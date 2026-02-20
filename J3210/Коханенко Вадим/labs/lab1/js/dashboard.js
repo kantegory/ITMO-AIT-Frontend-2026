@@ -13,7 +13,7 @@ function loadUserData() {
     if (savedRoutes) {
         userRoutes = JSON.parse(savedRoutes);
     }
-    alert(JSON.stringify(currentUser));
+
     if (currentUser.name) {
         
         document.getElementById('userName').textContent = currentUser.name;
