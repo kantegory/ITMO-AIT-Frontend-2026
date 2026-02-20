@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlyingOwl - Поиск путешествий</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/search.css">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <span class="navbar-brand">
+                <i class="bi bi-compass"></i> FlyingOwl
+            </span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="search.html">
+                            <i class="bi bi-search"></i> Поиск
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="bi bi-person-circle"></i> Личный кабинет
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Выйти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Секция с поиском -->
+    <div class="hero-search">
+        <div class="container text-center">
+            <h1 class="display-5 mb-3">
+                <i class="bi bi-compass"></i> Куда отправимся?
+            </h1>
+            <p class="lead mb-4">Найдите идеальное путешествие среди тысяч направлений</p>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text bg-white border-0">
+                            <i class="bi bi-search text-success"></i>
+                        </span>
+                        <input type="text" class="form-control border-0" id="searchInput" 
+                               placeholder="Поиск по странам, городам, направлениям…" 
+                               onkeyup="filterDestinations()">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="container mb-5">
+        <!-- Фильтры -->
+        <div class="filter-section">
+            <div class="row g-4">
+                <!-- Тип -->
+                <div class="col-lg-4">
+                    <div class="filter-title">
+                        <i class="bi bi-geo-alt-fill text-success"></i> Тип направления
+                    </div>
+                    <div class="btn-group w-100" role="group">
+                        <input type="radio" class="btn-check" name="typeFilter" id="typeAll" value="all" checked>
+                        <label class="btn btn-outline-success" for="typeAll">Все</label>
+                        
+                        <input type="radio" class="btn-check" name="typeFilter" id="typeCity" value="Город">
+                        <label class="btn btn-outline-success" for="typeCity">
+                            <i class="bi bi-building"></i> Город
+                        </label>
+                        
+                        <input type="radio" class="btn-check" name="typeFilter" id="typeNature" value="Природа">
+                        <label class="btn btn-outline-success" for="typeNature">
+                            <i class="bi bi-tree"></i> Природа
+                        </label>
+                        
+                        <input type="radio" class="btn-check" name="typeFilter" id="typeMixed" value="Смешанный">
+                        <label class="btn btn-outline-success" for="typeMixed">
+                            <i class="bi bi-arrow-repeat"></i> Смешанный
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Бюджет -->
+                <div class="col-lg-4">
+                    <div class="filter-title">
+                        <i class="bi bi-wallet2 text-success"></i> Бюджет
+                    </div>
+                    <select class="form-select" id="budgetFilter" onchange="filterDestinations()">
+                        <option value="all">Любой бюджет</option>
+                        <option value="Низкий">Низкий (до 50 000 рублей)</option>
+                        <option value="Средний">Средний (50 000 — 100 000 рублей)</option>
+                        <option value="Высокий">Высокий (от 100 000 рублей)</option>
+                    </select>
+                </div>
+                
+                <!-- Длительность -->
+                <div class="col-lg-4">
+                    <div class="filter-title">
+                        <i class="bi bi-calendar-week text-success"></i> Длительность
+                    </div>
+                    <select class="form-select" id="durationFilter" onchange="filterDestinations()">
+                        <option value="all">Любая длительность</option>
+                        <option value="1-3 дня">1-3 дня</option>
+                        <option value="4-7 дней">4-7 дней</option>
+                        <option value="8+ дней">8+ дней</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Кнопочки -->
+            <div class="row mt-4">
+                <div class="col-12 d-flex justify-content-end">
+                    <button class="btn btn-outline-secondary me-2" onclick="resetFilters()">
+                        <i class="bi bi-x-circle"></i> Сбросить
+                    </button>
+                    <span class="text-muted align-self-center" id="resultsCount"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Табличка с карточками направлений -->
+        <div class="row g-4" id="destinationsGrid">
+        </div>
+    </main>
+
+    <footer class="bg-light py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2026  FlyingOwl.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/data.js"></script>
+</body>
+</html>
