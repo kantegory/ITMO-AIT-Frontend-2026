@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlyingOwl - Личный кабинет</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <span class="navbar-brand">
+                <i class="bi bi-compass"></i> FlyingOwl
+            </span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="search.html">Поиск</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.html">
+                            <i class="bi bi-person-circle"></i> Личный кабинет
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="bi bi-box-arrow-right"></i> Выйти
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Приветствие -->
+    <div class="welcome-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2><i class="bi bi-person-circle"></i> Добро пожаловать!</h2>
+                    <p class="lead mb-0">Ваше путешествие начинается здесь.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="container mb-5">
+        <!-- Статистика -->
+        <div class="row mb-4">
+            <div class="col-md-4 mb-3 mb-md-0">
+                <div class="stat-card d-flex align-items-center">
+                    <div class="stat-icon me-3">
+                        <i class="bi bi-journal-bookmark-fill"></i>
+                    </div>
+                    <div>
+                        <h3 class="mb-0" id="notesCount">0</h3>
+                        <p class="text-muted mb-0">Путевых заметок</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+                <div class="stat-card d-flex align-items-center">
+                    <div class="stat-icon me-3">
+                        <i class="bi bi-map-fill"></i>
+                    </div>
+                    <div>
+                        <h3 class="mb-0" id="routesCount">0</h3>
+                        <p class="text-muted mb-0">Сохранённых маршрутов</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card d-flex align-items-center">
+                    <div class="stat-icon me-3">
+                        <i class="bi bi-airplane-fill"></i>
+                    </div>
+                    <div>
+                        <h3 class="mb-0" id="countriesCount">0</h3>
+                        <p class="text-muted mb-0">Стран посещено</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Заметки и маршруты -->
+        <ul class="nav nav-tabs mb-4" id="dashboardTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="notes-tab" data-bs-toggle="tab" data-bs-target="#notes" type="button" role="tab">
+                    <i class="bi bi-journal-text"></i> Путевые заметки
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="routes-tab" data-bs-toggle="tab" data-bs-target="#routes" type="button" role="tab">
+                    <i class="bi bi-map"></i> Сохранённые маршруты
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="dashboardTabContent">
+            <!-- Заметки -->
+            <div class="tab-pane fade show active" id="notes" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="mb-0"><i class="bi bi-journal-text"></i> Мои заметки</h4>
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addNoteModal">
+                        <i class="bi bi-plus-lg"></i> Новая заметка
+                    </button>
+                </div>
+
+                <div id="notesContainer" class="row g-4">
+                    <div class="col-12 empty-state">
+                        <i class="bi bi-journal-bookmark"></i>
+                        <h5>У вас пока нет заметок</h5>
+                        <p class="text-muted">Создайте первую заметку о вашем путешествии!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Маршруты -->
+            <div class="tab-pane fade" id="routes" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="mb-0"><i class="bi bi-map"></i> Сохранённые маршруты</h4>
+                    <a href="search.html">
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRouteModal">
+                            <i class="bi bi-search"></i> Найти маршруты
+                        </button>
+                    </a>
+                </div>
+
+                <div id="routesContainer" class="row g-4">
+                    <div class="col-12 empty-state">
+                        <i class="bi bi-map"></i>
+                        <h5>У вас пока нет сохранённых маршрутов</h5>
+                        <p class="text-muted">Найдите интересные направления в поиске!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Модалка: новая заметка -->
+    <div class="modal fade" id="addNoteModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title"><i class="bi bi-journal-plus"></i> Новая путевая заметка</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addNoteForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="noteTitle" class="form-label">Название/Место</label>
+                                <input type="text" class="form-control" id="noteTitle" placeholder="Например: Париж" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="noteDate" class="form-label">Дата поездки</label>
+                                <input type="text" class="form-control" id="noteDate" placeholder="Например: Март 2026">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="noteType" class="form-label">Тип путешествия</label>
+                                <select class="form-select" id="noteType">
+                                    <option value="Город">Город</option>
+                                    <option value="Природа">Природа</option>
+                                    <option value="Смешанный">Смешанный</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="noteCountry" class="form-label">Страна</label>
+                                <input type="text" class="form-control" id="noteCountry" placeholder="Например: Франция">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="noteContent" class="form-label">Заметка</label>
+                            <textarea class="form-control" id="noteContent" rows="4" placeholder="Ваши впечатления, советы, интересные места" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="noteTags" class="form-label">Теги</label>
+                            <input type="text" class="form-control" id="noteTags" placeholder="#париж #франция #европа">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-success" onclick="addNote()">
+                        <i class="bi bi-check-lg"></i> Сохранить заметку
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2026 FlyingOwl.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/maind.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
