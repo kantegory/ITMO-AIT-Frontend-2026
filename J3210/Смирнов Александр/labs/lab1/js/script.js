@@ -29,6 +29,12 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     };
 
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
     function getInitials(name) {
         const parts = name.trim().split(/\s+/).filter(Boolean);
         if (parts.length === 0) return "";
@@ -91,8 +97,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 <a href="model.html?id=${item.id}" class="text-decoration-none text-dark">
                     <div class="item-card">
                         <div class="d-flex justify-content-between">
-                            <h5>${item.name}</h5>
-                            <span class="badge ${typeBadge}">${item.type.toUpperCase()}</span>
+                            <h5>${escapeHtml(item.name)}</h5>
+                            <span class="badge ${typeBadge}">${escapeHtml(item.type.toUpperCase())}</span>
                         </div>
                         <p class="text-muted small">You will receive notifications about new versions and discussions.</p>
                     </div>
@@ -112,30 +118,37 @@ document.addEventListener("DOMContentLoaded", function() {
         initialsEl.textContent = getInitials(name) || "SU";
     }
 
+    function handleSubscribeClick(itemId) {
+        if (!storage.getIsLoggedIn()) {
+            window.location.href = "login.html";
+            return;
+        }
+        toggleSubscription(itemId);
+    }
+
     function renderCards(data) {
         if (!catalogContainer) return;
-        catalogContainer.innerHTML = "";
         
         if (data.length === 0) {
             catalogContainer.innerHTML = "<p>No matches found.</p>";
             return;
         }
 
-        data.forEach(item => {
+        const cardsHtml = data.map(item => {
             const typeBadge = item.type === 'model' ? 'bg-primary' : 'bg-success';
             const subscribed = isSubscribed(item.id);
             const buttonText = subscribed ? "Unsubscribe" : "Subscribe";
             const buttonClass = subscribed ? "btn-outline-danger" : "btn-outline-primary";
-            const card = `
+            return `
                 <div class="item-card">
                     <div class="d-flex justify-content-between align-items-start">
-                        <h3><a href="model.html?id=${item.id}" class="text-decoration-none text-dark">${item.name}</a></h3>
-                        <span class="badge ${typeBadge}">${item.type.toUpperCase()}</span>
+                        <h3><a href="model.html?id=${item.id}" class="text-decoration-none text-dark">${escapeHtml(item.name)}</a></h3>
+                        <span class="badge ${typeBadge}">${escapeHtml(item.type.toUpperCase())}</span>
                     </div>
-                    <p class="text-muted small mb-2">Task: ${item.task.toUpperCase()} | License: ${item.license.toUpperCase()} | Size: ${item.size}</p>
-                    <p>${item.desc}</p>
+                    <p class="text-muted small mb-2">Task: ${escapeHtml(item.task.toUpperCase())} | License: ${escapeHtml(item.license.toUpperCase())} | Size: ${escapeHtml(item.size)}</p>
+                    <p>${escapeHtml(item.desc)}</p>
                     <div class="d-flex gap-2">
-                        <span class="badge bg-secondary">Downloads: ${item.downloads}</span>
+                        <span class="badge bg-secondary">Downloads: ${escapeHtml(item.downloads)}</span>
                         <span class="badge bg-warning text-dark">Stars: ${item.stars}</span>
                     </div>
                     <div class="mt-3">
@@ -143,8 +156,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>
                 </div>
             `;
-            catalogContainer.innerHTML += card;
-        });
+        }).join("");
+        
+        catalogContainer.innerHTML = cardsHtml;
     }
 
     // Render initial catalog
@@ -178,38 +192,42 @@ document.addEventListener("DOMContentLoaded", function() {
     
     if (detailName && typeof appData !== 'undefined') {
         const params = new URLSearchParams(window.location.search);
-        const itemId = parseInt(params.get('id'));
+        const itemId = parseInt(params.get('id'), 10);
         
-        const item = appData.find(x => x.id === itemId);
-        
-        if (item) {
-            document.title = `${item.name} - AI Hub`;
-            detailName.textContent = item.name;
-            
-            const typeBadge = document.getElementById("detail-type");
-            typeBadge.textContent = item.type.toUpperCase();
-            typeBadge.className = `badge ${item.type === 'model' ? 'bg-primary' : 'bg-success'}`;
-            
-            document.getElementById("detail-stars").textContent = `Star ${item.stars}`;
-            document.getElementById("detail-forks").textContent = `Fork ${item.forks}`;
-            
-            document.getElementById("detail-desc").textContent = item.desc;
-            document.getElementById("detail-usage").textContent = item.usage;
-            
-            document.getElementById("detail-lic").textContent = item.license.toUpperCase();
-            document.getElementById("detail-size").textContent = item.size;
-            document.getElementById("detail-task").textContent = item.task.toUpperCase();
-            document.getElementById("detail-fw").textContent = item.framework.toUpperCase();
-            document.getElementById("detail-metrics").textContent = item.metrics;
-            document.getElementById("detail-dl").textContent = item.downloads;
-
-            if (detailSubscribeBtn) {
-                detailSubscribeBtn.style.display = "inline-block";
-                detailSubscribeBtn.dataset.subscribeId = String(item.id);
-                setSubscribeButtonState(detailSubscribeBtn, isSubscribed(item.id));
-            }
+        if (isNaN(itemId)) {
+            detailName.textContent = "Invalid item ID";
         } else {
-            detailName.textContent = "Item not found";
+            const item = appData.find(x => x.id === itemId);
+            
+            if (item) {
+                document.title = `${item.name} - AI Hub`;
+                detailName.textContent = item.name;
+                
+                const typeBadge = document.getElementById("detail-type");
+                typeBadge.textContent = item.type.toUpperCase();
+                typeBadge.className = `badge ${item.type === 'model' ? 'bg-primary' : 'bg-success'}`;
+                
+                document.getElementById("detail-stars").textContent = `Star ${item.stars}`;
+                document.getElementById("detail-forks").textContent = `Fork ${item.forks}`;
+                
+                document.getElementById("detail-desc").textContent = item.desc;
+                document.getElementById("detail-usage").textContent = item.usage;
+                
+                document.getElementById("detail-lic").textContent = item.license.toUpperCase();
+                document.getElementById("detail-size").textContent = item.size;
+                document.getElementById("detail-task").textContent = item.task.toUpperCase();
+                document.getElementById("detail-fw").textContent = item.framework.toUpperCase();
+                document.getElementById("detail-metrics").textContent = item.metrics;
+                document.getElementById("detail-dl").textContent = item.downloads;
+
+                if (detailSubscribeBtn) {
+                    detailSubscribeBtn.style.display = "inline-block";
+                    detailSubscribeBtn.dataset.subscribeId = String(item.id);
+                    setSubscribeButtonState(detailSubscribeBtn, isSubscribed(item.id));
+                }
+            } else {
+                detailName.textContent = "Item not found";
+            }
         }
     }
 
@@ -224,7 +242,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 const commentHtml = `
                     <div class="mb-3 border-bottom pb-2">
                         <strong>You:</strong> 
-                        <p class="mb-1 text-muted small">${text}</p>
+                        <p class="mb-1 text-muted small">${escapeHtml(text)}</p>
                     </div>
                 `;
                 commentsList.insertAdjacentHTML('beforeend', commentHtml);
@@ -288,12 +306,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const id = parseInt(button.getAttribute("data-subscribe-id"), 10);
             if (Number.isNaN(id)) return;
 
-            if (!storage.getIsLoggedIn()) {
-                window.location.href = "login.html";
-                return;
-            }
-
-            toggleSubscription(id);
+            handleSubscribeClick(id);
             setSubscribeButtonState(button, isSubscribed(id));
         });
     }
@@ -303,12 +316,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const id = parseInt(detailSubscribeBtn.dataset.subscribeId, 10);
             if (Number.isNaN(id)) return;
 
-            if (!storage.getIsLoggedIn()) {
-                window.location.href = "login.html";
-                return;
-            }
-
-            toggleSubscription(id);
+            handleSubscribeClick(id);
             setSubscribeButtonState(detailSubscribeBtn, isSubscribed(id));
         });
     }
