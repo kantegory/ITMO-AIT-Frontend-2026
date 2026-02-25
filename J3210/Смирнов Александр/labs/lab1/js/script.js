@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
+    // Main entry: initialize UI, state and event handlers
     const catalogContainer = document.getElementById("catalog-container");
     const authNav = document.getElementById("auth-nav");
 
+    // Local storage helpers
     const storage = {
         getIsLoggedIn() {
             return localStorage.getItem("isLoggedIn") === "true";
@@ -29,12 +31,14 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     };
 
+    // Escape user-provided text to prevent XSS when inserting into DOM
     function escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
 
+    // Compute initials used in profile avatar
     function getInitials(name) {
         const parts = name.trim().split(/\s+/).filter(Boolean);
         if (parts.length === 0) return "";
@@ -42,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
     }
 
+    // Update navigation area based on login state
     function updateAuthNav() {
         if (!authNav) return;
         if (storage.getIsLoggedIn()) {
@@ -56,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // Subscriptions helpers
     function isSubscribed(itemId) {
         return storage.getSubscriptions().includes(itemId);
     }
@@ -72,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return current;
     }
 
+    // Update subscribe button appearance and label
     function setSubscribeButtonState(button, subscribed) {
         if (!button) return;
         button.textContent = subscribed ? "Unsubscribe" : "Subscribe";
@@ -79,6 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
         button.classList.toggle("btn-outline-danger", subscribed);
     }
 
+    // Render subscriptions list in profile page
     function renderProfileSubscriptions() {
         const list = document.getElementById("subscriptions-list");
         if (!list || typeof appData === "undefined") return;
@@ -107,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }).join("");
     }
 
+    // Update profile name and initials in sidebar
     function updateProfileHeader() {
         const nameEl = document.getElementById("profile-name");
         const initialsEl = document.getElementById("profile-initials");
@@ -118,6 +127,7 @@ document.addEventListener("DOMContentLoaded", function() {
         initialsEl.textContent = getInitials(name) || "SU";
     }
 
+    // Centralized subscribe action with auth check
     function handleSubscribeClick(itemId) {
         if (!storage.getIsLoggedIn()) {
             window.location.href = "login.html";
@@ -126,6 +136,7 @@ document.addEventListener("DOMContentLoaded", function() {
         toggleSubscription(itemId);
     }
 
+    // Render catalog cards efficiently into the container
     function renderCards(data) {
         if (!catalogContainer) return;
         
@@ -161,13 +172,14 @@ document.addEventListener("DOMContentLoaded", function() {
         catalogContainer.innerHTML = cardsHtml;
     }
 
-    // Render initial catalog
+    // Render initial catalog (if present)
     if (catalogContainer && typeof appData !== 'undefined') {
         renderCards(appData);
     }
 
     // Filtering logic
     const applyBtn = document.getElementById("apply-filters");
+    // Filter apply handler
     if (applyBtn) {
         applyBtn.addEventListener("click", () => {
             const typeVal = document.getElementById("filter-type").value;
@@ -187,6 +199,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    // Load item details from URL and populate page
     const detailName = document.getElementById("detail-name");
     const detailSubscribeBtn = document.getElementById("btn-subscribe");
     
@@ -235,6 +248,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const commentInput = document.getElementById("comment-input");
     const commentsList = document.getElementById("comments-list");
 
+    // Post comment handler (client-side only)
     if (postBtn && commentInput && commentsList) {
         postBtn.addEventListener("click", () => {
             const text = commentInput.value.trim();
@@ -252,6 +266,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     const loginForm = document.getElementById("login-form");
+    // Simulated login: set auth state in localStorage
     if (loginForm) {
         loginForm.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -265,6 +280,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     const registerForm = document.getElementById("register-form");
+    // Simulated register: set auth state in localStorage
     if (registerForm) {
         registerForm.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -281,6 +297,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const editNameInput = document.getElementById("edit-name-input");
     const saveProfileBtn = document.getElementById("save-profile-btn");
 
+    // Edit profile modal handlers
     if (editProfileBtn && editNameInput) {
         editProfileBtn.addEventListener("click", () => {
             const current = storage.getUserName() || "Student User";
@@ -297,6 +314,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    // Delegate subscribe button clicks in catalog to central handler
     if (catalogContainer) {
         catalogContainer.addEventListener("click", (e) => {
             const target = e.target;
@@ -311,6 +329,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    // Subscribe button on detail page
     if (detailSubscribeBtn) {
         detailSubscribeBtn.addEventListener("click", () => {
             const id = parseInt(detailSubscribeBtn.dataset.subscribeId, 10);
@@ -321,6 +340,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    // Initial UI sync
     updateAuthNav();
     renderProfileSubscriptions();
     updateProfileHeader();
