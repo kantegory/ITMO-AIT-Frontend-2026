@@ -20,8 +20,21 @@ document.addEventListener("DOMContentLoaded", function() {
         },
         setSubscriptions(list) {
             localStorage.setItem("subscriptions", JSON.stringify(list));
+        },
+        getUserName() {
+            return localStorage.getItem("userName") || "";
+        },
+        setUserName(name) {
+            localStorage.setItem("userName", name);
         }
     };
+
+    function getInitials(name) {
+        const parts = name.trim().split(/\s+/).filter(Boolean);
+        if (parts.length === 0) return "";
+        if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
 
     function updateAuthNav() {
         if (!authNav) return;
@@ -75,15 +88,28 @@ document.addEventListener("DOMContentLoaded", function() {
         list.innerHTML = items.map(item => {
             const typeBadge = item.type === 'model' ? 'bg-primary' : 'bg-success';
             return `
-                <div class="item-card">
-                    <div class="d-flex justify-content-between">
-                        <h5>${item.name}</h5>
-                        <span class="badge ${typeBadge}">${item.type.toUpperCase()}</span>
+                <a href="model.html?id=${item.id}" class="text-decoration-none text-dark">
+                    <div class="item-card">
+                        <div class="d-flex justify-content-between">
+                            <h5>${item.name}</h5>
+                            <span class="badge ${typeBadge}">${item.type.toUpperCase()}</span>
+                        </div>
+                        <p class="text-muted small">You will receive notifications about new versions and discussions.</p>
                     </div>
-                    <p class="text-muted small">You will receive notifications about new versions and discussions.</p>
-                </div>
+                </a>
             `;
         }).join("");
+    }
+
+    function updateProfileHeader() {
+        const nameEl = document.getElementById("profile-name");
+        const initialsEl = document.getElementById("profile-initials");
+        if (!nameEl || !initialsEl) return;
+
+        const stored = storage.getUserName();
+        const name = stored.trim() ? stored : "Student User";
+        nameEl.textContent = name;
+        initialsEl.textContent = getInitials(name) || "SU";
     }
 
     function renderCards(data) {
@@ -212,6 +238,9 @@ document.addEventListener("DOMContentLoaded", function() {
         loginForm.addEventListener("submit", (e) => {
             e.preventDefault();
             storage.setIsLoggedIn(true);
+            if (!storage.getUserName()) {
+                storage.setUserName("Student User");
+            }
             updateAuthNav();
             window.location.href = "profile.html";
         });
@@ -222,8 +251,31 @@ document.addEventListener("DOMContentLoaded", function() {
         registerForm.addEventListener("submit", (e) => {
             e.preventDefault();
             storage.setIsLoggedIn(true);
+            if (!storage.getUserName()) {
+                storage.setUserName("Student User");
+            }
             updateAuthNav();
             window.location.href = "profile.html";
+        });
+    }
+
+    const editProfileBtn = document.getElementById("edit-profile-btn");
+    const editNameInput = document.getElementById("edit-name-input");
+    const saveProfileBtn = document.getElementById("save-profile-btn");
+
+    if (editProfileBtn && editNameInput) {
+        editProfileBtn.addEventListener("click", () => {
+            const current = storage.getUserName() || "Student User";
+            editNameInput.value = current;
+        });
+    }
+
+    if (saveProfileBtn && editNameInput) {
+        saveProfileBtn.addEventListener("click", () => {
+            const value = editNameInput.value.trim();
+            const name = value || "Student User";
+            storage.setUserName(name);
+            updateProfileHeader();
         });
     }
 
@@ -263,4 +315,5 @@ document.addEventListener("DOMContentLoaded", function() {
 
     updateAuthNav();
     renderProfileSubscriptions();
+    updateProfileHeader();
 });
