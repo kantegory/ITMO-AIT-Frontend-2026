@@ -12,15 +12,10 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="index.html">AI Hub</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Models</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html">Datasets</a></li>
-                </ul>
-                <div class="d-flex">
-                    <a href="login.html" class="btn btn-outline-light me-2">Log in</a>
-                    <a href="register.html" class="btn btn-primary">Sign up</a>
-                </div>
+            
+            <div class="ms-auto" id="auth-nav">
+                <a href="login.html" class="btn btn-outline-light me-2">Log in</a>
+                <a href="register.html" class="btn btn-primary">Sign up</a>
             </div>
         </div>
     </nav>
@@ -43,16 +38,15 @@
                 <!-- Bootstrap Tabs -->
                 <ul class="nav nav-tabs mb-4" id="profileTabs" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active text-dark" data-bs-toggle="tab" data-bs-target="#uploads">My Uploads</button>
+                        <button class="nav-link active text-dark" id="uploads-tab" data-bs-toggle="tab" data-bs-target="#uploads" type="button" role="tab" aria-controls="uploads" aria-selected="true">My Uploads</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link text-dark" data-bs-toggle="tab" data-bs-target="#subscriptions">Subscriptions</button>
+                        <button class="nav-link text-dark" id="subscriptions-tab" data-bs-toggle="tab" data-bs-target="#subscriptions" type="button" role="tab" aria-controls="subscriptions" aria-selected="false">Subscriptions</button>
                     </li>
                 </ul>
 
-                <div class="tab-content">
-                    <!-- Uploads Tab -->
-                    <div class="tab-pane fade show active" id="uploads">
+                <div class="tab-content" id="profileTabsContent">
+                    <div class="tab-pane fade show active" id="uploads" role="tabpanel" aria-labelledby="uploads-tab">
                         <div class="item-card">
                             <div class="d-flex justify-content-between">
                                 <h5>My-Custom-CNN</h5>
@@ -62,16 +56,8 @@
                         </div>
                     </div>
                     
-                    <!-- Subscriptions Tab -->
-                    <div class="tab-pane fade" id="subscriptions">
-                        <div class="item-card">
-                            <div class="d-flex justify-content-between">
-                                <h5>ImageNet-Mini</h5>
-                                <span class="badge bg-success">DATASET</span>
-                            </div>
-                            <p class="text-muted small">You will receive notifications about new versions and discussions.</p>
-                            <button class="btn btn-sm btn-outline-danger">Unsubscribe</button>
-                        </div>
+                    <div class="tab-pane fade" id="subscriptions" role="tabpanel" aria-labelledby="subscriptions-tab">
+                            <div id="subscriptions-list"></div>
                     </div>
                 </div>
             </div>
@@ -84,5 +70,8 @@
             <small>Frontend Lab 1 - AI Platform</small>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

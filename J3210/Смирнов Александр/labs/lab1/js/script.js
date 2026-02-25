@@ -1,5 +1,90 @@
 document.addEventListener("DOMContentLoaded", function() {
     const catalogContainer = document.getElementById("catalog-container");
+    const authNav = document.getElementById("auth-nav");
+
+    const storage = {
+        getIsLoggedIn() {
+            return localStorage.getItem("isLoggedIn") === "true";
+        },
+        setIsLoggedIn(value) {
+            localStorage.setItem("isLoggedIn", value ? "true" : "false");
+        },
+        getSubscriptions() {
+            try {
+                const raw = localStorage.getItem("subscriptions");
+                const parsed = raw ? JSON.parse(raw) : [];
+                return Array.isArray(parsed) ? parsed : [];
+            } catch {
+                return [];
+            }
+        },
+        setSubscriptions(list) {
+            localStorage.setItem("subscriptions", JSON.stringify(list));
+        }
+    };
+
+    function updateAuthNav() {
+        if (!authNav) return;
+        if (storage.getIsLoggedIn()) {
+            authNav.innerHTML = `
+                <a href="profile.html" class="btn btn-outline-light">Profile</a>
+            `;
+        } else {
+            authNav.innerHTML = `
+                <a href="login.html" class="btn btn-outline-light me-2">Log in</a>
+                <a href="register.html" class="btn btn-primary">Sign up</a>
+            `;
+        }
+    }
+
+    function isSubscribed(itemId) {
+        return storage.getSubscriptions().includes(itemId);
+    }
+
+    function toggleSubscription(itemId) {
+        const current = storage.getSubscriptions();
+        const idx = current.indexOf(itemId);
+        if (idx >= 0) {
+            current.splice(idx, 1);
+        } else {
+            current.push(itemId);
+        }
+        storage.setSubscriptions(current);
+        return current;
+    }
+
+    function setSubscribeButtonState(button, subscribed) {
+        if (!button) return;
+        button.textContent = subscribed ? "Unsubscribe" : "Subscribe";
+        button.classList.toggle("btn-outline-primary", !subscribed);
+        button.classList.toggle("btn-outline-danger", subscribed);
+    }
+
+    function renderProfileSubscriptions() {
+        const list = document.getElementById("subscriptions-list");
+        if (!list || typeof appData === "undefined") return;
+
+        const ids = storage.getSubscriptions();
+        const items = appData.filter(item => ids.includes(item.id));
+
+        if (items.length === 0) {
+            list.innerHTML = "<p class=\"text-muted\">No subscriptions yet.</p>";
+            return;
+        }
+
+        list.innerHTML = items.map(item => {
+            const typeBadge = item.type === 'model' ? 'bg-primary' : 'bg-success';
+            return `
+                <div class="item-card">
+                    <div class="d-flex justify-content-between">
+                        <h5>${item.name}</h5>
+                        <span class="badge ${typeBadge}">${item.type.toUpperCase()}</span>
+                    </div>
+                    <p class="text-muted small">You will receive notifications about new versions and discussions.</p>
+                </div>
+            `;
+        }).join("");
+    }
 
     function renderCards(data) {
         if (!catalogContainer) return;
@@ -12,6 +97,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
         data.forEach(item => {
             const typeBadge = item.type === 'model' ? 'bg-primary' : 'bg-success';
+            const subscribed = isSubscribed(item.id);
+            const buttonText = subscribed ? "Unsubscribe" : "Subscribe";
+            const buttonClass = subscribed ? "btn-outline-danger" : "btn-outline-primary";
             const card = `
                 <div class="item-card">
                     <div class="d-flex justify-content-between align-items-start">
@@ -23,6 +111,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     <div class="d-flex gap-2">
                         <span class="badge bg-secondary">Downloads: ${item.downloads}</span>
                         <span class="badge bg-warning text-dark">Stars: ${item.stars}</span>
+                    </div>
+                    <div class="mt-3">
+                        <button class="btn ${buttonClass} btn-sm subscribe-btn" data-subscribe-id="${item.id}">${buttonText}</button>
                     </div>
                 </div>
             `;
@@ -46,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const filtered = appData.filter(item => {
                 const matchType = typeVal === 'all' || item.type === typeVal;
-                const matchTask = taskTask = taskVal === 'all' || item.task === taskVal;
+                const matchTask = taskVal === 'all' || item.task === taskVal;
                 const matchLic = licVal === 'all' || item.license === licVal;
                 const matchSearch = item.name.toLowerCase().includes(searchVal);
                 return matchType && matchTask && matchLic && matchSearch;
@@ -57,9 +148,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     const detailName = document.getElementById("detail-name");
+    const detailSubscribeBtn = document.getElementById("btn-subscribe");
     
     if (detailName && typeof appData !== 'undefined') {
-        // Читаем параметр ?id= из URL
         const params = new URLSearchParams(window.location.search);
         const itemId = parseInt(params.get('id'));
         
@@ -85,8 +176,91 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("detail-fw").textContent = item.framework.toUpperCase();
             document.getElementById("detail-metrics").textContent = item.metrics;
             document.getElementById("detail-dl").textContent = item.downloads;
+
+            if (detailSubscribeBtn) {
+                detailSubscribeBtn.style.display = "inline-block";
+                detailSubscribeBtn.dataset.subscribeId = String(item.id);
+                setSubscribeButtonState(detailSubscribeBtn, isSubscribed(item.id));
+            }
         } else {
             detailName.textContent = "Item not found";
         }
     }
+
+    const postBtn = document.getElementById("post-comment-btn");
+    const commentInput = document.getElementById("comment-input");
+    const commentsList = document.getElementById("comments-list");
+
+    if (postBtn && commentInput && commentsList) {
+        postBtn.addEventListener("click", () => {
+            const text = commentInput.value.trim();
+            if (text) {
+                const commentHtml = `
+                    <div class="mb-3 border-bottom pb-2">
+                        <strong>You:</strong> 
+                        <p class="mb-1 text-muted small">${text}</p>
+                    </div>
+                `;
+                commentsList.insertAdjacentHTML('beforeend', commentHtml);
+                commentInput.value = "";
+            }
+        });
+    }
+
+    const loginForm = document.getElementById("login-form");
+    if (loginForm) {
+        loginForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            storage.setIsLoggedIn(true);
+            updateAuthNav();
+            window.location.href = "profile.html";
+        });
+    }
+
+    const registerForm = document.getElementById("register-form");
+    if (registerForm) {
+        registerForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            storage.setIsLoggedIn(true);
+            updateAuthNav();
+            window.location.href = "profile.html";
+        });
+    }
+
+    if (catalogContainer) {
+        catalogContainer.addEventListener("click", (e) => {
+            const target = e.target;
+            if (!(target instanceof HTMLElement)) return;
+            const button = target.closest(".subscribe-btn");
+            if (!button) return;
+            const id = parseInt(button.getAttribute("data-subscribe-id"), 10);
+            if (Number.isNaN(id)) return;
+
+            if (!storage.getIsLoggedIn()) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            toggleSubscription(id);
+            setSubscribeButtonState(button, isSubscribed(id));
+        });
+    }
+
+    if (detailSubscribeBtn) {
+        detailSubscribeBtn.addEventListener("click", () => {
+            const id = parseInt(detailSubscribeBtn.dataset.subscribeId, 10);
+            if (Number.isNaN(id)) return;
+
+            if (!storage.getIsLoggedIn()) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            toggleSubscription(id);
+            setSubscribeButtonState(detailSubscribeBtn, isSubscribed(id));
+        });
+    }
+
+    updateAuthNav();
+    renderProfileSubscriptions();
 });
