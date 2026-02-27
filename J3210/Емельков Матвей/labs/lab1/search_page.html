@@ -23,11 +23,15 @@
             </nav>
 
             <footer class="sidebar__footer dropdown">
-                <a href="#" class="sidebar__link dropdown-toggle" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                    Профиль пользователя
+                <a href="#" class="sidebar__link dropdown-toggle text-decoration-none text-truncate" id="userName" data-bs-toggle="dropdown" aria-expanded="false">
+                    Иван Иванов
                 </a>
-                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="userMenu">
-                    <li><a class="dropdown-item" href="#">Настройки</a></li>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="userName">
+                    <li>
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                            Настройки
+                        </a>
+                    </li>
                     <li><a class="dropdown-item text-danger" href="login.html">Выйти</a></li>
                 </ul>
             </footer>
@@ -91,7 +95,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <a href="#" class="text-decoration-none text-truncate btn-min-width" title="Face_Reid">
+                                    <a href="experiment_details.html" class="text-decoration-none text-truncate btn-min-width" title="Face_Reid">
                                         Face_Reid
                                     </a>
                                 </td>
@@ -102,7 +106,7 @@
                                 </td>
                                 <td>Accuracy</td>
                                 <td>92.3</td>
-                                <td>26.02.2026 16:18</td>
+                                <td>27.02.2026 16:18</td>
                                 <td>
                                     <span class="text-decoration-none">7 min 17 s</span>
                                 </td>
@@ -113,7 +117,8 @@
 
                             <tr>
                                 <td>
-                                    <a href="#" class="text-decoration-none text-truncate btn-min-width" title="Cats Detection 1">
+                                    <!--Тоже пока что на одну карточку ссылаемся-->
+                                    <a href="experiment_details.html" class="text-decoration-none text-truncate btn-min-width" title="Cats Detection 1">
                                         Cats Detection 1
                                     </a>
                                 </td>
@@ -167,6 +172,39 @@
                             </button>
                         </footer>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Настройки профиля</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Внешний вид</label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="darkModeSwitch">
+                                <label class="form-check-label" for="darkModeSwitch">Темная тема</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="interfaceLanguage" class="form-label fw-bold">Язык интерфейса</label>
+                            <select id="interfaceLanguage" class="form-select">
+                                <option selected>Русский</option>
+                                <option>English</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Сохранить</button>
                 </div>
             </div>
         </div>
