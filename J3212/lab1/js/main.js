@@ -79,9 +79,24 @@
   }
 
   var priorityClass = { low: 'badge-priority-low', medium: 'badge-priority-medium', high: 'badge-priority-high', critical: 'badge-priority-critical' };
-  var priorityLabel = { low: 'Низкий', medium: 'Средний', high: 'Высокий', critical: 'Критический' };
-  var statusLabel = { new: 'Новая', progress: 'В работе', review: 'На проверке', done: 'Выполнена' };
+  var priorityLabelFallback = { low: 'Низкий', medium: 'Средний', high: 'Высокий', critical: 'Критический' };
+  var statusLabelFallback = { new: 'Новая', progress: 'В работе', review: 'На проверке', done: 'Выполнена' };
   var statusBadgeClass = { new: 'bg-info', progress: 'bg-primary', review: 'bg-warning text-dark', done: 'bg-success' };
+
+  function getStatusLabel(s) {
+    if (typeof ProjectHubI18n !== 'undefined' && ProjectHubI18n.t[ProjectHubI18n.getLang()]) {
+      var key = 'status_' + s;
+      if (ProjectHubI18n.t[ProjectHubI18n.getLang()][key]) return ProjectHubI18n.t[ProjectHubI18n.getLang()][key];
+    }
+    return statusLabelFallback[s] || s;
+  }
+  function getPriorityLabel(p) {
+    if (typeof ProjectHubI18n !== 'undefined' && ProjectHubI18n.t[ProjectHubI18n.getLang()]) {
+      var key = 'priority_' + p;
+      if (ProjectHubI18n.t[ProjectHubI18n.getLang()][key]) return ProjectHubI18n.t[ProjectHubI18n.getLang()][key];
+    }
+    return priorityLabelFallback[p] || p;
+  }
 
   function getQueryParam(name) {
     var m = typeof location !== 'undefined' && location.search ? location.search.match(new RegExp('[?&]' + name + '=([^&]*)')) : null;
@@ -93,7 +108,7 @@
     if (!column) return;
     var card = document.createElement('div');
     card.className = 'card kanban-card mb-2';
-    var badge = task.priority ? '<span class="badge ' + (priorityClass[task.priority] || '') + ' mb-1">' + (priorityLabel[task.priority] || task.priority) + '</span>' : '';
+    var badge = task.priority ? '<span class="badge ' + (priorityClass[task.priority] || '') + ' mb-1">' + getPriorityLabel(task.priority) + '</span>' : '';
     card.innerHTML = '<div class="card-body py-2">' + badge + '<p class="mb-0 small">' + escapeHtml(task.title) + '</p></div>';
     column.appendChild(card);
   }
@@ -102,7 +117,7 @@
     var tbody = document.getElementById('deadlines-tbody');
     if (!tbody) return;
     var row = document.createElement('tr');
-    row.innerHTML = '<td>' + escapeHtml(task.title) + '</td><td>' + escapeHtml(task.assigneeName || '') + '</td><td>' + formatDate(task.deadline) + '</td><td><span class="badge ' + (statusBadgeClass[task.status] || 'bg-secondary') + '">' + (statusLabel[task.status] || task.status) + '</span></td>';
+    row.innerHTML = '<td>' + escapeHtml(task.title) + '</td><td>' + escapeHtml(task.assigneeName || '') + '</td><td>' + formatDate(task.deadline) + '</td><td><span class="badge ' + (statusBadgeClass[task.status] || 'bg-secondary') + '">' + getStatusLabel(task.status) + '</span></td>';
     tbody.appendChild(row);
   }
 
@@ -138,14 +153,14 @@
         if (column) {
           var card = document.createElement('div');
           card.className = 'card kanban-card mb-2';
-          var badge = priority ? '<span class="badge ' + priorityClass[priority] + ' mb-1">' + priorityLabel[priority] + '</span>' : '';
+          var badge = priority ? '<span class="badge ' + priorityClass[priority] + ' mb-1">' + getPriorityLabel(priority) + '</span>' : '';
           card.innerHTML = '<div class="card-body py-2">' + badge + '<p class="mb-0 small">' + escapeHtml(title) + '</p></div>';
           column.appendChild(card);
         }
         var tbody = document.getElementById('deadlines-tbody');
         if (tbody) {
           var row = document.createElement('tr');
-          row.innerHTML = '<td>' + escapeHtml(title) + '</td><td>' + escapeHtml(assigneeName) + '</td><td>' + formatDate(deadline) + '</td><td><span class="badge ' + statusBadgeClass[status] + '">' + statusLabel[status] + '</span></td>';
+          row.innerHTML = '<td>' + escapeHtml(title) + '</td><td>' + escapeHtml(assigneeName) + '</td><td>' + formatDate(deadline) + '</td><td><span class="badge ' + statusBadgeClass[status] + '">' + getStatusLabel(status) + '</span></td>';
           tbody.appendChild(row);
         }
         var modalEl = document.getElementById('modalAddTask');
@@ -236,7 +251,7 @@
             a.href = 'project.html?id=' + (t.projectId || 1);
             a.className = 'list-group-item list-group-item-action d-flex justify-content-between align-items-center';
             var badgeClass = statusBadgeClass[t.status] || 'bg-secondary';
-            a.innerHTML = '<span>' + escapeHtml(t.title) + '</span><span class="badge ' + badgeClass + ' rounded-pill">' + (statusLabel[t.status] || t.status) + '</span>';
+            a.innerHTML = '<span>' + escapeHtml(t.title) + '</span><span class="badge ' + badgeClass + ' rounded-pill">' + getStatusLabel(t.status) + '</span>';
             tasksList.appendChild(a);
           });
         }).catch(function () {
@@ -338,8 +353,8 @@
           col.className = 'col-12';
           var statusCl = t.status ? 'badge-status-' + t.status : 'bg-secondary';
           var prioCl = t.priority ? 'badge-priority-' + t.priority : '';
-          var statusBadge = '<span class="badge ' + statusCl + '">' + (statusLabel[t.status] || t.status || '') + '</span>';
-          var prioBadge = t.priority ? '<span class="badge ' + prioCl + '">' + (priorityLabel[t.priority] || t.priority) + '</span>' : '';
+          var statusBadge = '<span class="badge ' + statusCl + '">' + getStatusLabel(t.status) + '</span>';
+          var prioBadge = t.priority ? '<span class="badge ' + prioCl + '">' + getPriorityLabel(t.priority) + '</span>' : '';
           col.innerHTML = '<div class="card"><div class="card-body d-flex flex-wrap align-items-center gap-2">' + statusBadge + prioBadge + '<strong>' + escapeHtml(t.title) + '</strong><span class="text-muted small">Проект #' + (t.projectId || '') + ' · ' + escapeHtml(t.assigneeName || '') + '</span><a href="project.html?id=' + (t.projectId || '') + '" class="btn btn-sm btn-outline-primary ms-auto">Открыть</a></div></div>';
           container.appendChild(col);
         });

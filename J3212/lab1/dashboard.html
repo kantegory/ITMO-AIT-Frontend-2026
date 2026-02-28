@@ -15,17 +15,18 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item"><a class="nav-link active" href="dashboard.html">Личный кабинет</a></li>
-          <li class="nav-item"><a class="nav-link" href="search.html">Поиск</a></li>
+        <ul class="navbar-nav me-auto align-items-center">
+          <li class="nav-item"><a class="nav-link active" href="dashboard.html" data-i18n="nav_dashboard">Личный кабинет</a></li>
+          <li class="nav-item"><a class="nav-link" href="search.html" data-i18n="nav_search">Поиск</a></li>
+          <li class="nav-item ms-2"><span class="navbar-text small"><a href="#" class="text-white text-decoration-none" data-i18n-set="ru">RU</a><span class="mx-1">|</span><a href="#" class="text-white text-decoration-none" data-i18n-set="en">EN</a></span></li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Пользователь</a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-              <li><a class="dropdown-item" href="dashboard.html">Кабинет</a></li>
+              <li><a class="dropdown-item" href="dashboard.html" data-i18n="nav_cabinet">Кабинет</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#" id="logout-link">Выйти</a></li>
+              <li><a class="dropdown-item" href="#" id="logout-link" data-i18n="nav_logout">Выйти</a></li>
             </ul>
           </li>
         </ul>
@@ -34,23 +35,23 @@
   </nav>
 
   <main class="container py-4">
-    <h1 class="mb-4">Личный кабинет</h1>
+    <h1 class="mb-4" data-i18n="dash_title">Личный кабинет</h1>
 
     <section class="dashboard-section">
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="h5 mb-0">Мои проекты</h2>
-        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddProject">Добавить проект</button>
+        <h2 class="h5 mb-0" data-i18n="dash_projects">Мои проекты</h2>
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddProject" data-i18n="dash_add_project">Добавить проект</button>
       </div>
       <div class="row g-3" id="projects-list"></div>
     </section>
 
     <section class="dashboard-section">
-      <h2 class="h5 mb-3">Мои задачи</h2>
+      <h2 class="h5 mb-3" data-i18n="dash_tasks">Мои задачи</h2>
       <div class="list-group" id="tasks-list"></div>
     </section>
 
     <section class="dashboard-section">
-      <h2 class="h5 mb-3">Уведомления</h2>
+      <h2 class="h5 mb-3" data-i18n="dash_notifications">Уведомления</h2>
       <div class="list-group" id="notifications-list"></div>
     </section>
   </main>
@@ -59,23 +60,23 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalAddProjectLabel">Новый проект</h5>
+          <h5 class="modal-title" id="modalAddProjectLabel" data-i18n="dash_new_project">Новый проект</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
         </div>
         <form id="form-add-project">
           <div class="modal-body">
             <div class="mb-3">
-              <label for="project-name" class="form-label">Название</label>
-              <input type="text" class="form-control" id="project-name" required placeholder="Название проекта">
+              <label for="project-name" class="form-label" data-i18n="dash_project_name">Название</label>
+              <input type="text" class="form-control" id="project-name" required data-i18n-placeholder="dash_project_name">
             </div>
             <div class="mb-3">
-              <label for="project-desc" class="form-label">Описание (необязательно)</label>
-              <input type="text" class="form-control" id="project-desc" placeholder="Краткое описание">
+              <label for="project-desc" class="form-label" data-i18n="dash_project_desc">Описание (необязательно)</label>
+              <input type="text" class="form-control" id="project-desc" data-i18n-placeholder="dash_project_desc">
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-            <button type="submit" class="btn btn-primary">Добавить</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="dash_cancel">Отмена</button>
+            <button type="submit" class="btn btn-primary" data-i18n="dash_add">Добавить</button>
           </div>
         </form>
       </div>
@@ -87,6 +88,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/api.js"></script>
   <script src="js/main.js"></script>
 </body>
