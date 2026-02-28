@@ -23,7 +23,7 @@
 
   <main class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-      <h1 class="h3 mb-0">Веб-приложение</h1>
+      <h1 class="h3 mb-0" id="project-title">Веб-приложение</h1>
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddTask">Добавить задачу</button>
         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalRoles">Роли и права в команде</button>
@@ -51,52 +51,25 @@
           <div class="col-md-3">
             <div class="kanban-column p-3 rounded">
               <h6 class="text-muted mb-3">Новая</h6>
-              <div class="kanban-column-cards" data-column="new">
-                <div class="card kanban-card mb-2">
-                  <div class="card-body py-2">
-                    <span class="badge badge-priority-high mb-1">Высокий</span>
-                    <p class="mb-0 small">Добавить страницу поиска</p>
-                  </div>
-                </div>
-              </div>
+              <div class="kanban-column-cards" data-column="new"></div>
             </div>
           </div>
           <div class="col-md-3">
             <div class="kanban-column p-3 rounded">
               <h6 class="text-muted mb-3">В работе</h6>
-              <div class="kanban-column-cards" data-column="progress">
-                <div class="card kanban-card mb-2">
-                  <div class="card-body py-2">
-                    <span class="badge badge-priority-high mb-1">Высокий</span>
-                    <p class="mb-0 small">Настроить авторизацию</p>
-                  </div>
-                </div>
-              </div>
+              <div class="kanban-column-cards" data-column="progress"></div>
             </div>
           </div>
           <div class="col-md-3">
             <div class="kanban-column p-3 rounded">
               <h6 class="text-muted mb-3">На проверке</h6>
-              <div class="kanban-column-cards" data-column="review">
-                <div class="card kanban-card mb-2">
-                  <div class="card-body py-2">
-                    <span class="badge badge-priority-low mb-1">Низкий</span>
-                    <p class="mb-0 small">Ревью дизайна</p>
-                  </div>
-                </div>
-              </div>
+              <div class="kanban-column-cards" data-column="review"></div>
             </div>
           </div>
           <div class="col-md-3">
             <div class="kanban-column p-3 rounded">
               <h6 class="text-muted mb-3">Выполнена</h6>
-              <div class="kanban-column-cards" data-column="done">
-                <div class="card kanban-card mb-2">
-                  <div class="card-body py-2">
-                    <p class="mb-0 small">Главная страница</p>
-                  </div>
-                </div>
-              </div>
+              <div class="kanban-column-cards" data-column="done"></div>
             </div>
           </div>
         </div>
@@ -113,26 +86,7 @@
                 <th>Статус</th>
               </tr>
             </thead>
-            <tbody id="deadlines-tbody">
-              <tr>
-                <td>Настроить авторизацию</td>
-                <td>Иван Петров</td>
-                <td>05.03.2026</td>
-                <td><span class="badge bg-primary">В работе</span></td>
-              </tr>
-              <tr>
-                <td>Ревью дизайна</td>
-                <td>Алексей Козлов</td>
-                <td>01.03.2026</td>
-                <td><span class="badge bg-warning text-dark">На проверке</span></td>
-              </tr>
-              <tr>
-                <td>Добавить страницу поиска</td>
-                <td>Мария Сидорова</td>
-                <td>10.03.2026</td>
-                <td><span class="badge bg-info">Новая</span></td>
-              </tr>
-            </tbody>
+            <tbody id="deadlines-tbody"></tbody>
           </table>
         </div>
       </div>
@@ -155,26 +109,7 @@
       </div>
 
       <div class="tab-pane fade" id="discussions" role="tabpanel">
-        <div id="discussions-list">
-          <div class="card mb-3">
-            <div class="card-body">
-              <div class="d-flex justify-content-between mb-2">
-                <strong>Иван Петров</strong>
-                <small class="text-muted">26.02.2026, 14:30</small>
-              </div>
-              <p class="mb-0">Предлагаю для авторизации использовать JWT. Кто за?</p>
-            </div>
-          </div>
-          <div class="card mb-3">
-            <div class="card-body">
-              <div class="d-flex justify-content-between mb-2">
-                <strong>Мария Сидорова</strong>
-                <small class="text-muted">27.02.2026, 09:15</small>
-              </div>
-              <p class="mb-0">Согласна, плюс refresh token в httpOnly cookie.</p>
-            </div>
-          </div>
-        </div>
+        <div id="discussions-list"></div>
         <div class="mb-3">
           <textarea id="discussion-message" class="form-control" rows="2" placeholder="Написать сообщение..."></textarea>
           <button type="button" id="discussion-send" class="btn btn-primary mt-2">Отправить</button>
@@ -215,11 +150,7 @@
               </div>
               <div class="mb-3">
                 <label for="task-assignee" class="form-label">Исполнитель</label>
-                <select class="form-select" id="task-assignee">
-                  <option>Иван Петров</option>
-                  <option>Мария Сидорова</option>
-                  <option>Алексей Козлов</option>
-                </select>
+                <select class="form-select" id="task-assignee"></select>
               </div>
               <div class="mb-3">
                 <label for="task-deadline" class="form-label">Срок</label>
@@ -273,6 +204,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/api.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
