@@ -48,7 +48,9 @@
         <main class="main-content">
             <header class="main-content__header">
                 <h1>Обзор пайплайнов</h1>
-                <button class="btn btn-primary">Новый эксперимент</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newExperimentModel">
+                    Новый эксперимент
+                </button>
             </header>
 
             <section class="row mb-4">
@@ -119,6 +121,42 @@
             </section>
         </main>
 
+    </div>
+
+    <div class="modal fade" id="newExperimentModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title" id="newExperimentModelLabel">Создать новый эксперимент</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form class="row g-3">
+                        <div class="mb-3">
+                            <label for="expName" class="form-label">Название эксперимента</label>
+                            <input type="text" class="form-control" id="expName" placeholder="Experiment_N">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="expModels" class="form-label">Модель</label>
+                            <input type="text" class="form-control" id="expModels" placeholder="Например: ResNet_18">
+                        </div>
+
+                        <footer class="model-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Отмена
+                            </button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                Создать
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
