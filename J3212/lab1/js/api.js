@@ -35,6 +35,9 @@
     getProjects: function () {
       return request('/projects');
     },
+    getProject: function (id) {
+      return request('/projects/' + id);
+    },
     addProject: function (name, description) {
       return request('/projects', { method: 'POST', body: { name: name, description: description || '0 задач · 0 участников' } });
     },
