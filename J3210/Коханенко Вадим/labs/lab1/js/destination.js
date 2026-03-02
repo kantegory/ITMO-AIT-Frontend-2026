@@ -54,13 +54,13 @@ function renderDestinationPage(dest) {
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
-                            <h1 class="destination-title">${dest.name}</h1>
+                            <h1 class="destination-title display-7 display-md-5 display-lg-4">${dest.name}</h1>
                             <div class="d-flex align-items-center mb-3">
                                 <span class="rating-large me-2">${stars}</span>
                                 <span class="fs-4 fw-bold me-2">${dest.rating}</spanv>
                                 <span class="text-white-50">(${dest.reviews} отзывов)</span>
                             </div>
-                            <div class="d-flex gap-3">
+                            <div class="d-flex flex-wrap gap-3">
                                 <span class="badge bg-white text-dark p-2">
                                     <i class="bi bi-calendar3"></i> ${dest.duration}
                                 </span>
