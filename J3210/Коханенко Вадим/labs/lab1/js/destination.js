@@ -99,7 +99,7 @@ function renderDestinationPage(dest) {
 
                     <div class="card info-card mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <span><i class="bi bi-camera"></i> Достопримечательности</span>
+                            <span><i class="bi bi-camera"></i> Места</span>
                             <span class="badge bg-success">${dest.attractions.length}+ мест</span>
                         </div>
                         <div class="card-body p-0">
