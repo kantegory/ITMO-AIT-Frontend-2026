@@ -99,7 +99,7 @@ function createRouteCard(route, index) {
         <div class="col-lg-6">
             <div class="card route-card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between align-items-center">
                         <h5 class="card-title">${route.title}</h5>
                         <span class="badge bg-success">${route.duration}</span>
                     </div>
@@ -157,11 +157,37 @@ function createNoteCard(note, index) {
                 <div class="card-body">
                     <h5 class="card-title">${note.title}</h5>
                     ${note.date ? `<h6 class="card-subtitle mb-2 text-muted"><i class="bi bi-calendar3"></i> ${note.date}</h6>` : ''}
-                    <p class="card-text">${note.content}</p>
+                    <p class="card-text">
+                        <span class="note-preview">${note.content.substring(0, 100)}${note.content.length > 100 ? '…' : ''}</span>
+                        ${note.content.length > 100 ? 
+                            `<a href="#" class="text-success text-decoration-none" data-bs-toggle="modal" data-bs-target="#noteModal${index}">
+                                читать далее</a>` : ''}
+                    </p>
                     ${tags ? `<div class="mt-3">${tags}</div>` : ''}
                 </div>
             </div>
         </div>
+        
+        <!-- Модалка: текст длинной заметки -->
+        ${note.content.length > 100 ? `
+        <div class="modal fade" id="noteModal${index}" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title">
+                            <i class="bi bi-journal-text"></i> ${note.title}
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        ${note.date ? `<p class="text-muted"><i class="bi bi-calendar3"></i> ${note.date}</p>` : ''}
+                        <p>${note.content}</p>
+                        ${tags ? `<div class="mt-3">${tags}</div>` : ''}
+                    </div>
+                </div>
+            </div>
+        </div>
+        ` : ''}
     `;
 }
 
