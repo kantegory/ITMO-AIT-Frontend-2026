@@ -118,7 +118,7 @@
                 return;
             }
 
-            let users = JSON.parse(localStorage.getItem('users') || '[]');
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
             
             if (users.some(user => user.email === email)) {
                 alert(`Пользователь с таким email уже зарегистрирован.`);

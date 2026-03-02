@@ -199,6 +199,61 @@
         </div>
     </div>
 
+    <!-- Модалка: редактирование заметки -->
+    <div class="modal fade" id="editNoteModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title"><i class="bi bi-pencil-square"></i> Редактировать заметку</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editNoteForm">
+                        <input type="hidden" id="editNoteIndex">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="editNoteTitle" class="form-label">Название/Место</label>
+                                <input type="text" class="form-control" id="editNoteTitle" placeholder="Например: Париж" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="editNoteDate" class="form-label">Дата поездки</label>
+                                <input type="text" class="form-control" id="editNoteDate" placeholder="Например: Март 2026">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="editNoteType" class="form-label">Тип путешествия</label>
+                                <select class="form-select" id="editNoteType">
+                                    <option value="Город">Город</option>
+                                    <option value="Природа">Природа</option>
+                                    <option value="Смешанный">Смешанный</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="editNoteCountry" class="form-label">Страна</label>
+                                <input type="text" class="form-control" id="editNoteCountry" placeholder="Например: Франция">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editNoteContent" class="form-label">Заметка</label>
+                            <textarea class="form-control" id="editNoteContent" rows="4" placeholder="Ваши впечатления, советы, интересные места" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editNoteTags" class="form-label">Теги</label>
+                            <input type="text" class="form-control" id="editNoteTags" placeholder="#париж #франция #европа">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-success" onclick="updateNote()">
+                        <i class="bi bi-check-lg"></i> Сохранить изменения
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="bg-light py-4 mt-5">
         <div class="container text-center">
             <p class="mb-0">&copy; 2026 FlyingOwl.</p>

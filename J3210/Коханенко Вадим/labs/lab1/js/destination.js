@@ -184,7 +184,7 @@ function saveRouteFromDestination() {
     const description = document.getElementById('routeDescription').value;
 
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    let userRoutes = JSON.parse(localStorage.getItem(`travelRoutes_${currentUser.email}`) || '[]');
+    const userRoutes = JSON.parse(localStorage.getItem(`travelRoutes_${currentUser.email}`) || '[]');
     const route = userRoutes.find(r => r.title === title);
 
     if (route) {

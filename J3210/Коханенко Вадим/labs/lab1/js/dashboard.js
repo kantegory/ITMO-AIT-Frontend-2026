@@ -148,8 +148,11 @@ function createNoteCard(note, index) {
                     <span class="badge-type">
                         <i class="bi ${getTypeIcon(note.type)}"></i> ${note.type}
                     </span>
-                    <div>
-                        <button class="btn btn-sm btn-outline-danger" onclick="deleteNote(${index})">
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-primary" onclick="editNote(${index})" data-bs-toggle="modal" data-bs-target="#editNoteModal">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-outline-danger" onclick="deleteNote(${index})">
                             <i class="bi bi-trash"></i>
                         </button>
                     </div>
@@ -200,7 +203,7 @@ function deleteRoute(index) {
     }
 }
 
-// Операции с заметками
+// Добавить заметку
 function addNote() {
     const title = document.getElementById('noteTitle').value;
     const date = document.getElementById('noteDate').value;
@@ -214,15 +217,7 @@ function addNote() {
         return;
     }
     
-    const newNote = {
-        title,
-        date,
-        type,
-        country,
-        content,
-        tags,
-    };
-    
+    const newNote = {title, date, type, country, content, tags};
     userNotes.unshift(newNote);
     saveUserData();
     updateUI();
@@ -232,6 +227,7 @@ function addNote() {
     modal.hide();
 }
 
+// Удалить заметку
 function deleteNote(index) {
     if (confirm('Удалить эту заметку?')) {
         userNotes.splice(index, 1);
@@ -240,11 +236,55 @@ function deleteNote(index) {
     }
 }
 
+// Отредачить заметку
+function editNote(index) {
+    window.editingNoteIndex = index;
+    const note = userNotes[index];
+    
+    document.getElementById('editNoteTitle').value = note.title || '';
+    document.getElementById('editNoteDate').value = note.date || '';
+    document.getElementById('editNoteType').value = note.type || 'Смешанный';
+    document.getElementById('editNoteCountry').value = note.country || '';
+    document.getElementById('editNoteContent').value = note.content || '';
+    document.getElementById('editNoteTags').value = note.tags || '';
+}
+
+// Обновление заметки
+function updateNote() {
+    const title = document.getElementById('editNoteTitle').value;
+    const date = document.getElementById('editNoteDate').value;
+    const type = document.getElementById('editNoteType').value;
+    const country = document.getElementById('editNoteCountry').value;
+    const content = document.getElementById('editNoteContent').value;
+    const tags = document.getElementById('editNoteTags').value;
+    
+    if (!title || !content || !country) {
+        alert('Заполните обязательные поля: заголовок, страна, текст заметки');
+        return;
+    }
+    
+    userNotes[window.editingNoteIndex] = {
+        ...userNotes[window.editingNoteIndex],
+        title, date, type, country, content, tags
+    };
+    
+    saveUserData();
+    updateUI();
+    
+    const modal = bootstrap.Modal.getInstance(document.getElementById('editNoteModal'));
+    modal.hide();
+    delete window.editingNoteIndex;
+}
+
 // Инициализация при загрузке
 document.addEventListener('DOMContentLoaded', function() {
     loadUserData();
     
     document.getElementById('addNoteModal').addEventListener('show.bs.modal', function() {
         document.getElementById('addNoteForm').reset();
+    });
+
+    document.getElementById('editNoteModal').addEventListener('hidden.bs.modal', function() {
+        document.getElementById('editNoteForm').reset();
     });
 });
