@@ -73,7 +73,7 @@ function createDestinationCard(dest) {
                             ${stars} <span class="text-muted">${dest.rating}</span>
                         </span>
                     </div>
-                    <p class="card-text text-muted small mb-2">${dest.description}</p>
+                    <p class="card-text text-muted small mb-2">${dest.description.substring(0, 150)}${dest.description.length > 150 ? '…' : ''}</p>
                     <div class="mb-2 small">
                         ${tags}
                     </div>

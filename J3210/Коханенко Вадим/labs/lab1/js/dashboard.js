@@ -106,8 +106,11 @@ function createRouteCard(route, index) {
                     <div class="route-duration mb-2">
                         <i class="bi bi-geo-alt"></i> ${route.points}
                     </div>
-                    <p class="card-text">${route.description}</p>
-                    
+                    <p class="card-text">
+                        ${route.description.substring(0, 250)}${route.description.length > 250 ? '…' : ''}
+                        <a href="destination.html?id=${route.id}" class="text-success text-decoration-none">
+                                ${route.description.length > 250 ? '' : '…'}читать далее</a>
+                    </p>
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-between align-items-center">
@@ -161,7 +164,7 @@ function createNoteCard(note, index) {
                     <h5 class="card-title">${note.title}</h5>
                     ${note.date ? `<h6 class="card-subtitle mb-2 text-muted"><i class="bi bi-calendar3"></i> ${note.date}</h6>` : ''}
                     <p class="card-text">
-                        <span class="note-preview">${note.content.substring(0, 100)}${note.content.length > 100 ? '…' : ''}</span>
+                        ${note.content.substring(0, 100)}${note.content.length > 100 ? '…' : ''}
                         ${note.content.length > 100 ? 
                             `<a href="#" class="text-success text-decoration-none" data-bs-toggle="modal" data-bs-target="#noteModal${index}">
                                 читать далее</a>` : ''}

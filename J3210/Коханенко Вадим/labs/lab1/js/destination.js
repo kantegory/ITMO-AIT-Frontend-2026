@@ -176,6 +176,7 @@ function openAddRouteModal(destinationName, attractions, description, duration, 
 
 // Сохранение маршрута в ЛК
 function saveRouteFromDestination() {
+    const id = getDestinationId();
     const title = document.getElementById('routeTitle').value;
     const points = document.getElementById('routePoints').value;
     const type = document.getElementById('routeType').value;
@@ -185,21 +186,13 @@ function saveRouteFromDestination() {
 
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const userRoutes = JSON.parse(localStorage.getItem(`travelRoutes_${currentUser.email}`) || '[]');
-    const route = userRoutes.find(r => r.title === title);
+    const route = userRoutes.find(r => r.id === id);
 
     if (route) {
         alert(`Этот маршрут уже есть в вашем личном кабинете!`);
         return;
     } else {
-        const newRoute = {
-            title,
-            points,
-            duration,
-            budget,
-            type,
-            description
-        };
-
+        const newRoute = {id, title, points, duration, budget, type, description};
         userRoutes.unshift(newRoute);
         localStorage.setItem(`travelRoutes_${currentUser.email}`, JSON.stringify(userRoutes));
         alert(`Маршрут добавлен в личный кабинет!`);
