@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Веб-приложение — ProjectHub</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">ProjectHub</a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="dashboard.html" data-i18n="nav_dashboard">Личный кабинет</a></li>
+          <li class="nav-item"><a class="nav-link" href="search.html" data-i18n="nav_search">Поиск</a></li>
+          <li class="nav-item"><a class="nav-link active" href="project.html" data-i18n="nav_project">Проект</a></li>
+          <li class="nav-item ms-2"><span class="navbar-text small"><a href="#" class="text-white text-decoration-none" data-i18n-set="ru">RU</a><span class="mx-1">|</span><a href="#" class="text-white text-decoration-none" data-i18n-set="en">EN</a></span></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+      <h1 class="h3 mb-0" id="project-title">Веб-приложение</h1>
+      <div class="d-flex gap-2">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddTask" data-i18n="project_add_task">Добавить задачу</button>
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalRoles" data-i18n="project_roles">Роли и права в команде</button>
+      </div>
+    </div>
+
+    <ul class="nav nav-tabs mb-4" id="projectTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="board-tab" data-bs-toggle="tab" data-bs-target="#board" type="button" role="tab" data-i18n="project_board">Доска задач</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="deadlines-tab" data-bs-toggle="tab" data-bs-target="#deadlines" type="button" role="tab" data-i18n="project_deadlines">Сроки</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="files-tab" data-bs-toggle="tab" data-bs-target="#files" type="button" role="tab" data-i18n="project_files">Файлы</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="discussions-tab" data-bs-toggle="tab" data-bs-target="#discussions" type="button" role="tab" data-i18n="project_discussions">Обсуждения</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="projectTabsContent">
+      <div class="tab-pane fade show active" id="board" role="tabpanel">
+        <div class="row g-3">
+          <div class="col-md-3">
+            <div class="kanban-column p-3 rounded">
+              <h6 class="text-muted mb-3" data-i18n="status_new">Новая</h6>
+              <div class="kanban-column-cards" data-column="new"></div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="kanban-column p-3 rounded">
+              <h6 class="text-muted mb-3" data-i18n="status_progress">В работе</h6>
+              <div class="kanban-column-cards" data-column="progress"></div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="kanban-column p-3 rounded">
+              <h6 class="text-muted mb-3" data-i18n="status_review">На проверке</h6>
+              <div class="kanban-column-cards" data-column="review"></div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="kanban-column p-3 rounded">
+              <h6 class="text-muted mb-3" data-i18n="status_done">Выполнена</h6>
+              <div class="kanban-column-cards" data-column="done"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="deadlines" role="tabpanel">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th data-i18n="project_task">Задача</th>
+                <th data-i18n="project_assignee">Исполнитель</th>
+                <th data-i18n="project_deadline_date">Срок</th>
+                <th data-i18n="project_status">Статус</th>
+              </tr>
+            </thead>
+            <tbody id="deadlines-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="files" role="tabpanel">
+        <div class="list-group">
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <span>Макет_главная.fig</span>
+            <span class="badge bg-secondary">2.1 MB</span>
+          </div>
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <span>Требования.pdf</span>
+            <span class="badge bg-secondary">450 KB</span>
+          </div>
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <span>API_spec.yaml</span>
+            <span class="badge bg-secondary">15 KB</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="discussions" role="tabpanel">
+        <div id="discussions-list"></div>
+        <div class="mb-3">
+          <textarea id="discussion-message" class="form-control" rows="2" data-i18n-placeholder="project_disc_ph" placeholder="Написать сообщение..."></textarea>
+          <button type="button" id="discussion-send" class="btn btn-primary mt-2" data-i18n="project_send">Отправить</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalAddTask" tabindex="-1" aria-labelledby="modalAddTaskLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalAddTaskLabel" data-i18n="project_new_task">Новая задача</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <form id="form-add-task">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="task-title" class="form-label" data-i18n="project_task_name">Название</label>
+                <input type="text" class="form-control" id="task-title" required data-i18n-placeholder="project_task_title_ph">
+              </div>
+              <div class="mb-3">
+                <label for="task-status" class="form-label" data-i18n="search_status">Статус</label>
+                <select class="form-select" id="task-status">
+                  <option value="new" data-i18n="status_new">Новая</option>
+                  <option value="progress" data-i18n="status_progress">В работе</option>
+                  <option value="review" data-i18n="status_review">На проверке</option>
+                  <option value="done" data-i18n="status_done">Выполнена</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="task-priority" class="form-label" data-i18n="search_priority">Приоритет</label>
+                <select class="form-select" id="task-priority">
+                  <option value="low" data-i18n="priority_low">Низкий</option>
+                  <option value="medium" data-i18n="priority_medium">Средний</option>
+                  <option value="high" data-i18n="priority_high">Высокий</option>
+                  <option value="critical" data-i18n="priority_critical">Критический</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="task-assignee" class="form-label" data-i18n="project_assignee">Исполнитель</label>
+                <select class="form-select" id="task-assignee"></select>
+              </div>
+              <div class="mb-3">
+                <label for="task-deadline" class="form-label" data-i18n="project_deadline">Срок</label>
+                <input type="date" class="form-control" id="task-deadline">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="dash_cancel">Отмена</button>
+              <button type="submit" class="btn btn-primary" data-i18n="dash_add">Добавить</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalRoles" tabindex="-1" aria-labelledby="modalRolesLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalRolesLabel" data-i18n="project_roles">Роли и права в команде</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted small mb-3">Участники проекта и их роли:</p>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item role-admin px-0">
+                <strong>Иван Петров</strong> — Администратор
+                <span class="d-block small text-muted">Управление проектом, участниками и настройками</span>
+              </li>
+              <li class="list-group-item role-member px-0">
+                <strong>Мария Сидорова</strong> — Участник
+                <span class="d-block small text-muted">Создание и редактирование задач, доступ к файлам и обсуждениям</span>
+              </li>
+              <li class="list-group-item role-member px-0">
+                <strong>Алексей Козлов</strong> — Участник
+                <span class="d-block small text-muted">Создание и редактирование задач, доступ к файлам и обсуждениям</span>
+              </li>
+              <li class="list-group-item role-viewer px-0">
+                <strong>Ольга Новикова</strong> — Наблюдатель
+                <span class="d-block small text-muted">Только просмотр доски, сроков и обсуждений</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-light py-3 mt-auto">
+    <div class="container text-center text-muted small">&copy; 2026 ProjectHub</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
