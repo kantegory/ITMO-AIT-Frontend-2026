@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Подвал обучения — вход и регистрация</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-main sticky-top">
+  <div class="container py-2">
+    <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" href="index.html">
+      <span class="navbar-brand-mark"></span>
+      <span>Подвал обучения</span>
+    </a>
+    <button class="navbar-toggler border-0 shadow-none" type="button"
+            data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Переключить навигацию">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="mainNav">
+      <ul class="navbar-nav me-3">
+        <li class="nav-item"><a class="nav-link" href="index.html#search">Каталог курсов</a></li>
+        <li class="nav-item"><a class="nav-link" href="student.html">Кабинет воина (студента)</a></li>
+        <li class="nav-item"><a class="nav-link" href="teacher.html">Кабинет преподавателя</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<main class="container py-4 py-md-5">
+  <section class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="glass-card p-3 p-md-4">
+        <p class="section-label mb-1 text-center">Авторизация</p>
+        <h1 class="section-title mb-3 text-center">Вход и регистрация</h1>
+        <ul class="nav nav-pills justify-content-center mb-3 small" id="authTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active pill" id="login-tab"
+                    data-bs-toggle="pill" data-bs-target="#login-tab-pane"
+                    type="button" role="tab">
+              Вход
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link pill" id="register-tab"
+                    data-bs-toggle="pill" data-bs-target="#register-tab-pane"
+                    type="button" role="tab">
+              Регистрация
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content small">
+          <div class="tab-pane fade show active" id="login-tab-pane" role="tabpanel">
+            <form class="row g-3" id="login">
+              <div class="col-12">
+                <label class="form-label small text-muted">Email</label>
+                <input type="email" class="form-control form-control-sm" placeholder="you@example.com">
+              </div>
+              <div class="col-12">
+                <label class="form-label small text-muted">Пароль</label>
+                <input type="password" class="form-control form-control-sm">
+              </div>
+              <div class="col-12 d-flex justify-content-between align-items-center">
+                <button type="button" class="btn btn-sm btn-gradient pill">
+                  Войти
+                </button>
+                <a href="#" class="small text-muted text-decoration-none">
+                  Забыли пароль?
+                </a>
+              </div>
+            </form>
+          </div>
+          <div class="tab-pane fade" id="register-tab-pane" role="tabpanel">
+            <form class="row g-3" id="register">
+              <div class="col-md-6">
+                <label class="form-label small text-muted">Имя</label>
+                <input type="text" class="form-control form-control-sm">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small text-muted">Фамилия</label>
+                <input type="text" class="form-control form-control-sm">
+              </div>
+              <div class="col-12">
+                <label class="form-label small text-muted">Email</label>
+                <input type="email" class="form-control form-control-sm">
+              </div>
+              <div class="col-12">
+                <label class="form-label small text-muted">Пароль</label>
+                <input type="password" class="form-control form-control-sm">
+              </div>
+              <div class="col-12">
+                <button type="button" class="btn btn-sm btn-gradient pill w-100">
+                  Создать аккаунт
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
