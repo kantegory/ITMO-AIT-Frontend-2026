@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог курсов - EduPlatform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <a class="navbar-brand" href="search.html">
+                <i class="bi bi-mortarboard-fill"></i> EduPlatform
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="search.html">Каталог</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="theme-toggle" onclick="toggleTheme()">
+                        <i class="bi bi-moon-fill" id="themeIcon"></i>
+                    </span>
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                            <img src="images/avatar.jpg" alt="Avatar" class="rounded-circle" width="32" height="32">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="profile.html">Мой профиль</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">Выйти</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-4">
+        <div class="row mb-4">
+            <div class="col">
+                <h2>Каталог курсов</h2>
+                <p class="text-muted">Найдите курс для себя</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-3 mb-4">
+                <div class="card p-3">
+                    <h5 class="mb-3">Фильтры</h5>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Категория</label>
+                        <div class="form-check">
+                            <input class="form-check-input filter-category" type="checkbox" value="programming" id="cat1" checked>
+                            <label class="form-check-label" for="cat1">Программирование</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input filter-category" type="checkbox" value="design" id="cat2" checked>
+                            <label class="form-check-label" for="cat2">Дизайн</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input filter-category" type="checkbox" value="data" id="cat3" checked>
+                            <label class="form-check-label" for="cat3">Data Science</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Уровень</label>
+                        <div class="form-check">
+                            <input class="form-check-input filter-level" type="checkbox" value="beginner" id="lvl1" checked>
+                            <label class="form-check-label" for="lvl1">Начинающий</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input filter-level" type="checkbox" value="intermediate" id="lvl2" checked>
+                            <label class="form-check-label" for="lvl2">Средний</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input filter-level" type="checkbox" value="advanced" id="lvl3" checked>
+                            <label class="form-check-label" for="lvl3">Продвинутый</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Цена</label>
+                        <div class="form-check">
+                            <input class="form-check-input filter-price" type="checkbox" value="free" id="price1" checked>
+                            <label class="form-check-label" for="price1">Бесплатные</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input filter-price" type="checkbox" value="paid" id="price2" checked>
+                            <label class="form-check-label" for="price2">Платные</label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary w-100" onclick="applyFilters()">Применить</button>
+                </div>
+            </div>
+            
+            <div class="col-lg-9">
+                <div class="row" id="coursesContainer">
+                    <div class="col-md-6 col-lg-4 mb-4 course-card-wrapper" data-category="programming" data-level="beginner" data-price="paid">
+                        <div class="card course-card h-100">
+                            <img src="images/course-1.jpg" class="card-img-top" alt="Course">
+                            <span class="badge bg-primary position-absolute" style="top: 10px; left: 10px;">Популярный</span>
+                            <div class="card-body">
+                                <h5 class="card-title">Python для начинающих</h5>
+                                <p class="card-text text-muted small">Изучите основы Python с нуля</p>
+                                <div class="rating mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="text-muted small ms-1">(128)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="course-price">2 990 ₽</span>
+                                    <a href="course.html" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4 course-card-wrapper" data-category="design" data-level="intermediate" data-price="paid">
+                        <div class="card course-card h-100">
+                            <img src="images/course-2.jpg" class="card-img-top" alt="Course">
+                            <div class="card-body">
+                                <h5 class="card-title">UI/UX Дизайн</h5>
+                                <p class="card-text text-muted small">Создавайте красивые интерфейсы</p>
+                                <div class="rating mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                    <span class="text-muted small ms-1">(85)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="course-price">4 500 ₽</span>
+                                    <a href="course.html" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4 course-card-wrapper" data-category="data" data-level="advanced" data-price="paid">
+                        <div class="card course-card h-100">
+                            <img src="images/course-3.jpg" class="card-img-top" alt="Course">
+                            <div class="card-body">
+                                <h5 class="card-title">Machine Learning</h5>
+                                <p class="card-text text-muted small">Глубокое погружение в ML</p>
+                                <div class="rating mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <span class="text-muted small ms-1">(64)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="course-price">7 990 ₽</span>
+                                    <a href="course.html" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4 course-card-wrapper" data-category="programming" data-level="beginner" data-price="free">
+                        <div class="card course-card h-100">
+                            <img src="images/course-4.jpg" class="card-img-top" alt="Course">
+                            <span class="badge bg-success position-absolute" style="top: 10px; left: 10px;">Бесплатно</span>
+                            <div class="card-body">
+                                <h5 class="card-title">HTML & CSS основы</h5>
+                                <p class="card-text text-muted small">Начните путь в веб-разработку</p>
+                                <div class="rating mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                    <span class="text-muted small ms-1">(256)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="course-price text-success">Бесплатно</span>
+                                    <a href="course.html" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4 course-card-wrapper" data-category="programming" data-level="intermediate" data-price="paid">
+                        <div class="card course-card h-100">
+                            <img src="images/course-5.jpg" class="card-img-top" alt="Course">
+                            <div class="card-body">
+                                <h5 class="card-title">JavaScript Pro</h5>
+                                <p class="card-text text-muted small">Продвинутый JavaScript</p>
+                                <div class="rating mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="text-muted small ms-1">(92)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="course-price">3 990 ₽</span>
+                                    <a href="course.html" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4 course-card-wrapper" data-category="data" data-level="beginner" data-price="free">
+                        <div class="card course-card h-100">
+                            <img src="images/course-6.jpg" class="card-img-top" alt="Course">
+                            <span class="badge bg-success position-absolute" style="top: 10px; left: 10px;">Бесплатно</span>
+                            <div class="card-body">
+                                <h5 class="card-title">SQL для аналитиков</h5>
+                                <p class="card-text text-muted small">Работа с базами данных</p>
+                                <div class="rating mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                    <span class="text-muted small ms-1">(178)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="course-price text-success">Бесплатно</span>
+                                    <a href="course.html" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Выход</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Вы уверены, что хотите выйти из аккаунта?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <a href="login.html" class="btn btn-primary">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
