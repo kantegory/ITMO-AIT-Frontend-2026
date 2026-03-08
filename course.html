@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python для начинающих - EduPlatform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <a class="navbar-brand" href="search.html">
+                <i class="bi bi-mortarboard-fill"></i> EduPlatform
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="search.html">Каталог</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="theme-toggle" onclick="toggleTheme()">
+                        <i class="bi bi-moon-fill" id="themeIcon"></i>
+                    </span>
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                            <img src="images/avatar.jpg" alt="Avatar" class="rounded-circle" width="32" height="32">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="profile.html">Мой профиль</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">Выйти</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-4">
+        <div class="row">
+            <div class="col-lg-8">
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="search.html">Каталог</a></li>
+                        <li class="breadcrumb-item active">Python для начинающих</li>
+                    </ol>
+                </nav>
+                
+                <h1 class="mb-3">Python для начинающих</h1>
+                
+                <div class="d-flex align-items-center gap-3 mb-4">
+                    <div class="rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                        <span class="text-muted ms-1">4.5 (128 отзывов)</span>
+                    </div>
+                    <span class="text-muted">|</span>
+                    <span class="text-muted"><i class="bi bi-people"></i> 1,234 студента</span>
+                </div>
+                
+                <div class="video-container mb-4">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Course Video" allowfullscreen></iframe>
+                </div>
+                
+                <ul class="nav nav-tabs mb-4" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#overview">Обзор</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#content">Содержание</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#discussion">Обсуждение</button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="overview">
+                        <h4>О курсе</h4>
+                        <p>Этот курс предназначен для тех, кто хочет изучить Python с нуля. Вы научитесь основам программирования, работе с данными и созданию простых приложений.</p>
+                        
+                        <h5 class="mt-4">Чему вы научитесь:</h5>
+                        <ul>
+                            <li>Основы синтаксиса Python</li>
+                            <li>Работа с переменными и типами данных</li>
+                            <li>Условия и циклы</li>
+                            <li>Функции и модули</li>
+                            <li>Работа с файлами</li>
+                        </ul>
+                        
+                        <h5 class="mt-4">Преподаватель</h5>
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="images/teacher.jpg" alt="Teacher" class="rounded-circle" width="60" height="60">
+                            <div>
+                                <h6 class="mb-0">Алексей Петров</h6>
+                                <small class="text-muted">Senior Python Developer</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="content">
+                        <div class="accordion" id="courseContent">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#module1">
+                                        Модуль 1: Введение в Python
+                                    </button>
+                                </h2>
+                                <div id="module1" class="accordion-collapse collapse show" data-bs-parent="#courseContent">
+                                    <div class="accordion-body">
+                                        <ul class="list-unstyled">
+                                            <li class="py-2 border-bottom"><i class="bi bi-play-circle me-2"></i> Урок 1: Установка Python</li>
+                                            <li class="py-2 border-bottom"><i class="bi bi-play-circle me-2"></i> Урок 2: Первая программа</li>
+                                            <li class="py-2"><i class="bi bi-file-text me-2"></i> Задание: Hello World</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#module2">
+                                        Модуль 2: Переменные и типы данных
+                                    </button>
+                                </h2>
+                                <div id="module2" class="accordion-collapse collapse" data-bs-parent="#courseContent">
+                                    <div class="accordion-body">
+                                        <ul class="list-unstyled">
+                                            <li class="py-2 border-bottom"><i class="bi bi-play-circle me-2"></i> Урок 3: Числа и строки</li>
+                                            <li class="py-2 border-bottom"><i class="bi bi-play-circle me-2"></i> Урок 4: Списки и словари</li>
+                                            <li class="py-2"><i class="bi bi-file-text me-2"></i> Задание: Работа с данными</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="discussion">
+                        <div class="mb-4">
+                            <textarea class="form-control mb-2" rows="3" placeholder="Напишите комментарий..."></textarea>
+                            <button class="btn btn-primary btn-sm">Отправить</button>
+                        </div>
+                        
+                        <div class="card p-3 mb-3">
+                            <div class="d-flex gap-3">
+                                <img src="images/avatar.jpg" alt="User" class="rounded-circle" width="40" height="40">
+                                <div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <strong>Мария С.</strong>
+                                        <small class="text-muted">2 дня назад</small>
+                                    </div>
+                                    <p class="mb-0 mt-1">Отличный курс! Всё понятно объясняется.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card p-3">
+                            <div class="d-flex gap-3">
+                                <img src="images/avatar.jpg" alt="User" class="rounded-circle" width="40" height="40">
+                                <div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <strong>Дмитрий К.</strong>
+                                        <small class="text-muted">5 дней назад</small>
+                                    </div>
+                                    <p class="mb-0 mt-1">Подскажите, как установить Python на Mac?</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card p-4 sticky-top" style="top: 1rem;">
+                    <img src="images/course-1.jpg" class="rounded mb-3" alt="Course">
+                    <h3 class="course-price mb-3">2 990 ₽</h3>
+                    <button class="btn btn-primary w-100 mb-2">Купить курс</button>
+                    <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#previewModal">Предпросмотр</button>
+                    
+                    <hr>
+                    
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="bi bi-clock me-2"></i> 12 часов видео</li>
+                        <li class="mb-2"><i class="bi bi-file-text me-2"></i> 25 уроков</li>
+                        <li class="mb-2"><i class="bi bi-infinity me-2"></i> Бессрочный доступ</li>
+                        <li class="mb-2"><i class="bi bi-phone me-2"></i> Доступ с мобильных</li>
+                        <li><i class="bi bi-award me-2"></i> Сертификат</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="previewModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Предпросмотр курса</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Preview" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Выход</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Вы уверены, что хотите выйти из аккаунта?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <a href="login.html" class="btn btn-primary">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
