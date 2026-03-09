@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FinFlow — управление личными финансами</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body data-page="home">
+    <header class="site-header">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand brand-mark" href="./index.html">FinFlow</a>
+          <button
+            class="navbar-toggler border-0 shadow-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNav"
+            aria-controls="mainNav"
+            aria-expanded="false"
+            aria-label="Переключить навигацию"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav mx-auto gap-lg-2">
+              <li class="nav-item"><a class="nav-link active" href="./index.html">Главная</a></li>
+              <li class="nav-item"><a class="nav-link" href="./login.html">Вход</a></li>
+              <li class="nav-item"><a class="nav-link" href="./register.html">Регистрация</a></li>
+              <li class="nav-item"><a class="nav-link" href="./dashboard.html">Кабинет</a></li>
+              <li class="nav-item"><a class="nav-link" href="./reports.html">Отчёты</a></li>
+              <li class="nav-item"><a class="nav-link" href="./integrations.html">Интеграции</a></li>
+            </ul>
+            <div class="d-flex gap-2">
+              <a class="btn btn-outline-dark btn-sm px-3" href="./login.html">Войти</a>
+              <a class="btn btn-accent btn-sm px-3" href="./register.html">Начать</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-section">
+        <div class="container">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+              <span class="section-label">Управление финансами</span>
+              <h1 class="display-4 hero-title mt-3">
+                Контролируйте счета, бюджеты и траты в одном интерфейсе.
+              </h1>
+              <p class="hero-copy">
+                FinFlow помогает видеть движение денег в реальном времени, быстро
+                находить нужные транзакции и принимать решения на основе отчётов и
+                прогнозов.
+              </p>
+              <div class="d-flex flex-wrap gap-3 mt-4">
+                <a class="btn btn-accent btn-lg" href="./dashboard.html">Открыть демо-кабинет</a>
+                <button
+                  class="btn btn-outline-dark btn-lg"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#quickStartModal"
+                >
+                  Быстрый вход
+                </button>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <div class="content-card">
+                <h2 class="h4 mb-3">Что можно делать</h2>
+                <ul class="list-group list-group-flush simple-list">
+                  <li class="list-group-item">Смотреть счета и общий баланс</li>
+                  <li class="list-group-item">Фильтровать транзакции по категории, сумме и дате</li>
+                  <li class="list-group-item">Открывать отчёты по расходам</li>
+                  <li class="list-group-item">Подключать банковские аккаунты</li>
+                </ul>
+                <div class="mt-4">
+                  <a class="btn btn-outline-primary w-100" href="./reports.html">Перейти к отчётам</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-5">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="section-label">Разделы сервиса</span>
+              <h2 class="section-title">Основные страницы</h2>
+            </div>
+          </div>
+          <div class="row g-4 mt-1">
+            <div class="col-md-6 col-xl-3">
+              <article class="feature-card">
+                <i class="bi bi-shield-lock feature-card__icon"></i>
+                <h3>Вход и регистрация</h3>
+                <p>Отдельные формы с быстрыми сценариями входа и создания аккаунта.</p>
+              </article>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <article class="feature-card">
+                <i class="bi bi-wallet2 feature-card__icon"></i>
+                <h3>Личный кабинет</h3>
+                <p>Счета, бюджеты, быстрые действия и список транзакций на одной странице.</p>
+              </article>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <article class="feature-card">
+                <i class="bi bi-funnel feature-card__icon"></i>
+                <h3>Фильтры</h3>
+                <p>Поиск транзакций по категории, сумме и дате с мгновенным откликом.</p>
+              </article>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <article class="feature-card">
+                <i class="bi bi-bar-chart feature-card__icon"></i>
+                <h3>Отчёты</h3>
+                <p>Графики расходов, разбивка по категориям и краткий финансовый прогноз.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container d-flex flex-column flex-md-row justify-content-between gap-3">
+        <p class="mb-0">FinFlow</p>
+        <div class="d-flex gap-3">
+          <a href="./dashboard.html">Кабинет</a>
+          <a href="./reports.html">Отчёты</a>
+          <a href="./integrations.html">Интеграции</a>
+        </div>
+      </div>
+    </footer>
+
+    <div class="modal fade" id="quickStartModal" tabindex="-1" aria-labelledby="quickStartLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-modal">
+          <div class="modal-header border-0">
+            <div>
+              <span class="section-label">Демо-доступ</span>
+              <h2 class="h4 mb-0" id="quickStartLabel">Быстрый вход в систему</h2>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <div class="modal-body pt-0">
+            <p class="text-secondary">
+              Для демонстрации используйте готовый профиль и перейдите в личный кабинет.
+            </p>
+            <div class="quick-access-card">
+              <div>
+                <small class="text-uppercase text-secondary">Логин</small>
+                <div class="fw-semibold">demo@finflow.ru</div>
+              </div>
+              <div>
+                <small class="text-uppercase text-secondary">Пароль</small>
+                <div class="fw-semibold">FinFlow2026</div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <a class="btn btn-accent w-100" href="./dashboard.html">Открыть кабинет</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./assets/script.js"></script>
+  </body>
+</html>
