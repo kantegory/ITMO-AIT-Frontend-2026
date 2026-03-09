@@ -47,3 +47,136 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+function initPasswordToggle() {
+  const toggleButtons = document.querySelectorAll("[data-password-toggle]");
+
+  toggleButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const input = button.parentElement?.querySelector("[data-password-input]");
+
+      if (!input) {
+        return;
+      }
+
+      const isPassword = input.type === "password";
+      input.type = isPassword ? "text" : "password";
+      button.innerHTML = isPassword ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
+    });
+  });
+}
+
+function initPasswordStrength() {
+  const input = document.querySelector("[data-strength-input]");
+  const bar = document.querySelector("[data-strength-bar]");
+  const text = document.querySelector("[data-strength-text]");
+
+  if (!input || !bar || !text) {
+    return;
+  }
+
+  input.addEventListener("input", () => {
+    const value = input.value.trim();
+    let width = 12;
+    let label = "Укажите пароль";
+    let color = "#ef7e56";
+
+    if (value.length >= 6) {
+      width = 45;
+      label = "Средний пароль";
+      color = "#d29a2c";
+    }
+
+    if (value.length >= 10 && /\d/.test(value) && /[A-ZА-Я]/.test(value)) {
+      width = 100;
+      label = "Надёжный пароль";
+      color = "#0f766e";
+    }
+
+    bar.style.width = `${width}%`;
+    bar.style.backgroundColor = color;
+    text.textContent = label;
+  });
+}
+
+function initTransactionFilters() {
+  const list = document.querySelector("[data-transaction-list]");
+
+  if (!list) {
+    return;
+  }
+
+  const items = Array.from(list.querySelectorAll(".transaction-item"));
+  const searchInput = document.querySelector("[data-filter-search]");
+  const categoryInput = document.querySelector("[data-filter-category]");
+  const amountInput = document.querySelector("[data-filter-amount]");
+  const dateFromInput = document.querySelector("[data-filter-date-from]");
+  const dateToInput = document.querySelector("[data-filter-date-to]");
+  const countElement = document.querySelector("[data-transaction-count]");
+  const emptyState = document.querySelector("[data-empty-state]");
+  const resetButton = document.querySelector("[data-filter-reset]");
+
+  const applyFilters = () => {
+    const searchValue = (searchInput?.value || "").trim().toLowerCase();
+    const category = categoryInput?.value || "all";
+    const amount = Number(amountInput?.value || 0);
+    const dateFrom = dateFromInput?.value || "";
+    const dateTo = dateToInput?.value || "";
+
+    let visibleCount = 0;
+
+    items.forEach((item) => {
+      const itemCategory = item.dataset.category || "";
+      const itemAmount = Number(item.dataset.amount || 0);
+      const itemDate = item.dataset.date || "";
+      const itemText = item.textContent?.toLowerCase() || "";
+
+      const matchesSearch = !searchValue || itemText.includes(searchValue);
+      const matchesCategory = category === "all" || itemCategory === category;
+      const matchesAmount = !amount || itemAmount <= amount;
+      const matchesFrom = !dateFrom || itemDate >= dateFrom;
+      const matchesTo = !dateTo || itemDate <= dateTo;
+      const isVisible = matchesSearch && matchesCategory && matchesAmount && matchesFrom && matchesTo;
+
+      item.classList.toggle("d-none", !isVisible);
+
+      if (isVisible) {
+        visibleCount += 1;
+      }
+    });
+
+    if (countElement) {
+      countElement.textContent = String(visibleCount);
+    }
+
+    emptyState?.classList.toggle("d-none", visibleCount !== 0);
+  };
+
+  [searchInput, categoryInput, amountInput, dateFromInput, dateToInput].forEach((element) => {
+    element?.addEventListener("input", applyFilters);
+    element?.addEventListener("change", applyFilters);
+  });
+
+  resetButton?.addEventListener("click", () => {
+    if (searchInput) {
+      searchInput.value = "";
+    }
+
+    if (categoryInput) {
+      categoryInput.value = "all";
+    }
+
+    if (amountInput) {
+      amountInput.value = "";
+    }
+
+    if (dateFromInput) {
+      dateFromInput.value = "";
+    }
+
+    if (dateToInput) {
+      dateToInput.value = "";
+    }
+
+    applyFilters();
+  });
+}
