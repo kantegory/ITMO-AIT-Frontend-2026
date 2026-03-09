@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width", initial-scale="1.0">
+    <title>Платформа онлайн-курсов | Поиск</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/cards.css">
+</head>
+<body class="bg-light">
+
+    <!-- Навбар -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-martarboard-fill text-warning me-2"></i>EduPlatform
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Каталог курсов</a>
+                    </li>
+                </ul>
+                <div class="d-flex gap-2">
+                    <a href="#" class="btn btn-outline-light">Войти</a>
+                    <a href="#" class="btn btn-warning">Регистрация</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Главный контент -->
+    <div class="container my-5">
+        <div class="row mb-4">
+            <div class="col">
+                <h1 class="fw-bold">Найди свой идеальный курс</h1>
+                <p class="text-muted">Изучай программирование, дизайн и маркетинг у лучших преподавателей.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- САЙДБАР С ФИЛЬТРАМИ -->
+            <aside class="col-lg-3 mb-4">
+                <div class="card shadow-sm filter-sidebar">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3"><i class="bi bi-funnel"></i> Фильтры</h5>
+                        
+                        <form id="filterForm">
+                            <div class="mb-3">
+                                <label class="form-label text-muted small fw-bold text-uppercase">Поиск</label>
+                                <input type="text" class="form-control" placeholder="Название курса...">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label text-muted small fw-bold text-uppercase">Предмет</label>
+                                <select class="form-select">
+                                    <option value="all">Все направления</option>
+                                    <option value="it">Программирование</option>
+                                    <option value="design">Дизайн</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label text-muted small fw-bold text-uppercase">
+                                    Макс. цена: <span id="priceValue" class="text-primary fw-bold">15000</span> ₽
+                                </label>
+                                <input type="range" class="form-range custom-range" id="priceRange" min="0" max="50000" step="1000" value="15000">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100" id="applyFiltersBtn">Применить фильтры</button>
+                        </form>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- КАТАЛОГ КУРСОВ -->
+            <main class="col-lg-9">
+                <div class="row g-4">
+                    <!-- Курс 1 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card h-100 course-card shadow-sm">
+                            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Web Dev">
+                            <div class="card-body d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-primary">Программирование</span>
+                                </div>
+                                <h5 class="card-title fw-bold">Frontend Разработчик</h5>
+                                <p class="card-text text-muted small">Освойте HTML, CSS, JavaScript и React.</p>
+                                <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+                                    <span class="fs-5 fw-bold">12 000 ₽</span>
+                                    <button class="btn btn-sm btn-outline-dark buy-btn" data-course-name="Frontend Разработчик" data-course-price="12 000">Записаться</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Курс 2 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card h-100 course-card shadow-sm">
+                            <img src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Python">
+                            <div class="card-body d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-success">Анализ данных</span>
+                                </div>
+                                <h5 class="card-title fw-bold">Python для Data Science</h5>
+                                <p class="card-text text-muted small">Pandas, NumPy и машинное обучение.</p>
+                                <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+                                    <span class="fs-5 fw-bold">15 500 ₽</span>
+                                    <button class="btn btn-sm btn-outline-dark buy-btn" data-course-name="Python для Data Science" data-course-price="15 500">Записаться</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО -->
+    <div class="modal fade" id="purchaseModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title">Оформление заказа</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Вы собираетесь записаться на курс:</p>
+                    <h4 id="modalCourseTitle" class="text-primary mb-3">Название курса</h4>
+                    <p class="fs-5">К оплате: <strong id="modalCoursePrice">0</strong> ₽</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-warning" id="confirmPurchaseBtn">Перейти к оплате</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>    
+    <script type="module" src="js/main.js"></script>
+</body>
+</body>
+</html>
