@@ -105,78 +105,102 @@ function initTransactionFilters() {
     return;
   }
 
-  const items = Array.from(list.querySelectorAll(".transaction-item"));
-  const searchInput = document.querySelector("[data-filter-search]");
-  const categoryInput = document.querySelector("[data-filter-category]");
-  const amountInput = document.querySelector("[data-filter-amount]");
-  const dateFromInput = document.querySelector("[data-filter-date-from]");
-  const dateToInput = document.querySelector("[data-filter-date-to]");
-  const countElement = document.querySelector("[data-transaction-count]");
-  const emptyState = document.querySelector("[data-empty-state]");
-  const resetButton = document.querySelector("[data-filter-reset]");
+const items = Array.from(list.querySelectorAll(".transaction-item"));
+const searchInput = document.querySelector("[data-filter-search]");
+const categoryInput = document.querySelector("[data-filter-category]");
+const amountInput = document.querySelector("[data-filter-amount]");
+const dateFromInput = document.querySelector("[data-filter-date-from]");
+const dateToInput = document.querySelector("[data-filter-date-to]");
+const countElement = document.querySelector("[data-transaction-count]");
+const emptyState = document.querySelector("[data-empty-state]");
+const resetButton = document.querySelector("[data-filter-reset]");
 
-  const applyFilters = () => {
-    const searchValue = (searchInput?.value || "").trim().toLowerCase();
-    const category = categoryInput?.value || "all";
-    const amount = Number(amountInput?.value || 0);
-    const dateFrom = dateFromInput?.value || "";
-    const dateTo = dateToInput?.value || "";
+const applyFilters = () => {
+  const searchValue = (searchInput?.value || "").trim().toLowerCase();
+  const category = categoryInput?.value || "all";
+  const amount = Number(amountInput?.value || 0);
+  const dateFrom = dateFromInput?.value || "";
+  const dateTo = dateToInput?.value || "";
 
-    let visibleCount = 0;
+  let visibleCount = 0;
 
-    items.forEach((item) => {
-      const itemCategory = item.dataset.category || "";
-      const itemAmount = Number(item.dataset.amount || 0);
-      const itemDate = item.dataset.date || "";
-      const itemText = item.textContent?.toLowerCase() || "";
+  items.forEach((item) => {
+    const itemCategory = item.dataset.category || "";
+    const itemAmount = Number(item.dataset.amount || 0);
+    const itemDate = item.dataset.date || "";
+    const itemText = item.textContent?.toLowerCase() || "";
 
-      const matchesSearch = !searchValue || itemText.includes(searchValue);
-      const matchesCategory = category === "all" || itemCategory === category;
-      const matchesAmount = !amount || itemAmount <= amount;
-      const matchesFrom = !dateFrom || itemDate >= dateFrom;
-      const matchesTo = !dateTo || itemDate <= dateTo;
-      const isVisible = matchesSearch && matchesCategory && matchesAmount && matchesFrom && matchesTo;
+    const matchesSearch = !searchValue || itemText.includes(searchValue);
+    const matchesCategory = category === "all" || itemCategory === category;
+    const matchesAmount = !amount || itemAmount <= amount;
+    const matchesFrom = !dateFrom || itemDate >= dateFrom;
+    const matchesTo = !dateTo || itemDate <= dateTo;
+    const isVisible = matchesSearch && matchesCategory && matchesAmount && matchesFrom && matchesTo;
 
-      item.classList.toggle("d-none", !isVisible);
+    item.classList.toggle("d-none", !isVisible);
 
-      if (isVisible) {
-        visibleCount += 1;
+    if (isVisible) {
+      visibleCount += 1;
+    }
+  });
+
+  if (countElement) {
+    countElement.textContent = String(visibleCount);
+  }
+
+  emptyState?.classList.toggle("d-none", visibleCount !== 0);
+};
+
+[searchInput, categoryInput, amountInput, dateFromInput, dateToInput].forEach((element) => {
+  element?.addEventListener("input", applyFilters);
+  element?.addEventListener("change", applyFilters);
+});
+
+resetButton?.addEventListener("click", () => {
+  if (searchInput) {
+    searchInput.value = "";
+  }
+
+  if (categoryInput) {
+    categoryInput.value = "all";
+  }
+
+  if (amountInput) {
+    amountInput.value = "";
+  }
+
+  if (dateFromInput) {
+    dateFromInput.value = "";
+  }
+
+  if (dateToInput) {
+    dateToInput.value = "";
+  }
+
+  applyFilters();
+});
+}
+
+function initDashboardModal() {
+  const actionModal = document.getElementById("actionModal");
+
+  if (actionModal) {
+    actionModal.addEventListener("show.bs.modal", (event) => {
+      const trigger = event.relatedTarget;
+      const title = trigger?.getAttribute("data-action-title") || "Быстрое действие";
+      const text = trigger?.getAttribute("data-action-text") || "";
+      const titleNode = actionModal.querySelector("[data-modal-title]");
+      const textNode = actionModal.querySelector("[data-modal-text]");
+
+      if (titleNode) {
+        titleNode.textContent = title;
+      }
+
+      if (textNode) {
+        textNode.textContent = text;
       }
     });
-
-    if (countElement) {
-      countElement.textContent = String(visibleCount);
-    }
-
-    emptyState?.classList.toggle("d-none", visibleCount !== 0);
-  };
-
-  [searchInput, categoryInput, amountInput, dateFromInput, dateToInput].forEach((element) => {
-    element?.addEventListener("input", applyFilters);
-    element?.addEventListener("change", applyFilters);
-  });
-
-  resetButton?.addEventListener("click", () => {
-    if (searchInput) {
-      searchInput.value = "";
-    }
-
-    if (categoryInput) {
-      categoryInput.value = "all";
-    }
-
-    if (amountInput) {
-      amountInput.value = "";
-    }
-
-    if (dateFromInput) {
-      dateFromInput.value = "";
-    }
-
-    if (dateToInput) {
-      dateToInput.value = "";
-    }
-
-    applyFilters();
-  });
+  }
 }
+
+
