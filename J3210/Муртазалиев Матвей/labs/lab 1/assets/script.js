@@ -354,3 +354,21 @@ const switcher = document.querySelector("[data-report-switcher]");
     });
   });
 }
+
+function initImportModal() {
+  const importModal = document.getElementById("importModal");
+
+  if (!importModal) {
+    return;
+  }
+
+  importModal.addEventListener("show.bs.modal", (event) => {
+    const trigger = event.relatedTarget;
+    const provider = trigger?.getAttribute("data-provider") || "выбранный аккаунт";
+    const providerNode = importModal.querySelector("[data-import-provider]");
+
+    if (providerNode) {
+      providerNode.textContent = provider;
+    }
+  });
+}
