@@ -204,3 +204,153 @@ function initDashboardModal() {
 }
 
 
+
+
+function initReportCharts() {
+  const spendCanvas = document.getElementById("spendChart");
+  const categoryCanvas = document.getElementById("categoryChart");
+
+  if (!spendCanvas || !categoryCanvas || typeof Chart === "undefined") {
+    return;
+  }
+
+  const spendChart = new Chart(spendCanvas, {
+    type: "line",
+    data: {
+      labels: reportPresets.week.spendLabels,
+      datasets: [
+        {
+          label: "Расходы",
+          data: reportPresets.week.spendData,
+          fill: true,
+          borderWidth: 3,
+          borderColor: "#0f766e",
+          backgroundColor: "rgba(15, 118, 110, 0.14)",
+          tension: 0.35,
+          pointBackgroundColor: "#ef7e56",
+          pointRadius: 4,
+        },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: "rgba(24, 33, 38, 0.08)",
+          },
+        },
+        x: {
+          grid: {
+            display: false,
+          },
+        },
+      },
+    },
+  });
+
+  const categoryChart = new Chart(categoryCanvas, {
+    type: "doughnut",
+    data: {
+      labels: reportPresets.week.categoryLabels,
+      datasets: [
+        {
+          data: reportPresets.week.categoryData,
+          borderWidth: 0,
+          backgroundColor: ["#0f766e", "#ef7e56", "#4c84ff", "#9a6fdb"],
+        },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: "bottom",
+          labels: {
+            boxWidth: 12,
+            usePointStyle: true,
+          },
+        },
+      },
+      cutout: "68%",
+    },
+});
+
+const switcher = document.querySelector("[data-report-switcher]");
+  const spendNode = document.querySelector("[data-kpi-spend]");
+  const averageNode = document.querySelector("[data-kpi-average]");
+  const categoryNode = document.querySelector("[data-kpi-category]");
+  const forecastNode = document.querySelector("[data-kpi-forecast]");
+  const forecastTextNode = document.querySelector("[data-forecast-text]");
+  const forecastDescriptionNode = document.querySelector("[data-forecast-description]");
+  const breakdownContainer = document.querySelector("[data-category-breakdown]");
+
+  if (!switcher) {
+    return;
+  }
+
+  switcher.querySelectorAll("[data-period]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const period = button.getAttribute("data-period");
+      const preset = reportPresets[period];
+
+      if (!preset) {
+        return;
+      }
+
+      switcher.querySelectorAll(".btn").forEach((item) => item.classList.remove("active"));
+      button.classList.add("active");
+
+      spendChart.data.labels = preset.spendLabels;
+      spendChart.data.datasets[0].data = preset.spendData;
+      spendChart.update();
+
+      categoryChart.data.labels = preset.categoryLabels;
+      categoryChart.data.datasets[0].data = preset.categoryData;
+      categoryChart.update();
+
+      if (spendNode) {
+        spendNode.textContent = preset.spend;
+      }
+
+      if (averageNode) {
+        averageNode.textContent = preset.average;
+      }
+
+      if (categoryNode) {
+        categoryNode.textContent = preset.category;
+      }
+
+      if (forecastNode) {
+        forecastNode.textContent = preset.forecast;
+      }
+
+      if (forecastTextNode) {
+        forecastTextNode.textContent = preset.forecastText;
+      }
+
+      if (forecastDescriptionNode) {
+        forecastDescriptionNode.textContent = preset.forecastDescription;
+      }
+
+      if (breakdownContainer) {
+        breakdownContainer.innerHTML = preset.categoryLabels
+          .map(
+            (label, index) => `
+              <div class="insight-row">
+                <span>${label}</span>
+                <strong>₽ ${preset.categoryData[index].toLocaleString("ru-RU")}</strong>
+              </div>
+            `,
+          )
+          .join("");
+      }
+    });
+  });
+}
