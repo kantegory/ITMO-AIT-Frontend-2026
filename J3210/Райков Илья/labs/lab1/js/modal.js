@@ -2,28 +2,30 @@ import { getCurrentUser } from "./session.js";
 
 export function initModal() {
     const purchaseModalElement = document.getElementById("purchaseModal");
-    const buyBtns = document.querySelectorAll(".buy-btn");
+    const coursesContainer = document.querySelector(".col-lg-9 .row.g-4");
 
-    if (!purchaseModalElement || buyBtns.length === 0) return;
+    if (!purchaseModalElement || !coursesContainer) return;
 
     const purchaseModal = new window.bootstrap.Modal(purchaseModalElement);
     const modalTitle = document.getElementById("modalCourseTitle");
     const modalPrice = document.getElementById("modalCoursePrice");
     let currentSelectedCourse = null;
 
-    buyBtns.forEach(btn => {
-        btn.addEventListener("click", function () {
+    coursesContainer.addEventListener("click", function (event) {
+        const btn = event.target.closest(".buy-btn");
+        
+        if (btn) {
             currentSelectedCourse = {
-                title: this.getAttribute("data-course-name"),
-                price: this.getAttribute("data-course-price"),
-                imgSrc: this.closest('.card').querySelector('img').src,
+                title: btn.getAttribute("data-course-name"),
+                price: btn.getAttribute("data-course-price"),
+                imgSrc: btn.closest('.card').querySelector('img').src,
                 progress: 0
             };
 
             modalTitle.textContent = currentSelectedCourse.title;
             modalPrice.textContent = currentSelectedCourse.price;
             purchaseModal.show();
-        });
+        }
     });
 
     const confirmBtn = document.getElementById("confirmPurchaseBtn");

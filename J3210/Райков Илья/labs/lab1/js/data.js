@@ -5,9 +5,18 @@ export const COURSES_DATA = [
     { id: 4, title: "Интернет-маркетолог", category: "marketing", level: "beginner", price: 8000, rating: 4.5, imgSrc: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&q=80" },
     { id: 5, title: "Java-разработчик", category: "it", level: "advanced", price: 25000, rating: 4.9, imgSrc: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&q=80" },
     { id: 6, title: "Графический дизайнер", category: "design", level: "beginner", price: 11000, rating: 4.6, imgSrc: "https://images.unsplash.com/photo-1558655146-d09347e92766?w=400&q=80" },
+    { id: 7, title: "Аналитик данных", category: "it", level: "beginner", price: 14000, rating: 4.8, imgSrc: "https://images.unsplash.com/photo-1551288049-bbbda5366b7a?w=400&q=80" },
     { id: 8, title: "SMM-специалист", category: "marketing", level: "beginner", price: 7500, rating: 4.4, imgSrc: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&q=80" },
     { id: 9, title: "Алгоритмы на C++", category: "it", level: "advanced", price: 30000, rating: 5.0, imgSrc: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&q=80" },
     { id: 10, title: "React для профи", category: "it", level: "advanced", price: 18000, rating: 4.9, imgSrc: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&q=80" },
-    { id: 11, title: "Основы SQL", category: "it", level: "beginner", price: 6000, rating: 4.6, imgSrc: "https://images.unsplash.com/photo-1544383023-53fca215983d?w=400&q=80" },
-    { id: 12, title: "Motion Design в After Effects", category: "design", level: "advanced", price: 14500, rating: 4.8, imgSrc: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&q=80" }
+    { id: 11, title: "Основы SQL", category: "it", level: "beginner", price: 6000, rating: 4.6, imgSrc: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=400&q=80" },
+    { id: 12, title: "Motion Design в After Effects", category: "design", level: "advanced", price: 14500, rating: 4.8, imgSrc: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&q=80" },
+    { id: 13, title: "Разработка на Swift (iOS)", category: "it", level: "advanced", price: 28000, rating: 4.9, imgSrc: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&q=80" },
+    { id: 14, title: "Брендинг и айдентика", category: "design", level: "beginner", price: 10500, rating: 4.7, imgSrc: "https://images.unsplash.com/photo-1572044162444-ad60f128bde2?w=400&q=80" },
+    { id: 15, title: "SEO Оптимизация", category: "marketing", level: "advanced", price: 13000, rating: 4.6, imgSrc: "https://images.unsplash.com/photo-1571721795195-a2ca2d3370a9?w=400&q=80" },
+    { id: 16, title: "Кибербезопасность", category: "it", level: "beginner", price: 19000, rating: 4.8, imgSrc: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&q=80" },
+    { id: 17, title: "3D Моделирование в Blender", category: "design", level: "advanced", price: 17000, rating: 4.9, imgSrc: "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?w=400&q=80" },
+    { id: 18, title: "Копирайтинг", category: "marketing", level: "beginner", price: 5500, rating: 4.5, imgSrc: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&q=80" },
+    { id: 19, title: "Node.js Backend", category: "it", level: "advanced", price: 16500, rating: 4.7, imgSrc: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=400&q=80" },
+    { id: 20, title: "Иллюстрация Pro", category: "design", level: "advanced", price: 12500, rating: 4.8, imgSrc: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&q=80" }
 ];

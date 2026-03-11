@@ -54,31 +54,66 @@
             <aside class="col-lg-3 mb-4">
                 <div class="card shadow-sm filter-sidebar">
                     <div class="card-body">
-                        <h5 class="card-title mb-3"><i class="bi bi-funnel"></i> Фильтры</h5>
+                        <h5 class="card-title mb-4"><i class="bi bi-funnel"></i> Фильтры</h5>
                         
                         <form id="filterForm">
-                            <div class="mb-3">
-                                <label class="form-label text-muted small fw-bold text-uppercase">Поиск</label>
-                                <input type="text" class="form-control" placeholder="Название курса...">
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label text-muted small fw-bold text-uppercase">Предмет</label>
-                                <select class="form-select">
-                                    <option value="all">Все направления</option>
-                                    <option value="it">Программирование</option>
-                                    <option value="design">Дизайн</option>
-                                </select>
-                            </div>
-
+                            <!-- Поиск по тексту -->
                             <div class="mb-4">
-                                <label class="form-label text-muted small fw-bold text-uppercase">
-                                    Макс. цена: <span id="priceValue" class="text-primary fw-bold">15000</span> ₽
-                                </label>
-                                <input type="range" class="form-range custom-range" id="priceRange" min="0" max="50000" step="1000" value="15000">
+                                <label class="form-label text-muted small fw-bold text-uppercase">Поиск</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                                    <input type="text" id="searchInput" class="form-control border-start-0" placeholder="Название...">
+                                </div>
+                            </div>
+
+                            <!-- Выбор категорий (Чекбоксы) -->
+                            <div class="mb-4">
+                                <label class="form-label text-muted small fw-bold text-uppercase">Категории</label>
+                                <div id="categoryFilters">
+                                    <div class="form-check mb-1">
+                                        <input class="form-check-input" type="checkbox" value="it" id="cat-it">
+                                        <label class="form-check-label" for="cat-it">Программирование</label>
+                                    </div>
+                                    <div class="form-check mb-1">
+                                        <input class="form-check-input" type="checkbox" value="design" id="cat-design">
+                                        <label class="form-check-label" for="cat-design">Дизайн</label>
+                                    </div>
+                                    <div class="form-check mb-1">
+                                        <input class="form-check-input" type="checkbox" value="marketing" id="cat-marketing">
+                                        <label class="form-check-label" for="cat-marketing">Маркетинг</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Двойной ползунок цены -->
+                            <div class="mb-4">
+                                <label class="form-label text-muted small fw-bold text-uppercase">Цена (₽)</label>
+                                <div class="price-input-container d-flex justify-content-between mb-2">
+                                    <span id="priceMinLabel">0</span>
+                                    <span id="priceMaxLabel">50000</span>
+                                </div>
+                                <div class="range-slider">
+                                    <div class="slider-track"></div>
+                                    <input type="range" id="minPriceInput" min="0" max="50000" value="0" step="500">
+                                    <input type="range" id="maxPriceInput" min="0" max="50000" value="50000" step="500">
+                                </div>
+                            </div>
+
+                            <!-- Уровни сложности -->
+                            <div class="mb-4">
+                                <label class="form-label text-muted small fw-bold text-uppercase">Уровень</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="beginner" id="lvl-beginner">
+                                    <label class="form-check-label" for="lvl-beginner">Для новичков</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="advanced" id="lvl-advanced">
+                                    <label class="form-check-label" for="lvl-advanced">Продвинутый</label>
+                                </div>
                             </div>
 
                             <button type="submit" class="btn btn-primary w-100" id="applyFiltersBtn">Применить фильтры</button>
+                            <button type="button" class="btn btn-link w-100 btn-sm text-decoration-none mt-2" id="resetFiltersBtn">Сбросить всё</button>
                         </form>
                     </div>
                 </div>
@@ -87,41 +122,7 @@
             <!-- Каталог курсов -->
             <main class="col-lg-9">
                 <div class="row g-4">
-                    <!-- Курс 1 -->
-                    <div class="col-md-6 col-xl-4">
-                        <div class="card h-100 course-card shadow-sm">
-                            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Web Dev">
-                            <div class="card-body d-flex flex-column">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="badge bg-primary">Программирование</span>
-                                </div>
-                                <h5 class="card-title fw-bold">Frontend Разработчик</h5>
-                                <p class="card-text text-muted small">Освойте HTML, CSS, JavaScript и React.</p>
-                                <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
-                                    <span class="fs-5 fw-bold">12 000 ₽</span>
-                                    <button class="btn btn-sm btn-outline-dark buy-btn" data-course-name="Frontend Разработчик" data-course-price="12 000">Записаться</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Курс 2 -->
-                    <div class="col-md-6 col-xl-4">
-                        <div class="card h-100 course-card shadow-sm">
-                            <img src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Python">
-                            <div class="card-body d-flex flex-column">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="badge bg-success">Анализ данных</span>
-                                </div>
-                                <h5 class="card-title fw-bold">Python для Data Science</h5>
-                                <p class="card-text text-muted small">Pandas, NumPy и машинное обучение.</p>
-                                <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
-                                    <span class="fs-5 fw-bold">15 500 ₽</span>
-                                    <button class="btn btn-sm btn-outline-dark buy-btn" data-course-name="Python для Data Science" data-course-price="15 500">Записаться</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Вставит js -->
                 </div>
             </main>
         </div>
