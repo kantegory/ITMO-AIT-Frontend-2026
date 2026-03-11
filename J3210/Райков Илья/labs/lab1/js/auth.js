@@ -1,4 +1,9 @@
 export function initAuth() {
+    handleRegistration();
+    handleLogin();
+}
+
+function handleRegistration() {
     const registerForm = document.getElementById("registerForm")
 
     if (!registerForm) return;
@@ -47,5 +52,38 @@ export function initAuth() {
         if (passwordInput.value === confirmPasswordInput.value) {
             confirmPasswordInput.setCustomValidity("");
         }
+    });
+}
+
+function handleLogin() {
+    const loginForm = document.getElementById("loginForm");
+    if (!loginForm) return;
+
+    const loginBtn = document.getElementById("loginBtn");
+
+    loginForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (!loginForm.checkValidity()) {
+            loginForm.classList.add("was-validated");
+            return;
+        }
+
+        loginForm.classList.add("was-validated");
+
+        const originalText = loginBtn.innerHTML;
+        loginBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Вход...';
+        loginBtn.disabled = true;
+
+        setTimeout(() => {
+            loginBtn.innerHTML = originalText;
+            loginBtn.disabled = false;
+            
+            alert("Успешный вход!");
+            
+            window.location.href = "dashboard.html";
+            
+        }, 1000);
     });
 }
