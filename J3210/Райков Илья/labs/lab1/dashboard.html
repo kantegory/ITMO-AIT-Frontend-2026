@@ -32,125 +32,82 @@
                         <a class="nav-link active" href="dashboard.html">Мое обучение</a>
                     </li>
                 </ul>
-                <div class="d-flex align-items-center gap-3">
-                    <span class="text-light d-none d-md-inline">Привет, <strong>Студент</strong>!</span>
-                    <a href="index.html" class="btn btn-outline-danger btn-sm" id="logoutBtn">
-                        <i class="bi bi-box-arrow-right"></i> Выйти
-                    </a>
+                <div class="d-flex align-items-center gap-2" id="navAuthButtons">
+                    <!-- Сюда вставит js -->
                 </div>
             </div>
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container my-5">
 
         <!-- Шапка профиля -->
         <div class="profile-header shadow-sm mb-4 d-flex flex-column flex-md-row align-items-center text-center text-md-start">
-            <img src="https://ui-avatars.com/api/?name=Студент+Платформы&background=0D8ABC&color=fff&size=120" alt="Аватар" class="profile-avatar mb-3 mb-md-0 me-md-4">
+            <img src="" id="profileAvatar" alt="Аватар" class="profile-avatar mb-3 mb-md-0 me-md-4 bg-white">
             <div>
-                <h2 class="fw-bold mb-1">Студент платформы</h2>
-                <p class="mb-2 opacity-75"><i class="bi bi-envelope"></i> student@example.com</p>
+                <h2 class="fw-bold mb-1" id="profileName">Загрузка...</h2>
+                <p class="mb-2 opacity-75"><i class="bi bi-envelope"></i> <span id="profileEmail">...</span></p>
                 <div class="d-flex gap-3 justify-content-center justify-content-md-start">
-                    <span class="badge bg-light text-dark"><i class="bi bi-book me-1"></i> 2 курса</span>
-                    <span class="badge bg-light text-dark"><i class="bi bi-award me-1"></i> 1 сертификат</span>
+                    <span class="badge bg-light text-dark"><i class="bi bi-book"></i> <span id="courseCount">0</span> курсов</span>
+                    <span class="badge bg-light text-dark"><i class="bi bi-award"></i> <span id="certCount">0</span> сертификатов</span>
                 </div>
             </div>
         </div>
 
-        <!-- Навигация по вкладкам (Tabs) -->
+        <!-- Навигация по вкладкам -->
         <ul class="nav nav-tabs mb-4 custom-tabs" id="dashboardTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active fw-bold" id="courses-tab" data-bs-toggle="tab" data-bs-target="#courses-pane" type="button" role="tab">
-                    <i class="bi bi-play-circle me-1"></i> Мои курсы и прогресс
+                <button class="nav-link active fw-bold" data-bs-toggle="tab" data-bs-target="#courses-pane" type="button">
+                    <i class="bi bi-play-circle me-1"></i> Мои курсы
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link fw-bold" id="certs-tab" data-bs-toggle="tab" data-bs-target="#certs-pane" type="button" role="tab">
+                <button class="nav-link fw-bold" data-bs-toggle="tab" data-bs-target="#certs-pane" type="button">
                     <i class="bi bi-patch-check me-1"></i> Сертификаты
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold" data-bs-toggle="tab" data-bs-target="#settings-pane" type="button">
+                    <i class="bi bi-person-gear me-1"></i> Настройки профиля
                 </button>
             </li>
         </ul>
 
         <!-- Содержимое вкладок -->
         <div class="tab-content" id="dashboardTabContent">
-            
-            <!-- ВКЛАДКА 1: Мои курсы -->
-            <div class="tab-pane fade show active" id="courses-pane" role="tabpanel" tabindex="0">
-                <div class="row g-4">
-                    
-                    <!-- Купленный курс 1 (В процессе) -->
-                    <div class="col-md-6 col-xl-4">
-                        <div class="card h-100 course-card shadow-sm border-0">
-                            <img src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Python">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title fw-bold">Python для Data Science</h5>
-                                <p class="text-muted small mb-3">Осталось 12 уроков из 40</p>
-                                
-                                <!-- Прогресс бар -->
-                                <div class="mb-3">
-                                    <div class="d-flex justify-content-between small mb-1">
-                                        <span>Прогресс</span>
-                                        <span class="fw-bold text-primary">70%</span>
-                                    </div>
-                                    <div class="progress" style="height: 8px;">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                
-                                <div class="mt-auto">
-                                    <button class="btn btn-primary w-100 continue-btn">Продолжить обучение</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Купленный курс 2 (Завершен) -->
-                    <div class="col-md-6 col-xl-4">
-                        <div class="card h-100 course-card shadow-sm border-0">
-                            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Web Dev">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title fw-bold">Frontend Разработчик</h5>
-                                <p class="text-muted small mb-3">Курс полностью пройден</p>
-                                
-                                <!-- Прогресс бар -->
-                                <div class="mb-3">
-                                    <div class="d-flex justify-content-between small mb-1">
-                                        <span>Прогресс</span>
-                                        <span class="fw-bold text-success">100%</span>
-                                    </div>
-                                    <div class="progress" style="height: 8px;">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                
-                                <div class="mt-auto">
-                                    <button class="btn btn-outline-secondary w-100 continue-btn">Повторить материалы</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+            <!-- Вкладка курсов -->
+            <div class="tab-pane fade show active" id="courses-pane" role="tabpanel">
+                <div class="row g-4" id="coursesContainer">
+                    <!-- Сюда карточки курсов js -->
                 </div>
             </div>
 
-            <!-- ВКЛАДКА 2: Сертификаты -->
-            <div class="tab-pane fade" id="certs-pane" role="tabpanel" tabindex="0">
-                <div class="row">
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card shadow-sm border-0 cert-card text-center p-4">
-                            <div class="cert-icon mb-3">
-                                <i class="bi bi-award-fill text-warning" style="font-size: 4rem;"></i>
-                            </div>
-                            <h5 class="fw-bold">Frontend Разработчик</h5>
-                            <p class="text-muted small mb-4">Выдан: 15 марта 2024 г.<br>ID: CERT-89320</p>
-                            <button class="btn btn-success download-cert-btn">
-                                <i class="bi bi-download me-1"></i> Скачать PDF
-                            </button>
-                        </div>
-                    </div>
+            <!-- Вкладка сертификатов -->
+            <div class="tab-pane fade" id="certs-pane" role="tabpanel">
+                <div class="row g-4" id="certsContainer">
+                    <!-- Сюда сертификаты js -->
                 </div>
             </div>
 
+            <!-- Вкладка настроек -->
+            <div class="tab-pane fade" id="settings-pane" role="tabpanel">
+                <div class="card border-0 shadow-sm max-w-500">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-4">Изменение пароля</h5>
+                        <form id="changePasswordForm">
+                            <div class="mb-3">
+                                <label class="form-label text-muted small">Текущий пароль</label>
+                                <input type="password" class="form-control" id="oldPassword" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-muted small">Новый пароль</label>
+                                <input type="password" class="form-control" id="newPassword" required minlength="6">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
