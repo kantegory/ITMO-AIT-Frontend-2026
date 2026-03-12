@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Artifacts - MLOps Flow</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- Главный контейнер на Flexbox: делит экран на Сайдбар и Контентную часть -->
+    <div class="d-flex" id="wrapper">
+         <!-- Левая панель (Sidebar) -->
+        <div class="bg-white border-end" id="sidebar-wrapper">
+            <div class="sidebar-heading text-primary fw-bold p-4 fs-4">MLOps Flow</div>
+            <div class="list-group list-group-flush px-3">
+                <a href="dashboard.html" class="list-group-item list-group-item-action rounded mb-1"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+                <a href="experiments.html" class="list-group-item list-group-item-action rounded mb-1"><i class="bi bi-bar-chart-line me-2"></i> Experiments</a>
+                <a href="models.html" class="list-group-item list-group-item-action rounded mb-1"><i class="bi bi-box-seam me-2"></i> Models</a>
+                <a href="artifacts.html" class="list-group-item list-group-item-action active rounded mb-1"><i class="bi bi-archive me-2"></i> Artifacts</a>
+            </div>
+        </div>
+
+        <!-- Правая часть (Main Content) -->
+        <div id="page-content-wrapper" class="w-100">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom px-4 py-3">
+                <h4 class="mb-0">Artifact Storage</h4>
+            </nav>
+            <!-- Контейнер для данных -->
+            <div class="container-fluid p-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5>Files in S3 / Local Storage</h5>
+                        <div class="list-group list-group-flush mt-3">
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="bi bi-file-earmark-binary me-2"></i> model_final.pth</span>
+                                <span class="badge bg-light text-dark border">240 MB</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="bi bi-file-earmark-code me-2"></i> hyperparameters.yaml</span>
+                                <span class="badge bg-light text-dark border">2 KB</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="bi bi-file-earmark-image me-2"></i> confusion_matrix.png</span>
+                                <span class="badge bg-light text-dark border">45 KB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
