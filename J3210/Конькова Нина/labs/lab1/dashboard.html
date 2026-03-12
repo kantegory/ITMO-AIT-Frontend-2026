@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - MLOps Flow</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- Wrapper с d-flex: создаем двухколоночный макет (меню слева, контент справа) на весь экран -->
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-white border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading text-primary fw-bold p-4 fs-4">MLOps Flow</div>
+            <div class="list-group list-group-flush px-3">
+                <a href="dashboard.html" class="list-group-item list-group-item-action active rounded mb-1"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+                <a href="experiments.html" class="list-group-item list-group-item-action rounded mb-1"><i class="bi bi-bar-chart-line me-2"></i> Experiments</a>
+                <a href="models.html" class="list-group-item list-group-item-action rounded mb-1"><i class="bi bi-box-seam me-2"></i> Models</a>
+                <a href="artifacts.html" class="list-group-item list-group-item-action rounded mb-1"><i class="bi bi-archive me-2"></i> Artifacts</a>
+            </div>
+        </div>
+        <!-- Main content -->
+        <div id="page-content-wrapper" class="w-100">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom px-4 py-3">
+                <h4 class="mb-0">Overview</h4>
+                <!-- Профиль пользователя: выравниваем вправо (ms-auto) для удобства доступа -->
+                <div class="ms-auto d-flex align-items-center">
+                    <span class="me-3 text-muted">Admin User</span>
+                    <img src="https://ui-avatars.com/api/?name=Admin" class="rounded-circle" width="35" alt="profile">
+                </div>
+            </nav>
+            <!-- Контейнер для виджетов: p-4 создает отступы для чистоты интерфейса -->
+            <div class="container-fluid p-4">
+                <!-- Ряд карточек статистики: разбиваем на 4 колонки по 3 сегмента (col-md-3) -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card stat-card shadow-sm p-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="text-muted mb-1">Experiments</p>
+                                    <h3 class="fw-bold">24</h3>
+                                </div>
+                                <div class="icon-box bg-light-primary"><i class="bi bi-flask-florence text-primary"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stat-card shadow-sm p-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="text-muted mb-1">Active Models</p>
+                                    <h3 class="fw-bold">12</h3>
+                                </div>
+                                <div class="icon-box bg-light-success"><i class="bi bi-cpu text-success"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stat-card shadow-sm p-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="text-muted mb-1">Total Runs</p>
+                                    <h3 class="fw-bold">542</h3>
+                                </div>
+                                <div class="icon-box bg-light-info"><i class="bi bi-play-circle text-info"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stat-card shadow-sm p-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="text-muted mb-1">Best Accuracy</p>
+                                    <h3 class="fw-bold">99.2%</h3>
+                                </div>
+                                <div class="icon-box bg-light-warning"><i class="bi bi-trophy text-warning"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Таблица последних запусков -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Recent Experiments</h5>
+                        <table class="table align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                    <th>Metric (Acc)</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ResNet50_V2</td>
+                                    <td><span class="badge bg-success-soft text-success">Finished</span></td>
+                                    <td>0.984</td>
+                                    <td>2 hours ago</td>
+                                    <td><a href="experiment.html" class="btn btn-sm btn-outline-primary">View</a></td>
+                                </tr>
+                                <tr>
+                                    <td>BERT_Transformer_Base</td>
+                                    <td><span class="badge bg-warning-soft text-warning">Running</span></td>
+                                    <td>0.742</td>
+                                    <td>5 hours ago</td>
+                                    <td><a href="experiment.html" class="btn btn-sm btn-outline-primary">View</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
