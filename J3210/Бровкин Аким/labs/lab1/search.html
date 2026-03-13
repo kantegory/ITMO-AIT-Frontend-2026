@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Поиск курсов - EduPlatform</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -9,7 +10,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark custom-navbar mb-4">
         <div class="container">
-            <a class="navbar-brand" href="#">EduPlatform</a>
+            <a class="navbar-brand" href="dashboard.html">EduPlatform</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="dashboard.html">Мои курсы</a></li>
@@ -27,26 +28,36 @@
                     <h5>Фильтры</h5>
                     <hr>
                     <div class="mb-3">
-                        <label class="form-label">Предмет</label>
-                        <select class="form-select">
-                            <option>Все</option>
-                            <option>Программирование</option>
-                            <option>Дизайн</option>
+                        <label class="form-label">Категория</label>
+                        <select class="form-select" id="categorySelect">
+                            <option value="all">Все</option>
+                            <option value="programming">Программирование</option>
+                            <option value="design">Дизайн</option>
                         </select>
                     </div>
-                    <button class="btn-brand w-100">Применить</button>
+                    <button class="btn-brand w-100" onclick="applyFilters()">Применить</button>
                 </div>
             </div>
 
             <div class="col-md-9">
-                <div class="row">
-                    <div class="col-md-6 mb-4">
+                <div class="row" id="courseContainer">
+                    <div class="col-md-6 mb-4 course-item" data-category="programming">
                         <div class="edu-card course-card p-3 h-100 d-flex flex-column">
-                            <h5 class="card-title">React для продвинутых</h5>
-                            <p class="card-text text-muted">Изучите хуки, Redux Toolkit и роутинг.</p>
+                            <h5 class="course-title">React для продвинутых</h5>
+                            <p class="card-text text-muted">Изучите хуки и Redux Toolkit.</p>
                             <div class="mt-auto d-flex justify-content-between align-items-center">
                                 <span class="course-price">4990 ₽</span>
-                                <button class="btn-brand" data-bs-toggle="modal" data-bs-target="#buyModal">Купить</button>
+                                <button class="btn-brand" onclick="prepareModal('React для продвинутых')">Записаться</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4 course-item" data-category="design">
+                        <div class="edu-card course-card p-3 h-100 d-flex flex-column">
+                            <h5 class="course-title">UI/UX Design Masterclass</h5>
+                            <p class="card-text text-muted">Создание прототипов в Figma.</p>
+                            <div class="mt-auto d-flex justify-content-between align-items-center">
+                                <span class="course-price">3500 ₽</span>
+                                <button class="btn-brand" onclick="prepareModal('UI/UX Design Masterclass')">Записаться</button>
                             </div>
                         </div>
                     </div>
@@ -55,24 +66,59 @@
         </div>
     </div>
 
-    <div class="modal fade" id="buyModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="buyModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content edu-card">
                 <div class="modal-header border-0">
-                    <h5 class="modal-title">Подтверждение покупки</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title">Подтверждение</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    Вы уверены, что хотите приобрести курс "React для продвинутых" за 4990 ₽?
+                    Вы уверены, что хотите записаться на курс: <strong id="modalCourseTitle"></strong>?
                 </div>
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn-brand" data-bs-dismiss="modal" onclick="alert('Курс добавлен!')">Подтвердить</button>
+                    <button type="button" class="btn-brand" onclick="confirmEnrollment()">Подтвердить</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let selectedCourse = "";
+        const myModal = new bootstrap.Modal(document.getElementById('buyModal'));
+
+        function applyFilters() {
+            const category = document.getElementById('categorySelect').value;
+            const items = document.querySelectorAll('.course-item');
+            
+            items.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function prepareModal(title) {
+            selectedCourse = title;
+            document.getElementById('modalCourseTitle').innerText = title;
+            myModal.show();
+        }
+
+        function confirmEnrollment() {
+            let myCourses = JSON.parse(localStorage.getItem('myCourses')) || [];
+            if (!myCourses.includes(selectedCourse)) {
+                myCourses.push(selectedCourse);
+                localStorage.setItem('myCourses', JSON.stringify(myCourses));
+                alert('Курс "' + selectedCourse + '" добавлен в личный кабинет!');
+            } else {
+                alert('Вы уже записаны на этот курс.');
+            }
+            myModal.hide();
+        }
+    </script>
 </body>
 </html>
