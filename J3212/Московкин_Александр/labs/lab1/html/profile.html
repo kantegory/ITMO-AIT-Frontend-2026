@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>n3n – Профиль</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-light">
+<!-- # Верхнее меню (header) с логотипом и навигацией # -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-4">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="dashboard.html">
+      <span class="logo-n3n">
+        <span class="logo-n3n-black">n</span><span class="logo-n3n-red">3</span><span class="logo-n3n-black">n</span>
+      </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="workspaces.html">Рабочие пространства</a></li>
+        <li class="nav-item"><a class="nav-link" href="community.html">Сообщество</a></li>
+        <li class="nav-item"><a class="nav-link" href="search.html">Поиск</a></li>
+        <li class="nav-item"><a class="nav-link active" href="profile.html">Профиль</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- # Основное содержимое страницы профиля # -->
+<main class="container my-4">
+  <div class="row g-4">
+    <!-- Левая колонка: карточка профиля с аватаркой и кнопкой выхода -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body text-center">
+          <div class="profile-avatar mb-3">
+                <span class="profile-avatar-initials" id="profile-avatar-text">DU</span>
+            </div>
+                <h1 class="h5 mb-1" id="profile-display-name">Demo User</h1>
+                <p class="small text-muted mb-3" id="profile-display-email">demo@n3n.local</p>
+
+                <a href="login.html" class="btn btn-outline-danger btn-sm">
+                    Выйти из аккаунта
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Правая колонка: формы редактирования профиля и смены пароля -->
+    <div class="col-md-8">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h2 class="h6 mb-3">Основные данные</h2>
+          <form id="profile-form">
+          <div class="mb-3">
+            <label class="form-label">Никнейм</label>
+            <input type="text" class="form-control" id="profile-name" value="Demo User">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" id="profile-email" value="demo@n3n.local">
+          <!-- Кнопка "Сохранить": пока обновляет отображаемые данные и инициалы -->
+          </div>
+            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- # Форма смены пароля (с проверкой совпадения) # -->
+      <div class="card">
+        <div class="card-body">
+          <h2 class="h6 mb-3">Изменение пароля</h2>
+          <form id="profile-password-form">
+            <div class="mb-3">
+              <label class="form-label">Текущий пароль</label>
+              <input type="password" class="form-control" id="current-password">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Новый пароль</label>
+              <input type="password" class="form-control" id="new-password">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Повторите новый пароль</label>
+              <input type="password" class="form-control" id="new-password-confirm">
+            </div>
+            <div class="mb-3">
+              <small id="profile-password-error" class="text-danger d-none">
+                Новый пароль и подтверждение не совпадают
+              </small>
+            </div>
+            <button type="submit" class="btn btn-primary">Обновить пароль (демо)</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Подключение Bootstrap JS (для модалок и др. компонентов) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>
