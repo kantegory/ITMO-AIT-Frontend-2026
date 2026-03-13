@@ -1,0 +1,72 @@
+<!-- html/register.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>n3n – Регистрация</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-light">
+<!-- # Верхнее меню (header) с логотипом и навигацией # -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-4">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="dashboard.html">
+      <span class="logo-n3n">
+        <span class="logo-n3n-black">n</span>
+        <span class="logo-n3n-red">3</span>
+        <span class="logo-n3n-black">n</span>
+      </span>
+    </a>
+  </div>
+</nav>
+
+<!-- # Основной блок с формой регистрации # -->
+<main class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <h1 class="h4 mb-3 text-center">
+        Регистрация в
+        <span class="logo-n3n mb-3">
+          <span class="logo-n3n-black">n</span><span class="logo-n3n-red">3</span><span class="logo-n3n-black">n</span>
+        </span>
+      </h1>
+      <!-- Форма регистрации с базовой проверкой совпадения паролей -->
+      <form id="register-form">
+        <div class="mb-3">
+          <label class="form-label">Имя</label>
+          <input type="text" class="form-control" placeholder="Ваше имя">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" placeholder="you@example.com">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Пароль</label>
+          <input type="password" class="form-control" id="password" placeholder="Пароль">
+        </div>
+        <div class="mb-1">
+          <label class="form-label">Повторите пароль</label>
+          <input type="password" class="form-control" id="password-confirm" placeholder="Пароль">
+        </div>
+        <div class="mb-3">
+          <small id="password-error" class="text-danger d-none">Пароли не совпадают</small>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
+      </form>
+      <div class="text-center mt-3">
+        <a href="login.html" class="small">У меня уже есть аккаунт</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Подключение Bootstrap JS (для модалок и др. компонентов) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>
