@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог курсов | NexusEdu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-blob-1"></div>
+    <div class="bg-blob-2"></div>
+
+    <nav class="navbar navbar-expand-lg glass m-3 px-4 py-3">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold text-white fs-4" href="index.html">🌌 NexusEdu</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navBar">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navBar">
+                <ul class="navbar-nav me-auto ms-4 gap-3">
+                    <li class="nav-item"><a class="nav-link text-white fw-bold border-bottom" href="index.html">Каталог</a></li>
+                    <li class="nav-item"><a class="nav-link text-white-50" href="profile.html">Мой кабинет</a></li>
+                </ul>
+                <a href="auth.html" class="btn glass-btn px-4">Войти</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 mb-5">
+        <div class="row g-4">
+            <aside class="col-lg-3">
+                <div class="glass p-4 sticky-top" style="top: 20px;">
+                    <h5 class="fw-bold mb-4">Фильтры</h5>
+                    <div class="mb-3">
+                        <label class="form-label text-white-50">Поиск</label>
+                        <input type="text" id="searchCourse" class="form-control glass-input" placeholder="Например: Python...">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-white-50">Направление</label>
+                        <select class="form-select glass-input text-white">
+                            <option value="">Все направления</option>
+                            <option value="1">Frontend</option>
+                            <option value="2">Backend</option>
+                            <option value="3">Data Science / AI</option>
+                        </select>
+                    </div>
+                    <button class="btn glass-btn w-100 py-2 mt-3" id="applyFilterBtn">Применить</button>
+                </div>
+            </aside>
+
+            <main class="col-lg-9">
+                <div class="row g-4">
+                    <div class="col-md-6 col-xl-4 d-flex">
+                        <div class="glass glass-hover w-100 d-flex flex-column">
+                            <img src="img/course1.png" class="glass-img-top w-100" alt="Vue">
+                            <div class="p-4 d-flex flex-column flex-grow-1">
+                                <span class="badge bg-primary bg-opacity-25 text-info rounded-pill w-50 mb-3 border border-info border-opacity-25">Frontend</span>
+                                <h5 class="fw-bold">Vue.js 3 с нуля</h5>
+                                <p class="text-white-50 small flex-grow-1">Создаем SPA приложения. Composition API, Vuex, Vue Router.</p>
+                                <a href="course.html" class="btn glass-btn w-100">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 d-flex">
+                        <div class="glass glass-hover w-100 d-flex flex-column">
+                            <img src="img/course2.png" class="glass-img-top w-100" alt="Python">
+                            <div class="p-4 d-flex flex-column flex-grow-1">
+                                <span class="badge bg-success bg-opacity-25 text-success rounded-pill w-50 mb-3 border border-success border-opacity-25">Backend</span>
+                                <h5 class="fw-bold">Python Django</h5>
+                                <p class="text-white-50 small flex-grow-1">Разработка надежных бекенд систем и REST API.</p>
+                                <a href="course.html" class="btn glass-btn w-100">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 d-flex">
+                        <div class="glass glass-hover w-100 d-flex flex-column">
+                            <img src="img/course3.png" class="glass-img-top w-100" alt="Data Science">
+                            <div class="p-4 d-flex flex-column flex-grow-1">
+                                <span class="badge bg-warning bg-opacity-25 text-warning rounded-pill w-50 mb-3 border border-warning border-opacity-25">Data Science</span>
+                                <h5 class="fw-bold">Machine Learning</h5>
+                                <p class="text-white-50 small flex-grow-1">Обучение моделей, нейросети, работа с Pandas и NumPy.</p>
+                                <a href="course.html" class="btn glass-btn w-100">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
