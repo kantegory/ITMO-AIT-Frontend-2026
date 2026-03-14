@@ -29,4 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = 'profile.html';
         });
     }
+
+    const priceRange = document.getElementById('priceRange');
+    const priceValue = document.getElementById('priceValue');
+    
+    if(priceRange && priceValue) {
+        priceRange.addEventListener('input', (e) => {
+            const formattedPrice = Number(e.target.value).toLocaleString('ru-RU');
+            priceValue.textContent = `До ${formattedPrice} ₽`;
+        });
+    }
 });
