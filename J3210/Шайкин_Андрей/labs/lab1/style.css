@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap');
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #0f172a;
+    color: #f1f5f9;
+    min-height: 100vh;
+    margin: 0;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-blob-1, .bg-blob-2 {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: -1;
+}
+.bg-blob-1 {
+    width: 500px; height: 500px;
+    background: #2563eb; 
+    top: -150px; left: -150px;
+}
+.bg-blob-2 {
+    width: 450px; height: 450px;
+    background: #9333ea; 
+    bottom: -150px; right: -100px;
+}
+
+.glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.5rem; 
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.glass-input {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: #fff !important;
+    border-radius: 1rem !important;
+}
+.glass-input::placeholder { color: rgba(255, 255, 255, 0.4); }
+.glass-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(147, 51, 234, 0.3) !important;
+    border-color: #9333ea !important;
+}
+
+select.glass-input option {
+    background-color: #1e293b;
+    color: #fff;
+    padding: 10px;
+}
+
+.form-check-input.glass-input:checked {
+    background-color: #9333ea !important;
+    border-color: #9333ea !important;
+}
+
+.glass-btn {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.7), rgba(147, 51, 234, 0.7));
+    border: none;
+    border-radius: 1rem;
+    color: white;
+    transition: 0.3s;
+    backdrop-filter: blur(5px);
+}
+.glass-btn:hover {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(147, 51, 234, 0.9));
+    color: white;
+    transform: translateY(-2px);
+}
+
+.glass-img-top {
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+    object-fit: cover;
+    height: 180px;
+}
+
+.default-avatar {
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
+
+.nav-pills .nav-link { border-radius: 1rem; color: rgba(255,255,255,0.6); }
+.nav-pills .nav-link.active { background: rgba(255,255,255,0.1); color: #fff; }
