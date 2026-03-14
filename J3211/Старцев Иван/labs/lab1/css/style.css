@@ -1,0 +1,23 @@
+:root {
+    --header-height: 56px;
+}
+body {
+    padding-top: var(--header-height);
+}
+[data-app-header] {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+.catalog-page__search,
+.catalog-page__filters {
+    top: calc(var(--header-height) + .25rem);
+}
+.course-detail__info,
+.lesson-page__sidebar {
+    top: calc(var(--header-height) + .5rem);
+}
+.lesson-page__sidebar {
+    max-height: calc(100vh - var(--header-height) - 2rem);
+}
