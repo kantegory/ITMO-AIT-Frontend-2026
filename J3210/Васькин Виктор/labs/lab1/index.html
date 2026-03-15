@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PosiMax | Каталог курсов</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg custom-navbar py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3 text-white" href="index.html">
+                Posi<span class="neon-text">Max</span>
+            </a>
+            
+            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-bold" href="index.html">Каталог</a>
+                    </li>
+                </ul>
+                <div class="d-flex flex-column flex-lg-row gap-3 mt-3 mt-lg-0">
+                    <a href="login.html" class="btn btn-outline-light rounded-pill px-4 fw-bold">Войти</a>
+                    <a href="register.html" class="btn btn-neon rounded-pill px-4 fw-bold">Регистрация</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-5 pt-3 mb-5">
+        <h1 class="text-white fw-bold mb-4">Каталог курсов</h1>
+
+        <div class="filter-top-bar p-3 p-md-4 rounded-4 mb-4">
+            <form class="row g-3 align-items-end">
+                <div class="col-12 col-lg-3">
+                    <label class="form-label text-white-50 small mb-1">Поиск</label>
+                    <input type="text" id="searchInput" class="form-control bg-dark text-white border-secondary" placeholder="Название курса...">
+                </div>
+
+                <div class="col-12 col-md-4 col-lg-2">
+                    <label class="form-label text-white-50 small mb-1">Направление</label>
+                    <select class="form-select bg-dark text-white border-secondary">
+                        <option value="all">Все</option>
+                        <option value="lang">Языки</option>
+                        <option value="data">Данные/ML</option>
+                        <option value="math">Математика</option>
+                    </select>
+                </div>
+
+                <div class="col-12 col-md-4 col-lg-2">
+                    <label class="form-label text-white-50 small mb-1">Уровень</label>
+                    <select class="form-select bg-dark text-white border-secondary">
+                        <option value="all">Любой</option>
+                        <option value="beginner">Новичок</option>
+                        <option value="pro">Pro</option>
+                    </select>
+                </div>
+
+                <div class="col-12 col-md-4 col-lg-3">
+                    <label class="form-label text-white-50 small mb-1 d-flex justify-content-between">
+                        <span>Цена до:</span>
+                        <span class="text-white fw-bold">10 000 ₽</span>
+                    </label>
+                    <input type="range" class="form-range custom-range" min="0" max="10000" step="500" value="10000">
+                </div>
+
+                <div class="col-12 col-lg-2">
+                    <button type="button" class="btn btn-neon w-100 fw-bold">Найти</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4">
+            
+            <div class="col">
+                <div class="card course-card h-100 bg-dark text-white border-secondary rounded-4 overflow-hidden d-flex flex-column">
+                    <img src="img/course1.png" class="card-img-top image-placeholder" alt="Python">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <span class="badge bg-neon rounded-pill">Языки</span>
+                                <span class="badge bg-secondary rounded-pill">Новичок</span>
+                            </div>
+                        </div>
+                        <h5 class="card-title fw-bold mb-1">Python</h5>
+                        <div class="text-warning small mb-2">
+                            ★★★★★ <span class="text-white-50 ms-1">(124)</span>
+                        </div>
+                        <p class="card-text text-white-50 small flex-grow-1">Твой первый шаг в IT. Просто, доступно и максимально быстро к результату.</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+                            <span class="fs-5 fw-bold text-white">Бесплатно</span>
+                            <a href="course.html" class="btn btn-sm btn-outline-light rounded-pill px-3 fw-bold">Подробнее</a>
+                        </div>
+
+                        <div class="mt-auto pt-3 border-top border-secondary d-flex align-items-center">
+                            <img src="https://ui-avatars.com/api/?name=Kazantsev+O&background=a855f7&color=fff" class="rounded-circle" width="32" height="32" alt="Препod">
+                            <div class="ms-2 lh-1">
+                                <div class="small fw-bold text-white">Казанцев О. О.</div>
+                                <div class="text-white-50" style="font-size: 0.75rem;">Senior Backend Developer</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card course-card h-100 bg-dark text-white border-secondary rounded-4 overflow-hidden d-flex flex-column">
+                    <img src="img/course2.png" class="card-img-top image-placeholder" alt="Java">
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-2">
+                            <span class="badge bg-neon rounded-pill">Языки</span>
+                            <span class="badge bg-secondary rounded-pill">Новичок</span>
+                        </div>
+                        <h5 class="card-title fw-bold mb-1">Java</h5>
+                        <div class="text-warning small mb-2">
+                            ★★★★☆ <span class="text-white-50 ms-1">(89)</span>
+                        </div>
+                        <p class="card-text text-white-50 small flex-grow-1">Твой фундамент в энтерпрайз-разработке. Строго, структурировано, надежно.</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+                            <span class="fs-5 fw-bold text-white">Бесплатно</span>
+                            <a href="course.html" class="btn btn-sm btn-outline-light rounded-pill px-3 fw-bold">Подробнее</a>
+                        </div>
+                        
+                        <div class="mt-auto pt-3 border-top border-secondary d-flex align-items-center">
+                            <img src="https://ui-avatars.com/api/?name=Trybnikov+P&background=a855f7&color=fff" class="rounded-circle" width="32" height="32" alt="Препod">
+                            <div class="ms-2 lh-1">
+                                <div class="small fw-bold text-white">Трубников И. О.</div>
+                                <div class="text-white-50" style="font-size: 0.75rem;">Lead Java Engineer</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card course-card h-100 bg-dark text-white border-secondary rounded-4 overflow-hidden d-flex flex-column">
+                    <img src="img/course3.png" class="card-img-top image-placeholder" alt="C#">
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-2">
+                            <span class="badge bg-neon rounded-pill">Языки</span>
+                            <span class="badge bg-danger rounded-pill">Pro</span>
+                        </div>
+                        <h5 class="card-title fw-bold mb-1">C# разработчик</h5>
+                        <div class="text-warning small mb-2">
+                            ★★★★★ <span class="text-white-50 ms-1">(210)</span>
+                        </div>
+                        <p class="card-text text-white-50 small flex-grow-1">Стань мастером ООП, закрой вопросы по бэку. Гарантирована работа в Ozon!</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+                            <span class="fs-5 fw-bold neon-text">8 990 ₽</span>
+                            <a href="course.html" class="btn btn-sm btn-neon rounded-pill px-3 fw-bold">Подробнее</a>
+                        </div>
+
+                        <div class="mt-auto pt-3 border-top border-secondary d-flex align-items-center">
+                            <img src="https://ui-avatars.com/api/?name=Smirnov+A&background=a855f7&color=fff" class="rounded-circle" width="32" height="32" alt="Препod">
+                            <div class="ms-2 lh-1">
+                                <div class="small fw-bold text-white">Смирнов А. С.</div>
+                                <div class="text-white-50" style="font-size: 0.75rem;">Tech Lead @ Ozon</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card course-card h-100 bg-dark text-white border-secondary rounded-4 overflow-hidden d-flex flex-column">
+                    <img src="img/course4.png" class="card-img-top image-placeholder" alt="C++">
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-2">
+                            <span class="badge bg-neon rounded-pill">Языки</span>
+                            <span class="badge bg-danger rounded-pill">Pro</span>
+                        </div>
+                        <h5 class="card-title fw-bold mb-1">C++</h5>
+                        <div class="text-warning small mb-2">
+                            ★★★★★ <span class="text-white-50 ms-1">(342)</span>
+                        </div>
+                        <p class="card-text text-white-50 small flex-grow-1">Укроти память и скорость. Стань тем, кто пишет ядро системы, а не просто скрипты.</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+                            <span class="fs-5 fw-bold neon-text">9 500 ₽</span>
+                            <a href="course.html" class="btn btn-sm btn-neon rounded-pill px-3 fw-bold">Подробнее</a>
+                        </div>
+
+                        <div class="mt-auto pt-3 border-top border-secondary d-flex align-items-center">
+                            <img src="https://ui-avatars.com/api/?name=Khodnenko+I&background=a855f7&color=fff" class="rounded-circle" width="32" height="32" alt="Препod">
+                            <div class="ms-2 lh-1">
+                                <div class="small fw-bold text-white">Ходненко И. А.</div>
+                                <div class="text-white-50" style="font-size: 0.75rem;">System Architect</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card course-card h-100 bg-dark text-white border-secondary rounded-4 overflow-hidden d-flex flex-column">
+                    <img src="img/course5.png" class="card-img-top image-placeholder" alt="SQL">
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-2">
+                            <span class="badge bg-info text-dark rounded-pill">Данные</span>
+                            <span class="badge bg-secondary rounded-pill">Новичок</span>
+                        </div>
+                        <h5 class="card-title fw-bold mb-1">Основы SQL</h5>
+                        <div class="text-warning small mb-2">
+                            ★★★★☆ <span class="text-white-50 ms-1">(56)</span>
+                        </div>
+                        <p class="card-text text-white-50 small flex-grow-1">Повелитель данных. Научись доставать любую информацию из любой БД за секунды.</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+                            <span class="fs-5 fw-bold text-white">1 990 ₽</span>
+                            <a href="course.html" class="btn btn-sm btn-outline-light rounded-pill px-3 fw-bold">Подробнее</a>
+                        </div>
+
+                        <div class="mt-auto pt-3 border-top border-secondary d-flex align-items-center">
+                            <img src="https://ui-avatars.com/api/?name=Trybnikov+P&background=0dcaf0&color=000" class="rounded-circle" width="32" height="32" alt="Препod">
+                            <div class="ms-2 lh-1">
+                                <div class="small fw-bold text-white">Трубников А. И.</div>
+                                <div class="text-white-50" style="font-size: 0.75rem;">Data Analyst</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card course-card h-100 bg-dark text-white border-secondary rounded-4 overflow-hidden d-flex flex-column">
+                    <img src="img/course6.png" class="card-img-top image-placeholder" alt="ML">
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-2">
+                            <span class="badge bg-info text-dark rounded-pill">Данные</span>
+                            <span class="badge bg-secondary rounded-pill">Новичок</span>
+                        </div>
+                        <h5 class="card-title fw-bold mb-1">ML классик</h5>
+                        <div class="text-warning small mb-2">
+                            ★★★★★ <span class="text-white-50 ms-1">(112)</span>
+                        </div>
+                        <p class="card-text text-white-50 small flex-grow-1">Поймешь, как машины думают. База, которая превратит тебя из кодера в исследователя.</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+                            <span class="fs-5 fw-bold text-white">3 500 ₽</span>
+                            <a href="course.html" class="btn btn-sm btn-outline-light rounded-pill px-3 fw-bold">Подробнее</a>
+                        </div>
+
+                        <div class="mt-auto pt-3 border-top border-secondary d-flex align-items-center">
+                            <img src="https://ui-avatars.com/api/?name=Vyahirev+I&background=0dcaf0&color=000" class="rounded-circle" width="32" height="32" alt="Препod">
+                            <div class="ms-2 lh-1">
+                                <div class="small fw-bold text-white">Вяхирев И. О.</div>
+                                <div class="text-white-50" style="font-size: 0.75rem;">ML Engineer</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card course-card h-100 bg-dark text-white border-secondary rounded-4 overflow-hidden d-flex flex-column">
+                    <img src="img/course7.png" class="card-img-top image-placeholder" alt="Алгебра">
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-2">
+                            <span class="badge bg-success rounded-pill">Математика</span>
+                            <span class="badge bg-secondary rounded-pill">Новичок</span>
+                        </div>
+                        <h5 class="card-title fw-bold mb-1">Линейная алгебра</h5>
+                        <div class="text-warning small mb-2">
+                            ★★★★★ <span class="text-white-50 ms-1">(305)</span>
+                        </div>
+                        <p class="card-text text-white-50 small flex-grow-1">Теплый, ламповый курс. Разберем матрицы и векторы через призму философии.</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+                            <span class="fs-5 fw-bold text-white">Бесплатно</span>
+                            <a href="course.html" class="btn btn-sm btn-outline-light rounded-pill px-3 fw-bold">Подробнее</a>
+                        </div>
+
+                        <div class="mt-auto pt-3 border-top border-secondary d-flex align-items-center">
+                            <img src="https://ui-avatars.com/api/?name=Prof.+Popkov&background=198754&color=fff" class="rounded-circle" width="32" height="32" alt="Препod">
+                            <div class="ms-2 lh-1">
+                                <div class="small fw-bold text-white">Попков Р. А.</div>
+                                <div class="text-white-50" style="font-size: 0.75rem;">Доктор физ-мат наук</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card course-card h-100 bg-dark text-white border-secondary rounded-4 overflow-hidden d-flex flex-column">
+                    <img src="img/course8.png" class="card-img-top image-placeholder" alt="Теорвер">
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-2">
+                            <span class="badge bg-success rounded-pill">Математика</span>
+                            <span class="badge bg-secondary rounded-pill">Новичок</span>
+                        </div>
+                        <h5 class="card-title fw-bold mb-1">Теорвер и Статистика</h5>
+                        <div class="text-warning small mb-2">
+                            ★★★★☆ <span class="text-white-50 ms-1">(142)</span>
+                        </div>
+                        <p class="card-text text-white-50 small flex-grow-1">Переверни представление о случайностях. Узнай тайны скрытых закономерностей мира.</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+                            <span class="fs-5 fw-bold text-white">2 200 ₽</span>
+                            <a href="course.html" class="btn btn-sm btn-outline-light rounded-pill px-3 fw-bold">Подробнее</a>
+                        </div>
+
+                        <div class="mt-auto pt-3 border-top border-secondary d-flex align-items-center">
+                            <img src="https://ui-avatars.com/api/?name=Prof.+Karpov&background=198754&color=fff" class="rounded-circle" width="32" height="32" alt="Препod">
+                            <div class="ms-2 lh-1">
+                                <div class="small fw-bold text-white">Карпов Д. И.</div>
+                                <div class="text-white-50" style="font-size: 0.75rem;">Доктор всевозможных наук</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
+</body>
+</html>
