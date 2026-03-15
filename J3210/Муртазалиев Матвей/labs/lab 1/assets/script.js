@@ -1,3 +1,10 @@
+const $ = (selector, root = document) => root.querySelector(selector);
+const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+const setText = (selector, value, root = document) => {
+  const node = $(selector, root);
+  if (node) node.textContent = value;
+};
+
 const reportPresets = {
   week: {
     spend: "₽ 18 900",
@@ -17,7 +24,7 @@ const reportPresets = {
     category: "Еда",
     forecast: "₽ 27 100",
     forecastText: "Остаток около ₽ 27 100",
-    forecastDescription: "Есть небольшой запас, но категория «Еда» растёт быстрее плана.",
+    forecastDescription: "Есть небольшой запас, но категория «Еда» растет быстрее плана.",
     spendLabels: ["1", "5", "10", "15", "20", "25", "30"],
     spendData: [6400, 9100, 8500, 11600, 10800, 12900, 14150],
     categoryLabels: ["Еда", "Дом", "Транспорт", "Подписки"],
@@ -39,25 +46,17 @@ const reportPresets = {
 
 document.addEventListener("DOMContentLoaded", () => {
   initPasswordToggle();
-  initPasswordStrength();
   initTransactionFilters();
-  initDashboardModal();
+  initModal("actionModal", { "[data-modal-title]": "data-action-title", "[data-modal-text]": "data-action-text" }, { "[data-modal-title]": "Быстрое действие", "[data-modal-text]": "" });
+  initModal("importModal", { "[data-import-provider]": "data-provider" }, { "[data-import-provider]": "выбранный аккаунт" });
   initReportCharts();
-  initImportModal();
 });
 
-
 function initPasswordToggle() {
-  const toggleButtons = document.querySelectorAll("[data-password-toggle]");
-
-  toggleButtons.forEach((button) => {
+  $$("[data-password-toggle]").forEach((button) => {
     button.addEventListener("click", () => {
-      const input = button.parentElement?.querySelector("[data-password-input]");
-
-      if (!input) {
-        return;
-      }
-
+      const input = $("[data-password-input]", button.parentElement);
+      if (!input) return;
       const isPassword = input.type === "password";
       input.type = isPassword ? "text" : "password";
       button.innerHTML = isPassword ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
@@ -65,310 +64,124 @@ function initPasswordToggle() {
   });
 }
 
-function initPasswordStrength() {
-  const input = document.querySelector("[data-strength-input]");
-  const bar = document.querySelector("[data-strength-bar]");
-  const text = document.querySelector("[data-strength-text]");
-
-  if (!input || !bar || !text) {
-    return;
-  }
-
-  input.addEventListener("input", () => {
-    const value = input.value.trim();
-    let width = 12;
-    let label = "Укажите пароль";
-    let color = "#ef7e56";
-
-    if (value.length >= 6) {
-      width = 45;
-      label = "Средний пароль";
-      color = "#d29a2c";
-    }
-
-    if (value.length >= 10 && /\d/.test(value) && /[A-ZА-Я]/.test(value)) {
-      width = 100;
-      label = "Надёжный пароль";
-      color = "#0f766e";
-    }
-
-    bar.style.width = `${width}%`;
-    bar.style.backgroundColor = color;
-    text.textContent = label;
-  });
-}
-
 function initTransactionFilters() {
-  const list = document.querySelector("[data-transaction-list]");
+  const list = $("[data-transaction-list]");
+  if (!list) return;
 
-  if (!list) {
-    return;
-  }
+  const items = $$(".transaction-item", list);
+  const fields = {
+    search: $("[data-filter-search]"),
+    category: $("[data-filter-category]"),
+    amount: $("[data-filter-amount]"),
+    from: $("[data-filter-date-from]"),
+    to: $("[data-filter-date-to]"),
+  };
 
-const items = Array.from(list.querySelectorAll(".transaction-item"));
-const searchInput = document.querySelector("[data-filter-search]");
-const categoryInput = document.querySelector("[data-filter-category]");
-const amountInput = document.querySelector("[data-filter-amount]");
-const dateFromInput = document.querySelector("[data-filter-date-from]");
-const dateToInput = document.querySelector("[data-filter-date-to]");
-const countElement = document.querySelector("[data-transaction-count]");
-const emptyState = document.querySelector("[data-empty-state]");
-const resetButton = document.querySelector("[data-filter-reset]");
+  const applyFilters = () => {
+    const state = {
+      search: fields.search?.value.trim().toLowerCase() || "",
+      category: fields.category?.value || "all",
+      amount: Number(fields.amount?.value || 0),
+      from: fields.from?.value || "",
+      to: fields.to?.value || "",
+    };
 
-const applyFilters = () => {
-  const searchValue = (searchInput?.value || "").trim().toLowerCase();
-  const category = categoryInput?.value || "all";
-  const amount = Number(amountInput?.value || 0);
-  const dateFrom = dateFromInput?.value || "";
-  const dateTo = dateToInput?.value || "";
+    const visibleCount = items.reduce((count, item) => {
+      const matches =
+        (!state.search || item.textContent.toLowerCase().includes(state.search)) &&
+        (state.category === "all" || item.dataset.category === state.category) &&
+        (!state.amount || Number(item.dataset.amount) <= state.amount) &&
+        (!state.from || item.dataset.date >= state.from) &&
+        (!state.to || item.dataset.date <= state.to);
 
-  let visibleCount = 0;
+      item.classList.toggle("d-none", !matches);
+      return count + Number(matches);
+    }, 0);
 
-  items.forEach((item) => {
-    const itemCategory = item.dataset.category || "";
-    const itemAmount = Number(item.dataset.amount || 0);
-    const itemDate = item.dataset.date || "";
-    const itemText = item.textContent?.toLowerCase() || "";
+    setText("[data-transaction-count]", String(visibleCount));
+    $("[data-empty-state]")?.classList.toggle("d-none", visibleCount !== 0);
+  };
 
-    const matchesSearch = !searchValue || itemText.includes(searchValue);
-    const matchesCategory = category === "all" || itemCategory === category;
-    const matchesAmount = !amount || itemAmount <= amount;
-    const matchesFrom = !dateFrom || itemDate >= dateFrom;
-    const matchesTo = !dateTo || itemDate <= dateTo;
-    const isVisible = matchesSearch && matchesCategory && matchesAmount && matchesFrom && matchesTo;
-
-    item.classList.toggle("d-none", !isVisible);
-
-    if (isVisible) {
-      visibleCount += 1;
-    }
+  Object.values(fields).forEach((field) => {
+    field?.addEventListener("input", applyFilters);
+    field?.addEventListener("change", applyFilters);
   });
 
-  if (countElement) {
-    countElement.textContent = String(visibleCount);
-  }
-
-  emptyState?.classList.toggle("d-none", visibleCount !== 0);
-};
-
-[searchInput, categoryInput, amountInput, dateFromInput, dateToInput].forEach((element) => {
-  element?.addEventListener("input", applyFilters);
-  element?.addEventListener("change", applyFilters);
-});
-
-resetButton?.addEventListener("click", () => {
-  if (searchInput) {
-    searchInput.value = "";
-  }
-
-  if (categoryInput) {
-    categoryInput.value = "all";
-  }
-
-  if (amountInput) {
-    amountInput.value = "";
-  }
-
-  if (dateFromInput) {
-    dateFromInput.value = "";
-  }
-
-  if (dateToInput) {
-    dateToInput.value = "";
-  }
+  $("[data-filter-reset]")?.addEventListener("click", () => {
+    if (fields.search) fields.search.value = "";
+    if (fields.category) fields.category.value = "all";
+    if (fields.amount) fields.amount.value = "";
+    if (fields.from) fields.from.value = "";
+    if (fields.to) fields.to.value = "";
+    applyFilters();
+  });
 
   applyFilters();
-});
 }
 
-function initDashboardModal() {
-  const actionModal = document.getElementById("actionModal");
+function initModal(id, bindings, defaults = {}) {
+  const modal = document.getElementById(id);
+  if (!modal) return;
 
-  if (actionModal) {
-    actionModal.addEventListener("show.bs.modal", (event) => {
-      const trigger = event.relatedTarget;
-      const title = trigger?.getAttribute("data-action-title") || "Быстрое действие";
-      const text = trigger?.getAttribute("data-action-text") || "";
-      const titleNode = actionModal.querySelector("[data-modal-title]");
-      const textNode = actionModal.querySelector("[data-modal-text]");
-
-      if (titleNode) {
-        titleNode.textContent = title;
-      }
-
-      if (textNode) {
-        textNode.textContent = text;
-      }
+  modal.addEventListener("show.bs.modal", ({ relatedTarget }) => {
+    Object.entries(bindings).forEach(([selector, attribute]) => {
+      setText(selector, relatedTarget?.getAttribute(attribute) || defaults[selector] || "", modal);
     });
-  }
+  });
 }
-
-
-
 
 function initReportCharts() {
   const spendCanvas = document.getElementById("spendChart");
   const categoryCanvas = document.getElementById("categoryChart");
+  const switcher = $("[data-report-switcher]");
 
-  if (!spendCanvas || !categoryCanvas || typeof Chart === "undefined") {
-    return;
-  }
+  if (!spendCanvas || !categoryCanvas || !switcher || typeof Chart === "undefined") return;
 
   const spendChart = new Chart(spendCanvas, {
     type: "line",
-    data: {
-      labels: reportPresets.week.spendLabels,
-      datasets: [
-        {
-          label: "Расходы",
-          data: reportPresets.week.spendData,
-          fill: true,
-          borderWidth: 3,
-          borderColor: "#0f766e",
-          backgroundColor: "rgba(15, 118, 110, 0.14)",
-          tension: 0.35,
-          pointBackgroundColor: "#ef7e56",
-          pointRadius: 4,
-        },
-      ],
-    },
-    options: {
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: false,
-        },
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          grid: {
-            color: "rgba(24, 33, 38, 0.08)",
-          },
-        },
-        x: {
-          grid: {
-            display: false,
-          },
-        },
-      },
-    },
+    data: { labels: [], datasets: [{ label: "Расходы", data: [], fill: true, borderWidth: 3, borderColor: "#0f766e", backgroundColor: "rgba(15, 118, 110, 0.14)", tension: 0.35, pointBackgroundColor: "#ef7e56", pointRadius: 4 }] },
+    options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: "rgba(24, 33, 38, 0.08)" } }, x: { grid: { display: false } } } },
   });
 
   const categoryChart = new Chart(categoryCanvas, {
     type: "doughnut",
-    data: {
-      labels: reportPresets.week.categoryLabels,
-      datasets: [
-        {
-          data: reportPresets.week.categoryData,
-          borderWidth: 0,
-          backgroundColor: ["#0f766e", "#ef7e56", "#4c84ff", "#9a6fdb"],
-        },
-      ],
-    },
-    options: {
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: "bottom",
-          labels: {
-            boxWidth: 12,
-            usePointStyle: true,
-          },
-        },
-      },
-      cutout: "68%",
-    },
-});
+    data: { labels: [], datasets: [{ data: [], borderWidth: 0, backgroundColor: ["#0f766e", "#ef7e56", "#4c84ff", "#9a6fdb"] }] },
+    options: { maintainAspectRatio: false, plugins: { legend: { position: "bottom", labels: { boxWidth: 12, usePointStyle: true } } }, cutout: "68%" },
+  });
 
-const switcher = document.querySelector("[data-report-switcher]");
-  const spendNode = document.querySelector("[data-kpi-spend]");
-  const averageNode = document.querySelector("[data-kpi-average]");
-  const categoryNode = document.querySelector("[data-kpi-category]");
-  const forecastNode = document.querySelector("[data-kpi-forecast]");
-  const forecastTextNode = document.querySelector("[data-forecast-text]");
-  const forecastDescriptionNode = document.querySelector("[data-forecast-description]");
-  const breakdownContainer = document.querySelector("[data-category-breakdown]");
+  const applyPreset = (period) => {
+    const preset = reportPresets[period];
+    if (!preset) return;
 
-  if (!switcher) {
-    return;
-  }
+    spendChart.data.labels = preset.spendLabels;
+    spendChart.data.datasets[0].data = preset.spendData;
+    categoryChart.data.labels = preset.categoryLabels;
+    categoryChart.data.datasets[0].data = preset.categoryData;
+    spendChart.update();
+    categoryChart.update();
 
-  switcher.querySelectorAll("[data-period]").forEach((button) => {
+    setText("[data-kpi-spend]", preset.spend);
+    setText("[data-kpi-average]", preset.average);
+    setText("[data-kpi-category]", preset.category);
+    setText("[data-kpi-forecast]", preset.forecast);
+    setText("[data-forecast-text]", preset.forecastText);
+    setText("[data-forecast-description]", preset.forecastDescription);
+
+    const breakdown = $("[data-category-breakdown]");
+    if (breakdown) {
+      breakdown.innerHTML = preset.categoryLabels
+        .map((label, index) => `<div class="insight-row"><span>${label}</span><strong>₽ ${preset.categoryData[index].toLocaleString("ru-RU")}</strong></div>`)
+        .join("");
+    }
+  };
+
+  $$("[data-period]", switcher).forEach((button) => {
     button.addEventListener("click", () => {
-      const period = button.getAttribute("data-period");
-      const preset = reportPresets[period];
-
-      if (!preset) {
-        return;
-      }
-
-      switcher.querySelectorAll(".btn").forEach((item) => item.classList.remove("active"));
+      $$(".btn", switcher).forEach((item) => item.classList.remove("active"));
       button.classList.add("active");
-
-      spendChart.data.labels = preset.spendLabels;
-      spendChart.data.datasets[0].data = preset.spendData;
-      spendChart.update();
-
-      categoryChart.data.labels = preset.categoryLabels;
-      categoryChart.data.datasets[0].data = preset.categoryData;
-      categoryChart.update();
-
-      if (spendNode) {
-        spendNode.textContent = preset.spend;
-      }
-
-      if (averageNode) {
-        averageNode.textContent = preset.average;
-      }
-
-      if (categoryNode) {
-        categoryNode.textContent = preset.category;
-      }
-
-      if (forecastNode) {
-        forecastNode.textContent = preset.forecast;
-      }
-
-      if (forecastTextNode) {
-        forecastTextNode.textContent = preset.forecastText;
-      }
-
-      if (forecastDescriptionNode) {
-        forecastDescriptionNode.textContent = preset.forecastDescription;
-      }
-
-      if (breakdownContainer) {
-        breakdownContainer.innerHTML = preset.categoryLabels
-          .map(
-            (label, index) => `
-              <div class="insight-row">
-                <span>${label}</span>
-                <strong>₽ ${preset.categoryData[index].toLocaleString("ru-RU")}</strong>
-              </div>
-            `,
-          )
-          .join("");
-      }
+      applyPreset(button.dataset.period);
     });
   });
-}
 
-function initImportModal() {
-  const importModal = document.getElementById("importModal");
-
-  if (!importModal) {
-    return;
-  }
-
-  importModal.addEventListener("show.bs.modal", (event) => {
-    const trigger = event.relatedTarget;
-    const provider = trigger?.getAttribute("data-provider") || "выбранный аккаунт";
-    const providerNode = importModal.querySelector("[data-import-provider]");
-
-    if (providerNode) {
-      providerNode.textContent = provider;
-    }
-  });
+  applyPreset("week");
 }
