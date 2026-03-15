@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python для начинающих — MokiichukKnowledge</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="style.css?v=3" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><i class="bi bi-mortarboard-fill"></i> MokiichukKnowledge</a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto ms-3">
+          <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+          <li class="nav-item"><a class="nav-link" href="search.html">Каталог</a></li>
+          <li class="nav-item"><a class="nav-link" href="teacher.html">Преподавателям</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <a href="profile.html" class="btn btn-outline-primary btn-sm"><i class="bi bi-person me-1"></i>Профиль</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="course-hero" style="margin-top:64px">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-3" style="font-size:0.85rem">
+          <li class="breadcrumb-item"><a href="search.html" class="text-white-50 text-decoration-none">Каталог</a></li>
+          <li class="breadcrumb-item"><a href="search.html" class="text-white-50 text-decoration-none">Программирование</a></li>
+          <li class="breadcrumb-item text-white active">Python для начинающих</li>
+        </ol>
+      </nav>
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <h1>Python для начинающих</h1>
+          <p class="mb-3" style="opacity:0.85">Научитесь программировать на Python с нуля. Курс включает видеолекции, практические задания и финальный проект.</p>
+          <div class="d-flex flex-wrap gap-3 align-items-center mb-3">
+            <div class="rating" style="font-size:1rem">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+              <span class="text-white ms-1">4.8 (228 отзыва)</span>
+            </div>
+            <span class="text-white-50"><i class="bi bi-people me-1"></i>2 400 студентов</span>
+            <span class="text-white-50"><i class="bi bi-clock me-1"></i>24 часа</span>
+          </div>
+          <p class="mb-0" style="opacity:0.7;font-size:0.9rem">Автор: <strong>Илья Эксайл</strong></p>
+        </div>
+        <div class="col-lg-4 mt-4 mt-lg-0">
+          <div class="card-custom p-4 text-center" style="color:var(--gray-800)">
+            <div class="price-free mb-2" style="font-size:1.5rem">Бесплатно</div>
+            <button class="btn btn-accent w-100 mb-2" id="buyCourseBtn"><i class="bi bi-play-circle me-2"></i>Начать обучение</button>
+            <button class="btn btn-outline-primary w-100" onclick="showToast('Курс добавлен в избранное','success')"><i class="bi bi-heart me-2"></i>В избранное</button>
+            <hr>
+            <div class="text-start" style="font-size:0.85rem">
+              <div class="mb-1"><i class="bi bi-collection-play me-2 text-primary"></i>12 видео-лекций</div>
+              <div class="mb-1"><i class="bi bi-file-earmark-text me-2 text-primary"></i>8 материалов</div>
+              <div class="mb-1"><i class="bi bi-pencil-square me-2 text-primary"></i>6 заданий</div>
+              <div class="mb-1"><i class="bi bi-award me-2 text-primary"></i>Сертификат по окончании</div>
+              <div><i class="bi bi-infinity me-2 text-primary"></i>Бессрочный доступ</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:30px">
+    <div class="container">
+      <div class="row g-4">
+
+        <div class="col-lg-8">
+
+          <div class="video-placeholder mb-4">
+            <i class="bi bi-play-circle-fill" style="z-index:1;cursor:pointer" onclick="showToast('Воспроизведение видео (заглушка)','info')"></i>
+          </div>
+
+          <h4 class="fw-bold mb-1" id="currentLessonTitle">Урок 1: Введение в Python</h4>
+          <p class="text-muted mb-4">Знакомство с языком Python, установка среды разработки</p>
+
+          <div class="card-custom p-3 mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="fw-bold" style="font-size:0.9rem">Прогресс курса</span>
+              <span class="fw-bold text-primary" id="courseProgressText">0%</span>
+            </div>
+            <div class="progress progress-custom">
+              <div class="progress-bar" role="progressbar" id="courseProgressBar" style="width:0%"></div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary mb-4" id="completeLesson"><i class="bi bi-check2-circle me-2"></i>Отметить урок пройденным</button>
+
+          <ul class="nav nav-tabs-custom mb-4" role="tablist">
+            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tabMaterials">Материалы</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabTasks">Задания</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabDiscussion">Обсуждение</a></li>
+          </ul>
+
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="tabMaterials">
+              <div class="card-custom p-3 mb-3">
+                <div class="d-flex align-items-center gap-3">
+                  <i class="bi bi-file-earmark-pdf text-danger" style="font-size:1.5rem"></i>
+                  <div class="flex-grow-1">
+                    <div class="fw-bold" style="font-size:0.95rem">Конспект лекции 1</div>
+                    <small class="text-muted">PDF, 2.3 MB</small>
+                  </div>
+                  <button class="btn btn-sm btn-outline-primary" onclick="showToast('Скачивание файла (заглушка)','info')"><i class="bi bi-download"></i></button>
+                </div>
+              </div>
+              <div class="card-custom p-3 mb-3">
+                <div class="d-flex align-items-center gap-3">
+                  <i class="bi bi-file-earmark-code text-primary" style="font-size:1.5rem"></i>
+                  <div class="flex-grow-1">
+                    <div class="fw-bold" style="font-size:0.95rem">Исходный код примеров</div>
+                    <small class="text-muted">ZIP, 540 KB</small>
+                  </div>
+                  <button class="btn btn-sm btn-outline-primary" onclick="showToast('Скачивание файла (заглушка)','info')"><i class="bi bi-download"></i></button>
+                </div>
+              </div>
+              <div class="card-custom p-3">
+                <div class="d-flex align-items-center gap-3">
+                  <i class="bi bi-link-45deg text-success" style="font-size:1.5rem"></i>
+                  <div class="flex-grow-1">
+                    <div class="fw-bold" style="font-size:0.95rem">Официальная документация Python</div>
+                    <small class="text-muted">Внешняя ссылка</small>
+                  </div>
+                  <button class="btn btn-sm btn-outline-primary" onclick="showToast('Переход по ссылке (заглушка)','info')"><i class="bi bi-box-arrow-up-right"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="tabTasks">
+              <div class="card-custom p-4 mb-3">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h6 class="fw-bold mb-0">Задание 1: Hello World</h6>
+                  <span class="badge bg-success">Легкое</span>
+                </div>
+                <p class="text-muted mb-3" style="font-size:0.9rem">Напишите программу, которая выводит "Hello, World!" в консоль.</p>
+                <textarea class="form-control mb-3" rows="4" placeholder="Введите ваш код здесь..."></textarea>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-primary btn-sm" onclick="showToast('Решение отправлено!','success')"><i class="bi bi-send me-1"></i>Отправить</button>
+                  <button class="btn btn-outline-secondary btn-sm" onclick="showToast('Подсказка: используйте функцию print()','info')"><i class="bi bi-lightbulb me-1"></i>Подсказка</button>
+                </div>
+              </div>
+              <div class="card-custom p-4">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h6 class="fw-bold mb-0">Задание 2: Калькулятор</h6>
+                  <span class="badge bg-warning text-dark">Среднее</span>
+                </div>
+                <p class="text-muted mb-3" style="font-size:0.9rem">Создайте простой калькулятор с операциями сложения, вычитания, умножения и деления.</p>
+                <textarea class="form-control mb-3" rows="4" placeholder="Введите ваш код здесь..."></textarea>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-primary btn-sm" onclick="showToast('Решение отправлено!','success')"><i class="bi bi-send me-1"></i>Отправить</button>
+                  <button class="btn btn-outline-secondary btn-sm" onclick="showToast('Подсказка: используйте input() для ввода данных','info')"><i class="bi bi-lightbulb me-1"></i>Подсказка</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="tabDiscussion">
+              <form id="commentForm" class="mb-4">
+                <div class="d-flex gap-3">
+                  <div class="comment-avatar">Я</div>
+                  <div class="flex-grow-1">
+                    <textarea class="form-control mb-2" id="commentInput" rows="3" placeholder="Напишите комментарий или задайте вопрос..."></textarea>
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-send me-1"></i>Отправить</button>
+                  </div>
+                </div>
+              </form>
+
+              <div id="commentsList">
+                <div class="comment-item">
+                  <div class="d-flex gap-3">
+                    <div class="comment-avatar" style="background:var(--accent)">МК</div>
+                    <div class="flex-grow-1">
+                      <div class="d-flex justify-content-between align-items-center mb-1">
+                        <strong>Арина Вадимовна</strong>
+                        <small class="text-muted">2 часа назад</small>
+                      </div>
+                      <p class="mb-2" style="font-size:0.92rem">Отличный урок! Подскажите, какой редактор лучше использовать для Python?</p>
+                      <button class="btn btn-sm btn-link text-decoration-none p-0" onclick="showToast('Функция ответа','info')"><i class="bi bi-reply me-1"></i>Ответить</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="comment-item">
+                  <div class="d-flex gap-3">
+                    <div class="comment-avatar" style="background:var(--secondary)">АГ</div>
+                    <div class="flex-grow-1">
+                      <div class="d-flex justify-content-between align-items-center mb-1">
+                        <strong>Андрей Гайдулян</strong> <span class="badge bg-primary ms-2" style="font-size:0.7rem">Автор</span>
+                        <small class="text-muted">1 час назад</small>
+                      </div>
+                      <p class="mb-2" style="font-size:0.92rem">Рекомендую VS Code с расширением Python — это бесплатный и удобный вариант. Также подойдет PyCharm Community Edition.</p>
+                      <button class="btn btn-sm btn-link text-decoration-none p-0" onclick="showToast('Функция ответа (заглушка)','info')"><i class="bi bi-reply me-1"></i>Ответить</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="comment-item">
+                  <div class="d-flex gap-3">
+                    <div class="comment-avatar" style="background:#28a745">ИС</div>
+                    <div class="flex-grow-1">
+                      <div class="d-flex justify-content-between align-items-center mb-1">
+                        <strong>Илья Сатир</strong>
+                        <small class="text-muted">5 часов назад</small>
+                      </div>
+                      <p class="mb-0" style="font-size:0.92rem">Прошел первые 3 урока за день, очень доступно объясняется. Спасибо!</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card-custom" style="position:sticky;top:80px">
+            <div class="p-3 border-bottom">
+              <h6 class="fw-bold mb-0"><i class="bi bi-list-ul me-2"></i>Содержание курса</h6>
+            </div>
+            <div style="max-height:500px;overflow-y:auto">
+              <div class="lesson-item active" data-title="Урок 1: Введение в Python">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span style="font-size:0.9rem;font-weight:600">Урок 1: Введение в Python</span>
+                  <small class="text-muted">12:30</small>
+                </div>
+              </div>
+              <div class="lesson-item" data-title="Урок 2: Переменные и типы данных">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span style="font-size:0.9rem;font-weight:600">Урок 2: Переменные и типы данных</span>
+                  <small class="text-muted">18:45</small>
+                </div>
+              </div>
+              <div class="lesson-item" data-title="Урок 3: Условные операторы">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span style="font-size:0.9rem;font-weight:600">Урок 3: Условные операторы</span>
+                  <small class="text-muted">15:20</small>
+                </div>
+              </div>
+              <div class="lesson-item" data-title="Урок 4: Циклы">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span style="font-size:0.9rem;font-weight:600">Урок 4: Циклы</span>
+                  <small class="text-muted">22:10</small>
+                </div>
+              </div>
+              <div class="lesson-item" data-title="Урок 5: Функции">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span style="font-size:0.9rem;font-weight:600">Урок 5: Функции</span>
+                  <small class="text-muted">20:00</small>
+                </div>
+              </div>
+              <div class="lesson-item" data-title="Урок 6: Списки и кортежи">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span style="font-size:0.9rem;font-weight:600">Урок 6: Списки и кортежи</span>
+                  <small class="text-muted">19:30</small>
+                </div>
+              </div>
+              <div class="lesson-item" data-title="Урок 7: Словари и множества">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span style="font-size:0.9rem;font-weight:600">Урок 7: Словари и множества</span>
+                  <small class="text-muted">16:45</small>
+                </div>
+              </div>
+              <div class="lesson-item" data-title="Урок 8: Работа с файлами">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span style="font-size:0.9rem;font-weight:600">Урок 8: Работа с файлами</span>
+                  <small class="text-muted">14:20</small>
+                </div>
+              </div>
+              <div class="lesson-item" data-title="Урок 9: ООП — Классы и объекты">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span style="font-size:0.9rem;font-weight:600">Урок 9: ООП — Классы и объекты</span>
+                  <small class="text-muted">25:00</small>
+                </div>
+              </div>
+              <div class="lesson-item" data-title="Урок 10: Модули и библиотеки">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span style="font-size:0.9rem;font-weight:600">Урок 10: Модули и библиотеки</span>
+                  <small class="text-muted">18:15</small>
+                </div>
+              </div>
+              <div class="lesson-item" data-title="Урок 11: Обработка исключений">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span style="font-size:0.9rem;font-weight:600">Урок 11: Обработка исключений</span>
+                  <small class="text-muted">13:40</small>
+                </div>
+              </div>
+              <div class="lesson-item" data-title="Урок 12: Финальный проект">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span style="font-size:0.9rem;font-weight:600">Урок 12: Финальный проект</span>
+                  <small class="text-muted">30:00</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="modal fade" id="buyModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-cart-check me-2"></i>Начать обучение</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center mb-3">
+            <i class="bi bi-mortarboard" style="font-size:3rem;color:var(--primary)"></i>
+          </div>
+          <h5 class="text-center fw-bold">Python для начинающих</h5>
+          <p class="text-center text-muted">Бесплатный курс — 12 уроков, 24 часа контента</p>
+          <div class="card-custom p-3" style="background:var(--gray-100)">
+            <div class="d-flex justify-content-between mb-1"><span>Курс</span><span class="fw-bold">Бесплатно</span></div>
+            <div class="d-flex justify-content-between"><span>Сертификат</span><span class="fw-bold">Включен</span></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+          <button type="button" class="btn btn-accent" id="confirmBuy"><i class="bi bi-check2 me-1"></i>Подтвердить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="main.js?v=3"></script>
+</body>
+</html>
