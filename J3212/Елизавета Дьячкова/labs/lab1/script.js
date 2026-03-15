@@ -2,6 +2,7 @@
   const STORAGE_CURRENT_USER = 'tickethub_current_user';
   const STORAGE_TICKETS = 'tickethub_tickets';
   const STORAGE_EVENTS = 'tickethub_events';
+  const STORAGE_PENDING_EVENT_ID = 'tickethub_pending_event_id';
 
   const readStorage = function (key) {
     try {
@@ -71,7 +72,16 @@
       writeStorage(STORAGE_EVENTS, defaultEvents);
       return defaultEvents.slice();
     }
-    return stored;
+    var changed = false;
+    var normalized = stored.map(function (e) {
+      if (!e || typeof e !== 'object') return e;
+      var n = Number(e.id);
+      if (Number.isNaN(n)) return e;
+      if (e.id !== n) changed = true;
+      return Object.assign({}, e, { id: n });
+    });
+    if (changed) writeStorage(STORAGE_EVENTS, normalized);
+    return normalized;
   };
 
   const cityLabel = function (city) {
@@ -85,7 +95,29 @@
   const getEventById = function (id) {
     const events = resolveEvents();
     const numId = Number(id);
-    return events.find(function (e) { return e.id === numId; });
+    if (Number.isNaN(numId)) return undefined;
+    return events.find(function (e) {
+      return Number(e.id) === numId;
+    });
+  };
+
+  const readEventIdFromLocation = function () {
+    var params = new URLSearchParams(window.location.search);
+    var q = params.get('id');
+    if (q !== null && String(q).trim() !== '') return String(q).trim();
+
+    var rawHash = (window.location.hash || '').replace(/^#/, '');
+    if (/^\d+$/.test(rawHash)) return rawHash;
+
+    try {
+      var pending = sessionStorage.getItem(STORAGE_PENDING_EVENT_ID);
+      if (pending && String(pending).trim() !== '') {
+        sessionStorage.removeItem(STORAGE_PENDING_EVENT_ID);
+        return String(pending).trim();
+      }
+    } catch (_) {}
+
+    return '';
   };
 
   // ----- index.html: поиск и список мероприятий -----
@@ -110,7 +142,7 @@
           '<p class="mb-2 small flex-grow-1">' + event.description + '</p>' +
           '<div class="d-flex justify-content-between align-items-center mt-2">' +
           '<span class="fw-semibold">' + event.priceFrom + ' ₽</span>' +
-          '<a class="btn btn-sm btn-outline-primary" href="event.html?id=' + event.id + '">Подробнее</a>' +
+          '<a class="btn btn-sm btn-outline-primary js-event-detail" data-event-id="' + event.id + '" href="event.html?id=' + event.id + '#' + event.id + '">Подробнее</a>' +
           '</div></div></article></div>'
         );
       })
@@ -153,6 +185,15 @@
   }
 
   if (eventsListEl) {
+    eventsListEl.addEventListener('click', function (e) {
+      var a = e.target.closest('a.js-event-detail');
+      if (!a) return;
+      var pid = a.getAttribute('data-event-id');
+      if (!pid) return;
+      try {
+        sessionStorage.setItem(STORAGE_PENDING_EVENT_ID, pid);
+      } catch (_) {}
+    });
     renderEventsList(resolveEvents());
   }
 
@@ -241,9 +282,14 @@
   var eventNotFoundEl = document.getElementById('eventNotFound');
 
   if (eventTitleEl && eventPageEl && eventNotFoundEl) {
-    var params = new URLSearchParams(window.location.search);
-    var eventId = params.get('id');
-    var event = eventId ? getEventById(eventId) : null;
+    var eventIdStr = readEventIdFromLocation();
+    var event = eventIdStr ? getEventById(eventIdStr) : null;
+
+    if (event && !new URLSearchParams(window.location.search).get('id')) {
+      try {
+        window.history.replaceState(null, '', window.location.pathname + '?id=' + encodeURIComponent(eventIdStr));
+      } catch (_) {}
+    }
 
     if (!event) {
       eventPageEl.classList.add('d-none');
@@ -265,7 +311,7 @@
           var user = readStorage(STORAGE_CURRENT_USER);
           if (!user) {
             showToast('Сначала войдите в аккаунт');
-            window.location.href = 'login.html?from=' + encodeURIComponent(window.location.pathname + '?id=' + eventId);
+            window.location.href = 'login.html?from=' + encodeURIComponent(window.location.pathname + '?id=' + eventIdStr);
             return;
           }
           var existing = readStorage(STORAGE_TICKETS) || [];
