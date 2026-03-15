@@ -1,0 +1,106 @@
+:root {
+  --hub-bg: #f3f7fb;
+  --hub-surface: #ffffff;
+  --hub-accent: #1267a8;
+  --hub-accent-dark: #0d4e80;
+  --hub-text: #142b3e;
+  --hub-muted: #63788b;
+  --hub-border: #d6e1eb;
+  --hub-label: #262626;
+  --hub-shadow: 0 10px 30px #1267a814;
+}
+
+body {
+  margin: 0;
+  font-family: Tahoma, Verdana, sans-serif;
+  color: var(--hub-text);
+  background: var(--hub-bg);
+  min-height: 100vh;
+}
+
+.top-nav {
+  background: var(--hub-surface);
+  border-bottom: 1px solid var(--hub-border);
+}
+
+.top-nav .brand {
+  font-weight: 640;
+  color: var(--hub-accent-dark);
+}
+
+.top-nav .nav-link {
+  color: var(--hub-muted);
+}
+
+.top-nav .nav-link.active {
+  color: var(--hub-accent-dark);
+  font-weight: 600;
+}
+
+.page-shell {
+  padding: 2rem 0 3rem;
+}
+
+.registration-page {
+  min-height: calc(100vh - 128px);
+  display: flex;
+  align-items: center;
+}
+
+.registration-card,
+.hub-card {
+  border-radius: 2rem;
+  background: var(--hub-surface);
+  box-shadow: var(--hub-shadow);
+  border: 1px solid var(--hub-border);
+}
+
+.info-panel {
+  background: var(--hub-accent-dark);
+  color: #fff;
+}
+
+.feature-list li {
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.feature-list li::before {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: #fff;
+  position: absolute;
+  left: 0;
+  top: 0.48rem;
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--hub-accent);
+  --bs-btn-border-color: var(--hub-accent);
+  --bs-btn-hover-bg: var(--hub-accent-dark);
+  --bs-btn-hover-border-color: var(--hub-accent-dark);
+  --bs-btn-active-bg: var(--hub-accent-dark);
+  --bs-btn-active-border-color: var(--hub-accent-dark);
+}
+
+.form-control,
+.form-select {
+  border-color: var(--hub-border);
+}
+
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+  border-color: var(--hub-border);
+  box-shadow: var(--hub-shadow);
+}
+
+.form-check-label {
+  color: var(--hub-label);
+}
+
+.login-table td,
+.login-table th {
+  vertical-align: middle;
+}
