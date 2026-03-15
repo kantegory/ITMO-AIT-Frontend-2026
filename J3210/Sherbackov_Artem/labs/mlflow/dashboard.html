@@ -9,88 +9,199 @@
 </head>
 <body>
 
-<header>
-    <nav class="navbar bg-body-light border-bottom">
-        <div class="container-fluid">
-            <span class="navbar-brand fw-bold">MLPipelines</span>
-            <div>
-                <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#settingsModal">Settings</button>
-                <a href="index.html" class="btn btn-danger">Log out</a>
-            </div>
-        </div>
-    </nav>
-</header>
 
-<main class="d-flex">
+<div class="app-layout d-flex">
 
     <!-- Sidebar -->
-    <aside class="bg-light p-3" style="width: 220px; min-height: 100vh;">
-        <nav class="nav flex-column">
-            <a class="nav-link active" href="dashboard.html">Dashboard</a>
-            <a class="nav-link" href="search_page.html">Experiments</a>
-            <a class="nav-link" href="models.html">Models</a>
-        </nav>
+    <aside class="d-flex flex-column flex-shrink-0 p-4 bg-body-tertiary border-end"
+           style="width:260px; min-height:100vh;">
+
+        <a href="dashboard.html"
+           class="d-flex align-items-center mb-4 text-decoration-none">
+
+            <span class="fs-4 fw-bold">
+                MLPipelines
+            </span>
+
+        </a>
+
+        <ul class="nav nav-pills flex-column mb-auto">
+
+            <li class="nav-item mb-2">
+                <a href="dashboard.html" class="nav-link active">
+                    Home
+                </a>
+            </li>
+
+            <li class="mb-2">
+                <a href="experiments.html" class="nav-link link-body-emphasis">
+                    Experiments
+                </a>
+            </li>
+
+            <li class="mb-2">
+                <a href="models.html" class="nav-link link-body-emphasis">
+                    Model Registry
+                </a>
+            </li>
+
+        </ul>
+
+        <hr>
+
+        <div class="dropdown mt-auto">
+
+            <a href="#"
+               class="d-flex align-items-center text-decoration-none dropdown-toggle"
+               data-bs-toggle="dropdown">
+
+                <img src="https://github.com/mdo.png"
+                     width="32"
+                     height="32"
+                     class="rounded-circle me-2">
+
+                <strong>User</strong>
+
+            </a>
+
+            <ul class="dropdown-menu text-small shadow">
+
+                <li>
+                    <a class="dropdown-item" href="#">
+                        Settings
+                    </a>
+                </li>
+
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+
+                <li>
+                    <a class="dropdown-item text-danger" href="index.html">
+                        Sign out
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
     </aside>
 
-    <!-- Main content -->
-    <section class="flex-grow-1 p-4">
+
+    <main class="flex-grow-1 p-4">
+
         <header class="d-flex justify-content-between align-items-center mb-4">
+
             <h1>Dashboard</h1>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newExperimentModal">New Experiment</button>
+
+            <button class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#newExperimentModal">
+                New Experiment
+            </button>
+
         </header>
+
 
         <!-- Latest Models -->
         <section>
+
             <h2 class="mb-4">Latest Models</h2>
+
             <div class="row row-cols-1 row-cols-md-3 g-4">
+
                 <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">ResNet-18</h5>
-                            <p class="card-text text-muted">Classification model for face recognition.</p>
+                    <a href="experiment_entity.html" class="text-decoration-none text-dark">
+                        <div class="card h-100 text-center">
+
+                            <div class="card-body">
+                                <h5 class="card-title">ResNet-18</h5>
+
+                                <p class="card-text text-muted">
+                                    Face recognition classification model
+                                </p>
+
+                                <p class="fw-semibold">
+                                    Accuracy: 92.3%
+                                </p>
+                            </div>
+
+                            <div class="card-footer text-body-secondary">
+                                27 Feb 2026
+                            </div>
+
                         </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Updated: 27.02.2026</small>
-                        </div>
-                    </div>
+                    </a>
                 </div>
+
                 <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">YOLOv8_Detection</h5>
-                            <p class="card-text text-muted">Object detection model for cats.</p>
+                    <a href="experiment_entity.html" class="text-decoration-none text-dark">
+                        <div class="card h-100 text-center">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">YOLOv8 Detection</h5>
+
+                                <p class="card-text text-muted">
+                                    Object detection for cats
+                                </p>
+
+                                <p class="fw-semibold">
+                                    mAP: 0.872
+                                </p>
+
+                            </div>
+
+                            <div class="card-footer text-body-secondary">
+                                26 Feb 2026
+                            </div>
+
                         </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Updated: 26.02.2026</small>
-                        </div>
-                    </div>
+                    </a>
                 </div>
+
                 <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">BERT-Classifier</h5>
-                            <p class="card-text text-muted">Text classification for reviews.</p>
+                    <a href="experiment_entity.html" class="text-decoration-none text-dark">
+                        <div class="card h-100 text-center">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">BERT Classifier</h5>
+
+                                <p class="card-text text-muted">
+                                    NLP sentiment classification
+                                </p>
+
+                                <p class="fw-semibold">
+                                    F1 score: 0.91
+                                </p>
+
+                            </div>
+
+                            <div class="card-footer text-body-secondary">
+                                25 Feb 2026
+                            </div>
+
                         </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Updated: 25.02.2026</small>
-                        </div>
-                    </div>
+                    </a>
                 </div>
+
             </div>
+
         </section>
 
-    </section>
-</main>
+    </main>
 
-<footer class="bg-light text-center py-3 border-top">
-    © 2026 MLPipelines
-</footer>
+</div>
+
+
 
 <!-- Modal Template -->
 <div class="modal fade" id="newExperimentModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-custom">
         <div class="modal-content rounded-4 shadow">
-            <div class="modal-header">
+            <div class="modal-header modal-header-custom">
                 <h5 class="modal-title">Create New Experiment</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>

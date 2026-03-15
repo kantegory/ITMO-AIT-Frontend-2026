@@ -1,5 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Dashboard | MLPipelines</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="app-layout d-flex">
+
+    <!-- Sidebar -->
+    <aside class="d-flex flex-column flex-shrink-0 p-4 bg-body-tertiary border-end"
+           style="width:260px; min-height:100vh;">
+
+        <a href="dashboard.html"
+           class="d-flex align-items-center mb-4 text-decoration-none">
+
+            <span class="fs-4 fw-bold">
+                MLPipelines
+            </span>
+
+        </a>
+
+        <ul class="nav nav-pills flex-column mb-auto">
+
+            <li class="nav-item mb-2">
+                <a href="dashboard.html" class="nav-link active">
+                    Home
+                </a>
+            </li>
+
+            <li class="mb-2">
+                <a href="experiments.html" class="nav-link link-body-emphasis">
+                    Experiments
+                </a>
+            </li>
+
+            <li class="mb-2">
+                <a href="models.html" class="nav-link link-body-emphasis">
+                    Model Registry
+                </a>
+            </li>
+
+        </ul>
+
+        <hr>
+
+        <div class="dropdown mt-auto">
+
+            <a href="#"
+               class="d-flex align-items-center text-decoration-none dropdown-toggle"
+               data-bs-toggle="dropdown">
+
+                <img src="https://github.com/mdo.png"
+                     width="32"
+                     height="32"
+                     class="rounded-circle me-2">
+
+                <strong>User</strong>
+
+            </a>
+
+            <ul class="dropdown-menu text-small shadow">
+
+                <li>
+                    <a class="dropdown-item" href="#">
+                        Settings
+                    </a>
+                </li>
+
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+
+                <li>
+                    <a class="dropdown-item text-danger" href="index.html">
+                        Sign out
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </aside>
 
 
+    <!-- Main content -->
+    <main class="flex-grow-1 p-4">
+
+        <header class="d-flex justify-content-between align-items-center mb-4">
+
+            <h1>
+                Dashboard
+            </h1>
+
+            <button class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#newExperimentModal">
+
+                New Experiment
+
+            </button>
+
+        </header>
+
+
+        <!-- Latest Models -->
+        <section>
+
+            <h2 class="mb-4">
+                Latest Models
+            </h2>
+
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+
+                <div class="col">
+
+                    <div class="card h-100">
+
+                        <div class="card-body">
+
+                            <h5 class="card-title">
+                                ResNet-18
+                            </h5>
+
+                            <p class="card-text text-muted">
+                                Classification model for face recognition
+                            </p>
+
+                        </div>
+
+                        <div class="card-footer">
+
+                            <small class="text-muted">
+                                Updated: 27.02.2026
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col">
+
+                    <div class="card h-100">
+
+                        <div class="card-body">
+
+                            <h5 class="card-title">
+                                YOLOv8 Detection
+                            </h5>
+
+                            <p class="card-text text-muted">
+                                Object detection model for cats
+                            </p>
+
+                        </div>
+
+                        <div class="card-footer">
+
+                            <small class="text-muted">
+                                Updated: 26.02.2026
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col">
+
+                    <div class="card h-100">
+
+                        <div class="card-body">
+
+                            <h5 class="card-title">
+                                BERT Classifier
+                            </h5>
+
+                            <p class="card-text text-muted">
+                                Text classification for reviews
+                            </p>
+
+                        </div>
+
+                        <div class="card-footer">
+
+                            <small class="text-muted">
+                                Updated: 25.02.2026
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<footer class="bg-light text-center py-3 border-top">
+
+    © 2026 MLPipelines
+
+</footer>
+
+
+<!-- Modal -->
+<div class="modal fade" id="newExperimentModal" tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    Create New Experiment
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <form>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Experiment Name
+                        </label>
+
+                        <input type="text" class="form-control">
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Model
+                        </label>
+
+                        <input type="text" class="form-control">
+
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary w-100">
+
+                        Create
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
 
 
  
