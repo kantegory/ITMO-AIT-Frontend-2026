@@ -1,0 +1,275 @@
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Личный кабинет</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../UserCourses/AU-styles.css" />
+</head>
+
+<body>
+
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+            <div class="d-flex align-items-center">
+
+                <button class="btn btn-outline-light d-lg-none me-2" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#mobileSidebar">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <a href="../index.html" class="d-flex text-white text-decoration-none me-auto">
+                    <span class="fw-semibold"></span>
+                    <img src="../images/logo.png" alt="Логотип" width="40" height="40" class="me-2">
+                </a>
+
+                <a href="../index.html" class="btn btn-warning">
+                    Sign out
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="offcanvas offcanvas-start text-bg-dark d-lg-none" id="mobileSidebar" style="width: 280px;">
+        <div class="offcanvas-header border-bottom border-secondary pb-3">
+            <div class="d-flex align-items-center gap-2">
+                <img src="../images/jinx.png" alt="Аватар" class="rounded-circle"
+                    style="width:40px; height:40px; object-fit:cover;">
+                <div>
+                    <div class="fw-semibold" style="font-size:.9rem">Иван Иванов</div>
+                    <div style="font-size:.75rem; opacity:.6">ivan@example.com</div>
+                </div>
+            </div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <ul class="list-unstyled mb-0">
+                <li>
+                    <a href="TeacherCourses.html"
+                        class="d-flex align-items-center gap-2 px-3 py-2 text-white-50 text-decoration-none"
+                        style="font-size:.9rem; transition: background .15s;"
+                        onmouseover="this.style.background='rgba(255,255,255,.08)'"
+                        onmouseout="this.style.background='transparent'">
+                        <i class="bi bi-grid-1x2"></i> Мои курсы
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="d-flex align-items-center gap-2 px-3 py-2 text-white text-decoration-none"
+                        style="font-size:.9rem; background:rgba(13,110,253,.25);">
+                        <i class="bi bi-book"></i> Создать новый курс
+                    </a>
+                </li>
+
+                <li class="border-top border-secondary my-2"></li>
+
+                <li>
+                    <a href="../index.html"
+                        class="d-flex align-items-center gap-2 px-3 py-2 text-white-50 text-decoration-none"
+                        style="font-size:.9rem; transition: background .15s;"
+                        onmouseover="this.style.background='rgba(255,255,255,.08)'"
+                        onmouseout="this.style.background='transparent'">
+                        <i class="bi bi-box-arrow-left"></i> Выйти
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="cabinet-wrapper">
+
+        <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+        <aside class="cabinet-sidebar" id="sidebar">
+            <div class="sidebar-user">
+                <img src="../images/jinx.png" alt="Аватар">
+                <div>
+                    <div class="user-name">Иван Иванов</div>
+                    <div class="user-email">ivan@example.com</div>
+                </div>
+            </div>
+
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item">
+                    <a href="TeacherCourses.html" class="nav-link " data-panel="panel-courses">
+                        <i class="bi bi-book"></i> Мои курсы
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" data-panel="panel-favorites">
+                        <i class="bi bi-heart"></i> Создать новый курс
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="cabinet-main">
+            <h4 class="mb-4 fw-bold">Добавить новый курс</h4>
+
+            <div class="settings-section">
+                <h5 class="fw-semibold mb-3">Основная информация</h5>
+                <div class="row g-3">
+                    <div class="col-md-8">
+                        <label class="form-label">Название курса</label>
+                        <input type="text" class="form-control" placeholder="Например: Python для начинающих">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Категория</label>
+                        <select class="form-select">
+                            <option selected disabled>Выберите категорию</option>
+                            <option>Программирование</option>
+                            <option>Дизайн</option>
+                            <option>Data Science</option>
+                            <option>DevOps</option>
+                            <option>Маркетинг</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Краткое описание</label>
+                        <textarea class="form-control" rows="2" placeholder="Одно-два предложения о курсе"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Полное описание</label>
+                        <textarea class="form-control" rows="5"
+                            placeholder="Подробное описание, чему научатся студенты..."></textarea>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Язык курса</label>
+                        <select class="form-select">
+                            <option selected>Русский</option>
+                            <option>Английский</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Уровень</label>
+                        <select class="form-select">
+                            <option selected>Начинающий</option>
+                            <option>Средний</option>
+                            <option>Продвинутый</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Обложка курса</label>
+                        <input type="file" class="form-control" accept="image/*">
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h5 class="fw-semibold mb-3">Содержание курса</h5>
+
+                <div class="card mb-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span class="fw-semibold">Модуль 1: Введение</span>
+                        <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="bi bi-play-circle me-2 text-primary"></i>
+                                    <span>Урок 1: Знакомство с курсом</span>
+                                </div>
+                                <div class="d-flex gap-1">
+                                    <button class="btn btn-sm btn-outline-secondary"><i
+                                            class="bi bi-pencil"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="bi bi-file-text me-2 text-success"></i>
+                                    <span>Урок 2: Установка окружения</span>
+                                </div>
+                                <div class="d-flex gap-1">
+                                    <button class="btn btn-sm btn-outline-secondary"><i
+                                            class="bi bi-pencil"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-outline-primary mt-2">
+                            <i class="bi bi-plus-lg me-1"></i>Добавить урок
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span class="fw-semibold">Модуль 2: Основы</span>
+                        <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="bi bi-play-circle me-2 text-primary"></i>
+                                    <span>Урок 1: Переменные и типы данных</span>
+                                </div>
+                                <div class="d-flex gap-1">
+                                    <button class="btn btn-sm btn-outline-secondary"><i
+                                            class="bi bi-pencil"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-outline-primary mt-2">
+                            <i class="bi bi-plus-lg me-1"></i>Добавить урок
+                        </button>
+                    </div>
+                </div>
+
+                <button class="btn btn-outline-secondary">
+                    <i class="bi bi-plus-lg me-1"></i>Добавить модуль
+                </button>
+            </div>
+
+            <div class="settings-section">
+                <h5 class="fw-semibold mb-3">Параметры публикации</h5>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Цена (₽)</label>
+                        <input type="number" class="form-control" placeholder="0 = бесплатный">
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check form-switch mt-4">
+                            <input class="form-check-input" type="checkbox" id="certSwitch">
+                            <label class="form-check-label" for="certSwitch">Выдавать сертификат</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check form-switch mt-4">
+                            <input class="form-check-input" type="checkbox" id="publishSwitch">
+                            <label class="form-check-label" for="publishSwitch">Опубликовать сразу</label>
+                        </div>
+                    </div>
+                    <div class="col-12 d-flex gap-2">
+                        <button class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>Сохранить курс</button>
+                        <a href="teacher-courses.html" class="btn btn-outline-secondary">Отмена</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="container">
+        <footer class="py-3 my-4">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+            </ul>
+            <p class="text-center text-body-secondary">&copy; 2025 Company, Inc</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

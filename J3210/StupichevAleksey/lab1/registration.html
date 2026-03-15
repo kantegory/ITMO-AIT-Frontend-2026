@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stepik-style Auth</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="sign-in.css" />
+
+</head>
+
+<body>
+    <div class="auth-card">
+        <div class="tab-buttons">
+            <a href="signIn.html"><button>Вход</button></a>
+            <button class="active">Регистрация</button>
+        </div>
+
+        <form id="registerForm" novalidate>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="registerName" placeholder="Имя" required>
+                <label for="registerName">Имя</label>
+                <div class="invalid-feedback">Введите имя</div>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="registerEmail" placeholder="name@example.com" required>
+                <label for="registerEmail">E-mail</label>
+                <div class="invalid-feedback">Введите корректный email</div>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="registerPassword" placeholder="Пароль" required>
+                <label for="registerPassword">Пароль</label>
+                <div class="invalid-feedback">Пароль не может быть пустым</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Я регистрируюсь как</label>
+                <div class="d-flex gap-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" id="roleStudent" value="student"
+                            checked>
+                        <label class="form-check-label" for="roleStudent">Студент</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" id="roleTeacher" value="teacher">
+                        <label class="form-check-label" for="roleTeacher">Преподаватель</label>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary w-100 py-2 mb-3" type="submit">Зарегистрироваться</button>
+        </form>
+    </div>
+</body>
+
+</html>
