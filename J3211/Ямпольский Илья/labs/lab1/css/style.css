@@ -1,0 +1,277 @@
+body {
+    width: 100vw;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    max-height: 100vh;
+    height: 100%;
+    overflow-y: auto;
+    background: lightblue;
+}
+
+html {
+    height: -webkit-fill-available;
+}
+
+main {
+    height: 100%;
+    height: -webkit-fill-available;
+    max-height: calc(100vh - 56px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: white;
+}
+
+aside {
+    min-height: calc(100vh - 56px);
+    overflow-y: auto;
+    background: lightgray;
+    border-right: 2px solid gray;
+}
+
+.navbar {
+    height: 56px;
+    border-bottom: 2px solid gray;
+    box-shadow: 0 2px 4px black;
+}
+
+aside {
+    border-right: 2px solid gray;
+}
+
+.event-card .card {
+    border: 2px solid gray;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px black;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.event-card .card:hover {
+    border-color: purple;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px black;
+}
+
+.event-card .card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.event-card .card-title {
+    margin-bottom: 0.5rem;
+}
+
+.event-card .card-text {
+    flex: 1;
+    margin-bottom: 1rem;
+}
+
+.event-card .badge {
+    margin-top: auto;
+    align-self: flex-start;
+    background: green;
+    padding: 0.5rem 1rem;
+}
+
+.tickets-list {
+    min-height: calc(100vh - 56px);
+    max-height: calc(100vh - 56px);
+    height: 100%;
+    overflow-y: auto;
+}
+
+.tickets-list .card {
+    border: none !important;
+    border-bottom: 1px solid gray !important;
+    border-radius: 0 !important;
+    cursor: pointer;
+    transition: background 0.2s;
+    background: white;
+}
+
+.tickets-list .card:hover,
+.tickets-list .card.active {
+    background: lightgray;
+}
+
+.tickets-list .card-body {
+    padding: 0.75rem 1rem;
+}
+
+.event-content,
+.dashboard-content,
+.organizer-content,
+.returns-content {
+    min-height: calc(100vh - 56px);
+    max-height: calc(100vh - 56px);
+    height: 100%;
+    overflow-y: auto;
+    padding: 1rem 1.5rem;
+    background: white;
+    border-left: 1px solid gray;
+}
+
+.event-content h4,
+.dashboard-content h4,
+.organizer-content h4,
+.returns-content h4 {
+    padding-bottom: 10px;
+    border-bottom: 2px solid gray;
+    margin-bottom: 20px;
+}
+
+.seat-map {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 15px;
+    background: lightgray;
+    border-radius: 10px;
+}
+
+.seat {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+}
+
+.seat.available {
+    background: green !important;
+}
+
+.seat.selected {
+    background: yellow !important;
+}
+
+.seat.sold {
+    background: red !important;
+    cursor: not-allowed;
+}
+
+.legend-seat {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+.legend-seat.available {
+    background: green !important;
+}
+
+.legend-seat.selected {
+    background: yellow !important;
+}
+
+.legend-seat.sold {
+    background: red !important;
+}
+
+.nav-link {
+    color: black !important;
+}
+
+.nav-link.active {
+    background: purple !important;
+    color: white !important;
+}
+
+.nav-link.text-danger:hover {
+    background: pink !important;
+}
+
+.card {
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px black;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background: white;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px black;
+}
+
+.filter-box {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 4px 14px black;
+    border: 2px solid gray;
+}
+
+.btn-primary {
+    border: none;
+    border-radius: 10px;
+    background: purple;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: darkviolet;
+}
+
+.form-control,
+.form-select {
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+
+.stat-box {
+    padding: 20px;
+    border-radius: 14px;
+    background: white;
+    box-shadow: 0 4px 14px black;
+    text-align: center;
+    border: 2px solid gray;
+}
+
+.stat-box h4 {
+    color: purple;
+    margin-bottom: 5px;
+}
+
+.ticket-item {
+    border: 2px solid gray;
+    border-left: 4px solid purple !important;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    background: white;
+}
+
+.rating-select {
+    display: inline-block;
+}
+
+.rating-select span {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    border: 2px solid gray;
+    border-radius: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: bold;
+}
+
+.rating-select span:hover {
+    background: yellow;
+    border-color: yellow;
+    color: black;
+}
+
+.rating-select span.active {
+    background: yellow;
+    border-color: yellow;
+    color: black;
+}
