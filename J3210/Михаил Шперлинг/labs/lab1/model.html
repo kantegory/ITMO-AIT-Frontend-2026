@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llama-3-8B-Instruct | AI Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html text-primary">AI Hub</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link active" href="index.html">Модели</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Датасеты</a></li>
+            </ul>
+            <div class="d-flex">
+                <a href="profile.html" class="btn btn-secondary ms-2"><i class="bi bi-person-circle"></i> Профиль</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#" class="text-decoration-none">Meta</a></li>
+                    <li class="breadcrumb-item active">Llama-3-8B</li>
+                </ol>
+            </nav>
+            <h2>Llama-3-8B-Instruct</h2>
+        </div>
+        <div class="btn-group shadow-sm">
+            <button class="btn btn-light border"><i class="bi bi-star"></i> Star <span class="badge bg-secondary">12.5k</span></button>
+            <button class="btn btn-light border"><i class="bi bi-diagram-2"></i> Fork <span class="badge bg-secondary">840</span></button>
+            <button class="btn btn-primary"><i class="bi bi-cloud-arrow-down"></i> Download</button>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs mb-4" id="modelTabs" role="tablist">
+        <li class="nav-item">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#desc">Описание</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#metrics">Метрики</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#discuss">Обсуждения (34)</button>
+        </li>
+    </ul>
+
+    <div class="tab-content bg-white p-4 border rounded shadow-sm">
+        <div class="tab-pane fade show active" id="desc">
+            <h4>О модели</h4>
+            <p>Это подробное описание модели Llama-3. Используйте её для генерации текста и чат-ботов.</p>
+            <pre class="bg-dark text-light p-3 rounded"><code>pip install transformers
+from transformers import AutoModelForCausalLM
+
+model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-3-8B-Instruct")</code></pre>
+        </div>
+        <div class="tab-pane fade" id="metrics">
+            <table class="table table-hover">
+                <thead class="table-light"><tr><th>Метрика</th><th>Значение</th></tr></thead>
+                <tbody>
+                    <tr><td>MMLU</td><td>79.5</td></tr>
+                    <tr><td>HumanEval</td><td>62.1</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="discuss">
+            <p class="text-muted">Здесь пока нет комментариев. Будьте первым!</p>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

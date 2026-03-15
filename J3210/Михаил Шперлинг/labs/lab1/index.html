@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hub | Поиск моделей</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html text-primary">AI Hub</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link active" href="#">Модели</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Датасеты</a></li>
+            </ul>
+            <div class="d-flex">
+                <button class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Вход</button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">Регистрация</button>
+                <a href="profile.html" class="btn btn-secondary ms-2"><i class="bi bi-person-circle"></i></a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="row">
+        <aside class="col-md-3">
+            <div class="card p-3 shadow-sm">
+                <h5>Фильтры</h5>
+                <hr>
+                <h6>Задача</h6>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="nlp">
+                    <label class="form-check-label" for="nlp">NLP (Текст)</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cv">
+                    <label class="form-check-label" for="cv">Computer Vision</label>
+                </div>
+                
+                <h6 class="mt-3">Фреймворк</h6>
+                <select class="form-select">
+                    <option selected>Все</option>
+                    <option>PyTorch</option>
+                    <option>TensorFlow</option>
+                    <option>JAX</option>
+                </select>
+
+                <h6 class="mt-3">Лицензия</h6>
+                <select class="form-select">
+                    <option selected>Любая</option>
+                    <option>MIT</option>
+                    <option>Apache 2.0</option>
+                    <option>OpenRAIL</option>
+                </select>
+            </div>
+        </aside>
+
+        <main class="col-md-9">
+            <div class="input-group mb-4 shadow-sm">
+                <input type="text" class="form-control" placeholder="Поиск моделей, датасетов...">
+                <button class="btn btn-primary">Найти</button>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary"><a href="model.html" class="text-decoration-none">Llama-3-8B-Instruct</a></h5>
+                            <p class="card-text text-muted small">Meta's latest large language model fine-tuned for chat.</p>
+                            <div class="mb-2">
+                                <span class="badge bg-info text-dark">NLP</span>
+                                <span class="badge bg-secondary">PyTorch</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted"><i class="bi bi-star"></i> 12.5k • <i class="bi bi-download"></i> 1.2M</small>
+                                <span class="text-muted small">4.5 GB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<div class="modal fade" id="loginModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Вход в систему</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" placeholder="name@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Пароль</label>
+                        <input type="password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Войти</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
