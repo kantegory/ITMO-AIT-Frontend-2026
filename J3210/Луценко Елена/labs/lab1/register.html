@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Регистрация</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="d-flex align-items-center">
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-10 col-md-6 col-lg-4">
+            <div class="card p-5 reg-card">
+                <h3 class="text-center mb-4 fw-bold">Регистрация</h3>
+
+                <form>
+                    <div class="mb-3">
+                        <label for="surname" class="form-label small">Фамилия</label>
+                        <input type="text" class="form-control" id="surname" placeholder="Семенов" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label small">Имя</label>
+                        <input type="text" class="form-control" id="name" placeholder="Семен" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label small">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="semen@test.ru" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="pass_1" class="form-label small">Пароль</label>
+                        <input type="password" class="form-control" id="pass_1" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="pass_2" class="form-label small">Повторите пароль</label>
+                        <input type="password" class="form-control" id="pass_2" required>
+                    </div>
+
+                    <button type="button" onclick="validateReg()" class="btn btn-primary w-100">Создать аккаунт</button>
+                </form>
+
+                <div class="text-center mt-4">
+                    <p class="small mb-1">Уже есть аккаунт? <a href="login.html" class="text-decoration-none">Войти</a></p>
+                    <a href="index.html" class="text-muted text-decoration-none mt-2 d-inline-block small">Вернуться в каталог</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/data.js"></script>
+
+<script>
+    function validateReg() {
+        const surname = document.getElementById('surname').value;
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const pass_1 = document.getElementById('pass_1').value;
+        const pass_2 = document.getElementById('pass_2').value;
+
+        if (surname === "" || name === "" || email === "" || pass_1 === "" || pass_2 === "") {
+            alert("Пожалуйста, заполните все поля формы");
+            return;
+        }
+
+        const isUserExists = data.users.some(user => user.email === email);
+
+        if (isUserExists) {
+            alert("Пользователь с такой почтой уже зарегистрирован");
+            return;
+        }
+
+        if (pass_1 !== pass_2) {
+            alert("Пароли не совпадают");
+            return;
+        }
+
+        alert("Регистрация успешна! Теперь вы можете войти в систему");
+        window.location.href = "login.html";
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Профиль преподавателя</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="navbar navbar-dark bg-dark py-3">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="index.html">TopCourses</a>
+        <button onclick="logout()" class="btn btn-outline-light">Выйти</button>
+    </div>
+</header>
+
+<main class="container py-5">
+    <div class="card border-0 p-4 mb-5">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h4 class="fw-bold mb-0">Здравствуйте, <span class="text-primary" id="name"></span></h4>
+            </div>
+
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">+ Добавить материал</button>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="fw-bold mb-4 px-1">Ваши активные курсы</h3>
+    <div class="card overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                <tr>
+                    <th class="ps-4 py-3">Название курса</th>
+                    <th class="py-3">Студентов</th>
+                    <th class="py-3">Категория</th>
+                    <th class="py-3 pe-4">Статус</th>
+                </tr>
+                </thead>
+                <tbody id="teacherCourses"></tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<div class="modal fade" id="modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold w-100 text-center">Новый материал</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="courseSelect" class="form-label small">Выберите курс</label>
+                        <select class="form-select" id="courseSelect" required></select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="lessonTitle" class="form-label small">Тема урока</label>
+                        <input type="text" id="lessonTitle" class="form-control" placeholder="Типы данных" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small">Файл</label>
+                        <input type="file" class="form-control">
+                    </div>
+
+                    <button type="button" onclick="upload()" class="btn btn-primary w-100">Опубликовать</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/data.js"></script>
+
+<script>
+    function upload() {
+        const select = document.getElementById('courseSelect');
+        const courseTitle = select.options[select.selectedIndex].text;
+        const lesson = document.getElementById('lessonTitle').value;
+
+        if (!lesson) {
+            alert("Пожалуйста, введите название темы");
+            return;
+        }
+
+        alert("Успешно! Урок '" + lesson + "' добавлен в курс " + courseTitle);
+        location.reload();
+    }
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const user = getCurrentUser();
+
+        if (!user || user.role !== 'teacher') {
+            window.location.href = "login.html";
+            return;
+        }
+
+        document.getElementById('name').innerText = user.name;
+        const userCourses = data.courses.filter(course => user.courses.includes(course.id));
+        const tableBody = document.getElementById('teacherCourses');
+
+        tableBody.innerHTML = userCourses.map(course => `
+            <tr>
+                <td class="ps-4 py-3">
+                    <a href="course.html?id=${course.id}&lesson=0" class="text-decoration-none course-link fw-bold">${course.title}</a>
+                </td>
+                <td><span class="badge bg-light text-dark border">${course.studentsCount} чел.</span></td>
+                <td><small>${course.category}</small></td>
+                <td class="pe-4">
+                    <span class="badge bg-success-subtle text-success border border-success-subtle">Активен</span>
+                </td>
+            </tr>
+        `).join('');
+
+        const select = document.getElementById('courseSelect');
+        select.innerHTML = userCourses.map(course => `
+            <option value="${course.id}">${course.title}</option>
+        `).join('');
+
+    });
+</script>
+
+</body>
+</html>
