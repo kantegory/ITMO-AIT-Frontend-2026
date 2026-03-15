@@ -1,0 +1,105 @@
+﻿:root {
+  --sidebar-width: 250px;
+}
+
+.auth-layout {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.auth-panel {
+  width: min(100%, 480px);
+}
+
+.app-layout {
+  min-height: 100vh;
+}
+
+.app-sidebar {
+  width: var(--sidebar-width);
+  min-height: 100vh;
+  position: sticky;
+  top: 0;
+}
+
+.app-main {
+  min-width: 0;
+}
+
+.dashboard-runs {
+  list-style: none;
+  padding-left: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.pipeline-graph .dag-flow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.pipeline-graph__task {
+  min-width: 190px;
+  padding: 0.75rem;
+  border: 1px solid;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+.pipeline-graph__task h3 {
+  font-size: 1rem;
+  margin: 0 0 0.5rem;
+}
+
+.pipeline-graph__task.active {
+  outline: 2px solid;
+  outline-offset: 2px;
+}
+
+.flow-arrow {
+  font-size: 1.2rem;
+}
+
+.pipeline-logs {
+  border: 1px solid;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.9rem;
+  max-height: 320px;
+  overflow: auto;
+}
+
+.pipeline-logs p {
+  margin-bottom: 0.5rem;
+}
+
+.monitoring-alerts #notificationsList .list-group-item.hidden {
+  display: none;
+}
+
+.monitoring-alerts #notificationsList .list-group-item.read {
+  opacity: 0.6;
+}
+
+@media (max-width: 991.98px) {
+  .app-sidebar {
+    display: none;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .pipeline-graph .dag-flow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .flow-arrow {
+    transform: rotate(90deg);
+    align-self: center;
+  }
+}
