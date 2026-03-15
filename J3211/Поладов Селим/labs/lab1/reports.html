@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Отчёты — 67 Финансы</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <aside class="sidebar d-flex flex-column">
+    <a href="index.html" class="brand text-decoration-none">67 Финансы</a>
+    <nav class="flex-grow-1 pt-2">
+      <a href="index.html" class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>Главная</span>
+      </a>
+      <a href="transactions.html" class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+        <span>Транзакции</span>
+      </a>
+      <a href="reports.html" class="nav-link active">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        <span>Отчёты</span>
+      </a>
+    </nav>
+    <div class="nav-bottom px-3 pb-3">
+      <a href="login.html" class="nav-link"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg><span>Выход</span></a>
+    </div>
+  </aside>
+  <main class="main-wrap">
+    <div class="header-row">
+      <h1>Отчёты</h1>
+      <div class="header-actions">
+        <select class="form-select form-select-sm" style="width:160px">
+          <option>Март 2025</option>
+          <option>Февраль 2025</option>
+          <option>Январь 2025</option>
+        </select>
+        <div class="user-menu">
+          <div class="user-avatar"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+          <span class="d-none d-md-inline">Иван Иванов</span>
+        </div>
+      </div>
+    </div>
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <div class="content-card">
+          <h3>Расходы по категориям</h3>
+          <div class="report-chart">
+            <div class="text-center w-100">
+              <div class="d-flex justify-content-center gap-4 flex-wrap mb-2">
+                <span class="d-flex align-items-center gap-1"><span class="rounded-circle" style="width:12px;height:12px;background:var(--accent)"></span> Продукты 28%</span>
+                <span class="d-flex align-items-center gap-1"><span class="rounded-circle" style="width:12px;height:12px;background:#d4ee5e"></span> Транспорт 22%</span>
+                <span class="d-flex align-items-center gap-1"><span class="rounded-circle" style="width:12px;height:12px;background:#5a9bd5"></span> Развлечения 18%</span>
+                <span class="d-flex align-items-center gap-1"><span class="rounded-circle" style="width:12px;height:12px;background:#e8a838"></span> Прочее 32%</span>
+              </div>
+              <div class="rounded-circle border border-3 d-inline-flex align-items-center justify-content-center" style="width:140px;height:140px;border-color:var(--accent)!important;color:var(--accent)">₽25k</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="content-card">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="mb-0">Динамика расходов</h3>
+            <select class="form-select form-select-sm" style="width:auto">
+              <option>Последние 30 дней</option>
+              <option>Последние 7 дней</option>
+              <option>Последние 3 месяца</option>
+            </select>
+          </div>
+          <div class="report-chart">
+            <div class="w-100 d-flex align-items-end gap-1 px-2" style="height:220px">
+              <div style="height:45%;flex:1;max-width:40px;background:var(--accent);border-radius:6px"></div>
+              <div style="height:65%;flex:1;max-width:40px;background:var(--accent);border-radius:6px"></div>
+              <div style="height:55%;flex:1;max-width:40px;background:var(--accent);border-radius:6px"></div>
+              <div style="height:80%;flex:1;max-width:40px;background:var(--accent);border-radius:6px"></div>
+              <div style="height:70%;flex:1;max-width:40px;background:var(--accent);border-radius:6px"></div>
+              <div style="height:90%;flex:1;max-width:40px;background:var(--accent);border-radius:6px"></div>
+              <div style="height:75%;flex:1;max-width:40px;background:var(--accent);border-radius:6px"></div>
+              <div style="height:85%;flex:1;max-width:40px;background:var(--accent);border-radius:6px"></div>
+              <div style="height:60%;flex:1;max-width:40px;background:var(--accent);border-radius:6px"></div>
+              <div style="height:95%;flex:1;max-width:40px;background:var(--accent);border-radius:6px"></div>
+            </div>
+          </div>
+          <div class="small text-muted d-flex justify-content-between mt-1">
+            <span>1 мар</span>
+            <span>10 мар</span>
+            <span>20 мар</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="content-card">
+          <h3>Прогноз на следующий месяц</h3>
+          <div class="p-3 bg-light rounded-3 mb-2">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="text-muted">Ожидаемые расходы</span>
+              <span class="fw-bold">₽ 28 500</span>
+            </div>
+          </div>
+          <div class="p-3 bg-light rounded-3 mb-2">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="text-muted">Ожидаемый доход</span>
+              <span class="fw-bold text-success">₽ 85 000</span>
+            </div>
+          </div>
+          <div class="p-3 rounded-3" style="background: rgba(107, 201, 24, 0.15)">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="text-muted">Остаток (прогноз)</span>
+              <span class="fw-bold" style="color:var(--accent)">₽ 56 500</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="content-card">
+          <h3>Топ категорий за период</h3>
+          <ul class="list-unstyled mb-0">
+            <li class="d-flex justify-content-between align-items-center py-2 border-bottom">
+              <span>Продукты и быт</span>
+              <span class="fw-medium">₽ 7 140</span>
+            </li>
+            <li class="d-flex justify-content-between align-items-center py-2 border-bottom">
+              <span>Транспорт</span>
+              <span class="fw-medium">₽ 5 500</span>
+            </li>
+            <li class="d-flex justify-content-between align-items-center py-2 border-bottom">
+              <span>Развлечения</span>
+              <span class="fw-medium">₽ 4 600</span>
+            </li>
+            <li class="d-flex justify-content-between align-items-center py-2 border-bottom">
+              <span>Техника</span>
+              <span class="fw-medium">₽ 42 084</span>
+            </li>
+            <li class="d-flex justify-content-between align-items-center py-2">
+              <span>Прочее</span>
+              <span class="fw-medium">₽ 8 000</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
