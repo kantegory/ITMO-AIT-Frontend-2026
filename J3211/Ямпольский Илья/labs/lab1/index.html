@@ -19,7 +19,7 @@
             <div class="collapse navbar-collapse" id="navbarContent">
                 <form class="d-flex mx-auto my-2 my-lg-0" role="search">
                     <input class="form-control me-2" type="search" id="searchInput" placeholder="Поиск мероприятий..." aria-label="Search">
-                    <button class="btn btn-outline-success" type="button">Поиск</button>
+                    <button class="btn btn-outline-success" type="button" onclick="searchEvents()">Поиск</button>
                 </form>
                 <div class="d-flex ms-lg-auto">
                     <a href="login.html" class="btn btn-outline-danger">Выход</a>
@@ -91,5 +91,27 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function searchEvents() {
+        let searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        let cards = document.querySelectorAll('.event-card');
+
+        cards.forEach(function(card) {
+            let title = card.querySelector('.card-title').textContent.toLowerCase();
+            let description = card.querySelector('.card-text').textContent.toLowerCase();
+
+            if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                card.closest('.col-12').style.display = 'flex';
+            } else {
+                card.closest('.col-12').style.display = 'none';
+            }
+        });
+    }
+
+    let searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', searchEvents);
+    }
+</script>
 </body>
 </html>
