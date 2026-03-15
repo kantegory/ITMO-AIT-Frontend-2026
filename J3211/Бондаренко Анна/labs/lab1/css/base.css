@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+    --bg-color: #f0f0ee;
+    --surface-color: #ffffff;
+    --border-color: #1a1a1a;
+    --accent-color: #555555;
+    --income-color: #2e8b57;
+    --expense-color: #d2691e;
+    --border: 2px solid var(--border-color);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'JetBrains Mono', monospace;
+    border-radius: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--border-color);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.navbar-terminal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--surface-color);
+    border-bottom: var(--border);
+    padding: 15px 20px;
+    margin-bottom: 30px;
+}
+
+.navbar-brand {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.nav-links a {
+    color: var(--border-color);
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background: var(--border-color);
+    color: var(--surface-color);
+    padding: 2px 5px;
+}
+
+.dashboard-block,
+.terminal-box {
+    background: var(--surface-color);
+    border: var(--border);
+    box-shadow: 8px 8px 0 var(--border-color);
+    padding: 25px;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.block-title,
+.terminal-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+
+.terminal-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.terminal-table th,
+.terminal-table td {
+    border: 1px solid var(--border-color);
+    padding: 8px;
+    text-align: left;
+}
+
+.terminal-table th {
+    background: var(--border-color);
+    color: var(--surface-color);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.text-income { color: var(--income-color) !important; }
+.text-expense { color: var(--expense-color) !important; }
+.bg-income { background-color: var(--income-color) !important; }
+.bg-expense { background-color: var(--expense-color) !important; }

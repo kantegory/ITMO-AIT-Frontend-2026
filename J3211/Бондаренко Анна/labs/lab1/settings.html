@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>СИСТЕМА_СЧЁТ : НАСТРОЙКИ</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/form.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+<nav class="navbar-terminal">
+  <div class="navbar-brand">[ СИСТЕМА_СЧЁТ ]</div>
+  <div class="nav-links">
+    <a href="dashboard.html">ГЛАВНАЯ</a>
+    <a href="search.html">ПОИСК</a>
+    <a href="reports.html">ОТЧЁТЫ</a>
+    <a href="settings.html" class="active">НАСТРОЙКИ</a>
+    <a href="index.html">[ ВЫХОД ]</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <div class="dashboard-block h-100">
+        <div class="block-title">&gt; КОНФИГУРАЦИЯ_СИСТЕМЫ</div>
+
+        <div style="margin-bottom: 30px;">
+          <p style="font-size: 11px; color: var(--accent-color);">[ 1 ] ИМПОРТ_ТРАНЗАКЦИЙ</p>
+          <input type="file" id="csvFileInput" accept=".csv" style="display: none;">
+          <button class="terminal-btn w-100" id="triggerCsvUpload">[ ЗАГРУЗИТЬ_CSV ]</button>
+          <div id="importStatus" style="font-size: 10px; margin-top: 5px;"></div>
+        </div>
+
+        <hr>
+
+        <div style="margin-bottom: 30px;">
+          <p style="font-size: 11px; color: var(--accent-color);">[ 2 ] НОВАЯ_КАТЕГОРИЯ</p>
+          <form id="addCategoryForm" class="d-flex gap-2">
+            <label for="newCategoryName"></label><input type="text" id="newCategoryName" class="terminal-input" placeholder="ПУТЕШЕСТВИЕ" autocomplete="off">
+            <button type="submit" class="terminal-btn" style="min-width: 100px;">[ + ]</button>
+          </form>
+        </div>
+
+        <hr>
+
+        <div>
+          <p style="font-size: 11px; color: var(--accent-color);">[ 3 ] ПРАВИЛО_АВТОМАТИЗАЦИИ</p>
+          <form id="ruleForm">
+            <div class="input-group mb-2">
+              <span class="input-prefix" style="font-size: 11px;">ЕСЛИ:</span>
+              <label for="ruleKeyword"></label><input type="text" id="ruleKeyword" class="terminal-input" placeholder="КЛЮЧЕВОЕ_СЛОВО" autocomplete="off">
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-prefix" style="font-size: 11px;">ТО:</span>
+              <label for="ruleCategory"></label><select id="ruleCategory" class="terminal-input">
+              </select>
+            </div>
+            <button type="submit" class="terminal-btn w-100">[ СОЗДАТЬ_ПРАВИЛО ]</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-7">
+      <div class="dashboard-block h-100 d-flex flex-column">
+
+        <div class="block-title">&gt; СПИСОК_ПРАВИЛ</div>
+        <div id="rulesListBody" style="flex: 1; max-height: 250px; overflow-y: auto; margin-bottom: 20px;">
+        </div>
+
+        <div class="block-title" style="margin-top: auto;">&gt; СПИСОК_КАТЕГОРИЙ</div>
+        <div id="categoryListBody" style="flex: 1; max-height: 250px; overflow-y: auto;">
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/core.js"></script>
+<script src="js/settings.js"></script>
+</body>
+</html>

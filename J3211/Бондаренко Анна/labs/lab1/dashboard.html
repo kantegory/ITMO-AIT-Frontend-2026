@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СИСТЕМА_СЧЁТ : ДАШБОРД</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<nav class="navbar-terminal">
+    <div class="navbar-brand">[ СИСТЕМА_СЧЁТ ]</div>
+    <div class="nav-links">
+        <a href="dashboard.html" class="active">ГЛАВНАЯ</a>
+        <a href="search.html">ПОИСК</a>
+        <a href="reports.html">ОТЧЁТЫ</a>
+        <a href="settings.html">НАСТРОЙКИ</a>
+        <a href="index.html">[ ВЫХОД ]</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="dashboard-block">
+                <div class="block-title">&gt; ТЕКУЩИЙ_БАЛАНС</div>
+                <div class="balance-value" id="totalBalanceValue">0.00 RUB</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="dashboard-block">
+                <div class="block-title">&gt; МОИ_СЧЕТА</div>
+                <table class="terminal-table">
+                    <thead>
+                    <tr>
+                        <th>НАЗВАНИЕ</th>
+                        <th>БАЛАНС</th>
+                    </tr>
+                    </thead>
+                    <tbody id="accountsTableBody">
+                    </tbody>
+                </table>
+                <button class="terminal-btn" id="openAddAccountModalBtn">[ + НОВЫЙ_СЧЁТ ]</button>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="dashboard-block">
+                <div class="block-title">&gt; ПОСЛЕДНИЕ_ТРАНЗАКЦИИ</div>
+                <table class="terminal-table">
+                    <thead>
+                    <tr>
+                        <th>ДАТА</th>
+                        <th>СЧЁТ</th>
+                        <th>ОПИСАНИЕ</th>
+                        <th>КАТЕГОРИЯ</th>
+                        <th>СУММА</th>
+                    </tr>
+                    </thead>
+                    <tbody id="transactionsTableBody">
+                    </tbody>
+                </table>
+                <button class="terminal-btn" id="openModalBtn">[ + ДОБАВИТЬ_ТРАНЗАКЦИЮ ]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="txModal">
+    <div class="terminal-box">
+        <button class="close-btn" data-close-modal="txModal">[ X ]</button>
+        <div class="terminal-title">[ НОВАЯ_ТРАНЗАКЦИЯ ]</div>
+
+        <form id="txForm">
+            <div class="tx-type-selector">
+                <button type="button" class="tx-type-btn" data-type="expense">РАСХОД</button>
+                <button type="button" class="tx-type-btn" data-type="income">ДОХОД</button>
+            </div>
+
+            <div class="input-group">
+                <span class="input-prefix">&gt; СЧЁТ:</span>
+                <label for="txAccount"></label><select id="txAccount" class="terminal-input">
+                </select>
+            </div>
+
+            <div class="input-group">
+                <span class="input-prefix">&gt; ОПИСАНИЕ:</span>
+                <label for="txDesc"></label><input type="text" id="txDesc" class="terminal-input" placeholder="ТАКСИ" autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <span class="input-prefix">&gt; ДАТА:</span>
+                <label for="txDate"></label><input type="date" id="txDate" class="terminal-input">
+            </div>
+
+            <div class="input-group">
+                <span class="input-prefix">&gt; КАТЕГОРИЯ:</span>
+                <label for="txCategory"></label><select id="txCategory" class="terminal-input">
+                    <option value="РАЗНОЕ" selected>[ РАЗНОЕ ]</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <span class="input-prefix">&gt; СУММА:</span>
+                <label for="txSum"></label><input type="text" id="txSum" class="terminal-input" placeholder="0.00" autocomplete="off">
+            </div>
+
+            <button type="submit" class="terminal-btn">[ СОХРАНИТЬ_ТРАНЗАКЦИЮ ]</button>
+        </form>
+    </div>
+</div>
+
+<div class="modal-overlay" id="addAccountModal">
+    <div class="terminal-box">
+        <button class="close-btn" data-close-modal="addAccountModal">[ X ]</button>
+        <div class="terminal-title">[ РЕГИСТРАЦИЯ_СЧЁТА ]</div>
+
+        <form id="addAccountForm">
+            <div class="input-group">
+                <span class="input-prefix">&gt; НАЗВАНИЕ:</span>
+                <label for="newAccountName"></label><input type="text" id="newAccountName" class="terminal-input" placeholder="КАРТА" autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <span class="input-prefix">&gt; БАЛАНС:</span>
+                <label for="newAccountBalance"></label><input type="number" step="0.01" id="newAccountBalance" class="terminal-input" placeholder="0.00">
+            </div>
+
+            <button type="submit" class="terminal-btn">[ СОЗДАТЬ_СЧЁТ ]</button>
+        </form>
+    </div>
+</div>
+<script src="js/core.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
