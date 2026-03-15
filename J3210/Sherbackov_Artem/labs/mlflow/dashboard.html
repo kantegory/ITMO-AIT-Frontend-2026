@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard | MLPipelines</title>
+    <title>Dashboard | Pipes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,7 +12,6 @@
 
 <div class="app-layout d-flex">
 
-    <!-- Sidebar -->
     <aside class="d-flex flex-column flex-shrink-0 p-4 bg-body-tertiary border-end"
            style="width:260px; min-height:100vh;">
 
@@ -47,43 +46,47 @@
 
         </ul>
 
-        <hr>
 
-        <div class="dropdown mt-auto">
+        <div class="mt-auto">
 
-            <a href="#"
-               class="d-flex align-items-center text-decoration-none dropdown-toggle"
-               data-bs-toggle="dropdown">
+            <hr>
 
-                <img src="https://github.com/mdo.png"
-                     width="32"
-                     height="32"
-                     class="rounded-circle me-2">
+            <div class="dropdown">
 
-                <strong>User</strong>
+                <a href="#"
+                class="d-flex align-items-center text-decoration-none dropdown-toggle"
+                data-bs-toggle="dropdown">
 
-            </a>
+                    <img src="https://github.com/mdo.png"
+                        width="32"
+                        height="32"
+                        class="rounded-circle me-2">
 
-            <ul class="dropdown-menu text-small shadow">
+                    <strong>User</strong>
 
-                <li>
-                    <a class="dropdown-item" href="#">
-                        Settings
-                    </a>
-                </li>
+                </a>
 
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
+                <ul class="dropdown-menu text-small shadow">
 
-                <li>
-                    <a class="dropdown-item text-danger" href="index.html">
-                        Sign out
-                    </a>
-                </li>
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            Settings
+                        </a>
+                    </li>
 
-            </ul>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
 
+                    <li>
+                        <a class="dropdown-item text-danger" href="index.html">
+                            Sign out
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
         </div>
 
     </aside>
@@ -104,7 +107,24 @@
         </header>
 
 
-        <!-- Latest Models -->
+        <section class="mb-4">
+
+            <div class="alert alert-info d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>Documentation</strong><br>
+                    Learn how to use Pipes
+                </div>
+
+                <a href="https://mlflow.org/docs/latest/index.html"
+                target="_blank"
+                class="btn btn-outline-primary btn-sm">
+                    Open Docs
+                </a>
+            </div>
+
+        </section>
+
+
         <section>
 
             <h2 class="mb-4">Latest Models</h2>
@@ -116,19 +136,19 @@
                         <div class="card h-100 text-center">
 
                             <div class="card-body">
-                                <h5 class="card-title">ResNet-18</h5>
+                                <h5 class="card-title">Smth detection XGboost</h5>
 
                                 <p class="card-text text-muted">
-                                    Face recognition classification model
+                                    grad boosting model for detecting
                                 </p>
 
                                 <p class="fw-semibold">
-                                    Accuracy: 92.3%
+                                    ROC-AUC: 0.964
                                 </p>
                             </div>
 
                             <div class="card-footer text-body-secondary">
-                                27 Feb 2026
+                                15 Mar 2026
                             </div>
 
                         </div>
@@ -141,20 +161,20 @@
 
                             <div class="card-body">
 
-                                <h5 class="card-title">YOLOv8 Detection</h5>
+                                <h5 class="card-title">Rec sys</h5>
 
                                 <p class="card-text text-muted">
-                                    Object detection for cats
+                                    Ranking model suggest smth for users
                                 </p>
 
                                 <p class="fw-semibold">
-                                    mAP: 0.872
+                                    NDCG: 0.845
                                 </p>
 
                             </div>
 
                             <div class="card-footer text-body-secondary">
-                                26 Feb 2026
+                                14 Mar 2026
                             </div>
 
                         </div>
@@ -167,7 +187,7 @@
 
                             <div class="card-body">
 
-                                <h5 class="card-title">BERT Classifier</h5>
+                                <h5 class="card-title">BERT</h5>
 
                                 <p class="card-text text-muted">
                                     NLP sentiment classification
@@ -180,7 +200,7 @@
                             </div>
 
                             <div class="card-footer text-body-secondary">
-                                25 Feb 2026
+                                14 Mar 2026
                             </div>
 
                         </div>
@@ -196,8 +216,6 @@
 </div>
 
 
-
-<!-- Modal Template -->
 <div class="modal fade" id="newExperimentModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-custom">
         <div class="modal-content rounded-4 shadow">
