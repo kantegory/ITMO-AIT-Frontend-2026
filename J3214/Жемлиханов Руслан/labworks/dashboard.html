@@ -1,0 +1,218 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FlowOrchestrator | Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-layout d-flex">
+    <aside class="app-sidebar d-none d-lg-flex flex-column p-3 border-end bg-white" aria-label="Основная навигация">
+      <a href="dashboard.html" class="app-sidebar__brand d-flex align-items-center mb-4 text-decoration-none">
+        <span class="brand-mark me-2" aria-hidden="true">FO</span>
+        <span class="fw-bold text-dark">FlowOrchestrator</span>
+      </a>
+      <nav class="app-sidebar__nav nav nav-pills flex-column gap-1">
+        <a class="nav-link active" href="dashboard.html" aria-current="page">Dashboard</a>
+        <a class="nav-link" href="pipelines.html">Pipelines</a>
+        <a class="nav-link" href="monitoring.html">Monitoring</a>
+        <a class="nav-link" href="#">Connections</a>
+        <a class="nav-link" href="#">Variables</a>
+        <a class="nav-link" href="#">Settings</a>
+        <a class="nav-link text-danger" href="index.html" data-logout>Выйти</a>
+      </nav>
+    </aside>
+
+    <div class="app-main flex-grow-1">
+      <header class="app-topbar navbar navbar-expand-lg bg-white border-bottom px-3">
+        <button class="btn btn-outline-secondary d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-label="Открыть меню">☰</button>
+        <a class="navbar-brand fw-semibold" href="dashboard.html">Dashboard</a>
+        <form class="app-topbar__search d-none d-md-flex ms-auto me-3" role="search" aria-label="Поиск по системе">
+          <label class="visually-hidden" for="dashboardSearch">Поиск</label>
+          <input id="dashboardSearch" class="form-control" type="search" placeholder="Поиск DAG, owner, run...">
+        </form>
+        <div class="d-flex align-items-center gap-3">
+          <div class="dropdown">
+            <button class="btn btn-primary position-relative dropdown-toggle" type="button" id="dashboardNotificationsButton" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Уведомления">
+              Уведомления
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">4</span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dashboardNotificationsButton" style="width: 340px;">
+              <div class="px-3 py-2 border-bottom fw-semibold">Последние уведомления</div>
+              <ul class="list-group list-group-flush" id="dashboardNotificationsList"></ul>
+              <div class="px-3 py-2 border-top text-end">
+                <a href="monitoring.html" class="small text-decoration-none">Открыть Monitoring</a>
+              </div>
+            </div>
+          </div>
+          <p class="mb-0 fw-medium" data-current-user-name>Ruslan Zhemlihanov</p></div>
+      </header>
+      <main class="app-page p-3 p-md-4">
+        <section class="page-header d-flex justify-content-between flex-wrap gap-2 align-items-center mb-4" aria-labelledby="dashboardTitle">
+          <header>
+            <h1 id="dashboardTitle" class="h4 mb-1">Здравствуйте, <span data-current-user-greeting>Ruslan</span></h1>
+            <p class="text-secondary mb-0">Обзор ETL-экосистемы за последние 24 часа</p>
+          </header>
+        </section>
+
+        <section class="dashboard-summary row g-3 mb-4" aria-label="Сводная статистика">
+          <div class="col-12 col-sm-6 col-xl"><article class="card dashboard-summary__card h-100"><div class="card-body"><h2 class="text-secondary small mb-1">Всего DAG'ов</h2><p class="fs-3 fw-bold mb-0">42</p></div></article></div>
+          <div class="col-12 col-sm-6 col-xl"><article class="card dashboard-summary__card h-100"><div class="card-body"><h2 class="text-secondary small mb-1">Активных пайплайнов</h2><p class="fs-3 fw-bold mb-0">31</p></div></article></div>
+          <div class="col-12 col-sm-6 col-xl"><article class="card dashboard-summary__card h-100"><div class="card-body"><h2 class="text-secondary small mb-1">Ошибок за сутки</h2><p class="fs-3 fw-bold mb-0">5</p></div></article></div>
+          <div class="col-12 col-sm-6 col-xl"><article class="card dashboard-summary__card h-100"><div class="card-body"><h2 class="text-secondary small mb-1">Успешных запусков</h2><p class="fs-3 fw-bold mb-0">287</p></div></article></div>
+          <div class="col-12 col-sm-6 col-xl"><article class="card dashboard-summary__card h-100"><div class="card-body"><h2 class="text-secondary small mb-1">SLA violations</h2><p class="fs-3 fw-bold mb-0">2</p></div></article></div>
+        </section>
+
+        <section class="page-section card mb-4" aria-labelledby="myDagsHeading">
+          <header class="card-header bg-white d-flex justify-content-between align-items-center">
+            <h2 id="myDagsHeading" class="h6 mb-0">Мои DAG'и</h2>
+            <a href="pipelines.html" class="btn btn-sm btn-outline-primary">Все пайплайны</a>
+          </header>
+          <div class="table-responsive">
+            <table class="table align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Owner</th>
+                  <th scope="col">Last run</th>
+                  <th scope="col">Next run</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>daily_sales_etl</td><td>DT</td><td>2026-03-14 08:00</td><td>2026-03-15 08:00</td><td><span class="badge text-bg-success">Success</span></td><td><a href="pipeline-details.html" class="btn btn-sm btn-outline-secondary">Open</a></td></tr>
+                <tr><td>customer_sync</td><td>AT</td><td>2026-03-14 07:30</td><td>2026-03-14 13:30</td><td><span class="badge text-bg-danger">Failed</span></td><td><a href="pipeline-details.html" class="btn btn-sm btn-outline-secondary">Open</a></td></tr>
+                <tr><td>inventory_update</td><td>PT</td><td>2026-03-14 09:10</td><td>2026-03-14 10:10</td><td><span class="badge text-bg-primary">Running</span></td><td><a href="pipeline-details.html" class="btn btn-sm btn-outline-secondary">Open</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section class="row g-3" aria-label="Системные сущности">
+          <article class="col-12 col-xl-4">
+            <section class="card h-100" aria-labelledby="connectionsHeading">
+              <header class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h2 id="connectionsHeading" class="h6 mb-0">Connections</h2>
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addConnectionModal">Добавить</button>
+              </header>
+              <ul class="list-group list-group-flush" id="connectionsList">
+                <li class="list-group-item d-flex justify-content-between align-items-center">PostgreSQL Prod <button class="btn btn-sm btn-outline-danger" data-delete-item>Удалить</button></li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">S3 Raw Storage <button class="btn btn-sm btn-outline-danger" data-delete-item>Удалить</button></li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">Kafka Events <button class="btn btn-sm btn-outline-danger" data-delete-item>Удалить</button></li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">ClickHouse Warehouse <button class="btn btn-sm btn-outline-danger" data-delete-item>Удалить</button></li>
+              </ul>
+            </section>
+          </article>
+
+          <article class="col-12 col-xl-4">
+            <section class="card h-100" aria-labelledby="variablesHeading">
+              <header class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h2 id="variablesHeading" class="h6 mb-0">Variables</h2>
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addVariableModal">Добавить</button>
+              </header>
+              <ul class="list-group list-group-flush" id="variablesList">
+                <li class="list-group-item d-flex justify-content-between align-items-center"><span><strong>ENV</strong>: prod</span><button class="btn btn-sm btn-outline-danger" data-delete-item>Удалить</button></li>
+                <li class="list-group-item d-flex justify-content-between align-items-center"><span><strong>RETRY_COUNT</strong>: 3</span><button class="btn btn-sm btn-outline-danger" data-delete-item>Удалить</button></li>
+                <li class="list-group-item d-flex justify-content-between align-items-center"><span><strong>ALERT_EMAIL</strong>: alerts@flow.io</span><button class="btn btn-sm btn-outline-danger" data-delete-item>Удалить</button></li>
+              </ul>
+            </section>
+          </article>
+
+          <article class="col-12 col-xl-4">
+            <section class="card h-100" aria-labelledby="recentRunsHeading">
+              <header class="card-header bg-white"><h2 id="recentRunsHeading" class="h6 mb-0">Recent runs</h2></header>
+              <div class="card-body">
+                <ul class="dashboard-runs mb-0">
+                  <li><span class="badge text-bg-success">Success</span> daily_sales_etl completed in 3m 52s</li>
+                  <li><span class="badge text-bg-danger">Failed</span> customer_sync failed at task validate_data</li>
+                  <li><span class="badge text-bg-primary">Running</span> inventory_update currently in load phase</li>
+                  <li><span class="badge text-bg-secondary">Queued</span> marketing_report_build waiting for slot</li>
+                </ul>
+              </div>
+            </section>
+          </article>
+        </section>
+      </main>
+    </div>
+  </div>
+  <aside class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu" aria-label="Мобильная навигация">
+    <header class="offcanvas-header">
+      <h2 class="offcanvas-title h5 mb-0">FlowOrchestrator</h2>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть меню"></button>
+    </header>
+    <div class="offcanvas-body">
+      <nav class="nav nav-pills flex-column gap-1">
+        <a class="nav-link active" href="dashboard.html" aria-current="page">Dashboard</a>
+        <a class="nav-link" href="pipelines.html">Pipelines</a>
+        <a class="nav-link" href="monitoring.html">Monitoring</a>
+        <a class="nav-link" href="#">Connections</a>
+        <a class="nav-link" href="#">Variables</a>
+        <a class="nav-link" href="#">Settings</a>
+        <a class="nav-link text-danger" href="index.html" data-logout>Выйти</a>
+      </nav>
+    </div>
+  </aside>
+
+  <div class="modal fade" id="addConnectionModal" tabindex="-1" aria-labelledby="addConnectionTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <form class="modal-content" id="addConnectionForm">
+        <header class="modal-header">
+          <h2 class="modal-title h5" id="addConnectionTitle">Добавить соединение</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </header>
+        <div class="modal-body">
+          <label for="connectionName" class="form-label">Название</label>
+          <input id="connectionName" class="form-control" placeholder="Redis Cache" required>
+        </div>
+        <footer class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+          <button type="submit" class="btn btn-primary">Сохранить</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addVariableModal" tabindex="-1" aria-labelledby="addVariableTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <form class="modal-content" id="addVariableForm">
+        <header class="modal-header">
+          <h2 class="modal-title h5" id="addVariableTitle">Добавить переменную</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </header>
+        <div class="modal-body row g-3">
+          <div class="col-12">
+            <label for="varKey" class="form-label">Ключ</label>
+            <input id="varKey" class="form-control" placeholder="BATCH_SIZE" required>
+          </div>
+          <div class="col-12">
+            <label for="varValue" class="form-label">Значение</label>
+            <input id="varValue" class="form-control" placeholder="5000" required>
+          </div>
+        </div>
+        <footer class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+          <button type="submit" class="btn btn-primary">Сохранить</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="actionToast" class="toast" role="status" aria-live="polite" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="me-auto">FlowOrchestrator</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Закрыть"></button>
+      </div>
+      <div class="toast-body" id="toastBody">Операция выполнена.</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
