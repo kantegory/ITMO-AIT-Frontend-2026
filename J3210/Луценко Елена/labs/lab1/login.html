@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Вход</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="d-flex align-items-center">
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-10 col-md-6 col-lg-4">
+            <div class="card p-5 login-card">
+                <h3 class="text-center mb-4 fw-bold">Вход</h3>
+
+                <form>
+                    <div class="mb-3">
+                        <label for="email" class="form-label small">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="ivan@test.ru" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="pass" class="form-label small">Пароль</label>
+                        <input type="password" class="form-control" id="pass" required>
+                    </div>
+
+                    <button type="button" onclick="login()" class="btn btn-primary w-100">Войти в систему</button>
+                </form>
+
+                <div class="text-center mt-4">
+                    <p class="small">Нет аккаунта? <a href="register.html" class="text-decoration-none">Регистрация</a></p>
+                    <a href="index.html" class="text-muted text-decoration-none small">Вернуться в каталог</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/data.js"></script>
+
+<script>
+    function login() {
+        const email = document.getElementById('email').value;
+        const pass = document.getElementById('pass').value;
+
+        const user = data.users.find(user => user.email === email && user.password === pass);
+
+        if (user) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+
+            if (user.role === 'teacher') {
+                window.location.href = "teacher.html";
+            } else {
+                window.location.href = "profile.html";
+            }
+        } else {
+            alert("Ошибка! Неверный email или пароль");
+        }
+    }
+</script>
+
+</body>
+</html>
