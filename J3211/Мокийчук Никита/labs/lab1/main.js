@@ -10,6 +10,62 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   }
+
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) {
+    loginForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      if (email && password) {
+        showToast('Вход выполнен успешно!', 'success');
+        setTimeout(() => { window.location.href = 'profile.html'; }, 1000);
+      } else {
+        showToast('Заполните все поля', 'danger');
+      }
+    });
+  }
+
+  const registerForm = document.getElementById('registerForm');
+  if (registerForm) {
+    registerForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value;
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+      const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+      if (!name || !email || !password || !confirmPassword) {
+        showToast('Заполните все поля', 'danger');
+        return;
+      }
+      if (password !== confirmPassword) {
+        showToast('Пароли не совпадают', 'danger');
+        return;
+      }
+      if (password.length < 6) {
+        showToast('Пароль должен содержать минимум 6 символов', 'danger');
+        return;
+      }
+      showToast('Регистрация прошла успешно!', 'success');
+      setTimeout(() => { window.location.href = 'profile.html'; }, 1000);
+    });
+  }
+
+  document.querySelectorAll('.toggle-password').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const input = this.closest('.input-group').querySelector('input');
+      const icon = this.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('bi-eye', 'bi-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.replace('bi-eye-slash', 'bi-eye');
+      }
+    });
+  });
+
 });
 
 function showToast(message, type) {
@@ -42,4 +98,10 @@ function showToast(message, type) {
   const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
   toast.show();
   toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
 }
