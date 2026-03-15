@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Hub | Поиск моделей</title>
+    <title>AI Hub | Датасеты</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css">
@@ -18,8 +18,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link active" href="index.html">Модели</a></li>
-                <li class="nav-item"><a class="nav-link" href="datasets.html">Датасеты</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html">Модели</a></li>
+                <li class="nav-item"><a class="nav-link active" href="datasets.html">Датасеты</a></li>
             </ul>
             <div class="d-flex align-items-center">
                 <a href="login.html" class="btn btn-outline-light me-2">Вход</a>
@@ -36,26 +36,26 @@
             <div class="card p-3 shadow-sm border-0">
                 <h5 class="fw-bold">Фильтры</h5>
                 <hr>
-                <h6 class="text-muted text-uppercase small fw-bold">Задача</h6>
+                <h6 class="text-muted text-uppercase small fw-bold">Тип данных</h6>
                 <div class="form-check">
                     <input class="form-check-input task-filter" type="checkbox" id="nlp" value="nlp">
-                    <label class="form-check-label" for="nlp">NLP (Текст)</label>
+                    <label class="form-check-label" for="nlp">Текст (NLP)</label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input task-filter" type="checkbox" id="cv" value="cv">
-                    <label class="form-check-label" for="cv">Computer Vision</label>
+                    <label class="form-check-label" for="cv">Изображения (CV)</label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input task-filter" type="checkbox" id="audio" value="audio">
-                    <label class="form-check-label" for="audio">Audio / Speech</label>
+                    <label class="form-check-label" for="audio">Аудио</label>
                 </div>
                 
-                <h6 class="text-muted text-uppercase small fw-bold mt-4">Фреймворк</h6>
-                <select id="frameworkSelect" class="form-select border-0 bg-light">
-                    <option value="all" selected>Все</option>
-                    <option value="pytorch">PyTorch</option>
-                    <option value="tensorflow">TensorFlow</option>
-                    <option value="jax">JAX</option>
+                <h6 class="text-muted text-uppercase small fw-bold mt-4">Формат</h6>
+                <select id="formatSelect" class="form-select border-0 bg-light">
+                    <option value="all" selected>Все форматы</option>
+                    <option value="csv">CSV / Parquet</option>
+                    <option value="json">JSON / JSONL</option>
+                    <option value="images">ZIP (Images)</option>
                 </select>
             </div>
         </aside>
@@ -63,79 +63,79 @@
         <main class="col-md-9">
             <div class="input-group mb-4 shadow-sm">
                 <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-                <input type="text" id="searchInput" class="form-control border-start-0 ps-0" placeholder="Поиск по названию или описанию (например, Llama)...">
+                <input type="text" id="searchInput" class="form-control border-start-0 ps-0" placeholder="Поиск по датасетам...">
                 <button class="btn btn-primary">Найти</button>
             </div>
 
             <div class="row row-cols-1 row-cols-md-2 g-4">
                 
-                <div class="col model-col" data-task="nlp" data-framework="pytorch">
+                <div class="col model-col" data-task="nlp" data-format="json">
                     <div class="card h-100 shadow-sm border-0 model-card">
                         <div class="card-body">
-                            <h5 class="card-title"><a href="model.html" class="text-decoration-none">Llama-3-8B-Instruct</a></h5>
-                            <p class="card-text text-muted small">Meta's latest large language model fine-tuned for chat and conversational AI.</p>
+                            <h5 class="card-title"><a href="#" class="text-decoration-none">WikiText-103</a></h5>
+                            <p class="card-text text-muted small">Большая коллекция качественных статей из Википедии для обучения языковых моделей.</p>
                             <div class="mb-3">
-                                <span class="badge bg-primary">Модель</span>
+                                <span class="badge bg-success">Датасет</span>
                                 <span class="badge bg-info-soft border text-primary">NLP</span>
-                                <span class="badge bg-light text-dark border">PyTorch</span>
+                                <span class="badge bg-light text-dark border">JSONL</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 12.5k • <i class="bi bi-download"></i> 1.2M</small>
-                                <span class="text-muted small">4.5 GB</span>
+                                <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 5.2k • <i class="bi bi-download"></i> 8.1M</small>
+                                <span class="text-muted small">515 MB</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col model-col" data-task="cv" data-framework="tensorflow">
+                <div class="col model-col" data-task="cv" data-format="images">
                     <div class="card h-100 shadow-sm border-0 model-card">
                         <div class="card-body">
-                            <h5 class="card-title"><a href="#" class="text-decoration-none">Stable-Diffusion-XL</a></h5>
-                            <p class="card-text text-muted small">Модель для генерации высококачественных изображений по текстовому описанию.</p>
+                            <h5 class="card-title"><a href="#" class="text-decoration-none">COCO-2017</a></h5>
+                            <p class="card-text text-muted small">Масштабный датасет для обнаружения объектов, сегментации и описания изображений.</p>
                             <div class="mb-3">
-                                <span class="badge bg-primary">Модель</span>
+                                <span class="badge bg-success">Датасет</span>
                                 <span class="badge bg-success bg-opacity-10 border text-success">Computer Vision</span>
-                                <span class="badge bg-light text-dark border">TensorFlow</span>
+                                <span class="badge bg-light text-dark border">ZIP</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 8.9k • <i class="bi bi-download"></i> 3.4M</small>
-                                <span class="text-muted small">6.9 GB</span>
+                                <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 14.8k • <i class="bi bi-download"></i> 2.5M</small>
+                                <span class="text-muted small">25 GB</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col model-col" data-task="audio" data-framework="jax">
+                <div class="col model-col" data-task="audio" data-format="images">
                     <div class="card h-100 shadow-sm border-0 model-card">
                         <div class="card-body">
-                            <h5 class="card-title"><a href="#" class="text-decoration-none">Whisper-v3-Large</a></h5>
-                            <p class="card-text text-muted small">Модель от OpenAI для распознавания речи (STT) с поддержкой множества языков.</p>
+                            <h5 class="card-title"><a href="#" class="text-decoration-none">Common Voice 15.0</a></h5>
+                            <p class="card-text text-muted small">Мультиязычный датасет голосовых записей от Mozilla для обучения систем распознавания речи.</p>
                             <div class="mb-3">
-                                <span class="badge bg-primary">Модель</span>
+                                <span class="badge bg-success">Датасет</span>
                                 <span class="badge bg-danger bg-opacity-10 border text-danger">Audio</span>
-                                <span class="badge bg-light text-dark border">JAX</span>
+                                <span class="badge bg-light text-dark border">MP3/TAR</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 15.2k • <i class="bi bi-download"></i> 800k</small>
-                                <span class="text-muted small">3.1 GB</span>
+                                <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 9.1k • <i class="bi bi-download"></i> 1.1M</small>
+                                <span class="text-muted small">110 GB</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col model-col" data-task="cv" data-framework="pytorch">
+                <div class="col model-col" data-task="nlp" data-format="csv">
                     <div class="card h-100 shadow-sm border-0 model-card">
                         <div class="card-body">
-                            <h5 class="card-title"><a href="#" class="text-decoration-none">YOLOv9-Object-Detection</a></h5>
-                            <p class="card-text text-muted small">Быстрая и точная модель для обнаружения объектов на фото и видео в реальном времени.</p>
+                            <h5 class="card-title"><a href="#" class="text-decoration-none">IMDB Movie Reviews</a></h5>
+                            <p class="card-text text-muted small">Датасет для бинарной классификации тональности текста на основе отзывов о фильмах.</p>
                             <div class="mb-3">
-                                <span class="badge bg-primary">Модель</span>
-                                <span class="badge bg-success bg-opacity-10 border text-success">Computer Vision</span>
-                                <span class="badge bg-light text-dark border">PyTorch</span>
+                                <span class="badge bg-success">Датасет</span>
+                                <span class="badge bg-info-soft border text-primary">NLP</span>
+                                <span class="badge bg-light text-dark border">CSV</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 4.1k • <i class="bi bi-download"></i> 500k</small>
-                                <span class="text-muted small">150 MB</span>
+                                <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 3.4k • <i class="bi bi-download"></i> 900k</small>
+                                <span class="text-muted small">80 MB</span>
                             </div>
                         </div>
                     </div>
