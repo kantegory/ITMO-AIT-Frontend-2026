@@ -176,6 +176,75 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  const addCourseForm = document.getElementById('addCourseForm');
+  if (addCourseForm) {
+    addCourseForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const title = document.getElementById('newCourseTitle').value;
+      if (title) {
+        showToast('Курс «' + escapeHtml(title) + '» создан!', 'success');
+        const modal = bootstrap.Modal.getInstance(document.getElementById('addCourseModal'));
+        if (modal) modal.hide();
+        addCourseForm.reset();
+      }
+    });
+  }
+
+  const addLessonForm = document.getElementById('addLessonForm');
+  if (addLessonForm) {
+    addLessonForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const title = document.getElementById('newLessonTitle').value;
+      if (title) {
+        showToast('Урок «' + escapeHtml(title) + '» добавлен!', 'success');
+        const modal = bootstrap.Modal.getInstance(document.getElementById('addLessonModal'));
+        if (modal) modal.hide();
+        addLessonForm.reset();
+      }
+    });
+  }
+
+  const buyBtn = document.getElementById('buyCourseBtn');
+  if (buyBtn) {
+    buyBtn.addEventListener('click', function () {
+      const modal = new bootstrap.Modal(document.getElementById('buyModal'));
+      modal.show();
+    });
+  }
+  const confirmBuyBtn = document.getElementById('confirmBuy');
+  if (confirmBuyBtn) {
+    confirmBuyBtn.addEventListener('click', function () {
+      showToast('Курс успешно куплен! Перенаправление...', 'success');
+      const modal = bootstrap.Modal.getInstance(document.getElementById('buyModal'));
+      if (modal) modal.hide();
+      setTimeout(() => { window.location.href = 'profile.html'; }, 1500);
+    });
+  }
+
+  const editProfileForm = document.getElementById('editProfileForm');
+  if (editProfileForm) {
+    editProfileForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      showToast('Профиль обновлен', 'success');
+      const modal = bootstrap.Modal.getInstance(document.getElementById('editProfileModal'));
+      if (modal) modal.hide();
+    });
+  }
+
+  const sidebarLinks = document.querySelectorAll('.sidebar-link');
+  const tabPanes = document.querySelectorAll('.profile-tab-pane');
+  sidebarLinks.forEach(link => {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      sidebarLinks.forEach(l => l.classList.remove('active'));
+      this.classList.add('active');
+      const target = this.dataset.tab;
+      tabPanes.forEach(pane => {
+        pane.classList.toggle('d-none', pane.id !== target);
+      });
+    });
+  });
+
   document.querySelectorAll('.toggle-password').forEach(btn => {
     btn.addEventListener('click', function () {
       const input = this.closest('.input-group').querySelector('input');
