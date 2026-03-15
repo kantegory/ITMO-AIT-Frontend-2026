@@ -1,0 +1,283 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar {
+    background: white;
+}
+
+.logo {
+    font-size: 25px;
+    letter-spacing: 3px;
+}
+
+.hero {
+    height: 92vh;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: clamp(70px, 15vw, 160px);
+    font-weight: 900;
+    letter-spacing: 15px;
+    color: white;
+    white-space: nowrap;
+}
+
+.hero-title span,
+.prime-letter {
+    display: inline-block;
+    transition: transform 0.25s ease;
+}
+
+.hero-title span:hover {
+    transform: scale(0.85);
+}
+
+.prime-letter {
+    position: relative;
+    cursor: pointer;
+}
+
+.prime-letter:hover {
+    transform: scale(0.9);
+}
+
+.prime-word {
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 1px;
+    opacity: 0;
+    white-space: nowrap;
+    transition: 0.25s;
+}
+
+.prime-letter:hover .prime-word {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.hero-subtitle {
+    color: #bbb;
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+.auth-page {
+    background: black;
+    min-height: 100vh;
+}
+
+.auth-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 85vh;
+}
+
+.auth-card {
+    padding: 30px;
+}
+
+.floating-input {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.floating-input input {
+    width: 100%;
+    padding: 12px 10px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #555;
+    color: white;
+    outline: none;
+}
+
+.floating-input label {
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    color: #777;
+    font-size: 14px;
+    pointer-events: none;
+    transition: 0.3s;
+}
+
+.floating-input input:focus + label,
+.floating-input input:valid + label {
+    top: -10px;
+    font-size: 12px;
+    color: #bbb;
+}
+
+.floating-input input:focus {
+    border-bottom: 1px solid white;
+}
+
+.role-select select {
+    background: transparent;
+    color: white;
+    border: 1px solid #555;
+}
+
+.role-select select:focus {
+    border-color: white;
+    box-shadow: none;
+}
+
+.role-select option {
+    color: black;
+}
+
+.dashboard-page {
+    background: #f5f5f5;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 220px;
+    background: black;
+    min-height: 100vh;
+}
+
+.sidebar .nav-link {
+    font-size: 15px;
+}
+
+.sidebar .nav-link:hover {
+    color: #ccc;
+}
+
+.project-card {
+    border: none;
+    transition: 0.2s;
+}
+
+.project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.error-text {
+    color: #ff6b6b;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+.password-rules {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #888;
+}
+
+.password-rules p {
+    margin: 2px 0;
+}
+
+.rule-valid {
+    color: #4caf50;
+}
+
+.password-strength {
+    height: 4px;
+    background: #333;
+    margin-top: 8px;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+#strengthBar {
+    height: 100%;
+    width: 0%;
+    transition: 0.3s;
+}
+
+.password-container {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #aaa;
+}
+
+.kanban-board {
+    margin-bottom: 40px;
+}
+
+.kanban-column {
+    border-radius: 20px;
+    padding: 20px;
+    min-height: 320px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.kanban-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.kanban-todo {
+    background: #fdecec;
+}
+
+.kanban-progress {
+    background: #fff8e1;
+}
+
+.kanban-done {
+    background: #eaf8ee;
+}
+
+.task-card {
+    background: rgba(255, 255, 255, 0.88);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    transition: 0.2s ease;
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+}
+
+.task-card strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.task-project {
+    font-size: 13px;
+    color: #666;
+}
+
+.task-due {
+    font-size: 12px;
+    color: #888;
+    margin-top: 6px;
+}
+
+.btn.login-btn:hover {
+    background: #e5e5e5;
+    border-color: #e5e5e5;
+    color: black;
+}
