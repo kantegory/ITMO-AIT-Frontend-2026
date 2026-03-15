@@ -1,0 +1,246 @@
+:root {
+    --sidebar-width: 280px;
+    --header-height: 62px;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f6f8;
+}
+
+.site-header {
+    height: var(--header-height);
+    z-index: 100;
+}
+
+.cabinet-wrapper {
+    display: flex;
+    flex: 1;
+}
+
+.cabinet-sidebar {
+    width: var(--sidebar-width);
+    min-height: calc(100vh - var(--header-height));
+    background: #212529;
+    color: #fff;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    position: sticky;
+    top: var(--header-height);
+    align-self: flex-start;
+    transition: transform .3s ease;
+}
+
+.cabinet-sidebar .nav-link {
+    color: rgba(255, 255, 255, .75);
+    border-radius: .375rem;
+    padding: .6rem 1rem;
+    margin-bottom: .15rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    font-size: .95rem;
+    transition: background .2s, color .2s;
+}
+
+.cabinet-sidebar .nav-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, .1);
+}
+
+.cabinet-sidebar .nav-link.active {
+    color: #fff;
+    background: #0d6efd;
+}
+
+.cabinet-sidebar .sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .75rem 1rem;
+    border-radius: .375rem;
+    background: rgba(255, 255, 255, .05);
+    margin-bottom: 1.25rem;
+}
+
+.cabinet-sidebar .sidebar-user img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.cabinet-sidebar .sidebar-user .user-name {
+    font-weight: 600;
+    font-size: .95rem;
+}
+
+.cabinet-sidebar .sidebar-user .user-email {
+    font-size: .78rem;
+    opacity: .6;
+}
+
+.cabinet-main {
+    flex: 1;
+    padding: 2rem 2.5rem;
+    min-width: 0;
+}
+
+.panel {
+    display: none;
+}
+
+.panel.active {
+    display: block;
+    animation: fadeUp .35s ease;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.stat-card {
+    background: #fff;
+    border-radius: .75rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+    transition: transform .2s, box-shadow .2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+}
+
+.stat-card .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.stat-card .stat-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.stat-card .stat-label {
+    font-size: .82rem;
+    color: #6c757d;
+}
+
+.course-card-lk {
+    background: #fff;
+    border-radius: .75rem;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+    transition: transform .2s, box-shadow .2s;
+}
+
+.course-card-lk:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+}
+
+.course-card-lk img {
+    height: 150px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.course-card-lk .card-body {
+    padding: 1rem 1.25rem;
+}
+
+.progress {
+    height: 6px;
+    border-radius: 3px;
+}
+
+.settings-section {
+    background: #fff;
+    border-radius: .75rem;
+    padding: 2rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+}
+
+.settings-section + .settings-section {
+    margin-top: 1.5rem;
+}
+
+.cert-card {
+    background: #fff;
+    border-radius: .75rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: transform .2s;
+}
+
+.cert-card:hover {
+    transform: translateY(-2px);
+}
+
+.cert-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: .5rem;
+    background: linear-gradient(135deg, #ffc107, #ff9800);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+@media (max-width: 991.98px) {
+    .cabinet-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-height: 100vh;
+        z-index: 1050;
+        transform: translateX(-100%);
+        padding-top: 1rem;
+    }
+
+    .cabinet-sidebar.show {
+        transform: translateX(0);
+    }
+
+    .sidebar-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .45);
+        z-index: 1040;
+    }
+
+    .sidebar-backdrop.show {
+        display: block;
+    }
+
+    .cabinet-main {
+        padding: 1.25rem 1rem;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .cabinet-sidebar {
+        display: none;
+    }
+}

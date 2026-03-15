@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Личный кабинет</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../UserCourses/AU-styles.css" />
+</head>
+
+<body>
+
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+            <div class="d-flex align-items-center">
+
+                <button class="btn btn-outline-light d-lg-none me-2" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#mobileSidebar">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <a href="../index.html" class="d-flex text-white text-decoration-none me-auto">
+                    <span class="fw-semibold"></span>
+                    <img src="../images/logo.png" alt="Логотип" width="40" height="40" class="me-2">
+                </a>
+
+                <a href="../index.html" class="btn btn-warning">
+                    Sign out
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="offcanvas offcanvas-start text-bg-dark d-lg-none" id="mobileSidebar" style="width: 280px;">
+        <div class="offcanvas-header border-bottom border-secondary pb-3">
+            <div class="d-flex align-items-center gap-2">
+                <img src="../images/jinx.png" alt="Аватар" class="rounded-circle"
+                    style="width:40px; height:40px; object-fit:cover;">
+                <div>
+                    <div class="fw-semibold" style="font-size:.9rem">Иван Иванов</div>
+                    <div style="font-size:.75rem; opacity:.6">ivan@example.com</div>
+                </div>
+            </div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <ul class="list-unstyled mb-0">
+                <li>
+                    <a
+                        class="d-flex align-items-center gap-2 px-3 py-2 text-white text-decoration-none"
+                        style="font-size:.9rem; background:rgba(13,110,253,.25);">
+                        <i class="bi bi-book"></i> Мои курсы
+                    </a>
+                </li>
+                <li>
+                    <a href="AddNewCourse.html" class="d-flex align-items-center gap-2 px-3 py-2 text-white-50 text-decoration-none"
+                        style="font-size:.9rem; transition: background .15s;"
+                        onmouseover="this.style.background='rgba(255,255,255,.08)'"
+                        onmouseout="this.style.background='transparent'">
+                        <i class="bi bi-grid-1x2"></i> Создать новый курс
+                    </a>
+                </li>
+
+                <li class="border-top border-secondary my-2"></li>
+
+                <li>
+                    <a href="../index.html"
+                        class="d-flex align-items-center gap-2 px-3 py-2 text-white-50 text-decoration-none"
+                        style="font-size:.9rem; transition: background .15s;"
+                        onmouseover="this.style.background='rgba(255,255,255,.08)'"
+                        onmouseout="this.style.background='transparent'">
+                        <i class="bi bi-box-arrow-left"></i> Выйти
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="cabinet-wrapper">
+
+        <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+        <aside class="cabinet-sidebar" id="sidebar">
+            <div class="sidebar-user">
+                <img src="../images/jinx.png" alt="Аватар">
+                <div>
+                    <div class="user-name">Иван Иванов</div>
+                    <div class="user-email">ivan@example.com</div>
+                </div>
+            </div>
+
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" data-panel="panel-courses">
+                        <i class="bi bi-book"></i> Мои курсы
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="AddNewCourse.html" class="nav-link" data-panel="panel-favorites">
+                        <i class="bi bi-heart"></i> Создать новый курс
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="cabinet-main">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold mb-0">Мои курсы</h4>
+                <a href="AddNewCourse.html" class="btn btn-primary">
+                    <i class="bi bi-plus-lg me-1"></i>Новый курс
+                </a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width:50px"></th>
+                            <th>Название</th>
+                            <th>Статус</th>
+                            <th>Студенты</th>
+                            <th>Рейтинг</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="https://images.unsplash.com/photo-1504639725590-34d0984388bd" alt=""
+                                    class="rounded" style="width:48px;height:36px;object-fit:cover"></td>
+                            <td class="fw-semibold">Data Science</td>
+                            <td><span class="badge bg-success">Опубликован</span></td>
+                            <td>574</td>
+                            <td><i class="bi bi-star-fill text-warning"></i> 4.9</td>
+                            <td>
+                                <a href="EditCourse.html" class="btn btn-sm btn-outline-primary me-1"><i
+                                        class="bi bi-pencil"></i></a>
+                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c" alt=""
+                                    class="rounded" style="width:48px;height:36px;object-fit:cover"></td>
+                            <td class="fw-semibold">UI / UX дизайн</td>
+                            <td><span class="badge bg-warning text-dark">Черновик</span></td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>
+                                <a href="EditCourse.html" class="btn btn-sm btn-outline-primary me-1"><i
+                                        class="bi bi-pencil"></i></a>
+                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085" alt=""
+                                    class="rounded" style="width:48px;height:36px;object-fit:cover"></td>
+                            <td class="fw-semibold">HTML + CSS</td>
+                            <td><span class="badge bg-success">Опубликован</span></td>
+                            <td>623</td>
+                            <td><i class="bi bi-star-fill text-warning"></i> 4.7</td>
+                            <td>
+                                <a href="EditCourse.html" class="btn btn-sm btn-outline-primary me-1"><i
+                                        class="bi bi-pencil"></i></a>
+                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://images.unsplash.com/photo-1531496730074-83b638c0a7ac" alt=""
+                                    class="rounded" style="width:48px;height:36px;object-fit:cover"></td>
+                            <td class="fw-semibold">Git и GitHub</td>
+                            <td><span class="badge bg-secondary">Архив</span></td>
+                            <td>95</td>
+                            <td><i class="bi bi-star-fill text-warning"></i> 4.3</td>
+                            <td>
+                                <a href="EditCourse.html" class="btn btn-sm btn-outline-primary me-1"><i
+                                        class="bi bi-pencil"></i></a>
+                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <div class="container">
+        <footer class="py-3 my-4">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+            </ul>
+            <p class="text-center text-body-secondary">&copy; 2025 Company, Inc</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
