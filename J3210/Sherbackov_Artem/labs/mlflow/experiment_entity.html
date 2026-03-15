@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Experiment | Pipes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="experiment-entity-page">
+
+<div class="app-layout d-flex">
+
+    <aside>
+
+    <button class="btn btn-primary d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar">
+        ☰
+    </button>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel">
+        <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="mobileSidebarLabel">Pipes</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+        <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary h-100 p-3">
+            <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item mb-2"><a href="dashboard.html" class="nav-link link-body-emphasis">Home</a></li>
+            <li class="mb-2"><a href="experiments.html" class="nav-link active">Experiments</a></li>
+            <li class="mb-2"><a href="models.html" class="nav-link link-body-emphasis">Model Registry</a></li>
+            </ul>
+
+            <div class="mt-auto">
+            <hr>
+            <div class="dropdown">
+
+                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                <img src="https://github.com/mdo.png" width="32" height="32" class="rounded-circle me-2">
+                <strong>User</strong>
+                </a>
+
+                <ul class="dropdown-menu text-small shadow">
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="index.html">Sign out</a></li>
+                </ul>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="d-none d-md-flex flex-column flex-shrink-0 p-4 bg-body-tertiary border-end" style="width:260px; min-height:100vh;">
+
+        <a href="dashboard.html" class="d-flex align-items-center mb-4 text-decoration-none">
+        <span class="fs-4 fw-bold">Pipes</span>
+        </a>
+
+        <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item mb-2"><a href="dashboard.html" class="nav-link link-body-emphasis">Home</a></li>
+        <li class="mb-2"><a href="experiments.html" class="nav-link active">Experiments</a></li>
+        <li class="mb-2"><a href="models.html" class="nav-link link-body-emphasis">Model Registry</a></li>
+        </ul>
+
+        <div class="mt-auto">
+        <hr>
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+            <img src="https://github.com/mdo.png" width="32" height="32" class="rounded-circle me-2">
+            <strong>User</strong>
+            </a>
+            <ul class="dropdown-menu text-small shadow">
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="index.html">Sign out</a></li>
+            </ul>
+        </div>
+        </div>
+    </div>
+
+    </aside>
+
+
+
+    <main class="flex-grow-1 p-4">
+
+
+        <header class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+                <h1 class="mb-0">Experiment: Detection Experiment</h1>
+            </div>
+
+            <button class="btn btn-primary">
+                New Run
+            </button>
+
+        </header>
+
+
+
+        <section class="card mb-4">
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <input class="form-control"
+                               placeholder="Filter">
+                    </div>
+
+                    <div class="col-md-2">
+
+                        <select class="form-select">
+                            <option>Active</option>
+                            <option>Deleted</option>
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-2">
+
+                        <select class="form-select">
+                            <option>Sort: Created</option>
+                            <option>Sort: Metric</option>
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-2">
+
+                        <button class="btn btn-outline-secondary w-100">
+                            Columns
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    
+
+
+        <section class="card">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+
+                    <tr>
+
+                        <th>Run Name</th>
+
+                        <th>Created</th>
+
+                        <th>Status</th>
+
+                        <th>Metrics</th>
+
+                        <th>Parameters</th>
+
+                        <th>Duration</th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    <tr>
+
+                        <td>
+                            <a href="run_entity.html"
+                               class="fw-semibold text-decoration-none">
+                                run_1
+                            </a>
+                        </td>
+
+                        <td>15 Mar 2026</td>
+
+                        <td>
+                            <span class="badge bg-success">
+                                Finished
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="badge bg-primary">
+                                accuracy: 0.93
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="badge bg-secondary">
+                                model=xgboost
+                            </span>
+                        </td>
+
+                        <td>12m 32s</td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <nav class="mt-4 d-flex justify-content-between align-items-center">
+
+            <span class="text-muted">
+                Showing 1-3 of 3 runs
+            </span>
+
+            <ul class="pagination mb-0">
+                <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                </li>
+
+                <li class="page-item active">
+                    <a class="page-link">1</a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link disabled">Next</a>
+                </li>
+            </ul>
+
+        </nav>
+
+    </main>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

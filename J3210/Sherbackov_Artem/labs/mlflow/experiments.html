@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Experiments | Pipes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+
+<body class="experiment-page">
+
+<div class="app-layout d-flex">
+
+    <aside>
+
+    <button class="btn btn-primary d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar">
+        ☰
+    </button>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel">
+        <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="mobileSidebarLabel">Pipes</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+        <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary h-100 p-3">
+            <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item mb-2"><a href="dashboard.html" class="nav-link link-body-emphasis">Home</a></li>
+            <li class="mb-2"><a href="experiments.html" class="nav-link active">Experiments</a></li>
+            <li class="mb-2"><a href="models.html" class="nav-link link-body-emphasis">Model Registry</a></li>
+            </ul>
+
+            <div class="mt-auto">
+            <hr>
+            <div class="dropdown">
+
+                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                <img src="https://github.com/mdo.png" width="32" height="32" class="rounded-circle me-2">
+                <strong>User</strong>
+                </a>
+
+                <ul class="dropdown-menu text-small shadow">
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="index.html">Sign out</a></li>
+                </ul>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="d-none d-md-flex flex-column flex-shrink-0 p-4 bg-body-tertiary border-end" style="width:260px; min-height:100vh;">
+
+        <a href="dashboard.html" class="d-flex align-items-center mb-4 text-decoration-none">
+        <span class="fs-4 fw-bold">Pipes</span>
+        </a>
+
+        <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item mb-2"><a href="dashboard.html" class="nav-link link-body-emphasis">Home</a></li>
+        <li class="mb-2"><a href="experiments.html" class="nav-link active">Experiments</a></li>
+        <li class="mb-2"><a href="models.html" class="nav-link link-body-emphasis">Model Registry</a></li>
+        </ul>
+
+        <div class="mt-auto">
+        <hr>
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+            <img src="https://github.com/mdo.png" width="32" height="32" class="rounded-circle me-2">
+            <strong>User</strong>
+            </a>
+            <ul class="dropdown-menu text-small shadow">
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="index.html">Sign out</a></li>
+            </ul>
+        </div>
+        </div>
+    </div>
+
+    </aside>
+
+
+
+    <main class="flex-grow-1 p-4">
+
+        <header class="d-flex justify-content-between align-items-center mb-4">
+
+            <h1>Experiments</h1>
+
+            <div class="d-flex flex-column flex-md-row gap-2">
+
+                <button class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#newExperimentModal">
+                    Create
+                </button>
+
+                <button class="btn btn-outline-secondary" disabled>
+                    Compare
+                </button>
+
+                <button class="btn btn-outline-danger" disabled>
+                    Delete
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <section class="card mb-4">
+
+            <div class="card-body">
+
+                <div class="row g-3 align-items-center">
+
+                    <div class="col-sm-12 col-md-6">
+
+                        <div class="input-group">
+
+                            <input type="text"
+                                class="form-control"
+                                placeholder="Search experiments">
+
+                            <button class="btn btn-outline-secondary">
+                                Search
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-12 col-md-3">
+
+                        <select class="form-select">
+
+                            <option selected>
+                                Filter by tag
+                            </option>
+
+                            <option>
+                                NLP
+                            </option>
+
+                            <option>
+                                CV
+                            </option>
+
+                            <option>
+                                Recommendation
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="card">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th style="width:40px;">
+                                <input class="form-check-input" type="checkbox">
+                            </th>
+
+                            <th>Name</th>
+
+                            <th>Created</th>
+
+                            <th>Last Modified</th>
+
+                            <th>Description</th>
+
+                            <th>Tags</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>
+                                <input class="form-check-input" type="checkbox">
+                            </td>
+
+                            <td>
+                                <a href="experiment_entity.html"
+                                class="text-decoration-none fw-semibold">
+                                    Smth detection XGboost
+                                </a>
+                            </td>
+
+                            <td>15 Mar 2026</td>
+
+                            <td>15 Mar 2026</td>
+
+                            <td>grad boosting model for detecting</td>
+
+                            <td>
+                                <span class="badge bg-primary">
+                                    xgboost
+                                </span>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <input class="form-check-input" type="checkbox">
+                            </td>
+
+                            <td>
+                                <a href="experiment_entity.html"
+                                class="text-decoration-none fw-semibold">
+                                    Rec sys
+                                </a>
+                            </td>
+
+                            <td>14 Mar 2026</td>
+
+                            <td>14 Mar 2026</td>
+
+                            <td>Ranking model suggests smth for users</td>
+
+                            <td>
+                                <span class="badge bg-success">
+                                    recommender
+                                </span>
+
+                                <span class="badge bg-info">
+                                    ranking
+                                </span>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <input class="form-check-input" type="checkbox">
+                            </td>
+
+                            <td>
+                                <a href="experiment_entity.html"
+                                class="text-decoration-none fw-semibold">
+                                    NLP Sentiment
+                                </a>
+                            </td>
+
+                            <td>14 Mar 2026</td>
+
+                            <td>14 Mar 2026</td>
+
+                            <td>BERT sentiment classification</td>
+
+                            <td>
+                                <span class="badge bg-warning">
+                                    nlp
+                                </span>
+
+                                <span class="badge bg-dark">
+                                    bert
+                                </span>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <nav class="mt-4 d-flex justify-content-between align-items-center">
+
+            <span class="text-muted">
+                Showing 1-3 of 3 experiments
+            </span>
+
+            <ul class="pagination mb-0">
+
+                <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                </li>
+
+                <li class="page-item active">
+                    <a class="page-link">1</a>
+                </li>
+
+                <li class="page-item disabled">
+                    <a class="page-link">Next</a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </main>
+
+
+</div>
+
+
+
+
+<div class="modal fade" id="newExperimentModal" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-dialog-custom">
+
+        <div class="modal-content rounded-4 shadow">
+
+            <div class="modal-header modal-header-custom">
+
+                <h5 class="modal-title">Create New Experiment</h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <form>
+
+                    <div class="mb-3">
+
+                        <label for="expName"
+                               class="form-label">
+                            Experiment Name
+                        </label>
+
+                        <input type="text"
+                               id="expName"
+                               class="form-control">
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label for="expModel"
+                               class="form-label">
+                            Model
+                        </label>
+
+                        <input type="text"
+                               id="expModel"
+                               class="form-control">
+
+                    </div>
+
+
+                    <button type="submit"
+                            class="btn btn-primary w-100">
+
+                        Create
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
