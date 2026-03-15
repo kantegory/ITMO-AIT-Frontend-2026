@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Поиск фанфиков</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #fff3e0;
+        }
+
+        .fic-title {
+            text-decoration: none;
+            color: #000000;
+            font-weight: 600;
+            display: inline-block;
+            transition: color 0.3s;
+        }
+
+        .fic-title:hover {
+            color: #ff5722;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #ffa676, #fd7f59);
+        }
+
+        .filter-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tag {
+            background: #ffdfd1;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        .btn-main {
+            background: #ff7043;
+            color: white;
+        }
+
+        .btn-main:hover {
+            background: #f4511e;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">FanFicLib</a>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Поиск</a></li>
+                    <li class="nav-item"><a class="nav-link" href="write.html">Написать фанфик</a></li>
+                </ul>
+                <a class="btn btn-light me-2" href="login.html">Вход</a>
+                <a class="btn btn-dark" href="register.html">Регистрация</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+
+        <header class="mb-4">
+            <h1>Поиск фанфиков</h1>
+        </header>
+
+        <section class="row">
+
+            <aside class="col-md-3">
+                <div class="filter-box">
+                    <h2 class="h5">Фильтры</h2>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="filter-title">Название</label>
+                        <input id="filter-title" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="filter-fandom">Фандом</label>
+                        <select id="filter-fandom" class="form-select">
+                            <option>Любой</option>
+                            <option>Harry Potter</option>
+                            <option>Naruto</option>
+                            <option>Marvel</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="filter-rating">Рейтинг</label>
+                        <select id="filter-rating" class="form-select">
+                            <option>Любой</option>
+                            <option>G</option>
+                            <option>PG</option>
+                            <option>R</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="filter-status">Статус</label>
+                        <select id="filter-status" class="form-select">
+                            <option>Любой</option>
+                            <option>Закончен</option>
+                            <option>В процессе</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-main w-100" id="filter-btn">Найти</button>
+                </div>
+            </aside>
+
+            <section class="col-md-9" id="results">
+
+                <article class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <header>
+                                    <a href="fic.html" class="fic-title h5">Тайна Хогвартса</a>
+                                    <p class="text-muted">Автор: Alex</p>
+                                </header>
+                                <p>История о скрытых комнатах школы магии.</p>
+                                <div>
+                                    <span class="tag">магия</span>
+                                    <span class="tag">приключения</span>
+                                    <span class="tag">драма</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="row g-0">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <header>
+                                    <a href="fic.html" class="fic-title h5">Путь шиноби</a>
+                                    <p class="text-muted">Автор: Kate</p>
+                                </header>
+                                <p>Альтернативная история Наруто.</p>
+                                <div>
+                                    <span class="tag">боевик</span>
+                                    <span class="tag">аниме</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </section>
+
+        </section>
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
