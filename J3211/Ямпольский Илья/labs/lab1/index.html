@@ -223,12 +223,13 @@
             <div class="mb-3">
                 <label class="form-label">Ваша оценка</label>
                 <div class="rating-select" id="ratingSelect">
-                    <span>1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>5</span>
+                    <span data-value="1">1</span>
+                    <span data-value="2">2</span>
+                    <span data-value="3">3</span>
+                    <span data-value="4">4</span>
+                    <span data-value="5">5</span>
                 </div>
+                <input type="hidden" id="selectedRating" value="0">
             </div>
             <div class="mb-3">
                 <label class="form-label">Ваш отзыв</label>
@@ -243,13 +244,23 @@
         </div>
         <div class="modal-footer">
             <button class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-            <button class="btn btn-primary" data-bs-dismiss="modal">Отправить</button>
+            <button class="btn btn-primary" data-bs-dismiss="modal" onclick="alert('Спасибо за отзыв!')">Отправить</button>
         </div>
     </div></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    document.querySelectorAll('.rating-select span').forEach(function(span) {
+        span.addEventListener('click', function() {
+            document.querySelectorAll('.rating-select span').forEach(function(s) {
+                s.classList.remove('active');
+            });
+            this.classList.add('active');
+            document.getElementById('selectedRating').value = this.getAttribute('data-value');
+        });
+    });
+
     function generateSeatMap(containerId, soldSeats, selectedSeats) {
         let container = document.getElementById(containerId);
         if (!container) return;
