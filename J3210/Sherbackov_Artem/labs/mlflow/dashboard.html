@@ -13,82 +13,72 @@
 
 <div class="app-layout d-flex">
 
-    <aside class="d-flex flex-column flex-shrink-0 p-4 bg-body-tertiary border-end"
-           style="width:260px; min-height:100vh;">
+    <aside>
 
-        <a href="dashboard.html"
-           class="d-flex align-items-center mb-4 text-decoration-none">
+    <button class="btn btn-primary d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar">
+        ☰
+    </button>
 
-            <span class="fs-4 fw-bold">
-                Pipes
-            </span>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel">
+        <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="mobileSidebarLabel">Pipes</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+        <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary h-100 p-3">
+            <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item mb-2"><a href="dashboard.html" class="nav-link active">Home</a></li>
+            <li class="mb-2"><a href="experiments.html" class="nav-link link-body-emphasis">Experiments</a></li>
+            <li class="mb-2"><a href="models.html" class="nav-link link-body-emphasis">Model Registry</a></li>
+            </ul>
 
-        </a>
-
-        <ul class="nav nav-pills flex-column mb-auto">
-
-            <li class="nav-item mb-2">
-                <a href="dashboard.html" class="nav-link active">
-                    Home
-                </a>
-            </li>
-
-            <li class="mb-2">
-                <a href="experiments.html" class="nav-link link-body-emphasis">
-                    Experiments
-                </a>
-            </li>
-
-            <li class="mb-2">
-                <a href="models.html" class="nav-link link-body-emphasis">
-                    Model Registry
-                </a>
-            </li>
-
-        </ul>
-
-
-        <div class="mt-auto">
-
+            <div class="mt-auto">
             <hr>
-
             <div class="dropdown">
 
-                <a href="#"
-                class="d-flex align-items-center text-decoration-none dropdown-toggle"
-                data-bs-toggle="dropdown">
-
-                    <img src="https://github.com/mdo.png"
-                        width="32"
-                        height="32"
-                        class="rounded-circle me-2">
-
-                    <strong>User</strong>
-
+                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                <img src="https://github.com/mdo.png" width="32" height="32" class="rounded-circle me-2">
+                <strong>User</strong>
                 </a>
 
                 <ul class="dropdown-menu text-small shadow">
-
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            Settings
-                        </a>
-                    </li>
-
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item text-danger" href="index.html">
-                            Sign out
-                        </a>
-                    </li>
-
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="index.html">Sign out</a></li>
                 </ul>
-
+            </div>
             </div>
         </div>
+        </div>
+    </div>
+
+    <div class="d-none d-md-flex flex-column flex-shrink-0 p-4 bg-body-tertiary border-end" style="width:260px; min-height:100vh;">
+
+        <a href="dashboard.html" class="d-flex align-items-center mb-4 text-decoration-none">
+        <span class="fs-4 fw-bold">Pipes</span>
+        </a>
+
+        <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item mb-2"><a href="dashboard.html" class="nav-link active">Home</a></li>
+        <li class="mb-2"><a href="experiments.html" class="nav-link link-body-emphasis">Experiments</a></li>
+        <li class="mb-2"><a href="models.html" class="nav-link link-body-emphasis">Model Registry</a></li>
+        </ul>
+
+        <div class="mt-auto">
+        <hr>
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+            <img src="https://github.com/mdo.png" width="32" height="32" class="rounded-circle me-2">
+            <strong>User</strong>
+            </a>
+            <ul class="dropdown-menu text-small shadow">
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="index.html">Sign out</a></li>
+            </ul>
+        </div>
+        </div>
+    </div>
 
     </aside>
 
@@ -130,10 +120,10 @@
 
             <h2 class="mb-4">Latest Models</h2>
 
-            <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
 
                 <div class="col">
-                    <a href="experiment_entity.html" class="text-decoration-none text-dark">
+                    <a href="model_entity.html" class="text-decoration-none text-dark">
                         <div class="card h-100 text-center">
 
                             <div class="card-body">
@@ -157,7 +147,7 @@
                 </div>
 
                 <div class="col">
-                    <a href="experiment_entity.html" class="text-decoration-none text-dark">
+                    <a href="model_entity.html" class="text-decoration-none text-dark">
                         <div class="card h-100 text-center">
 
                             <div class="card-body">
@@ -183,7 +173,7 @@
                 </div>
 
                 <div class="col">
-                    <a href="experiment_entity.html" class="text-decoration-none text-dark">
+                    <a href="model_entity.html" class="text-decoration-none text-dark">
                         <div class="card h-100 text-center">
 
                             <div class="card-body">
