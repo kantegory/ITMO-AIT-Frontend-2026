@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Платформа онлайн-курсов | Поиск</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/cards.css">
+</head>
+<body class="bg-light">
+
+    <!-- Навбар -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-mortarboard-fill text-warning me-2"></i>EduPlatform
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Каталог курсов</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html" id="navMyLearning">Мое обучение</a>
+                    </li>
+                </ul>
+                <div class="d-flex gap-2 align-items-center" id="navAuthButtons">
+                    <a href="login.html " class="btn btn-outline-light">Войти</a>
+                    <a href="register.html" class="btn btn-warning">Регистрация</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Главный контент -->
+    <div class="container my-5">
+        <div class="row mb-4">
+            <div class="col">
+                <h1 class="fw-bold">Найди свой идеальный курс</h1>
+                <p class="text-muted">Изучай программирование, дизайн и маркетинг у лучших преподавателей.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Сайдбар с фильтрами -->
+            <aside class="col-lg-3 mb-4">
+                <div class="card shadow-sm filter-sidebar">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4"><i class="bi bi-funnel"></i> Фильтры</h5>
+                        
+                        <form id="filterForm">
+                            <!-- Поиск по тексту -->
+                            <div class="mb-4">
+                                <label class="form-label text-muted small fw-bold text-uppercase">Поиск</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                                    <input type="text" id="searchInput" class="form-control border-start-0" placeholder="Название...">
+                                </div>
+                            </div>
+
+                            <!-- Выбор категорий (Чекбоксы) -->
+                            <div class="mb-4">
+                                <label class="form-label text-muted small fw-bold text-uppercase">Категории</label>
+                                <div id="categoryFilters">
+                                    <div class="form-check mb-1">
+                                        <input class="form-check-input" type="checkbox" value="it" id="cat-it">
+                                        <label class="form-check-label" for="cat-it">Программирование</label>
+                                    </div>
+                                    <div class="form-check mb-1">
+                                        <input class="form-check-input" type="checkbox" value="design" id="cat-design">
+                                        <label class="form-check-label" for="cat-design">Дизайн</label>
+                                    </div>
+                                    <div class="form-check mb-1">
+                                        <input class="form-check-input" type="checkbox" value="marketing" id="cat-marketing">
+                                        <label class="form-check-label" for="cat-marketing">Маркетинг</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Двойной ползунок цены -->
+                            <div class="mb-4">
+                                <label class="form-label text-muted small fw-bold text-uppercase">Цена (₽)</label>
+                                <div class="price-input-container d-flex justify-content-between mb-2">
+                                    <span id="priceMinLabel">0</span>
+                                    <span id="priceMaxLabel">50000</span>
+                                </div>
+                                <div class="range-slider">
+                                    <div class="slider-track"></div>
+                                    <input type="range" id="minPriceInput" min="0" max="50000" value="0" step="500">
+                                    <input type="range" id="maxPriceInput" min="0" max="50000" value="50000" step="500">
+                                </div>
+                            </div>
+
+                            <!-- Уровни сложности -->
+                            <div class="mb-4">
+                                <label class="form-label text-muted small fw-bold text-uppercase">Уровень</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="beginner" id="lvl-beginner">
+                                    <label class="form-check-label" for="lvl-beginner">Для новичков</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="advanced" id="lvl-advanced">
+                                    <label class="form-check-label" for="lvl-advanced">Продвинутый</label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100" id="applyFiltersBtn">Применить фильтры</button>
+                            <button type="button" class="btn btn-link w-100 btn-sm text-decoration-none mt-2" id="resetFiltersBtn">Сбросить всё</button>
+                        </form>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Каталог курсов -->
+            <main class="col-lg-9">
+                <div class="row g-4">
+                    <!-- Вставит js -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="modal fade" id="purchaseModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title">Оформление заказа</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Вы собираетесь записаться на курс:</p>
+                    <h4 id="modalCourseTitle" class="text-primary mb-3">Название курса</h4>
+                    <p class="fs-5">К оплате: <strong id="modalCoursePrice">0</strong> ₽</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-warning" id="confirmPurchaseBtn">Перейти к оплате</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>    
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
