@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет | Финансы</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="app-header bg-dark text-white">
+        <nav class="container navbar navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href="index.html">Мои Финансы</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Обзор</a></li>
+                    <li class="nav-item"><a class="nav-link" href="transactions.html">Транзакции</a></li>
+                    <li class="nav-item"><a class="nav-link" href="reports.html">Отчёты</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Выход</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Сводка по счетам</h2>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTransactionModal">
+                + Добавить транзакцию
+            </button>
+        </div>
+
+        <section class="row mb-5">
+            <article class="col-md-4 mb-3">
+                <div class="card account-card account-card--primary h-100 shadow">
+                    <div class="card-body p-4 d-flex flex-column justify-content-between">
+                        <p class="account-card__label">Зарплатная карта</p>
+                        <h3 class="fw-bold mb-0">125 000 ₽</h3>
+                    </div>
+                </div>
+            </article>
+            <article class="col-md-4 mb-3">
+                <div class="card account-card account-card--success h-100 shadow">
+                    <div class="card-body p-4 d-flex flex-column justify-content-between">
+                        <p class="account-card__label">Наличные</p>
+                        <h3 class="fw-bold mb-0">14 500 ₽</h3>
+                    </div>
+                </div>
+            </article>
+            <article class="col-md-4 mb-3">
+                <div class="card account-card account-card--credit h-100 shadow">
+                    <div class="card-body p-4 d-flex flex-column justify-content-between">
+                        <p class="account-card__label">Кредитная карта</p>
+                        <h3 class="fw-bold mb-0">- 30 000 ₽</h3>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+    </main>
+
+    <div class="modal fade" id="addTransactionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Новая транзакция</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                                <div class="modal-body">
+                    <form id="transactionForm">
+                        <div class="mb-3">
+                            <label class="form-label">Тип операции</label>
+                            <div class="d-flex gap-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="transType" id="typeExpense" checked>
+                                    <label class="form-check-label text-danger" for="typeExpense">Расход</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="transType" id="typeIncome">
+                                    <label class="form-check-label text-success" for="typeIncome">Доход</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Счёт</label>
+                            <select class="form-select" id="transAccount">
+                                <option value="salary">Зарплатная карта</option>
+                                <option value="cash">Наличные</option>
+                                <option value="credit">Кредитная карта</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Сумма (₽)</label>
+                            <input type="number" class="form-control" placeholder="Например: 1500" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Категория</label>
+                            <select class="form-select">
+                                <option>Супермаркеты</option>
+                                <option>Транспорт</option>
+                                <option>Зарплата</option>
+                                <option>Переводы</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary w-100" id="saveTransactionBtn">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+        <div id="successToast" class="toast align-items-center text-bg-success border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body fw-bold">
+                    ✅ Транзакция успешно добавлена!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Закрыть"></button>
+            </div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
