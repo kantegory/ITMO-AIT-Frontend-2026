@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Каталог</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="navbar navbar-dark bg-dark py-3">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="index.html">TopCourses</a>
+        <div id="navAuth" class="d-flex align-items-center gap-2"></div>
+    </div>
+</header>
+
+<main class="container-fluid py-4">
+    <div class="row">
+        <aside class="col-lg-3 mb-4">
+            <div class="card border-0 p-4">
+                <h5 class="fw-bold mb-4">Фильтры</h5>
+
+                <div class="mb-3">
+                    <label for="search" class="form-label small fw-bold">Поиск</label>
+                    <input type="text" class="form-control" id="search" placeholder="Название курса" oninput="getCatalog()">
+                </div>
+
+                <div class="mb-3">
+                    <label for="filter" class="form-label small fw-bold">Предмет</label>
+                    <select class="form-select" id="filter" onchange="getCatalog()">
+                        <option value="all">Все предметы</option>
+                        <option value="Программирование">Программирование</option>
+                        <option value="Дизайн">Дизайн</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="levelFilter" class="form-label small fw-bold">Уровень</label>
+                    <select class="form-select" id="levelFilter" onchange="getCatalog()">
+                        <option value="all">Любой уровень</option>
+                        <option value="Новичок">Новичок</option>
+                        <option value="Средний">Средний</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label small fw-bold d-flex justify-content-between">
+                        Цена до: <span id="priceValue">20000 ₽</span>
+                    </label>
+                    <input type="range" class="form-range" id="priceFilter" min="0" max="20000" step="1000" value="20000" oninput="updatePrice()">
+                </div>
+
+                <button class="btn btn-outline-secondary w-100" onclick="resetFilters()">Сбросить всё</button>
+            </div>
+        </aside>
+
+        <section class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold mb-0">Каталог курсов</h2>
+                <span class="badge bg-secondary" id="resultsCount">Найдено: 0</span>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4" id="catalog"></div>
+        </section>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/data.js"></script>
+
+<script>
+    function updatePrice() {
+        const value = document.getElementById('priceFilter').value;
+        document.getElementById('priceValue').innerText = value + " ₽";
+        getCatalog();
+    }
+
+    function resetFilters() {
+        document.getElementById('search').value = "";
+        document.getElementById('filter').value = "all";
+        document.getElementById('levelFilter').value = "all";
+        document.getElementById('priceFilter').value = 20000;
+        updatePrice();
+    }
+
+    function getCatalog() {
+        const catalog = document.getElementById('catalog');
+        const search = document.getElementById('search').value.toLowerCase();
+        const category = document.getElementById('filter').value;
+        const level = document.getElementById('levelFilter').value;
+        const maxPrice = parseInt(document.getElementById('priceFilter').value);
+
+        const filtered = data.courses.filter(course => {
+            const matchesSearch = course.title.toLowerCase().includes(search);
+            const matchesCategory = (category === 'all' || course.category === category);
+            const matchesLevel = (level === 'all' || course.level === level);
+            const matchesPrice = (course.price <= maxPrice);
+
+            return matchesSearch && matchesCategory && matchesLevel && matchesPrice;
+        });
+
+        document.getElementById('resultsCount').innerText = "Найдено: " + filtered.length;
+
+        if (filtered.length === 0) {
+            catalog.innerHTML = '<div class="col-12 text-muted">Курсы не найдены :(</div>';
+            return;
+        }
+
+        catalog.innerHTML = filtered.map(course => `
+            <div class="col">
+                <div class="card h-100 border-0 course-card">
+                    <div class="card-body d-flex flex-column p-4">
+                        <div class="d-flex justify-content-between mb-4">
+                            <span class="badge bg-light text-dark border">${course.level}</span>
+                            <small class="text-muted">${course.category}</small>
+                        </div>
+
+                        <h5 class="fw-bold mb-4">${course.title}</h5>
+
+                        <div class="pt-4 border-top d-flex justify-content-between align-items-center">
+                            <span class="fw-bold text-primary">${course.price} ₽</span>
+                            <a href="course.html?id=${course.id}&lesson=0" class="btn btn-dark btn-sm">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function updateNav() {
+        const user = getCurrentUser();
+        const nav = document.getElementById('navAuth');
+
+        if (user) {
+            nav.innerHTML = `
+                <a href="${user.role === 'teacher' ? 'teacher.html' : 'profile.html'}" class="btn btn-link text-white text-decoration-none fw-bold me-2">${user.name}</a>
+                <button onclick="logout()" class="btn btn-outline-light">Выйти</button>
+            `;
+        } else {
+            nav.innerHTML = `
+                <a href="login.html" class="btn btn-outline-light">Вход</a>
+                <a href="register.html" class="btn btn-primary">Регистрация</a>
+            `;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        updateNav();
+        getCatalog();
+    });
+</script>
+
+</body>
+</html>
