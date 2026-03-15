@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Курс</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="sticky-top" data-app-header></header>
+
+<main class="container pt-2 pb-4">
+    <div class="mb-3">
+        <a href="courses.html" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left"></i> Назад
+        </a>
+    </div>
+
+    <div>
+        <div class="row g-4">
+            <section class="col-12 col-lg-8">
+                <div class="card">
+                    <img id="courseImage" src="" alt="Обложка курса" class="card-img-top">
+                    <div class="card-body">
+                        <h1 id="courseTitle" class="h3 mb-3"></h1>
+                        <p id="courseDescription" class="mb-0"></p>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h2 class="h5 mb-0">Комментарии</h2>
+                        <button type="button" class="btn btn-primary btn-sm px-2 px-sm-3" data-bs-toggle="modal"
+                                data-bs-target="#commentModal" aria-label="Оставить комментарий">
+                            <i class="bi bi-chat-square-text"></i>
+                            <span class="d-none d-sm-inline ms-1">Оставить комментарий</span>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div id="commentsList" class="list-group list-group-flush"></div>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="col-12 col-lg-4">
+                <div class="card sticky-top z-0 course-detail__info">
+                    <div class="card-body">
+                        <h2 class="h5 mb-3">О курсе</h2>
+                        <p class="mb-2"><strong>Автор:</strong> <span id="courseAuthor"></span></p>
+                        <p class="mb-2"><strong>Рейтинг:</strong> <span id="courseRating"></span></p>
+                        <p class="mb-2"><strong>Участники:</strong> <span id="courseStudents"></span></p>
+                        <p class="mb-2"><strong>Уровень:</strong> <span id="courseLevel"></span></p>
+                        <p class="mb-3"><strong>Язык:</strong> <span id="courseLanguage"></span></p>
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="badge text-bg-primary fs-5" id="coursePrice"></span>
+                        </div>
+                        <a id="startLearningBtn" href="lesson.html" class="btn btn-success w-100">Начать обучение</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <section class="mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="h5 mb-0">Программа курса</h2>
+                </div>
+                <div class="card-body">
+                    <div class="accordion accordion-flush" id="programAccordion"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5" id="commentModalLabel">Оставить комментарий</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="commentRating" class="form-label">Оценка</label>
+                    <select id="commentRating" class="form-select">
+                        <option value="5">5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="commentText" class="form-label">Текст комментария</label>
+                    <textarea id="commentText" class="form-control" rows="4" placeholder="Напишите комментарий..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Отправить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/header.js"></script>
+<script src="js/courses-data.js"></script>
+<script src="js/app-data.js"></script>
+<script src="js/course-page.js"></script>
+</body>
+</html>

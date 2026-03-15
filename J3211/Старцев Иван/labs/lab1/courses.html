@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Курсы</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="courses">
+<header class="sticky-top" data-app-header></header>
+
+<main class="container-fluid pt-2 pb-3">
+    <div class="row g-3 z-0 position-relative">
+        <aside class="d-none d-md-block col-md-4 col-lg-3">
+            <div class="card sticky-top catalog-page__filters">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Фильтры</h5>
+
+                    <div class="mb-3">
+                        <label for="desktopLevel" class="form-label">Сложность</label>
+                        <select id="desktopLevel" class="form-select">
+                            <option value="any">Любая</option>
+                            <option value="Начальный">Начальный</option>
+                            <option value="Средний">Средний</option>
+                            <option value="Продвинутый">Продвинутый</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Цена</label>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <input id="desktopMinPrice" type="number" class="form-control" placeholder="От" min="0">
+                            </div>
+                            <div class="col-6">
+                                <input id="desktopMaxPrice" type="number" class="form-control" placeholder="До" min="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="desktopLanguage" class="form-label">Язык</label>
+                        <select id="desktopLanguage" class="form-select">
+                            <option value="any">Любой</option>
+                            <option value="Русский">Русский</option>
+                            <option value="Английский">Английский</option>
+                        </select>
+                    </div>
+
+                    <button id="desktopApplyBtn" type="button" class="btn btn-primary w-100">Применить</button>
+                </div>
+            </div>
+        </aside>
+
+        <section class="col-12 col-md-8 col-lg-9">
+            <div class="sticky-top catalog-page__search">
+                <form id="searchForm" class="input-group mb-3">
+                    <input id="searchInput" type="text" class="form-control" placeholder="Введите название курса">
+
+                    <button class="btn btn-secondary d-md-none" type="button"
+                            data-bs-toggle="modal" data-bs-target="#filtersModal" aria-label="Открыть фильтры">
+                        <i class="bi bi-funnel"></i>
+                    </button>
+
+                    <button class="btn btn-primary" type="submit">
+                        <i class="bi bi-search"></i>
+                        <span class="d-none d-sm-inline ms-1">Искать</span>
+                    </button>
+                </form>
+            </div>
+
+            <div id="emptyState" class="alert alert-secondary d-none" role="alert">
+                Курсы не найдены.
+            </div>
+
+            <div id="coursesContainer" class="row g-3"></div>
+        </section>
+    </div>
+</main>
+
+<div class="modal fade" id="filtersModal" tabindex="-1" aria-labelledby="filtersModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filtersModalLabel">Фильтры</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="mobileLevel" class="form-label">Сложность</label>
+                    <select id="mobileLevel" class="form-select">
+                        <option value="any">Любая</option>
+                        <option value="Начальный">Начальный</option>
+                        <option value="Средний">Средний</option>
+                        <option value="Продвинутый">Продвинутый</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Цена</label>
+                        <div class="row g-2">
+                            <div class="col-6">
+                            <input id="mobileMinPrice" type="number" class="form-control" placeholder="От" min="0">
+                            </div>
+                            <div class="col-6">
+                            <input id="mobileMaxPrice" type="number" class="form-control" placeholder="До" min="0">
+                            </div>
+                        </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="mobileLanguage" class="form-label">Язык</label>
+                    <select id="mobileLanguage" class="form-select">
+                        <option value="any">Любой</option>
+                        <option value="Русский">Русский</option>
+                        <option value="Английский">Английский</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="mobileApplyBtn" data-bs-dismiss="modal">Применить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/header.js"></script>
+<script src="js/courses-data.js"></script>
+<script src="js/app-data.js"></script>
+<script src="js/courses-page.js"></script>
+</body>
+</html>
