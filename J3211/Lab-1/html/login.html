@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>LabelFlow – Вход в систему</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light py-3">
+    <div class="container">
+        <a class="brand-logo" href="index.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="brand-icon">
+                <path d="M3 3h18v18H3z"></path>
+                <path d="M8 8h8v8H8z"></path>
+            </svg>
+            LabelFlow
+        </a>
+    </div>
+</nav>
+
+<main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+
+            <div class="text-center mb-4">
+                <h1 class="h3 fw-bold mb-2">С возвращением!</h1>
+                <p class="text-muted">Войдите в свой аккаунт для продолжения работы над ML-проектами</p>
+            </div>
+
+            <div class="card border-0">
+                <div class="card-body p-4">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="emailInput" class="form-label">Email рабочая почта</label>
+                            <input type="email" class="form-control" id="emailInput" placeholder="name@company.com" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between">
+                                <label for="passwordInput" class="form-label">Пароль</label>
+                                <a href="#" class="text-decoration-none small" style="color: var(--lf-primary);">Забыли пароль?</a>
+                            </div>
+                            <input type="password" class="form-control" id="passwordInput" placeholder="••••••••" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-2">
+                            Войти в платформу
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <p class="text-muted small">
+                    Нет аккаунта? <a href="registration.html" class="text-decoration-none fw-semibold" style="color: var(--lf-primary);">Создать рабочее пространство</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: var(--lf-radius-lg);">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold" id="authModalLabel">Авторизация успешна</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-muted">
+                Добро пожаловать в LabelFlow! Сейчас вы будете перенаправлены в панель управления проектами (Dashboard).
+            </div>
+            <div class="modal-footer border-top-0 pt-0">
+                <a href="dashboard.html" class="btn btn-primary w-100">Перейти в Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>
