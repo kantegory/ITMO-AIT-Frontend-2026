@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цели - MyFinance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <div class="sidebar p-3 d-flex flex-column" id="sidebar">
+        <a href="dashboard.html" class="d-flex align-items-center mb-3 text-decoration-none">
+            <i class="bi bi-wallet2 text-primary fs-3 me-2"></i>
+            <span class="fs-4 fw-bold text-primary">MyFinance</span>
+        </a>
+        <hr class="custom-divider">
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item"><a href="dashboard.html" class="nav-link"><i class="bi bi-grid-1x2 me-2"></i> Обзор</a></li>
+            <li><a href="transactions.html" class="nav-link"><i class="bi bi-cash-stack me-2"></i> Транзакции</a></li>
+            <li><a href="goals.html" class="nav-link active"><i class="bi bi-bullseye me-2"></i> Цели</a></li>
+            <li><a href="reports.html" class="nav-link"><i class="bi bi-pie-chart me-2"></i> Отчеты и Бюджеты</a></li>
+            <li><a href="integrations.html" class="nav-link"><i class="bi bi-bank me-2"></i> Интеграции</a></li>
+        </ul>
+        <hr>
+        <a href="login.html" id="logout-btn" class="nav-link text-danger"><i class="bi bi-box-arrow-left me-2"></i> Выход</a>
+    </div>
+
+    <div class="main-content p-4">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-light d-lg-none me-2" id="toggle-sidebar"><i class="bi bi-list"></i></button>
+                <h2 class="m-0">Мои накопления</h2>
+            </div>
+            <button class="btn btn-primary btn-sm px-3 py-2">
+                <i class="bi bi-plus-lg"></i> Новая цель
+            </button>
+        </div>
+
+        <div class="row g-4" id="goals-container">
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="card border-0 shadow-sm h-100 p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="m-0"><i></i>На новый ноутбук</h5>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between text-muted small mb-1">
+                            <span>Накоплено: <strong>20 000 ₽</strong></span>
+                            <span>Цель: 100 000 ₽</span>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 20%"></div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-auto">
+                        <button class="btn btn-outline-primary w-100"><i class="bi bi-plus-circle me-1"></i> Пополнить</button>
+                        <button class="btn btn-outline-warning w-100"><i class="bi bi-dash-circle me-1"></i> Снять</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
