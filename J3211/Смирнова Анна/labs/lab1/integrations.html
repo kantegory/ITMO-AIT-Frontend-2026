@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интеграции - MyFinance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    
+    <div class="sidebar position-fixed vh-100 p-3 d-flex flex-column" id="sidebar">
+        <a href="dashboard.html" class="d-flex align-items-center mb-3 text-decoration-none">
+            <i class="bi bi-wallet2 text-primary fs-3 me-2"></i><span class="fs-4 fw-bold text-primary">MyFinance</span>
+        </a>
+        <hr class="custom-divider">
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item"><a href="dashboard.html" class="nav-link"><i class="bi bi-grid-1x2 me-2"></i> Обзор</a></li>
+            <li><a href="transactions.html" class="nav-link"><i class="bi bi-cash-stack me-2"></i> Транзакции</a></li>
+            <li><a href="goals.html" class="nav-link"><i class="bi bi-bullseye me-2"></i> Цели</a></li>
+            <li><a href="reports.html" class="nav-link"><i class="bi bi-pie-chart me-2"></i> Отчеты и Бюджеты</a></li>
+            <li><a href="integrations.html" class="nav-link active"><i class="bi bi-bank me-2"></i> Интеграции</a></li>
+        </ul>
+        <hr>
+        <a href="login.html" id="logout-btn" class="nav-link text-danger"><i class="bi bi-box-arrow-left me-2"></i> Выход</a>
+    </div>
+
+    <div class="main-content flex-grow-1 p-4">
+        <div class="d-flex align-items-center mb-4">
+            <button class="btn btn-light d-lg-none me-2" id="toggle-sidebar"><i class="bi bi-list"></i></button>
+            <h2 class="m-0">Интеграция аккаунтов</h2>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-12 col-lg-6">
+                <div class="card border-0 shadow-sm p-4 h-100">
+                    <h5>Подключенные банки</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
+                            <div><i></i>СберБанк</div>
+                            <button class="btn btn-outline-primary btn-sm" style="width: 130px;">Подключить</button>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
+                            <div><i></i>T-Bank</div>
+                            <button class="btn btn-success btn-sm disabled" style="width: 130px;"><i class="bi bi-check-lg"></i> Подключено</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="card border-0 shadow-sm p-4 bg-light h-100">
+                    <h5>Настройка правил импорта</h5>
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Если описание содержит:</label>
+                            <input type="text" class="form-control" value="Яндекс.Еда">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Назначить категорию:</label>
+                            <select class="form-select">
+                                <option>Продукты</option>
+                                <option selected>Развлечения (Рестораны)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Сохранить правило</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
