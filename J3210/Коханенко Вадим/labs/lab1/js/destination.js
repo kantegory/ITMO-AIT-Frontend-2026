@@ -4,15 +4,20 @@ function getDestinationId() {
     return parseInt(urlParams.get('id')) || 1;
 }
 
-function loadDestination() {
+async function loadDestination() {
     const id = getDestinationId();
-    const destination = destinations.find(d => d.id === id) || destinations[0];
     
-    if (!destination) {
+    try {
+        const destination = await api.get(`/destinations/${id}`);
+        if (!destination) {
+            window.location.href = 'search.html';
+            return;
+        }
+        renderDestinationPage(destination);
+    } catch (error) {
+        console.error('Ошибка загрузки направления:', error);
         window.location.href = 'search.html';
-        return;
     }
-    renderDestinationPage(destination);
 }
 
 // Отрисовка странички
@@ -57,7 +62,7 @@ function renderDestinationPage(dest) {
                             <h1 class="destination-title display-7 display-md-5 display-lg-4">${dest.name}</h1>
                             <div class="d-flex align-items-center mb-3">
                                 <span class="rating-large me-2">${stars}</span>
-                                <span class="fs-4 fw-bold me-2">${dest.rating}</spanv>
+                                <span class="fs-4 fw-bold me-2">${dest.rating}</span>
                                 <span class="text-white-50">(${dest.reviews} отзывов)</span>
                             </div>
                             <div class="d-flex flex-wrap gap-3">
@@ -77,7 +82,7 @@ function renderDestinationPage(dest) {
         <div class="container mt-4">
             <div class="row mb-4">
                 <div class="col-12 d-flex justify-content-end">
-                    <button class="btn btn-success me-2" onclick="openAddRouteModal('${dest.name}', '${dest.attractions[0].name}, ${dest.attractions[1].name}', '${dest.description}', '${dest.duration}', '${dest.budget}', '${dest.type}')">
+                    <button class="btn btn-success me-2" onclick="openAddRouteModal('${dest.id}', '${dest.name}', '${dest.attractions[0]?.name}, ${dest.attractions[1]?.name}', '${dest.description}', '${dest.duration}', '${dest.budget}', '${dest.type}')">
                         <i class="bi bi-map"></i> Добавить в маршруты
                     </button>
                 </div>
@@ -162,21 +167,22 @@ function renderDestinationPage(dest) {
 }
 
 // Модалка добавления маршрута
-function openAddRouteModal(destinationName, attractions, description, duration, budget, type) {
+function openAddRouteModal(destinationId, destinationName, attractions, description, duration, budget, type) {
     document.getElementById('routeTitle').value = destinationName;
     document.getElementById('routePoints').value = attractions;
     document.getElementById('routeType').value = type;
     document.getElementById('routeDescription').value = description;
     document.getElementById('routeDuration').value = duration;
     document.getElementById('routeBudget').value = budget;
+    document.getElementById('routeDestinationId').value = destinationId;
     
     const modal = new bootstrap.Modal(document.getElementById('addRouteModal'));
     modal.show();
 }
 
 // Сохранение маршрута в ЛК
-function saveRouteFromDestination() {
-    const id = getDestinationId();
+async function saveRouteFromDestination() {
+    const destinationId = parseInt(document.getElementById('routeDestinationId').value);
     const title = document.getElementById('routeTitle').value;
     const points = document.getElementById('routePoints').value;
     const type = document.getElementById('routeType').value;
@@ -184,22 +190,44 @@ function saveRouteFromDestination() {
     const budget = document.getElementById('routeBudget').value;
     const description = document.getElementById('routeDescription').value;
 
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    const userRoutes = JSON.parse(localStorage.getItem(`travelRoutes_${currentUser.email}`) || '[]');
-    const route = userRoutes.find(r => r.id === id);
-
-    if (route) {
-        alert(`Этот маршрут уже есть в вашем личном кабинете!`);
+    const currentUser = api.getCurrentUser();
+    if (!currentUser) {
+        alert('Необходимо авторизоваться');
+        window.location.href = 'index.html';
         return;
-    } else {
-        const newRoute = {id, title, points, duration, budget, type, description};
-        userRoutes.unshift(newRoute);
-        localStorage.setItem(`travelRoutes_${currentUser.email}`, JSON.stringify(userRoutes));
-        alert(`Маршрут добавлен в личный кабинет!`);
     }
-    
-    const modal = bootstrap.Modal.getInstance(document.getElementById('addRouteModal'));
-    modal.hide();
+
+    try {
+        const allRoutes = await api.authGet('/routes');
+        const existingRoute = allRoutes.find(r => r.destinationId === destinationId && r.userId === currentUser.id);
+
+        if (existingRoute) {
+            alert('Этот маршрут уже есть в вашем личном кабинете!');
+            return;
+        }
+
+        const newRoute = {
+            id: Date.now().toString(),
+            destinationId,
+            title,
+            points,
+            duration,
+            budget,
+            type,
+            description,
+            userId: currentUser.id,
+            savedAt: new Date().toISOString()
+        };
+
+        await api.authPost('/routes', newRoute);
+        alert('Маршрут добавлен в личный кабинет!');
+        
+        const modal = bootstrap.Modal.getInstance(document.getElementById('addRouteModal'));
+        modal.hide();
+    } catch (error) {
+        console.error('Ошибка при сохранении маршрута:', error);
+        alert('Ошибка при сохранении маршрута: ' + error.message);
+    }
 }
 
 // Инициализация

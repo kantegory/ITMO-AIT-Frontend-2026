@@ -1,3 +1,24 @@
+let destinations = [];
+
+// Загрузка направлений с API
+async function loadDestinations() {
+    try {
+        destinations = await api.get('/destinations');
+        renderDestinations(destinations);
+    } catch (error) {
+        console.error('Ошибка загрузки направлений:', error);
+        document.getElementById('destinationsGrid').innerHTML = `
+            <div class="col-12">
+                <div class="no-results">
+                    <i class="bi bi-exclamation-triangle" style="font-size: 3rem;"></i>
+                    <h5 class="mt-3">Ошибка загрузки данных</h5>
+                    <p class="text-muted">Попробуйте обновить страницу</p>
+                </div>
+            </div>
+        `;
+    }
+}
+
 // Отображение направлений
 function renderDestinations(filteredDestinations) {
     const grid = document.getElementById('destinationsGrid');
@@ -134,7 +155,7 @@ function resetFilters() {
 
 // Инициализация
 document.addEventListener('DOMContentLoaded', function() {
-    renderDestinations(destinations);
+    loadDestinations();
     
     document.querySelectorAll('input[name="typeFilter"]').forEach(radio => {
         radio.addEventListener('change', filterDestinations);
