@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Касса.ру</a>
+        <div>
+            <a href="login.html" class="btn btn-outline-light me-2">Вход</a>
+            <a href="register.html" class="btn btn-warning">Регистрация</a>
+            <a href="organizer.html" class="btn btn-success">Я организатор</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    
+    <h1 class="mb-4">Купить билет на мероприятие</h1>
+    
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <input
+                type="text"
+                id="searchInput"
+                class="form-control"
+                placeholder="Поиск по названию">
+        </div>
+
+        <div class="col-md-3">
+            <select id="typeFilter" class="form-select">
+                <option value="all">Все типы</option>
+                <option value="concert">Концерт</option>
+                <option value="theatre">Театр</option>
+                <option value="exhibition">Выставка</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <input
+                type="text"
+                id="cityFilter"
+                class="form-control"
+                placeholder="Введите город">
+        </div>
+
+        <div class="col-md-2">
+            <button onclick="filterEvents()" class="btn btn-primary w-100">
+                Найти
+            </button>
+        </div>
+    </div>
+
+    <h2 class="mb-4">Мероприятия</h2>
+
+    <div class="row">
+
+        <div class="col-md-4 event-card"
+            data-title="концерт ubel"
+            data-type="concert"
+            data-city="санкт-петербург">
+            <div class="card">
+                <img src="https://cdn-image.zvuk.com/pic?hash=39740422-075d-4666-b540-c120cc6679b9&id=210736873&size=large&type=artist" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Концерт UBEL</h5>
+                    <p>Санкт-Петербург • 9 марта</p>
+                    <a href="event1.html" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 event-card"
+            data-title="лебединое озеро"
+            data-type="theatre"
+            data-city="санкт-петербург">
+            <div class="card">
+                <img src="https://sochi.com/upload/iblock/3a7/lcebml8ngm8r04e020eyfxkge8lly64j/lebedinoe_ozero_900kh900px.jpg" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Балет Лебединое озеро</h5>
+                    <p>Санкт-Петербург • 25 марта</p>
+                    <a href="event2.html" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 event-card"
+            data-title="ленинградский зоопарк"
+            data-type="exhibition"
+            data-city="санкт-петербург">
+            <div class="card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScMsmAzI6jczvqbF-JrTSSW4cWASxFk3d0NQ&s" width="900" height="413" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Ленинградский зоопарк</h5>
+                    <p>Санкт-Петербург • до 31 октября</p>
+                    <a href="event3.html" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
