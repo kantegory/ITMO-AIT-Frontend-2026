@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Транзакции - MyFinance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    
+    <div class="sidebar p-3 d-flex flex-column" id="sidebar">
+        <a href="dashboard.html" class="d-flex align-items-center mb-3 text-decoration-none">
+            <i class="bi bi-wallet2 text-primary fs-3 me-2"></i><span class="fs-4 fw-bold text-primary">MyFinance</span>
+        </a>
+        <hr class="custom-divider">
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item"><a href="dashboard.html" class="nav-link"><i class="bi bi-grid-1x2 me-2"></i> Обзор</a></li>
+            <li><a href="transactions.html" class="nav-link active"><i class="bi bi-cash-stack me-2"></i> Транзакции</a></li>
+            <li><a href="goals.html" class="nav-link"><i class="bi bi-bullseye me-2"></i> Цели</a></li>
+            <li><a href="reports.html" class="nav-link"><i class="bi bi-pie-chart me-2"></i> Отчеты и Бюджеты</a></li>
+            <li><a href="integrations.html" class="nav-link"><i class="bi bi-bank me-2"></i> Интеграции</a></li>
+        </ul>
+        <hr>
+        <a href="login.html" id="logout-btn" class="nav-link text-danger"><i class="bi bi-box-arrow-left me-2"></i> Выход</a>
+    </div>
+
+    <div class="main-content p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-light d-lg-none me-2" id="toggle-sidebar"><i class="bi bi-list"></i></button>
+                <h2 class="m-0">Управление транзакциями</h2>
+            </div>
+            <button class="btn btn-primary btn-sm px-3 py-2"><i class="bi bi-plus-lg"></i> Добавить</button>
+        </div>
+
+        <div class="card border-0 shadow-sm p-4 mb-4">
+            <h5 class="mb-3">Поиск и фильтрация</h5>
+            <div class="row g-3">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <label class="form-label text-muted small mb-1">Категория</label>
+                    <select class="form-select trans-filter">
+                        <option value="all">Все категории</option>
+                        <option value="food">Продукты</option>
+                        <option value="salary">Зарплата</option>
+                    </select>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2"><label class="form-label text-muted small mb-1">Сумма от</label><input type="number" class="form-control" placeholder="0"></div>
+                <div class="col-6 col-md-3 col-lg-2"><label class="form-label text-muted small mb-1">Сумма до</label><input type="number" class="form-control" placeholder="Макс"></div>
+                <div class="col-6 col-md-6 col-lg-2"><label class="form-label text-muted small mb-1">Дата с</label><input type="date" class="form-control"></div>
+                <div class="col-6 col-md-6 col-lg-3"><label class="form-label text-muted small mb-1">Дата по</label><input type="date" class="form-control"></div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm p-3 table-responsive">
+            <table class="table table-hover align-middle mb-0" style="min-width: 600px;">
+                <thead><tr><th>Дата</th><th>Описание</th><th>Категория</th><th>Сумма</th><th>Действия</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td>01.03.2026</td>
+                        <td>Работа</td>
+                        <td><span class="badge bg-secondary">Зарплата</span></td>
+                        <td class="text-success fw-bold">+ 100 000 ₽</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil"></i></button>
+                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>01.03.2026</td>
+                        <td>Яндекс Лавка</td>
+                        <td><span class="badge bg-secondary">Продукты</span></td>
+                        <td class="text-danger fw-bold">- 10 000 ₽</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil"></i></button>
+                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>01.03.2026</td>
+                        <td>На новый ноутбук</td>
+                        <td><span class="badge bg-secondary">В копилку</span></td>
+                        <td class="text-primary fw-bold">- 50 000 ₽</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil"></i></button>
+                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>01.03.2026</td>
+                        <td>На общий баланс</td>
+                        <td><span class="badge bg-secondary">Из копилки</span></td>
+                        <td class="text-warning fw-bold">+ 30 000 ₽</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil"></i></button>
+                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="all-modals">
+        <div class="modal fade" id="transactionModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content border-0 shadow">
+                    <div class="modal-header bg-light"><h5 class="modal-title">Добавить транзакцию</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label">Тип операции</label>
+                                <div class="d-flex flex-wrap gap-3">
+                                    <div class="form-check"><input class="form-check-input" type="radio" name="tt" checked><label class="form-check-label text-danger">Расход</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="radio" name="tt"><label class="form-check-label text-success">Доход</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="radio" name="tt"><label class="form-check-label text-primary">В копилку</label></div>
+                                </div>
+                            </div>
+                            <div class="mb-3"><label class="form-label">Сумма (₽)</label><input type="number" class="form-control" required></div>
+                            <div class="mb-3">
+                                <label class="form-label">Категория</label>
+                                <div class="input-group">
+                                    <select class="form-select" required><option>Продукты</option><option>Зарплата</option></select>
+                                    <button class="btn btn-outline-secondary" type="button"><i class="bi bi-gear"></i></button>
+                                </div>
+                            </div>
+                            <div class="mb-3"><label class="form-label">Дата</label><input type="date" class="form-control" required></div>
+                            <div class="mb-3"><label class="form-label">Описание</label><input type="text" class="form-control" placeholder="Например: Покупка"></div>
+                            <div class="text-end"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button><button type="submit" class="btn btn-primary">Сохранить</button></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="manageCategoriesModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow">
+                    <div class="modal-header bg-light"><h6 class="modal-title">Категории</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                    <div class="modal-body">
+                        <div class="input-group input-group-sm"><input type="text" class="form-control" placeholder="Новое название"><button class="btn btn-primary" type="button" data-bs-dismiss="modal">Добавить</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content border-0 shadow text-center p-4">
+                    <i class="bi bi-exclamation-circle text-danger" style="font-size: 3rem;"></i>
+                    <h5 class="mt-3 mb-4">Удалить запись?</h5>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button type="button" class="btn btn-secondary w-50" data-bs-dismiss="modal">Отмена</button>
+                        <button type="button" class="btn btn-danger w-50" data-bs-dismiss="modal">Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
