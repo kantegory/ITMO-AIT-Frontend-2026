@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Красная нить | Свободные площади</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-view="search">
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="container py-3">
+        <nav class="navbar navbar-expand-lg p-0">
+          <a class="navbar-brand" href="index.html">
+            <span class="brand-lockup">
+              <img class="brand-mark" src="assets/img/logo_header.svg" alt="Логотип Красной нити">
+              <span class="brand-text">
+                <span class="brand-title">Красная нить</span>
+                <span class="brand-caption">бизнес-центр</span>
+              </span>
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNav" aria-controls="siteNav" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse mt-3 mt-lg-0" id="siteNav">
+            <ul class="navbar-nav ms-auto gap-lg-2 align-items-lg-center" id="authNav">
+              <li class="nav-item"><a class="nav-link" href="index.html">Вход</a></li>
+              <li class="nav-item"><a class="nav-link" href="register.html">Регистрация</a></li>
+              <li class="nav-item"><a class="nav-link active" href="search.html">Помещения</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container py-4 py-lg-5">
+      <section class="hero-card mb-4">
+        <div class="row g-4 align-items-end">
+          <div class="col-lg-8">
+            <span class="eyebrow">Поиск</span>
+            <h1>Свободные площади</h1>
+            <p class="section-text">Здесь только каталог помещений: статус, площадь, фильтры и заявка на просмотр.</p>
+          </div>
+          <div class="col-lg-4">
+            <div class="stat-grid">
+              <div class="stat-card">
+                <strong id="spaceCount">4</strong>
+                <span>помещения в выдаче</span>
+              </div>
+              <div class="stat-card">
+                <strong>3 статуса</strong>
+                <span>свободно, резерв, сдано</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="row g-4 align-items-start">
+        <div class="col-xl-3">
+          <aside class="filter-panel">
+            <span class="eyebrow text-dark">Фильтры</span>
+            <h2 class="section-title">Подобрать помещение</h2>
+            <form class="row g-3 mt-1" id="spaceFilters">
+              <div class="col-12">
+                <label class="form-label" for="spaceQuery">Поиск</label>
+                <input class="form-control" id="spaceQuery" type="search" placeholder="Например, лофт 3.12">
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="spaceStatus">Статус</label>
+                <select class="form-select" id="spaceStatus">
+                  <option value="all">Все</option>
+                  <option value="free">Свободно</option>
+                  <option value="reserved">В резерве</option>
+                  <option value="rented">Сдано</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="spaceType">Тип</label>
+                <select class="form-select" id="spaceType">
+                  <option value="all">Все</option>
+                  <option value="office">Офис</option>
+                  <option value="loft">Лофт</option>
+                  <option value="showroom">Шоурум</option>
+                  <option value="storage">Склад</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="spaceFloor">Этаж</label>
+                <select class="form-select" id="spaceFloor">
+                  <option value="all">Любой</option>
+                  <option value="1">1 этаж</option>
+                  <option value="2">2 этаж</option>
+                  <option value="3">3 этаж</option>
+                  <option value="4">4 этаж</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label class="form-label" for="areaMin">Площадь от</label>
+                <input class="form-control" id="areaMin" type="number" placeholder="50">
+              </div>
+              <div class="col-6">
+                <label class="form-label" for="areaMax">Площадь до</label>
+                <input class="form-control" id="areaMax" type="number" placeholder="200">
+              </div>
+              <div class="col-12 d-grid gap-2 pt-2">
+                <button class="btn btn-outline-brand" id="resetFilters" type="button">Сбросить фильтры</button>
+              </div>
+            </form>
+          </aside>
+        </div>
+
+        <div class="col-xl-9">
+          <p class="result-note mb-3">В списке только актуальные варианты и несколько резервов.</p>
+
+          <div class="row g-4">
+            <div class="col-md-6" data-space-result>
+              <article class="space-card" data-space-card data-name="Лофт 3.12" data-status="free" data-type="loft" data-floor="3" data-area="126" data-tenant="новая аренда">
+                <div class="space-media">
+                  <img src="assets/img/space-loft.svg" alt="Лофт 3.12">
+                </div>
+                <div class="space-body">
+                  <div class="d-flex justify-content-between gap-3 align-items-start">
+                    <div>
+                      <h2 class="section-title mb-1">Лофт 3.12</h2>
+                      <p class="section-text mb-0">3 этаж, 126 м², open space</p>
+                    </div>
+                    <span class="badge app-badge status-free">Свободно</span>
+                  </div>
+                  <p class="space-meta">2 350 ₽ / м². Подходит под студию или небольшой офис.</p>
+                  <button class="btn btn-brand w-100" type="button" data-bs-toggle="modal" data-bs-target="#applicationModal" data-space-name="Лофт 3.12">Оставить заявку</button>
+                </div>
+              </article>
+            </div>
+
+            <div class="col-md-6" data-space-result>
+              <article class="space-card" data-space-card data-name="Офис 2.06" data-status="reserved" data-type="office" data-floor="2" data-area="84" data-tenant="резерв">
+                <div class="space-media">
+                  <img src="assets/img/space-suite.svg" alt="Офис 2.06">
+                </div>
+                <div class="space-body">
+                  <div class="d-flex justify-content-between gap-3 align-items-start">
+                    <div>
+                      <h2 class="section-title mb-1">Офис 2.06</h2>
+                      <p class="section-text mb-0">2 этаж, 84 м², кабинетная планировка</p>
+                    </div>
+                    <span class="badge app-badge status-reserved">В резерве</span>
+                  </div>
+                  <p class="space-meta">2 100 ₽ / м². Можно оставить заявку в лист ожидания.</p>
+                  <button class="btn btn-outline-brand w-100" type="button" data-bs-toggle="modal" data-bs-target="#applicationModal" data-space-name="Офис 2.06">Встать в резерв</button>
+                </div>
+              </article>
+            </div>
+
+            <div class="col-md-6" data-space-result>
+              <article class="space-card" data-space-card data-name="Шоурум 1.03" data-status="free" data-type="showroom" data-floor="1" data-area="210" data-tenant="новая аренда">
+                <div class="space-media">
+                  <img src="assets/img/space-showroom.svg" alt="Шоурум 1.03">
+                </div>
+                <div class="space-body">
+                  <div class="d-flex justify-content-between gap-3 align-items-start">
+                    <div>
+                      <h2 class="section-title mb-1">Шоурум 1.03</h2>
+                      <p class="section-text mb-0">1 этаж, 210 м², отдельный вход</p>
+                    </div>
+                    <span class="badge app-badge status-free">Свободно</span>
+                  </div>
+                  <p class="space-meta">2 800 ₽ / м². Подойдет для витрины, презентаций или retail.</p>
+                  <button class="btn btn-brand w-100" type="button" data-bs-toggle="modal" data-bs-target="#applicationModal" data-space-name="Шоурум 1.03">Запросить просмотр</button>
+                </div>
+              </article>
+            </div>
+
+            <div class="col-md-6" data-space-result>
+              <article class="space-card" data-space-card data-name="Склад 4.02" data-status="rented" data-type="storage" data-floor="4" data-area="62" data-tenant="действующий арендатор">
+                <div class="space-media">
+                  <img src="assets/img/space-suite.svg" alt="Склад 4.02">
+                </div>
+                <div class="space-body">
+                  <div class="d-flex justify-content-between gap-3 align-items-start">
+                    <div>
+                      <h2 class="section-title mb-1">Склад 4.02</h2>
+                      <p class="section-text mb-0">4 этаж, 62 м², грузовой лифт</p>
+                    </div>
+                    <span class="badge app-badge status-rented">Сдано</span>
+                  </div>
+                  <p class="space-meta">1 450 ₽ / м². Добавлено в каталог для оценки будущей ротации.</p>
+                  <button class="btn btn-outline-brand w-100" type="button" data-bs-toggle="modal" data-bs-target="#applicationModal" data-space-name="Склад 4.02">Оставить интерес</button>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="empty-state mt-4" id="spaceEmpty">
+            По текущим фильтрам ничего не найдено.
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <div class="container py-4">
+        <div class="footer-grid">
+          <div>
+            <div class="brand-lockup">
+              <img class="brand-mark" src="assets/img/logo_header.svg" alt="Логотип Красной нити">
+              <span class="brand-text">
+                <span class="brand-title">Красная нить</span>
+                <span class="brand-caption text-white-50">портал арендаторов</span>
+              </span>
+            </div>
+          </div>
+          <div>
+            <div class="footer-title">Контакты</div>
+            <p class="mb-1">Санкт-Петербург, Гельсингфорссская, 3</p>
+            <p class="mb-1"><a href="tel:+78126128734">+7 (812) 612-87-34</a></p>
+            <p class="mb-0"><a href="mailto:arenda@krnit.ru">arenda@krnit.ru</a></p>
+          </div>
+          <div>
+            <div class="footer-title">Разделы</div>
+            <ul class="footer-links" id="authFooterLinks">
+              <li><a href="index.html">Вход</a></li>
+              <li><a href="register.html">Регистрация</a></li>
+              <li><a href="search.html">Помещения</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-note">© <span data-current-year></span> Красная нить</div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="authAlerts" aria-labelledby="authAlertsLabel">
+    <div class="offcanvas-header">
+      <h2 class="offcanvas-title fs-4" id="authAlertsLabel">Уведомления</h2>
+      <button class="btn-close" type="button" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="list-group status-feed" id="authAlertsList"></div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="applicationModal" tabindex="-1" aria-labelledby="applicationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-4" id="applicationModalLabel">Заявка на просмотр</h2>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <form id="applicationForm">
+          <div class="modal-body">
+            <p class="mb-3">Помещение: <strong id="applicationSpaceName">Помещение</strong></p>
+            <input id="applicationSpace" type="hidden">
+            <div class="mb-3">
+              <label class="form-label" for="applicationPerson">Контактное лицо</label>
+              <input class="form-control" id="applicationPerson" type="text" placeholder="Анна Петрова" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="applicationPhone">Телефон</label>
+              <input class="form-control" id="applicationPhone" type="tel" placeholder="+7 (999) 000-00-00" required>
+            </div>
+            <div>
+              <label class="form-label" for="applicationComment">Комментарий</label>
+              <textarea class="form-control" id="applicationComment" rows="3" placeholder="Удобно после 15:00"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-outline-brand" type="button" data-bs-dismiss="modal">Отмена</button>
+            <button class="btn btn-brand" type="submit">Отправить</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div class="toast app-toast border-0" id="actionToast" role="status" aria-live="polite" aria-atomic="true">
+      <div class="toast-body" id="actionToastMessage">Действие выполнено.</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
