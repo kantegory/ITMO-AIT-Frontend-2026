@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Красная нить | Регистрация</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="container py-3">
+        <nav class="navbar navbar-expand-lg p-0">
+          <a class="navbar-brand" href="index.html">
+            <span class="brand-lockup">
+              <img class="brand-mark" src="assets/img/logo_header.svg" alt="Логотип Красной нити">
+              <span class="brand-text">
+                <span class="brand-title">Красная нить</span>
+                <span class="brand-caption">бизнес-центр</span>
+              </span>
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNav" aria-controls="siteNav" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse mt-3 mt-lg-0" id="siteNav">
+            <ul class="navbar-nav ms-auto gap-lg-2">
+              <li class="nav-item"><a class="nav-link" href="index.html">Вход</a></li>
+              <li class="nav-item"><a class="nav-link active" href="register.html">Регистрация</a></li>
+              <li class="nav-item"><a class="nav-link" href="search.html">Помещения</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container py-4 py-lg-5">
+      <div class="row g-4 align-items-stretch">
+        <div class="col-xl-8">
+          <section class="page-card h-100">
+            <span class="eyebrow text-dark">Регистрация</span>
+            <h1 class="section-title">Создать кабинет</h1>
+            <p class="section-text">Форма одна, а после регистрации пользователь попадает в кабинет своей роли.</p>
+            <form class="row g-3 mt-1" id="registerForm">
+              <div class="col-md-6">
+                <label class="form-label" for="accountRole">Роль</label>
+                <select class="form-select" id="accountRole" required>
+                  <option value="tenant">Арендатор</option>
+                  <option value="admin">Администрация</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="accessRole">Доступ</label>
+                <select class="form-select" id="accessRole" required>
+                  <option>Основной подписант</option>
+                  <option>Менеджер</option>
+                  <option>Оператор</option>
+                </select>
+              </div>
+              <div class="col-md-7">
+                <label class="form-label" for="companyName">Компания</label>
+                <input class="form-control" id="companyName" type="text" placeholder="ООО «Северная линия»" required>
+              </div>
+              <div class="col-md-5">
+                <label class="form-label" for="companyInn">ИНН / код</label>
+                <input class="form-control" id="companyInn" type="text" placeholder="7801234567" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="companyRoom">Помещение / отдел</label>
+                <input class="form-control" id="companyRoom" type="text" placeholder="3.18" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="leaseType">Формат</label>
+                <select class="form-select" id="leaseType">
+                  <option>Офис</option>
+                  <option>Шоурум</option>
+                  <option>Склад</option>
+                  <option>Администрация</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="contactName">Контактное лицо</label>
+                <input class="form-control" id="contactName" type="text" placeholder="Анна Петрова" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="contactPhone">Телефон</label>
+                <input class="form-control" id="contactPhone" type="tel" placeholder="+7 (999) 000-00-00" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="contactEmail">Почта</label>
+                <input class="form-control" id="contactEmail" type="email" placeholder="office@company.ru" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="registerPassword">Пароль</label>
+                <div class="input-group">
+                  <input class="form-control" id="registerPassword" type="password" placeholder="Минимум 8 символов" required>
+                  <button class="btn btn-outline-brand" type="button" data-password-toggle="#registerPassword">Показать</button>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="registerPasswordRepeat">Повтор пароля</label>
+                <div class="input-group">
+                  <input class="form-control" id="registerPasswordRepeat" type="password" placeholder="Повторите пароль" required>
+                  <button class="btn btn-outline-brand" type="button" data-password-toggle="#registerPasswordRepeat">Показать</button>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="registerComment">Комментарий</label>
+                <input class="form-control" id="registerComment" type="text" placeholder="Например: бухгалтерия">
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" id="registerAgreement" type="checkbox" required>
+                  <label class="form-check-label" for="registerAgreement">Подтверждаю корректность данных.</label>
+                </div>
+              </div>
+              <div class="col-12 d-flex flex-wrap gap-3 pt-2">
+                <button class="btn btn-brand" type="submit">Создать кабинет</button>
+                <a class="btn btn-outline-brand" href="index.html">Вернуться ко входу</a>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <div class="col-xl-4">
+          <section class="hero-card h-100">
+            <span class="eyebrow">Как это работает</span>
+            <h2>После регистрации открывается только нужный кабинет</h2>
+            <ul class="info-list mt-4">
+              <li>Выбрали роль.</li>
+              <li>Заполнили данные компании.</li>
+              <li>Получили доступ в кабинет арендатора или администрации.</li>
+            </ul>
+            <div class="stat-grid mt-4">
+              <div class="stat-card">
+                <strong>2 маршрута</strong>
+                <span>арендатор и администрация</span>
+              </div>
+              <div class="stat-card">
+                <strong>1 форма</strong>
+                <span>без лишних шагов</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container py-4">
+        <div class="footer-grid">
+          <div>
+            <div class="brand-lockup">
+              <img class="brand-mark" src="assets/img/logo_header.svg" alt="Логотип Красной нити">
+              <span class="brand-text">
+                <span class="brand-title">Красная нить</span>
+                <span class="brand-caption text-white-50">портал арендаторов</span>
+              </span>
+            </div>
+          </div>
+          <div>
+            <div class="footer-title">Контакты</div>
+            <p class="mb-1">Санкт-Петербург, Гельсингфорссская, 3</p>
+            <p class="mb-1"><a href="tel:+78126128734">+7 (812) 612-87-34</a></p>
+            <p class="mb-0"><a href="mailto:arenda@krnit.ru">arenda@krnit.ru</a></p>
+          </div>
+          <div>
+            <div class="footer-title">Разделы</div>
+            <ul class="footer-links">
+              <li><a href="index.html">Вход</a></li>
+              <li><a href="register.html">Регистрация</a></li>
+              <li><a href="search.html">Помещения</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-note">© <span data-current-year></span> Красная нить</div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="modal fade" id="registerSuccessModal" tabindex="-1" aria-labelledby="registerSuccessModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-4" id="registerSuccessModalLabel">Кабинет создан</h2>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-2 fw-semibold" id="registerSuccessRole">Роль: Арендатор</p>
+          <p class="mb-0" id="registerSuccessText">Заявка на создание кабинета отправлена.</p>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-outline-brand" href="index.html">Ко входу</a>
+          <a class="btn btn-brand" id="registerDemoLink" href="tenant.html">Открыть демо-кабинет</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
