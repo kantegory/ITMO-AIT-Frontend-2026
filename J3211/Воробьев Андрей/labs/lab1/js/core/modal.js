@@ -20,7 +20,7 @@ export function showModal(title, message) {
                     <p>${message}</p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary"
+                   <button class="btn btn-primary fw-semibold"
                             data-bs-dismiss="modal">OK</button>
                 </div>
             </div>
