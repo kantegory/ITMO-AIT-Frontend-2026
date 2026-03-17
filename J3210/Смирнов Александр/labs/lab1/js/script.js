@@ -1,7 +1,40 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
     // Main entry: initialize UI, state and event handlers
     const catalogContainer = document.getElementById("catalog-container");
-    const authNav = document.getElementById("auth-nav");
+
+    // Inject shared header/footer templates into placeholders
+    async function injectSharedLayout() {
+        const headerSlot = document.getElementById("site-header");
+        const footerSlot = document.getElementById("site-footer");
+
+        const requests = [];
+
+        if (headerSlot) {
+            requests.push(
+                fetch("components/header.html")
+                    .then(res => res.ok ? res.text() : "")
+                    .then(html => {
+                        if (html) headerSlot.innerHTML = html;
+                    })
+                    .catch(() => {})
+            );
+        }
+
+        if (footerSlot) {
+            requests.push(
+                fetch("components/footer.html")
+                    .then(res => res.ok ? res.text() : "")
+                    .then(html => {
+                        if (html) footerSlot.innerHTML = html;
+                    })
+                    .catch(() => {})
+            );
+        }
+
+        await Promise.all(requests);
+    }
+
+    await injectSharedLayout();
 
     // Local storage helpers
     const storage = {
@@ -28,8 +61,26 @@ document.addEventListener("DOMContentLoaded", function() {
         },
         setUserName(name) {
             localStorage.setItem("userName", name);
+        },
+        getUserUploads() {
+            try {
+                const raw = localStorage.getItem("userUploads");
+                const parsed = raw ? JSON.parse(raw) : [];
+                return Array.isArray(parsed) ? parsed : [];
+            } catch {
+                return [];
+            }
+        },
+        setUserUploads(list) {
+            localStorage.setItem("userUploads", JSON.stringify(list));
         }
     };
+
+    function getAllItems() {
+        const base = typeof appData !== "undefined" && Array.isArray(appData) ? appData : [];
+        const uploads = storage.getUserUploads();
+        return [...base, ...uploads];
+    }
 
     // Escape user-provided text to prevent XSS when inserting into DOM
     function escapeHtml(text) {
@@ -48,10 +99,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Update navigation area based on login state
     function updateAuthNav() {
+        const authNav = document.getElementById("auth-nav");
         if (!authNav) return;
         if (storage.getIsLoggedIn()) {
             authNav.innerHTML = `
-                <a href="profile.html" class="btn btn-outline-light">Profile</a>
+                <a href="profile.html" class="btn btn-outline-light me-2">Profile</a>
+                <button type="button" id="logout-btn" class="btn btn-danger btn-sm">Log out</button>
             `;
         } else {
             authNav.innerHTML = `
@@ -89,10 +142,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // Render subscriptions list in profile page
     function renderProfileSubscriptions() {
         const list = document.getElementById("subscriptions-list");
-        if (!list || typeof appData === "undefined") return;
+        if (!list) return;
 
         const ids = storage.getSubscriptions();
-        const items = appData.filter(item => ids.includes(item.id));
+        const items = getAllItems().filter(item => ids.includes(item.id));
 
         if (items.length === 0) {
             list.innerHTML = "<p class=\"text-muted\">No subscriptions yet.</p>";
@@ -109,6 +162,33 @@ document.addEventListener("DOMContentLoaded", function() {
                             <span class="badge ${typeBadge}">${escapeHtml(item.type.toUpperCase())}</span>
                         </div>
                         <p class="text-muted small">You will receive notifications about new versions and discussions.</p>
+                    </div>
+                </a>
+            `;
+        }).join("");
+    }
+
+    function renderProfileUploads() {
+        const list = document.getElementById("my-uploads-list");
+        if (!list) return;
+
+        const items = storage.getUserUploads();
+        if (items.length === 0) {
+            list.innerHTML = "<p class=\"text-muted\">You have not uploaded any models or datasets yet.</p>";
+            return;
+        }
+
+        list.innerHTML = items.map(item => {
+            const typeBadge = item.type === "model" ? "bg-primary" : "bg-success";
+            return `
+                <a href="model.html?id=${item.id}" class="text-decoration-none text-dark">
+                    <div class="item-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h5>${escapeHtml(item.name)}</h5>
+                            <span class="badge ${typeBadge}">${escapeHtml(item.type.toUpperCase())}</span>
+                        </div>
+                        <p class="text-muted small mb-2">Task: ${escapeHtml(item.task.toUpperCase())} | License: ${escapeHtml(item.license.toUpperCase())} | Size: ${escapeHtml(item.size)}</p>
+                        <p class="mb-0">${escapeHtml(item.desc)}</p>
                     </div>
                 </a>
             `;
@@ -173,8 +253,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Render initial catalog (if present)
-    if (catalogContainer && typeof appData !== 'undefined') {
-        renderCards(appData);
+    if (catalogContainer) {
+        renderCards(getAllItems());
     }
 
     // Filtering logic
@@ -187,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const licVal = document.getElementById("filter-license").value;
             const searchVal = document.getElementById("searchInput").value.toLowerCase();
 
-            const filtered = appData.filter(item => {
+            const filtered = getAllItems().filter(item => {
                 const matchType = typeVal === 'all' || item.type === typeVal;
                 const matchTask = taskVal === 'all' || item.task === taskVal;
                 const matchLic = licVal === 'all' || item.license === licVal;
@@ -203,14 +283,14 @@ document.addEventListener("DOMContentLoaded", function() {
     const detailName = document.getElementById("detail-name");
     const detailSubscribeBtn = document.getElementById("btn-subscribe");
     
-    if (detailName && typeof appData !== 'undefined') {
+    if (detailName) {
         const params = new URLSearchParams(window.location.search);
         const itemId = parseInt(params.get('id'), 10);
         
         if (isNaN(itemId)) {
             detailName.textContent = "Invalid item ID";
         } else {
-            const item = appData.find(x => x.id === itemId);
+            const item = getAllItems().find(x => x.id === itemId);
             
             if (item) {
                 document.title = `${item.name} - AI Hub`;
@@ -223,7 +303,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.getElementById("detail-stars").textContent = `Star ${item.stars}`;
                 document.getElementById("detail-forks").textContent = `Fork ${item.forks}`;
                 
-                document.getElementById("detail-desc").textContent = item.desc;
+                document.getElementById("detail-desc").textContent = item.fullDesc || item.desc;
                 document.getElementById("detail-usage").textContent = item.usage;
                 
                 document.getElementById("detail-lic").textContent = item.license.toUpperCase();
@@ -284,12 +364,61 @@ document.addEventListener("DOMContentLoaded", function() {
     if (registerForm) {
         registerForm.addEventListener("submit", (e) => {
             e.preventDefault();
+            const usernameInput = document.getElementById("register-username");
+            const username = usernameInput ? usernameInput.value.trim() : "";
             storage.setIsLoggedIn(true);
-            if (!storage.getUserName()) {
-                storage.setUserName("Student User");
-            }
+            storage.setUserName(username || "Student User");
             updateAuthNav();
             window.location.href = "profile.html";
+        });
+    }
+
+    const uploadForm = document.getElementById("upload-form");
+    if (uploadForm) {
+        uploadForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            if (!storage.getIsLoggedIn()) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            const type = document.getElementById("upload-type").value;
+            const name = document.getElementById("upload-name").value.trim();
+            const task = document.getElementById("upload-task").value;
+            const framework = document.getElementById("upload-framework").value.trim() || "none";
+            const license = document.getElementById("upload-license").value;
+            const shortDesc = document.getElementById("upload-short-desc").value.trim();
+            const fullDesc = document.getElementById("upload-full-desc").value.trim();
+            const fileInput = document.getElementById("upload-file");
+            const file = fileInput && fileInput.files ? fileInput.files[0] : null;
+
+            const size = file ? `${(file.size / (1024 * 1024)).toFixed(2)}mb` : "n/a";
+            const usage = file ? `User file: ${file.name}` : "User uploaded item";
+
+            const newItem = {
+                id: Date.now(),
+                type,
+                name,
+                task,
+                framework: framework.toLowerCase(),
+                license,
+                size,
+                downloads: "0",
+                stars: 0,
+                forks: 0,
+                metrics: "No metrics yet",
+                desc: shortDesc,
+                fullDesc,
+                usage
+            };
+
+            const uploads = storage.getUserUploads();
+            uploads.unshift(newItem);
+            storage.setUserUploads(uploads);
+
+            uploadForm.reset();
+            renderProfileUploads();
         });
     }
 
@@ -340,8 +469,30 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    document.addEventListener("click", (e) => {
+        const target = e.target;
+        if (!(target instanceof HTMLElement)) return;
+        if (target.id !== "logout-btn") return;
+
+        const confirmed = window.confirm("Are you sure you want to log out?");
+        if (!confirmed) return;
+
+        storage.setIsLoggedIn(false);
+        updateAuthNav();
+
+        if (window.location.pathname.endsWith("profile.html")) {
+            window.location.href = "index.html";
+        }
+    });
+
+    if (window.location.pathname.endsWith("profile.html") && !storage.getIsLoggedIn()) {
+        window.location.href = "login.html";
+        return;
+    }
+
     // Initial UI sync
     updateAuthNav();
     renderProfileSubscriptions();
     updateProfileHeader();
+    renderProfileUploads();
 });

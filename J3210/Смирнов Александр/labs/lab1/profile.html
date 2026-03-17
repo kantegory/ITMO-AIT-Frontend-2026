@@ -8,17 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">AI Hub</a>
-            
-            <div class="ms-auto" id="auth-nav">
-                <a href="login.html" class="btn btn-outline-light me-2">Log in</a>
-                <a href="register.html" class="btn btn-primary">Sign up</a>
-            </div>
-        </div>
-    </nav>
+    <div id="site-header"></div>
 
     <main class="container">
         <div class="row">
@@ -48,12 +38,62 @@
                 <div class="tab-content" id="profileTabsContent">
                     <div class="tab-pane fade show active" id="uploads" role="tabpanel" aria-labelledby="uploads-tab">
                         <div class="item-card">
-                            <div class="d-flex justify-content-between">
-                                <h5>My-Custom-CNN</h5>
-                                <span class="badge bg-primary">MODEL</span>
-                            </div>
-                            <p class="text-muted small mb-0">Task: CV | Framework: PyTorch</p>
+                            <h5 class="mb-3">Upload model or dataset</h5>
+                            <form id="upload-form">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label for="upload-type" class="form-label">Type</label>
+                                        <select id="upload-type" class="form-select" required>
+                                            <option value="model">Model</option>
+                                            <option value="dataset">Dataset</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="upload-task" class="form-label">Task</label>
+                                        <select id="upload-task" class="form-select" required>
+                                            <option value="cv">Computer Vision</option>
+                                            <option value="nlp">NLP</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="upload-license" class="form-label">License</label>
+                                        <select id="upload-license" class="form-select" required>
+                                            <option value="mit">MIT</option>
+                                            <option value="apache">Apache 2.0</option>
+                                            <option value="cc">Creative Commons</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="upload-name" class="form-label">Name</label>
+                                        <input type="text" id="upload-name" class="form-control" placeholder="My-awesome-model" required>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="upload-framework" class="form-label">Framework</label>
+                                        <input type="text" id="upload-framework" class="form-control" placeholder="pytorch / tensorflow / none">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="upload-file" class="form-label">File</label>
+                                        <input type="file" id="upload-file" class="form-control" required>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="upload-short-desc" class="form-label">Short description</label>
+                                        <input type="text" id="upload-short-desc" class="form-control" maxlength="160" required>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="upload-full-desc" class="form-label">Detailed description</label>
+                                        <textarea id="upload-full-desc" class="form-control" rows="4" required></textarea>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary mt-3">Upload</button>
+                            </form>
                         </div>
+
+                        <div id="my-uploads-list"></div>
                     </div>
                     
                     <div class="tab-pane fade" id="subscriptions" role="tabpanel" aria-labelledby="subscriptions-tab">
@@ -64,12 +104,7 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-light text-center py-3">
-        <div class="container">
-            <small>Frontend Lab 1 - AI Platform</small>
-        </div>
-    </footer>
+    <div id="site-footer"></div>
 
     <!-- Edit Profile Modal -->
     <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
