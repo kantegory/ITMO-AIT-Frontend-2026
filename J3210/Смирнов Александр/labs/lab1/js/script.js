@@ -1,95 +1,64 @@
 document.addEventListener("DOMContentLoaded", async function() {
-    // Main entry: initialize UI, state and event handlers
     const catalogContainer = document.getElementById("catalog-container");
+    const API_URL = 'http://localhost:3000';
 
-    // Inject shared header/footer templates into placeholders
     async function injectSharedLayout() {
         const headerSlot = document.getElementById("site-header");
         const footerSlot = document.getElementById("site-footer");
-
-        const requests = [];
+        const requests =[];
 
         if (headerSlot) {
-            requests.push(
-                fetch("components/header.html")
-                    .then(res => res.ok ? res.text() : "")
-                    .then(html => {
-                        if (html) headerSlot.innerHTML = html;
-                    })
-                    .catch(() => {})
-            );
+            requests.push(fetch("components/header.html").then(res => res.ok ? res.text() : "").then(html => {
+                if (html) headerSlot.innerHTML = html;
+            }).catch(() => {}));
         }
 
         if (footerSlot) {
-            requests.push(
-                fetch("components/footer.html")
-                    .then(res => res.ok ? res.text() : "")
-                    .then(html => {
-                        if (html) footerSlot.innerHTML = html;
-                    })
-                    .catch(() => {})
-            );
+            requests.push(fetch("components/footer.html").then(res => res.ok ? res.text() : "").then(html => {
+                if (html) footerSlot.innerHTML = html;
+            }).catch(() => {}));
         }
 
         await Promise.all(requests);
     }
-
     await injectSharedLayout();
 
     // Local storage helpers
     const storage = {
-        getIsLoggedIn() {
-            return localStorage.getItem("isLoggedIn") === "true";
+        getIsLoggedIn: () => localStorage.getItem("isLoggedIn") === "true",
+        setIsLoggedIn: (value) => localStorage.setItem("isLoggedIn", value ? "true" : "false"),
+        getSubscriptions: () => {
+            try { return JSON.parse(localStorage.getItem("subscriptions")) ||[]; } catch { return[]; }
         },
-        setIsLoggedIn(value) {
-            localStorage.setItem("isLoggedIn", value ? "true" : "false");
+        setSubscriptions: (list) => localStorage.setItem("subscriptions", JSON.stringify(list)),
+        getUserName: () => localStorage.getItem("userName") || "",
+        setUserName: (name) => localStorage.setItem("userName", name),
+        getUserUploads: () => {
+            try { return JSON.parse(localStorage.getItem("userUploads")) || []; } catch { return[]; }
         },
-        getSubscriptions() {
-            try {
-                const raw = localStorage.getItem("subscriptions");
-                const parsed = raw ? JSON.parse(raw) : [];
-                return Array.isArray(parsed) ? parsed : [];
-            } catch {
-                return [];
-            }
-        },
-        setSubscriptions(list) {
-            localStorage.setItem("subscriptions", JSON.stringify(list));
-        },
-        getUserName() {
-            return localStorage.getItem("userName") || "";
-        },
-        setUserName(name) {
-            localStorage.setItem("userName", name);
-        },
-        getUserUploads() {
-            try {
-                const raw = localStorage.getItem("userUploads");
-                const parsed = raw ? JSON.parse(raw) : [];
-                return Array.isArray(parsed) ? parsed : [];
-            } catch {
-                return [];
-            }
-        },
-        setUserUploads(list) {
-            localStorage.setItem("userUploads", JSON.stringify(list));
-        }
+        setUserUploads: (list) => localStorage.setItem("userUploads", JSON.stringify(list))
     };
 
-    function getAllItems() {
-        const base = typeof appData !== "undefined" && Array.isArray(appData) ? appData : [];
-        const uploads = storage.getUserUploads();
-        return [...base, ...uploads];
+    async function fetchAllItems() {
+        try {
+            const response = await fetch(`${API_URL}/items`);
+            if (!response.ok) throw new Error('Network error');
+            const apiItems = await response.json();
+            
+            const uploads = storage.getUserUploads();
+            return [...apiItems, ...uploads];
+        } catch (error) {
+            console.error("Failed to fetch API data:", error);
+            return storage.getUserUploads();
+        }
     }
 
-    // Escape user-provided text to prevent XSS when inserting into DOM
     function escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
 
-    // Compute initials used in profile avatar
     function getInitials(name) {
         const parts = name.trim().split(/\s+/).filter(Boolean);
         if (parts.length === 0) return "";
@@ -97,7 +66,6 @@ document.addEventListener("DOMContentLoaded", async function() {
         return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
     }
 
-    // Update navigation area based on login state
     function updateAuthNav() {
         const authNav = document.getElementById("auth-nav");
         if (!authNav) return;
@@ -114,24 +82,23 @@ document.addEventListener("DOMContentLoaded", async function() {
         }
     }
 
-    // Subscriptions helpers
     function isSubscribed(itemId) {
-        return storage.getSubscriptions().includes(itemId);
+        return storage.getSubscriptions().includes(String(itemId));
     }
 
     function toggleSubscription(itemId) {
         const current = storage.getSubscriptions();
-        const idx = current.indexOf(itemId);
+        const strId = String(itemId);
+        const idx = current.indexOf(strId);
         if (idx >= 0) {
             current.splice(idx, 1);
         } else {
-            current.push(itemId);
+            current.push(strId);
         }
         storage.setSubscriptions(current);
         return current;
     }
 
-    // Update subscribe button appearance and label
     function setSubscribeButtonState(button, subscribed) {
         if (!button) return;
         button.textContent = subscribed ? "Unsubscribe" : "Subscribe";
@@ -139,13 +106,13 @@ document.addEventListener("DOMContentLoaded", async function() {
         button.classList.toggle("btn-outline-danger", subscribed);
     }
 
-    // Render subscriptions list in profile page
-    function renderProfileSubscriptions() {
+    async function renderProfileSubscriptions() {
         const list = document.getElementById("subscriptions-list");
         if (!list) return;
 
         const ids = storage.getSubscriptions();
-        const items = getAllItems().filter(item => ids.includes(item.id));
+        const allItems = await fetchAllItems();
+        const items = allItems.filter(item => ids.includes(String(item.id)));
 
         if (items.length === 0) {
             list.innerHTML = "<p class=\"text-muted\">No subscriptions yet.</p>";
@@ -195,7 +162,6 @@ document.addEventListener("DOMContentLoaded", async function() {
         }).join("");
     }
 
-    // Update profile name and initials in sidebar
     function updateProfileHeader() {
         const nameEl = document.getElementById("profile-name");
         const initialsEl = document.getElementById("profile-initials");
@@ -207,7 +173,6 @@ document.addEventListener("DOMContentLoaded", async function() {
         initialsEl.textContent = getInitials(name) || "SU";
     }
 
-    // Centralized subscribe action with auth check
     function handleSubscribeClick(itemId) {
         if (!storage.getIsLoggedIn()) {
             window.location.href = "login.html";
@@ -216,7 +181,6 @@ document.addEventListener("DOMContentLoaded", async function() {
         toggleSubscription(itemId);
     }
 
-    // Render catalog cards efficiently into the container
     function renderCards(data) {
         if (!catalogContainer) return;
         
@@ -252,22 +216,25 @@ document.addEventListener("DOMContentLoaded", async function() {
         catalogContainer.innerHTML = cardsHtml;
     }
 
-    // Render initial catalog (if present)
     if (catalogContainer) {
-        renderCards(getAllItems());
+        catalogContainer.innerHTML = '<div class="text-center my-5"><p>Loading data from API...</p></div>';
+        const initialItems = await fetchAllItems();
+        renderCards(initialItems);
     }
 
-    // Filtering logic
     const applyBtn = document.getElementById("apply-filters");
-    // Filter apply handler
     if (applyBtn) {
-        applyBtn.addEventListener("click", () => {
+        applyBtn.addEventListener("click", async () => {
+            catalogContainer.innerHTML = '<div class="text-center my-5"><p>Loading...</p></div>';
+            
             const typeVal = document.getElementById("filter-type").value;
             const taskVal = document.getElementById("filter-task").value;
             const licVal = document.getElementById("filter-license").value;
             const searchVal = document.getElementById("searchInput").value.toLowerCase();
 
-            const filtered = getAllItems().filter(item => {
+            const allItems = await fetchAllItems();
+
+            const filtered = allItems.filter(item => {
                 const matchType = typeVal === 'all' || item.type === typeVal;
                 const matchTask = taskVal === 'all' || item.task === taskVal;
                 const matchLic = licVal === 'all' || item.license === licVal;
@@ -279,18 +246,18 @@ document.addEventListener("DOMContentLoaded", async function() {
         });
     }
 
-    // Load item details from URL and populate page
     const detailName = document.getElementById("detail-name");
     const detailSubscribeBtn = document.getElementById("btn-subscribe");
     
     if (detailName) {
         const params = new URLSearchParams(window.location.search);
-        const itemId = parseInt(params.get('id'), 10);
+        const itemId = params.get('id');
         
-        if (isNaN(itemId)) {
+        if (!itemId) {
             detailName.textContent = "Invalid item ID";
         } else {
-            const item = getAllItems().find(x => x.id === itemId);
+            const allItems = await fetchAllItems();
+            const item = allItems.find(x => String(x.id) === String(itemId));
             
             if (item) {
                 document.title = `${item.name} - AI Hub`;
@@ -328,7 +295,6 @@ document.addEventListener("DOMContentLoaded", async function() {
     const commentInput = document.getElementById("comment-input");
     const commentsList = document.getElementById("comments-list");
 
-    // Post comment handler (client-side only)
     if (postBtn && commentInput && commentsList) {
         postBtn.addEventListener("click", () => {
             const text = commentInput.value.trim();
@@ -346,7 +312,6 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
 
     const loginForm = document.getElementById("login-form");
-    // Simulated login: set auth state in localStorage
     if (loginForm) {
         loginForm.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -360,7 +325,6 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
 
     const registerForm = document.getElementById("register-form");
-    // Simulated register: set auth state in localStorage
     if (registerForm) {
         registerForm.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -377,7 +341,6 @@ document.addEventListener("DOMContentLoaded", async function() {
     if (uploadForm) {
         uploadForm.addEventListener("submit", (e) => {
             e.preventDefault();
-
             if (!storage.getIsLoggedIn()) {
                 window.location.href = "login.html";
                 return;
@@ -397,7 +360,7 @@ document.addEventListener("DOMContentLoaded", async function() {
             const usage = file ? `User file: ${file.name}` : "User uploaded item";
 
             const newItem = {
-                id: Date.now(),
+                id: String(Date.now()),
                 type,
                 name,
                 task,
@@ -426,43 +389,35 @@ document.addEventListener("DOMContentLoaded", async function() {
     const editNameInput = document.getElementById("edit-name-input");
     const saveProfileBtn = document.getElementById("save-profile-btn");
 
-    // Edit profile modal handlers
     if (editProfileBtn && editNameInput) {
         editProfileBtn.addEventListener("click", () => {
-            const current = storage.getUserName() || "Student User";
-            editNameInput.value = current;
+            editNameInput.value = storage.getUserName() || "Student User";
         });
     }
 
     if (saveProfileBtn && editNameInput) {
         saveProfileBtn.addEventListener("click", () => {
-            const value = editNameInput.value.trim();
-            const name = value || "Student User";
-            storage.setUserName(name);
+            storage.setUserName(editNameInput.value.trim() || "Student User");
             updateProfileHeader();
         });
     }
 
-    // Delegate subscribe button clicks in catalog to central handler
     if (catalogContainer) {
         catalogContainer.addEventListener("click", (e) => {
-            const target = e.target;
-            if (!(target instanceof HTMLElement)) return;
-            const button = target.closest(".subscribe-btn");
+            const button = e.target.closest(".subscribe-btn");
             if (!button) return;
-            const id = parseInt(button.getAttribute("data-subscribe-id"), 10);
-            if (Number.isNaN(id)) return;
+            const id = button.getAttribute("data-subscribe-id");
+            if (!id) return;
 
             handleSubscribeClick(id);
             setSubscribeButtonState(button, isSubscribed(id));
         });
     }
 
-    // Subscribe button on detail page
     if (detailSubscribeBtn) {
         detailSubscribeBtn.addEventListener("click", () => {
-            const id = parseInt(detailSubscribeBtn.dataset.subscribeId, 10);
-            if (Number.isNaN(id)) return;
+            const id = detailSubscribeBtn.dataset.subscribeId;
+            if (!id) return;
 
             handleSubscribeClick(id);
             setSubscribeButtonState(detailSubscribeBtn, isSubscribed(id));
@@ -470,12 +425,8 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
 
     document.addEventListener("click", (e) => {
-        const target = e.target;
-        if (!(target instanceof HTMLElement)) return;
-        if (target.id !== "logout-btn") return;
-
-        const confirmed = window.confirm("Are you sure you want to log out?");
-        if (!confirmed) return;
+        if (e.target.id !== "logout-btn") return;
+        if (!window.confirm("Are you sure you want to log out?")) return;
 
         storage.setIsLoggedIn(false);
         updateAuthNav();
@@ -490,9 +441,8 @@ document.addEventListener("DOMContentLoaded", async function() {
         return;
     }
 
-    // Initial UI sync
     updateAuthNav();
-    renderProfileSubscriptions();
+    await renderProfileSubscriptions();
     updateProfileHeader();
     renderProfileUploads();
 });
