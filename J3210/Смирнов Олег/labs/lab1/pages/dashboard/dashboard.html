@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Личный кабинет — AI Hub</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><i class="bi bi-cpu"></i> AI Hub</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+          <li class="nav-item"><a class="nav-link" href="search.html?type=models">Модели</a></li>
+          <li class="nav-item"><a class="nav-link" href="search.html?type=datasets">Датасеты</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-2">
+          <div class="avatar">ИИ</div>
+          <span class="text-light small d-none d-md-inline">Иван Иванов</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="py-4">
+    <div class="container">
+      <!-- Профиль -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="d-flex align-items-center gap-4 flex-wrap">
+            <div class="avatar avatar-lg">ИИ</div>
+            <div>
+              <h1 class="h4 mb-1">Иван Иванов</h1>
+              <p class="text-muted mb-0">ML-инженер &middot; Москва</p>
+            </div>
+            <div class="ms-auto">
+              <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#editProfileModal"><i class="bi bi-pencil"></i> Редактировать</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h5 mb-0">Ваш контент</h2>
+        <button class="btn btn-accent btn-sm" data-bs-toggle="modal" data-bs-target="#uploadModal">
+          <i class="bi bi-plus-lg"></i> Загрузить
+        </button>
+      </div>
+
+      <ul class="nav nav-tabs mb-4" role="tablist">
+        <li class="nav-item">
+          <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-models" type="button">Мои модели</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-datasets" type="button">Мои датасеты</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-starred" type="button">Подписки</button>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="tab-models" role="tabpanel">
+          <div class="row g-3">
+            <div class="col-md-6 col-lg-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title"><a href="model.html">ivanov/sentiment-bert</a></h5>
+                  <p class="card-text small">BERT для анализа тональности текста.</p>
+                  <div class="d-flex flex-wrap gap-1 mb-3">
+                    <span class="badge badge-task">классификация</span>
+                    <span class="badge badge-framework">PyTorch</span>
+                  </div>
+                  <div class="d-flex gap-3 text-muted small">
+                    <span><i class="bi bi-star-fill text-warning"></i> 42</span>
+                    <span><i class="bi bi-download"></i> 1.2K</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="tab-datasets" role="tabpanel">
+          <div class="row g-3">
+            <div class="col-md-6 col-lg-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title"><a href="dataset.html">ivanov/reviews-ru</a></h5>
+                  <p class="card-text small">50K отзывов на русском языке с метками тональности.</p>
+                  <div class="d-flex flex-wrap gap-1 mb-3">
+                    <span class="badge badge-task">текстовый корпус</span>
+                    <span class="badge badge-license">MIT</span>
+                  </div>
+                  <div class="d-flex gap-3 text-muted small">
+                    <span><i class="bi bi-star-fill text-warning"></i> 18</span>
+                    <span><i class="bi bi-download"></i> 340</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="tab-starred" role="tabpanel">
+          <div class="row g-3">
+            <div class="col-md-6 col-lg-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title"><a href="model.html">meta/llama-3-70b</a></h5>
+                  <p class="card-text small">Открытая языковая модель для генерации текста.</p>
+                  <div class="d-flex flex-wrap gap-1 mb-3">
+                    <span class="badge badge-task">генерация текста</span>
+                    <span class="badge badge-framework">PyTorch</span>
+                  </div>
+                  <div class="d-flex gap-3 text-muted small">
+                    <span><i class="bi bi-star-fill text-warning"></i> 9.8k</span>
+                    <span><i class="bi bi-download"></i> 1.5M</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Модальное окно загрузки -->
+  <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="uploadModalLabel">Загрузить модель или датасет</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="uploadName" class="form-label">Название</label>
+              <input type="text" class="form-control" id="uploadName" placeholder="my-model" required>
+            </div>
+            <div class="mb-3">
+              <label for="uploadType" class="form-label">Тип</label>
+              <select class="form-select" id="uploadType">
+                <option value="model">Модель</option>
+                <option value="dataset">Датасет</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="uploadDesc" class="form-label">Описание</label>
+              <textarea class="form-control" id="uploadDesc" rows="2" placeholder="Краткое описание..."></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="uploadFramework" class="form-label">Фреймворк</label>
+              <select class="form-select" id="uploadFramework">
+                <option value="">Выберите...</option>
+                <option>PyTorch</option>
+                <option>TensorFlow</option>
+                <option>JAX</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="uploadFiles" class="form-label">Файлы</label>
+              <input class="form-control" type="file" id="uploadFiles" multiple>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-light btn-sm" data-bs-dismiss="modal">Отмена</button>
+          <button type="button" class="btn btn-accent btn-sm">Загрузить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно редактирования профиля -->
+  <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProfileModalLabel">Редактировать профиль</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="profileName" class="form-label">Имя</label>
+              <input type="text" class="form-control" id="profileName" value="Иван Иванов">
+            </div>
+            <div class="mb-3">
+              <label for="profileBio" class="form-label">О себе</label>
+              <input type="text" class="form-control" id="profileBio" value="ML-инженер">
+            </div>
+            <div class="mb-3">
+              <label for="profileLocation" class="form-label">Город</label>
+              <input type="text" class="form-control" id="profileLocation" value="Москва">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-light btn-sm" data-bs-dismiss="modal">Отмена</button>
+          <button type="button" class="btn btn-accent btn-sm" data-bs-dismiss="modal">Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="py-4 mt-4">
+    <div class="container text-center">
+      <small class="text-muted">&copy; 2026 AI Hub</small>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
