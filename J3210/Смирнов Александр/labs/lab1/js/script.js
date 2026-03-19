@@ -23,33 +23,33 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
     await injectSharedLayout();
 
-    // Local storage helpers
     const storage = {
         getIsLoggedIn: () => localStorage.getItem("isLoggedIn") === "true",
         setIsLoggedIn: (value) => localStorage.setItem("isLoggedIn", value ? "true" : "false"),
-        getSubscriptions: () => {
-            try { return JSON.parse(localStorage.getItem("subscriptions")) ||[]; } catch { return[]; }
-        },
-        setSubscriptions: (list) => localStorage.setItem("subscriptions", JSON.stringify(list)),
+        getUserId: () => localStorage.getItem("userId") || "",
+        setUserId: (id) => localStorage.setItem("userId", id),
         getUserName: () => localStorage.getItem("userName") || "",
         setUserName: (name) => localStorage.setItem("userName", name),
-        getUserUploads: () => {
-            try { return JSON.parse(localStorage.getItem("userUploads")) || []; } catch { return[]; }
+        getUserEmail: () => localStorage.getItem("userEmail") || "",
+        setUserEmail: (email) => localStorage.setItem("userEmail", email),
+        getSubscriptions: () => {
+            try { return JSON.parse(localStorage.getItem("subscriptions")) || []; } catch { return []; }
         },
-        setUserUploads: (list) => localStorage.setItem("userUploads", JSON.stringify(list))
+        setSubscriptions: (list) => localStorage.setItem("subscriptions", JSON.stringify(list)),
+        getStarred: () => {
+            try { return JSON.parse(localStorage.getItem("starred")) || []; } catch { return []; }
+        },
+        setStarred: (list) => localStorage.setItem("starred", JSON.stringify(list))
     };
 
     async function fetchAllItems() {
         try {
             const response = await fetch(`${API_URL}/items`);
             if (!response.ok) throw new Error('Network error');
-            const apiItems = await response.json();
-            
-            const uploads = storage.getUserUploads();
-            return [...apiItems, ...uploads];
+            return await response.json();
         } catch (error) {
             console.error("Failed to fetch API data:", error);
-            return storage.getUserUploads();
+            return [];
         }
     }
 
@@ -135,11 +135,14 @@ document.addEventListener("DOMContentLoaded", async function() {
         }).join("");
     }
 
-    function renderProfileUploads() {
+    async function renderProfileUploads() {
         const list = document.getElementById("my-uploads-list");
         if (!list) return;
 
-        const items = storage.getUserUploads();
+        const allItems = await fetchAllItems();
+        // Условно считаем, что загрузки пользователя - это те, где автор совпадает (добавим поле authorId при загрузке)
+        const items = allItems.filter(item => item.authorId === storage.getUserId());
+        
         if (items.length === 0) {
             list.innerHTML = "<p class=\"text-muted\">You have not uploaded any models or datasets yet.</p>";
             return;
@@ -165,12 +168,16 @@ document.addEventListener("DOMContentLoaded", async function() {
     function updateProfileHeader() {
         const nameEl = document.getElementById("profile-name");
         const initialsEl = document.getElementById("profile-initials");
+        const emailEl = document.getElementById("profile-email");
         if (!nameEl || !initialsEl) return;
 
-        const stored = storage.getUserName();
-        const name = stored.trim() ? stored : "Student User";
+        const name = storage.getUserName() || "Student User";
         nameEl.textContent = name;
         initialsEl.textContent = getInitials(name) || "SU";
+        
+        if (emailEl) {
+            emailEl.textContent = storage.getUserEmail() || "student@itmo.ru";
+        }
     }
 
     function handleSubscribeClick(itemId) {
@@ -192,8 +199,12 @@ document.addEventListener("DOMContentLoaded", async function() {
         const cardsHtml = data.map(item => {
             const typeBadge = item.type === 'model' ? 'bg-primary' : 'bg-success';
             const subscribed = isSubscribed(item.id);
-            const buttonText = subscribed ? "Unsubscribe" : "Subscribe";
-            const buttonClass = subscribed ? "btn-outline-danger" : "btn-outline-primary";
+            const isStarred = storage.getStarred().includes(String(item.id));
+            
+            const btnSubText = subscribed ? "Unsubscribe" : "Subscribe";
+            const btnSubClass = subscribed ? "btn-outline-danger" : "btn-outline-primary";
+            const btnStarClass = isStarred ? "btn-warning" : "btn-outline-warning";
+
             return `
                 <div class="item-card">
                     <div class="d-flex justify-content-between align-items-start">
@@ -203,11 +214,11 @@ document.addEventListener("DOMContentLoaded", async function() {
                     <p class="text-muted small mb-2">Task: ${escapeHtml(item.task.toUpperCase())} | License: ${escapeHtml(item.license.toUpperCase())} | Size: ${escapeHtml(item.size)}</p>
                     <p>${escapeHtml(item.desc)}</p>
                     <div class="d-flex gap-2">
-                        <span class="badge bg-secondary">Downloads: ${escapeHtml(item.downloads)}</span>
-                        <span class="badge bg-warning text-dark">Stars: ${item.stars}</span>
+                        <span class="badge bg-secondary">Downloads: ${escapeHtml(String(item.downloads))}</span>
                     </div>
-                    <div class="mt-3">
-                        <button class="btn ${buttonClass} btn-sm subscribe-btn" data-subscribe-id="${item.id}">${buttonText}</button>
+                    <div class="mt-3 d-flex gap-2">
+                        <button class="btn ${btnStarClass} btn-sm star-btn" data-star-id="${item.id}" data-stars="${item.stars}">★ ${item.stars}</button>
+                        <button class="btn ${btnSubClass} btn-sm subscribe-btn" data-subscribe-id="${item.id}">${btnSubText}</button>
                     </div>
                 </div>
             `;
@@ -267,8 +278,39 @@ document.addEventListener("DOMContentLoaded", async function() {
                 typeBadge.textContent = item.type.toUpperCase();
                 typeBadge.className = `badge ${item.type === 'model' ? 'bg-primary' : 'bg-success'}`;
                 
-                document.getElementById("detail-stars").textContent = `Star ${item.stars}`;
-                document.getElementById("detail-forks").textContent = `Fork ${item.forks}`;
+                const starBtn = document.getElementById("detail-stars");
+                const isStarred = storage.getStarred().includes(String(item.id));
+                starBtn.textContent = `★ ${item.stars}`;
+                starBtn.className = `btn ${isStarred ? 'btn-warning' : 'btn-outline-warning'}`;
+                
+                starBtn.onclick = async () => {
+                    if (!storage.getIsLoggedIn()) {
+                        window.location.href = "login.html";
+                        return;
+                    }
+                    const starred = storage.getStarred();
+                    const currentlyStarred = starred.includes(String(item.id));
+                    const newStarsCount = currentlyStarred ? item.stars - 1 : item.stars + 1;
+
+                    try {
+                        await fetch(`${API_URL}/items/${item.id}`, {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ stars: newStarsCount })
+                        });
+
+                        item.stars = newStarsCount;
+                        if (currentlyStarred) {
+                            storage.setStarred(starred.filter(id => id !== String(item.id)));
+                            starBtn.className = "btn btn-outline-warning";
+                        } else {
+                            starred.push(String(item.id));
+                            storage.setStarred(starred);
+                            starBtn.className = "btn btn-warning";
+                        }
+                        starBtn.textContent = `★ ${newStarsCount}`;
+                    } catch (err) { console.error(err); }
+                };
                 
                 document.getElementById("detail-desc").textContent = item.fullDesc || item.desc;
                 document.getElementById("detail-usage").textContent = item.usage;
@@ -313,33 +355,66 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     const loginForm = document.getElementById("login-form");
     if (loginForm) {
-        loginForm.addEventListener("submit", (e) => {
+        loginForm.addEventListener("submit", async (e) => {
             e.preventDefault();
-            storage.setIsLoggedIn(true);
-            if (!storage.getUserName()) {
-                storage.setUserName("Student User");
-            }
-            updateAuthNav();
-            window.location.href = "profile.html";
+            const email = loginForm.querySelector('input[type="email"]').value;
+            const password = loginForm.querySelector('input[type="password"]').value;
+
+            try {
+                const res = await fetch(`${API_URL}/users?email=${email}&password=${password}`);
+                const users = await res.json();
+                
+                if (users.length > 0) {
+                    const user = users[0];
+                    storage.setIsLoggedIn(true);
+                    storage.setUserId(user.id);
+                    storage.setUserName(user.username);
+                    storage.setUserEmail(user.email);
+                    updateAuthNav();
+                    window.location.href = "profile.html";
+                } else {
+                    alert("Invalid email or password!");
+                }
+            } catch (err) { console.error(err); }
         });
     }
 
     const registerForm = document.getElementById("register-form");
     if (registerForm) {
-        registerForm.addEventListener("submit", (e) => {
+        registerForm.addEventListener("submit", async (e) => {
             e.preventDefault();
-            const usernameInput = document.getElementById("register-username");
-            const username = usernameInput ? usernameInput.value.trim() : "";
-            storage.setIsLoggedIn(true);
-            storage.setUserName(username || "Student User");
-            updateAuthNav();
-            window.location.href = "profile.html";
+            const username = document.getElementById("register-username").value.trim();
+            const email = registerForm.querySelector('input[type="email"]').value;
+            const password = registerForm.querySelector('input[type="password"]').value;
+
+            try {
+                // Проверка, есть ли уже такая почта
+                const check = await fetch(`${API_URL}/users?email=${email}`);
+                if ((await check.json()).length > 0) {
+                    alert("Email already in use!");
+                    return;
+                }
+
+                const newUser = { id: String(Date.now()), username, email, password };
+                await fetch(`${API_URL}/users`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newUser)
+                });
+
+                storage.setIsLoggedIn(true);
+                storage.setUserId(newUser.id);
+                storage.setUserName(username);
+                storage.setUserEmail(email);
+                updateAuthNav();
+                window.location.href = "profile.html";
+            } catch (err) { console.error(err); }
         });
     }
 
     const uploadForm = document.getElementById("upload-form");
     if (uploadForm) {
-        uploadForm.addEventListener("submit", (e) => {
+        uploadForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             if (!storage.getIsLoggedIn()) {
                 window.location.href = "login.html";
@@ -356,32 +431,29 @@ document.addEventListener("DOMContentLoaded", async function() {
             const fileInput = document.getElementById("upload-file");
             const file = fileInput && fileInput.files ? fileInput.files[0] : null;
 
-            const size = file ? `${(file.size / (1024 * 1024)).toFixed(2)}mb` : "n/a";
-            const usage = file ? `User file: ${file.name}` : "User uploaded item";
-
             const newItem = {
                 id: String(Date.now()),
-                type,
-                name,
-                task,
+                authorId: storage.getUserId(),
+                type, name, task, license,
                 framework: framework.toLowerCase(),
-                license,
-                size,
+                size: file ? `${(file.size / (1024 * 1024)).toFixed(2)}mb` : "n/a",
                 downloads: "0",
                 stars: 0,
-                forks: 0,
                 metrics: "No metrics yet",
                 desc: shortDesc,
                 fullDesc,
-                usage
+                usage: file ? `User file: ${file.name}` : "User uploaded item"
             };
 
-            const uploads = storage.getUserUploads();
-            uploads.unshift(newItem);
-            storage.setUserUploads(uploads);
-
-            uploadForm.reset();
-            renderProfileUploads();
+            try {
+                await fetch(`${API_URL}/items`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newItem)
+                });
+                uploadForm.reset();
+                renderProfileUploads();
+            } catch (err) { console.error("Upload failed", err); }
         });
     }
 
@@ -403,14 +475,49 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
 
     if (catalogContainer) {
-        catalogContainer.addEventListener("click", (e) => {
-            const button = e.target.closest(".subscribe-btn");
-            if (!button) return;
-            const id = button.getAttribute("data-subscribe-id");
-            if (!id) return;
+        catalogContainer.addEventListener("click", async (e) => {
+            const subBtn = e.target.closest(".subscribe-btn");
+            if (subBtn) {
+                const id = subBtn.getAttribute("data-subscribe-id");
+                if (!id) return;
+                handleSubscribeClick(id);
+                setSubscribeButtonState(subBtn, isSubscribed(id));
+            }
 
-            handleSubscribeClick(id);
-            setSubscribeButtonState(button, isSubscribed(id));
+            const starBtn = e.target.closest(".star-btn");
+            if (starBtn) {
+                if (!storage.getIsLoggedIn()) {
+                    window.location.href = "login.html";
+                    return;
+                }
+                const id = starBtn.getAttribute("data-star-id");
+                let currentStars = parseInt(starBtn.getAttribute("data-stars")) || 0;
+                
+                const starred = storage.getStarred();
+                const isStarred = starred.includes(id);
+                
+                const newStarsCount = isStarred ? currentStars - 1 : currentStars + 1;
+                
+                try {
+                    await fetch(`${API_URL}/items/${id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ stars: newStarsCount })
+                    });
+                    
+                    if (isStarred) {
+                        storage.setStarred(starred.filter(sid => sid !== id));
+                        starBtn.classList.replace("btn-warning", "btn-outline-warning");
+                    } else {
+                        starred.push(id);
+                        storage.setStarred(starred);
+                        starBtn.classList.replace("btn-outline-warning", "btn-warning");
+                    }
+                    
+                    starBtn.setAttribute("data-stars", newStarsCount);
+                    starBtn.textContent = `★ ${newStarsCount}`;
+                } catch (err) { console.error("Failed to star", err); }
+            }
         });
     }
 
