@@ -66,14 +66,55 @@ document.addEventListener("DOMContentLoaded", async function() {
         return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
     }
 
+    async function loadNotifications() {
+        const userId = storage.getUserId();
+        if (!userId) return;
+        try {
+            const res = await fetch(`${API_URL}/notifications?userId=${userId}`);
+            const notifs = res.ok ? await res.json() : [];
+            const list = document.getElementById("notif-list");
+            const badge = document.getElementById("notif-badge");
+            if (!list || !badge || !Array.isArray(notifs)) return;
+
+            if (notifs.length === 0) {
+                list.innerHTML = '<li><span class="dropdown-item text-muted">No notifications</span></li>';
+                badge.classList.add('d-none');
+                return;
+            }
+
+            badge.textContent = notifs.length;
+            badge.classList.remove('d-none');
+
+            list.innerHTML = notifs.map(n => `
+                <li class="dropdown-item border-bottom d-flex justify-content-between align-items-start px-3 py-2 text-wrap position-relative">
+                    <a href="model.html?id=${n.itemId}" class="text-decoration-none text-dark flex-grow-1 me-3">
+                        <small><strong>${escapeHtml(n.actorName)}</strong> ${n.type === 'reply' ? 'replied to your comment' : 'commented on your item'}.</small>
+                    </a>
+                    <button class="btn btn-sm text-danger p-0 ms-2 delete-notif-btn" data-id="${n.id}" style="z-index: 10;">&times;</button>
+                </li>
+            `).join("");
+        } catch (e) { console.error("Failed to load notifications", e); }
+    }
+
     function updateAuthNav() {
         const authNav = document.getElementById("auth-nav");
         if (!authNav) return;
         if (storage.getIsLoggedIn()) {
             authNav.innerHTML = `
-                <a href="profile.html" class="btn btn-outline-light me-2">Profile</a>
-                <button type="button" id="logout-btn" class="btn btn-danger btn-sm">Log out</button>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="dropdown position-relative">
+                        <button class="btn btn-outline-light position-relative" type="button" id="notifDropdown">
+                            🔔 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="notif-badge" style="font-size: 0.65rem;">0</span>
+                        </button>
+                        <ul class="dropdown-menu shadow position-absolute" id="notif-list" style="width: 300px; max-height: 400px; overflow-y: auto; right: 0; left: auto; top: 100%;">
+                            <li><span class="dropdown-item text-muted">Loading...</span></li>
+                        </ul>
+                    </div>
+                    <a href="profile.html" class="btn btn-outline-light">Profile</a>
+                    <button type="button" id="logout-btn" class="btn btn-danger btn-sm">Log out</button>
+                </div>
             `;
+            loadNotifications();
         } else {
             authNav.innerHTML = `
                 <a href="login.html" class="btn btn-outline-light me-2">Log in</a>
@@ -140,7 +181,6 @@ document.addEventListener("DOMContentLoaded", async function() {
         if (!list) return;
 
         const allItems = await fetchAllItems();
-        // Условно считаем, что загрузки пользователя - это те, где автор совпадает (добавим поле authorId при загрузке)
         const items = allItems.filter(item => item.authorId === storage.getUserId());
         
         if (items.length === 0) {
@@ -327,30 +367,152 @@ document.addEventListener("DOMContentLoaded", async function() {
                     detailSubscribeBtn.dataset.subscribeId = String(item.id);
                     setSubscribeButtonState(detailSubscribeBtn, isSubscribed(item.id));
                 }
+
+                await loadComments(item.id);
             } else {
                 detailName.textContent = "Item not found";
             }
         }
     }
 
+    async function loadComments(itemId) {
+        if (!itemId) return;
+        try {
+            const res = await fetch(`${API_URL}/comments`);
+            const comments = res.ok ? await res.json() : [];
+            if (!Array.isArray(comments)) {
+                renderComments([]);
+                return;
+            }
+
+            const filtered = comments.filter(c => String(c.itemId) === String(itemId));
+            renderComments(filtered);
+        } catch (e) { console.error("Failed to load comments", e); }
+    }
+
+    function renderComments(comments) {
+        const list = document.getElementById("comments-list");
+        if (!list) return;
+
+        if (!Array.isArray(comments) || comments.length === 0) {
+            list.innerHTML = "<p class='text-muted small'>No comments yet. Be the first to start the discussion!</p>";
+            return;
+        }
+
+        const childrenByParent = new Map();
+        const rootComments = [];
+
+        for (const c of comments) {
+            const isRoot = c.parentId == null || c.parentId === '' || c.parentId === 'null' || c.parentId === 'undefined';
+            if (isRoot) {
+                rootComments.push(c);
+                continue;
+            }
+            const pKey = String(c.parentId);
+            if (!childrenByParent.has(pKey)) childrenByParent.set(pKey, []);
+            childrenByParent.get(pKey).push(c);
+        }
+
+        if (rootComments.length === 0) {
+            list.innerHTML = "<p class='text-muted small'>No comments yet. Be the first to start the discussion!</p>";
+            return;
+        }
+
+        const renderNode = (comment, level = 0) => {
+            const children = childrenByParent.get(String(comment.id)) || [];
+            const leftMarginClass = level > 0 ? "ms-4" : "";
+
+            return `
+                <div class="${leftMarginClass} mb-3 border-bottom pb-2">
+                    <div class="d-flex justify-content-between align-items-start gap-2">
+                        <strong>${escapeHtml(comment.userName || "User")}</strong>
+                        <button class="btn btn-sm btn-link p-0 text-secondary text-decoration-none reply-btn" data-parent-id="${comment.id}" data-parent-author="${escapeHtml(comment.userName || "User")}" title="Reply" aria-label="Reply">↪</button>
+                    </div>
+                    <p class="mb-1 text-muted small">${escapeHtml(comment.text)}</p>
+
+                    <div class="mt-2 d-none reply-form" id="reply-form-${comment.id}">
+                        <textarea class="form-control form-control-sm mb-1" id="reply-input-${comment.id}" rows="1" placeholder="Write a reply..."></textarea>
+                        <button class="btn btn-primary btn-sm submit-reply-btn" data-parent-id="${comment.id}" data-parent-author="${escapeHtml(comment.userName || "User")}">Send</button>
+                        <button class="btn btn-secondary btn-sm cancel-reply-btn" data-parent-id="${comment.id}">Cancel</button>
+                    </div>
+
+                    ${children.map(child => renderNode(child, level + 1)).join("")}
+                </div>
+            `;
+        };
+
+        list.innerHTML = rootComments.map(c => renderNode(c)).join("");
+    }
+
+    async function createComment(text, parentId = null) {
+        if (!storage.getIsLoggedIn()) return window.location.href = "login.html";
+        const params = new URLSearchParams(window.location.search);
+        const itemId = params.get('id');
+        const userId = storage.getUserId();
+        const userName = storage.getUserName();
+
+        try {
+            const createRes = await fetch(`${API_URL}/comments`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: String(Date.now()), itemId, userId, userName, text, parentId })
+            });
+            if (!createRes.ok) throw new Error("Failed to save comment");
+
+            const notificationsToSend = new Map();
+            
+            const itemRes = await fetch(`${API_URL}/items/${itemId}`);
+            if (itemRes.ok) {
+                const item = await itemRes.json();
+                if (item.authorId && String(item.authorId) !== String(userId)) {
+                    notificationsToSend.set(String(item.authorId), 'comment');
+                }
+            }
+
+            if (parentId) {
+                const parentRes = await fetch(`${API_URL}/comments/${parentId}`);
+                if (parentRes.ok) {
+                    const parentComment = await parentRes.json();
+                    if (String(parentComment.userId) !== String(userId)) {
+                        notificationsToSend.set(String(parentComment.userId), 'reply');
+                    }
+                }
+            }
+
+            for (const [targetUserId, notificationType] of notificationsToSend.entries()) {
+                const notifRes = await fetch(`${API_URL}/notifications`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: `${Date.now()}-${Math.random()}`, userId: targetUserId, actorName: userName, type: notificationType, itemId })
+                });
+                if (!notifRes.ok) {
+                    console.error("Failed to send notification", await notifRes.text());
+                }
+            }
+
+            await loadComments(itemId);
+        } catch (e) { console.error("Failed to create comment", e); }
+    }
+
     const postBtn = document.getElementById("post-comment-btn");
     const commentInput = document.getElementById("comment-input");
-    const commentsList = document.getElementById("comments-list");
-
-    if (postBtn && commentInput && commentsList) {
-        postBtn.addEventListener("click", () => {
+    if (postBtn && commentInput) {
+        postBtn.addEventListener("click", async () => {
             const text = commentInput.value.trim();
             if (text) {
-                const commentHtml = `
-                    <div class="mb-3 border-bottom pb-2">
-                        <strong>You:</strong> 
-                        <p class="mb-1 text-muted small">${escapeHtml(text)}</p>
-                    </div>
-                `;
-                commentsList.insertAdjacentHTML('beforeend', commentHtml);
+                await createComment(text, null);
                 commentInput.value = "";
             }
         });
+    }
+
+    const commentsContainer = document.getElementById("comments-list");
+    if (commentsContainer) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentItemId = urlParams.get('id');
+        if (currentItemId) {
+            loadComments(currentItemId);
+        }
     }
 
     const loginForm = document.getElementById("login-form");
@@ -388,7 +550,6 @@ document.addEventListener("DOMContentLoaded", async function() {
             const password = registerForm.querySelector('input[type="password"]').value;
 
             try {
-                // Проверка, есть ли уже такая почта
                 const check = await fetch(`${API_URL}/users?email=${email}`);
                 if ((await check.json()).length > 0) {
                     alert("Email already in use!");
@@ -531,15 +692,60 @@ document.addEventListener("DOMContentLoaded", async function() {
         });
     }
 
-    document.addEventListener("click", (e) => {
-        if (e.target.id !== "logout-btn") return;
-        if (!window.confirm("Are you sure you want to log out?")) return;
+    document.addEventListener("click", async (e) => {
+        const notifDropdown = e.target.closest("#notifDropdown");
+        const notifMenu = document.getElementById("notif-list");
+        if (notifDropdown && notifMenu) {
+            notifMenu.classList.toggle("show");
+        } else if (notifMenu && !e.target.closest(".dropdown")) {
+            notifMenu.classList.remove("show");
+        }
 
-        storage.setIsLoggedIn(false);
-        updateAuthNav();
+        if (e.target.classList.contains("delete-notif-btn")) {
+            e.preventDefault();
+            e.stopPropagation();
+            const id = e.target.getAttribute("data-id");
+            await fetch(`${API_URL}/notifications/${id}`, { method: 'DELETE' });
+            loadNotifications();
+        }
 
-        if (window.location.pathname.endsWith("profile.html")) {
-            window.location.href = "index.html";
+        if (e.target.classList.contains("reply-btn")) {
+            if (!storage.getIsLoggedIn()) return window.location.href = "login.html";
+            const pid = e.target.getAttribute("data-parent-id");
+            document.getElementById(`reply-form-${pid}`).classList.remove("d-none");
+            e.target.classList.add("d-none");
+        }
+
+        if (e.target.classList.contains("cancel-reply-btn")) {
+            const pid = e.target.getAttribute("data-parent-id");
+            document.getElementById(`reply-form-${pid}`).classList.add("d-none");
+            document.querySelector(`.reply-btn[data-parent-id="${pid}"]`).classList.remove("d-none");
+            document.getElementById(`reply-input-${pid}`).value = "";
+        }
+
+        if (e.target.classList.contains("submit-reply-btn")) {
+            const pid = e.target.getAttribute("data-parent-id");
+            const parentAuthor = (e.target.getAttribute("data-parent-author") || "User").trim();
+            const input = document.getElementById(`reply-input-${pid}`);
+            const text = input.value.trim();
+            if (text) {
+                const mention = `@${parentAuthor}`;
+                const finalText = text.startsWith(mention) ? text : `${mention}, ${text}`;
+                await createComment(finalText, pid);
+                input.value = "";
+
+                document.getElementById(`reply-form-${pid}`).classList.add("d-none");
+                document.querySelector(`.reply-btn[data-parent-id="${pid}"]`).classList.remove("d-none");
+            }
+        }
+
+        if (e.target.id === "logout-btn") {
+            if (!window.confirm("Are you sure you want to log out?")) return;
+            storage.setIsLoggedIn(false);
+            updateAuthNav();
+            if (window.location.pathname.endsWith("profile.html")) {
+                window.location.href = "index.html";
+            }
         }
     });
 
