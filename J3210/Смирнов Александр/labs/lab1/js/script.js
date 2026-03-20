@@ -59,6 +59,20 @@ document.addEventListener("DOMContentLoaded", async function() {
         return div.innerHTML;
     }
 
+    function parseDownloads(str) {
+        if (!str) return 0;
+        str = String(str).toUpperCase();
+        if (str.endsWith('K')) return parseFloat(str) * 1000;
+        if (str.endsWith('M')) return parseFloat(str) * 1000000;
+        return parseInt(str) || 0;
+    }
+
+    function formatDownloads(num) {
+        if (num >= 1000000) return (num / 1000000).toFixed(1).replace('.0', '') + 'M';
+        if (num >= 1000) return (num / 1000).toFixed(1).replace('.0', '') + 'K';
+        return String(num);
+    }
+
     function getInitials(name) {
         const parts = name.trim().split(/\s+/).filter(Boolean);
         if (parts.length === 0) return "";
@@ -362,6 +376,41 @@ document.addEventListener("DOMContentLoaded", async function() {
                 document.getElementById("detail-metrics").textContent = item.metrics;
                 document.getElementById("detail-dl").textContent = item.downloads;
 
+                // Находим родительскую кнопку для спана с загрузками
+                const dlButton = document.getElementById("detail-dl").parentElement;
+                
+                dlButton.onclick = async () => {
+                    // 1. Увеличиваем счетчик
+                    let currentCount = parseDownloads(item.downloads);
+                    currentCount++;
+                    item.downloads = formatDownloads(currentCount);
+                    
+                    // Обновляем текст на кнопке
+                    document.getElementById("detail-dl").textContent = item.downloads;
+
+                    // 2. Генерируем фейковый файл для скачивания
+                    const content = `=== AI Hub Download ===\nName: ${item.name}\nTask: ${item.task}\nFramework: ${item.framework}\nLicense: ${item.license}\n\nMetrics: ${item.metrics}\nUsage:\n${item.usage}\n`;
+                    const blob = new Blob([content], { type: "text/plain" });
+                    const url = URL.createObjectURL(blob);
+                    
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = `${item.name.replace(/\s+/g, '_')}_data.txt`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+
+                    // 3. Отправляем обновленный счетчик на сервер
+                    try {
+                        await fetch(`${API_URL}/items/${item.id}`, {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ downloads: item.downloads })
+                        });
+                    } catch (err) { console.error("Failed to update downloads", err); }
+                };
+
                 if (detailSubscribeBtn) {
                     detailSubscribeBtn.style.display = "inline-block";
                     detailSubscribeBtn.dataset.subscribeId = String(item.id);
@@ -483,7 +532,14 @@ document.addEventListener("DOMContentLoaded", async function() {
                 const notifRes = await fetch(`${API_URL}/notifications`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: `${Date.now()}-${Math.random()}`, userId: targetUserId, actorName: userName, type: notificationType, itemId })
+                    body: JSON.stringify({ 
+                        id: `${Date.now()}-${Math.random()}`, 
+                        userId: targetUserId, 
+                        actorName: userName, 
+                        type: notificationType, 
+                        itemId,
+                        read: false
+                    })
                 });
                 if (!notifRes.ok) {
                     console.error("Failed to send notification", await notifRes.text());
@@ -591,6 +647,8 @@ document.addEventListener("DOMContentLoaded", async function() {
             const fullDesc = document.getElementById("upload-full-desc").value.trim();
             const fileInput = document.getElementById("upload-file");
             const file = fileInput && fileInput.files ? fileInput.files[0] : null;
+            const metrics = document.getElementById("upload-metrics").value.trim();
+            const usage = document.getElementById("upload-usage").value.trim();
 
             const newItem = {
                 id: String(Date.now()),
@@ -600,10 +658,10 @@ document.addEventListener("DOMContentLoaded", async function() {
                 size: file ? `${(file.size / (1024 * 1024)).toFixed(2)}mb` : "n/a",
                 downloads: "0",
                 stars: 0,
-                metrics: "No metrics yet",
+                metrics: metrics,
                 desc: shortDesc,
                 fullDesc,
-                usage: file ? `User file: ${file.name}` : "User uploaded item"
+                usage: usage
             };
 
             try {
