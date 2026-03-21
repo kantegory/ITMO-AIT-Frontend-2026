@@ -1,6 +1,7 @@
 (() => {
     const form = document.getElementById("loginForm");
     const alert = document.getElementById("loginAlert");
+    const passwordInput = form.querySelector("[name='password']");
 
     const showMessage = (type, text) => {
         alert.className = `alert alert-${type}`;
@@ -12,6 +13,10 @@
         alert.className = "alert d-none";
         alert.textContent = "";
     };
+
+    passwordInput.addEventListener("input", () => {
+        passwordInput.value = passwordInput.value.replace(/\s/g, "");
+    });
 
     const init = async () => {
         if (await window.auth.redirectAuth()) {
