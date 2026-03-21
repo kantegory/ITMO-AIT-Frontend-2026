@@ -1,12 +1,19 @@
 (() => {
-    const params = new URLSearchParams(window.location.search);
-    const course = window.store.getCourse(params.get("id"));
+    const courseId = Number(new URLSearchParams(window.location.search).get("id"));
     const lessonsNav = document.getElementById("lessonsNav");
     const lessonsNavMobile = document.getElementById("lessonsNavMobile");
     const state = {
         section: 0,
         item: 0
     };
+    const init = async () => {
+        const user = await window.auth.requireAuth();
+        if (!user) {return;}
+        if (!courseId || !user.learningCourseIds.includes(courseId)) {
+            window.location.href = "my-learning.html";
+            return;
+        }
+        const course = await window.api.getCourse(courseId);
 
     const getNavHtml = (dismissOnClick = false) => course.program.map((section, sectionIndex) => `
             <div class="mb-3">
@@ -49,10 +56,14 @@
         document.getElementById("contentCourseTitle").textContent = course.title;
         document.getElementById("contentLessonTitle").textContent = lesson.title;
         document.getElementById("contentSectionTitle").textContent = section.title;
-        document.getElementById("contentText").textContent = lesson.content || `Материал по теме "${lesson.title}".`;
+        document.getElementById("contentText").textContent = lesson.content;
     };
 
     document.querySelectorAll("[data-back-to-course-link]").forEach((link) => {link.href = `course.html?id=${course.id}`;});
     renderSidebar();
     renderContent();
+    };
+    init().catch(() => {
+        document.getElementById("contentText").textContent = "Не удалось загрузить урок";
+    });
 })();
