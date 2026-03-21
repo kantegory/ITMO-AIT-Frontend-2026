@@ -1,7 +1,7 @@
 (() => {
     const form = document.getElementById("loginForm");
     const alert = document.getElementById("loginAlert");
-    const passwordInput = form.querySelector("[name='password']");
+    const passwordInput = document.getElementById("InputPassword");
 
     const showMessage = (type, text) => {
         alert.className = `alert alert-${type}`;
