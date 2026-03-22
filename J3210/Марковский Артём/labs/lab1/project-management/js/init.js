@@ -1,3 +1,14 @@
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('TaskHub init');
+document.addEventListener("DOMContentLoaded", () => {
+  ensureSessionData();
+
+  const pageName = getPageName();
+
+  if (!protectPages(pageName)) {
+    return;
+  }
+
+  setUserName();
+  markNavigation(pageName);
+  setupAuthForms();
+  setupLogout();
 });

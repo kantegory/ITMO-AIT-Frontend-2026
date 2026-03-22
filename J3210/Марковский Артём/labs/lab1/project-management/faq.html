@@ -6,46 +6,194 @@
     <title>TaskHub — Справка</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <link href="css/style.css" rel="stylesheet" />
   </head>
   <body data-page="faq">
     <header class="site-header">
-      <div class="container header-row">
-        <a href="index.html"><strong>TaskHub</strong></a>
-        <nav class="nav-links">
-          <a href="index.html">Вход</a>
-          <a href="register.html">Регистрация</a>
-          <a href="dashboard.html">Личный кабинет</a>
-          <a href="search.html">Поиск</a>
-          <a href="faq.html">Справка</a>
-        </nav>
-      </div>
+      <nav class="navbar navbar-expand-lg app-navbar">
+        <div class="container">
+          <a class="navbar-brand app-brand" href="dashboard.html">TaskHub</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#userNav"
+            aria-controls="userNav"
+            aria-expanded="false"
+            aria-label="Меню"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="userNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+              <li class="nav-item">
+                <a class="nav-link" href="dashboard.html">Личный кабинет</a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="dashboard.html#projectsSection"
+                  data-nav-group="projects"
+                  >Проекты</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="search.html">Поиск</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="faq.html">Справка</a>
+              </li>
+              <li class="nav-item user-chip">
+                <span id="headerUserName">Марковский Артём</span>
+              </li>
+              <li class="nav-item">
+                <a class="btn btn-light btn-sm logout-link" href="index.html"
+                  >Выйти</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </header>
+
     <main class="page-section">
       <div class="container layout-stack">
         <section class="panel-card">
           <div class="eyebrow">Справка</div>
-          <h1 class="page-title">Основные разделы сервиса</h1>
-          <p class="page-text">Краткая памятка по навигации: где находятся проекты, как открыть поиск и где смотреть карточку проекта.</p>
+          <h1 class="page-title">Справка</h1>
+          <p class="page-text">
+            Небольшая памятка по ролям и основным разделам.
+          </p>
         </section>
-        <section class="grid-3">
-          <article class="project-card"><h2 class="section-title">Личный кабинет</h2><p class="page-text">Главная страница с рабочими блоками.</p></article>
-          <article class="project-card"><h2 class="section-title">Поиск</h2><p class="page-text">Отдельный раздел для поиска задач и проектов.</p></article>
-          <article class="project-card"><h2 class="section-title">Проект</h2><p class="page-text">Карточка проекта с описанием и задачами.</p></article>
+
+        <section class="panel-card">
+          <div class="accordion app-accordion" id="faqAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq-roles"
+                  aria-expanded="true"
+                  aria-controls="faq-roles"
+                >
+                  Как работают роли внутри проекта?
+                </button>
+              </h2>
+              <div
+                id="faq-roles"
+                class="accordion-collapse collapse show"
+                data-bs-parent="#faqAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    Роль задаётся отдельно внутри каждого проекта. Поэтому в одном месте можно редактировать данные, а в другом только смотреть.
+                  </p>
+                  <ul class="mb-0">
+                    <li>
+                      Администратор меняет состав команды и основные настройки проекта.
+                    </li>
+                    <li>
+                      Участник работает с задачами и материалами проекта.
+                    </li>
+                    <li>
+                      Наблюдатель может смотреть прогресс, но ничего не меняет.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq-search"
+                  aria-expanded="false"
+                  aria-controls="faq-search"
+                >
+                  Что можно делать в поиске?
+                </button>
+              </h2>
+              <div
+                id="faq-search"
+                class="accordion-collapse collapse"
+                data-bs-parent="#faqAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    В поиске можно отфильтровать задачи и быстро перейти в нужный проект.
+                  </p>
+                  <ul class="mb-0">
+                    <li>Поиск по названию задачи или проекта.</li>
+                    <li>Фильтрация по статусу, приоритету и исполнителю.</li>
+                    <li>
+                      Переход в проект прямо из результата поиска.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq-project"
+                  aria-expanded="false"
+                  aria-controls="faq-project"
+                >
+                  Что доступно на странице проекта?
+                </button>
+              </h2>
+              <div
+                id="faq-project"
+                class="accordion-collapse collapse"
+                data-bs-parent="#faqAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    На странице проекта лежит всё основное, чтобы не прыгать по разным разделам.
+                  </p>
+                  <ul class="mb-0">
+                    <li>Доска задач по статусам.</li>
+                    <li>Сроки проекта по этапам.</li>
+                    <li>Файлы проекта и обсуждения команды.</li>
+                    <li>Блок с ролью и списком доступных действий.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
       </div>
     </main>
+
     <footer class="site-footer">
       <div class="container footer-row">
-        <div>TaskHub</div>
-        <div>Учебный сервис для работы с проектами</div>
+        <div>
+          <div class="footer-brand">TaskHub</div>
+          <div class="footer-text">Памятка по работе в сервисе</div>
+        </div>
+        <div class="footer-text">Роли и основные разделы</div>
       </div>
     </footer>
-    <script src="js/app-core.js"></script>
-    <script src="js/dashboard.js"></script>
-    <script src="js/project-page.js"></script>
-    <script src="js/search-page.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+      <script src="js/app-core.js"></script>
     <script src="js/init.js"></script>
   </body>
 </html>
