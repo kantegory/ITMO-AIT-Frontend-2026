@@ -1,0 +1,74 @@
+:root {
+  --bg: #f6f1eb;
+  --surface: #fffaf5;
+  --text: #47372d;
+  --muted: #7f6f62;
+  --accent: #a9876d;
+  --border: #dccfc3;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Manrope, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a { color: inherit; }
+.container { width: min(1100px, calc(100% - 32px)); margin: 0 auto; }
+.site-header, .site-footer {
+  background: #fbf6f0;
+  border-bottom: 1px solid var(--border);
+}
+.site-footer { border-top: 1px solid var(--border); border-bottom: 0; margin-top: 32px; }
+.header-row, .footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 0;
+}
+.nav-links { display: flex; flex-wrap: wrap; gap: 16px; }
+.page-section, .auth-page { padding: 32px 0 48px; }
+.panel-card, .hero-panel, .project-card, .task-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+}
+.layout-stack { display: grid; gap: 24px; }
+.grid-2 { display: grid; gap: 24px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-3 { display: grid; gap: 24px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.page-title, .hero-title { margin: 0 0 12px; font-size: clamp(2rem, 4vw, 2.8rem); }
+.section-title { margin: 0 0 12px; font-size: 1.5rem; }
+.page-text, .hero-text { margin: 0; color: var(--muted); line-height: 1.65; }
+.eyebrow { margin-bottom: 8px; color: var(--muted); font-size: .9rem; text-transform: uppercase; letter-spacing: .08em; }
+.form-label { display: block; margin: 0 0 8px; font-weight: 600; }
+.form-control, .form-select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  background: #fff;
+  cursor: pointer;
+}
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-light { background: #fff; }
+.actions, .section-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.stack-list { display: grid; gap: 14px; }
+.soft-badge { display: inline-flex; padding: 6px 10px; border-radius: 999px; background: #eee4da; font-size: .9rem; }
+.card-meta { color: var(--muted); font-size: .95rem; }
+.task-card-title { margin: 0 0 10px; font-size: 1.15rem; }
+@media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
