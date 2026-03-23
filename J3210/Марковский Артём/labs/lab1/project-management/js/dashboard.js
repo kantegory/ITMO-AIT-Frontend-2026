@@ -134,87 +134,165 @@ function renderDashboardSummary(summaryBox, tasks) {
     watcher: projects.filter((project) => project.role === "Наблюдатель").length,
   };
 
-  summaryBox.innerHTML = `
-        <div class="stats-line">
-            <span>Проектов</span>
-            <strong>${projects.length}</strong>
-        </div>
-        <div class="stats-line">
-            <span>Активных задач</span>
-            <strong>${tasks.length}</strong>
-        </div>
-        <div class="stats-line">
-            <span>Администратор</span>
-            <strong>${roleSummary.admin}</strong>
-        </div>
-        <div class="stats-line">
-            <span>Участник</span>
-            <strong>${roleSummary.member}</strong>
-        </div>
-        <div class="stats-line">
-            <span>Наблюдатель</span>
-            <strong>${roleSummary.watcher}</strong>
-        </div>
-    `;
+  const summaryRows = [
+    ["Проектов", projects.length],
+    ["Активных задач", tasks.length],
+    ["Администратор", roleSummary.admin],
+    ["Участник", roleSummary.member],
+    ["Наблюдатель", roleSummary.watcher],
+  ];
+
+  summaryBox.replaceChildren();
+
+  summaryRows.forEach(([label, value]) => {
+    const row = document.createElement("div");
+    row.className = "stats-line";
+
+    const name = document.createElement("span");
+    name.textContent = label;
+
+    const count = document.createElement("strong");
+    count.textContent = String(value);
+
+    row.append(name, count);
+    summaryBox.append(row);
+  });
+}
+
+function createDashboardProjectCard(project) {
+  const column = document.createElement("div");
+  column.className = "col-lg-4 col-md-6";
+
+  const card = document.createElement("article");
+  card.className = "project-card h-100";
+
+  const badges = document.createElement("div");
+  badges.className = "d-flex flex-wrap gap-2 mb-3";
+
+  const roleBadge = document.createElement("span");
+  roleBadge.className = "soft-badge";
+  roleBadge.textContent = project.role;
+
+  const statusBadge = document.createElement("span");
+  statusBadge.className = "status-badge";
+  statusBadge.textContent = project.status;
+
+  badges.append(roleBadge, statusBadge);
+
+  const title = document.createElement("h2");
+  title.className = "project-card-title mb-2 text-wrap-anywhere";
+  title.title = project.title;
+  title.textContent = project.title;
+
+  const description = document.createElement("p");
+  description.className = "card-text mb-3 text-wrap-anywhere";
+  description.textContent = project.description;
+
+  const deadline = document.createElement("div");
+  deadline.className = "card-meta";
+  deadline.textContent = `Срок завершения: ${project.deadline}`;
+
+  const footer = document.createElement("div");
+  footer.className = "project-card-footer";
+
+  const members = document.createElement("span");
+  members.className = "card-meta";
+  members.textContent = `${project.members.length} участника`;
+
+  const link = document.createElement("a");
+  link.className = "btn btn-primary";
+  link.href = `project.html?project=${project.id}`;
+  link.textContent = "Открыть проект";
+
+  footer.append(members, link);
+  card.append(badges, title, description, deadline, footer);
+  column.append(card);
+
+  return column;
 }
 
 function renderDashboardProjects(projectsBox) {
-  projectsBox.innerHTML = projects
-    .map(
-      (project) => `
-        <div class="col-lg-4 col-md-6">
-            <article class="project-card h-100">
-                <div class="d-flex flex-wrap gap-2 mb-3">
-                    <span class="soft-badge">${project.role}</span>
-                    <span class="status-badge">${project.status}</span>
-                </div>
-                <h2 class="project-card-title mb-2 text-wrap-anywhere" title="${project.title}">${project.title}</h2>
-                <p class="card-text mb-3 text-wrap-anywhere">${project.description}</p>
-                <div class="card-meta">Срок завершения: ${project.deadline}</div>
-                <div class="project-card-footer">
-                    <span class="card-meta">${project.members.length} участника</span>
-                    <a class="btn btn-primary" href="project.html?project=${project.id}">Открыть проект</a>
-                </div>
-            </article>
-        </div>
-    `,
-    )
-    .join("");
+  projectsBox.replaceChildren();
+
+  projects.forEach((project) => {
+    projectsBox.append(createDashboardProjectCard(project));
+  });
+}
+
+function createDashboardTaskRow(task) {
+  const row = document.createElement("article");
+  row.className = "task-row";
+
+  const info = document.createElement("div");
+
+  const title = document.createElement("div");
+  title.className = "fw-bold mb-1 clamp-2";
+  title.title = task.title;
+  title.textContent = task.title;
+
+  const project = document.createElement("div");
+  project.className = "task-row-meta text-wrap-anywhere";
+  project.title = task.projectTitle;
+  project.textContent = task.projectTitle;
+
+  const meta = document.createElement("div");
+  meta.className = "task-row-meta text-wrap-anywhere";
+  meta.title = `${task.assignee} · ${task.due}`;
+  meta.textContent = `${task.assignee} · ${task.due}`;
+
+  info.append(title, project, meta);
+
+  const link = document.createElement("a");
+  link.className = "btn btn-light";
+  link.href = `project.html?project=${task.projectId}`;
+  link.textContent = "Открыть";
+
+  row.append(info, link);
+  return row;
 }
 
 function renderDashboardTasks(tasksBox, countBadge, tasks) {
   const currentTasks = tasks.slice(0, 4);
 
   countBadge.textContent = `${tasks.length} задач`;
-  tasksBox.innerHTML = currentTasks
-    .map(
-      (task) => `
-        <article class="task-row">
-            <div>
-                <div class="fw-bold mb-1 clamp-2" title="${task.title}">${task.title}</div>
-                <div class="task-row-meta text-wrap-anywhere" title="${task.projectTitle}">${task.projectTitle}</div>
-                <div class="task-row-meta text-wrap-anywhere" title="${task.assignee} · ${task.due}">${task.assignee} · ${task.due}</div>
-            </div>
-            <a class="btn btn-light" href="project.html?project=${task.projectId}">Открыть</a>
-        </article>
-    `,
-    )
-    .join("");
+  tasksBox.replaceChildren();
+
+  currentTasks.forEach((task) => {
+    tasksBox.append(createDashboardTaskRow(task));
+  });
+}
+
+function createDashboardNotification(item) {
+  const card = document.createElement("article");
+  card.className = "note-card";
+
+  const project = document.createElement("div");
+  project.className = "fw-bold mb-1";
+  project.textContent = item.projectTitle;
+
+  const meta = document.createElement("div");
+  meta.className = "note-meta mb-2";
+  meta.textContent = `${item.author} · ${item.time}`;
+
+  const text = document.createElement("p");
+  text.className = "mb-3";
+  text.textContent = item.text;
+
+  const link = document.createElement("a");
+  link.className = "btn btn-light btn-sm";
+  link.href = `project.html?project=${item.projectId}`;
+  link.textContent = "Перейти к проекту";
+
+  card.append(project, meta, text, link);
+  return card;
 }
 
 function renderDashboardNotifications(notificationsBox, notes) {
-  notificationsBox.innerHTML = notes
-    .map(
-      (item) => `
-        <article class="note-card">
-            <div class="fw-bold mb-1">${item.projectTitle}</div>
-            <div class="note-meta mb-2">${item.author} · ${item.time}</div>
-            <p class="mb-3">${item.text}</p>
-            <a class="btn btn-light btn-sm" href="project.html?project=${item.projectId}">Перейти к проекту</a>
-        </article>
-    `,
-    )
-    .join("");
+  notificationsBox.replaceChildren();
+
+  notes.forEach((item) => {
+    notificationsBox.append(createDashboardNotification(item));
+  });
 }
 
 function renderDashboard() {

@@ -1,38 +1,110 @@
+function optionTag(value, currentValue) {
+  const selected = value === currentValue ? " selected" : "";
+  return `<option value="${value}"${selected}>${value}</option>`;
+}
+
+function renderMemberEditorRow(member, index) {
+  const roles = ["Администратор", "Участник", "Наблюдатель"];
+
+  return [
+    '<div class="modal-grid modal-grid-team">',
+    `  <input class="form-control" type="text" value="${member.name}" data-member-name="${index}">`,
+    `  <select class="form-select" data-member-role="${index}">`,
+    ...roles.map((role) => `    ${optionTag(role, member.role)}`),
+    '  </select>',
+    `  <button class="btn btn-light" type="button" data-remove-member="${index}">Удалить</button>`,
+    '</div>',
+  ].join("\n");
+}
+
+function buildMemberAssigneeOptions(memberNames, selectedValue) {
+  return memberNames.map((name) => optionTag(name, selectedValue)).join("\n");
+}
+
+function renderAdminTaskEditor(task, index, memberNames) {
+  return [
+    '<div class="modal-task-card">',
+    '  <div class="modal-grid modal-grid-tasks">',
+    `    <input class="form-control" type="text" maxlength="80" value="${task.title}" data-task-title="${index}">`,
+    `    <select class="form-select" data-task-status="${index}">`,
+    `      ${optionTag("Новая", task.status)}`,
+    `      ${optionTag("В работе", task.status)}`,
+    `      ${optionTag("На проверке", task.status)}`,
+    `      ${optionTag("Завершено", task.status)}`,
+    '    </select>',
+    `    <select class="form-select" data-task-priority="${index}">`,
+    `      ${optionTag("Высокий", task.priority)}`,
+    `      ${optionTag("Средний", task.priority)}`,
+    `      ${optionTag("Низкий", task.priority)}`,
+    '    </select>',
+    `    <select class="form-select" data-task-assignee="${index}">`,
+    buildMemberAssigneeOptions(memberNames, task.assignee),
+    '    </select>',
+    `    <input class="form-control" type="text" inputmode="numeric" maxlength="10" value="${task.due}" data-task-due="${index}">`,
+    `    <button class="btn btn-light" type="button" data-remove-task="${index}">Удалить</button>`,
+    '  </div>',
+    '</div>',
+  ].join("\n");
+}
+
+function renderMemberTaskEditor(task, index, currentUser) {
+  const isOwnTask = task.assignee === currentUser;
+  const isFreeTask = task.assignee === "Без исполнителя";
+  const statusDisabled = isOwnTask ? "" : " disabled";
+  const takeDisabled = isFreeTask ? "" : " disabled";
+
+  return [
+    '<div class="modal-task-card">',
+    '  <div class="modal-grid modal-grid-member-task">',
+    '    <div class="modal-task-summary">',
+    `      <div class="fw-bold text-wrap-anywhere">${task.title}</div>`,
+    `      <div class="modal-caption text-wrap-anywhere">${task.assignee} · ${task.priority} приоритет · ${task.due}</div>`,
+    '    </div>',
+    `    <select class="form-select" data-task-status="${index}"${statusDisabled}>`,
+    `      ${optionTag("Новая", task.status)}`,
+    `      ${optionTag("В работе", task.status)}`,
+    `      ${optionTag("На проверке", task.status)}`,
+    `      ${optionTag("Завершено", task.status)}`,
+    '    </select>',
+    `    <button class="btn btn-primary" type="button" data-take-task="${index}"${takeDisabled}>Взять задачу</button>`,
+    '  </div>',
+    '</div>',
+  ].join("\n");
+}
+
+function renderDiscussionItem(item) {
+  return [
+    '<article class="discussion-card">',
+    `  <div class="fw-bold text-wrap-anywhere" title="${item.author}">${item.author}</div>`,
+    `  <div class="note-meta mb-2">${item.time}</div>`,
+    `  <p class="mb-0 text-wrap-anywhere">${item.text}</p>`,
+    '</article>',
+  ].join("\n");
+}
+
 function buildTeamModal(project) {
-  return `
-        <div class="modal-editor-list">
-            <div class="modal-editor-card">
-                <div class="modal-section-title">Состав команды</div>
-                ${project.members
-                  .map(
-                    (member, index) => `
-                    <div class="modal-grid modal-grid-team">
-                        <input class="form-control" type="text" value="${member.name}" data-member-name="${index}">
-                        <select class="form-select" data-member-role="${index}">
-                            <option value="Администратор" ${member.role === "Администратор" ? "selected" : ""}>Администратор</option>
-                            <option value="Участник" ${member.role === "Участник" ? "selected" : ""}>Участник</option>
-                            <option value="Наблюдатель" ${member.role === "Наблюдатель" ? "selected" : ""}>Наблюдатель</option>
-                        </select>
-                        <button class="btn btn-light" type="button" data-remove-member="${index}">Удалить</button>
-                    </div>
-                `,
-                  )
-                  .join("")}
-            </div>
-            <div class="modal-editor-card">
-                <div class="modal-section-title">Добавить участника</div>
-                <div class="modal-grid modal-grid-team-add">
-                    <input class="form-control" id="newMemberName" type="text" placeholder="Имя и фамилия">
-                    <select class="form-select" id="newMemberRole">
-                        <option value="Участник">Участник</option>
-                        <option value="Наблюдатель">Наблюдатель</option>
-                        <option value="Администратор">Администратор</option>
-                    </select>
-                    <button class="btn btn-primary" type="button" id="addMemberButton">Добавить</button>
-                </div>
-            </div>
-        </div>
-    `;
+  const memberRows = project.members.map(renderMemberEditorRow).join("\n");
+
+  return [
+    '<div class="modal-editor-list">',
+    '  <div class="modal-editor-card">',
+    '    <div class="modal-section-title">Состав команды</div>',
+    memberRows,
+    '  </div>',
+    '  <div class="modal-editor-card">',
+    '    <div class="modal-section-title">Добавить участника</div>',
+    '    <div class="modal-grid modal-grid-team-add">',
+    '      <input class="form-control" id="newMemberName" type="text" placeholder="Имя и фамилия">',
+    '      <select class="form-select" id="newMemberRole">',
+    '        <option value="Участник">Участник</option>',
+    '        <option value="Наблюдатель">Наблюдатель</option>',
+    '        <option value="Администратор">Администратор</option>',
+    '      </select>',
+    '      <button class="btn btn-primary" type="button" id="addMemberButton">Добавить</button>',
+    '    </div>',
+    '  </div>',
+    '</div>',
+  ].join("\n");
 }
 
 function bindTeamModal(projectId) {
@@ -149,101 +221,57 @@ function buildTasksModal(project) {
     ...project.members.map((member) => member.name),
   ].filter((name, index, list) => list.indexOf(name) === index);
 
-  const buildOptions = (selectedValue) =>
-    memberNames
-      .map(
-        (name) =>
-          `<option value="${name}" ${selectedValue === name ? "selected" : ""}>${name}</option>`,
-      )
-      .join("");
-
   if (project.role === "Участник") {
     const currentUser = getUserName();
+    const taskRows = project.tasks
+      .map((task, index) => renderMemberTaskEditor(task, index, currentUser))
+      .join("\n");
 
-    return `
-            <div class="modal-editor-list">
-                <div class="modal-editor-card">
-                    <div class="modal-section-title">Мои задачи и свободные карточки</div>
-                    <div class="modal-caption mb-3">Участник может взять свободную задачу и менять статус только у своих карточек.</div>
-                    ${project.tasks
-                      .map((task, index) => {
-                        const isOwnTask = task.assignee === currentUser;
-                        const isFreeTask = task.assignee === "Без исполнителя";
-
-                        return `
-                            <div class="modal-task-card">
-                                <div class="modal-grid modal-grid-member-task">
-                                    <div class="modal-task-summary">
-                                        <div class="fw-bold text-wrap-anywhere">${task.title}</div>
-                                        <div class="modal-caption text-wrap-anywhere">${task.assignee} · ${task.priority} приоритет · ${task.due}</div>
-                                    </div>
-                                    <select class="form-select" data-task-status="${index}" ${isOwnTask ? "" : "disabled"}>
-                                        <option value="Новая" ${task.status === "Новая" ? "selected" : ""}>Новая</option>
-                                        <option value="В работе" ${task.status === "В работе" ? "selected" : ""}>В работе</option>
-                                        <option value="На проверке" ${task.status === "На проверке" ? "selected" : ""}>На проверке</option>
-                                        <option value="Завершено" ${task.status === "Завершено" ? "selected" : ""}>Завершено</option>
-                                    </select>
-                                    <button class="btn btn-primary" type="button" data-take-task="${index}" ${isFreeTask ? "" : "disabled"}>Взять задачу</button>
-                                </div>
-                            </div>
-                        `;
-                      })
-                      .join("")}
-                </div>
-            </div>
-        `;
+    return [
+      '<div class="modal-editor-list">',
+      '  <div class="modal-editor-card">',
+      '    <div class="modal-section-title">Мои задачи и свободные карточки</div>',
+      '    <div class="modal-caption mb-3">Участник может взять свободную задачу и менять статус только у своих карточек.</div>',
+      taskRows,
+      '  </div>',
+      '</div>',
+    ].join("\n");
   }
 
-  return `
-        <div class="modal-editor-list">
-            <div class="modal-editor-card">
-                <div class="modal-section-title">Карточки задач</div>
-                ${project.tasks
-                  .map(
-                    (task, index) => `
-                    <div class="modal-task-card">
-                        <div class="modal-grid modal-grid-tasks">
-                            <input class="form-control" type="text" maxlength="80" value="${task.title}" data-task-title="${index}">
-                            <select class="form-select" data-task-status="${index}">
-                                <option value="Новая" ${task.status === "Новая" ? "selected" : ""}>Новая</option>
-                                <option value="В работе" ${task.status === "В работе" ? "selected" : ""}>В работе</option>
-                                <option value="На проверке" ${task.status === "На проверке" ? "selected" : ""}>На проверке</option>
-                                <option value="Завершено" ${task.status === "Завершено" ? "selected" : ""}>Завершено</option>
-                            </select>
-                            <select class="form-select" data-task-priority="${index}">
-                                <option value="Высокий" ${task.priority === "Высокий" ? "selected" : ""}>Высокий</option>
-                                <option value="Средний" ${task.priority === "Средний" ? "selected" : ""}>Средний</option>
-                                <option value="Низкий" ${task.priority === "Низкий" ? "selected" : ""}>Низкий</option>
-                            </select>
-                            <select class="form-select" data-task-assignee="${index}">
-                                ${buildOptions(task.assignee)}
-                            </select>
-                            <input class="form-control" type="text" inputmode="numeric" maxlength="10" value="${task.due}" data-task-due="${index}">
-                            <button class="btn btn-light" type="button" data-remove-task="${index}">Удалить</button>
-                        </div>
-                    </div>
-                `,
-                  )
-                  .join("")}
-            </div>
-            <div class="modal-editor-card">
-                <div class="modal-section-title">Добавить задачу</div>
-                <div class="modal-grid modal-grid-tasks-add">
-                    <input class="form-control" id="newTaskTitle" type="text" maxlength="80" placeholder="Название задачи">
-                    <select class="form-select" id="newTaskAssignee">
-                        ${buildOptions("Без исполнителя")}
-                    </select>
-                    <input class="form-control" id="newTaskDue" type="text" inputmode="numeric" maxlength="10" placeholder="01.01.1999">
-                    <select class="form-select" id="newTaskPriority">
-                        <option value="Высокий">Высокий</option>
-                        <option value="Средний">Средний</option>
-                        <option value="Низкий">Низкий</option>
-                    </select>
-                    <button class="btn btn-primary" type="button" id="addTaskButton">Добавить задачу</button>
-                </div>
-            </div>
-        </div>
-    `;
+  const taskRows = project.tasks
+    .map((task, index) => renderAdminTaskEditor(task, index, memberNames))
+    .join("\n");
+
+  return [
+    '<div class="modal-editor-list">',
+    '  <div class="modal-editor-card">',
+    '    <div class="modal-section-title">Карточки задач</div>',
+    taskRows,
+    '  </div>',
+    '  <div class="modal-editor-card">',
+    '    <div class="modal-section-title">Добавить задачу</div>',
+    '    <div class="modal-grid modal-grid-tasks-add">',
+    '      <input class="form-control" id="newTaskTitle" type="text" maxlength="80" placeholder="Название задачи">',
+    '      <select class="form-select" id="newTaskStatus">',
+    '        <option value="Новая">Новая</option>',
+    '        <option value="В работе">В работе</option>',
+    '        <option value="На проверке">На проверке</option>',
+    '        <option value="Завершено">Завершено</option>',
+    '      </select>',
+    '      <select class="form-select" id="newTaskPriority">',
+    '        <option value="Высокий">Высокий</option>',
+    '        <option value="Средний">Средний</option>',
+    '        <option value="Низкий">Низкий</option>',
+    '      </select>',
+    '      <select class="form-select" id="newTaskAssignee">',
+    buildMemberAssigneeOptions(memberNames, "Без исполнителя"),
+    '      </select>',
+    '      <input class="form-control" id="newTaskDue" type="text" inputmode="numeric" maxlength="10" placeholder="01.01.1999">',
+    '      <button class="btn btn-primary" type="button" id="addTaskButton">Добавить</button>',
+    '    </div>',
+    '  </div>',
+    '</div>',
+  ].join("\n");
 }
 
 function bindTasksModal(projectId) {
@@ -434,39 +462,39 @@ function bindTasksModal(projectId) {
 }
 
 function buildSettingsModal(project) {
-  return `
-        <form class="modal-editor-list" id="projectSettingsForm">
-            <div class="modal-editor-card">
-                <div class="modal-section-title">Основные параметры проекта</div>
-                <div class="row g-3">
-                    <div class="col-12">
-                        <label class="form-label" for="settingsTitle">Название</label>
-                        <input class="form-control" id="settingsTitle" type="text" maxlength="60" value="${project.title}">
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label" for="settingsDescription">Описание</label>
-                        <textarea class="form-control modal-textarea" id="settingsDescription" maxlength="260">${project.description}</textarea>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="settingsStatus">Статус</label>
-                        <select class="form-select" id="settingsStatus">
-                            <option value="Активный проект" ${project.status === "Активный проект" ? "selected" : ""}>Активный проект</option>
-                            <option value="Планирование" ${project.status === "Планирование" ? "selected" : ""}>Планирование</option>
-                            <option value="На согласовании" ${project.status === "На согласовании" ? "selected" : ""}>На согласовании</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="settingsDeadline">Срок завершения</label>
-                        <input class="form-control" id="settingsDeadline" type="text" inputmode="numeric" maxlength="10" value="${project.deadline}">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-settings-actions">
-                <button class="btn btn-primary" type="submit">Сохранить изменения</button>
-                <button class="btn btn-light modal-danger-button" type="button" id="deleteProjectButton">Удалить проект</button>
-            </div>
-        </form>
-    `;
+  return [
+    '<form class="modal-editor-list" id="projectSettingsForm">',
+    '  <div class="modal-editor-card">',
+    '    <div class="modal-section-title">Основные настройки</div>',
+    '    <div class="row g-3">',
+    '      <div class="col-12">',
+    '        <label class="form-label" for="settingsTitle">Название</label>',
+    `        <input class="form-control" id="settingsTitle" type="text" maxlength="60" value="${project.title}">`,
+    '      </div>',
+    '      <div class="col-12">',
+    '        <label class="form-label" for="settingsDescription">Описание</label>',
+    `        <textarea class="form-control modal-textarea" id="settingsDescription" maxlength="260">${project.description}</textarea>`,
+    '      </div>',
+    '      <div class="col-md-6">',
+    '        <label class="form-label" for="settingsStatus">Статус</label>',
+    '        <select class="form-select" id="settingsStatus">',
+    `          ${optionTag("Активный проект", project.status)}`,
+    `          ${optionTag("Планирование", project.status)}`,
+    `          ${optionTag("На согласовании", project.status)}`,
+    '        </select>',
+    '      </div>',
+    '      <div class="col-md-6">',
+    '        <label class="form-label" for="settingsDeadline">Срок завершения</label>',
+    `        <input class="form-control" id="settingsDeadline" type="text" inputmode="numeric" maxlength="10" value="${project.deadline}">`,
+    '      </div>',
+    '    </div>',
+    '  </div>',
+    '  <div class="modal-settings-actions">',
+    '    <button class="btn btn-primary" type="submit">Сохранить изменения</button>',
+    '    <button class="btn btn-light modal-danger-button" type="button" id="deleteProjectButton">Удалить проект</button>',
+    '  </div>',
+    '</form>',
+  ].join("\n");
 }
 
 function bindSettingsModal(projectId) {
@@ -538,34 +566,26 @@ function bindSettingsModal(projectId) {
 }
 
 function buildDiscussionModal(project) {
-  return `
-        <div class="modal-editor-list">
-            <div class="modal-editor-card">
-                <div class="modal-section-title">Новое сообщение</div>
-                <div class="modal-caption mb-3">Сообщение добавляется в обсуждение выбранного проекта и сразу отображается на странице.</div>
-                <textarea class="form-control modal-textarea" id="newDiscussionText" placeholder="Напишите сообщение для команды"></textarea>
-                <div class="d-grid mt-3">
-                    <button class="btn btn-primary" type="button" id="addDiscussionButton">Добавить сообщение</button>
-                </div>
-            </div>
-            <div class="modal-editor-card">
-                <div class="modal-section-title">Последние сообщения</div>
-                <div class="stack-list">
-                    ${project.discussion
-                      .map(
-                        (item) => `
-                        <article class="discussion-card">
-                            <div class="fw-bold text-wrap-anywhere" title="${item.author}">${item.author}</div>
-                            <div class="note-meta mb-2">${item.time}</div>
-                            <p class="mb-0 text-wrap-anywhere">${item.text}</p>
-                        </article>
-                    `,
-                      )
-                      .join("")}
-                </div>
-            </div>
-        </div>
-    `;
+  const discussionItems = project.discussion.map(renderDiscussionItem).join("\n");
+
+  return [
+    '<div class="modal-editor-list">',
+    '  <div class="modal-editor-card">',
+    '    <div class="modal-section-title">Новое сообщение</div>',
+    '    <div class="modal-caption mb-3">Сообщение добавляется в обсуждение выбранного проекта и сразу отображается на странице.</div>',
+    '    <textarea class="form-control modal-textarea" id="newDiscussionText" placeholder="Напишите сообщение для команды"></textarea>',
+    '    <div class="d-grid mt-3">',
+    '      <button class="btn btn-primary" type="button" id="addDiscussionButton">Добавить сообщение</button>',
+    '    </div>',
+    '  </div>',
+    '  <div class="modal-editor-card">',
+    '    <div class="modal-section-title">Последние сообщения</div>',
+    '    <div class="stack-list">',
+    discussionItems,
+    '    </div>',
+    '  </div>',
+    '</div>',
+  ].join("\n");
 }
 
 function bindDiscussionModal(projectId) {
@@ -626,125 +646,213 @@ function openActionModal(projectId, actionType) {
 }
 
 function renderProjectMembers(membersBox, members) {
-  membersBox.innerHTML = members
-    .map(
-      (member) => `
-        <div class="member-item">
-            <div class="text-wrap-anywhere" title="${member.name}">${member.name}</div>
-            <div class="member-role">${member.role}</div>
-        </div>
-    `,
-    )
-    .join("");
+  membersBox.replaceChildren();
+
+  members.forEach((member) => {
+    const item = document.createElement("div");
+    item.className = "member-item";
+
+    const name = document.createElement("div");
+    name.className = "text-wrap-anywhere";
+    name.title = member.name;
+    name.textContent = member.name;
+
+    const role = document.createElement("div");
+    role.className = "member-role";
+    role.textContent = member.role;
+
+    item.append(name, role);
+    membersBox.append(item);
+  });
 }
 
 function renderProjectActions(actionButtons, project) {
-  if (project.actions.length) {
-    actionButtons.innerHTML = project.actions
-      .map(
-        (action, index) => `
-            <button class="action-button" type="button" title="${action.title}" data-action-index="${index}">
-                ${action.title}
-                <span>${action.text}</span>
-            </button>
-        `,
-      )
-      .join("");
+  actionButtons.replaceChildren();
 
+  if (!project.actions.length) {
+    const empty = document.createElement("div");
+    empty.className = "action-empty";
+    empty.textContent = "Для роли наблюдателя доступны просмотр задач, сроков, файлов и обсуждений проекта.";
+    actionButtons.append(empty);
     return;
   }
 
-  actionButtons.innerHTML =
-    '<div class="action-empty">Для роли наблюдателя доступны просмотр задач, сроков, файлов и обсуждений проекта.</div>';
+  project.actions.forEach((action, index) => {
+    const button = document.createElement("button");
+    button.className = "action-button";
+    button.type = "button";
+    button.title = action.title;
+    button.dataset.actionIndex = String(index);
+    button.append(action.title);
+
+    const text = document.createElement("span");
+    text.textContent = action.text;
+    button.append(text);
+
+    actionButtons.append(button);
+  });
 }
 
 function renderProjectBoard(board, project) {
   const statuses = ["Новая", "В работе", "На проверке", "Завершено"];
+  board.replaceChildren();
 
-  board.innerHTML = statuses
-    .map((status) => {
-      const tasks = project.tasks
-        .map((task, index) => ({ ...task, index }))
-        .filter((task) => task.status === status);
+  statuses.forEach((status) => {
+    const column = document.createElement("div");
+    column.className = "col-lg-3 col-md-6";
 
-      return `
-            <div class="col-lg-3 col-md-6">
-                <div class="board-column">
-                    <div class="board-column-title">${status}</div>
-                    <div class="board-list">
-                        ${
-                          tasks.length
-                            ? tasks
-                                .map(
-                                  (task) => `
-                            <button class="board-task" type="button" data-task-index="${task.index}">
-                                <div class="fw-bold mb-2 text-wrap-anywhere" title="${task.title}">${task.title}</div>
-                                <div class="card-meta text-wrap-anywhere" title="${task.assignee}">${task.assignee}</div>
-                                <div class="card-meta text-wrap-anywhere" title="${task.priority} приоритет · ${task.due}">${task.priority} приоритет · ${task.due}</div>
-                            </button>
-                        `,
-                                )
-                                .join("")
-                            : '<div class="card-meta">Нет задач</div>'
-                        }
-                    </div>
-                </div>
-            </div>
-        `;
-    })
-    .join("");
+    const columnBody = document.createElement("div");
+    columnBody.className = "board-column";
+
+    const title = document.createElement("div");
+    title.className = "board-column-title";
+    title.textContent = status;
+
+    const list = document.createElement("div");
+    list.className = "board-list";
+
+    const tasks = project.tasks
+      .map((task, index) => ({ ...task, index }))
+      .filter((task) => task.status === status);
+
+    if (!tasks.length) {
+      const empty = document.createElement("div");
+      empty.className = "card-meta";
+      empty.textContent = "Нет задач";
+      list.append(empty);
+    } else {
+      tasks.forEach((task) => {
+        const button = document.createElement("button");
+        button.className = "board-task";
+        button.type = "button";
+        button.dataset.taskIndex = String(task.index);
+
+        const taskTitle = document.createElement("div");
+        taskTitle.className = "fw-bold mb-2 text-wrap-anywhere";
+        taskTitle.title = task.title;
+        taskTitle.textContent = task.title;
+
+        const assignee = document.createElement("div");
+        assignee.className = "card-meta text-wrap-anywhere";
+        assignee.title = task.assignee;
+        assignee.textContent = task.assignee;
+
+        const meta = document.createElement("div");
+        meta.className = "card-meta text-wrap-anywhere";
+        meta.title = `${task.priority} приоритет · ${task.due}`;
+        meta.textContent = `${task.priority} приоритет · ${task.due}`;
+
+        button.append(taskTitle, assignee, meta);
+        list.append(button);
+      });
+    }
+
+    columnBody.append(title, list);
+    column.append(columnBody);
+    board.append(column);
+  });
 }
 
 function renderProjectDeadlines(deadlinesBox, deadlines) {
-  deadlinesBox.innerHTML = deadlines.length
-    ? deadlines
-        .map(
-          (item) => `
-        <tr>
-            <td>${item.stage}</td>
-            <td>${item.date}</td>
-            <td>${item.owner}</td>
-        </tr>
-    `,
-        )
-        .join("")
-    : '<tr><td colspan="3" class="table-empty">Сроки пока не добавлены.</td></tr>';
+  deadlinesBox.replaceChildren();
+
+  if (!deadlines.length) {
+    const row = document.createElement("tr");
+    const cell = document.createElement("td");
+    cell.colSpan = 3;
+    cell.className = "table-empty";
+    cell.textContent = "Сроки пока не добавлены.";
+    row.append(cell);
+    deadlinesBox.append(row);
+    return;
+  }
+
+  deadlines.forEach((item) => {
+    const row = document.createElement("tr");
+
+    [item.stage, item.date, item.owner].forEach((value) => {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.append(cell);
+    });
+
+    deadlinesBox.append(row);
+  });
 }
 
 function renderProjectFiles(filesBox, project) {
-  filesBox.innerHTML = project.files.length
-    ? project.files
-        .map(
-          (file, index) => `
-        <button class="file-card" type="button" data-file-index="${index}">
-            <div class="file-card-line">
-                <div>
-                    <div class="fw-bold mb-1 text-wrap-anywhere" title="${file.name}">${file.name}</div>
-                    <div class="file-meta text-wrap-anywhere">${file.description}</div>
-                </div>
-                <span class="soft-badge">${file.type}</span>
-            </div>
-        </button>
-    `,
-        )
-        .join("")
-    : '<div class="empty-pane">Файлы пока не добавлены.</div>';
+  filesBox.replaceChildren();
+
+  if (!project.files.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-pane";
+    empty.textContent = "Файлы пока не добавлены.";
+    filesBox.append(empty);
+    return;
+  }
+
+  project.files.forEach((file, index) => {
+    const button = document.createElement("button");
+    button.className = "file-card";
+    button.type = "button";
+    button.dataset.fileIndex = String(index);
+
+    const line = document.createElement("div");
+    line.className = "file-card-line";
+
+    const info = document.createElement("div");
+    const name = document.createElement("div");
+    name.className = "fw-bold mb-1 text-wrap-anywhere";
+    name.title = file.name;
+    name.textContent = file.name;
+
+    const description = document.createElement("div");
+    description.className = "file-meta text-wrap-anywhere";
+    description.textContent = file.description;
+
+    info.append(name, description);
+
+    const type = document.createElement("span");
+    type.className = "soft-badge";
+    type.textContent = file.type;
+
+    line.append(info, type);
+    button.append(line);
+    filesBox.append(button);
+  });
 }
 
 function renderProjectDiscussion(discussionBox, discussion) {
-  discussionBox.innerHTML = discussion.length
-    ? discussion
-        .map(
-          (item) => `
-        <article class="discussion-card">
-            <div class="fw-bold text-wrap-anywhere" title="${item.author}">${item.author}</div>
-            <div class="note-meta mb-2">${item.time}</div>
-            <p class="mb-0 text-wrap-anywhere">${item.text}</p>
-        </article>
-    `,
-        )
-        .join("")
-    : '<div class="empty-pane">Обсуждения пока пустые.</div>';
+  discussionBox.replaceChildren();
+
+  if (!discussion.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-pane";
+    empty.textContent = "Обсуждения пока пустые.";
+    discussionBox.append(empty);
+    return;
+  }
+
+  discussion.forEach((item) => {
+    const card = document.createElement("article");
+    card.className = "discussion-card";
+
+    const author = document.createElement("div");
+    author.className = "fw-bold text-wrap-anywhere";
+    author.title = item.author;
+    author.textContent = item.author;
+
+    const time = document.createElement("div");
+    time.className = "note-meta mb-2";
+    time.textContent = item.time;
+
+    const text = document.createElement("p");
+    text.className = "mb-0 text-wrap-anywhere";
+    text.textContent = item.text;
+
+    card.append(author, time, text);
+    discussionBox.append(card);
+  });
 }
 
 function bindProjectActionButtons(project) {

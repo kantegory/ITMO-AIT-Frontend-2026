@@ -14,11 +14,19 @@ function fillAssigneeFilter(assigneeFilter, tasks) {
     (left, right) => left.localeCompare(right, "ru"),
   );
 
-  assigneeFilter.innerHTML =
-    '<option value="all">Все</option>' +
-    assignees
-      .map((name) => `<option value="${name}">${name}</option>`)
-      .join("");
+  assigneeFilter.replaceChildren();
+
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "all";
+  defaultOption.textContent = "Все";
+  assigneeFilter.append(defaultOption);
+
+  assignees.forEach((name) => {
+    const option = document.createElement("option");
+    option.value = name;
+    option.textContent = name;
+    assigneeFilter.append(option);
+  });
 }
 
 function filterTasks(tasks, filters) {
@@ -41,30 +49,69 @@ function filterTasks(tasks, filters) {
   });
 }
 
+function createSearchResultCard(task) {
+  const column = document.createElement("div");
+  column.className = "col-lg-6";
+
+  const card = document.createElement("article");
+  card.className = "task-card h-100";
+
+  const badges = document.createElement("div");
+  badges.className = "d-flex flex-wrap gap-2 mb-3";
+
+  [task.status, task.priority, task.role].forEach((label) => {
+    const badge = document.createElement("span");
+    badge.className = "soft-badge";
+    badge.textContent = label;
+    badges.append(badge);
+  });
+
+  const title = document.createElement("h2");
+  title.className = "task-card-title text-wrap-anywhere";
+  title.title = task.title;
+  title.textContent = task.title;
+
+  const projectLine = document.createElement("p");
+  projectLine.className = "card-text mb-3";
+  projectLine.append("Проект: ");
+
+  const projectLink = document.createElement("a");
+  projectLink.className = "link-dark fw-semibold text-decoration-none";
+  projectLink.href = `project.html?project=${task.projectId}`;
+  projectLink.textContent = task.projectTitle;
+  projectLine.append(projectLink);
+
+  const assignee = document.createElement("div");
+  assignee.className = "card-meta text-wrap-anywhere";
+  assignee.title = `Исполнитель: ${task.assignee}`;
+  assignee.textContent = `Исполнитель: ${task.assignee}`;
+
+  const footer = document.createElement("div");
+  footer.className = "task-card-footer";
+
+  const due = document.createElement("span");
+  due.className = "card-meta";
+  due.textContent = `Срок: ${task.due}`;
+
+  const link = document.createElement("a");
+  link.className = "btn btn-primary";
+  link.href = `project.html?project=${task.projectId}`;
+  link.textContent = "Открыть проект";
+
+  footer.append(due, link);
+  card.append(badges, title, projectLine, assignee, footer);
+  column.append(card);
+
+  return column;
+}
+
 function renderSearchResults(resultBox, resultCount, tasks) {
   resultCount.textContent = `${tasks.length} результатов`;
-  resultBox.innerHTML = tasks
-    .map(
-      (task) => `
-            <div class="col-lg-6">
-                <article class="task-card h-100">
-                    <div class="d-flex flex-wrap gap-2 mb-3">
-                        <span class="soft-badge">${task.status}</span>
-                        <span class="soft-badge">${task.priority}</span>
-                        <span class="soft-badge">${task.role}</span>
-                    </div>
-                    <h2 class="task-card-title text-wrap-anywhere" title="${task.title}">${task.title}</h2>
-                    <p class="card-text mb-3">Проект: <a class="link-dark fw-semibold text-decoration-none" href="project.html?project=${task.projectId}">${task.projectTitle}</a></p>
-                    <div class="card-meta text-wrap-anywhere" title="Исполнитель: ${task.assignee}">Исполнитель: ${task.assignee}</div>
-                    <div class="task-card-footer">
-                        <span class="card-meta">Срок: ${task.due}</span>
-                        <a class="btn btn-primary" href="project.html?project=${task.projectId}">Открыть проект</a>
-                    </div>
-                </article>
-            </div>
-        `,
-    )
-    .join("");
+  resultBox.replaceChildren();
+
+  tasks.forEach((task) => {
+    resultBox.append(createSearchResultCard(task));
+  });
 }
 
 function renderSearch() {
