@@ -6,7 +6,6 @@
     <title>FlyingOwl - Личный кабинет</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/theme.css">
@@ -16,7 +15,10 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-success" aria-label="Главная навигация">
         <div class="container">
             <span class="navbar-brand" aria-label="FlyingOwl">
-                <i class="bi bi-compass" aria-hidden="true"></i> FlyingOwl
+                <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                    <use xlink:href="sprite.svg#icon-compass"></use>
+                </svg>
+                FlyingOwl
             </span>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
                     aria-expanded="false" aria-controls="navbarNav" aria-label="Открыть меню">
@@ -29,7 +31,10 @@
                     </li>
                     <li class="nav-item" role="listitem">
                         <a class="nav-link active" href="dashboard.html" aria-current="page">
-                            <i class="bi bi-person-circle" aria-hidden="true"></i> Личный кабинет
+                            <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                                <use xlink:href="sprite.svg#icon-person-circle"></use>
+                            </svg>
+                            Личный кабинет
                         </a>
                     </li>
                     <li class="nav-item" role="listitem">
@@ -45,7 +50,10 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h1><i class="bi bi-person-circle" aria-hidden="true"></i> Добро пожаловать, <span id="userName">путешественник</span>!</h1>
+                    <h1><svg class="icon" width="1em" height="1em" aria-hidden="true">
+                            <use xlink:href="sprite.svg#icon-person-circle"></use>
+                        </svg>
+                        </i> Добро пожаловать, <span id="userName">путешественник</span>!</h1>
                     <p class="lead mb-0">Ваше путешествие начинается здесь.</p>
                 </div>
             </div>
@@ -60,7 +68,9 @@
                 <div class="col-md-4 mb-3 mb-md-0">
                     <div class="stat-card d-flex align-items-center">
                         <div class="stat-icon me-3" aria-hidden="true">
-                            <i class="bi bi-journal-bookmark-fill"></i>
+                            <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                                <use xlink:href="sprite.svg#icon-journal-bookmark"></use>
+                            </svg>
                         </div>
                         <div>
                             <div class="stat-number" aria-live="polite">
@@ -73,7 +83,9 @@
                 <div class="col-md-4 mb-3 mb-md-0">
                     <div class="stat-card d-flex align-items-center">
                         <div class="stat-icon me-3" aria-hidden="true">
-                            <i class="bi bi-map-fill"></i>
+                            <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                                <use xlink:href="sprite.svg#icon-map"></use>
+                            </svg>
                         </div>
                         <div>
                             <div class="stat-number" aria-live="polite">
@@ -86,7 +98,9 @@
                 <div class="col-md-4">
                     <div class="stat-card d-flex align-items-center">
                         <div class="stat-icon me-3" aria-hidden="true">
-                            <i class="bi bi-airplane-fill"></i>
+                            <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                                <use xlink:href="sprite.svg#icon-airplane"></use>
+                            </svg>
                         </div>
                         <div>
                             <div class="stat-number" aria-live="polite">
@@ -104,13 +118,19 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="notes-tab" data-bs-toggle="tab" data-bs-target="#notes" 
                         type="button" role="tab" aria-controls="notes" aria-selected="true">
-                    <i class="bi bi-journal-text" aria-hidden="true"></i> Путевые заметки
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                        <use xlink:href="sprite.svg#icon-journal-bookmark"></use>
+                    </svg>
+                    Путевые заметки
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="routes-tab" data-bs-toggle="tab" data-bs-target="#routes" 
                         type="button" role="tab" aria-controls="routes" aria-selected="false">
-                    <i class="bi bi-map" aria-hidden="true"></i> Сохранённые маршруты
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                        <use xlink:href="sprite.svg#icon-map"></use>
+                    </svg>
+                    Сохранённые маршруты
                 </button>
             </li>
         </ul>
@@ -119,16 +139,26 @@
             <!-- Заметки -->
             <div class="tab-pane fade show active" id="notes" role="tabpanel" aria-labelledby="notes-tab">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="h4 mb-0"><i class="bi bi-journal-text" aria-hidden="true"></i> Мои заметки</h2>
+                    <h2 class="h4 mb-0">
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                            <use xlink:href="sprite.svg#icon-journal-bookmark"></use>
+                        </svg>
+                        Мои заметки
+                    </h2>
                     <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addNoteModal"
                             aria-label="Создать новую заметку">
-                        <i class="bi bi-plus-lg" aria-hidden="true"></i> Новая заметка
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                            <use xlink:href="sprite.svg#icon-plus"></use>
+                        </svg>
+                        Новая заметка
                     </button>
                 </div>
 
                 <div id="notesContainer" class="row g-4" role="list" aria-label="Список заметок">
                     <div class="col-12 empty-state">
-                        <i class="bi bi-journal-bookmark" aria-hidden="true"></i>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                            <use xlink:href="sprite.svg#icon-journal-bookmark"></use>
+                        </svg>
                         <h3>У вас пока нет заметок</h3>
                         <p class="text-muted">Создайте первую заметку о вашем путешествии!</p>
                     </div>
@@ -138,15 +168,25 @@
             <!-- Маршруты -->
             <div class="tab-pane fade" id="routes" role="tabpanel" aria-labelledby="routes-tab">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="h4 mb-0"><i class="bi bi-map" aria-hidden="true"></i> Сохранённые маршруты</h2>
+                    <h2 class="h4 mb-0">
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                            <use xlink:href="sprite.svg#icon-map"></use>
+                        </svg>
+                        Сохранённые маршруты
+                    </h2>
                     <a href="search.html" class="btn btn-success">
-                        <i class="bi bi-search" aria-hidden="true"></i> Найти маршруты
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                            <use xlink:href="sprite.svg#icon-search"></use>
+                        </svg>
+                        Найти маршруты
                     </a>
                 </div>
 
                 <div id="routesContainer" class="row g-4" role="list" aria-label="Список маршрутов">
                     <div class="col-12 empty-state">
-                        <i class="bi bi-map" aria-hidden="true"></i>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                            <use xlink:href="sprite.svg#icon-map"></use>
+                        </svg>
                         <h3>У вас пока нет сохранённых маршрутов</h3>
                         <p class="text-muted">Найдите интересные направления в поиске!</p>
                     </div>
@@ -161,7 +201,10 @@
             <div class="modal-content">
                 <div class="modal-header bg-success text-white">
                     <h5 class="modal-title" id="addNoteModalLabel">
-                        <i class="bi bi-journal-plus" aria-hidden="true"></i> Новая путевая заметка
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                            <use xlink:href="sprite.svg#icon-journal-bookmark"></use>
+                        </svg>
+                        Новая путевая заметка
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                 </div>
@@ -207,7 +250,10 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
                     <button type="button" class="btn btn-success" onclick="addNote()">
-                        <i class="bi bi-check-lg" aria-hidden="true"></i> Сохранить заметку
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                            <use xlink:href="sprite.svg#icon-check"></use>
+                        </svg>
+                        Сохранить заметку
                     </button>
                 </div>
             </div>
@@ -220,7 +266,10 @@
             <div class="modal-content">
                 <div class="modal-header bg-success text-white">
                     <h5 class="modal-title" id="editNoteModalLabel">
-                        <i class="bi bi-pencil-square" aria-hidden="true"></i> Редактировать заметку
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                            <use xlink:href="sprite.svg#icon-pencil"></use>
+                        </svg>
+                        Редактировать заметку
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                 </div>
@@ -267,7 +316,10 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
                     <button type="button" class="btn btn-success" onclick="updateNote()">
-                        <i class="bi bi-check-lg" aria-hidden="true"></i> Сохранить изменения
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true">
+                            <use xlink:href="sprite.svg#icon-check"></use>
+                        </svg>
+                        Сохранить изменения
                     </button>
                 </div>
             </div>
