@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Профиль</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        body {
+            background: white;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #ffa676, #fd7f59);
+        }
+
+        .profile-header {
+            background: linear-gradient(120deg, #ffa676, #fd7f59);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            object-fit: cover;
+        }
+
+        .stats-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(253, 121, 68, 0.25);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-title a {
+            color: #2d3748;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .card-title a:hover {
+            color: #ff7043;
+        }
+
+        .fandom-tag {
+            display: inline-block;
+            background: #ffd8c4;
+            color: #f4511e;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .tag {
+            background: #ffe0b2;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-right: 5px;
+            display: inline-block;
+            color: #d84315;
+        }
+
+        .fic-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            color: #2d3748;
+            font-size: 0.9rem;
+        }
+
+        .fic-meta i {
+            color: #ff7043;
+            margin-right: 0.25rem;
+        }
+
+        .btn-main {
+            background: #ff7043;
+            color: white;
+        }
+
+        .btn-main:hover {
+            background: #f4511e;
+            color: white;
+        }
+
+        .nav-tabs {
+            border-bottom: 2px solid #ffccb2;
+            margin-top: 2rem;
+        }
+
+        .nav-tabs .nav-link {
+            border: none;
+            color: #2d3748;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 30px 30px 0 0;
+            transition: 0.2s;
+            background: transparent;
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: #ff7043;
+            background: rgba(255, 215, 196, 0.3);
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #d84315;
+            background: transparent;
+            border-bottom: 3px solid #ff7043;
+            font-weight: 700;
+        }
+
+        .tab-pane p {
+            color: #2d3748;
+            font-weight: 500;
+        }
+
+        .nav-tabs .nav-link i {
+            margin-right: 6px;
+            font-size: 1rem;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">FanFicLib</a>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="search.html">Поиск</a></li>
+                    <li class="nav-item"><a class="nav-link" href="write.html">Написать фанфик</a></li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Профиль</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container mt-4">
+        <div class="profile-header">
+            <div class="row align-items-center">
+                <div class="col-md-2 text-center">
+                    <img src="pics/ava.jpg" class="avatar">
+                </div>
+
+                <div class="col-md-7">
+
+                    <h2>User123</h2>
+
+                    <p>
+                        Интересная жизнь.
+                    </p>
+
+                </div>
+
+                <div class="col-md-3 text-end">
+
+                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        Редактировать профиль
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row text-center mt-4 g-3">
+
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-box">
+                    <h4>12</h4>
+                    <p>Фанфиков</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-box">
+                    <h4>4500</h4>
+                    <p>Просмотров</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-box">
+                    <h4>340</h4>
+                    <p>Лайков</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-box">
+                    <h4>28</h4>
+                    <p>Подписчиков</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center my-5 py-3">
+            <a href="write.html" class="btn btn-main btn-lg px-5">
+                Создать новую работу
+            </a>
+        </div>
+
+        <ul class="nav nav-tabs mt-5">
+            <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#works">
+                    <i class="bi bi-grid"></i> Мои фанфики
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#favorites">
+                    <i class="bi bi-bookmark-heart"></i> Избранное
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#history">
+                    <i class="bi bi-clock-history"></i> История чтения
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#drafts">
+                    <i class="bi bi-file-earmark"></i> Черновики
+                </button>
+            </li>
+        </ul>
+
+
+        <div class="tab-content mt-4">
+
+            <div class="tab-pane fade show active" id="works">
+
+                <div class="row g-4 mt-2">
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <span class="fandom-tag"><i class="bi bi-wand"></i> Harry Potter</span>
+                                <h5 class="card-title"><a href="fic.html">Тайна Хогвартса</a></h5>
+                                <p class="small text-muted">История о скрытых комнатах школы магии, где скрытые комнаты
+                                    Хогвартса таят древние тайны...</p>
+                                <div class="mb-2">
+                                    <span class="tag">магия</span>
+                                    <span class="tag">приключения</span>
+                                </div>
+                                <div class="fic-meta">
+                                    <span><i class="bi bi-heart-fill"></i> 342</span>
+                                    <span><i class="bi bi-chat-fill"></i> 28</span>
+                                    <span><i class="bi bi-eye-fill"></i> 1.2k</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <span class="fandom-tag"><i class="bi bi-ninja"></i> Naruto</span>
+                                <h5 class="card-title"><a href="fic.html">Путь шиноби</a></h5>
+                                <p class="small text-muted">Альтернативная история Наруто, где он попадает в другой мир
+                                    и становится сильнейшим шиноби.</p>
+                                <div class="mb-2">
+                                    <span class="tag">аниме</span>
+                                    <span class="tag">боевик</span>
+                                    <span class="tag">дружба</span>
+                                </div>
+                                <div class="fic-meta">
+                                    <span><i class="bi bi-heart-fill"></i> 256</span>
+                                    <span><i class="bi bi-chat-fill"></i> 19</span>
+                                    <span><i class="bi bi-eye-fill"></i> 890</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <span class="fandom-tag"><i class="bi bi-shield"></i> Marvel</span>
+                                <h5 class="card-title"><a href="fic.html">Железный человек</a></h5>
+                                <p class="small text-muted">Что если бы Тони Старк не погиб, а продолжил развивать
+                                    технологии?</p>
+                                <div class="mb-2">
+                                    <span class="tag">экшн</span>
+                                    <span class="tag">техно</span>
+                                </div>
+                                <div class="fic-meta">
+                                    <span><i class="bi bi-heart-fill"></i> 567</span>
+                                    <span><i class="bi bi-chat-fill"></i> 43</span>
+                                    <span><i class="bi bi-eye-fill"></i> 2.1k</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="favorites">
+                <p>Здесь будут сохраненные фанфики.</p>
+            </div>
+
+
+            <div class="tab-pane fade" id="history">
+                <p>История прочитанных фанфиков.</p>
+            </div>
+
+            <div class="tab-pane fade" id="drafts">
+                <p>Здесь будут черновики ваших фанфиков.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
+
+    <footer class="text-center mt-5 p-4">
+        <p>© 2026 FanFicLib</p>
+    </footer>
+
+    <div class="modal fade" id="editProfileModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Редактировать профиль</h5>
+                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form>
+
+                        <div class="mb-3">
+                            <label class="form-label">Имя пользователя</label>
+                            <input type="text" class="form-control" value="User123">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Описание</label>
+                            <textarea class="form-control" rows="3">Интересная жизнь.</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Аватар</label>
+                            <input type="file" class="form-control">
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">
+                        Отмена
+                    </button>
+
+                    <button class="btn btn-main">
+                        Сохранить
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
