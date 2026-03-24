@@ -34,11 +34,11 @@ function renderDestinationPage(dest) {
     let stars = '';
     for (let i = 0; i < 5; i++) {
         if (i < fullStars) {
-            stars += '<i class="bi bi-star-fill" aria-hidden="true"></i>';
+            stars += '<svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-star-fill"></use></svg>';
         } else if (i === fullStars && hasHalf) {
-            stars += '<i class="bi bi-star-half" aria-hidden="true"></i>';
+            stars += '<svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-star-half"></use></svg>';
         } else {
-            stars += '<i class="bi bi-star" aria-hidden="true"></i>';
+            stars += '<svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-star"></use></svg>';
         }
     }
 
@@ -72,7 +72,7 @@ function renderDestinationPage(dest) {
                             </div>
                             <div class="d-flex flex-wrap gap-3">
                                 <span class="badge bg-white text-dark p-2">
-                                    <i class="bi bi-calendar3" aria-hidden="true"></i> ${dest.duration}
+                                    <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-calendar"></use></svg> ${dest.duration}
                                 </span>
                                 <span class="badge bg-white text-dark p-2">
                                     ${dest.budget} бюджет
@@ -89,7 +89,7 @@ function renderDestinationPage(dest) {
                 <div class="col-12 d-flex justify-content-end">
                     <button class="btn btn-success me-2" onclick="openAddRouteModal('${dest.id}', '${dest.name.replace(/'/g, "\\'")}', '${dest.attractions[0]?.name || ''}, ${dest.attractions[1]?.name || ''}', '${dest.description.replace(/'/g, "\\'")}', '${dest.duration}', '${dest.budget}', '${dest.type}')"
                             aria-label="Добавить маршрут в личный кабинет">
-                        <i class="bi bi-map" aria-hidden="true"></i> Добавить в маршруты
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-map"></use></svg> Добавить в маршруты
                     </button>
                 </div>
             </div>
@@ -98,7 +98,7 @@ function renderDestinationPage(dest) {
                 <div class="col-lg-8">
                     <section class="card info-card mb-4" aria-labelledby="aboutHeading">
                         <div class="card-header">
-                            <h2 id="aboutHeading" class="h5 mb-0"><i class="bi bi-info-circle" aria-hidden="true"></i> О направлении</h2>
+                            <h2 id="aboutHeading" class="h5 mb-0"><svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-info-circle"></use></svg> О направлении</h2>
                         </div>
                         <div class="card-body">
                             <p class="card-text">${dest.fullDescription || dest.description}</p>
@@ -110,7 +110,7 @@ function renderDestinationPage(dest) {
 
                     <section class="card info-card mb-4" aria-labelledby="attractionsHeading">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h2 id="attractionsHeading" class="h5 mb-0"><i class="bi bi-camera" aria-hidden="true"></i> Достопримечательности</h2>
+                            <h2 id="attractionsHeading" class="h5 mb-0"><svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-camera"></use></svg> Достопримечательности</h2>
                             <span class="badge bg-success">${dest.attractions.length}+ мест</span>
                         </div>
                         <div class="card-body p-0">
@@ -124,12 +124,12 @@ function renderDestinationPage(dest) {
                 <div class="col-lg-4">
                     <aside class="card info-card mb-4" aria-labelledby="quickInfoHeading">
                         <div class="card-header">
-                            <h2 id="quickInfoHeading" class="h5 mb-0"><i class="bi bi-clock-history" aria-hidden="true"></i> Быстрая информация</h2>
+                            <h2 id="quickInfoHeading" class="h5 mb-0"><svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-clock"></use></svg> Быстрая информация</h2>
                         </div>
                         <div class="card-body">
                             <div class="quick-info-item text-center">
                                 <div class="quick-info-icon" aria-hidden="true">
-                                    <i class="bi bi-cash-coin"></i>
+                                    <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-wallet"></use></svg>
                                 </div>
                                 <h3 class="h6">Стоимость</h3>
                                 <div class="price-large">${dest.price}</div>
@@ -138,28 +138,28 @@ function renderDestinationPage(dest) {
                             <div class="row g-3">
                                 <div class="col-6">
                                     <div class="quick-info-icon small" aria-hidden="true">
-                                        <i class="bi bi-calendar-check"></i>
+                                        <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-calendar"></use></svg>
                                     </div>
                                     <h3 class="h6 small">Лучший сезон</h3>
                                     <p class="fw-bold">${dest.bestSeason}</p>
                                 </div>
                                 <div class="col-6">
                                     <div class="quick-info-icon small" aria-hidden="true">
-                                        <i class="bi bi-translate"></i>
+                                        <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-person"></use></svg>
                                     </div>
                                     <h3 class="h6 small">Язык</h3>
                                     <p class="fw-bold">${dest.language}</p>
                                 </div>
                                 <div class="col-6">
                                     <div class="quick-info-icon small" aria-hidden="true">
-                                        <i class="bi bi-currency-exchange"></i>
+                                        <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-wallet"></use></svg>
                                     </div>
                                     <h3 class="h6 small">Валюта</h3>
                                     <p class="fw-bold">${dest.currency}</p>
                                 </div>
                                 <div class="col-6">
                                     <div class="quick-info-icon small" aria-hidden="true">
-                                        <i class="bi bi-clock"></i>
+                                        <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-clock"></use></svg>
                                     </div>
                                     <h3 class="h6 small">Часовой пояс</h3>
                                     <p class="fw-bold">${dest.timezone}</p>

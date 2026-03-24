@@ -10,7 +10,6 @@ async function loadDestinations() {
         document.getElementById('destinationsGrid').innerHTML = `
             <div class="col-12">
                 <div class="no-results">
-                    <i class="bi bi-exclamation-triangle" style="font-size: 3rem;" aria-hidden="true"></i>
                     <h3 class="mt-3">Ошибка загрузки данных</h3>
                     <p class="text-muted">Попробуйте обновить страницу</p>
                 </div>
@@ -26,7 +25,7 @@ function renderDestinations(filteredDestinations) {
         grid.innerHTML = `
             <div class="col-12">
                 <div class="no-results">
-                    <i class="bi bi-search" style="font-size: 3rem;" aria-hidden="true"></i>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-search"></use></svg>
                     <h3 class="mt-3">Ничего не найдено</h3>
                     <p class="text-muted">Попробуйте изменить параметры фильтрации</p>
                 </div>
@@ -52,11 +51,11 @@ function createDestinationCard(dest) {
     
     for (let i = 0; i < 5; i++) {
         if (i < fullStars) {
-            stars += '<i class="bi bi-star-fill" aria-hidden="true"></i>';
+            stars += '<svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-star-fill"></use></svg>';
         } else if (i === fullStars && hasHalf) {
-            stars += '<i class="bi bi-star-half" aria-hidden="true"></i>';
+            stars += '<svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-star-half"></use></svg>';
         } else {
-            stars += '<i class="bi bi-star" aria-hidden="true"></i>';
+            stars += '<svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-star"></use></svg>';
         }
     }
     
@@ -65,9 +64,9 @@ function createDestinationCard(dest) {
     ).join('');
     
     let typeIcon = 'bi-geo-alt';
-    if (dest.type === 'Город') typeIcon = 'bi-building';
-    else if (dest.type === 'Природа') typeIcon = 'bi-tree';
-    else if (dest.type === 'Смешанный') typeIcon = 'bi-arrow-repeat';
+    if (dest.type === 'Город') typeIcon = 'icon-building';
+    else if (dest.type === 'Природа') typeIcon = 'icon-tree';
+    else typeIcon = 'icon-arrow-repeat';
     
     return `
         <div class="col-lg-6 col-xl-3 col-md-6 destination-item" role="listitem"
@@ -77,7 +76,7 @@ function createDestinationCard(dest) {
             <div class="card destination-card">
                 <div class="destination-img" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('${dest.image}');">
                     <span class="destination-badge">
-                        <i class="bi ${typeIcon}" aria-hidden="true"></i> ${dest.type}
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#${typeIcon}"></use></svg> ${dest.type}
                     </span>
                 </div>
                 <div class="card-body">
@@ -86,7 +85,7 @@ function createDestinationCard(dest) {
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <span class="badge bg-light text-dark">
-                            <i class="bi bi-calendar3" aria-hidden="true"></i> ${dest.duration}
+                            <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-calendar"></use></svg> ${dest.duration}
                         </span>
                         <span class="rating-stars" aria-label="Рейтинг: ${dest.rating} из 5">
                             ${stars} <span class="text-muted" aria-hidden="true">${dest.rating}</span>
@@ -101,7 +100,7 @@ function createDestinationCard(dest) {
                         <div>
                             <a href="destination.html?id=${dest.id}" class="btn btn-sm btn-outline-success me-1"
                                aria-label="Подробнее о ${dest.name}">
-                                <i class="bi bi-eye" aria-hidden="true"></i> Смотреть
+                                <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-eye"></use></svg> Смотреть
                             </a>
                         </div>
                     </div>

@@ -87,11 +87,11 @@ function updateUI() {
 
 function getTypeIcon(type) {
     const icons = {
-        'Город': 'bi-building',
-        'Природа': 'bi-tree',
-        'Смешанный': 'bi-arrow-repeat',
+        'Город': 'icon-building',
+        'Природа': 'icon-tree',
+        'Смешанный': 'icon-arrow-repeat',
     };
-    return icons[type] || 'bi-arrow-repeat';
+    return icons[type] || 'icon-arrow-repeat';
 }
 
 function renderRoutes() {
@@ -100,7 +100,7 @@ function renderRoutes() {
     if (userRoutes.length === 0) {
         container.innerHTML = `
             <div class="col-12 empty-state">
-                <i class="bi bi-map" aria-hidden="true"></i>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-map"></use></svg>
                 <h3>У вас пока нет сохранённых маршрутов</h3>
                 <p class="text-muted">Найдите интересные направления в поиске!</p>
             </div>
@@ -121,7 +121,7 @@ function renderNotes() {
     if (userNotes.length === 0) {
         container.innerHTML = `
             <div class="col-12 empty-state">
-                <i class="bi bi-journal-bookmark" aria-hidden="true"></i>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-journal-bookmark"></use></svg>
                 <h3>У вас пока нет заметок</h3>
                 <p class="text-muted">Создайте первую заметку о ваших путешествиях!</p>
             </div>
@@ -146,7 +146,7 @@ function createRouteCard(route) {
                         <span class="badge bg-success">${route.duration}</span>
                     </div>
                     <div class="route-duration mb-2">
-                        <i class="bi bi-geo-alt" aria-hidden="true"></i> ${route.points}
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-geo-alt"></use></svg> ${route.points}
                     </div>
                     <p class="card-text">
                         ${route.description.substring(0, 250)}${route.description.length > 250 ? '…' : ''}
@@ -159,16 +159,16 @@ function createRouteCard(route) {
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <span class="badge bg-light text-dark me-1">
-                                <i class="bi bi-tag" aria-hidden="true"></i> ${route.budget} бюджет
+                                <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-tag"></use></svg> ${route.budget} бюджет
                             </span>
                             <span class="badge bg-light text-dark me-1">
-                                <i class="bi ${getTypeIcon(route.type)}" aria-hidden="true"></i> ${route.type}
+                                <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#${getTypeIcon(route.type)}"></use></svg> ${route.type}
                             </span>
                         </div>
                         <div>
                             <button class="btn btn-sm btn-outline-danger" onclick="deleteRoute('${route.id}')"
                                     aria-label="Удалить маршрут ${route.title}">
-                                <i class="bi bi-trash" aria-hidden="true"></i>
+                                <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-trash"></use></svg>
                             </button>
                         </div>
                     </div>
@@ -194,22 +194,22 @@ function createNoteCard(note) {
             <div class="card note-card h-100">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span class="badge-type">
-                        <i class="bi ${getTypeIcon(note.type)}" aria-hidden="true"></i> ${note.type}
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#${getTypeIcon(note.type)}"></use></svg> ${note.type}
                     </span>
                     <div class="btn-group btn-group-sm" role="group" aria-label="Действия с заметкой">
                         <button class="btn btn-outline-primary" onclick="editNote('${note.id}')" data-bs-toggle="modal" data-bs-target="#editNoteModal"
                                 aria-label="Редактировать заметку">
-                            <i class="bi bi-pencil" aria-hidden="true"></i>
+                            <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-pencil"></use></svg>
                         </button>
                         <button class="btn btn-outline-danger" onclick="deleteNote('${note.id}')"
                                 aria-label="Удалить заметку">
-                            <i class="bi bi-trash" aria-hidden="true"></i>
+                            <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-trash"></use></svg>
                         </button>
                     </div>
                 </div>
                 <div class="card-body">
                     <h3 class="h5 card-title">${note.title}</h3>
-                    ${note.date ? `<h4 class="h6 card-subtitle mb-2 text-muted"><i class="bi bi-calendar3" aria-hidden="true"></i> ${note.date}</h4>` : ''}
+                    ${note.date ? `<h4 class="h6 card-subtitle mb-2 text-muted"><svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-calendar"></use></svg> ${note.date}</h4>` : ''}
                     <p class="card-text">
                         ${note.content.substring(0, 100)}${note.content.length > 100 ? '…' : ''}
                         ${note.content.length > 100 ? 
@@ -227,12 +227,12 @@ function createNoteCard(note) {
                 <div class="modal-content">
                     <div class="modal-header bg-success text-white">
                         <h5 class="modal-title" id="noteModalLabel${safeNoteId}">
-                            <i class="bi bi-journal-text" aria-hidden="true"></i> ${note.title}
+                            <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-journal-bookmark"></use></svg> ${note.title}
                         </h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                     </div>
                     <div class="modal-body">
-                        ${note.date ? `<p class="text-muted"><i class="bi bi-calendar3" aria-hidden="true"></i> ${note.date}</p>` : ''}
+                        ${note.date ? `<p class="text-muted"><svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-calendar"></use></svg> ${note.date}</p>` : ''}
                         <p>${note.content}</p>
                         ${tags ? `<div class="mt-3">${tags}</div>` : ''}
                     </div>

@@ -76,9 +76,9 @@ const ThemeManager = {
         if (!button) return;
         
         if (theme === 'dark') {
-            button.innerHTML = '<i class="bi bi-sun-fill"></i> Светлая';
+            button.innerHTML = '<svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-arrow-repeat"></use></svg> Светлая';
         } else {
-            button.innerHTML = '<i class="bi bi-moon-fill"></i> Тёмная';
+            button.innerHTML = '<svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-arrow-repeat"></use></svg> Тёмная';
         }
     }
 };
