@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Страница модели — ModelHub</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="custom-navbar">
+  <div class="nav-wrapper">
+    <div class="nav-left">
+      <a href="index.html" class="logo">ModelHub</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="profile.html">Профиль</a></li>
+      </ul>
+      <form class="search-box" action="search.html" method="GET">
+        <i class="bi bi-search"></i>
+        <input type="text" name="query" placeholder="Введите запрос">
+      </form>
+    </div>
+
+  </div>
+</nav>
+
+<section class="page-container">
+  <div class="soft-card hero-card">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-8">
+        <h1 class="model-title">BERT Sentiment</h1>
+        <p class="model-meta">Автор: <strong>Anastasia Dev</strong> • Обновлено: 12 марта 2026</p>
+
+        <div class="mb-2">
+          <span class="tag-badge">NLP</span>
+          <span class="tag-badge gray">PyTorch</span>
+          <span class="tag-badge green">MIT</span>
+        </div>
+
+        <div class="stats-box">
+          <div class="stats-item">Загрузок <strong>12 000</strong></div>
+          <div class="stats-item">Звезд <strong>320</strong></div>
+          <div class="stats-item">Форков <strong>48</strong></div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+          <button class="action-btn">Star 320</button>
+          <button class="action-btn">Fork 48</button>
+          <button class="action-btn primary" data-bs-toggle="modal" data-bs-target="#downloadModal">Download</button>
+          <button class="action-btn">Follow author</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="soft-card content-card">
+        <div class="tab-nav nav mb-4" id="itemTabs" role="tablist">
+          <button class="nav-link active"
+                  id="overview-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#overview"
+                  type="button"
+                  role="tab">
+            Описание
+          </button>
+
+          <button class="nav-link"
+                  id="metrics-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#metrics"
+                  type="button"
+                  role="tab">
+            Метрики
+          </button>
+
+          <button class="nav-link"
+                  id="usage-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#usage"
+                  type="button"
+                  role="tab">
+            Пример использования
+          </button>
+
+          <button class="nav-link"
+                  id="discussions-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#discussions"
+                  type="button"
+                  role="tab">
+            Обсуждения
+          </button>
+
+          <button class="nav-link"
+                  id="repro-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#repro"
+                  type="button"
+                  role="tab">
+            Воспроизводимость
+          </button>
+        </div>
+
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+            <h4 class="section-title">Описание модели</h4>
+            <p>
+              BERT Sentiment — это модель для анализа тональности текста, обученная на большом наборе текстовых отзывов.
+              Она позволяет определять эмоциональную окраску текста как положительную, отрицательную или нейтральную.
+            </p>
+            <p>
+              Модель может использоваться для анализа отзывов клиентов, комментариев, сообщений в социальных сетях и других текстовых данных.
+            </p>
+          </div>
+
+          <div class="tab-pane fade" id="metrics" role="tabpanel" aria-labelledby="metrics-tab">
+            <h4 class="section-title">Метрики качества</h4>
+            <div class="custom-table">
+              <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                  <thead class="table-light">
+                  <tr>
+                    <th>Метрика</th>
+                    <th>Значение</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr><td>Accuracy</td><td>94.2%</td></tr>
+                  <tr><td>F1-score</td><td>91.8%</td></tr>
+                  <tr><td>Precision</td><td>92.5%</td></tr>
+                  <tr><td>Recall</td><td>91.1%</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="usage" role="tabpanel" aria-labelledby="usage-tab">
+            <h4 class="section-title">Пример использования</h4>
+            <pre class="bg-dark text-white p-4 rounded"><code>from transformers import pipeline
+
+classifier = pipeline("text-classification", model="anastasia-dev/bert-sentiment")
+result = classifier("This course is amazing!")
+print(result)</code></pre>
+          </div>
+
+          <div class="tab-pane fade" id="discussions" role="tabpanel" aria-labelledby="discussions-tab">
+            <h4 class="section-title">Обсуждения</h4>
+
+            <div class="comment-box mb-3">
+              <strong>ml_user42:</strong>
+              <p class="mb-0 mt-2">Очень удобная модель для быстрого прототипирования. Хорошие результаты на коротких текстах.</p>
+            </div>
+
+            <div class="comment-box mb-3">
+              <strong>data_researcher:</strong>
+              <p class="mb-0 mt-2">Хотелось бы увидеть сравнение с RoBERTa на этом же датасете.</p>
+            </div>
+
+            <form class="mt-4">
+              <label class="form-label fw-semibold">Добавить комментарий</label>
+              <textarea class="form-control mb-3" rows="3" placeholder="Напишите комментарий..."></textarea>
+              <button type="button" class="action-btn primary">Отправить</button>
+            </form>
+          </div>
+
+          <div class="tab-pane fade" id="repro" role="tabpanel" aria-labelledby="repro-tab">
+            <h4 class="section-title">Процессы воспроизводимости</h4>
+            <ul class="list-group repro-list">
+              <li class="list-group-item"><strong>Dataset version:</strong> imdb_reviews_v2</li>
+              <li class="list-group-item"><strong>Training config:</strong> batch_size=32, epochs=5, lr=2e-5</li>
+              <li class="list-group-item"><strong>Random seed:</strong> 42</li>
+              <li class="list-group-item"><strong>Hardware:</strong> NVIDIA Tesla T4</li>
+              <li class="list-group-item"><strong>Logs:</strong> available</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="soft-card sidebar-card mb-4">
+        <h5 class="section-title">Информация</h5>
+        <div class="info-line">Тип: Model</div>
+        <div class="info-line">Задача: NLP</div>
+        <div class="info-line">Лицензия: MIT</div>
+        <div class="info-line">Фреймворк: PyTorch</div>
+        <div class="info-line">Версия: 1.2.0</div>
+        <div class="info-line">Размер: 420 MB</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="downloadModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content custom-modal-content">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title">Скачать модель</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body pt-3">
+        Выберите формат загрузки:
+        <div class="d-grid gap-2 mt-3">
+          <button class="action-btn">PyTorch checkpoint</button>
+          <button class="action-btn">ONNX</button>
+          <button class="action-btn">TensorFlow SavedModel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
