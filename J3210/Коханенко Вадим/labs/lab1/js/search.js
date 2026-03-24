@@ -25,7 +25,7 @@ function renderDestinations(filteredDestinations) {
         grid.innerHTML = `
             <div class="col-12">
                 <div class="no-results">
-                    <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-search"></use></svg>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="sprite.svg#icon-search"></use></svg>
                     <h3 class="mt-3">Ничего не найдено</h3>
                     <p class="text-muted">Попробуйте изменить параметры фильтрации</p>
                 </div>
@@ -51,11 +51,11 @@ function createDestinationCard(dest) {
     
     for (let i = 0; i < 5; i++) {
         if (i < fullStars) {
-            stars += '<svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-star-fill"></use></svg>';
+            stars += '<svg class="icon" aria-hidden="true"><use xlink:href="sprite.svg#icon-star-fill"></use></svg>';
         } else if (i === fullStars && hasHalf) {
-            stars += '<svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-star-half"></use></svg>';
+            stars += '<svg class="icon" aria-hidden="true"><use xlink:href="sprite.svg#icon-star-half"></use></svg>';
         } else {
-            stars += '<svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-star"></use></svg>';
+            stars += '<svg class="icon" aria-hidden="true"><use xlink:href="sprite.svg#icon-star"></use></svg>';
         }
     }
     
@@ -76,7 +76,7 @@ function createDestinationCard(dest) {
             <div class="card destination-card">
                 <div class="destination-img" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('${dest.image}');">
                     <span class="destination-badge">
-                        <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#${typeIcon}"></use></svg> ${dest.type}
+                        <svg class="icon" aria-hidden="true"><use xlink:href="sprite.svg#${typeIcon}"></use></svg> ${dest.type}
                     </span>
                 </div>
                 <div class="card-body">
@@ -85,7 +85,7 @@ function createDestinationCard(dest) {
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <span class="badge bg-light text-dark">
-                            <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-calendar"></use></svg> ${dest.duration}
+                            <svg class="icon" aria-hidden="true"><use xlink:href="sprite.svg#icon-calendar"></use></svg> ${dest.duration}
                         </span>
                         <span class="rating-stars" aria-label="Рейтинг: ${dest.rating} из 5">
                             ${stars} <span class="text-muted" aria-hidden="true">${dest.rating}</span>
@@ -100,7 +100,7 @@ function createDestinationCard(dest) {
                         <div>
                             <a href="destination.html?id=${dest.id}" class="btn btn-sm btn-outline-success me-1"
                                aria-label="Подробнее о ${dest.name}">
-                                <svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-eye"></use></svg> Смотреть
+                                <svg class="icon" aria-hidden="true"><use xlink:href="sprite.svg#icon-eye"></use></svg> Смотреть
                             </a>
                         </div>
                     </div>

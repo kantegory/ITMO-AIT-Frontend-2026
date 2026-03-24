@@ -76,9 +76,9 @@ const ThemeManager = {
         if (!button) return;
         
         if (theme === 'dark') {
-            button.innerHTML = '<svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-arrow-repeat"></use></svg> Светлая';
+            button.innerHTML = '<svg class="icon" aria-hidden="true"><use xlink:href="sprite.svg#icon-arrow-repeat"></use></svg> Светлая';
         } else {
-            button.innerHTML = '<svg class="icon" width="1em" height="1em" aria-hidden="true"><use xlink:href="sprite.svg#icon-arrow-repeat"></use></svg> Тёмная';
+            button.innerHTML = '<svg class="icon" aria-hidden="true"><use xlink:href="sprite.svg#icon-arrow-repeat"></use></svg> Тёмная';
         }
     }
 };
