@@ -37,8 +37,6 @@ const emit = defineEmits(['edit'])
                 <button
                     type="button"
                     class="btn btn-sm btn-outline-secondary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#courseModal"
                     @click="emit('edit', course)"
                 >
                     Редактировать
