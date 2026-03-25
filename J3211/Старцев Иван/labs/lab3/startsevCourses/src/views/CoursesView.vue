@@ -2,6 +2,7 @@
 import { computed, onMounted, reactive, ref } from 'vue'
 import AppAlert from '@/components/AppAlert.vue'
 import CatalogCourseCard from '@/components/CatalogCourseCard.vue'
+import CoursesFilters from '@/components/coursesFilters.vue'
 import { useCourses } from '@/composables/useCourses'
 import { usePageMeta } from '@/composables/usePageMeta'
 import { useCoursesStore } from '@/stores/courses'
@@ -68,58 +69,13 @@ onMounted(async () => {
                     <div class="card-body">
                         <h2 class="card-title mb-3">Фильтры</h2>
 
-                        <div class="mb-3">
-                            <label for="desktopLevel" class="form-label">Сложность</label>
-                            <select id="desktopLevel" v-model="filters.level" class="form-select">
-                                <option value="any">Любая</option>
-                                <option value="Начальный">Начальный</option>
-                                <option value="Средний">Средний</option>
-                                <option value="Продвинутый">Продвинутый</option>
-                            </select>
-                        </div>
-
-                        <fieldset class="mb-3">
-                            <legend class="form-label">Цена</legend>
-
-                            <div class="row g-2">
-                                <div class="col-6">
-                                    <label for="desktopMinPrice" class="visually-hidden">
-                                        Введите минимальную цену
-                                    </label>
-                                    <input
-                                        id="desktopMinPrice"
-                                        v-model="filters.minPrice"
-                                        type="number"
-                                        class="form-control"
-                                        placeholder="От"
-                                        min="0"
-                                    >
-                                </div>
-
-                                <div class="col-6">
-                                    <label for="desktopMaxPrice" class="visually-hidden">
-                                        Введите максимальную цену
-                                    </label>
-                                    <input
-                                        id="desktopMaxPrice"
-                                        v-model="filters.maxPrice"
-                                        type="number"
-                                        class="form-control"
-                                        placeholder="До"
-                                        min="0"
-                                    >
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <div class="mb-3">
-                            <label for="desktopLanguage" class="form-label">Язык</label>
-                            <select id="desktopLanguage" v-model="filters.language" class="form-select">
-                                <option value="any">Любой</option>
-                                <option value="Русский">Русский</option>
-                                <option value="Английский">Английский</option>
-                            </select>
-                        </div>
+                        <CoursesFilters
+                            id-prefix="desktop"
+                            v-model:level="filters.level"
+                            v-model:min-price="filters.minPrice"
+                            v-model:max-price="filters.maxPrice"
+                            v-model:language="filters.language"
+                        />
                     </div>
                 </div>
             </aside>
@@ -189,58 +145,13 @@ onMounted(async () => {
                 </div>
 
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="mobileLevel" class="form-label">Сложность</label>
-                        <select id="mobileLevel" v-model="filters.level" class="form-select">
-                            <option value="any">Любая</option>
-                            <option value="Начальный">Начальный</option>
-                            <option value="Средний">Средний</option>
-                            <option value="Продвинутый">Продвинутый</option>
-                        </select>
-                    </div>
-
-                    <fieldset class="mb-3">
-                        <legend class="form-label">Цена</legend>
-
-                        <div class="row g-2">
-                            <div class="col-6">
-                                <label for="mobileMinPrice" class="visually-hidden">
-                                    Введите минимальную цену
-                                </label>
-                                <input
-                                    id="mobileMinPrice"
-                                    v-model="filters.minPrice"
-                                    type="number"
-                                    class="form-control"
-                                    placeholder="От"
-                                    min="0"
-                                >
-                            </div>
-
-                            <div class="col-6">
-                                <label for="mobileMaxPrice" class="visually-hidden">
-                                    Введите максимальную цену
-                                </label>
-                                <input
-                                    id="mobileMaxPrice"
-                                    v-model="filters.maxPrice"
-                                    type="number"
-                                    class="form-control"
-                                    placeholder="До"
-                                    min="0"
-                                >
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <div class="mb-3">
-                        <label for="mobileLanguage" class="form-label">Язык</label>
-                        <select id="mobileLanguage" v-model="filters.language" class="form-select">
-                            <option value="any">Любой</option>
-                            <option value="Русский">Русский</option>
-                            <option value="Английский">Английский</option>
-                        </select>
-                    </div>
+                    <CoursesFilters
+                        id-prefix="mobile"
+                        v-model:level="filters.level"
+                        v-model:min-price="filters.minPrice"
+                        v-model:max-price="filters.maxPrice"
+                        v-model:language="filters.language"
+                    />
                 </div>
 
                 <div class="modal-footer">

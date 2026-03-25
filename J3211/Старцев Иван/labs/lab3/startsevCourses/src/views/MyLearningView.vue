@@ -52,12 +52,6 @@ onMounted(async () => {
                 class="form-control"
                 placeholder="Введите название курса"
             >
-            <button class="btn btn-primary" type="submit">
-                <svg class="default_svg" aria-hidden="true">
-                    <use href="/sprites.svg#lupa"></use>
-                </svg>
-                Искать
-            </button>
         </form>
 
         <AppAlert
