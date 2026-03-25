@@ -7,51 +7,50 @@ import { useSessionStore } from '@/stores/session'
 const sessionStore = useSessionStore()
 const currentUser = computed(() => sessionStore.currentUser)
 
+const allCourses = ref([])
 const searchInput = ref('')
-const learningCourses = ref([])
-const filteredCourses = ref([])
+const hasLoadError = ref(false)
 
-const emptyState = ref({
-    visible: false,
-    text: 'Курсы не найдены.',
-    type: 'secondary',
+const learningCourses = computed(() =>
+    allCourses.value
+        .filter((course) => currentUser.value.learningCourseIds.includes(course.id))
+        .map((course) => ({
+            ...course,
+            rating: course.comments.length
+                ? course.comments.reduce((sum, comment) => sum + comment.rating, 0) / course.comments.length
+                : 0,
+        })),
+)
+
+const filteredCourses = computed(() => {
+    const query = searchInput.value.trim().toLowerCase()
+
+    return learningCourses.value.filter(
+        (course) => !query || course.title.toLowerCase().includes(query),
+    )
 })
 
-const getCourseRating = (course) => {
-    if (!course.comments.length) {
-        return 0
+const emptyStateVisible = computed(() =>
+    hasLoadError.value || filteredCourses.value.length === 0,
+)
+
+const emptyStateText = computed(() =>
+    hasLoadError.value ? 'Не удалось загрузить информацию.' : 'Курсы не найдены.',
+)
+
+const emptyStateType = computed(() =>
+    hasLoadError.value ? 'danger' : 'secondary',
+)
+
+const loadData = async () => {
+    try {
+        allCourses.value = await coursesApi.getAll()
+    } catch {
+        hasLoadError.value = true
     }
-
-    const total = course.comments.reduce((sum, comment) => sum + comment.rating, 0)
-    return total / course.comments.length
 }
 
-const render = () => {
-    filteredCourses.value = learningCourses.value.filter((course) =>
-        course.title.toLowerCase().includes(searchInput.value.trim().toLowerCase()),
-    )
-
-    emptyState.value = {
-        visible: filteredCourses.value.length === 0,
-        text: 'Курсы не найдены.',
-        type: 'secondary',
-    }
-}
-
-const handleSearchSubmit = () => {
-    render()
-}
-
-const init = async () => {
-    const courses = await coursesApi.getAll()
-    learningCourses.value = courses.filter((course) =>
-        currentUser.value.learningCourseIds.includes(course.id),
-    )
-
-    render()
-}
-
-onMounted(async () => {
+onMounted(() => {
     document.title = 'Моё обучение'
 
     const metaDescription = document.querySelector('meta[name="description"]')
@@ -59,15 +58,7 @@ onMounted(async () => {
         metaDescription.setAttribute('content', 'Ваши активные курсы.')
     }
 
-    try {
-        await init()
-    } catch {
-        emptyState.value = {
-            visible: true,
-            text: 'Не удалось загрузить информацию.',
-            type: 'danger',
-        }
-    }
+    loadData()
 })
 </script>
 
@@ -75,7 +66,7 @@ onMounted(async () => {
     <main class="container pt-2 pb-4">
         <h1 class="h3 mb-3">Моё обучение</h1>
 
-        <form id="searchForm" role="search" class="input-group mb-3" @submit.prevent="handleSearchSubmit">
+        <form id="searchForm" role="search" class="input-group mb-3" @submit.prevent>
             <label for="searchInput" class="visually-hidden">Поиск курса по названию</label>
             <input
                 id="searchInput"
@@ -93,11 +84,11 @@ onMounted(async () => {
         </form>
 
         <div
-            v-if="emptyState.visible"
-            :class="`alert alert-${emptyState.type}`"
+            v-if="emptyStateVisible"
+            :class="`alert alert-${emptyStateType}`"
             role="alert"
         >
-            {{ emptyState.text }}
+            {{ emptyStateText }}
         </div>
 
         <ul id="learningCoursesContainer" class="row g-3 list-unstyled">
@@ -117,7 +108,7 @@ onMounted(async () => {
                             <svg class="rating__star" aria-hidden="true">
                                 <use href="/sprites.svg#ratingStar"></use>
                             </svg>
-                            {{ getCourseRating(course).toFixed(1) }} / 5
+                            {{ course.rating.toFixed(1) }} / 5
                         </p>
 
                         <div class="mt-auto">

@@ -1,109 +1,93 @@
 <script setup>
-import { onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { coursesApi, usersApi } from '@/api'
 
-const emptyStateText = ref('Курсы не найдены.')
-const emptyStateVisible = ref(false)
-const filteredCourses = ref([])
 const courses = ref([])
 const users = ref([])
 const searchInput = ref('')
-const isDesktop = ref(false)
 const hasLoadError = ref(false)
 
-const desktopFilters = reactive({
+const filters = reactive({
     level: 'any',
     minPrice: '',
     maxPrice: '',
     language: 'any',
 })
 
-const mobileFilters = reactive({
-    level: 'any',
-    minPrice: '',
-    maxPrice: '',
-    language: 'any',
+const normalizedFilters = computed(() => ({
+    level: filters.level,
+    minPrice: filters.minPrice === '' ? null : Number(filters.minPrice),
+    maxPrice: filters.maxPrice === '' ? null : Number(filters.maxPrice),
+    language: filters.language,
+}))
+
+const usersById = computed(() => {
+    const map = new Map()
+
+    users.value.forEach((user) => {
+        map.set(user.id, user)
+    })
+
+    return map
 })
 
-let mediaQuery = null
+const studentsByCourseId = computed(() => {
+    const map = new Map()
 
-const getCourseRating = (course) => {
-    if (!course.comments.length) {
-        return 0
-    }
+    users.value.forEach((user) => {
+        user.learningCourseIds.forEach((courseId) => {
+            map.set(courseId, (map.get(courseId) || 0) + 1)
+        })
+    })
 
-    const total = course.comments.reduce((sum, comment) => sum + comment.rating, 0)
-    return total / course.comments.length
-}
+    return map
+})
 
-const getCourseStudents = (courseId) =>
-    users.value.filter((user) => user.learningCourseIds.includes(courseId)).length
+const catalogCourses = computed(() =>
+    courses.value.map((course) => {
+        const author = usersById.value.get(course.userId)
+        const rating = course.comments.length
+            ? course.comments.reduce((sum, comment) => sum + comment.rating, 0) / course.comments.length
+            : 0
 
-const getAuthorName = (course) => {
-    const user = users.value.find((item) => item.id === course.userId)
-    return user ? user.name : 'Неизвестный автор'
-}
+        return {
+            ...course,
+            authorName: author ? author.name : 'Неизвестный автор',
+            studentsCount: studentsByCourseId.value.get(course.id) || 0,
+            rating,
+        }
+    }),
+)
 
-const readFilters = (prefix) => {
-    const source = prefix === 'desktop' ? desktopFilters : mobileFilters
-
-    return {
-        level: source.level,
-        minPrice: source.minPrice === '' ? null : Number(source.minPrice),
-        maxPrice: source.maxPrice === '' ? null : Number(source.maxPrice),
-        language: source.language,
-    }
-}
-
-const render = () => {
-    if (hasLoadError.value) {
-        return
-    }
-
+const filteredCourses = computed(() => {
     const query = searchInput.value.trim().toLowerCase()
-    const filters = readFilters(isDesktop.value ? 'desktop' : 'mobile')
+    const currentFilters = normalizedFilters.value
 
-    filteredCourses.value = courses.value.filter(
+    return catalogCourses.value.filter(
         (course) =>
             (!query || course.title.toLowerCase().includes(query)) &&
-            (filters.level === 'any' || course.level === filters.level) &&
-            (filters.language === 'any' || course.language === filters.language) &&
-            (filters.minPrice === null || course.price >= filters.minPrice) &&
-            (filters.maxPrice === null || course.price <= filters.maxPrice),
+            (currentFilters.level === 'any' || course.level === currentFilters.level) &&
+            (currentFilters.language === 'any' || course.language === currentFilters.language) &&
+            (currentFilters.minPrice === null || course.price >= currentFilters.minPrice) &&
+            (currentFilters.maxPrice === null || course.price <= currentFilters.maxPrice),
     )
+})
 
-    emptyStateText.value = 'Курсы не найдены.'
-    emptyStateVisible.value = filteredCourses.value.length === 0
-}
+const emptyStateText = computed(() =>
+    hasLoadError.value ? 'Не удалось загрузить курсы.' : 'Курсы не найдены.',
+)
 
-const handleSearchSubmit = () => {
-    render()
-}
+const emptyStateVisible = computed(() =>
+    hasLoadError.value || filteredCourses.value.length === 0,
+)
 
-const applyDesktopFilters = () => {
-    render()
-}
-
-const applyMobileFilters = () => {
-    render()
-}
-
-const handleViewportChange = (event) => {
-    isDesktop.value = event.matches
-    render()
-}
-
-const init = async () => {
+const loadData = async () => {
     try {
         courses.value = await coursesApi.getAll()
         users.value = await usersApi.getAll()
-        render()
     } catch {
         hasLoadError.value = true
-        filteredCourses.value = []
-        emptyStateText.value = 'Не удалось загрузить курсы.'
-        emptyStateVisible.value = true
     }
 }
 
@@ -118,28 +102,7 @@ onMounted(() => {
         )
     }
 
-    mediaQuery = window.matchMedia('(min-width: 768px)')
-    isDesktop.value = mediaQuery.matches
-
-    if (mediaQuery.addEventListener) {
-        mediaQuery.addEventListener('change', handleViewportChange)
-    } else {
-        mediaQuery.addListener(handleViewportChange)
-    }
-
-    init()
-})
-
-onBeforeUnmount(() => {
-    if (!mediaQuery) {
-        return
-    }
-
-    if (mediaQuery.removeEventListener) {
-        mediaQuery.removeEventListener('change', handleViewportChange)
-    } else {
-        mediaQuery.removeListener(handleViewportChange)
-    }
+    loadData()
 })
 </script>
 
@@ -153,7 +116,7 @@ onBeforeUnmount(() => {
 
                         <div class="mb-3">
                             <label for="desktopLevel" class="form-label">Сложность</label>
-                            <select id="desktopLevel" v-model="desktopFilters.level" class="form-select">
+                            <select id="desktopLevel" v-model="filters.level" class="form-select">
                                 <option value="any">Любая</option>
                                 <option value="Начальный">Начальный</option>
                                 <option value="Средний">Средний</option>
@@ -171,7 +134,7 @@ onBeforeUnmount(() => {
                                     </label>
                                     <input
                                         id="desktopMinPrice"
-                                        v-model="desktopFilters.minPrice"
+                                        v-model="filters.minPrice"
                                         type="number"
                                         class="form-control"
                                         placeholder="От"
@@ -185,7 +148,7 @@ onBeforeUnmount(() => {
                                     </label>
                                     <input
                                         id="desktopMaxPrice"
-                                        v-model="desktopFilters.maxPrice"
+                                        v-model="filters.maxPrice"
                                         type="number"
                                         class="form-control"
                                         placeholder="До"
@@ -197,21 +160,12 @@ onBeforeUnmount(() => {
 
                         <div class="mb-3">
                             <label for="desktopLanguage" class="form-label">Язык</label>
-                            <select id="desktopLanguage" v-model="desktopFilters.language" class="form-select">
+                            <select id="desktopLanguage" v-model="filters.language" class="form-select">
                                 <option value="any">Любой</option>
                                 <option value="Русский">Русский</option>
                                 <option value="Английский">Английский</option>
                             </select>
                         </div>
-
-                        <button
-                            id="desktopApplyBtn"
-                            type="button"
-                            class="btn btn-primary w-100"
-                            @click="applyDesktopFilters"
-                        >
-                            Применить
-                        </button>
                     </div>
                 </div>
             </aside>
@@ -220,7 +174,7 @@ onBeforeUnmount(() => {
                 <h1 class="visually-hidden">Каталог курсов</h1>
 
                 <div class="sticky-top catalog-page__search">
-                    <form id="searchForm" role="search" class="input-group mb-3" @submit.prevent="handleSearchSubmit">
+                    <form id="searchForm" role="search" class="input-group mb-3" @submit.prevent>
                         <label for="searchInput" class="visually-hidden">
                             Поиск по названию курса
                         </label>
@@ -245,12 +199,6 @@ onBeforeUnmount(() => {
                             </svg>
                         </button>
 
-                        <button class="btn btn-primary" type="submit" aria-label="Искать">
-                            <svg class="default_svg" aria-hidden="true">
-                                <use href="/sprites.svg#lupa"></use>
-                            </svg>
-                            <span class="d-none d-sm-inline ms-1">Искать</span>
-                        </button>
                     </form>
                 </div>
 
@@ -271,7 +219,7 @@ onBeforeUnmount(() => {
                                 <h2 class="h5 card-title">{{ course.title }}</h2>
                                 <p class="card-text text-muted small mb-2">{{ course.description }}</p>
                                 <p class="card-text mb-1">
-                                    <strong>Автор:</strong> {{ getAuthorName(course) }}
+                                    <strong>Автор:</strong> {{ course.authorName }}
                                 </p>
                                 <p class="card-text mb-1">
                                     <strong>Уровень:</strong> {{ course.level }}
@@ -283,13 +231,13 @@ onBeforeUnmount(() => {
                                     <svg class="rating__star" aria-hidden="true">
                                         <use href="/sprites.svg#ratingStar"></use>
                                     </svg>
-                                    {{ getCourseRating(course).toFixed(1) }} / 5
+                                    {{ course.rating.toFixed(1) }} / 5
                                 </p>
                                 <p class="card-text mb-3">
                                     <svg class="card__users" aria-hidden="true">
                                         <use href="/sprites.svg#users"></use>
                                     </svg>
-                                    {{ getCourseStudents(course.id) }} участников
+                                    {{ course.studentsCount }} участников
                                 </p>
 
                                 <div class="mt-auto">
@@ -326,7 +274,7 @@ onBeforeUnmount(() => {
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="mobileLevel" class="form-label">Сложность</label>
-                        <select id="mobileLevel" v-model="mobileFilters.level" class="form-select">
+                        <select id="mobileLevel" v-model="filters.level" class="form-select">
                             <option value="any">Любая</option>
                             <option value="Начальный">Начальный</option>
                             <option value="Средний">Средний</option>
@@ -344,7 +292,7 @@ onBeforeUnmount(() => {
                                 </label>
                                 <input
                                     id="mobileMinPrice"
-                                    v-model="mobileFilters.minPrice"
+                                    v-model="filters.minPrice"
                                     type="number"
                                     class="form-control"
                                     placeholder="От"
@@ -358,7 +306,7 @@ onBeforeUnmount(() => {
                                 </label>
                                 <input
                                     id="mobileMaxPrice"
-                                    v-model="mobileFilters.maxPrice"
+                                    v-model="filters.maxPrice"
                                     type="number"
                                     class="form-control"
                                     placeholder="До"
@@ -370,7 +318,7 @@ onBeforeUnmount(() => {
 
                     <div class="mb-3">
                         <label for="mobileLanguage" class="form-label">Язык</label>
-                        <select id="mobileLanguage" v-model="mobileFilters.language" class="form-select">
+                        <select id="mobileLanguage" v-model="filters.language" class="form-select">
                             <option value="any">Любой</option>
                             <option value="Русский">Русский</option>
                             <option value="Английский">Английский</option>
@@ -380,13 +328,12 @@ onBeforeUnmount(() => {
 
                 <div class="modal-footer">
                     <button
-                        id="mobileApplyBtn"
+                        id="mobileCloseBtn"
                         type="button"
                         class="btn btn-primary"
                         data-bs-dismiss="modal"
-                        @click="applyMobileFilters"
                     >
-                        Применить
+                        Закрыть
                     </button>
                 </div>
             </div>

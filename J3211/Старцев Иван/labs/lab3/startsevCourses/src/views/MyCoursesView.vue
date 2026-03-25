@@ -55,26 +55,18 @@ const hideMessage = () => {
     }
 }
 
-const getCourseRating = (course) => {
-    if (!course.comments.length) {
-        return 0
-    }
+const studentsByCourseId = computed(() => {
+    const map = new Map()
 
-    const total = course.comments.reduce((sum, comment) => sum + comment.rating, 0)
-    return total / course.comments.length
-}
+    users.value.forEach((user) => {
+        user.learningCourseIds.forEach((courseId) => {
+            map.set(courseId, (map.get(courseId) || 0) + 1)
+        })
+    })
 
-const getCourseStudents = (courseId) =>
-    users.value.filter((user) => user.learningCourseIds.includes(courseId)).length
+    return map
+})
 
-const cloneProgram = (program = []) =>
-    program.map((section) => ({
-        title: section.title,
-        items: section.items.map((item) => ({
-            title: item.title,
-            content: item.content,
-        })),
-    }))
 
 const renumberProgram = () => {
     form.program.forEach((section, sectionIndex) => {
@@ -89,17 +81,30 @@ const renumberProgram = () => {
         })
     })
 }
-
 const myCourses = computed(() =>
-    courses.value.filter((course) => currentUser.value.createdCourseIds.includes(course.id)),
+    courses.value
+        .filter((course) => currentUser.value.createdCourseIds.includes(course.id))
+        .map((course) => {
+            const rating = course.comments.length
+                ? course.comments.reduce((sum, comment) => sum + comment.rating, 0) / course.comments.length
+                : 0
+            const studentsCount = studentsByCourseId.value.get(course.id) || 0
+
+            return {
+                ...course,
+                rating,
+                studentsCount,
+                revenue: studentsCount * course.price,
+            }
+        }),
 )
 
 const studentsCount = computed(() =>
-    myCourses.value.reduce((sum, course) => sum + getCourseStudents(course.id), 0),
+    myCourses.value.reduce((sum, course) => sum + course.studentsCount, 0),
 )
 
 const revenue = computed(() =>
-    myCourses.value.reduce((sum, course) => sum + getCourseStudents(course.id) * course.price, 0),
+    myCourses.value.reduce((sum, course) => sum + course.revenue, 0),
 )
 
 const modalTitle = computed(() =>
@@ -117,6 +122,15 @@ const resetForm = () => {
     form.image = ''
     form.program = [getEmptySection()]
 }
+
+const cloneProgram = (program) =>
+    program.map((section) => ({
+        title: section.title,
+        items: section.items.map((item) => ({
+            title: item.title,
+            content: item.content,
+        })),
+    }))
 
 const fillForm = (course) => {
     editingCourseId.value = course.id
@@ -335,12 +349,12 @@ onMounted(async () => {
                         <div class="card-body">
                             <h2 class="h6 mb-2">{{ course.title }}</h2>
                             <p class="small text-muted mb-1">{{ currentUser.name }}</p>
-                            <p class="small mb-1">Рейтинг: <strong>{{ getCourseRating(course).toFixed(1) }} / 5</strong></p>
+                            <p class="small mb-1">Рейтинг: <strong>{{ course.rating.toFixed(1) }} / 5</strong></p>
                             <p class="small mb-1">Цена: <strong>{{ course.price }} ₽</strong></p>
-                            <p class="small mb-1">Учеников: <strong>{{ getCourseStudents(course.id) }}</strong></p>
+                            <p class="small mb-1">Учеников: <strong>{{ course.studentsCount }}</strong></p>
                             <p class="small mb-3">
                                 Выручка:
-                                <strong>{{ getCourseStudents(course.id) * course.price }} ₽</strong>
+                                <strong>{{ course.revenue }} ₽</strong>
                             </p>
 
                             <div class="d-flex gap-1">
