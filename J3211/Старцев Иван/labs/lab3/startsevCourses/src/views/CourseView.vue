@@ -205,30 +205,12 @@ onMounted(async () => {
                         </div>
                     </div>
 
-                    <div class="card mt-4">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h2 class="h5 mb-0">Комментарии</h2>
-
-                            <button
-                                v-if="commentButtonVisible"
-                                type="button"
-                                class="btn btn-primary btn-sm px-2 px-sm-3"
-                                data-bs-toggle="modal"
-                                data-bs-target="#commentModal"
-                                :aria-label="commentButtonText"
-                                @click="handleOpenCommentModal"
-                            >
-                                <svg class="default_svg" aria-hidden="true">
-                                    <use href="/sprites.svg#chat"></use>
-                                </svg>
-                                <span class="d-none d-sm-inline ms-1">{{ commentButtonText }}</span>
-                            </button>
-                        </div>
-
-                        <div class="card-body">
-                            <CommentsList :comments="commentsWithAuthors" />
-                        </div>
-                    </div>
+                    <CommentsList
+                        :comments="commentsWithAuthors"
+                        :button-visible="commentButtonVisible"
+                        :button-text="commentButtonText"
+                        @open-comment="handleOpenCommentModal"
+                    />
                 </section>
 
                 <aside class="col-12 col-lg-4">
