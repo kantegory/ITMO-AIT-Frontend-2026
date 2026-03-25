@@ -1,8 +1,8 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
-import { coursesApi } from '@/api'
-import { useSessionStore } from '@/stores/session'
+import { useCourses } from '@/composables/useCourses'
+import { useCoursesStore } from '@/stores/courses'
 
 const props = defineProps({
     id: {
@@ -12,10 +12,11 @@ const props = defineProps({
 })
 
 const router = useRouter()
-const sessionStore = useSessionStore()
+const coursesStore = useCoursesStore()
+const { getCourseById, isLearningCourse } = useCourses()
 
 const courseId = Number(props.id)
-const course = ref(null)
+const course = computed(() => getCourseById(courseId))
 const errorText = ref('')
 
 const state = reactive({
@@ -62,12 +63,19 @@ const isCurrentLesson = (sectionIndex, itemIndex) =>
     sectionIndex === state.section && itemIndex === state.item
 
 const init = async () => {
-    if (!courseId || !sessionStore.currentUser.learningCourseIds.includes(courseId)) {
+    await coursesStore.loadCourses()
+
+    if (!courseId || !isLearningCourse(courseId)) {
         await router.replace('/my-learning')
         return
     }
 
-    course.value = await coursesApi.getById(courseId)
+    if (!course.value) {
+        errorText.value = 'Курс не найден.'
+        document.title = 'Обучение'
+        return
+    }
+
     updatePageMeta()
 }
 
@@ -75,7 +83,7 @@ onMounted(async () => {
     try {
         await init()
     } catch {
-        errorText.value = 'Не удалось загрузить урок.'
+        errorText.value = coursesStore.error || 'Не удалось загрузить урок.'
         document.title = 'Обучение'
     }
 })
@@ -125,10 +133,10 @@ onMounted(async () => {
                                         <button
                                             type="button"
                                             :class="[
-                        'list-group-item',
-                        'list-group-item-action',
-                        isCurrentLesson(sectionIndex, itemIndex) ? 'active' : '',
-                      ]"
+                                                'list-group-item',
+                                                'list-group-item-action',
+                                                isCurrentLesson(sectionIndex, itemIndex) ? 'active' : '',
+                                            ]"
                                             :aria-current="isCurrentLesson(sectionIndex, itemIndex) ? 'location' : null"
                                             @click="selectLesson(sectionIndex, itemIndex)"
                                         >
@@ -219,10 +227,10 @@ onMounted(async () => {
                                             type="button"
                                             data-bs-dismiss="modal"
                                             :class="[
-                        'list-group-item',
-                        'list-group-item-action',
-                        isCurrentLesson(sectionIndex, itemIndex) ? 'active' : '',
-                      ]"
+                                                'list-group-item',
+                                                'list-group-item-action',
+                                                isCurrentLesson(sectionIndex, itemIndex) ? 'active' : '',
+                                            ]"
                                             :aria-current="isCurrentLesson(sectionIndex, itemIndex) ? 'location' : null"
                                             @click="selectLesson(sectionIndex, itemIndex)"
                                         >

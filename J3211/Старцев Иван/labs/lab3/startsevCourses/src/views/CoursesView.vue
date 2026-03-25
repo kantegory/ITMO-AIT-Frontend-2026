@@ -1,12 +1,13 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import { coursesApi, usersApi } from '@/api'
+import { useCourses } from '@/composables/useCourses'
+import { useCoursesStore } from '@/stores/courses'
 
-const courses = ref([])
-const users = ref([])
+const coursesStore = useCoursesStore()
+const { catalogCourses } = useCourses()
+
 const searchInput = ref('')
-const hasLoadError = ref(false)
 
 const filters = reactive({
     level: 'any',
@@ -21,44 +22,6 @@ const normalizedFilters = computed(() => ({
     maxPrice: filters.maxPrice === '' ? null : Number(filters.maxPrice),
     language: filters.language,
 }))
-
-const usersById = computed(() => {
-    const map = new Map()
-
-    users.value.forEach((user) => {
-        map.set(user.id, user)
-    })
-
-    return map
-})
-
-const studentsByCourseId = computed(() => {
-    const map = new Map()
-
-    users.value.forEach((user) => {
-        user.learningCourseIds.forEach((courseId) => {
-            map.set(courseId, (map.get(courseId) || 0) + 1)
-        })
-    })
-
-    return map
-})
-
-const catalogCourses = computed(() =>
-    courses.value.map((course) => {
-        const author = usersById.value.get(course.userId)
-        const rating = course.comments.length
-            ? course.comments.reduce((sum, comment) => sum + comment.rating, 0) / course.comments.length
-            : 0
-
-        return {
-            ...course,
-            authorName: author ? author.name : 'Неизвестный автор',
-            studentsCount: studentsByCourseId.value.get(course.id) || 0,
-            rating,
-        }
-    }),
-)
 
 const filteredCourses = computed(() => {
     const query = searchInput.value.trim().toLowerCase()
@@ -75,23 +38,18 @@ const filteredCourses = computed(() => {
 })
 
 const emptyStateText = computed(() =>
-    hasLoadError.value ? 'Не удалось загрузить курсы.' : 'Курсы не найдены.',
+    coursesStore.error || 'Курсы не найдены.',
 )
 
 const emptyStateVisible = computed(() =>
-    hasLoadError.value || filteredCourses.value.length === 0,
+    Boolean(coursesStore.error) || (!coursesStore.isLoading && filteredCourses.value.length === 0),
 )
 
-const loadData = async () => {
-    try {
-        courses.value = await coursesApi.getAll()
-        users.value = await usersApi.getAll()
-    } catch {
-        hasLoadError.value = true
-    }
-}
+const emptyStateType = computed(() =>
+    coursesStore.error ? 'danger' : 'secondary',
+)
 
-onMounted(() => {
+onMounted(async () => {
     document.title = 'Курсы'
 
     const metaDescription = document.querySelector('meta[name="description"]')
@@ -102,7 +60,9 @@ onMounted(() => {
         )
     }
 
-    loadData()
+    try {
+        await coursesStore.loadCourses(true)
+    } catch {}
 })
 </script>
 
@@ -198,11 +158,14 @@ onMounted(() => {
                                 <use href="/sprites.svg#funnel"></use>
                             </svg>
                         </button>
-
                     </form>
                 </div>
 
-                <div v-if="emptyStateVisible" class="alert alert-secondary" role="alert">
+                <div
+                    v-if="emptyStateVisible"
+                    :class="`alert alert-${emptyStateType}`"
+                    role="alert"
+                >
                     {{ emptyStateText }}
                 </div>
 

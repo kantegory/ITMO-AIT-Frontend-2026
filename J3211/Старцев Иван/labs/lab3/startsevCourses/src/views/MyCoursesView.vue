@@ -1,15 +1,17 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import { coursesApi, usersApi } from '@/api'
+import { useCourses } from '@/composables/useCourses'
+import { useCoursesStore } from '@/stores/courses'
 import { useSessionStore } from '@/stores/session'
 
 const sessionStore = useSessionStore()
+const coursesStore = useCoursesStore()
+const { myCourses, getCourseById } = useCourses()
+
 const currentUser = computed(() => sessionStore.currentUser)
 
 const courseModal = ref(null)
-const users = ref([])
-const courses = ref([])
 const editingCourseId = ref(null)
 
 const pageAlert = ref({
@@ -55,19 +57,6 @@ const hideMessage = () => {
     }
 }
 
-const studentsByCourseId = computed(() => {
-    const map = new Map()
-
-    users.value.forEach((user) => {
-        user.learningCourseIds.forEach((courseId) => {
-            map.set(courseId, (map.get(courseId) || 0) + 1)
-        })
-    })
-
-    return map
-})
-
-
 const renumberProgram = () => {
     form.program.forEach((section, sectionIndex) => {
         if (/^Раздел \d+$/.test(section.title.trim())) {
@@ -81,30 +70,13 @@ const renumberProgram = () => {
         })
     })
 }
-const myCourses = computed(() =>
-    courses.value
-        .filter((course) => currentUser.value.createdCourseIds.includes(course.id))
-        .map((course) => {
-            const rating = course.comments.length
-                ? course.comments.reduce((sum, comment) => sum + comment.rating, 0) / course.comments.length
-                : 0
-            const studentsCount = studentsByCourseId.value.get(course.id) || 0
-
-            return {
-                ...course,
-                rating,
-                studentsCount,
-                revenue: studentsCount * course.price,
-            }
-        }),
-)
 
 const studentsCount = computed(() =>
     myCourses.value.reduce((sum, course) => sum + course.studentsCount, 0),
 )
 
 const revenue = computed(() =>
-    myCourses.value.reduce((sum, course) => sum + course.revenue, 0),
+    myCourses.value.reduce((sum, course) => sum + course.studentsCount * course.price, 0),
 )
 
 const modalTitle = computed(() =>
@@ -123,7 +95,7 @@ const resetForm = () => {
     form.program = [getEmptySection()]
 }
 
-const cloneProgram = (program) =>
+const cloneProgram = (program = []) =>
     program.map((section) => ({
         title: section.title,
         items: section.items.map((item) => ({
@@ -194,11 +166,6 @@ const getProgram = () =>
         })),
     }))
 
-const loadData = async () => {
-    courses.value = await coursesApi.getAll()
-    users.value = await usersApi.getAll()
-}
-
 const handleSubmit = async () => {
     hideMessage()
 
@@ -218,14 +185,14 @@ const handleSubmit = async () => {
 
     try {
         if (isEditing) {
-            const currentCourse = courses.value.find((course) => course.id === editingCourseId.value)
+            const currentCourse = getCourseById(editingCourseId.value)
 
-            await coursesApi.update(editingCourseId.value, {
+            await coursesStore.updateCourse(editingCourseId.value, {
                 ...payload,
                 comments: currentCourse ? currentCourse.comments : [],
             })
         } else {
-            const createdCourse = await coursesApi.create({
+            const createdCourse = await coursesStore.createCourse({
                 ...payload,
                 comments: [],
             })
@@ -235,7 +202,6 @@ const handleSubmit = async () => {
             })
         }
 
-        await loadData()
         resetForm()
 
         const modal = window.bootstrap?.Modal.getOrCreateInstance(courseModal.value)
@@ -262,10 +228,10 @@ onMounted(async () => {
     }
 
     try {
-        await loadData()
+        await coursesStore.loadCourses()
         resetForm()
     } catch {
-        showMessage('danger', 'Не удалось загрузить мои курсы.')
+        showMessage('danger', coursesStore.error || 'Не удалось загрузить мои курсы.')
     }
 })
 </script>
@@ -354,7 +320,7 @@ onMounted(async () => {
                             <p class="small mb-1">Учеников: <strong>{{ course.studentsCount }}</strong></p>
                             <p class="small mb-3">
                                 Выручка:
-                                <strong>{{ course.revenue }} ₽</strong>
+                                <strong>{{ course.studentsCount * course.price }} ₽</strong>
                             </p>
 
                             <div class="d-flex gap-1">

@@ -6,10 +6,12 @@ import { usePreferencesStore } from '@/stores/preferences'
 import { useSessionStore } from '@/stores/session'
 import './assets/main.css'
 
-const preferencesStore = usePreferencesStore(store)
-const sessionStore = useSessionStore(store)
+const app = createApp(App)
+app.use(store)
+const preferencesStore = usePreferencesStore()
+const sessionStore = useSessionStore()
 
 preferencesStore.initTheme()
 await sessionStore.restoreSession()
 
-createApp(App).use(store).use(router).mount('#app')
+app.use(router).mount('#app')

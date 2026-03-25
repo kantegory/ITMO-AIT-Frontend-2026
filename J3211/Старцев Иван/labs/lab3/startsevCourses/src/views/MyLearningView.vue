@@ -1,56 +1,35 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import { coursesApi } from '@/api'
-import { useSessionStore } from '@/stores/session'
+import { useCourses } from '@/composables/useCourses'
+import { useCoursesStore } from '@/stores/courses'
 
-const sessionStore = useSessionStore()
-const currentUser = computed(() => sessionStore.currentUser)
+const coursesStore = useCoursesStore()
+const { myLearningCourses } = useCourses()
 
-const allCourses = ref([])
 const searchInput = ref('')
-const hasLoadError = ref(false)
-
-const learningCourses = computed(() =>
-    allCourses.value
-        .filter((course) => currentUser.value.learningCourseIds.includes(course.id))
-        .map((course) => ({
-            ...course,
-            rating: course.comments.length
-                ? course.comments.reduce((sum, comment) => sum + comment.rating, 0) / course.comments.length
-                : 0,
-        })),
-)
 
 const filteredCourses = computed(() => {
     const query = searchInput.value.trim().toLowerCase()
 
-    return learningCourses.value.filter(
+    return myLearningCourses.value.filter(
         (course) => !query || course.title.toLowerCase().includes(query),
     )
 })
 
 const emptyStateVisible = computed(() =>
-    hasLoadError.value || filteredCourses.value.length === 0,
+    Boolean(coursesStore.error) || (!coursesStore.isLoading && filteredCourses.value.length === 0),
 )
 
 const emptyStateText = computed(() =>
-    hasLoadError.value ? 'Не удалось загрузить информацию.' : 'Курсы не найдены.',
+    coursesStore.error || 'Курсы не найдены.',
 )
 
 const emptyStateType = computed(() =>
-    hasLoadError.value ? 'danger' : 'secondary',
+    coursesStore.error ? 'danger' : 'secondary',
 )
 
-const loadData = async () => {
-    try {
-        allCourses.value = await coursesApi.getAll()
-    } catch {
-        hasLoadError.value = true
-    }
-}
-
-onMounted(() => {
+onMounted(async () => {
     document.title = 'Моё обучение'
 
     const metaDescription = document.querySelector('meta[name="description"]')
@@ -58,7 +37,9 @@ onMounted(() => {
         metaDescription.setAttribute('content', 'Ваши активные курсы.')
     }
 
-    loadData()
+    try {
+        await coursesStore.loadCourses()
+    } catch {}
 })
 </script>
 

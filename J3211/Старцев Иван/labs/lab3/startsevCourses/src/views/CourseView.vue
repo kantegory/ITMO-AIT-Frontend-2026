@@ -1,7 +1,8 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
-import { coursesApi, usersApi } from '@/api'
+import { useCourses } from '@/composables/useCourses'
+import { useCoursesStore } from '@/stores/courses'
 import { useSessionStore } from '@/stores/session'
 
 const props = defineProps({
@@ -13,12 +14,13 @@ const props = defineProps({
 
 const router = useRouter()
 const sessionStore = useSessionStore()
+const coursesStore = useCoursesStore()
 
 const currentUser = computed(() => sessionStore.currentUser)
+const { getCourseById, usersById, isLearningCourse } = useCourses()
 
 const courseId = Number(props.id)
-const course = ref(null)
-const users = ref([])
+const course = computed(() => getCourseById(courseId))
 const commentModal = ref(null)
 
 const message = ref({
@@ -48,48 +50,24 @@ const hideMessage = () => {
     }
 }
 
-const usersById = computed(() => {
-    const map = new Map()
-
-    users.value.forEach((user) => {
-        map.set(user.id, user)
-    })
-
-    return map
-})
-
-const studentCount = computed(() => {
-    return users.value.filter((user) => user.learningCourseIds.includes(course.value.id)).length
-})
-
-const courseRating = computed(() => {
-    if (!course.value.comments.length) {
-        return 0
+const commentsWithAuthors = computed(() => {
+    if (!course.value) {
+        return []
     }
 
-    const total = course.value.comments.reduce((sum, comment) => sum + comment.rating, 0)
-    return total / course.value.comments.length
-})
-
-const authorName = computed(() => {
-    const author = usersById.value.get(course.value.userId)
-    return author ? author.name : 'Неизвестный автор'
-})
-
-const courseDescriptionText = computed(() =>
-    course.value.fullDescription || course.value.description,
-)
-
-const commentsWithAuthors = computed(() =>
-    course.value.comments.map((comment) => ({
+    return course.value.comments.map((comment) => ({
         ...comment,
         authorName: usersById.value.get(comment.userId)?.name || 'Неизвестный пользователь',
-    })),
-)
+    }))
+})
 
-const currentComment = computed(() =>
-    course.value.comments.find((comment) => comment.userId === currentUser.value.id) || null,
-)
+const currentComment = computed(() => {
+    if (!course.value || !currentUser.value) {
+        return null
+    }
+
+    return course.value.comments.find((comment) => comment.userId === currentUser.value.id) || null
+})
 
 const commentButtonVisible = computed(() => Boolean(currentUser.value))
 
@@ -102,11 +80,15 @@ const submitCommentText = computed(() =>
 )
 
 const startLearningText = computed(() => {
-    if (currentUser.value.learningCourseIds.includes(course.value.id)) {
-        return 'Продолжить обучение'
+    if (!course.value) {
+        return 'Начать обучение'
     }
 
-    return 'Начать обучение'
+    if (!currentUser.value) {
+        return 'Войти для обучения'
+    }
+
+    return isLearningCourse(course.value.id) ? 'Продолжить обучение' : 'Начать обучение'
 })
 
 const fillCommentForm = () => {
@@ -127,12 +109,10 @@ const handleOpenCommentModal = () => {
 const handleCommentSubmit = async () => {
     hideMessage()
 
-    const text = commentForm.text.trim()
-
     const nextComment = {
         userId: currentUser.value.id,
         rating: Number(commentForm.rating),
-        text,
+        text: commentForm.text.trim(),
     }
 
     const isEditing = Boolean(currentComment.value)
@@ -143,7 +123,7 @@ const handleCommentSubmit = async () => {
         : [...course.value.comments, nextComment]
 
     try {
-        course.value = await coursesApi.update(course.value.id, {
+        await coursesStore.updateCourse(course.value.id, {
             comments: nextComments,
         })
 
@@ -165,7 +145,12 @@ const handleCommentSubmit = async () => {
 const handleStartLearning = async () => {
     hideMessage()
 
-    if (currentUser.value.learningCourseIds.includes(course.value.id)) {
+    if (!currentUser.value) {
+        await router.push('/login')
+        return
+    }
+
+    if (isLearningCourse(course.value.id)) {
         await router.push({ name: 'lesson', params: { id: course.value.id } })
         return
     }
@@ -182,10 +167,15 @@ const handleStartLearning = async () => {
 }
 
 const loadPage = async () => {
-    course.value = await coursesApi.getById(courseId)
-    users.value = await usersApi.getAll()
+    await coursesStore.loadCourses()
 
-    document.title = `Курс${course.value.title ? `: ${course.value.title}` : ''}`
+    if (!course.value) {
+        showMessage('danger', 'Курс не найден.')
+        document.title = 'Курс'
+        return
+    }
+
+    document.title = `Курс: ${course.value.title}`
 
     const metaDescription = document.querySelector('meta[name="description"]')
     if (metaDescription) {
@@ -202,7 +192,7 @@ onMounted(async () => {
     try {
         await loadPage()
     } catch {
-        showMessage('danger', 'Не удалось загрузить курс.')
+        showMessage('danger', coursesStore.error || 'Не удалось загрузить курс.')
     }
 })
 </script>
@@ -233,7 +223,7 @@ onMounted(async () => {
                         <img :src="course.image" :alt="course.title" class="card-img-top">
                         <div class="card-body">
                             <h1 class="h3 mb-3">{{ course.title }}</h1>
-                            <p class="mb-0">{{ courseDescriptionText }}</p>
+                            <p class="mb-0">{{ course.fullDescription || course.description }}</p>
                         </div>
                     </div>
 
@@ -275,11 +265,11 @@ onMounted(async () => {
                                         <header class="d-flex justify-content-between gap-2">
                                             <strong>{{ comment.authorName }}</strong>
                                             <span>
-                        <svg class="rating__star" aria-hidden="true">
-                          <use href="/sprites.svg#ratingStar"></use>
-                        </svg>
-                        {{ comment.rating }}/5
-                      </span>
+                                                <svg class="rating__star" aria-hidden="true">
+                                                    <use href="/sprites.svg#ratingStar"></use>
+                                                </svg>
+                                                {{ comment.rating }}/5
+                                            </span>
                                         </header>
                                         <p class="mb-0 mt-1">{{ comment.text }}</p>
                                     </article>
@@ -297,7 +287,7 @@ onMounted(async () => {
                             <dl class="mb-3">
                                 <div class="mb-2">
                                     <dt class="mb-2"><strong>Автор:</strong></dt>
-                                    <dd>{{ authorName }}</dd>
+                                    <dd>{{ course.authorName }}</dd>
                                 </div>
 
                                 <div class="mb-2">
@@ -306,13 +296,13 @@ onMounted(async () => {
                                         <svg class="rating__star" aria-hidden="true">
                                             <use href="/sprites.svg#ratingStar"></use>
                                         </svg>
-                                        {{ courseRating.toFixed(1) }} / 5
+                                        {{ course.rating.toFixed(1) }} / 5
                                     </dd>
                                 </div>
 
                                 <div class="mb-2">
                                     <dt class="mb-2"><strong>Участники:</strong></dt>
-                                    <dd>{{ studentCount }} человек</dd>
+                                    <dd>{{ course.studentsCount }} человек</dd>
                                 </div>
 
                                 <div class="mb-2">
