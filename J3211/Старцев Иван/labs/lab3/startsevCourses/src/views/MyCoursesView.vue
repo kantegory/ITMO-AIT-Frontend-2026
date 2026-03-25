@@ -2,6 +2,7 @@
 import { computed, onMounted, reactive, ref } from 'vue'
 import AppAlert from '@/components/AppAlert.vue'
 import MyCourseCard from '@/components/MyCourseCard.vue'
+import MyCoursesStats from '@/components/myCoursesStats.vue'
 import { useAlert } from '@/composables/useAlert'
 import { useCourses } from '@/composables/useCourses'
 import { usePageMeta } from '@/composables/usePageMeta'
@@ -61,6 +62,21 @@ const studentsCount = computed(() =>
 const revenue = computed(() =>
     myCourses.value.reduce((sum, course) => sum + course.studentsCount * course.price, 0),
 )
+
+const stats = computed(() => [
+    {
+        title: 'Создано курсов',
+        value: myCourses.value.length,
+    },
+    {
+        title: 'Учеников на курсах',
+        value: studentsCount.value,
+    },
+    {
+        title: 'Выручка',
+        value: `${revenue.value} ₽`,
+    },
+])
 
 const modalTitle = computed(() =>
     editingCourseId.value ? 'Редактировать курс' : 'Создать курс',
@@ -239,37 +255,15 @@ onMounted(async () => {
             </div>
 
             <div class="row g-3 mb-3">
-                <div class="col-12 col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <dl class="mb-2">
-                                <dt class="text-muted mb-1">Создано курсов</dt>
-                                <dd class="h3 mb-0">{{ myCourses.length }}</dd>
-                            </dl>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <dl class="mb-2">
-                                <dt class="text-muted mb-1">Учеников на курсах</dt>
-                                <dd class="h3 mb-0">{{ studentsCount }}</dd>
-                            </dl>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <dl class="mb-2">
-                                <dt class="text-muted mb-1">Выручка</dt>
-                                <dd class="h3 mb-0">{{ revenue }} ₽</dd>
-                            </dl>
-                        </div>
-                    </div>
+                <div
+                    v-for="stat in stats"
+                    :key="stat.title"
+                    class="col-12 col-md-4"
+                >
+                    <MyCoursesStats
+                        :title="stat.title"
+                        :value="stat.value"
+                    />
                 </div>
             </div>
 
