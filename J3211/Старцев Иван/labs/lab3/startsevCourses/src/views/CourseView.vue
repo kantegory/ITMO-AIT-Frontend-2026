@@ -1,7 +1,9 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import AppAlert from '@/components/AppAlert.vue'
+import CommentsList from '@/components/commentsList.vue'
+import CreateCommentModal from '@/components/createCommentModal.vue'
 import { useAlert } from '@/composables/useAlert'
 import { useCourses } from '@/composables/useCourses'
 import { usePageMeta } from '@/composables/usePageMeta'
@@ -26,7 +28,6 @@ const { getCourseById, usersById, isLearningCourse } = useCourses()
 
 const courseId = Number(props.id)
 const course = computed(() => getCourseById(courseId))
-const commentModal = ref(null)
 
 const commentForm = reactive({
     rating: '5',
@@ -110,7 +111,7 @@ const handleCommentSubmit = async () => {
             comments: nextComments,
         })
 
-        const modal = window.bootstrap?.Modal.getInstance(commentModal.value)
+        const modal = window.bootstrap?.Modal.getInstance(document.getElementById('commentModal'))
 
         if (modal) {
             modal.hide()
@@ -225,33 +226,7 @@ onMounted(async () => {
                         </div>
 
                         <div class="card-body">
-                            <ul class="list-group list-group-flush">
-                                <li
-                                    v-if="!commentsWithAuthors.length"
-                                    class="list-group-item px-0 text-muted"
-                                >
-                                    Пока нет комментариев.
-                                </li>
-
-                                <li
-                                    v-for="comment in commentsWithAuthors"
-                                    :key="comment.userId"
-                                    class="list-group-item px-0"
-                                >
-                                    <article>
-                                        <header class="d-flex justify-content-between gap-2">
-                                            <strong>{{ comment.authorName }}</strong>
-                                            <span>
-                                                <svg class="rating__star" aria-hidden="true">
-                                                    <use href="/sprites.svg#ratingStar"></use>
-                                                </svg>
-                                                {{ comment.rating }}/5
-                                            </span>
-                                        </header>
-                                        <p class="mb-0 mt-1">{{ comment.text }}</p>
-                                    </article>
-                                </li>
-                            </ul>
+                            <CommentsList :comments="commentsWithAuthors" />
                         </div>
                     </div>
                 </section>
@@ -360,60 +335,12 @@ onMounted(async () => {
         </div>
     </main>
 
-    <div
-        id="commentModal"
-        ref="commentModal"
-        class="modal fade"
-        tabindex="-1"
-        aria-labelledby="commentModalLabel"
-        aria-hidden="true"
-    >
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 id="commentModalLabel" class="modal-title fs-5">
-                        {{ commentButtonText }}
-                    </h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                </div>
+    <CreateCommentModal
+        :title="commentButtonText"
+        :submit-text="submitCommentText"
+        @submit="handleCommentSubmit"
+        v-model:rating="commentForm.rating"
+        v-model:text="commentForm.text"
+    />
 
-                <div class="modal-body">
-                    <form id="commentForm" @submit.prevent="handleCommentSubmit">
-                        <div class="mb-3">
-                            <label for="commentRating" class="form-label">Оценка</label>
-                            <select id="commentRating" v-model="commentForm.rating" class="form-select" name="rating">
-                                <option value="5">5</option>
-                                <option value="4">4</option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label for="commentText" class="form-label">Текст комментария</label>
-                            <textarea
-                                id="commentText"
-                                v-model="commentForm.text"
-                                class="form-control"
-                                rows="4"
-                                name="text"
-                                placeholder="Напишите комментарий..."
-                                required
-                            ></textarea>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                        Отмена
-                    </button>
-                    <button type="submit" class="btn btn-primary" form="commentForm">
-                        {{ submitCommentText }}
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 </template>
