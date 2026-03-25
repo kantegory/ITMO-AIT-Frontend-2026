@@ -1,11 +1,14 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import AppAlert from '@/components/AppAlert.vue'
 import { useCourses } from '@/composables/useCourses'
+import { usePageMeta } from '@/composables/usePageMeta'
 import { useCoursesStore } from '@/stores/courses'
 
 const coursesStore = useCoursesStore()
 const { myLearningCourses } = useCourses()
+const { setPageMeta } = usePageMeta()
 
 const searchInput = ref('')
 
@@ -30,16 +33,9 @@ const emptyStateType = computed(() =>
 )
 
 onMounted(async () => {
-    document.title = 'Моё обучение'
+    setPageMeta('Моё обучение', 'Ваши активные курсы.')
 
-    const metaDescription = document.querySelector('meta[name="description"]')
-    if (metaDescription) {
-        metaDescription.setAttribute('content', 'Ваши активные курсы.')
-    }
-
-    try {
-        await coursesStore.loadCourses()
-    } catch {}
+    await coursesStore.loadCourses()
 })
 </script>
 
@@ -64,13 +60,11 @@ onMounted(async () => {
             </button>
         </form>
 
-        <div
-            v-if="emptyStateVisible"
-            :class="`alert alert-${emptyStateType}`"
-            role="alert"
-        >
-            {{ emptyStateText }}
-        </div>
+        <AppAlert
+            :visible="emptyStateVisible"
+            :type="emptyStateType"
+            :text="emptyStateText"
+        />
 
         <ul id="learningCoursesContainer" class="row g-3 list-unstyled">
             <li

@@ -1,7 +1,10 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
+import AppAlert from '@/components/AppAlert.vue'
+import { useAlert } from '@/composables/useAlert'
 import { useCourses } from '@/composables/useCourses'
+import { usePageMeta } from '@/composables/usePageMeta'
 import { useCoursesStore } from '@/stores/courses'
 import { useSessionStore } from '@/stores/session'
 
@@ -15,6 +18,8 @@ const props = defineProps({
 const router = useRouter()
 const sessionStore = useSessionStore()
 const coursesStore = useCoursesStore()
+const { alert: message, showAlert: showMessage, hideAlert: hideMessage } = useAlert()
+const { setPageMeta } = usePageMeta()
 
 const currentUser = computed(() => sessionStore.currentUser)
 const { getCourseById, usersById, isLearningCourse } = useCourses()
@@ -23,32 +28,10 @@ const courseId = Number(props.id)
 const course = computed(() => getCourseById(courseId))
 const commentModal = ref(null)
 
-const message = ref({
-    type: '',
-    text: '',
-    visible: false,
-})
-
 const commentForm = reactive({
     rating: '5',
     text: '',
 })
-
-const showMessage = (type, text) => {
-    message.value = {
-        type,
-        text,
-        visible: true,
-    }
-}
-
-const hideMessage = () => {
-    message.value = {
-        type: '',
-        text: '',
-        visible: false,
-    }
-}
 
 const commentsWithAuthors = computed(() => {
     if (!course.value) {
@@ -171,16 +154,11 @@ const loadPage = async () => {
 
     if (!course.value) {
         showMessage('danger', 'Курс не найден.')
-        document.title = 'Курс'
+        setPageMeta('Курс')
         return
     }
 
-    document.title = `Курс: ${course.value.title}`
-
-    const metaDescription = document.querySelector('meta[name="description"]')
-    if (metaDescription) {
-        metaDescription.setAttribute('content', `Информация о курсе: ${course.value.title}`)
-    }
+    setPageMeta(`Курс: ${course.value.title}`, `Информация о курсе: ${course.value.title}`)
 }
 
 onMounted(async () => {
@@ -199,13 +177,12 @@ onMounted(async () => {
 
 <template>
     <main class="container pt-2 pb-4">
-        <div
-            v-if="message.visible"
-            :class="`alert alert-${message.type} mb-3`"
-            role="alert"
-        >
-            {{ message.text }}
-        </div>
+        <AppAlert
+            :visible="message.visible"
+            :type="message.type"
+            :text="message.text"
+            class="mb-3"
+        />
 
         <div class="mb-3">
             <RouterLink to="/courses" class="btn btn-outline-dark btn-sm">

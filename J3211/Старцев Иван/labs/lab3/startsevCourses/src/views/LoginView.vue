@@ -1,6 +1,8 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
+import AppAlert from '@/components/AppAlert.vue'
+import { useAlert } from '@/composables/useAlert'
 import { useSessionStore } from '@/stores/session'
 
 const router = useRouter()
@@ -11,34 +13,14 @@ const form = reactive({
     password: '',
 })
 
-const alert = ref({
-    type: '',
-    text: '',
-    visible: false,
-})
-
-const showMessage = (type, text) => {
-    alert.value = {
-        type,
-        text,
-        visible: true,
-    }
-}
-
-const hideMessage = () => {
-    alert.value = {
-        type: '',
-        text: '',
-        visible: false,
-    }
-}
+const { alert, showAlert, hideAlert } = useAlert()
 
 const sanitizePassword = () => {
     form.password = form.password.replace(/\s/g, '')
 }
 
 const handleSubmit = async () => {
-    hideMessage()
+    hideAlert()
 
     try {
         await sessionStore.login({
@@ -48,7 +30,7 @@ const handleSubmit = async () => {
 
         await router.replace('/courses')
     } catch {
-        showMessage('danger', 'Не удалось войти.')
+        showAlert('danger', 'Не удалось войти.')
     }
 }
 </script>
@@ -62,13 +44,7 @@ const handleSubmit = async () => {
         >
             <h1 id="authTitle" class="h5 text-center mb-3">Вход</h1>
 
-            <div
-                v-if="alert.visible"
-                :class="`alert alert-${alert.type}`"
-                role="alert"
-            >
-                {{ alert.text }}
-            </div>
+            <AppAlert :visible="alert.visible" :type="alert.type" :text="alert.text" />
 
             <form @submit.prevent="handleSubmit">
                 <div class="mb-3">

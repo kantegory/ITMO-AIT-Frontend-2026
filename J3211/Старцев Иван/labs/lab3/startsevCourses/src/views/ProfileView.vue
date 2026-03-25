@@ -1,15 +1,14 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive } from 'vue'
 import { RouterLink } from 'vue-router'
+import AppAlert from '@/components/AppAlert.vue'
+import { useAlert } from '@/composables/useAlert'
+import { usePageMeta } from '@/composables/usePageMeta'
 import { useSessionStore } from '@/stores/session'
 
 const sessionStore = useSessionStore()
-
-const alert = ref({
-    type: '',
-    text: '',
-    visible: false,
-})
+const { alert, showAlert, hideAlert } = useAlert()
+const { setPageMeta } = usePageMeta()
 
 const form = reactive({
     name: '',
@@ -17,22 +16,6 @@ const form = reactive({
     avatar: '',
     password: '',
 })
-
-const showMessage = (type, text) => {
-    alert.value = {
-        type,
-        text,
-        visible: true,
-    }
-}
-
-const hideMessage = () => {
-    alert.value = {
-        type: '',
-        text: '',
-        visible: false,
-    }
-}
 
 const sanitizePassword = () => {
     form.password = form.password.replace(/\s/g, '')
@@ -46,7 +29,7 @@ const fillForm = () => {
 }
 
 const handleSubmit = async () => {
-    hideMessage()
+    hideAlert()
 
     const payload = {
         name: form.name.trim(),
@@ -61,7 +44,7 @@ const handleSubmit = async () => {
     try {
         await sessionStore.patchCurrentUser(payload)
         fillForm()
-        showMessage('success', 'Профиль обновлен.')
+        showAlert('success', 'Профиль обновлен.')
 
         const modal = window.bootstrap?.Modal.getInstance(document.getElementById('editProfileModal'))
 
@@ -69,18 +52,12 @@ const handleSubmit = async () => {
             modal.hide()
         }
     } catch {
-        showMessage('danger', 'Не удалось сохранить изменения.')
+        showAlert('danger', 'Не удалось сохранить изменения.')
     }
 }
 
 onMounted(() => {
-    document.title = 'Профиль'
-
-    const metaDescription = document.querySelector('meta[name="description"]')
-    if (metaDescription) {
-        metaDescription.setAttribute('content', 'Профиль пользователя.')
-    }
-
+    setPageMeta('Профиль', 'Профиль пользователя.')
     fillForm()
 })
 </script>
@@ -88,13 +65,7 @@ onMounted(() => {
 <template>
     <main class="py-4">
         <div class="container">
-            <div
-                v-if="alert.visible"
-                :class="`alert alert-${alert.type} mb-4`"
-                role="alert"
-            >
-                {{ alert.text }}
-            </div>
+            <AppAlert :visible="alert.visible" :type="alert.type" :text="alert.text" class="mb-4" />
 
             <div class="row g-4">
                 <div class="col-12 col-lg-8">

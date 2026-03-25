@@ -1,11 +1,14 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import AppAlert from '@/components/AppAlert.vue'
 import { useCourses } from '@/composables/useCourses'
+import { usePageMeta } from '@/composables/usePageMeta'
 import { useCoursesStore } from '@/stores/courses'
 
 const coursesStore = useCoursesStore()
 const { catalogCourses } = useCourses()
+const { setPageMeta } = usePageMeta()
 
 const searchInput = ref('')
 
@@ -50,19 +53,10 @@ const emptyStateType = computed(() =>
 )
 
 onMounted(async () => {
-    document.title = 'Курсы'
+    setPageMeta('Курсы', 'Большая коллекция онлайн курсов на любую тему для любого уровня')
 
-    const metaDescription = document.querySelector('meta[name="description"]')
-    if (metaDescription) {
-        metaDescription.setAttribute(
-            'content',
-            'Большая коллекция онлайн курсов на любую тему для любого уровня',
-        )
-    }
 
-    try {
-        await coursesStore.loadCourses(true)
-    } catch {}
+    await coursesStore.loadCourses(true)
 })
 </script>
 
@@ -161,13 +155,11 @@ onMounted(async () => {
                     </form>
                 </div>
 
-                <div
-                    v-if="emptyStateVisible"
-                    :class="`alert alert-${emptyStateType}`"
-                    role="alert"
-                >
-                    {{ emptyStateText }}
-                </div>
+                <AppAlert
+                    :visible="emptyStateVisible"
+                    :type="emptyStateType"
+                    :text="emptyStateText"
+                />
 
                 <ul id="coursesContainer" class="row g-3 list-unstyled">
                     <li

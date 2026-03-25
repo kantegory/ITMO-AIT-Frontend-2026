@@ -1,7 +1,9 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
+import AppAlert from '@/components/AppAlert.vue'
 import { useCourses } from '@/composables/useCourses'
+import { usePageMeta } from '@/composables/usePageMeta'
 import { useCoursesStore } from '@/stores/courses'
 
 const props = defineProps({
@@ -14,6 +16,7 @@ const props = defineProps({
 const router = useRouter()
 const coursesStore = useCoursesStore()
 const { getCourseById, isLearningCourse } = useCourses()
+const { setPageMeta } = usePageMeta()
 
 const courseId = Number(props.id)
 const course = computed(() => getCourseById(courseId))
@@ -44,13 +47,10 @@ const updatePageMeta = () => {
     if (!course.value) {
         return
     }
-
-    const metaDescription = document.querySelector('meta[name="description"]')
-    if (metaDescription) {
-        metaDescription.setAttribute('content', `Информация о курсе: ${course.value.title}`)
-    }
-
-    document.title = currentLesson.value ? currentLesson.value.title : 'Обучение'
+    setPageMeta(
+        currentLesson.value ? currentLesson.value.title : 'Обучение',
+        `Информация о курсе: ${course.value.title}`,
+    )
 }
 
 const selectLesson = (sectionIndex, itemIndex) => {
@@ -72,7 +72,7 @@ const init = async () => {
 
     if (!course.value) {
         errorText.value = 'Курс не найден.'
-        document.title = 'Обучение'
+        setPageMeta('Обучение')
         return
     }
 
@@ -84,16 +84,14 @@ onMounted(async () => {
         await init()
     } catch {
         errorText.value = coursesStore.error || 'Не удалось загрузить урок.'
-        document.title = 'Обучение'
+        setPageMeta('Обучение')
     }
 })
 </script>
 
 <template>
     <main class="container-fluid pt-2 pb-3">
-        <div v-if="errorText" class="alert alert-danger" role="alert">
-            {{ errorText }}
-        </div>
+        <AppAlert v-if="errorText" type="danger" :text="errorText" />
 
         <div v-else-if="course" class="row g-3">
             <aside class="d-none d-lg-block col-lg-4 col-xl-3">

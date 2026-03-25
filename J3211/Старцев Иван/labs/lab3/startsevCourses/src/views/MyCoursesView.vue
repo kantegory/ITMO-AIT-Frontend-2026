@@ -1,24 +1,23 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import AppAlert from '@/components/AppAlert.vue'
+import { useAlert } from '@/composables/useAlert'
 import { useCourses } from '@/composables/useCourses'
+import { usePageMeta } from '@/composables/usePageMeta'
 import { useCoursesStore } from '@/stores/courses'
 import { useSessionStore } from '@/stores/session'
 
 const sessionStore = useSessionStore()
 const coursesStore = useCoursesStore()
 const { myCourses, getCourseById } = useCourses()
+const { alert: pageAlert, showAlert: showMessage, hideAlert: hideMessage } = useAlert()
+const { setPageMeta } = usePageMeta()
 
 const currentUser = computed(() => sessionStore.currentUser)
 
 const courseModal = ref(null)
 const editingCourseId = ref(null)
-
-const pageAlert = ref({
-    type: '',
-    text: '',
-    visible: false,
-})
 
 const getEmptyLesson = (title = 'Урок 1', content = '') => ({
     title,
@@ -40,22 +39,6 @@ const form = reactive({
     image: '',
     program: [getEmptySection()],
 })
-
-const showMessage = (type, text) => {
-    pageAlert.value = {
-        type,
-        text,
-        visible: true,
-    }
-}
-
-const hideMessage = () => {
-    pageAlert.value = {
-        type: '',
-        text: '',
-        visible: false,
-    }
-}
 
 const renumberProgram = () => {
     form.program.forEach((section, sectionIndex) => {
@@ -217,15 +200,7 @@ const handleSubmit = async () => {
 }
 
 onMounted(async () => {
-    document.title = 'Мои курсы'
-
-    const metaDescription = document.querySelector('meta[name="description"]')
-    if (metaDescription) {
-        metaDescription.setAttribute(
-            'content',
-            'Управляйте созданными курсами, следите за количеством учеников и выручкой',
-        )
-    }
+    setPageMeta('Мои курсы', 'Управляйте созданными курсами, следите за количеством учеников и выручкой')
 
     try {
         await coursesStore.loadCourses()
@@ -238,13 +213,12 @@ onMounted(async () => {
 
 <template>
     <main class="container pt-2 pb-4">
-        <div
-            v-if="pageAlert.visible"
-            :class="`alert alert-${pageAlert.type} mb-3`"
-            role="alert"
-        >
-            {{ pageAlert.text }}
-        </div>
+        <AppAlert
+            :visible="pageAlert.visible"
+            :type="pageAlert.type"
+            :text="pageAlert.text"
+            class="mb-3"
+        />
 
         <div>
             <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
@@ -299,9 +273,10 @@ onMounted(async () => {
                 </div>
             </div>
 
-            <div v-if="!myCourses.length" class="alert alert-secondary">
-                Пока нет созданных курсов.
-            </div>
+            <AppAlert
+                :visible="!myCourses.length"
+                text="Пока нет созданных курсов."
+            />
 
             <ul class="row g-3 list-unstyled">
                 <li
