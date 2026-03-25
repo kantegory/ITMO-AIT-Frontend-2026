@@ -2,6 +2,7 @@
 import { computed, onMounted, reactive, ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import AppAlert from '@/components/AppAlert.vue'
+import LessonNav from '@/components/lessonNav.vue'
 import { useCourses } from '@/composables/useCourses'
 import { usePageMeta } from '@/composables/usePageMeta'
 import { useCoursesStore } from '@/stores/courses'
@@ -59,9 +60,6 @@ const selectLesson = (sectionIndex, itemIndex) => {
     updatePageMeta()
 }
 
-const isCurrentLesson = (sectionIndex, itemIndex) =>
-    sectionIndex === state.section && itemIndex === state.item
-
 const init = async () => {
     await coursesStore.loadCourses()
 
@@ -114,36 +112,12 @@ onMounted(async () => {
                     </div>
 
                     <div id="lessonsNav">
-                        <nav aria-label="Уроки курса">
-                            <section
-                                v-for="(section, sectionIndex) in course.program"
-                                :key="`${section.title}-${sectionIndex}`"
-                                class="mb-3"
-                            >
-                                <h3 class="h6 mb-2 p-2">{{ section.title }}</h3>
-
-                                <ul class="list-group">
-                                    <li
-                                        v-for="(item, itemIndex) in section.items"
-                                        :key="`${item.title}-${itemIndex}`"
-                                        class="list-group-item p-0"
-                                    >
-                                        <button
-                                            type="button"
-                                            :class="[
-                                                'list-group-item',
-                                                'list-group-item-action',
-                                                isCurrentLesson(sectionIndex, itemIndex) ? 'active' : '',
-                                            ]"
-                                            :aria-current="isCurrentLesson(sectionIndex, itemIndex) ? 'location' : null"
-                                            @click="selectLesson(sectionIndex, itemIndex)"
-                                        >
-                                            {{ itemIndex + 1 }}. {{ item.title }}
-                                        </button>
-                                    </li>
-                                </ul>
-                            </section>
-                        </nav>
+                        <LessonNav
+                            :program="course.program"
+                            :active-section="state.section"
+                            :active-item="state.item"
+                            @select-lesson="selectLesson($event.sectionIndex, $event.itemIndex)"
+                        />
                     </div>
                 </div>
             </aside>
@@ -207,37 +181,13 @@ onMounted(async () => {
 
                 <div class="modal-body">
                     <div v-if="course" id="lessonsNavMobile">
-                        <nav aria-label="Уроки курса">
-                            <section
-                                v-for="(section, sectionIndex) in course.program"
-                                :key="`mobile-${section.title}-${sectionIndex}`"
-                                class="mb-3"
-                            >
-                                <h3 class="h6 mb-2 p-2">{{ section.title }}</h3>
-
-                                <ul class="list-group">
-                                    <li
-                                        v-for="(item, itemIndex) in section.items"
-                                        :key="`mobile-${item.title}-${itemIndex}`"
-                                        class="list-group-item p-0"
-                                    >
-                                        <button
-                                            type="button"
-                                            data-bs-dismiss="modal"
-                                            :class="[
-                                                'list-group-item',
-                                                'list-group-item-action',
-                                                isCurrentLesson(sectionIndex, itemIndex) ? 'active' : '',
-                                            ]"
-                                            :aria-current="isCurrentLesson(sectionIndex, itemIndex) ? 'location' : null"
-                                            @click="selectLesson(sectionIndex, itemIndex)"
-                                        >
-                                            {{ itemIndex + 1 }}. {{ item.title }}
-                                        </button>
-                                    </li>
-                                </ul>
-                            </section>
-                        </nav>
+                        <LessonNav
+                            :program="course.program"
+                            :active-section="state.section"
+                            :active-item="state.item"
+                            :dismiss-on-select=true
+                            @select-lesson="selectLesson($event.sectionIndex, $event.itemIndex)"
+                        />
                     </div>
                 </div>
             </div>
