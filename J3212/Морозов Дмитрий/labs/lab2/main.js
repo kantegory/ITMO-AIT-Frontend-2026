@@ -50,7 +50,7 @@ function initRegister() {
     const registerForm = document.getElementById('register-form');
     if (!registerForm) return;
     
-    registerForm.addEventListener('submit', function(event) {
+    registerForm.addEventListener('submit', async function(event) {
         event.preventDefault();
         
         const email = document.getElementById('email')?.value;
@@ -59,33 +59,42 @@ function initRegister() {
         const passwordConfirm = document.getElementById('password-confirm')?.value;
         const terms = document.getElementById('terms')?.checked;
         
+        // Валидация полей
         if (!email || !username || !password || !passwordConfirm) {
-            alert('Пожалуйста, заполните все поля!');
+            alert('Пожалуйста, заполните все поля');
             return;
         }
         
         if (password !== passwordConfirm) {
-            alert('Пароли не совпадают!');
+            alert('Пароли не совпадают');
             return;
         }
         
         if (password.length < 8) {
-            alert('Пароль должен быть не менее 8 символов!');
+            alert('Пароль должен быть не менее 8 символов');
             return;
         }
         
         if (!terms) {
-            alert('Необходимо принять условия использования!');
+            alert('Необходимо принять условия использования');
             return;
         }
         
-        localStorage.setItem('registeredEmail', email);
-        localStorage.setItem('registeredUsername', username);
-        
-        console.log('Регистрация успешна:', email);
-        
-        alert('Регистрация успешна! Теперь вы можете войти.');
-        window.location.href = 'index.html';
+        try {
+            const response = await api.post('/users', {
+                email,
+                username,
+                password,
+                createdAt: new Date().toISOString().split('T')[0]
+            });
+            
+            console.log('Регистрация успешна:', response.data);
+            alert('Регистрация успешна! Теперь вы можете войти');
+            window.location.href = 'index.html';
+        } catch (error) {
+            console.error('Ошибка регистрации:', error);
+            alert('Ошибка при регистрации. Попробуйте другой email');
+        }
     });
 }
 
