@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initExperimentDetail();
     initModels();
     initModelsPagination();
+    initExperimentsPagination();
     checkAuth();
 });
 
@@ -98,7 +99,7 @@ function initRegister() {
     });
 }
 
-function initExperiments() {
+async function initExperiments() {
     const tableBody = document.querySelector('#experiments-table tbody');
     if (!tableBody) return;
     
@@ -113,6 +114,61 @@ function initExperiments() {
     const resetButton = document.querySelector('#filters-form button[type="reset"]');
     const resultCount = document.getElementById('result-count');
     
+    let allExperiments = [];
+    
+    // Загрузка экспериментов из API
+    async function loadExperiments() {
+        try {
+            const response = await api.get('/experiments');
+            allExperiments = response.data;
+            renderExperiments(allExperiments);
+        } catch (error) {
+            console.error('❌ Ошибка загрузки экспериментов:', error);
+            alert('Не удалось загрузить эксперименты. Убедитесь, что JSON Server запущен.');
+        }
+    }
+    
+    // Внутри initExperiments(), найдите функцию renderExperiments и обновите:
+
+    function renderExperiments(experiments) {
+        tableBody.innerHTML = '';
+        
+        experiments.forEach(function(exp) {
+            const row = document.createElement('tr');
+            row.setAttribute('data-date', exp.date);
+            row.setAttribute('data-metric', exp.metric || '');
+            row.setAttribute('data-status', exp.status);
+            row.setAttribute('data-tags', exp.tags?.join(' ') || '');
+            row.setAttribute('data-id', exp.id);
+            
+            const metricDisplay = exp.metric ? exp.metric.toFixed(2) : '—';
+            const tagsDisplay = exp.tags ? exp.tags.join('   ') : '';
+            
+            row.innerHTML = `
+                <td><a href="experiment-detail.html?id=${exp.id}">${exp.name}</a></td>
+                <td>${exp.date}</td>
+                <td>${metricDisplay}</td>
+                <td>${tagsDisplay}</td>
+                <td>${exp.status}</td>
+                <td>
+                    <a href="experiment-detail.html?id=${exp.id}" class="btn btn-sm btn-primary">Просмотр</a>
+                </td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+        
+        if (resultCount) {
+            resultCount.textContent = experiments.length;
+        }
+        
+        // ✅ Вызываем обновление пагинации после отрисовки
+        if (typeof window.updateExperimentsPagination === 'function') {
+            window.updateExperimentsPagination();
+        }
+    }
+    
+    // Фильтрация (клиентская)
     function filterTable() {
         const searchText = searchInput?.value.toLowerCase().trim() || '';
         const dateFrom = dateFromInput?.value || '';
@@ -122,73 +178,58 @@ function initExperiments() {
         const metricMax = metricMaxInput?.value || '';
         const tagsFilter = tagsInput?.value.toLowerCase().trim() || '';
         
-        let visibleCount = 0;
-        const tableRows = tableBody.querySelectorAll('tr');
-        
-        tableRows.forEach(function(row) {
-            const name = row.cells[0]?.textContent.toLowerCase() || '';
-            const date = row.getAttribute('data-date') || '';
-            const metric = row.getAttribute('data-metric') || '';
-            const status = row.getAttribute('data-status') || '';
-            const tags = (row.getAttribute('data-tags') || '').toLowerCase();
-            
+        let filtered = allExperiments.filter(function(exp) {
             let show = true;
             
-            if (searchText && !name.includes(searchText)) {
+            if (searchText && !exp.name.toLowerCase().includes(searchText)) {
                 show = false;
             }
             
-            if (show && dateFrom && date) {
-                if (date < dateFrom) show = false;
-            }
-            
-            if (show && dateTo && date) {
-                if (date > dateTo) show = false;
-            }
-            
-            if (show && statusFilter && status !== statusFilter) {
+            if (show && dateFrom && exp.date < dateFrom) {
                 show = false;
             }
             
-            if (show && metricMin && metric) {
-                const metricNum = parseFloat(metric);
-                const minNum = parseFloat(metricMin);
-                if (!isNaN(metricNum) && !isNaN(minNum) && metricNum < minNum) {
-                    show = false;
-                }
+            if (show && dateTo && exp.date > dateTo) {
+                show = false;
             }
             
-            if (show && metricMax && metric) {
-                const metricNum = parseFloat(metric);
-                const maxNum = parseFloat(metricMax);
-                if (!isNaN(metricNum) && !isNaN(maxNum) && metricNum > maxNum) {
-                    show = false;
-                }
+            if (show && statusFilter && exp.status !== statusFilter) {
+                show = false;
+            }
+            
+            if (show && metricMin && exp.metric < parseFloat(metricMin)) {
+                show = false;
+            }
+            
+            if (show && metricMax && exp.metric > parseFloat(metricMax)) {
+                show = false;
             }
             
             if (show && tagsFilter) {
                 const searchTags = tagsFilter.split(',').map(tag => tag.trim()).filter(t => t);
                 if (searchTags.length > 0) {
-                    const hasTag = searchTags.some(tag => tags.includes(tag));
+                    const hasTag = searchTags.some(tag => 
+                        exp.tags?.some(expTag => expTag.toLowerCase().includes(tag))
+                    );
                     if (!hasTag) show = false;
                 }
             }
             
-            row.style.display = show ? '' : 'none';
-            if (show) visibleCount++;
+            return show;
         });
         
-        if (resultCount) {
-            resultCount.textContent = visibleCount;
+        renderExperiments(filtered);
+        console.log('🔍 Найдено экспериментов:', filtered.length);
+        // ✅ Обновляем пагинацию после фильтрации
+        if (typeof window.updateExperimentsPagination === 'function') {
+            window.updateExperimentsPagination();
         }
-        
-        if (typeof updatePaginationAfterFilter === 'function') {
-            updatePaginationAfterFilter();
-        }
-        
-        console.log('Найдено экспериментов:', visibleCount);
     }
     
+    // Загружаем данные при старте
+    await loadExperiments();
+    
+    // Навешиваем обработчики
     if (applyButton) {
         applyButton.addEventListener('click', filterTable);
     }
@@ -340,6 +381,96 @@ function initModelsPagination() {
     });
     
     showPage(1);
+}
+
+function initExperimentsPagination() {
+    const experimentsTable = document.getElementById('experiments-table');
+    if (!experimentsTable) return;
+    
+    const tbody = document.querySelector('#experiments-table tbody');
+    if (!tbody) return;
+    
+    const rowsPerPage = 8;
+    let allRows = [];
+    let totalPages = 1;
+    let currentPage = 1;
+    
+    function updatePagination() {
+        allRows = Array.from(tbody.querySelectorAll('tr'));
+        totalPages = Math.ceil(allRows.length / rowsPerPage);
+        currentPage = 1;
+        showPage(1);
+        updatePageLinks();
+    }
+    
+    function showPage(page) {
+        const start = (page - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        
+        allRows.forEach(function(row, index) {
+            if (index >= start && index < end) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+        
+        currentPage = page;
+        updatePageLinks();
+    }
+    
+    function updatePageLinks() {
+        const pageLinks = document.querySelectorAll('#experiments-pagination .page-link');
+        pageLinks.forEach(function(link) {
+            const parent = link.parentElement;
+            parent.classList.remove('active');
+            
+            const linkPage = parseInt(link.getAttribute('data-page'));
+            if (linkPage === currentPage) {
+                parent.classList.add('active');
+            }
+        });
+        
+        const prevBtn = document.getElementById('exp-prev-page');
+        const nextBtn = document.getElementById('exp-next-page');
+        
+        if (prevBtn) {
+            prevBtn.classList.toggle('disabled', currentPage === 1);
+        }
+        
+        if (nextBtn) {
+            nextBtn.classList.toggle('disabled', currentPage === totalPages);
+        }
+    }
+    
+    const pageLinks = document.querySelectorAll('#experiments-pagination .page-link');
+    pageLinks.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            
+            const pageAttr = this.getAttribute('data-page');
+            const text = this.textContent.trim();
+            
+            let targetPage = currentPage;
+            
+            if (pageAttr && pageAttr !== 'prev' && pageAttr !== 'next') {
+                targetPage = parseInt(pageAttr);
+            } else if (text.includes('Предыдущая') || pageAttr === 'prev') {
+                targetPage = Math.max(1, currentPage - 1);
+            } else if (text.includes('Следующая') || pageAttr === 'next') {
+                targetPage = Math.min(totalPages, currentPage + 1);
+            }
+            
+            if (targetPage >= 1 && targetPage <= totalPages) {
+                showPage(targetPage);
+            }
+        });
+    });
+    
+    window.updateExperimentsPagination = updatePagination;
+    window.showExperimentsPage = showPage;
+    
+    updatePagination();
 }
 
 function initModels() {

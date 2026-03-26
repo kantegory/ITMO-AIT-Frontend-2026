@@ -116,64 +116,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr data-date="2026-01-15" data-metric="0.95" data-status="Completed" data-tags="production,v1">
-                                    <td><a href="experiment-detail.html">model_v1_training</a></td>
-                                    <td>2026-01-15</td>
-                                    <td>0.95</td>
-                                    <td><span class="badge bg-secondary">production</span> <span class="badge bg-secondary">v1</span></td>
-                                    <td><span class="badge bg-success">Completed</span></td>
-                                    <td><a href="experiment-detail.html" class="btn btn-sm btn-outline-primary">Просмотр</a></td>
-                                </tr>
-                                <tr data-date="2026-01-14" data-metric="0.92" data-status="Completed" data-tags="testing,v2">
-                                    <td><a href="experiment-detail.html">model_v2_hyperparam</a></td>
-                                    <td>2026-01-14</td>
-                                    <td>0.92</td>
-                                    <td><span class="badge bg-secondary">testing</span> <span class="badge bg-secondary">v2</span></td>
-                                    <td><span class="badge bg-success">Completed</span></td>
-                                    <td><a href="experiment-detail.html" class="btn btn-sm btn-outline-primary">Просмотр</a></td>
-                                </tr>
-                                <tr data-date="2026-01-13" data-metric="" data-status="Running" data-tags="development">
-                                    <td><a href="experiment-detail.html">model_v3_test</a></td>
-                                    <td>2026-01-13</td>
-                                    <td>—</td>
-                                    <td><span class="badge bg-secondary">development</span></td>
-                                    <td><span class="badge bg-warning text-dark">Running</span></td>
-                                    <td><a href="experiment-detail.html" class="btn btn-sm btn-outline-primary">Просмотр</a></td>
-                                </tr>
-                                <tr data-date="2026-01-10" data-metric="0.87" data-status="Failed" data-tags="baseline">
-                                    <td><a href="experiment-detail.html">baseline_model</a></td>
-                                    <td>2026-01-10</td>
-                                    <td>0.87</td>
-                                    <td><span class="badge bg-secondary">baseline</span></td>
-                                    <td><span class="badge bg-danger">Failed</span></td>
-                                    <td><a href="experiment-detail.html" class="btn btn-sm btn-outline-primary">Просмотр</a></td>
-                                </tr>
-                                <tr data-date="2026-01-08" data-metric="0.91" data-status="Completed" data-tags="nn,pytorch">
-                                    <td><a href="experiment-detail.html">neural_net_exp</a></td>
-                                    <td>2026-01-08</td>
-                                    <td>0.91</td>
-                                    <td><span class="badge bg-secondary">nn</span> <span class="badge bg-secondary">pytorch</span></td>
-                                    <td><span class="badge bg-success">Completed</span></td>
-                                    <td><a href="experiment-detail.html" class="btn btn-sm btn-outline-primary">Просмотр</a></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
-
-                    <nav aria-label="Пагинация">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Предыдущая">
-                                    <span>ПредЫдущая</span>
-                                </a>
+                    <nav aria-label="Пагинация экспериментов">
+                        <ul class="pagination justify-content-center" id="experiments-pagination">
+                            <li class="page-item disabled" id="exp-prev-page">
+                                <a class="page-link" href="#" data-page="prev">Предыдущая</a>
                             </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Следующая">
-                                    <span>Следующая</span>
-                                </a>
+                            <li class="page-item active"><a class="page-link" href="#" data-page="1">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#" data-page="2">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#" data-page="3">3</a></li>
+                            <li class="page-item" id="exp-next-page">
+                                <a class="page-link" href="#" data-page="next">Следующая</a>
                             </li>
                         </ul>
                     </nav>
