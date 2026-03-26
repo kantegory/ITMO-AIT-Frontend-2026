@@ -3,6 +3,59 @@
     --secondary: #20c997;
 }
 
+/* ─── Hero section ─────────────────────────────────────────────────────────── */
+.hero-section {
+    background: linear-gradient(135deg, rgba(102, 16, 242, 0.1) 0%, rgba(32, 201, 151, 0.1) 100%);
+}
+
+/* ─── Skeleton loading ──────────────────────────────────────────────────────── */
+.skeleton-card {
+    pointer-events: none;
+}
+
+.skeleton-img {
+    height: 160px;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 0.375rem 0.375rem 0 0;
+}
+
+.skeleton-img-sm {
+    min-height: 120px;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 0.375rem 0 0 0.375rem;
+}
+
+.skeleton-line {
+    height: 14px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    margin-bottom: 8px;
+}
+
+@keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+[data-bs-theme="dark"] .skeleton-img,
+[data-bs-theme="dark"] .skeleton-img-sm,
+[data-bs-theme="dark"] .skeleton-line {
+    background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+/* ─── User avatar in navbar ─────────────────────────────────────────────────── */
+.user-avatar-nav {
+    color: #6610f2;
+}
+
 .brand-minion {
     color: #FFD700;
 }

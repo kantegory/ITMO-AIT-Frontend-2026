@@ -11,7 +11,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container">
-            <a class="navbar-brand" href="search.html">
+            <a class="navbar-brand" href="index.html">
                 <i class="bi bi-mortarboard-fill"></i> <span class="brand-minion">Minion</span> <span class="brand-courses">Courses</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -27,14 +27,21 @@
                     <span class="theme-toggle" onclick="toggleTheme()">
                         <i class="bi bi-moon-fill" id="themeIcon"></i>
                     </span>
-                    <div class="dropdown">
+                    <!-- Кнопки для неавторизованных -->
+                    <div id="authButtons" class="d-flex gap-2">
+                        <a href="login.html" class="btn btn-outline-primary btn-sm">Войти</a>
+                        <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
+                    </div>
+                    <!-- Дропдаун для авторизованных -->
+                    <div id="userDropdown" class="dropdown" style="display:none;">
                         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
-                            <img src="images/avatar.jpg" alt="Avatar" class="rounded-circle" width="32" height="32">
+                            <i class="bi bi-person-circle fs-4 me-2"></i>
+                            <span id="userDropdownName" class="d-none d-md-inline"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="profile.html">Мой профиль</a></li>
+                            <li><a class="dropdown-item active" href="profile.html"><i class="bi bi-person me-2"></i>Мой профиль</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">Выйти</a></li>
+                            <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="bi bi-box-arrow-right me-2"></i>Выйти</a></li>
                         </ul>
                     </div>
                 </div>
@@ -43,103 +50,85 @@
     </nav>
 
     <main class="container py-4">
-        <div class="row">
+
+        <!-- Алерт для неавторизованных -->
+        <div id="notAuthAlert" class="alert alert-warning d-none">
+            <i class="bi bi-lock me-2"></i>
+            Для просмотра профиля необходимо <a href="login.html" class="alert-link">войти в аккаунт</a>.
+        </div>
+
+        <!-- Основной контент профиля -->
+        <div id="profileContent" class="row d-none">
+            <!-- Карточка пользователя -->
             <div class="col-lg-4 mb-4">
                 <div class="card p-4 text-center">
-                    <img src="images/avatar.jpg" alt="Avatar" class="avatar mx-auto mb-3">
-                    <h4>Иван Иванов</h4>
-                    <p class="text-muted">ivan@example.com</p>
+                    <div class="mb-3">
+                        <i class="bi bi-person-circle text-primary" style="font-size: 5rem;"></i>
+                    </div>
+                    <h4 id="profileName">—</h4>
+                    <p class="text-muted" id="profileEmail">—</p>
+                    <span class="badge mb-3" id="profileRoleBadge">—</span>
                     <div class="d-flex justify-content-center gap-4 my-3">
                         <div>
-                            <div class="fw-bold text-primary fs-4">3</div>
-                            <small class="text-muted">Курса</small>
+                            <div class="fw-bold text-primary fs-4" id="profileCoursesCount">0</div>
+                            <small class="text-muted">Курсов</small>
                         </div>
                         <div>
-                            <div class="fw-bold text-primary fs-4">1</div>
-                            <small class="text-muted">Сертификат</small>
+                            <div class="fw-bold text-primary fs-4" id="profileCertsCount">0</div>
+                            <small class="text-muted">Сертификатов</small>
+                        </div>
+                        <div>
+                            <div class="fw-bold text-primary fs-4" id="profileCompletedCount">0</div>
+                            <small class="text-muted">Завершено</small>
                         </div>
                     </div>
-                    <button class="btn btn-outline-primary btn-sm">Редактировать профиль</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="alert('Редактирование профиля в разработке')">
+                        <i class="bi bi-pencil me-1"></i>Редактировать профиль
+                    </button>
                 </div>
             </div>
-            
+
+            <!-- Вкладки -->
             <div class="col-lg-8">
                 <ul class="nav nav-tabs mb-4" role="tablist">
                     <li class="nav-item">
-                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#courses">Мои курсы</button>
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#courses">
+                            <i class="bi bi-book me-1"></i>Мои курсы
+                        </button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#certificates">Сертификаты</button>
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#certificates">
+                            <i class="bi bi-award me-1"></i>Сертификаты
+                        </button>
                     </li>
                 </ul>
-                
+
                 <div class="tab-content">
+                    <!-- Вкладка: Мои курсы -->
                     <div class="tab-pane fade show active" id="courses">
-                        <div class="card mb-3">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="images/course-1.jpg" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="Course">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Python для начинающих</h5>
-                                        <p class="text-muted small mb-2">Прогресс: 65%</p>
-                                        <div class="progress mb-3">
-                                            <div class="progress-bar" style="width: 65%"></div>
-                                        </div>
-                                        <a href="course.html" class="btn btn-primary btn-sm">Продолжить</a>
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- Скелетон -->
+                        <div id="enrollmentsLoading">
+                            <div class="card mb-3 skeleton-card"><div class="row g-0"><div class="col-md-4 skeleton-img-sm"></div><div class="col-md-8 p-3"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
+                            <div class="card mb-3 skeleton-card"><div class="row g-0"><div class="col-md-4 skeleton-img-sm"></div><div class="col-md-8 p-3"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
                         </div>
-                        
-                        <div class="card mb-3">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="images/course-2.jpg" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="Course">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Web-разработка с нуля</h5>
-                                        <p class="text-muted small mb-2">Прогресс: 30%</p>
-                                        <div class="progress mb-3">
-                                            <div class="progress-bar" style="width: 30%"></div>
-                                        </div>
-                                        <a href="course.html" class="btn btn-primary btn-sm">Продолжить</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="card">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="images/course-3.jpg" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="Course">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Data Science основы</h5>
-                                        <p class="text-muted small mb-2">Прогресс: 100%</p>
-                                        <div class="progress mb-3">
-                                            <div class="progress-bar" style="width: 100%"></div>
-                                        </div>
-                                        <span class="badge bg-success">Завершён</span>
-                                    </div>
-                                </div>
-                            </div>
+                        <div id="enrollmentsContainer"></div>
+                        <div id="enrollmentsEmpty" class="text-center py-4 d-none">
+                            <i class="bi bi-journal-x text-muted" style="font-size:2.5rem;"></i>
+                            <p class="text-muted mt-2">Вы ещё не записаны ни на один курс.</p>
+                            <a href="search.html" class="btn btn-primary btn-sm">Найти курс</a>
                         </div>
                     </div>
-                    
+
+                    <!-- Вкладка: Сертификаты -->
                     <div class="tab-pane fade" id="certificates">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="card p-4 text-center">
-                                    <i class="bi bi-award text-primary" style="font-size: 3rem;"></i>
-                                    <h5 class="mt-3">Data Science основы</h5>
-                                    <p class="text-muted small">Выдан: 15.02.2026</p>
-                                    <button class="btn btn-outline-primary btn-sm">Скачать PDF</button>
-                                </div>
-                            </div>
+                        <div id="certsLoading" class="text-center py-3">
+                            <div class="spinner-border text-primary" role="status"></div>
+                        </div>
+                        <div id="certsContainer" class="row d-none"></div>
+                        <div id="certsEmpty" class="text-center py-4 d-none">
+                            <i class="bi bi-award text-muted" style="font-size:2.5rem;"></i>
+                            <p class="text-muted mt-2">У вас пока нет сертификатов.</p>
+                            <p class="text-muted small">Завершите курс, чтобы получить сертификат.</p>
                         </div>
                     </div>
                 </div>
@@ -147,6 +136,7 @@
         </div>
     </main>
 
+    <!-- Модалка выхода -->
     <div class="modal fade" id="logoutModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -159,7 +149,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <a href="login.html" class="btn btn-primary">Выйти</a>
+                    <button type="button" class="btn btn-primary" id="logoutConfirmBtn">Выйти</button>
                 </div>
             </div>
         </div>
@@ -167,5 +157,157 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Рендер карточки записи на курс
+        function renderEnrollmentCard(enrollment) {
+            const course = enrollment.course;
+            if (!course) return '';
+
+            const progress = enrollment.progress || 0;
+            const isCompleted = progress === 100;
+
+            const progressBar = `
+                <p class="text-muted small mb-1">Прогресс: ${progress}%</p>
+                <div class="progress mb-3">
+                    <div class="progress-bar" style="width: ${progress}%"></div>
+                </div>
+            `;
+
+            const action = isCompleted
+                ? '<span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Завершён</span>'
+                : `<a href="course.html?id=${course.id}" class="btn btn-primary btn-sm">Продолжить</a>`;
+
+            return `
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="${course.image}" class="img-fluid rounded-start h-100"
+                                 style="object-fit:cover; min-height:120px;"
+                                 alt="${course.title}"
+                                 onerror="this.src='https://placehold.co/300x120/6610f2/white?text=Course'">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">${course.title}</h5>
+                                <p class="text-muted small mb-2">
+                                    <i class="bi bi-calendar3 me-1"></i>Записан: ${enrollment.enrolledAt}
+                                </p>
+                                ${progressBar}
+                                ${action}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Рендер сертификата
+        function renderCertCard(cert) {
+            return `
+                <div class="col-md-6 mb-3">
+                    <div class="card p-4 text-center">
+                        <i class="bi bi-award text-primary" style="font-size: 3rem;"></i>
+                        <h5 class="mt-3">${cert.courseTitle}</h5>
+                        <p class="text-muted small">Выдан: ${cert.issuedAt}</p>
+                        <button class="btn btn-outline-primary btn-sm" onclick="alert('Скачивание PDF в разработке')">
+                            <i class="bi bi-download me-1"></i>Скачать PDF
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Загрузка профиля
+        async function loadProfile() {
+            if (!isLoggedIn()) {
+                document.getElementById('notAuthAlert').classList.remove('d-none');
+                return;
+            }
+
+            document.getElementById('profileContent').classList.remove('d-none');
+
+            try {
+                // Загружаем данные пользователя
+                const user = await apiFetch('/me');
+
+                document.getElementById('profileName').textContent = user.name;
+                document.getElementById('profileEmail').textContent = user.email;
+
+                const roleBadge = document.getElementById('profileRoleBadge');
+                if (user.role === 'teacher') {
+                    roleBadge.textContent = '🎓 Преподаватель';
+                    roleBadge.classList.add('bg-warning', 'text-dark');
+                } else {
+                    roleBadge.textContent = '👤 Студент';
+                    roleBadge.classList.add('bg-primary');
+                }
+
+                // Загружаем записи на курсы
+                await loadEnrollments(user);
+
+                // Загружаем сертификаты
+                await loadCertificates(user);
+
+            } catch (err) {
+                console.error('Ошибка загрузки профиля:', err);
+                document.getElementById('notAuthAlert').classList.remove('d-none');
+                document.getElementById('notAuthAlert').innerHTML =
+                    `<i class="bi bi-exclamation-triangle me-2"></i>Ошибка загрузки профиля: ${err.message}`;
+                document.getElementById('profileContent').classList.add('d-none');
+            }
+        }
+
+        async function loadEnrollments(user) {
+            const loadingEl = document.getElementById('enrollmentsLoading');
+            const container = document.getElementById('enrollmentsContainer');
+            const emptyEl = document.getElementById('enrollmentsEmpty');
+
+            try {
+                const enrollments = await apiFetch('/my-enrollments');
+
+                loadingEl.classList.add('d-none');
+
+                // Обновляем счётчики
+                document.getElementById('profileCoursesCount').textContent = enrollments.length;
+                const completed = enrollments.filter(e => e.progress === 100).length;
+                document.getElementById('profileCompletedCount').textContent = completed;
+
+                if (enrollments.length === 0) {
+                    emptyEl.classList.remove('d-none');
+                } else {
+                    container.innerHTML = enrollments.map(renderEnrollmentCard).join('');
+                }
+            } catch (err) {
+                loadingEl.classList.add('d-none');
+                container.innerHTML = `<div class="alert alert-warning">Не удалось загрузить курсы: ${err.message}</div>`;
+            }
+        }
+
+        async function loadCertificates(user) {
+            const loadingEl = document.getElementById('certsLoading');
+            const container = document.getElementById('certsContainer');
+            const emptyEl = document.getElementById('certsEmpty');
+
+            try {
+                const certs = await apiFetch(`/certificates?userId=${user.id}`);
+
+                loadingEl.classList.add('d-none');
+                document.getElementById('profileCertsCount').textContent = certs.length;
+
+                if (certs.length === 0) {
+                    emptyEl.classList.remove('d-none');
+                } else {
+                    container.classList.remove('d-none');
+                    container.innerHTML = certs.map(renderCertCard).join('');
+                }
+            } catch (err) {
+                loadingEl.classList.add('d-none');
+                container.innerHTML = `<div class="alert alert-warning">Не удалось загрузить сертификаты: ${err.message}</div>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadProfile);
+    </script>
 </body>
 </html>
