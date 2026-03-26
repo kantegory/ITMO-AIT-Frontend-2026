@@ -4,12 +4,17 @@
   "description": "Frontend project with json-server backend",
   "main": "index.js",
   "scripts": {
-    "server": "json-server --watch db.json --port 3000"
+    "server": "json-server db.json --middlewares ./node_modules/json-server-auth",
+    "start": "live-server"
   },
   "keywords": [],
   "license": "MIT",
   "dependencies": {
+    "axios": "^1.13.6",
     "json-server": "^0.17.0",
     "json-server-auth": "^2.1.0"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
   }
 }
