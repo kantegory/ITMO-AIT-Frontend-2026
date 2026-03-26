@@ -12,23 +12,37 @@ function initLogin() {
     const loginForm = document.getElementById('login-form');
     if (!loginForm) return;
     
-    loginForm.addEventListener('submit', function(event) {
+    loginForm.addEventListener('submit', async function(event) {
         event.preventDefault();
         
         const email = document.getElementById('email')?.value;
         const password = document.getElementById('password')?.value;
         
         if (!email || !password) {
-            alert('Пожалуйста, заполните все поля!');
+            alert('Пожалуйста, заполните все поля');
             return;
         }
         
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('userEmail', email);
-        
-        console.log('Вход выполнен:', email);
-        
-        window.location.href = 'dashboard.html';
+        try {
+            const response = await api.get('/users', {
+                params: { email }
+            });
+            
+            const user = response.data[0];
+            
+            if (user && user.password === password) {
+                localStorage.setItem('token', user.id);
+                localStorage.setItem('userEmail', user.email);
+                
+                console.log('Вход выполнен:', user.email);
+                window.location.href = 'dashboard.html';
+            } else {
+                alert('Неверный email или пароль');
+            }
+        } catch (error) {
+            console.error('Ошибка входа:', error);
+            alert('Ошибка сервера');
+        }
     });
 }
 
