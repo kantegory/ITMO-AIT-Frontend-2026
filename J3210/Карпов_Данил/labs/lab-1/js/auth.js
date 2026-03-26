@@ -104,15 +104,22 @@ function updateNavbar() {
     if (!authButtons && !userDropdown) return;
 
     if (loggedIn) {
-        if (authButtons) authButtons.style.display = 'none';
+        if (authButtons) {
+            authButtons.classList.add('d-none');
+        }
         if (userDropdown) {
-            userDropdown.style.display = 'flex';
+            userDropdown.classList.remove('d-none');
+            userDropdown.style.removeProperty('display');
             const nameEl = document.getElementById('userDropdownName');
             if (nameEl) nameEl.textContent = user.name;
         }
     } else {
-        if (authButtons) authButtons.style.display = 'flex';
-        if (userDropdown) userDropdown.style.display = 'none';
+        if (authButtons) {
+            authButtons.classList.remove('d-none');
+        }
+        if (userDropdown) {
+            userDropdown.classList.add('d-none');
+        }
     }
 }
 
