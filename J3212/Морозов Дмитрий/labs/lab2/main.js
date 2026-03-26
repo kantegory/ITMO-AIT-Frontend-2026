@@ -413,20 +413,19 @@ function initModels() {
 }
 
 function logout() {
-    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('token');
     localStorage.removeItem('userEmail');
-    localStorage.removeItem('registeredEmail');
-    localStorage.removeItem('registeredUsername');
+    console.log('Пользователь вышел из системы');
     window.location.href = 'index.html';
 }
 
 function checkAuth() {
-    const isLogged = localStorage.getItem('isLoggedIn');
+    const token = localStorage.getItem('token');
     const isAuthPage = document.getElementById('login-form') || document.getElementById('register-form');
-    const userGreeting = document.getElementById('user-greeting');
-    
-    if (userGreeting && isLogged === 'true') {
-        const email = localStorage.getItem('userEmail') || 'User';
-        userGreeting.textContent = 'Привет, ' + email.split('@')[0];
+
+    if (!isAuthPage && !token) {
+        console.log('Пользователь не авторизован, редирект на вход');
+        window.location.href = 'index.html';
+        return;
     }
 }
