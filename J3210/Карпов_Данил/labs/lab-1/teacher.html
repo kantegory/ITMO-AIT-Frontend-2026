@@ -11,7 +11,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container">
-            <a class="navbar-brand" href="search.html">
+            <a class="navbar-brand" href="index.html">
                 <i class="bi bi-mortarboard-fill"></i> <span class="brand-minion">Minion</span> <span class="brand-courses">Courses</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -22,19 +22,30 @@
                     <li class="nav-item">
                         <a class="nav-link" href="search.html">Каталог</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="teacher.html">Мой кабинет</a>
+                    </li>
                 </ul>
                 <div class="d-flex align-items-center gap-3">
                     <span class="theme-toggle" onclick="toggleTheme()">
                         <i class="bi bi-moon-fill" id="themeIcon"></i>
                     </span>
-                    <div class="dropdown">
+                    <!-- Кнопки для неавторизованных -->
+                    <div id="authButtons" class="d-flex gap-2">
+                        <a href="login.html" class="btn btn-outline-primary btn-sm">Войти</a>
+                        <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
+                    </div>
+                    <!-- Дропдаун для авторизованных -->
+                    <div id="userDropdown" class="dropdown d-none">
                         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
-                            <img src="images/teacher.jpg" alt="Avatar" class="rounded-circle" width="32" height="32">
+                            <i class="bi bi-person-circle fs-4 me-2"></i>
+                            <span id="userDropdownName" class="d-none d-md-inline"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="teacher.html">Мой кабинет</a></li>
+                            <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person me-2"></i>Мой профиль</a></li>
+                            <li><a class="dropdown-item active" href="teacher.html"><i class="bi bi-easel me-2"></i>Кабинет преподавателя</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">Выйти</a></li>
+                            <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="bi bi-box-arrow-right me-2"></i>Выйти</a></li>
                         </ul>
                     </div>
                 </div>
@@ -43,143 +54,84 @@
     </nav>
 
     <main class="container py-4">
-        <div class="row">
+
+        <!-- Алерт для неавторизованных -->
+        <div id="notAuthAlert" class="alert alert-warning d-none">
+            <i class="bi bi-lock me-2"></i>
+            Кабинет преподавателя доступен только авторизованным пользователям.
+            <a href="login.html" class="alert-link">Войти</a>
+        </div>
+
+        <div id="teacherContent" class="row">
             <div class="col-lg-3 mb-4">
                 <div class="card p-4 text-center">
-                    <img src="images/teacher.jpg" alt="Avatar" class="avatar mx-auto mb-3">
-                    <h5>Алексей Петров</h5>
-                    <p class="text-muted small">Senior Python Developer</p>
-                    <span class="badge bg-primary">Преподаватель</span>
+                    <i class="bi bi-person-circle text-primary mb-2" style="font-size:4rem;"></i>
+                    <h5 id="teacherName">—</h5>
+                    <p class="text-muted small" id="teacherEmail">—</p>
+                    <span class="badge bg-warning text-dark">🎓 Преподаватель</span>
                 </div>
-                
+
                 <div class="card p-3 mt-3">
                     <div class="list-group list-group-flush">
                         <a href="#" class="list-group-item list-group-item-action active">
-                            <i class="bi bi-grid me-2"></i> Мои курсы
+                            <i class="bi bi-grid me-2"></i>Мои курсы
                         </a>
                         <a href="#" class="list-group-item list-group-item-action">
-                            <i class="bi bi-bar-chart me-2"></i> Статистика
+                            <i class="bi bi-bar-chart me-2"></i>Статистика
                         </a>
                         <a href="#" class="list-group-item list-group-item-action">
-                            <i class="bi bi-gear me-2"></i> Настройки
+                            <i class="bi bi-gear me-2"></i>Настройки
                         </a>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-lg-9">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h3>Мои курсы</h3>
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newCourseModal">
-                        <i class="bi bi-plus-lg me-1"></i> Создать курс
+                        <i class="bi bi-plus-lg me-1"></i>Создать курс
                     </button>
                 </div>
-                
-                <div class="row mb-4">
+
+                <!-- Статистика -->
+                <div id="statsLoading" class="row mb-4">
+                    <div class="col-md-4"><div class="card p-3 text-center skeleton-card"><div class="skeleton-line w-50 mx-auto mb-1" style="height:28px;"></div><div class="skeleton-line w-75 mx-auto" style="height:12px;"></div></div></div>
+                    <div class="col-md-4"><div class="card p-3 text-center skeleton-card"><div class="skeleton-line w-50 mx-auto mb-1" style="height:28px;"></div><div class="skeleton-line w-75 mx-auto" style="height:12px;"></div></div></div>
+                    <div class="col-md-4"><div class="card p-3 text-center skeleton-card"><div class="skeleton-line w-50 mx-auto mb-1" style="height:28px;"></div><div class="skeleton-line w-75 mx-auto" style="height:12px;"></div></div></div>
+                </div>
+                <div id="statsContainer" class="row mb-4 d-none">
                     <div class="col-md-4">
                         <div class="card p-3 text-center">
-                            <div class="fs-3 fw-bold text-primary">3</div>
+                            <div class="fs-3 fw-bold text-primary" id="statCourses">—</div>
                             <small class="text-muted">Курсов</small>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card p-3 text-center">
-                            <div class="fs-3 fw-bold text-primary">1,547</div>
+                            <div class="fs-3 fw-bold text-primary" id="statStudents">—</div>
                             <small class="text-muted">Студентов</small>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card p-3 text-center">
-                            <div class="fs-3 fw-bold text-primary">45,200 ₽</div>
-                            <small class="text-muted">Доход</small>
+                            <div class="fs-3 fw-bold text-primary" id="statRating">—</div>
+                            <small class="text-muted">Средний рейтинг</small>
                         </div>
                     </div>
                 </div>
-                
-                <div class="card mb-3">
-                    <div class="row g-0">
-                        <div class="col-md-3">
-                            <img src="images/course-1.jpg" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="Course">
-                        </div>
-                        <div class="col-md-9">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="card-title">Python для начинающих</h5>
-                                    <span class="badge bg-success">Опубликован</span>
-                                </div>
-                                <p class="text-muted small">1,234 студента • 128 отзывов • 4.5 ★</p>
-                                <div class="d-flex gap-2">
-                                    <button class="btn btn-outline-primary btn-sm">
-                                        <i class="bi bi-pencil"></i> Редактировать
-                                    </button>
-                                    <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#uploadModal">
-                                        <i class="bi bi-upload"></i> Загрузить материалы
-                                    </button>
-                                    <button class="btn btn-outline-danger btn-sm">
-                                        <i class="bi bi-eye-slash"></i> Скрыть
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+                <!-- Курсы преподавателя -->
+                <div id="coursesLoading">
+                    <div class="card mb-3 skeleton-card"><div class="row g-0"><div class="col-md-3 skeleton-img-sm"></div><div class="col-md-9 p-3"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
+                    <div class="card mb-3 skeleton-card"><div class="row g-0"><div class="col-md-3 skeleton-img-sm"></div><div class="col-md-9 p-3"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
                 </div>
-                
-                <div class="card mb-3">
-                    <div class="row g-0">
-                        <div class="col-md-3">
-                            <img src="images/course-5.jpg" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="Course">
-                        </div>
-                        <div class="col-md-9">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="card-title">JavaScript Pro</h5>
-                                    <span class="badge bg-success">Опубликован</span>
-                                </div>
-                                <p class="text-muted small">256 студентов • 42 отзыва • 4.7 ★</p>
-                                <div class="d-flex gap-2">
-                                    <button class="btn btn-outline-primary btn-sm">
-                                        <i class="bi bi-pencil"></i> Редактировать
-                                    </button>
-                                    <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#uploadModal">
-                                        <i class="bi bi-upload"></i> Загрузить материалы
-                                    </button>
-                                    <button class="btn btn-outline-danger btn-sm">
-                                        <i class="bi bi-eye-slash"></i> Скрыть
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="row g-0">
-                        <div class="col-md-3">
-                            <img src="images/course-3.jpg" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="Course">
-                        </div>
-                        <div class="col-md-9">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="card-title">Machine Learning</h5>
-                                    <span class="badge bg-warning text-dark">Черновик</span>
-                                </div>
-                                <p class="text-muted small">Не опубликован</p>
-                                <div class="d-flex gap-2">
-                                    <button class="btn btn-outline-primary btn-sm">
-                                        <i class="bi bi-pencil"></i> Редактировать
-                                    </button>
-                                    <button class="btn btn-primary btn-sm">
-                                        <i class="bi bi-send"></i> Опубликовать
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div id="coursesContainer"></div>
             </div>
         </div>
     </main>
 
+    <!-- Модалка создания курса -->
     <div class="modal fade" id="newCourseModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -188,70 +140,41 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="newCourseForm">
                         <div class="mb-3">
                             <label class="form-label">Название курса</label>
-                            <input type="text" class="form-control" placeholder="Введите название">
+                            <input type="text" class="form-control" id="newCourseTitle" placeholder="Введите название" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Категория</label>
-                            <select class="form-select">
-                                <option>Программирование</option>
-                                <option>Дизайн</option>
-                                <option>Data Science</option>
+                            <select class="form-select" id="newCourseCategory">
+                                <option value="programming">Программирование</option>
+                                <option value="design">Дизайн</option>
+                                <option value="data">Data Science</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Описание</label>
-                            <textarea class="form-control" rows="3" placeholder="Краткое описание курса"></textarea>
+                            <textarea class="form-control" id="newCourseDesc" rows="3" placeholder="Краткое описание курса" required></textarea>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Цена (₽)</label>
-                            <input type="number" class="form-control" placeholder="0 = бесплатно">
+                            <input type="number" class="form-control" id="newCoursePrice" placeholder="0 = бесплатно" min="0" value="0">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-primary">Создать</button>
+                    <button type="button" class="btn btn-primary" onclick="createCourse()">
+                        <span id="createBtnText">Создать</span>
+                        <span id="createBtnSpinner" class="spinner-border spinner-border-sm d-none ms-1"></span>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="uploadModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Загрузка материалов</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Тип материала</label>
-                        <select class="form-select">
-                            <option>Видео-лекция</option>
-                            <option>PDF документ</option>
-                            <option>Задание</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Файл</label>
-                        <input type="file" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Название</label>
-                        <input type="text" class="form-control" placeholder="Название материала">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-primary">Загрузить</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <!-- Модалка выхода -->
     <div class="modal fade" id="logoutModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -264,7 +187,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <a href="login.html" class="btn btn-primary">Выйти</a>
+                    <button type="button" class="btn btn-primary" id="logoutConfirmBtn">Выйти</button>
                 </div>
             </div>
         </div>
@@ -272,5 +195,152 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Рендер карточки курса преподавателя
+        function renderTeacherCourseCard(course) {
+            const statusBadge = course.priceType === 'free'
+                ? '<span class="badge bg-success">Бесплатный</span>'
+                : `<span class="badge bg-primary">${course.price.toLocaleString('ru-RU')} ₽</span>`;
+
+            return `
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-3">
+                            <img src="${course.image}" class="img-fluid rounded-start h-100"
+                                 style="object-fit:cover; min-height:120px;"
+                                 alt="${course.title}"
+                                 onerror="this.src='https://placehold.co/300x120/6610f2/white?text=Course'">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-1">
+                                    <h5 class="card-title mb-0">${course.title}</h5>
+                                    ${statusBadge}
+                                </div>
+                                <p class="text-muted small mb-2">
+                                    <i class="bi bi-people me-1"></i>${course.studentsCount.toLocaleString('ru-RU')} студентов
+                                    &nbsp;•&nbsp;
+                                    <i class="bi bi-star-fill text-warning me-1"></i>${course.rating} (${course.reviewsCount} отзывов)
+                                </p>
+                                <div class="d-flex gap-2 flex-wrap">
+                                    <button class="btn btn-outline-primary btn-sm">
+                                        <i class="bi bi-pencil me-1"></i>Редактировать
+                                    </button>
+                                    <a href="course.html?id=${course.id}" class="btn btn-outline-secondary btn-sm">
+                                        <i class="bi bi-eye me-1"></i>Просмотр
+                                    </a>
+                                    <button class="btn btn-outline-danger btn-sm">
+                                        <i class="bi bi-eye-slash me-1"></i>Скрыть
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Загрузка данных преподавателя
+        async function loadTeacherData() {
+            if (!isLoggedIn()) {
+                document.getElementById('notAuthAlert').classList.remove('d-none');
+                document.getElementById('teacherContent').classList.add('d-none');
+                return;
+            }
+
+            try {
+                // Данные пользователя
+                const user = await apiFetch('/me');
+                document.getElementById('teacherName').textContent = user.name;
+                document.getElementById('teacherEmail').textContent = user.email;
+
+                // Курсы преподавателя (фильтруем по teacherId)
+                const courses = await apiFetch(`/courses?teacherId=${user.id}`);
+
+                // Статистика
+                const totalStudents = courses.reduce((sum, c) => sum + c.studentsCount, 0);
+                const avgRating = courses.length
+                    ? (courses.reduce((sum, c) => sum + c.rating, 0) / courses.length).toFixed(1)
+                    : '—';
+
+                document.getElementById('statsLoading').classList.add('d-none');
+                document.getElementById('statsContainer').classList.remove('d-none');
+                document.getElementById('statCourses').textContent = courses.length;
+                document.getElementById('statStudents').textContent = totalStudents.toLocaleString('ru-RU');
+                document.getElementById('statRating').textContent = avgRating + ' ★';
+
+                // Список курсов
+                document.getElementById('coursesLoading').classList.add('d-none');
+                if (courses.length === 0) {
+                    document.getElementById('coursesContainer').innerHTML =
+                        '<div class="text-center py-4 text-muted"><i class="bi bi-journal-x" style="font-size:2rem;"></i><p class="mt-2">У вас пока нет курсов. Создайте первый!</p></div>';
+                } else {
+                    document.getElementById('coursesContainer').innerHTML = courses.map(renderTeacherCourseCard).join('');
+                }
+
+            } catch (err) {
+                console.error('Ошибка загрузки данных преподавателя:', err);
+                document.getElementById('coursesLoading').classList.add('d-none');
+                document.getElementById('coursesContainer').innerHTML =
+                    `<div class="alert alert-warning">Ошибка загрузки: ${err.message}</div>`;
+            }
+        }
+
+        // Создание нового курса через API
+        async function createCourse() {
+            const title = document.getElementById('newCourseTitle').value.trim();
+            const description = document.getElementById('newCourseDesc').value.trim();
+            const category = document.getElementById('newCourseCategory').value;
+            const price = parseInt(document.getElementById('newCoursePrice').value) || 0;
+
+            if (!title || !description) {
+                alert('Заполните название и описание курса');
+                return;
+            }
+
+            const btn = document.getElementById('createBtnText');
+            const spinner = document.getElementById('createBtnSpinner');
+            btn.textContent = 'Создаём...';
+            spinner.classList.remove('d-none');
+
+            try {
+                const user = getCurrentUser();
+                await apiFetch('/courses', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        title,
+                        description,
+                        category,
+                        price,
+                        priceType: price === 0 ? 'free' : 'paid',
+                        level: 'beginner',
+                        rating: 0,
+                        reviewsCount: 0,
+                        image: 'images/course-1.jpg',
+                        badge: price === 0 ? 'Бесплатно' : null,
+                        badgeColor: price === 0 ? 'success' : null,
+                        teacherId: user.id,
+                        teacherName: user.name,
+                        duration: '0 часов',
+                        lessonsCount: 0,
+                        studentsCount: 0
+                    })
+                });
+
+                // Закрываем модалку и перезагружаем
+                bootstrap.Modal.getInstance(document.getElementById('newCourseModal')).hide();
+                await loadTeacherData();
+
+            } catch (err) {
+                alert('Ошибка создания курса: ' + err.message);
+            } finally {
+                btn.textContent = 'Создать';
+                spinner.classList.add('d-none');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadTeacherData);
+    </script>
 </body>
 </html>
