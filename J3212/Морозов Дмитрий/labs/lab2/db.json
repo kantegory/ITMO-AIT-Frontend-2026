@@ -1,0 +1,906 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "user@example.com",
+      "username": "user",
+      "password": "password123",
+      "createdAt": "2026-03-26"
+    },
+    {
+      "id": "2",
+      "email": "admin@example.com",
+      "username": "admin",
+      "password": "admin123",
+      "createdAt": "2026-03-26"
+    },
+    {
+      "email": "test@test.com",
+      "username": "testuser",
+      "password": "test123",
+      "createdAt": "2026-03-26",
+      "id": "90e-s7CIBhw"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "exp-2026-001",
+      "name": "model_v1_training",
+      "date": "2026-01-15",
+      "metric": 0.95,
+      "status": "Completed",
+      "tags": [
+        "production",
+        "v1"
+      ],
+      "logs": [
+        "[2026-01-15 10:00:00] INFO: Starting experiment model_v1_training",
+        "[2026-01-15 10:00:01] INFO: Loading dataset...",
+        "[2026-01-15 10:00:05] INFO: Dataset loaded: 10000 samples",
+        "[2026-01-15 10:00:06] INFO: Preprocessing data...",
+        "[2026-01-15 10:00:10] INFO: Data preprocessing completed",
+        "[2026-01-15 10:00:11] INFO: Initializing model...",
+        "[2026-01-15 10:00:12] INFO: Model architecture: RandomForestClassifier",
+        "[2026-01-15 10:00:13] INFO: Starting training (epochs=100)...",
+        "[2026-01-15 10:01:00] INFO: Epoch 10/100 - accuracy: 0.75",
+        "[2026-01-15 10:02:00] INFO: Epoch 20/100 - accuracy: 0.82",
+        "[2026-01-15 10:03:00] INFO: Epoch 50/100 - accuracy: 0.89",
+        "[2026-01-15 10:04:00] INFO: Epoch 75/100 - accuracy: 0.93",
+        "[2026-01-15 10:05:00] INFO: Epoch 100/100 - accuracy: 0.95",
+        "[2026-01-15 10:05:01] INFO: Training completed successfully",
+        "[2026-01-15 10:05:02] INFO: Saving model artifacts...",
+        "[2026-01-15 10:05:05] INFO: Experiment finished with status: Completed"
+      ],
+      "artifacts": [
+        {
+          "name": "model.pkl",
+          "type": "Model",
+          "size": "2.4 MB",
+          "date": "2026-01-15"
+        },
+        {
+          "name": "metrics.json",
+          "type": "JSON",
+          "size": "1.2 KB",
+          "date": "2026-01-15"
+        },
+        {
+          "name": "confusion_matrix.png",
+          "type": "Image",
+          "size": "156 KB",
+          "date": "2026-01-15"
+        },
+        {
+          "name": "training_data.csv",
+          "type": "CSV",
+          "size": "5.8 MB",
+          "date": "2026-01-15"
+        }
+      ],
+      "params": {
+        "model_type": "RandomForestClassifier",
+        "n_estimators": 100,
+        "max_depth": 10,
+        "min_samples_split": 2,
+        "learning_rate": 0.01,
+        "batch_size": 32,
+        "epochs": 100,
+        "optimizer": "adam"
+      },
+      "metrics": {
+        "accuracy": 0.95,
+        "loss": 0.23
+      }
+    },
+    {
+      "id": "exp-2026-002",
+      "name": "model_v2_hyperparam",
+      "date": "2026-01-14",
+      "metric": 0.92,
+      "status": "Completed",
+      "tags": [
+        "testing",
+        "v2"
+      ],
+      "logs": [
+        "[2026-01-14 09:00:00] INFO: Starting experiment"
+      ],
+      "artifacts": [
+        {
+          "name": "model_v2.pkl",
+          "type": "Model",
+          "size": "2.1 MB",
+          "date": "2026-01-14"
+        }
+      ],
+      "params": {
+        "model_type": "RandomForestClassifier",
+        "n_estimators": 150
+      },
+      "metrics": {
+        "accuracy": 0.92,
+        "loss": 0.28
+      }
+    },
+    {
+      "id": "exp-2026-003",
+      "name": "model_v3_test",
+      "date": "2026-01-13",
+      "metric": null,
+      "status": "Running",
+      "tags": [
+        "development"
+      ],
+      "logs": [
+        "[2026-01-13 14:00:00] INFO: Starting experiment"
+      ],
+      "artifacts": [],
+      "params": {
+        "model_type": "NeuralNetwork"
+      },
+      "metrics": {
+        "accuracy": null,
+        "loss": null
+      }
+    },
+    {
+      "id": "exp-2026-004",
+      "name": "baseline_model",
+      "date": "2026-01-10",
+      "metric": 0.87,
+      "status": "Failed",
+      "tags": [
+        "baseline"
+      ],
+      "logs": [
+        "[2026-01-10 11:00:00] ERROR: Training failed"
+      ],
+      "artifacts": [],
+      "params": {
+        "model_type": "LinearRegression"
+      },
+      "metrics": {
+        "accuracy": 0.87,
+        "loss": 0.45
+      }
+    },
+    {
+      "id": "exp-2026-005",
+      "name": "neural_net_exp",
+      "date": "2026-01-08",
+      "metric": 0.91,
+      "status": "Completed",
+      "tags": [
+        "nn",
+        "pytorch"
+      ],
+      "logs": [
+        "[2026-01-08 10:00:00] INFO: Starting neural network training"
+      ],
+      "artifacts": [
+        {
+          "name": "nn_model.pth",
+          "type": "Model",
+          "size": "5.2 MB",
+          "date": "2026-01-08"
+        }
+      ],
+      "params": {
+        "model_type": "NeuralNetwork",
+        "framework": "PyTorch"
+      },
+      "metrics": {
+        "accuracy": 0.91,
+        "loss": 0.31
+      }
+    },
+    {
+      "id": "exp-2026-006",
+      "name": "xgboost_trial",
+      "date": "2026-01-07",
+      "metric": 0.94,
+      "status": "Completed",
+      "tags": [
+        "xgboost",
+        "production"
+      ],
+      "logs": [
+        "[2026-01-07 08:00:00] INFO: Starting XGBoost training"
+      ],
+      "artifacts": [
+        {
+          "name": "xgb_model.json",
+          "type": "Model",
+          "size": "1.8 MB",
+          "date": "2026-01-07"
+        }
+      ],
+      "params": {
+        "model_type": "XGBoost",
+        "max_depth": 6
+      },
+      "metrics": {
+        "accuracy": 0.94,
+        "loss": 0.25
+      }
+    },
+    {
+      "id": "exp-2026-007",
+      "name": "svm_experiment",
+      "date": "2026-01-06",
+      "metric": 0.88,
+      "status": "Completed",
+      "tags": [
+        "svm",
+        "testing"
+      ],
+      "logs": [
+        "[2026-01-06 12:00:00] INFO: Starting SVM training"
+      ],
+      "artifacts": [
+        {
+          "name": "svm_model.sav",
+          "type": "Model",
+          "size": "3.1 MB",
+          "date": "2026-01-06"
+        }
+      ],
+      "params": {
+        "model_type": "SVM",
+        "kernel": "rbf"
+      },
+      "metrics": {
+        "accuracy": 0.88,
+        "loss": 0.35
+      }
+    },
+    {
+      "id": "exp-2026-008",
+      "name": "image_classifier_exp",
+      "date": "2026-01-08",
+      "metric": 0.91,
+      "status": "Completed",
+      "tags": [
+        "cnn",
+        "image"
+      ],
+      "logs": [
+        "[2026-01-08 15:00:00] INFO: Starting CNN training"
+      ],
+      "artifacts": [
+        {
+          "name": "cnn_model.h5",
+          "type": "Model",
+          "size": "12.4 MB",
+          "date": "2026-01-08"
+        }
+      ],
+      "params": {
+        "model_type": "CNN",
+        "framework": "TensorFlow"
+      },
+      "metrics": {
+        "accuracy": 0.91,
+        "loss": 0.29
+      }
+    },
+    {
+      "id": "exp-2026-009",
+      "name": "text_embedding_exp",
+      "date": "2026-01-09",
+      "metric": 0.89,
+      "status": "Completed",
+      "tags": [
+        "nlp",
+        "embedding"
+      ],
+      "logs": [
+        "[2026-01-09 10:00:00] INFO: Starting embedding training"
+      ],
+      "artifacts": [
+        {
+          "name": "embeddings.bin",
+          "type": "Binary",
+          "size": "50.2 MB",
+          "date": "2026-01-09"
+        }
+      ],
+      "params": {
+        "model_type": "Word2Vec",
+        "vector_size": 300
+      },
+      "metrics": {
+        "accuracy": 0.89,
+        "loss": 0.33
+      }
+    },
+    {
+      "id": "exp-2026-010",
+      "name": "sentiment_analysis_exp",
+      "date": "2026-01-10",
+      "metric": 0.85,
+      "status": "Completed",
+      "tags": [
+        "nlp",
+        "sentiment"
+      ],
+      "logs": [
+        "[2026-01-10 09:00:00] INFO: Starting sentiment analysis"
+      ],
+      "artifacts": [
+        {
+          "name": "sentiment_model.pkl",
+          "type": "Model",
+          "size": "4.5 MB",
+          "date": "2026-01-10"
+        }
+      ],
+      "params": {
+        "model_type": "LSTM",
+        "framework": "PyTorch"
+      },
+      "metrics": {
+        "accuracy": 0.85,
+        "loss": 0.38
+      }
+    },
+    {
+      "id": "exp-2026-011",
+      "name": "feature_engineering_v1",
+      "date": "2026-01-11",
+      "metric": 0.9,
+      "status": "Completed",
+      "tags": [
+        "features",
+        "preprocessing"
+      ],
+      "logs": [
+        "[2026-01-11 11:00:00] INFO: Starting feature engineering"
+      ],
+      "artifacts": [
+        {
+          "name": "features.pkl",
+          "type": "Pickle",
+          "size": "1.2 MB",
+          "date": "2026-01-11"
+        }
+      ],
+      "params": {
+        "n_features": 50,
+        "selection_method": "mutual_info"
+      },
+      "metrics": {
+        "accuracy": 0.9,
+        "loss": 0.32
+      }
+    },
+    {
+      "id": "exp-2026-012",
+      "name": "customer_churn_exp",
+      "date": "2026-01-12",
+      "metric": 0.89,
+      "status": "Completed",
+      "tags": [
+        "churn",
+        "production"
+      ],
+      "logs": [
+        "[2026-01-12 14:00:00] INFO: Starting churn prediction"
+      ],
+      "artifacts": [
+        {
+          "name": "churn_model.pkl",
+          "type": "Model",
+          "size": "2.8 MB",
+          "date": "2026-01-12"
+        }
+      ],
+      "params": {
+        "model_type": "RandomForestClassifier",
+        "n_estimators": 200
+      },
+      "metrics": {
+        "accuracy": 0.89,
+        "loss": 0.34
+      }
+    },
+    {
+      "id": "exp-2026-013",
+      "name": "ensemble_method_exp",
+      "date": "2026-01-13",
+      "metric": 0.96,
+      "status": "Completed",
+      "tags": [
+        "ensemble",
+        "voting"
+      ],
+      "logs": [
+        "[2026-01-13 10:00:00] INFO: Starting ensemble training"
+      ],
+      "artifacts": [
+        {
+          "name": "ensemble_model.pkl",
+          "type": "Model",
+          "size": "8.5 MB",
+          "date": "2026-01-13"
+        }
+      ],
+      "params": {
+        "model_type": "VotingClassifier",
+        "n_estimators": 5
+      },
+      "metrics": {
+        "accuracy": 0.96,
+        "loss": 0.21
+      }
+    },
+    {
+      "id": "exp-2026-014",
+      "name": "hyperparameter_tuning",
+      "date": "2026-01-14",
+      "metric": 0.93,
+      "status": "Completed",
+      "tags": [
+        "tuning",
+        "gridsearch"
+      ],
+      "logs": [
+        "[2026-01-14 08:00:00] INFO: Starting grid search"
+      ],
+      "artifacts": [
+        {
+          "name": "best_params.json",
+          "type": "JSON",
+          "size": "2.5 KB",
+          "date": "2026-01-14"
+        }
+      ],
+      "params": {
+        "search_type": "grid",
+        "cv_folds": 5
+      },
+      "metrics": {
+        "accuracy": 0.93,
+        "loss": 0.27
+      }
+    },
+    {
+      "id": "exp-2026-015",
+      "name": "fraud_detection_exp",
+      "date": "2026-01-15",
+      "metric": 0.97,
+      "status": "Completed",
+      "tags": [
+        "fraud",
+        "production"
+      ],
+      "logs": [
+        "[2026-01-15 07:00:00] INFO: Starting fraud detection training"
+      ],
+      "artifacts": [
+        {
+          "name": "fraud_model.pkl",
+          "type": "Model",
+          "size": "3.2 MB",
+          "date": "2026-01-15"
+        }
+      ],
+      "params": {
+        "model_type": "XGBoost",
+        "scale_pos_weight": 10
+      },
+      "metrics": {
+        "accuracy": 0.97,
+        "loss": 0.19
+      }
+    },
+    {
+      "id": "exp-2026-016",
+      "name": "time_series_forecast",
+      "date": "2026-01-16",
+      "metric": 0.84,
+      "status": "Pending",
+      "tags": [
+        "timeseries",
+        "forecast"
+      ],
+      "logs": [],
+      "artifacts": [],
+      "params": {
+        "model_type": "ARIMA",
+        "order": [
+          1,
+          1,
+          1
+        ]
+      },
+      "metrics": {
+        "accuracy": null,
+        "loss": null
+      }
+    },
+    {
+      "id": "exp-2026-017",
+      "name": "anomaly_detector_exp",
+      "date": "2026-01-17",
+      "metric": 0.88,
+      "status": "Completed",
+      "tags": [
+        "anomaly",
+        "unsupervised"
+      ],
+      "logs": [
+        "[2026-01-17 13:00:00] INFO: Starting anomaly detection"
+      ],
+      "artifacts": [
+        {
+          "name": "anomaly_model.pkl",
+          "type": "Model",
+          "size": "1.9 MB",
+          "date": "2026-01-17"
+        }
+      ],
+      "params": {
+        "model_type": "IsolationForest",
+        "contamination": 0.1
+      },
+      "metrics": {
+        "accuracy": 0.88,
+        "loss": 0.36
+      }
+    },
+    {
+      "id": "exp-2026-018",
+      "name": "recommendation_engine_exp",
+      "date": "2026-01-18",
+      "metric": 0.92,
+      "status": "Completed",
+      "tags": [
+        "recommendation",
+        "collaborative"
+      ],
+      "logs": [
+        "[2026-01-18 10:00:00] INFO: Starting recommendation training"
+      ],
+      "artifacts": [
+        {
+          "name": "rec_model.pkl",
+          "type": "Model",
+          "size": "15.3 MB",
+          "date": "2026-01-18"
+        }
+      ],
+      "params": {
+        "model_type": "MatrixFactorization",
+        "n_factors": 50
+      },
+      "metrics": {
+        "accuracy": 0.92,
+        "loss": 0.28
+      }
+    },
+    {
+      "id": "exp-2026-019",
+      "name": "object_detection_exp",
+      "date": "2026-01-19",
+      "metric": 0.9,
+      "status": "Running",
+      "tags": [
+        "object",
+        "detection",
+        "yolo"
+      ],
+      "logs": [
+        "[2026-01-19 09:00:00] INFO: Starting YOLO training"
+      ],
+      "artifacts": [],
+      "params": {
+        "model_type": "YOLOv5",
+        "img_size": 640
+      },
+      "metrics": {
+        "accuracy": null,
+        "loss": null
+      }
+    },
+    {
+      "id": "exp-2026-020",
+      "name": "text_classifier_exp",
+      "date": "2026-01-20",
+      "metric": 0.93,
+      "status": "Completed",
+      "tags": [
+        "text",
+        "classification",
+        "bert"
+      ],
+      "logs": [
+        "[2026-01-20 11:00:00] INFO: Starting BERT fine-tuning"
+      ],
+      "artifacts": [
+        {
+          "name": "bert_model.pth",
+          "type": "Model",
+          "size": "440 MB",
+          "date": "2026-01-20"
+        }
+      ],
+      "params": {
+        "model_type": "BERT",
+        "max_length": 512
+      },
+      "metrics": {
+        "accuracy": 0.93,
+        "loss": 0.26
+      }
+    },
+    {
+      "id": "exp-2026-021",
+      "name": "clustering_exp",
+      "date": "2026-01-21",
+      "metric": 0.81,
+      "status": "Completed",
+      "tags": [
+        "clustering",
+        "unsupervised"
+      ],
+      "logs": [
+        "[2026-01-21 14:00:00] INFO: Starting K-Means clustering"
+      ],
+      "artifacts": [
+        {
+          "name": "clusters.pkl",
+          "type": "Pickle",
+          "size": "0.8 MB",
+          "date": "2026-01-21"
+        }
+      ],
+      "params": {
+        "model_type": "KMeans",
+        "n_clusters": 5
+      },
+      "metrics": {
+        "accuracy": 0.81,
+        "loss": 0.42
+      }
+    },
+    {
+      "id": "exp-2026-022",
+      "name": "dimensionality_reduction",
+      "date": "2026-01-22",
+      "metric": 0.86,
+      "status": "Completed",
+      "tags": [
+        "pca",
+        "reduction"
+      ],
+      "logs": [
+        "[2026-01-22 10:00:00] INFO: Starting PCA"
+      ],
+      "artifacts": [
+        {
+          "name": "pca_components.pkl",
+          "type": "Pickle",
+          "size": "1.5 MB",
+          "date": "2026-01-22"
+        }
+      ],
+      "params": {
+        "model_type": "PCA",
+        "n_components": 50
+      },
+      "metrics": {
+        "accuracy": 0.86,
+        "loss": 0.37
+      }
+    },
+    {
+      "id": "exp-2026-023",
+      "name": "transfer_learning_exp",
+      "date": "2026-01-23",
+      "metric": 0.95,
+      "status": "Completed",
+      "tags": [
+        "transfer",
+        "resnet"
+      ],
+      "logs": [
+        "[2026-01-23 08:00:00] INFO: Starting transfer learning"
+      ],
+      "artifacts": [
+        {
+          "name": "transfer_model.pth",
+          "type": "Model",
+          "size": "95 MB",
+          "date": "2026-01-23"
+        }
+      ],
+      "params": {
+        "model_type": "ResNet50",
+        "pretrained": true
+      },
+      "metrics": {
+        "accuracy": 0.95,
+        "loss": 0.22
+      }
+    },
+    {
+      "id": "exp-2026-024",
+      "name": "autoencoder_exp",
+      "date": "2026-01-24",
+      "metric": 0.87,
+      "status": "Pending",
+      "tags": [
+        "autoencoder",
+        "compression"
+      ],
+      "logs": [],
+      "artifacts": [],
+      "params": {
+        "model_type": "Autoencoder",
+        "latent_dim": 128
+      },
+      "metrics": {
+        "accuracy": null,
+        "loss": null
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "1",
+      "name": "fraud_detection",
+      "version": "v2.1",
+      "status": "Production",
+      "metric": 0.97,
+      "experimentId": "exp-2026-015",
+      "date": "2026-01-15",
+      "description": "Model for fraud detection in financial transactions",
+      "metrics": {
+        "accuracy": 0.97,
+        "precision": 0.95,
+        "recall": 0.94,
+        "f1": 0.945
+      }
+    },
+    {
+      "id": "2",
+      "name": "customer_churn",
+      "version": "v1.5",
+      "status": "Production",
+      "metric": 0.89,
+      "experimentId": "exp-2026-012",
+      "date": "2026-01-12",
+      "description": "Predicts customer churn probability",
+      "metrics": {
+        "accuracy": 0.89,
+        "precision": 0.87,
+        "recall": 0.85,
+        "f1": 0.86
+      }
+    },
+    {
+      "id": "3",
+      "name": "recommendation_engine",
+      "version": "v3.0",
+      "status": "Staging",
+      "metric": 0.92,
+      "experimentId": "exp-2026-018",
+      "date": "2026-01-18",
+      "description": "Product recommendation system",
+      "metrics": {
+        "accuracy": 0.92,
+        "precision": 0.9,
+        "recall": 0.88,
+        "f1": 0.89
+      }
+    },
+    {
+      "id": "4",
+      "name": "sentiment_analysis",
+      "version": "v1.2",
+      "status": "Staging",
+      "metric": 0.85,
+      "experimentId": "exp-2026-010",
+      "date": "2026-01-10",
+      "description": "Text sentiment analysis model",
+      "metrics": {
+        "accuracy": 0.85,
+        "precision": 0.83,
+        "recall": 0.81,
+        "f1": 0.82
+      }
+    },
+    {
+      "id": "5",
+      "name": "image_classifier",
+      "version": "v1.0",
+      "status": "Staging",
+      "metric": 0.91,
+      "experimentId": "exp-2026-008",
+      "date": "2026-01-08",
+      "description": "Image classification CNN model",
+      "metrics": {
+        "accuracy": 0.91,
+        "precision": 0.89,
+        "recall": 0.87,
+        "f1": 0.88
+      }
+    },
+    {
+      "id": "6",
+      "name": "baseline_v1",
+      "version": "v1.0",
+      "status": "Archived",
+      "metric": 0.78,
+      "experimentId": "exp-2026-001",
+      "date": "2026-01-01",
+      "description": "Baseline model for comparison",
+      "metrics": {
+        "accuracy": 0.78,
+        "precision": 0.76,
+        "recall": 0.74,
+        "f1": 0.75
+      }
+    },
+    {
+      "id": "7",
+      "name": "text_classifier",
+      "version": "v2.0",
+      "status": "Production",
+      "metric": 0.93,
+      "experimentId": "exp-2026-020",
+      "date": "2026-01-20",
+      "description": "Text classification using BERT",
+      "metrics": {
+        "accuracy": 0.93,
+        "precision": 0.91,
+        "recall": 0.89,
+        "f1": 0.9
+      }
+    },
+    {
+      "id": "8",
+      "name": "anomaly_detector",
+      "version": "v1.3",
+      "status": "Staging",
+      "metric": 0.88,
+      "experimentId": "exp-2026-017",
+      "date": "2026-01-17",
+      "description": "Anomaly detection for system monitoring",
+      "metrics": {
+        "accuracy": 0.88,
+        "precision": 0.86,
+        "recall": 0.84,
+        "f1": 0.85
+      }
+    },
+    {
+      "id": "9",
+      "name": "price_predictor",
+      "version": "v1.1",
+      "status": "Archived",
+      "metric": 0.82,
+      "experimentId": "exp-2026-005",
+      "date": "2026-01-05",
+      "description": "Price prediction model",
+      "metrics": {
+        "accuracy": 0.82,
+        "precision": 0.8,
+        "recall": 0.78,
+        "f1": 0.79
+      }
+    }
+  ],
+  "settings": {
+    "appName": "ML Pipeline",
+    "version": "1.0.0",
+    "stats": {
+      "totalExperiments": 12,
+      "modelsInRegistry": 5,
+      "runningNow": 2,
+      "filesSaved": 48
+    }
+  },
+  "$schema": "./node_modules/json-server/schema.json"
+}
