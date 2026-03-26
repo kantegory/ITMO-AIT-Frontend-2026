@@ -89,7 +89,7 @@
         <header class="d-flex justify-content-between align-items-center mb-4">
 
             <div>
-                <h1 class="mb-0">Experiment: Detection Experiment</h1>
+                <h1 class="mb-0" id="experimentTitle"></h1>
             </div>
 
             <button class="btn btn-primary">
@@ -173,41 +173,7 @@
 
                     </thead>
 
-                    <tbody>
-
-                    <tr>
-
-                        <td>
-                            <a href="run_entity.html"
-                               class="fw-semibold text-decoration-none">
-                                run_1
-                            </a>
-                        </td>
-
-                        <td>15 Mar 2026</td>
-
-                        <td>
-                            <span class="badge bg-success">
-                                Finished
-                            </span>
-                        </td>
-
-                        <td>
-                            <span class="badge bg-primary">
-                                accuracy: 0.93
-                            </span>
-                        </td>
-
-                        <td>
-                            <span class="badge bg-secondary">
-                                model=xgboost
-                            </span>
-                        </td>
-
-                        <td>12m 32s</td>
-
-                    </tr>
-
+                    <tbody id="runsTableBody">
                     </tbody>
 
                 </table>
@@ -220,8 +186,7 @@
 
         <nav class="mt-4 d-flex justify-content-between align-items-center">
 
-            <span class="text-muted">
-                Showing 1-3 of 3 runs
+            <span class="text-muted" id="runsStats">
             </span>
 
             <ul class="pagination mb-0">
@@ -246,6 +211,9 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="module" src="js/app.js"></script>
 
 </body>
 </html>
