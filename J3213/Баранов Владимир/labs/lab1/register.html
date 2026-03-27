@@ -24,7 +24,7 @@
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-                <div class="container">
+                <div class="container"> 
 
                     <a class="navbar-brand" href="index.html">PipelineLab</a>
 
@@ -39,7 +39,7 @@
                             <a class="nav-link" href="dashboard.html">Личный кабинет</a>
                             <a class="nav-link" href="experiments.html">Эксперименты</a>
                             <a class="nav-link" href="models.html">Модели</a>
-                            <a class="nav-link" href="login.html">Вход</a>
+                            <a class="nav-link" href="login.html" id="navAuthLink">Вход</a>
                         </div>
 
                     </div>
@@ -54,7 +54,9 @@
                     <div class="card p-4">
                         <h2 class="text-center mb-4">Регистрация</h2>
                         
-                        <form>
+                        <div class="alert alert-danger d-none" id="registerError"></div>
+
+                        <form id="registerForm">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Имя пользователя</label>
                                 <input
@@ -71,8 +73,8 @@
                                 <input
                                     type="email"
                                     class="form-control"
-                                    name="password"
-                                    id="password"
+                                    name="email"
+                                    id="email"
                                     aria-describedby="emailHelpId"
                                     placeholder="example@mail.com"
                                     required
@@ -114,6 +116,12 @@
         </main>
         <footer>
         </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+        <script src="js/api.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/register.js"></script>
+
         <!-- Bootstrap JavaScript Libraries -->
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

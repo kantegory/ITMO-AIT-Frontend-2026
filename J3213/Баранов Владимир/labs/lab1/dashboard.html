@@ -39,7 +39,7 @@
                             <a class="nav-link active" href="dashboard.html">Личный кабинет</a>
                             <a class="nav-link" href="experiments.html">Эксперименты</a>
                             <a class="nav-link" href="models.html">Модели</a>
-                            <a class="nav-link" href="login.html">Вход</a>
+                            <a class="nav-link" href="login.html" id="navAuthLink">Вход</a>
                         </div>
 
                     </div>
@@ -65,7 +65,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Эксперименты</h5>
                                 <p class="card-text">
-                                    Всего экспериментов: <strong>12</strong>
+                                    Всего экспериментов: <strong id="expCount">-</strong>
                                 </p>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Модели</h5>
                                 <p class="card-text">
-                                    Всего моделей: <strong>5</strong>
+                                    Всего моделей: <strong id="modelCount">-</strong>
                                 </p>
                             </div>
                         </div>
@@ -87,12 +87,45 @@
                             <div class="card-body">
                                 <h5 class="card-title">Артефакты</h5>
                                 <p class="card-text">
-                                    Всего артефактов: <strong>23</strong>
+                                    Всего артефактов: <strong id="artifactCount">-</strong>
                                 </p>
                             </div>
                         </div>
                     </div>
 
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-primary">
+                            <div class="card-body">
+                                <h6 class="card-title">Running</h6>
+                                <p class="card-text mb-0">
+                                    Активных экспериментов: <strong id="runningCount">-</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-success">
+                            <div class="card-body">
+                                <h6 class="card-title">Completed</h6>
+                                <p class="card-text mb-0">
+                                    Успешно завершено: <strong id="completedCount">-</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-danger">
+                            <div class="card-body">
+                                <h6 class="card-title">Failed</h6>
+                                <p class="card-text mb-0">
+                                    С ошибкой: <strong id="failedCount">-</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -110,33 +143,14 @@
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Название</th>
+                                        <th scope="col">Этап</th>
+                                        <th scope="col">Модель</th>
                                         <th scope="col">Статус</th>
                                         <th scope="col">Метрика</th>
                                         <th scope="col">Дата</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>#12</td>
-                                        <td>ResNet50 CIFAR10</td>
-                                        <td>Завершен</td>
-                                        <td>Accuracy: 0.91</td>
-                                        <td>10.03.2026</td>
-                                    </tr>
-                                    <tr>
-                                        <td>#11</td>
-                                        <td>XGBoost Credit Score</td>
-                                        <td>Завершен</td>
-                                        <td>ROC-AUC: 0.87</td>
-                                        <td>09.03.2026</td>
-                                    </tr>
-                                    <tr>
-                                        <td>#10</td>
-                                        <td>Baseline Logistic Regression</td>
-                                        <td>Выполняется</td>
-                                        <td>-</td>
-                                        <td>09.03.2026</td>
-                                    </tr>
+                                <tbody id="dashboardExperimentsTbody">
                                 </tbody>
                             </table>
                         </div>
@@ -149,6 +163,11 @@
 
         <footer>
         </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+        <script src="js/api.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/dashboard.js"></script>
 
         <!-- Bootstrap JavaScript Libraries -->
         <script

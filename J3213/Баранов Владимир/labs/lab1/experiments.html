@@ -40,7 +40,7 @@
 
                             <a class="nav-link" href="experiments.html">Эксперименты</a>
                             <a class="nav-link" href="models.html">Модели</a>
-                            <a class="nav-link" href="login.html">Вход</a>
+                            <a class="nav-link" href="login.html" id="navAuthLink">Вход</a>
                         </div>
 
                     </div>
@@ -83,6 +83,17 @@
                                 </div>
 
                                 <div class="mb-3">
+                                    <label for="statusFilter" class="form-label">Статус</label>
+                                    <select class="form-select" id="statusFilter">
+                                        <option selected>Любой</option>
+                                        <option>Draft</option>
+                                        <option>Running</option>
+                                        <option>Completed</option>
+                                        <option>Failed</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
                                     <label for="tagFilter" class="form-label">Тег</label>
                                     <input
                                         type="text"
@@ -108,7 +119,12 @@
                         <div class="card">
                             <div class="card-body">
 
-                                <h5 class="card-title mb-3">Список экспериментов</h5>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="card-title mb-0">Список экспериментов</h5>
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createExpModal">
+                                        + Новый эксперимент
+                                    </button>
+                                </div>
 
                                 <div class="table-responsive">
                                     <table class="table table-striped mb-0" id="experimentsTable">
@@ -116,40 +132,15 @@
                                             <tr>
                                                 <th scope="col">ID</th>
                                                 <th scope="col">Название</th>
+                                                <th scope="col">Этап</th>
+                                                <th scope="col">Модель</th>
                                                 <th scope="col">Статус</th>
                                                 <th scope="col">Метрика</th>
                                                 <th scope="col">Дата</th>
+                                                <th scope="col">Действия</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><a href="experiment.html">#12</a></td>
-                                                <td>ResNet50 CIFAR10</td>
-                                                <td>Завершен</td>
-                                                <td>Accuracy: 0.91</td>
-                                                <td>10.03.2026</td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="experiment.html">#11</a></td>
-                                                <td>XGBoost Credit Score</td>
-                                                <td>Завершен</td>
-                                                <td>ROC-AUC: 0.87</td>
-                                                <td>09.03.2026</td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="experiment.html">#10</a></td>
-                                                <td>Baseline Logistic Regression</td>
-                                                <td>Выполняется</td>
-                                                <td>-</td>
-                                                <td>09.03.2026</td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="experiment.html">#9</a></td>
-                                                <td>LightGBM Click Prediction</td>
-                                                <td>Завершен</td>
-                                                <td>F1-score: 0.76</td>
-                                                <td>05.03.2026</td>
-                                            </tr>
+                                        <tbody id="experimentsTbody">
                                         </tbody>
                                     </table>
                                 </div>
@@ -164,65 +155,78 @@
             </div>
         </main>
 
+        <!-- Modal: создание эксперимента -->
+        <div class="modal fade" id="createExpModal" tabindex="-1" aria-labelledby="createExpModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createExpModalLabel">Новый эксперимент</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <form id="createExpForm">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="expNameInput" class="form-label">Название</label>
+                                <input type="text" class="form-control" id="expNameInput" placeholder="Например: ResNet baseline" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="expMetricName" class="form-label">Метрика</label>
+                                <select class="form-select" id="expMetricName">
+                                    <option value="">— не указана —</option>
+                                    <option value="Accuracy">Accuracy</option>
+                                    <option value="ROC-AUC">ROC-AUC</option>
+                                    <option value="F1-score">F1-score</option>
+                                    <option value="Loss">Loss</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="expStageSelect" class="form-label">Этап</label>
+                                <select class="form-select" id="expStageSelect">
+                                    <option value="DataPrep">DataPrep</option>
+                                    <option value="Train" selected>Train</option>
+                                    <option value="Eval">Eval</option>
+                                    <option value="DeployCheck">DeployCheck</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="expModelSelect" class="form-label">Модель</label>
+                                <select class="form-select" id="expModelSelect">
+                                    <option value="">— без модели —</option>
+                                </select>
+                                <small class="text-muted" id="expModelHelp">
+                                    Если моделей нет, создайте их на странице "Модели".
+                                </small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="expMetricValue" class="form-label">Значение метрики</label>
+                                <input type="number" class="form-control" id="expMetricValue" placeholder="Например: 0.94" step="0.0001" min="0" max="1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="expTagsInput" class="form-label">Теги <small class="text-muted">(через запятую)</small></label>
+                                <input type="text" class="form-control" id="expTagsInput" placeholder="Например: baseline, cv, resnet">
+                            </div>
+                            <div class="mb-3">
+                                <label for="expDescriptionInput" class="form-label">Описание</label>
+                                <textarea class="form-control" id="expDescriptionInput" rows="3" placeholder="Кратко: цель эксперимента, гипотеза, данные"></textarea>
+                            </div>
+                            <div id="createExpError" class="alert alert-danger d-none"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+                            <button type="submit" class="btn btn-primary">Создать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <footer>
         </footer>
 
-        <script>
-            const metricSelect = document.getElementById("metricFilter");
-            const tagInput = document.getElementById("tagFilter");
-            const applyButton = document.getElementById("applyFilters");
-            const resetButton = document.getElementById("resetFilters");
-            const table = document.getElementById("experimentsTable");
-
-            if (applyButton && table && metricSelect && tagInput) {
-                applyButton.addEventListener("click", function () {
-                    const metricValue = metricSelect.value;
-                    const tagValue = tagInput.value.toLowerCase();
-
-                    const rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-
-                    for (let i = 0; i < rows.length; i++) {
-                        const cells = rows[i].getElementsByTagName("td");
-                        const nameText = cells[1].textContent || cells[1].innerText;
-                        const metricText = cells[3].textContent || cells[3].innerText;
-                        const rowText = (nameText + " " + metricText).toLowerCase();
-
-                        let show = true;
-
-                        if (metricValue !== "Любая") {
-                            if (metricText.indexOf(metricValue) === -1) {
-                                show = false;
-                            }
-                        }
-
-                        if (tagValue) {
-                            if (rowText.indexOf(tagValue) === -1) {
-                                show = false;
-                            }
-                        }
-
-                        if (show) {
-                            rows[i].style.display = "";
-                        } else {
-                            rows[i].style.display = "none";
-                        }
-                    }
-                });
-            }
-
-            if (resetButton && table && metricSelect && tagInput) {
-                resetButton.addEventListener("click", function () {
-                    metricSelect.value = "Любая";
-                    tagInput.value = "";
-
-                    const rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-
-                    for (let i = 0; i < rows.length; i++) {
-                        rows[i].style.display = "";
-                    }
-                });
-            }
-        </script>
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+        <script src="js/api.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/experiments.js"></script>
 
         <!-- Bootstrap JavaScript Libraries -->
         <script

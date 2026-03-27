@@ -39,7 +39,7 @@
                             <a class="nav-link" href="dashboard.html">Личный кабинет</a>
                             <a class="nav-link" href="experiments.html">Эксперименты</a>
                             <a class="nav-link" href="models.html">Модели</a>
-                            <a class="nav-link" href="login.html">Вход</a>
+                            <a class="nav-link" href="login.html" id="navAuthLink">Вход</a>
                         </div>
 
                     </div>
@@ -57,10 +57,15 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <h5 class="card-title mb-3">Список моделей</h5>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0">Список моделей</h5>
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createModelModal">
+                                + Зарегистрировать модель
+                            </button>
+                        </div>
 
                         <div class="table-responsive">
-                            <table class="table table-striped mb-0">
+                            <table class="table table-striped mb-0" id="modelsTable">
                                 <thead>
                                     <tr>
                                         <th scope="col">Название</th>
@@ -70,63 +75,7 @@
                                         <th scope="col">Действия</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>ResNet50 CIFAR10</td>
-                                        <td>v3</td>
-                                        <td>В проде</td>
-                                        <td>10.03.2026</td>
-                                        <td>
-                                            <button type="button" class="btn btn-sm btn-success">
-                                                Deploy
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                Archive
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>XGBoost Credit Score</td>
-                                        <td>v2</td>
-                                        <td>Тестирование</td>
-                                        <td>09.03.2026</td>
-                                        <td>
-                                            <button type="button" class="btn btn-sm btn-success">
-                                                Deploy
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                Archive
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Baseline Logistic Regression</td>
-                                        <td>v1</td>
-                                        <td>Архив</td>
-                                        <td>01.03.2026</td>
-                                        <td>
-                                            <button type="button" class="btn btn-sm btn-success">
-                                                Deploy
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                Archive
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>LightGBM Click Prediction</td>
-                                        <td>v4</td>
-                                        <td>В проде</td>
-                                        <td>05.03.2026</td>
-                                        <td>
-                                            <button type="button" class="btn btn-sm btn-success">
-                                                Deploy
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                Archive
-                                            </button>
-                                        </td>
-                                    </tr>
+                                <tbody id="modelsTbody">
                                 </tbody>
                             </table>
                         </div>
@@ -137,8 +86,52 @@
             </div>
         </main>
 
+        <!-- Modal: регистрация модели -->
+        <div class="modal fade" id="createModelModal" tabindex="-1" aria-labelledby="createModelModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createModelModalLabel">Зарегистрировать модель</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <form id="createModelForm">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="modelNameInput" class="form-label">Название модели</label>
+                                <input type="text" class="form-control" id="modelNameInput" placeholder="Например: ResNet-50" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="modelVersionInput" class="form-label">Версия</label>
+                                <input type="text" class="form-control" id="modelVersionInput" placeholder="Например: v1.0" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="modelFramework" class="form-label">Фреймворк</label>
+                                <select class="form-select" id="modelFramework">
+                                    <option value="PyTorch">PyTorch</option>
+                                    <option value="TensorFlow">TensorFlow</option>
+                                    <option value="scikit-learn">scikit-learn</option>
+                                    <option value="XGBoost">XGBoost</option>
+                                    <option value="ONNX">ONNX</option>
+                                </select>
+                            </div>
+                            <div id="createModelError" class="alert alert-danger d-none"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+                            <button type="submit" class="btn btn-primary">Зарегистрировать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <footer>
         </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+        <script src="js/api.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/models.js"></script>
 
         <!-- Bootstrap JavaScript Libraries -->
         <script

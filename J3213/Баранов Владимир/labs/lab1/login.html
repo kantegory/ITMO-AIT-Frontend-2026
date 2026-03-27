@@ -39,7 +39,7 @@
                             <a class="nav-link" href="dashboard.html">Личный кабинет</a>
                             <a class="nav-link" href="experiments.html">Эксперименты</a>
                             <a class="nav-link" href="models.html">Модели</a>
-                            <a class="nav-link" href="login.html">Вход</a>
+                            <a class="nav-link" href="login.html" id="navAuthLink">Вход</a>
                         </div>
 
                     </div>
@@ -53,7 +53,9 @@
                 <div class="col-md-5">
                     <div class="card p-4">
                         <h2 class="text-center mb-4">Вход</h2>
-                        <form>
+                        <div class="alert alert-danger d-none" id="loginError"></div>
+
+                        <form id="loginForm">
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
@@ -94,6 +96,12 @@
         </main>
         <footer>
         </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+        <script src="js/api.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/login.js"></script>
+
         <!-- Bootstrap JavaScript Libraries -->
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

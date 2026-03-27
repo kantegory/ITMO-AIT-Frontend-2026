@@ -39,7 +39,7 @@
                             <a class="nav-link" href="dashboard.html">Личный кабинет</a>
                             <a class="nav-link" href="experiments.html">Эксперименты</a>
                             <a class="nav-link" href="models.html">Модели</a>
-                            <a class="nav-link" href="login.html">Вход</a>
+                            <a class="nav-link" href="login.html" id="navAuthLink">Вход</a>
                         </div>
 
                     </div>
@@ -52,7 +52,7 @@
         <main>
             <div class="container mt-5 mb-5">
 
-                <h1 class="mb-4">Эксперимент #12</h1>
+                <h1 class="mb-4" id="experimentTitle">Эксперимент</h1>
 
                 <div class="row">
 
@@ -61,11 +61,14 @@
                             <div class="card-body">
                                 <h5 class="card-title mb-3">Информация об эксперименте</h5>
 
-                                <p class="mb-1"><strong>Название:</strong> ResNet50 CIFAR10</p>
-                                <p class="mb-1"><strong>Статус:</strong> Завершен</p>
-                                <p class="mb-1"><strong>Автор:</strong> student</p>
-                                <p class="mb-1"><strong>Дата запуска:</strong> 10.03.2026</p>
-                                <p class="mb-0"><strong>Теги:</strong> image, resnet, baseline</p>
+                                <p class="mb-1"><strong>Название:</strong> <span id="expName">-</span></p>
+                                <p class="mb-1"><strong>Статус:</strong> <span id="expStatus">-</span></p>
+                                <p class="mb-1"><strong>Этап:</strong> <span id="expStage">-</span></p>
+                                <p class="mb-1"><strong>Модель:</strong> <span id="expModel">-</span></p>
+                                <p class="mb-1"><strong>Автор:</strong> <span id="expAuthor">-</span></p>
+                                <p class="mb-1"><strong>Дата запуска:</strong> <span id="expDate">-</span></p>
+                                <p class="mb-1"><strong>Теги:</strong> <span id="expTags">-</span></p>
+                                <p class="mb-0"><strong>Описание:</strong> <span id="expDescription">-</span></p>
                             </div>
                         </div>
                     </div>
@@ -75,11 +78,21 @@
                             <div class="card-body">
                                 <h5 class="card-title mb-3">Метрики</h5>
 
-                                <ul class="mb-0">
-                                    <li>Accuracy: 0.91</li>
-                                    <li>Loss: 0.28</li>
-                                    <li>Precision: 0.89</li>
-                                    <li>Recall: 0.88</li>
+                                <form id="addMetricForm" class="mb-3">
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <input type="text" class="form-control" id="metricNameInput" placeholder="Metric name" required>
+                                        </div>
+                                        <div class="col-4">
+                                            <input type="number" class="form-control" id="metricValueInput" placeholder="Value" step="0.0001" required>
+                                        </div>
+                                        <div class="col-2 d-grid">
+                                            <button type="submit" class="btn btn-sm btn-primary">+</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <ul class="mb-0" id="metricsList">
                                 </ul>
                             </div>
                         </div>
@@ -94,11 +107,27 @@
                             <div class="card-body">
                                 <h5 class="card-title mb-3">Артефакты</h5>
 
-                                <ul class="mb-0">
-                                    <li>model.pt</li>
-                                    <li>confusion_matrix.png</li>
-                                    <li>training_config.json</li>
-                                    <li>metrics.json</li>
+                                <form id="addArtifactForm" class="mb-3">
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <input type="text" class="form-control" id="artifactNameInput" placeholder="Artifact name" required>
+                                        </div>
+                                        <div class="col-4">
+                                            <select class="form-select" id="artifactTypeInput">
+                                                <option value="model">model</option>
+                                                <option value="image">image</option>
+                                                <option value="config">config</option>
+                                                <option value="metrics">metrics</option>
+                                                <option value="other">other</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-2 d-grid">
+                                            <button type="submit" class="btn btn-sm btn-primary">+</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <ul class="mb-0" id="artifactsList">
                                 </ul>
                             </div>
                         </div>
@@ -109,12 +138,21 @@
                             <div class="card-body">
                                 <h5 class="card-title mb-3">Логи</h5>
 
-                                <p class="text-muted mb-0">
-                                    [10:00:01] Начало обучения.<br />
-                                    [10:00:10] Epoch 1/10 - loss=1.23, accuracy=0.55<br />
-                                    [10:01:20] Epoch 5/10 - loss=0.62, accuracy=0.82<br />
-                                    [10:02:45] Epoch 10/10 - loss=0.28, accuracy=0.91<br />
-                                    [10:03:00] Эксперимент завершен успешно.
+                                <div class="mb-3">
+                                    <div class="btn-group mb-2" role="group">
+                                        <button type="button" class="btn btn-sm btn-outline-primary" id="setRunningBtn">Start</button>
+                                        <button type="button" class="btn btn-sm btn-outline-success" id="setCompletedBtn">Finish</button>
+                                        <button type="button" class="btn btn-sm btn-outline-danger" id="setFailedBtn">Fail</button>
+                                    </div>
+                                    <form id="addLogForm">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="logTextInput" placeholder="Комментарий / лог">
+                                            <button type="submit" class="btn btn-outline-secondary">Добавить лог</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <p class="text-muted mb-0" id="logsBlock">
                                 </p>
                             </div>
                         </div>
@@ -127,6 +165,11 @@
 
         <footer>
         </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+        <script src="js/api.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/experiment.js"></script>
 
         <!-- Bootstrap JavaScript Libraries -->
         <script
