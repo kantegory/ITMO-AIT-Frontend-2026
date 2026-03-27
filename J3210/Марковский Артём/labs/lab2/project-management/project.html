@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaskHub — Проект</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <body data-page="project">
+    <header class="site-header">
+      <nav class="navbar navbar-expand-lg app-navbar">
+        <div class="container">
+          <a class="navbar-brand app-brand" href="dashboard.html">TaskHub</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#userNav"
+            aria-controls="userNav"
+            aria-expanded="false"
+            aria-label="Меню"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="userNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+              <li class="nav-item">
+                <a class="nav-link" href="dashboard.html">Личный кабинет</a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="dashboard.html#projectsSection"
+                  data-nav-group="projects"
+                  >Проекты</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="search.html">Поиск</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="faq.html">Справка</a>
+              </li>
+              <li class="nav-item user-chip">
+                <span id="headerUserName">Марковский Артём</span>
+              </li>
+              <li class="nav-item">
+                <a class="btn btn-light btn-sm logout-link" href="index.html"
+                  >Выйти</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page-section">
+      <div class="container layout-stack">
+        <section class="panel-card panel-header" id="projectOverviewSection">
+          <div class="row g-4 align-items-stretch">
+            <div class="col-lg-8">
+              <div class="badge-row">
+                <span class="soft-badge" id="projectRoleBadge">Участник</span>
+                <span class="status-badge" id="projectStatusBadge"
+                  >Активный проект</span
+                >
+              </div>
+              <div class="eyebrow mt-3">Проект</div>
+              <h1 class="page-title" id="projectTitle">Проект</h1>
+              <p class="page-text" id="projectDescription"></p>
+            </div>
+            <div class="col-lg-4">
+              <div class="stats-card project-info-card" id="projectTeamSection">
+                <div class="stats-line">
+                  <span>Срок завершения</span>
+                  <strong id="projectDeadline"></strong>
+                </div>
+                <div class="stats-line align-items-start">
+                  <span>Участники</span>
+                  <div class="member-list" id="projectMembers"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <article class="panel-card h-100" id="projectBoardSection">
+                <div class="section-head mb-3">
+                  <div>
+                    <div class="eyebrow">Задачи</div>
+                    <h2 class="section-title">Доска задач</h2>
+                  </div>
+                  <span class="soft-badge" id="projectTaskSummary"></span>
+                </div>
+                <div class="row g-3" id="projectBoard"></div>
+              </article>
+            </div>
+            <div class="col-lg-4">
+              <article class="panel-card h-100">
+                <div class="eyebrow">Роль</div>
+                <h2 class="section-title">Доступ по роли</h2>
+                <div class="role-card-current mt-3">
+                  <div class="role-name" id="projectCurrentRoleTitle"></div>
+                  <p class="role-text" id="projectCurrentRoleText"></p>
+                </div>
+                <div class="eyebrow mt-4">Что можно делать</div>
+                <div class="action-list" id="projectActionButtons"></div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="projectWorkspaceSection">
+          <ul class="nav nav-pills app-tabs gap-2 mb-3" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="deadlines-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#deadlines-pane"
+                type="button"
+                role="tab"
+              >
+                Сроки
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="files-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#files-pane"
+                type="button"
+                role="tab"
+              >
+                Файлы
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="discussion-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#discussion-pane"
+                type="button"
+                role="tab"
+              >
+                Обсуждения
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content panel-card">
+            <div
+              class="tab-pane fade show active"
+              id="deadlines-pane"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <div class="table-responsive">
+                <table class="table app-table align-middle mb-0">
+                  <thead>
+                    <tr>
+                      <th>Этап</th>
+                      <th>Дата</th>
+                      <th>Ответственный</th>
+                    </tr>
+                  </thead>
+                  <tbody id="projectDeadlines"></tbody>
+                </table>
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="files-pane"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <div class="list-stack" id="projectFiles"></div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="discussion-pane"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <div class="stack-list" id="projectDiscussion"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-row">
+        <div>
+          <div class="footer-brand">TaskHub</div>
+          <div class="footer-text">Страница проекта</div>
+        </div>
+        <div class="footer-text">Задачи, сроки и файлы проекта</div>
+      </div>
+    </footer>
+
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content app-modal">
+          <div class="modal-header">
+            <h2 class="modal-title h5 mb-0" id="detailsModalTitle"></h2>
+            <button
+              class="btn-close"
+              type="button"
+              data-bs-dismiss="modal"
+              aria-label="Закрыть"
+            ></button>
+          </div>
+          <div class="modal-body" id="detailsModalBody"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+      <script src="js/app-core.js"></script>
+    <script src="js/project-page.js"></script>
+    <script src="js/init.js"></script>
+  </body>
+</html>
