@@ -39,9 +39,16 @@
     <div class="header-row">
       <h1>Транзакции</h1>
       <div class="header-actions">
-        <div class="user-menu">
-          <div class="user-avatar"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
-          <span class="d-none d-md-inline" id="user-name">—</span>
+        <div class="dropdown">
+          <button type="button" class="user-menu dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="user-avatar"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+            <span class="d-none d-md-inline" id="user-name">—</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="settings.html">Настройки</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="#" onclick="logout(); return false;">Выйти</a></li>
+          </ul>
         </div>
       </div>
     </div>
