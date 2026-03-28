@@ -1,10 +1,11 @@
 function setupDashboardActions() {
   const createProjectButton = document.getElementById("createProjectButton");
 
-  if (!createProjectButton) {
+  if (!createProjectButton || createProjectButton.dataset.bound) {
     return;
   }
 
+  createProjectButton.dataset.bound = "1";
   createProjectButton.addEventListener("click", () => {
     openModal("Создать проект", buildCreateProjectModal(), true);
     bindCreateProjectModal();
@@ -82,26 +83,30 @@ function bindCreateProjectModal() {
     const projectId = `project-${Date.now()}`;
     const currentUser = getUserName();
 
-    projects.unshift({
+    const project = {
       id: projectId,
       title: title.slice(0, 60),
       description: (
         description || "Новый проект без описания."
       ).slice(0, 260),
-      role: "Администратор",
       status: statusField.value,
       deadline,
       members: [{ name: currentUser, role: "Администратор" }],
-      actions: buildProjectActions("Администратор"),
       tasks: [],
       deadlines: [
         { stage: "Старт проекта", date: deadline, owner: currentUser },
       ],
       files: [],
       discussion: [],
-    });
+    };
 
-    saveProjects();
+    const nextProjects = [
+      applyProjectView(project, currentUser),
+      ...projects.filter((item) => item.id !== project.id),
+    ];
+
+    setProjects(nextProjects);
+    void createProjectInApi(project).catch((error) => console.error(error));
     window.location.href = `project.html?project=${projectId}`;
   });
 }
@@ -214,6 +219,14 @@ function createDashboardProjectCard(project) {
 function renderDashboardProjects(projectsBox) {
   projectsBox.replaceChildren();
 
+  if (!projects.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-pane";
+    empty.textContent = "Пока нет проектов, в которых вы участвуете.";
+    projectsBox.append(empty);
+    return;
+  }
+
   projects.forEach((project) => {
     projectsBox.append(createDashboardProjectCard(project));
   });
@@ -257,6 +270,14 @@ function renderDashboardTasks(tasksBox, countBadge, tasks) {
   countBadge.textContent = `${tasks.length} задач`;
   tasksBox.replaceChildren();
 
+  if (!currentTasks.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-pane";
+    empty.textContent = "Сейчас у вас нет активных задач.";
+    tasksBox.append(empty);
+    return;
+  }
+
   currentTasks.forEach((task) => {
     tasksBox.append(createDashboardTaskRow(task));
   });
@@ -290,12 +311,33 @@ function createDashboardNotification(item) {
 function renderDashboardNotifications(notificationsBox, notes) {
   notificationsBox.replaceChildren();
 
+  if (!notes.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-pane";
+    empty.textContent = "Пока нет новых сообщений по проектам.";
+    notificationsBox.append(empty);
+    return;
+  }
+
   notes.forEach((item) => {
     notificationsBox.append(createDashboardNotification(item));
   });
 }
 
-function renderDashboard() {
+function renderDashboardError(projectsBox, tasksBox, notificationsBox, summaryBox, countBadge) {
+  summaryBox.replaceChildren();
+  countBadge.textContent = "0 задач";
+
+  [projectsBox, tasksBox, notificationsBox].forEach((box) => {
+    box.replaceChildren();
+    const empty = document.createElement("div");
+    empty.className = "empty-pane";
+    empty.textContent = "Не получилось загрузить данные с mock API. Пока показывать нечего.";
+    box.append(empty);
+  });
+}
+
+async function renderDashboard() {
   const projectsBox = document.getElementById("dashboardProjects");
   const tasksBox = document.getElementById("dashboardTasks");
   const notificationsBox = document.getElementById("dashboardNotifications");
@@ -312,7 +354,12 @@ function renderDashboard() {
     return;
   }
 
-  syncProjects();
+  try {
+    await refreshProjects({ silent: false });
+  } catch {
+    renderDashboardError(projectsBox, tasksBox, notificationsBox, summaryBox, countBadge);
+    return;
+  }
 
   const tasks = getDashboardTasks();
   const notes = getDashboardNotes();
