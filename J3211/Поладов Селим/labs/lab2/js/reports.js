@@ -25,6 +25,7 @@ async function loadReports() {
       }]
     },
     options: {
+      maintainAspectRatio: false,
       plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } },
       cutout: '60%'
     }
@@ -64,6 +65,7 @@ async function loadReports() {
       ]
     },
     options: {
+      maintainAspectRatio: false,
       plugins: { legend: { display: true, position: 'top', labels: { font: { size: 11 } } } },
       scales: {
         y: { beginAtZero: true, ticks: { font: { size: 11 } } },

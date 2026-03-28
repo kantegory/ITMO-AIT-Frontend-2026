@@ -341,14 +341,17 @@ body {
 }
 
 .report-chart {
+  position: relative;
   height: 280px;
   background: #fafafa;
   border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--gray);
   margin-bottom: 1rem;
+}
+
+@media (max-width: 767px) {
+  .report-chart {
+    height: 220px;
+  }
 }
 
 .integration-card {
@@ -456,19 +459,121 @@ body {
   margin: 0.35rem 0;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 767px) {
   .sidebar {
-    width: 72px;
-    padding: 0.5rem 0;
+    width: 100%;
+    height: 60px;
+    min-height: unset;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    flex-direction: row;
+    align-items: stretch;
+    border-right: none;
+    border-top: 1px solid #eee;
+    padding: 0;
+    z-index: 200;
   }
-  .sidebar .nav-link span {
+
+  .sidebar .brand {
     display: none;
   }
-  .sidebar .nav-link {
-    justify-content: center;
-    padding: 0.75rem;
+
+  .sidebar nav {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    padding-top: 0;
   }
+
+  .sidebar .nav-link {
+    flex-direction: column;
+    gap: 2px;
+    padding: 0.4rem 0.25rem;
+    justify-content: center;
+    flex: 1;
+    text-align: center;
+    border-radius: 0;
+  }
+
+  .sidebar .nav-link span {
+    display: block;
+    font-size: 0.6rem;
+    white-space: nowrap;
+  }
+
+  .sidebar .nav-link svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .sidebar .nav-bottom {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    border-left: 1px solid #eee;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .sidebar .nav-bottom .nav-link {
+    padding: 0.4rem 0.75rem;
+  }
+
   .main-wrap {
-    margin-left: 72px;
+    margin-left: 0;
+    padding: 1rem 0.75rem 5rem;
+    min-height: calc(100vh - 60px);
+  }
+
+  .header-row {
+    margin-bottom: 1rem;
+  }
+
+  .header-row h1 {
+    font-size: 1.15rem;
+  }
+
+  .card-metric .value {
+    font-size: 1.2rem;
+  }
+
+  .card-metric {
+    padding: 1rem;
+  }
+
+  .content-card {
+    padding: 1rem;
+  }
+
+  .settings-avatar-col {
+    border-right: none;
+    border-bottom: 1px solid #eee;
+  }
+
+  .settings-form-col {
+    padding: 1rem;
+  }
+
+  .settings-avatar-wrap {
+    padding: 1.5rem 1rem;
+  }
+
+  .wallet-card {
+    max-width: 100%;
+  }
+
+  .filter-row .form-control,
+  .filter-row .form-select {
+    font-size: 0.875rem;
+  }
+
+  .auth-page .auth-card .brand.brand-hero {
+    font-size: 2.25rem;
+  }
+
+  .auth-page {
+    padding: 3rem 1rem 1.5rem;
+    align-items: flex-start;
   }
 }

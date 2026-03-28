@@ -67,8 +67,8 @@ function openModal(id) {
   document.getElementById('modal-counterparty').textContent = t.counterparty || '—'
   document.getElementById('modal-category').textContent = t.category
   const amountStr = t.amount < 0
-    ? `− ₽${Math.abs(t.amount).toLocaleString('ru-RU')}`
-    : `+ ₽${t.amount.toLocaleString('ru-RU')}`
+    ? `− ${Math.abs(t.amount).toLocaleString('ru-RU')} ₽`
+    : `+ ${t.amount.toLocaleString('ru-RU')} ₽`
   document.getElementById('modal-amount').textContent = amountStr
   document.getElementById('modal-date').textContent = new Date(t.date).toLocaleString('ru-RU')
   document.getElementById('modal-account').textContent = t.accountId || '—'
