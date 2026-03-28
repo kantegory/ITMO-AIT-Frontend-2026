@@ -10,8 +10,8 @@ function renderTransactions(transactions) {
     const emoji = CATEGORY_EMOJI[t.category] || '💳'
     const amountClass = t.amount < 0 ? 'amount-negative' : 'text-success'
     const amountStr = t.amount < 0
-      ? `− ₽${Math.abs(t.amount).toLocaleString('ru-RU')}`
-      : `+ ₽${t.amount.toLocaleString('ru-RU')}`
+      ? `− ${Math.abs(t.amount).toLocaleString('ru-RU')} ₽`
+      : `+ ${t.amount.toLocaleString('ru-RU')} ₽`
     const date = new Date(t.date).toLocaleString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
     return `<tr>
       <td>

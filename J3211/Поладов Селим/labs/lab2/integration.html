@@ -52,6 +52,9 @@
         </div>
       </div>
     </div>
+
+    <div id="transaction-toast" class="alert alert-success d-none mb-3 py-2">Транзакция успешно добавлена</div>
+
     <div class="content-card mb-4">
       <h3 class="mb-3">Импорт транзакций</h3>
       <p class="text-muted small mb-3">Подключите банк или загрузите выписку, чтобы автоматически учитывать операции.</p>
@@ -83,6 +86,14 @@
         </div>
       </div>
     </div>
+
+    <div class="content-card mb-4">
+      <h3 class="mb-3">Подключённые банки</h3>
+      <div id="banks-list">
+        <p class="text-muted small mb-0">Загрузка...</p>
+      </div>
+    </div>
+
     <div class="content-card">
       <h3 class="mb-3">Настройка правил</h3>
       <p class="text-muted small mb-3">Создайте правила для автоматической категоризации и учёта транзакций.</p>
@@ -114,23 +125,26 @@
           <h5 class="modal-title">Подключение банка</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body">
-          <p class="text-muted small">Выберите банк для подключения. Данные передаются по защищённому соединению.</p>
-          <select class="form-select mb-3">
-            <option>Сбер</option>
-            <option>Олег Т-Банк</option>
-            <option>ВТБ</option>
-            <option>Альфа-Банк</option>
-          </select>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="bankAgree">
-            <label class="form-check-label small" for="bankAgree">Согласен с условиями передачи данных</label>
+        <form id="bank-connect-form">
+          <div class="modal-body">
+            <p class="text-muted small">Выберите банк для подключения. Данные передаются по защищённому соединению.</p>
+            <select class="form-select mb-3" id="bank-select">
+              <option>Сбер</option>
+              <option>Олег Т-Банк</option>
+              <option>ВТБ</option>
+              <option>Альфа-Банк</option>
+            </select>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="bankAgree">
+              <label class="form-check-label small" for="bankAgree">Согласен с условиями передачи данных</label>
+            </div>
+            <div id="bank-agree-error" class="text-danger small mt-1 d-none">Необходимо принять условия</div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Подключить</button>
-        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-primary">Подключить</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

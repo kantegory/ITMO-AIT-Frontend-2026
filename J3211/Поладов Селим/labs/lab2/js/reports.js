@@ -76,7 +76,7 @@ async function loadReports() {
   document.getElementById('top-categories').innerHTML = topCats.map(([cat, amount], i) => `
     <li class="d-flex justify-content-between align-items-center py-2 ${i < topCats.length - 1 ? 'border-bottom' : ''}">
       <span>${cat}</span>
-      <span class="fw-medium">₽ ${amount.toLocaleString('ru-RU')}</span>
+      <span class="fw-medium">${amount.toLocaleString('ru-RU')} ₽</span>
     </li>
   `).join('')
 }

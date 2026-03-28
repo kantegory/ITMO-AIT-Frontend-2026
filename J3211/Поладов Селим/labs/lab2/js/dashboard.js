@@ -20,9 +20,9 @@ async function loadSummary() {
   const savingsAccount = accounts.find(a => a.name === 'Накопительный')
   const savings = savingsAccount ? savingsAccount.balance : 0
 
-  document.getElementById('total-balance').textContent = '₽ ' + totalBalance.toLocaleString('ru-RU')
-  document.getElementById('monthly-expenses').textContent = '₽ ' + monthExpenses.toLocaleString('ru-RU')
-  document.getElementById('savings').textContent = '₽ ' + savings.toLocaleString('ru-RU')
+  document.getElementById('total-balance').textContent = totalBalance.toLocaleString('ru-RU') + ' ₽'
+  document.getElementById('monthly-expenses').textContent = monthExpenses.toLocaleString('ru-RU') + ' ₽'
+  document.getElementById('savings').textContent = savings.toLocaleString('ru-RU') + ' ₽'
 
   document.getElementById('accounts-list').innerHTML = accounts.map(a => `
     <li class="d-flex justify-content-between align-items-center py-2 border-bottom">
@@ -30,7 +30,7 @@ async function loadSummary() {
         <div class="fw-medium">${a.name}</div>
         <div class="small text-muted">${a.currency}</div>
       </div>
-      <div class="fw-bold">₽ ${a.balance.toLocaleString('ru-RU')}</div>
+      <div class="fw-bold">${a.balance.toLocaleString('ru-RU')} ₽</div>
     </li>
   `).join('')
 }
@@ -53,8 +53,8 @@ async function loadRecentTransactions() {
     const emoji = CATEGORY_EMOJI[t.category] || '💳'
     const amountClass = t.amount < 0 ? 'amount-negative' : 'text-success'
     const amountStr = t.amount < 0
-      ? `− ₽${Math.abs(t.amount).toLocaleString('ru-RU')}`
-      : `+ ₽${t.amount.toLocaleString('ru-RU')}`
+      ? `− ${Math.abs(t.amount).toLocaleString('ru-RU')} ₽`
+      : `+ ${t.amount.toLocaleString('ru-RU')} ₽`
     const date = new Date(t.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' })
     return `<tr>
       <td><span class="rounded bg-light d-inline-flex align-items-center justify-content-center me-2" style="width:36px;height:36px">${emoji}</span> ${t.name}</td>

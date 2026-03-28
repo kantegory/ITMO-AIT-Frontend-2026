@@ -67,10 +67,68 @@ async function addTransaction(event) {
 
   bootstrap.Modal.getInstance(document.getElementById('manualModal')).hide()
   event.target.reset()
+
+  const toast = document.getElementById('transaction-toast')
+  toast.classList.remove('d-none')
+  setTimeout(() => toast.classList.add('d-none'), 3000)
+}
+
+async function loadBanks() {
+  const user = getUser()
+  const response = await fetch(`${API}/banks?userId=${user.id}`, { headers: authHeaders() })
+  const banks = await response.json()
+
+  const container = document.getElementById('banks-list')
+  if (!banks.length) {
+    container.innerHTML = '<p class="text-muted small mb-0">Нет подключённых банков</p>'
+    return
+  }
+  container.innerHTML = banks.map(b => `
+    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+      <div>
+        <span class="fw-medium">${b.name}</span>
+        <span class="small text-muted ms-2">подключён ${new Date(b.connectedAt).toLocaleDateString('ru-RU')}</span>
+      </div>
+      <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteBank(${b.id})">Отключить</button>
+    </div>
+  `).join('')
+}
+
+async function connectBank(event) {
+  event.preventDefault()
+  const user = getUser()
+  const select = document.getElementById('bank-select')
+  const agree = document.getElementById('bankAgree')
+
+  if (!agree.checked) {
+    document.getElementById('bank-agree-error').classList.remove('d-none')
+    return
+  }
+  document.getElementById('bank-agree-error').classList.add('d-none')
+
+  await fetch(`${API}/banks`, {
+    method: 'POST',
+    body: JSON.stringify({ userId: user.id, name: select.value, connectedAt: new Date().toISOString() }),
+    headers: { 'Content-Type': 'application/json', ...authHeaders() }
+  })
+
+  bootstrap.Modal.getInstance(document.getElementById('bankModal')).hide()
+  agree.checked = false
+  loadBanks()
+}
+
+async function deleteBank(id) {
+  await fetch(`${API}/banks/${id}`, {
+    method: 'DELETE',
+    headers: authHeaders()
+  })
+  loadBanks()
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   checkAuth()
   setUserName()
   loadRules()
+  loadBanks()
+  document.getElementById('bank-connect-form').addEventListener('submit', connectBank)
 })
