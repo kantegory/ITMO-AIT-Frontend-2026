@@ -754,7 +754,7 @@ function renderProjectDeadlines(deadlinesBox, deadlines) {
     const cell = document.createElement("td");
     cell.colSpan = 3;
     cell.className = "table-empty";
-    cell.textContent = "Сроки пока не добавлены.";
+    cell.textContent = "Сроки ещё не добавлены.";
     row.append(cell);
     deadlinesBox.append(row);
     return;
@@ -779,7 +779,7 @@ function renderProjectFiles(filesBox, project) {
   if (!project.files.length) {
     const empty = document.createElement("div");
     empty.className = "empty-pane";
-    empty.textContent = "Файлы пока не добавлены.";
+    empty.textContent = "Файлы ещё не добавлены.";
     filesBox.append(empty);
     return;
   }
@@ -821,7 +821,7 @@ function renderProjectDiscussion(discussionBox, discussion) {
   if (!discussion.length) {
     const empty = document.createElement("div");
     empty.className = "empty-pane";
-    empty.textContent = "Обсуждения пока пустые.";
+    empty.textContent = "Сообщений пока нет.";
     discussionBox.append(empty);
     return;
   }
@@ -955,13 +955,13 @@ async function renderProject() {
     await refreshProject(projectId, { silent: false });
   } catch {
     title.textContent = "Проект не загрузился";
-    description.textContent = "Не получилось получить данные проекта с mock API.";
+    description.textContent = "Не получилось загрузить данные проекта.";
     deadline.textContent = "—";
     roleBadge.textContent = "—";
     statusBadge.textContent = "—";
     summary.textContent = "0 задач";
     currentRoleTitle.textContent = "—";
-    currentRoleText.textContent = "Сейчас данные недоступны.";
+    currentRoleText.textContent = "Данные сейчас недоступны.";
     renderProjectMembers(members, []);
     renderProjectActions(actionButtons, { actions: [] });
     renderProjectBoard(board, { tasks: [] });
@@ -981,7 +981,7 @@ async function renderProject() {
     statusBadge.textContent = "—";
     summary.textContent = "0 задач";
     currentRoleTitle.textContent = "—";
-    currentRoleText.textContent = "Сейчас нечего показать.";
+    currentRoleText.textContent = "Нечего показывать.";
     renderProjectMembers(members, []);
     renderProjectActions(actionButtons, { actions: [] });
     renderProjectBoard(board, { tasks: [] });

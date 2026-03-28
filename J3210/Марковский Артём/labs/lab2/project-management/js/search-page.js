@@ -128,7 +128,7 @@ function renderSearchError(resultBox, resultCount) {
 
   const empty = document.createElement("div");
   empty.className = "empty-pane";
-  empty.textContent = "Не получилось загрузить задачи с mock API.";
+  empty.textContent = "Не получилось загрузить задачи.";
   resultBox.append(empty);
 }
 

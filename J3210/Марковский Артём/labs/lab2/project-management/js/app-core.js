@@ -10,7 +10,7 @@ const initialProjects = [
     id: "nimbus",
     title: "Nimbus CRM",
     description:
-      "Черновой проект по обработке входящих заявок. Сейчас доделываем базовые экраны.",
+      "Проект по обработке входящих заявок. Сейчас доделываем основные экраны.",
     role: "Участник",
     status: "Активный проект",
     deadline: "27.03.2026",
@@ -77,7 +77,7 @@ const initialProjects = [
       {
         author: "Анна Романова",
         time: "Сегодня, 10:15",
-        text: "Регистрацию ещё посмотрю вечером, но в целом уже нормально.",
+        text: "Регистрацию ещё вечером посмотрю, но в целом всё на месте.",
       },
       {
         author: "Марковский Артём",
@@ -90,7 +90,7 @@ const initialProjects = [
     id: "atlas",
     title: "Atlas Analytics",
     description:
-      "Панель с отчётами для внутренней команды. Пока это скорее черновик структуры.",
+      "Панель с отчётами для внутренней команды. Сейчас собирается базовая структура.",
     role: "Наблюдатель",
     status: "На согласовании",
     deadline: "29.03.2026",
@@ -609,7 +609,7 @@ function setupAuthForms() {
         window.location.href = "dashboard.html";
       } catch (error) {
         console.error(error);
-        setFormMessage(loginForm, "Не получилось подключиться к mock API. Проверь, что json-server запущен.");
+        setFormMessage(loginForm, "Не получилось подключиться к серверу. Проверь, что json-server запущен.");
       } finally {
         toggleSubmitState(loginForm, false);
       }

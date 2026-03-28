@@ -222,7 +222,7 @@ function renderDashboardProjects(projectsBox) {
   if (!projects.length) {
     const empty = document.createElement("div");
     empty.className = "empty-pane";
-    empty.textContent = "Пока нет проектов, в которых вы участвуете.";
+    empty.textContent = "У вас пока нет проектов.";
     projectsBox.append(empty);
     return;
   }
@@ -273,7 +273,7 @@ function renderDashboardTasks(tasksBox, countBadge, tasks) {
   if (!currentTasks.length) {
     const empty = document.createElement("div");
     empty.className = "empty-pane";
-    empty.textContent = "Сейчас у вас нет активных задач.";
+    empty.textContent = "Сейчас активных задач нет.";
     tasksBox.append(empty);
     return;
   }
@@ -314,7 +314,7 @@ function renderDashboardNotifications(notificationsBox, notes) {
   if (!notes.length) {
     const empty = document.createElement("div");
     empty.className = "empty-pane";
-    empty.textContent = "Пока нет новых сообщений по проектам.";
+    empty.textContent = "Пока нет новых сообщений.";
     notificationsBox.append(empty);
     return;
   }
@@ -332,7 +332,7 @@ function renderDashboardError(projectsBox, tasksBox, notificationsBox, summaryBo
     box.replaceChildren();
     const empty = document.createElement("div");
     empty.className = "empty-pane";
-    empty.textContent = "Не получилось загрузить данные с mock API. Пока показывать нечего.";
+    empty.textContent = "Не получилось загрузить данные. Попробуйте обновить страницу.";
     box.append(empty);
   });
 }
