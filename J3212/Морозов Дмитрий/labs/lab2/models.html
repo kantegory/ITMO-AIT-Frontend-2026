@@ -138,34 +138,36 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="add-model-form">
-                        <div class="mb-3">
-                            <label class="form-label">Название модели</label>
-                            <input type="text" class="form-control" id="model-name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Версия</label>
-                            <input type="text" class="form-control" id="model-version" placeholder="v1.0" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Эксперимент</label>
-                            <select id="experiment-select">
-                                <option value="">Загрузка экспериментов...</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Файл модели</label>
-                            <input type="file" class="form-control" id="model-file" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Описание</label>
-                            <textarea class="form-control" id="model-description" rows="3"></textarea>
-                        </div>
-                    </form>
+                    <div class="mb-3">
+                        <label class="form-label">Название модели *</label>
+                        <input type="text" id="model-name" class="form-control" placeholder="Например: fraud_detection" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Версия *</label>
+                        <input type="text" id="model-version" class="form-control" placeholder="Например: v1.0" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Эксперимент</label>
+                        <select id="experiment-select" class="form-select">
+                            <option value="">Выберите эксперимент</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Файл модели</label>
+                        <input type="file" id="model-file" class="form-control">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Описание</label>
+                        <textarea id="model-description" class="form-control" rows="3" placeholder="Описание модели"></textarea>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-primary" id="confirm-add-model">Добавить</button>
+                    <button type="button" id="confirm-add-model" class="btn btn-primary">Добавить</button>
                 </div>
             </div>
         </div>

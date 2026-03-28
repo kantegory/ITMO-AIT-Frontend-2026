@@ -22,125 +22,103 @@
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html" onclick="logout()">Выйти</a>
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="experiments.html">Эксперименты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="models.html">Модели</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="logout()">Выйти</a>
                     </li>
                 </ul>
             </div>
         </div>
     </header>
 
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="dashboard.html">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="experiments.html">Эксперименты</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="models.html">Модели</a>
-                        </li>
-                    </ul>
+    <main class="container py-4">
+        <section class="mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 id="exp-name">Загрузка...</h1>
+                    <p class="text-muted">
+                        ID: <span id="exp-id">—</span> | 
+                        Статус: <span id="exp-status">—</span> |
+                        Дата: <span id="exp-date">—</span>
+                    </p>
                 </div>
-            </nav>
+                <div>
+                    <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#cloneModal">Клонировать</button>
+                    <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Удалить</button>
+                </div>
+            </div>
+        </section>
 
-            <main class="col-md-10 ms-sm-auto px-md-4 py-4">
-                <nav aria-label="breadcrumb" class="mb-4">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="experiments.html">Эксперименты</a></li>
-                        <li class="breadcrumb-item active" id="experiment-name">model_v1_training</li>
-                    </ol>
-                </nav>
+        <nav>
+            <ul class="nav nav-tabs mb-4" id="expTabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#metrics" data-bs-toggle="tab">Метрики</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#logs" data-bs-toggle="tab">Логи</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#artifacts" data-bs-toggle="tab">Артефакты</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#params" data-bs-toggle="tab">Параметры</a>
+                </li>
+            </ul>
+        </nav>
 
-                <section class="d-flex justify-content-between align-items-center mb-4">
-                    <div>
-                        <h1 id="exp-title">model_v1_training</h1>
-                        <p class="text-muted mb-0">
-                            ID: <span id="exp-id">exp-2026-001</span> | 
-                            Статус: <span class="badge bg-success" id="exp-status">Completed</span>
-                        </p>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn btn-outline-primary" data-bs-target="#cloneModal" data-bs-toggle="modal">Клонировать</button>
-                        <button class="btn btn-outline-danger" data-bs-target="#deleteModal" data-bs-toggle="modal">Удалить</button>
-                    </div>
-                </section>
-
-                <nav>
-                    <ul class="nav nav-tabs mb-4" id="expTabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="tab-metrics" data-bs-toggle="tab" href="#metrics" role="tab">Метрики</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="tab-logs" data-bs-toggle="tab" href="#logs" role="tab">Логи</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="tab-artifacts" data-bs-toggle="tab" href="#artifacts" role="tab">Артефакты</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="tab-params" data-bs-toggle="tab" href="#params" role="tab">Параметры</a>
-                        </li>
-                    </ul>
-                </nav>
-
-                <div class="tab-content" id="expTabContent">
-                    <section class="tab-pane fade show active" id="metrics" role="tabpanel">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="card mb-4">
-                                    <header class="card-header">Accuracy</header>
-                                    <div class="card-body">
-                                        <div class="chart-placeholder" style="height: 200px;">[График Accuracy]</div>
-                                        <p class="text-center mt-3">Итоговое значение: <strong id="metric-accuracy">0.95</strong></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card mb-4">
-                                    <header class="card-header">Loss</header>
-                                    <div class="card-body">
-                                        <div class="chart-placeholder" style="height: 200px;">[График Loss]</div>
-                                        <p class="text-center mt-3">Итоговое значение: <strong id="metric-loss">0.23</strong></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="tab-pane fade" id="logs" role="tabpanel">
-                        <div class="card">
-                            <header class="card-header">Логи обучения</header>
+        <section class="tab-content">
+            <section class="tab-pane fade show active" id="metrics">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4">
                             <div class="card-body">
-                                <pre class="bg-light p-3" id="experiment-logs" style="max-height: 400px; overflow-y: auto;">[2026-01-15 10:00:00] INFO: Starting experiment model_v1_training
-[2026-01-15 10:00:01] INFO: Loading dataset...
-[2026-01-15 10:00:05] INFO: Dataset loaded: 10000 samples
-[2026-01-15 10:00:06] INFO: Preprocessing data...
-[2026-01-15 10:00:10] INFO: Data preprocessing completed
-[2026-01-15 10:00:11] INFO: Initializing model...
-[2026-01-15 10:00:12] INFO: Model architecture: RandomForestClassifier
-[2026-01-15 10:00:13] INFO: Starting training (epochs=100)...
-[2026-01-15 10:01:00] INFO: Epoch 10/100 - accuracy: 0.75
-[2026-01-15 10:02:00] INFO: Epoch 20/100 - accuracy: 0.82
-[2026-01-15 10:03:00] INFO: Epoch 50/100 - accuracy: 0.89
-[2026-01-15 10:04:00] INFO: Epoch 75/100 - accuracy: 0.93
-[2026-01-15 10:05:00] INFO: Epoch 100/100 - accuracy: 0.95
-[2026-01-15 10:05:01] INFO: Training completed successfully
-[2026-01-15 10:05:02] INFO: Saving model artifacts...
-[2026-01-15 10:05:05] INFO: Experiment finished with status: Completed</pre>
+                                <h5>Accuracy</h5>
+                                <h2 id="metric-accuracy">—</h2>
+                                <p class="text-muted">Итоговое значение</p>
                             </div>
                         </div>
-                    </section>
-
-                    <section class="tab-pane fade" id="artifacts" role="tabpanel">
-                        <div class="d-flex justify-content-end mb-3">
-                            <button class="btn btn-primary">Загрузить артефакт</button>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5>Loss</h5>
+                                <h2 id="metric-loss">—</h2>
+                                <p class="text-muted">Итоговое значение</p>
+                            </div>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tab-pane fade" id="logs">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Логи обучения</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="logs-container" style="max-height: 400px; overflow-y: auto; font-family: monospace; font-size: 0.9em;">
+                            <p class="text-muted">Загрузка логов...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tab-pane fade" id="artifacts">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Артефакты</h5>
+                        <button class="btn btn-sm btn-primary">Загрузить артефакт</button>
+                    </div>
+                    <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-hover" id="artifacts-table">
+                            <table class="table table-hover">
                                 <thead class="table-light">
                                     <tr>
                                         <th>Название</th>
@@ -150,70 +128,47 @@
                                         <th>Действия</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr data-artifact-type="model">
-                                        <td>model.pkl</td>
-                                        <td><span class="badge bg-primary">Model</span></td>
-                                        <td>2.4 MB</td>
-                                        <td>2026-01-15</td>
-                                        <td><a href="#" class="btn btn-sm btn-outline-primary">Скачать</a></td>
-                                    </tr>
-                                    <tr data-artifact-type="json">
-                                        <td>metrics.json</td>
-                                        <td><span class="badge bg-secondary">JSON</span></td>
-                                        <td>1.2 KB</td>
-                                        <td>2026-01-15</td>
-                                        <td><a href="#" class="btn btn-sm btn-outline-primary">Скачать</a></td>
-                                    </tr>
-                                    <tr data-artifact-type="image">
-                                        <td>confusion_matrix.png</td>
-                                        <td><span class="badge bg-info">Image</span></td>
-                                        <td>156 KB</td>
-                                        <td>2026-01-15</td>
-                                        <td><a href="#" class="btn btn-sm btn-outline-primary">Скачать</a></td>
-                                    </tr>
-                                    <tr data-artifact-type="csv">
-                                        <td>training_data.csv</td>
-                                        <td><span class="badge bg-warning">CSV</span></td>
-                                        <td>5.8 MB</td>
-                                        <td>2026-01-15</td>
-                                        <td><a href="#" class="btn btn-sm btn-outline-primary">Скачать</a></td>
+                                <tbody id="artifacts-tbody">
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted">Загрузка артефактов...</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                    </section>
+                    </div>
+                </div>
+            </section>
 
-                    <section class="tab-pane fade" id="params" role="tabpanel">
+            <section class="tab-pane fade" id="params">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Параметры эксперимента</h5>
+                    </div>
+                    <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="params-table">
+                            <table class="table table-bordered">
                                 <thead class="table-light">
                                     <tr>
                                         <th>Параметр</th>
                                         <th>Значение</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr><td>model_type</td><td>RandomForestClassifier</td></tr>
-                                    <tr><td>n_estimators</td><td>100</td></tr>
-                                    <tr><td>max_depth</td><td>10</td></tr>
-                                    <tr><td>min_samples_split</td><td>2</td></tr>
-                                    <tr><td>learning_rate</td><td>0.01</td></tr>
-                                    <tr><td>batch_size</td><td>32</td></tr>
-                                    <tr><td>epochs</td><td>100</td></tr>
-                                    <tr><td>optimizer</td><td>adam</td></tr>
+                                <tbody id="params-tbody">
+                                    <tr>
+                                        <td colspan="2" class="text-center text-muted">Загрузка параметров...</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
-                    </section>
+                    </div>
                 </div>
-            </main>
-        </div>
-    </div>
+            </section>
+        </section>
+    </main>
 
-    <footer class="footer mt-auto py-3 bg-light">
+    <footer class="bg-light py-3 mt-auto">
         <div class="container text-center text-muted">
-            <p>&copy; 2026 ML Pipeline. Все права защищены.</p>
+            © 2026 ML Pipeline. Все права защищены.
         </div>
     </footer>
 
@@ -225,8 +180,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Вы уверены, что хотите удалить эксперимент <strong id="delete-exp-name"></strong>?</p>
+                    <p>Вы уверены, что хотите удалить эксперимент?</p>
                     <p class="text-danger">Это действие нельзя отменить.</p>
+                    <input type="hidden" id="delete-exp-id" value="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
@@ -246,11 +202,11 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Новое название</label>
-                        <input type="text" class="form-control" id="clone-name" placeholder="model_v1_training_copy">
+                        <input type="text" id="clone-name" class="form-control" placeholder="model_v1_training_copy">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Описание</label>
-                        <textarea class="form-control" id="clone-description" rows="3"></textarea>
+                        <textarea id="clone-description" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

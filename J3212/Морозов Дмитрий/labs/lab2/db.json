@@ -139,9 +139,26 @@
         "development"
       ],
       "logs": [
-        "[2026-01-13 14:00:00] INFO: Starting experiment"
+        "[2026-01-13 14:00:00] INFO: Starting experiment model_v3_test",
+        "[2026-01-13 14:00:05] INFO: Loading dataset...",
+        "[2026-01-13 14:00:10] INFO: Initializing NeuralNetwork model",
+        "[2026-01-13 14:01:00] INFO: Epoch 10/100 - loss: 0.85",
+        "[2026-01-13 14:02:00] INFO: Epoch 20/100 - loss: 0.72"
       ],
-      "artifacts": [],
+      "artifacts": [
+        {
+          "name": "nn_model_v3.pth",
+          "type": "Model",
+          "size": "4.8 MB",
+          "date": "2026-01-13"
+        },
+        {
+          "name": "training_log.json",
+          "type": "JSON",
+          "size": "2.1 KB",
+          "date": "2026-01-13"
+        }
+      ],
       "params": {
         "model_type": "NeuralNetwork"
       },
@@ -160,9 +177,19 @@
         "baseline"
       ],
       "logs": [
-        "[2026-01-10 11:00:00] ERROR: Training failed"
+        "[2026-01-10 11:00:00] INFO: Starting baseline_model experiment",
+        "[2026-01-10 11:00:05] INFO: Loading dataset...",
+        "[2026-01-10 11:00:10] ERROR: Training failed - insufficient data",
+        "[2026-01-10 11:00:11] ERROR: Experiment terminated"
       ],
-      "artifacts": [],
+      "artifacts": [
+        {
+          "name": "error_log.txt",
+          "type": "Log",
+          "size": "1.5 KB",
+          "date": "2026-01-10"
+        }
+      ],
       "params": {
         "model_type": "LinearRegression"
       },
@@ -511,8 +538,26 @@
         "timeseries",
         "forecast"
       ],
-      "logs": [],
-      "artifacts": [],
+      "logs": [
+        "[2026-01-16 09:00:00] INFO: Starting time_series_forecast experiment",
+        "[2026-01-16 09:00:05] INFO: Loading time series data...",
+        "[2026-01-16 09:00:10] INFO: ARIMA model initialized",
+        "[2026-01-16 09:01:00] INFO: Fitting model..."
+      ],
+      "artifacts": [
+        {
+          "name": "arima_model.pkl",
+          "type": "Model",
+          "size": "1.2 MB",
+          "date": "2026-01-16"
+        },
+        {
+          "name": "forecast_results.csv",
+          "type": "CSV",
+          "size": "3.4 MB",
+          "date": "2026-01-16"
+        }
+      ],
       "params": {
         "model_type": "ARIMA",
         "order": [
@@ -598,9 +643,26 @@
         "yolo"
       ],
       "logs": [
-        "[2026-01-19 09:00:00] INFO: Starting YOLO training"
+        "[2026-01-19 09:00:00] INFO: Starting YOLO training",
+        "[2026-01-19 09:00:05] INFO: Loading dataset (COCO format)...",
+        "[2026-01-19 09:00:10] INFO: YOLOv5 model initialized",
+        "[2026-01-19 09:01:00] INFO: Epoch 10/100 - mAP: 0.45",
+        "[2026-01-19 09:02:00] INFO: Epoch 20/100 - mAP: 0.58"
       ],
-      "artifacts": [],
+      "artifacts": [
+        {
+          "name": "yolo_weights.pt",
+          "type": "Model",
+          "size": "142 MB",
+          "date": "2026-01-19"
+        },
+        {
+          "name": "predictions.png",
+          "type": "Image",
+          "size": "2.8 MB",
+          "date": "2026-01-19"
+        }
+      ],
       "params": {
         "model_type": "YOLOv5",
         "img_size": 640
@@ -741,8 +803,25 @@
         "autoencoder",
         "compression"
       ],
-      "logs": [],
-      "artifacts": [],
+      "logs": [
+        "[2026-01-24 10:00:00] INFO: Starting autoencoder_exp experiment",
+        "[2026-01-24 10:00:05] INFO: Building autoencoder architecture...",
+        "[2026-01-24 10:00:10] INFO: Latent dimension: 128"
+      ],
+      "artifacts": [
+        {
+          "name": "autoencoder.pth",
+          "type": "Model",
+          "size": "25 MB",
+          "date": "2026-01-24"
+        },
+        {
+          "name": "reconstruction_samples.png",
+          "type": "Image",
+          "size": "1.9 MB",
+          "date": "2026-01-24"
+        }
+      ],
       "params": {
         "model_type": "Autoencoder",
         "latent_dim": 128
@@ -751,63 +830,6 @@
         "accuracy": null,
         "loss": null
       }
-    },
-    {
-      "name": "abc",
-      "date": "2026-03-28",
-      "metric": null,
-      "status": "Pending",
-      "tags": [],
-      "logs": [
-        "[INFO] Experiment abc created"
-      ],
-      "artifacts": [],
-      "params": {
-        "model_type": "Scikit-learn"
-      },
-      "metrics": {
-        "accuracy": null,
-        "loss": null
-      },
-      "id": "i2tHQEwvkzk"
-    },
-    {
-      "name": "test",
-      "date": "2026-03-28",
-      "metric": null,
-      "status": "Pending",
-      "tags": [],
-      "logs": [
-        "[INFO] Experiment test created"
-      ],
-      "artifacts": [],
-      "params": {
-        "model_type": "Scikit-learn"
-      },
-      "metrics": {
-        "accuracy": null,
-        "loss": null
-      },
-      "id": "s0_cfa1qDBw"
-    },
-    {
-      "name": "test2",
-      "date": "2026-03-28",
-      "metric": null,
-      "status": "Pending",
-      "tags": [],
-      "logs": [
-        "[INFO] Experiment test2 created"
-      ],
-      "artifacts": [],
-      "params": {
-        "model_type": "Scikit-learn"
-      },
-      "metrics": {
-        "accuracy": null,
-        "loss": null
-      },
-      "id": "k6tIJG09JlY"
     }
   ],
   "models": [

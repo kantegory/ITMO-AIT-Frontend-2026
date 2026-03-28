@@ -256,47 +256,176 @@ async function initExperiments() {
     window.filterTable = filterTable;
 }
 
-function initExperimentDetail() {
-    const expName = document.getElementById('experiment-name')?.textContent || 
-                    document.getElementById('exp-title')?.textContent || '';
-    
-    const deleteExpName = document.getElementById('delete-exp-name');
-    if (deleteExpName) {
-        deleteExpName.textContent = expName;
+async function initExperimentDetail() {
+    const expNameEl = document.getElementById('exp-name');
+    if (!expNameEl) {
+        return;
     }
     
-    const cloneNameInput = document.getElementById('clone-name');
-    if (cloneNameInput && expName) {
-        cloneNameInput.value = expName + '_copy';
+    const urlParams = new URLSearchParams(window.location.search);
+    const expId = urlParams.get('id');
+    
+    if (!expId) {
+        console.error('ID эксперимента не указан в URL');
+        expNameEl.textContent = 'Ошибка: эксперимент не найден';
+        return;
+    }
+    
+    let experimentData = null;
+    
+    async function loadExperiment() {
+        try {
+            const response = await api.get(`/experiments/${expId}`);
+            experimentData = response.data;
+            populateExperimentData(experimentData);
+        } catch (error) {
+            console.error('Ошибка загрузки эксперимента:', error);
+            expNameEl.textContent = 'Ошибка загрузки данных';
+            alert('Не удалось загрузить данные эксперимента');
+        }
+    }
+    
+    function populateExperimentData(exp) {
+        const expIdEl = document.getElementById('exp-id');
+        const expStatus = document.getElementById('exp-status');
+        const expDate = document.getElementById('exp-date');
+        
+        if (expNameEl) expNameEl.textContent = exp.name || '—';
+        if (expIdEl) expIdEl.textContent = exp.id || '—';
+        if (expStatus) {
+            expStatus.textContent = exp.status || '—';
+            if (exp.status === 'Completed') expStatus.className = 'text-success';
+            else if (exp.status === 'Running') expStatus.className = 'text-warning';
+            else if (exp.status === 'Failed') expStatus.className = 'text-danger';
+            else expStatus.className = 'text-secondary';
+        }
+        if (expDate) expDate.textContent = exp.date || '—';
+        
+        const accuracy = document.getElementById('metric-accuracy');
+        const loss = document.getElementById('metric-loss');
+        
+        if (accuracy) {
+            accuracy.textContent = exp.metrics?.accuracy !== null ? exp.metrics.accuracy.toFixed(2) : '—';
+        }
+        if (loss) {
+            loss.textContent = exp.metrics?.loss !== null ? exp.metrics.loss.toFixed(2) : '—';
+        }
+        
+        const logsContainer = document.getElementById('logs-container');
+        if (logsContainer) {
+            if (exp.logs && exp.logs.length > 0) {
+                logsContainer.innerHTML = exp.logs.map(log => 
+                    `<div class="log-line mb-1">${escapeHtml(log)}</div>`
+                ).join('');
+            } else {
+                logsContainer.innerHTML = '<p class="text-muted">Логи отсутствуют</p>';
+            }
+        }
+        
+        const artifactsTbody = document.getElementById('artifacts-tbody');
+        if (artifactsTbody) {
+            if (exp.artifacts && exp.artifacts.length > 0) {
+                artifactsTbody.innerHTML = exp.artifacts.map(artifact => `
+                    <tr>
+                        <td>${escapeHtml(artifact.name)}</td>
+                        <td>${escapeHtml(artifact.type)}</td>
+                        <td>${escapeHtml(artifact.size)}</td>
+                        <td>${escapeHtml(artifact.date)}</td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-primary">Скачать</a>
+                        </td>
+                    </tr>
+                `).join('');
+            } else {
+                artifactsTbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">Артефакты отсутствуют</td></tr>';
+            }
+        }
+        
+        const paramsTbody = document.getElementById('params-tbody');
+        if (paramsTbody) {
+            if (exp.params && Object.keys(exp.params).length > 0) {
+                paramsTbody.innerHTML = Object.entries(exp.params).map(([key, value]) => `
+                    <tr>
+                        <td>${escapeHtml(key)}</td>
+                        <td>${escapeHtml(String(value))}</td>
+                    </tr>
+                `).join('');
+            } else {
+                paramsTbody.innerHTML = '<tr><td colspan="2" class="text-center text-muted">Параметры отсутствуют</td></tr>';
+            }
+        }
+        
+        const deleteIdInput = document.getElementById('delete-exp-id');
+        if (deleteIdInput) deleteIdInput.value = exp.id;
+        
+        const cloneNameInput = document.getElementById('clone-name');
+        if (cloneNameInput && exp.name) {
+            cloneNameInput.value = exp.name + '_copy';
+        }
+    }
+    
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
     }
     
     const confirmDelete = document.getElementById('confirm-delete');
     if (confirmDelete) {
-        confirmDelete.addEventListener('click', function() {
-            console.log('Удаление эксперимента:', expName);
-            alert('Эксперимент "' + expName + '" удалён');
-            window.location.href = 'experiments.html';
+        confirmDelete.addEventListener('click', async function() {
+            const deleteId = document.getElementById('delete-exp-id')?.value;
+            
+            if (!deleteId) {
+                alert('Ошибка: ID эксперимента не найден');
+                return;
+            }
+            
+            try {
+                await api.delete(`/experiments/${deleteId}`);
+                alert('Эксперимент удалён');
+                window.location.href = 'experiments.html';
+            } catch (error) {
+                console.error('Ошибка удаления:', error);
+                alert('Ошибка при удалении эксперимента');
+            }
         });
     }
     
     const confirmClone = document.getElementById('confirm-clone');
     if (confirmClone) {
-        confirmClone.addEventListener('click', function() {
-            const newName = cloneNameInput?.value || expName + '_copy';
-            console.log('Клонирование эксперимента:', expName, '->', newName);
-            alert('Эксперимент клонирован как "' + newName + '"');
-            window.location.href = 'experiments.html';
+        confirmClone.addEventListener('click', async function() {
+            const newName = document.getElementById('clone-name')?.value;
+            
+            if (!newName) {
+                alert('Введите название для клонированного эксперимента');
+                return;
+            }
+            
+            try {
+                await api.post('/experiments', {
+                    name: newName,
+                    date: new Date().toISOString().split('T')[0],
+                    metric: experimentData?.metric || null,
+                    status: 'Pending',
+                    tags: experimentData?.tags || [],
+                    logs: [`[INFO] Cloned from ${experimentData?.name || 'unknown'}`],
+                    artifacts: [],
+                    params: experimentData?.params || {},
+                    metrics: experimentData?.metrics || { accuracy: null, loss: null }
+                });
+                
+                alert('Эксперимент клонирован');
+                window.location.href = 'experiments.html';
+            } catch (error) {
+                console.error('Ошибка клонирования:', error);
+                alert('Ошибка при клонировании эксперимента');
+            }
         });
     }
     
-    const tabLinks = document.querySelectorAll('#expTabs .nav-link');
-    tabLinks.forEach(function(link) {
-        link.addEventListener('click', function() {
-            tabLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
+    await loadExperiment();
 }
+
 
 function initModelsPagination() {
     const tbody = document.getElementById('models-tbody');
@@ -625,6 +754,7 @@ async function initModels() {
             const version = document.getElementById('model-version')?.value;
             const experimentId = document.getElementById('experiment-select')?.value;
             const description = document.getElementById('model-description')?.value;
+            const fileInput = document.getElementById('model-file')?.files[0];
             
             if (!name || !version) {
                 alert('Заполните все обязательные поля!');
@@ -635,13 +765,39 @@ async function initModels() {
                 await api.post('/models', {
                     name,
                     version,
-                    experimentId,
-                    description,
+                    experimentId: experimentId || null,
+                    description: description || '',
+                    fileName: fileInput ? fileInput.name : null,
+                    fileSize: fileInput ? fileInput.size : null,
                     status: 'Staging',
                     metric: 0,
                     date: new Date().toISOString().split('T')[0],
                     metrics: { accuracy: 0, precision: 0, recall: 0, f1: 0 }
                 });
+                
+                if (experimentId) {
+                    const expResponse = await api.get(`/experiments/${experimentId}`);
+                    const experiment = expResponse.data;
+                    
+                    const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
+                    const newLog = `[${timestamp}] INFO: Model ${name} ${version} registered from this experiment`;
+                    const updatedLogs = [...(experiment.logs || []), newLog];
+                    
+                    const newArtifact = {
+                        name: fileInput ? fileInput.name : `${name}_${version}.pkl`,
+                        type: 'Model',
+                        size: fileInput ? `${(fileInput.size / 1024 / 1024).toFixed(2)} MB` : 'N/A',
+                        date: new Date().toISOString().split('T')[0]
+                    };
+                    const updatedArtifacts = [...(experiment.artifacts || []), newArtifact];
+                    
+                    await api.patch(`/experiments/${experimentId}`, {
+                        logs: updatedLogs,
+                        artifacts: updatedArtifacts
+                    });
+                    
+                    console.log('Эксперимент обновлён: добавлен лог и артефакт');
+                }
                 
                 alert('Модель добавлена!');
                 window.location.reload();
@@ -872,6 +1028,30 @@ async function initDashboard() {
                     date: new Date().toISOString().split('T')[0],
                     metrics: { accuracy: 0, precision: 0, recall: 0, f1: 0 }
                 });
+                
+                if (experimentId) {
+                    const expResponse = await api.get(`/experiments/${experimentId}`);
+                    const experiment = expResponse.data;
+                    
+                    const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
+                    const newLog = `[${timestamp}] INFO: Model ${name} ${version} registered from dashboard`;
+                    const updatedLogs = [...(experiment.logs || []), newLog];
+                    
+                    const newArtifact = {
+                        name: fileInput ? fileInput.name : `${name}_${version}.pkl`,
+                        type: 'Model',
+                        size: fileInput ? `${(fileInput.size / 1024 / 1024).toFixed(2)} MB` : 'N/A',
+                        date: new Date().toISOString().split('T')[0]
+                    };
+                    const updatedArtifacts = [...(experiment.artifacts || []), newArtifact];
+                    
+                    await api.patch(`/experiments/${experimentId}`, {
+                        logs: updatedLogs,
+                        artifacts: updatedArtifacts
+                    });
+                    
+                    console.log('Эксперимент обновлён: добавлен лог и артефакт');
+                }
                 
                 alert('Модель загружена!');
                 window.location.reload();
