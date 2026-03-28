@@ -1,5 +1,6 @@
 const storageKeys = {
   auth: "taskhub-auth",
+  userId: "taskhub-user-id",
   userName: "taskhub-user-name",
   projects: "taskhub-projects",
 };
@@ -328,6 +329,18 @@ function buildProjectActions(role) {
   return [];
 }
 
+function applyProjectView(project, userName) {
+  if (!project) {
+    return null;
+  }
+
+  if (typeof decorateProject === "function") {
+    return decorateProject(project, userName);
+  }
+
+  return cloneData(project);
+}
+
 function loadProjects() {
   const raw = sessionStorage.getItem(storageKeys.projects);
 
@@ -350,8 +363,87 @@ function saveProjects() {
   sessionStorage.setItem(storageKeys.projects, JSON.stringify(projects));
 }
 
+function setProjects(nextProjects) {
+  projects = cloneData(nextProjects);
+  saveProjects();
+  return projects;
+}
+
 function syncProjects() {
   projects = loadProjects();
+}
+
+function stripProjectUi(project) {
+  const nextProject = cloneData(project);
+  delete nextProject.actions;
+  delete nextProject.role;
+  return nextProject;
+}
+
+async function refreshProjects(options = { silent: true }) {
+  if (typeof loadProjectsFromApi !== "function" || !getUserName()) {
+    return projects;
+  }
+
+  try {
+    const apiProjects = await loadProjectsFromApi(getUserName());
+    setProjects(apiProjects);
+    return projects;
+  } catch (error) {
+    console.error(error);
+
+    if (!options.silent) {
+      throw error;
+    }
+
+    return projects;
+  }
+}
+
+async function refreshProject(projectId, options = { silent: true }) {
+  if (typeof loadProjectFromApi !== "function") {
+    return getProject(projectId);
+  }
+
+  try {
+    const project = await loadProjectFromApi(projectId, getUserName());
+
+    if (!project) {
+      return null;
+    }
+
+    const nextProjects = projects.filter((item) => item.id !== project.id);
+    nextProjects.unshift(project);
+    setProjects(nextProjects);
+
+    return project;
+  } catch (error) {
+    console.error(error);
+
+    if (!options.silent) {
+      throw error;
+    }
+
+    return getProject(projectId);
+  }
+}
+
+async function persistProject(projectId) {
+  if (typeof saveProjectInApi !== "function") {
+    return;
+  }
+
+  const project = getProject(projectId);
+
+  if (!project) {
+    return;
+  }
+
+  try {
+    await saveProjectInApi(projectId, stripProjectUi(project));
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function getPageName() {
@@ -363,15 +455,19 @@ function getProjectIndex(projectId) {
 }
 
 function getProject(projectId) {
-  return projects.find((project) => project.id === projectId) || projects[0];
+  return projects.find((project) => project.id === projectId) || projects[0] || null;
+}
+
+function getUserId() {
+  return sessionStorage.getItem(storageKeys.userId) || "";
 }
 
 function getUserName() {
-  return sessionStorage.getItem(storageKeys.userName) || "Марковский Артём";
+  return sessionStorage.getItem(storageKeys.userName) || "";
 }
 
 function setUserName() {
-  const userName = getUserName();
+  const userName = getUserName() || "Пользователь";
 
   document.querySelectorAll("#headerUserName").forEach((node) => {
     node.textContent = userName;
@@ -384,15 +480,24 @@ function setUserName() {
   });
 }
 
+function saveSessionUser(user) {
+  sessionStorage.setItem(storageKeys.auth, "1");
+  sessionStorage.setItem(storageKeys.userId, user.id || "");
+  sessionStorage.setItem(storageKeys.userName, user.name || "Пользователь");
+}
+
+function clearSession() {
+  sessionStorage.removeItem(storageKeys.auth);
+  sessionStorage.removeItem(storageKeys.userId);
+  sessionStorage.removeItem(storageKeys.userName);
+  sessionStorage.removeItem(storageKeys.projects);
+}
+
 function isAuthorized() {
-  return sessionStorage.getItem(storageKeys.auth) === "1";
+  return sessionStorage.getItem(storageKeys.auth) === "1" && Boolean(getUserId());
 }
 
 function ensureSessionData() {
-  if (!sessionStorage.getItem(storageKeys.userName)) {
-    sessionStorage.setItem(storageKeys.userName, "Марковский Артём");
-  }
-
   if (!sessionStorage.getItem(storageKeys.projects)) {
     saveProjects();
   }
@@ -437,29 +542,92 @@ function markNavigation(pageName) {
   }
 }
 
+function getOrCreateFormMessage(form) {
+  let message = form.querySelector(".form-message");
+
+  if (!message) {
+    message = document.createElement("div");
+    message.className = "form-message";
+    form.prepend(message);
+  }
+
+  return message;
+}
+
+function setFormMessage(form, text, type = "danger") {
+  const message = getOrCreateFormMessage(form);
+  message.className = `form-message alert alert-${type}`;
+  message.textContent = text;
+}
+
+function clearFormMessage(form) {
+  const message = form.querySelector(".form-message");
+
+  if (message) {
+    message.remove();
+  }
+}
+
+function toggleSubmitState(form, disabled) {
+  const submitButton = form.querySelector('button[type="submit"]');
+
+  if (submitButton) {
+    submitButton.disabled = disabled;
+  }
+}
+
 function setupAuthForms() {
   const loginForm = document.getElementById("loginForm");
 
-  if (loginForm) {
-    loginForm.addEventListener("submit", (event) => {
+  if (loginForm && !loginForm.dataset.bound) {
+    loginForm.dataset.bound = "1";
+
+    loginForm.addEventListener("submit", async (event) => {
       event.preventDefault();
+      clearFormMessage(loginForm);
 
       if (!loginForm.checkValidity()) {
         loginForm.reportValidity();
         return;
       }
 
-      sessionStorage.setItem(storageKeys.auth, "1");
-      window.location.href = "dashboard.html";
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value;
+
+      toggleSubmitState(loginForm, true);
+
+      try {
+        const user = await loginUser(email, password);
+
+        if (!user) {
+          setFormMessage(loginForm, "Не удалось войти. Проверь email и пароль.");
+          return;
+        }
+
+        saveSessionUser(user);
+        await refreshProjects();
+        window.location.href = "dashboard.html";
+      } catch (error) {
+        console.error(error);
+        setFormMessage(loginForm, "Не получилось подключиться к mock API. Проверь, что json-server запущен.");
+      } finally {
+        toggleSubmitState(loginForm, false);
+      }
     });
   }
 
   const registerForm = document.getElementById("registerForm");
 
-  if (registerForm) {
-    registerForm.addEventListener("submit", (event) => {
-      event.preventDefault();
+  if (registerForm && !registerForm.dataset.bound) {
+    registerForm.dataset.bound = "1";
 
+    registerForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearFormMessage(registerForm);
+
+      const firstName = document.getElementById("firstName");
+      const lastName = document.getElementById("lastName");
+      const email = document.getElementById("registerEmail");
       const password = document.getElementById("registerPassword");
       const repeatPassword = document.getElementById("registerPasswordRepeat");
 
@@ -477,27 +645,38 @@ function setupAuthForms() {
         return;
       }
 
-      const firstName = document.getElementById("firstName").value.trim();
-      const lastName = document.getElementById("lastName").value.trim();
-      const fullName = `${firstName} ${lastName}`
-        .replace(/\s+/g, " ")
-        .trim()
-        .slice(0, 80);
+      toggleSubmitState(registerForm, true);
 
-      sessionStorage.setItem(
-        storageKeys.userName,
-        fullName || "Марковский Артём",
-      );
-      window.location.href = "index.html";
+      try {
+        await registerUser({
+          firstName: firstName.value.trim().slice(0, 40),
+          lastName: lastName.value.trim().slice(0, 40),
+          email: email.value.trim(),
+          password: password.value,
+        });
+
+        window.location.href = "index.html";
+      } catch (error) {
+        console.error(error);
+        setFormMessage(registerForm, error.message || "Не удалось создать аккаунт.");
+      } finally {
+        toggleSubmitState(registerForm, false);
+      }
     });
   }
 }
 
 function setupLogout() {
   document.querySelectorAll(".logout-link").forEach((link) => {
+    if (link.dataset.bound) {
+      return;
+    }
+
+    link.dataset.bound = "1";
+
     link.addEventListener("click", (event) => {
       event.preventDefault();
-      sessionStorage.removeItem(storageKeys.auth);
+      clearSession();
       window.location.href = "index.html";
     });
   });
@@ -542,9 +721,16 @@ function updateProject(projectId, change) {
 
   change(projects[projectIndex]);
   saveProjects();
+  void persistProject(projectId);
 }
 
-function rerenderCurrentPage() {
+function deleteProject(projectId) {
+  projects = projects.filter((project) => project.id !== projectId);
+  saveProjects();
+  void deleteProjectInApi(projectId).catch((error) => console.error(error));
+}
+
+async function rerenderCurrentPage() {
   const pageName = getPageName();
 
   if (pageName === "dashboard") {
@@ -553,16 +739,16 @@ function rerenderCurrentPage() {
     }
 
     if (typeof renderDashboard === "function") {
-      renderDashboard();
+      await renderDashboard();
     }
   }
 
   if (pageName === "search" && typeof renderSearch === "function") {
-    renderSearch();
+    await renderSearch();
   }
 
   if (pageName === "project" && typeof renderProject === "function") {
-    renderProject();
+    await renderProject();
   }
 }
 

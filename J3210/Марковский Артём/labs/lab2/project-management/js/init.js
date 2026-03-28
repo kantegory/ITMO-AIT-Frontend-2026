@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
+  void initializeApp();
+});
+
+async function initializeApp() {
   syncProjects();
 
   const pageName = getPageName();
@@ -14,14 +18,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (pageName === "dashboard" && typeof renderDashboard === "function") {
     setupDashboardActions();
-    renderDashboard();
+    await renderDashboard();
   }
 
   if (pageName === "search" && typeof renderSearch === "function") {
-    renderSearch();
+    await renderSearch();
   }
 
   if (pageName === "project" && typeof renderProject === "function") {
-    renderProject();
+    await renderProject();
   }
-});
+}
