@@ -109,12 +109,30 @@ function renderSearchResults(resultBox, resultCount, tasks) {
   resultCount.textContent = `${tasks.length} результатов`;
   resultBox.replaceChildren();
 
+  if (!tasks.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-pane";
+    empty.textContent = "Ничего не нашлось. Попробуйте поменять фильтры или запрос.";
+    resultBox.append(empty);
+    return;
+  }
+
   tasks.forEach((task) => {
     resultBox.append(createSearchResultCard(task));
   });
 }
 
-function renderSearch() {
+function renderSearchError(resultBox, resultCount) {
+  resultCount.textContent = "0 результатов";
+  resultBox.replaceChildren();
+
+  const empty = document.createElement("div");
+  empty.className = "empty-pane";
+  empty.textContent = "Не получилось загрузить задачи с mock API.";
+  resultBox.append(empty);
+}
+
+async function renderSearch() {
   const searchQuery = document.getElementById("searchQuery");
   const statusFilter = document.getElementById("statusFilter");
   const priorityFilter = document.getElementById("priorityFilter");
@@ -135,7 +153,12 @@ function renderSearch() {
     return;
   }
 
-  syncProjects();
+  try {
+    await refreshProjects({ silent: false });
+  } catch {
+    renderSearchError(resultBox, resultCount);
+    return;
+  }
 
   const allTasks = getSearchTasks();
   fillAssigneeFilter(assigneeFilter, allTasks);
@@ -151,13 +174,16 @@ function renderSearch() {
     renderSearchResults(resultBox, resultCount, filtered);
   };
 
-  applyButton.addEventListener("click", applySearch);
-  searchQuery.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      applySearch();
-    }
-  });
+  if (!applyButton.dataset.bound) {
+    applyButton.dataset.bound = "1";
+    applyButton.addEventListener("click", applySearch);
+    searchQuery.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        applySearch();
+      }
+    });
+  }
 
   applySearch();
 }
