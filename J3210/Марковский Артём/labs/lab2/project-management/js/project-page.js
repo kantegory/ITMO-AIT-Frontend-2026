@@ -547,13 +547,7 @@ function bindSettingsModal(projectId) {
   }
 
   deleteButton.addEventListener("click", () => {
-    projects = projects.filter((project) => project.id !== projectId);
-
-    if (!projects.length) {
-      projects = cloneData(initialProjects);
-    }
-
-    saveProjects();
+    deleteProject(projectId);
 
     const { modalElement } = getModalElements();
 
@@ -618,7 +612,6 @@ function bindDiscussionModal(projectId) {
 }
 
 function openActionModal(projectId, actionType) {
-  syncProjects();
   const project = getProject(projectId);
 
   if (actionType === "team") {
@@ -920,7 +913,7 @@ function bindProjectFiles(project) {
   });
 }
 
-function renderProject() {
+async function renderProject() {
   const title = document.getElementById("projectTitle");
   const description = document.getElementById("projectDescription");
   const deadline = document.getElementById("projectDeadline");
@@ -955,10 +948,48 @@ function renderProject() {
     return;
   }
 
-  syncProjects();
-
   const params = new URLSearchParams(window.location.search);
-  const project = getProject(params.get("project"));
+  const projectId = params.get("project");
+
+  try {
+    await refreshProject(projectId, { silent: false });
+  } catch {
+    title.textContent = "Проект не загрузился";
+    description.textContent = "Не получилось получить данные проекта с mock API.";
+    deadline.textContent = "—";
+    roleBadge.textContent = "—";
+    statusBadge.textContent = "—";
+    summary.textContent = "0 задач";
+    currentRoleTitle.textContent = "—";
+    currentRoleText.textContent = "Сейчас данные недоступны.";
+    renderProjectMembers(members, []);
+    renderProjectActions(actionButtons, { actions: [] });
+    renderProjectBoard(board, { tasks: [] });
+    renderProjectDeadlines(deadlinesBox, []);
+    renderProjectFiles(filesBox, { files: [] });
+    renderProjectDiscussion(discussionBox, []);
+    return;
+  }
+
+  const project = getProject(projectId);
+
+  if (!project) {
+    title.textContent = "Проект не найден";
+    description.textContent = "Скорее всего ссылка устарела или проект уже удалён.";
+    deadline.textContent = "—";
+    roleBadge.textContent = "—";
+    statusBadge.textContent = "—";
+    summary.textContent = "0 задач";
+    currentRoleTitle.textContent = "—";
+    currentRoleText.textContent = "Сейчас нечего показать.";
+    renderProjectMembers(members, []);
+    renderProjectActions(actionButtons, { actions: [] });
+    renderProjectBoard(board, { tasks: [] });
+    renderProjectDeadlines(deadlinesBox, []);
+    renderProjectFiles(filesBox, { files: [] });
+    renderProjectDiscussion(discussionBox, []);
+    return;
+  }
 
   document.title = `TaskHub — ${project.title}`;
   title.textContent = project.title;
