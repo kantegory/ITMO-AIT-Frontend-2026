@@ -59,7 +59,7 @@
 
                     <div id="integrations-container">
                         <div class="text-center text-muted py-3">
-                            <div class="spinner-border spinner-border-sm text-success" role="status"></div> Загрузка банков...
+                            <div class="spinner-border spinner-border-sm text-success" role="status"></div> Загрузка списка банков...
                         </div>
                     </div>
 
@@ -87,35 +87,9 @@
                     <h5 class="card-title mb-3"><i class="bi bi-robot me-2"></i> Правила автоматизации</h5>
                     <p class="small text-muted">Система будет автоматически распределять транзакции по категориям на основе этих правил.</p>
 
-                    <div class="list-group">
-                        <div class="list-group-item d-flex justify-content-between align-items-center py-3">
-                            <div>
-                                <h6 class="mb-1 fw-bold">Яндекс.Такси <i class="bi bi-arrow-right mx-1 text-muted"></i> Транспорт</h6>
-                                <small class="text-muted">Если название содержит "Такси"</small>
-                            </div>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" checked style="transform: scale(1.3);">
-                            </div>
-                        </div>
-
-                        <div class="list-group-item d-flex justify-content-between align-items-center py-3">
-                            <div>
-                                <h6 class="mb-1 fw-bold">Пятерочка, Магнит <i class="bi bi-arrow-right mx-1 text-muted"></i> Продукты</h6>
-                                <small class="text-muted">По совпадению ИНН магазина</small>
-                            </div>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" checked style="transform: scale(1.3);">
-                            </div>
-                        </div>
-
-                        <div class="list-group-item d-flex justify-content-between align-items-center py-3">
-                            <div>
-                                <h6 class="mb-1 fw-bold">Spotify, Кинопоиск <i class="bi bi-arrow-right mx-1 text-muted"></i> Развлечения</h6>
-                                <small class="text-muted">Ежемесячные автоплатежи</small>
-                            </div>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" checked style="transform: scale(1.3);">
-                            </div>
+                    <div class="list-group" id="rulesList">
+                        <div class="text-center text-muted py-3">
+                            <div class="spinner-border spinner-border-sm text-success" role="status"></div> Загрузка правил...
                         </div>
                     </div>
 
@@ -127,7 +101,10 @@
 
             <div class="card shadow-sm" style="border-radius: 15px;">
                 <div class="card-body">
-                    <h5 class="card-title mb-3"><i class="bi bi-bell me-2"></i> Уведомления</h5>
+                    <h5 class="card-title mb-3 d-flex align-items-center">
+                        <i class="bi bi-bell me-2"></i> Уведомления
+                        <span id="saveStatus" class="badge bg-success ms-auto" style="opacity: 0; transition: 0.3s;">Сохранено</span>
+                    </h5>
 
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div>
@@ -135,7 +112,7 @@
                             <small class="text-muted">Сводка расходов на Email</small>
                         </div>
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" checked style="transform: scale(1.2);">
+                            <input class="form-check-input" type="checkbox" id="notifyEmail" style="transform: scale(1.2);">
                         </div>
                     </div>
 
@@ -145,7 +122,7 @@
                             <small class="text-muted">Push-уведомление при перерасходе</small>
                         </div>
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" checked style="transform: scale(1.2);">
+                            <input class="form-check-input" type="checkbox" id="notifyPush" style="transform: scale(1.2);">
                         </div>
                     </div>
                 </div>
@@ -166,12 +143,12 @@
                 <form>
                     <div class="mb-3">
                         <label class="form-label fw-bold">Если в названии транзакции есть слово:</label>
-                        <input type="text" class="form-control" placeholder="Например: АЗС">
+                        <input type="text" class="form-control" id="ruleKeyword" placeholder="Например: АЗС">
                     </div>
 
                     <div class="mb-4">
                         <label class="form-label fw-bold">То автоматически назначить категорию:</label>
-                        <select class="form-select">
+                        <select class="form-select" id="ruleCategory">
                             <option>Выберите категорию...</option>
                             <option>Продукты</option>
                             <option>Транспорт</option>
@@ -183,7 +160,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Сохранить правило</button>
+                <button type="button" class="btn btn-success" id="saveRuleBtn" data-bs-dismiss="modal">Сохранить правило</button>
             </div>
         </div>
     </div>

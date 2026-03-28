@@ -139,3 +139,159 @@ async function loadStocks() {
         console.error(error);
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const recentTable = document.getElementById("recentTransactionsTable");
+    const saveDashTxBtn = document.getElementById("saveDashTxBtn");
+
+    async function loadRecentTransactions() {
+        if (!recentTable) return;
+        try {
+            const response = await fetch("http://localhost:3000/transactions");
+            let txs = await response.json();
+
+            txs.sort((a, b) => new Date(b.date) - new Date(a.date));
+            const recentTxs = txs.slice(0, 3);
+
+            recentTable.innerHTML = "";
+
+            if(recentTxs.length === 0) {
+                recentTable.innerHTML = "<tr><td colspan='4' class='text-center text-muted'>Нет операций</td></tr>";
+                return;
+            }
+
+            recentTxs.forEach(tr => {
+                const dateObj = new Date(tr.date);
+                const dateStr = dateObj.toLocaleDateString("ru-RU", { day: 'numeric', month: 'short' });
+
+                const isExpense = tr.type === "expense";
+                const color = isExpense ? "text-danger" : "text-success";
+                const prefix = isExpense ? "- " : "+ ";
+
+                let icon = "bi-tag";
+                if(tr.category === "food") icon = "bi-cart";
+                if(tr.category === "salary") icon = "bi-briefcase";
+
+                recentTable.innerHTML += `
+                    <tr>
+                        <td class="text-muted small">${dateStr}</td>
+                        <td><div class="fw-bold">${tr.title}</div></td>
+                        <td><span class="badge bg-light text-dark border"><i class="bi ${icon} me-1"></i> ${tr.categoryName}</span></td>
+                        <td class="${color} text-end fw-bold">${prefix}${tr.amount.toLocaleString('ru-RU')} ₽</td>
+                    </tr>
+                `;
+            });
+        } catch (error) {
+            console.error("Ошибка загрузки последних транзакций:", error);
+        }
+    }
+
+    if (saveDashTxBtn) {
+
+        const categoryNames = {
+            food: "Продукты",
+            transport: "Транспорт",
+            entertainment: "Развлечения",
+            salary: "Зарплата",
+            other: "Разное"
+        };
+
+        saveDashTxBtn.addEventListener("click", async () => {
+            const title = document.getElementById("dashTxTitle").value;
+            const amount = document.getElementById("dashTxAmount").value;
+            const type = document.getElementById("dashTxType").value;
+            const category = document.getElementById("dashTxCategory").value;
+
+            if (!title || !amount) {
+                alert("Заполните название и сумму!");
+                return;
+            }
+
+            const today = new Date().toISOString().split('T')[0];
+
+            const newTransaction = {
+                title: title,
+                amount: Number(amount),
+                type: type,
+                date: today,
+                category: category,
+                categoryName: categoryNames[category]
+            };
+
+            try {
+                const response = await fetch("http://localhost:3000/transactions", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(newTransaction)
+                });
+
+                if (response.ok) {
+                    document.getElementById("dashTxTitle").value = "";
+                    document.getElementById("dashTxAmount").value = "";
+                    document.getElementById("dashTxCategory").selectedIndex = 0;
+
+                    loadRecentTransactions();
+
+                    const pushEnabled = localStorage.getItem("notifyPush") !== "false";
+
+                    if (pushEnabled && type === "expense") {
+                        try {
+                            const allTxResponse = await fetch("http://localhost:3000/transactions");
+                            const allTransactions = await allTxResponse.json();
+
+                            let categoryTotal = 0;
+                            allTransactions.forEach(t => {
+                                if (t.type === "expense" && t.category === category) {
+                                    categoryTotal += t.amount;
+                                }
+                            });
+
+                            const limits = {
+                                food: 30000,
+                                entertainment: 40000,
+                                transport: 15000,
+                                other: 10000
+                            };
+
+                            const limit = limits[category] || 10000;
+                            const percentage = (categoryTotal / limit) * 100;
+
+                            if (percentage >= 85) {
+                                const toastEl = document.getElementById('limitToast');
+                                const titleEl = document.getElementById('toastLimitTitle');
+                                const textEl = document.getElementById('toastLimitText');
+
+                                if (toastEl && titleEl && textEl) {
+                                    titleEl.textContent = `Внимание: «${categoryNames[category]}»`;
+
+                                    if (percentage >= 100) {
+                                        toastEl.classList.replace("text-bg-warning", "text-bg-danger");
+                                        textEl.textContent = `Лимит исчерпан! Потрачено ${categoryTotal.toLocaleString('ru-RU')} из ${limit.toLocaleString('ru-RU')} ₽.`;
+                                    } else {
+                                        toastEl.classList.replace("text-bg-danger", "text-bg-warning");
+                                        textEl.textContent = `Израсходовано ${percentage.toFixed(0)}% лимита (${categoryTotal.toLocaleString('ru-RU')} из ${limit.toLocaleString('ru-RU')} ₽).`;
+                                    }
+
+                                    const toast = new bootstrap.Toast(toastEl);
+                                    toast.show();
+                                }
+                            } else {
+                                alert("Операция успешно добавлена!");
+                            }
+
+                        } catch (error) {
+                            console.error("Ошибка проверки лимитов:", error);
+                        }
+                    } else {
+                        alert("Операция успешно добавлена!");
+                    }
+                }
+            } catch (error) {
+                console.error("Ошибка сохранения транзакции:", error);
+            }
+        });
+    }
+
+    loadRecentTransactions();
+});

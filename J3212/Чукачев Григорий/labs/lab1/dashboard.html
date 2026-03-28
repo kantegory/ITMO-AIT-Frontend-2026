@@ -269,20 +269,10 @@
                         <a href="search.html" class="text-success text-decoration-none small">Смотреть все <i class="bi bi-arrow-right"></i></a>
                     </div>
                     <table class="table table-hover align-middle">
-                        <tbody>
-                        <tr>
-                            <td class="text-muted small">14 Марта</td>
-                            <td><div class="fw-bold">Супермаркет "Лента"</div></td>
-                            <td><span class="badge bg-light text-dark border"><i class="bi bi-cart me-1"></i> Продукты</span></td>
-                            <td class="text-danger text-end fw-bold">- 1 588 ₽</td>
-                        </tr>
-                        <tr>
-                            <td class="text-muted small">13 Марта</td>
-                            <td><div class="fw-bold">Аванс</div></td>
-                            <td><span class="badge bg-light text-dark border"><i class="bi bi-briefcase me-1"></i> Доход</span></td>
-                            <td class="text-success text-end fw-bold">+ 52 000 ₽</td>
-                        </tr>
+                        <tbody id="recentTransactionsTable">
+                        <tr><td colspan="4" class="text-center text-muted">Загрузка операций...</td></tr>
                         </tbody>
+                    </table>
                     </table>
                 </div>
             </div>
@@ -298,12 +288,23 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="dashTxForm">
                     <div class="mb-3">
                         <label class="form-label">Тип операции</label>
-                        <select class="form-select">
-                            <option>Расход</option>
-                            <option>Доход</option>
+                        <select class="form-select" id="dashTxType">
+                            <option value="expense">Расход</option>
+                            <option value="income">Доход</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Категория</label>
+                        <select class="form-select" id="dashTxCategory">
+                            <option value="food">Продукты</option>
+                            <option value="transport">Транспорт</option>
+                            <option value="entertainment">Развлечения</option>
+                            <option value="salary">Зарплата</option>
+                            <option value="other">Разное</option>
                         </select>
                     </div>
 
@@ -316,20 +317,35 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Название</label>
-                        <input type="text" class="form-control" placeholder="Например: Покупка кофе">
+                        <input type="text" class="form-control" id="dashTxTitle" placeholder="Например: Покупка кофе">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Сумма (₽)</label>
-                        <input type="number" class="form-control" placeholder="1000">
+                        <input type="number" class="form-control" id="dashTxAmount" placeholder="1000">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal">
+                <button type="button" class="btn btn-success" id="saveDashTxBtn" data-bs-dismiss="modal">
                     <i class="bi bi-check-lg me-1"></i> Добавить
                 </button>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+    <div id="limitToast" class="toast align-items-center text-bg-warning border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="7000">
+        <div class="d-flex">
+            <div class="toast-body fw-bold d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
+                <div>
+                    <div class="mb-1" id="toastLimitTitle">Превышение лимита!</div>
+                    <small class="fw-normal" id="toastLimitText">Вы приблизились к лимиту.</small>
+                </div>
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Закрыть"></button>
         </div>
     </div>
 </div>
