@@ -29,7 +29,10 @@
       </a>
     </nav>
     <div class="nav-bottom px-3 pb-3">
-      <a href="login.html" class="nav-link"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg><span>Выход</span></a>
+      <a href="#" class="nav-link" onclick="logout()">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        <span>Выход</span>
+      </a>
     </div>
   </aside>
   <main class="main-wrap">
@@ -38,7 +41,7 @@
       <div class="header-actions">
         <div class="user-menu">
           <div class="user-avatar"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
-          <span class="d-none d-md-inline">Иван Иванов</span>
+          <span class="d-none d-md-inline" id="user-name">—</span>
         </div>
       </div>
     </div>
@@ -86,25 +89,8 @@
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>Контрагент содержит «Пятёрочка»</td>
-              <td><span class="badge bg-light text-dark">Продукты</span></td>
-              <td>Присвоить категорию</td>
-              <td><button type="button" class="btn btn-sm btn-outline-secondary">Изменить</button></td>
-            </tr>
-            <tr>
-              <td>Контрагент содержит «Яндекс»</td>
-              <td><span class="badge bg-light text-dark">Транспорт</span></td>
-              <td>Присвоить категорию</td>
-              <td><button type="button" class="btn btn-sm btn-outline-secondary">Изменить</button></td>
-            </tr>
-            <tr>
-              <td>Сумма &gt; 10 000 ₽</td>
-              <td><span class="badge bg-light text-dark">Крупные траты</span></td>
-              <td>Пометить и уведомить</td>
-              <td><button type="button" class="btn btn-sm btn-outline-secondary">Изменить</button></td>
-            </tr>
+          <tbody id="rules-tbody">
+            <tr><td colspan="4" class="text-center text-muted py-3">Загрузка...</td></tr>
           </tbody>
         </table>
       </div>
@@ -113,6 +99,7 @@
       </div>
     </div>
   </main>
+
   <div class="modal fade" id="bankModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -135,11 +122,12 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-          <button type="button" class="btn btn-primary">Подключить</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Подключить</button>
         </div>
       </div>
     </div>
   </div>
+
   <div class="modal fade" id="manualModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -147,33 +135,43 @@
           <h5 class="modal-title">Добавить транзакцию</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label class="form-label">Название</label>
-            <input type="text" class="form-control" placeholder="Например: Продукты">
+        <form onsubmit="addTransaction(event)">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Название</label>
+              <input type="text" class="form-control" name="name" placeholder="Например: Продукты" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Контрагент</label>
+              <input type="text" class="form-control" name="counterparty" placeholder="Магазин, компания...">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Сумма, ₽</label>
+              <input type="number" class="form-control" name="amount" placeholder="0" min="1" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Категория</label>
+              <select class="form-select" name="category">
+                <option>Продукты</option>
+                <option>Транспорт</option>
+                <option>Развлечения</option>
+                <option>Жильё</option>
+                <option>Техника</option>
+                <option>Авто</option>
+                <option>Накопления</option>
+                <option>Доход</option>
+              </select>
+            </div>
           </div>
-          <div class="mb-3">
-            <label class="form-label">Сумма, ₽</label>
-            <input type="number" class="form-control" placeholder="0">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-primary">Добавить</button>
           </div>
-          <div class="mb-3">
-            <label class="form-label">Категория</label>
-            <select class="form-select">
-              <option>Расход</option>
-              <option>Доход</option>
-              <option>Продукты</option>
-              <option>Транспорт</option>
-              <option>Развлечения</option>
-            </select>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-          <button type="button" class="btn btn-primary">Добавить</button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
+
   <div class="modal fade" id="ruleModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -181,37 +179,46 @@
           <h5 class="modal-title">Новое правило</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label class="form-label">Условие</label>
-            <select class="form-select">
-              <option>Контрагент содержит</option>
-              <option>Сумма больше</option>
-              <option>Сумма меньше</option>
-              <option>Комментарий содержит</option>
-            </select>
+        <form onsubmit="saveRule(event)">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Условие</label>
+              <select class="form-select" name="condition">
+                <option>Контрагент содержит</option>
+                <option>Сумма больше</option>
+                <option>Сумма меньше</option>
+                <option>Комментарий содержит</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Значение</label>
+              <input type="text" class="form-control" name="value" placeholder="Текст или число" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Категория</label>
+              <select class="form-select" name="category">
+                <option>Продукты</option>
+                <option>Транспорт</option>
+                <option>Развлечения</option>
+                <option>Жильё</option>
+                <option>Техника</option>
+                <option>Авто</option>
+                <option>Крупные траты</option>
+                <option>Доход</option>
+              </select>
+            </div>
           </div>
-          <div class="mb-3">
-            <label class="form-label">Значение</label>
-            <input type="text" class="form-control" placeholder="Текст или число">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-primary">Создать правило</button>
           </div>
-          <div class="mb-3">
-            <label class="form-label">Категория</label>
-            <select class="form-select">
-              <option>Продукты</option>
-              <option>Транспорт</option>
-              <option>Развлечения</option>
-              <option>Доход</option>
-            </select>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-          <button type="button" class="btn btn-primary">Создать правило</button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/integration.js"></script>
 </body>
 </html>
