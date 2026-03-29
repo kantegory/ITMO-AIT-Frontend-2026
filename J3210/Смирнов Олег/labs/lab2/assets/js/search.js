@@ -1,4 +1,7 @@
 let allItems = [];
+let activeTags = new Set();
+
+const TYPE_TITLES = { models: 'Модели', datasets: 'Датасеты' };
 
 function formatCount(n) {
   if (n >= 1000000) return (n / 1000000).toFixed(1).replace('.0', '') + 'M';
@@ -13,7 +16,7 @@ function buildCard(item) {
     : `<span class="badge badge-license">${item.license}</span>`;
 
   return `
-    <div class="col-12" data-type="${item.type}">
+    <div class="col-12">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title mb-1">
@@ -33,32 +36,57 @@ function buildCard(item) {
     </div>`;
 }
 
-function renderCards(items) {
-  const list = document.getElementById('cardList');
-  const count = document.getElementById('resultsCount');
-  list.innerHTML = items.map(buildCard).join('');
-  count.textContent = items.length;
+function getTypeParam() {
+  return new URLSearchParams(window.location.search).get('type') || '';
 }
 
-function getActiveType() {
-  const checked = document.querySelector('input[name="type"]:checked');
-  return checked ? checked.value : 'all';
+function renderTagFilters(sourceItems) {
+  const tagFiltersEl = document.getElementById('tagFilters');
+  const tags = new Set();
+  sourceItems.forEach(function (item) {
+    if (item.task) tags.add(item.task);
+    if (item.framework) tags.add(item.framework);
+    if (item.license) tags.add(item.license);
+  });
+
+  tagFiltersEl.innerHTML = '';
+  tags.forEach(function (tag) {
+    const btn = document.createElement('button');
+    btn.className = 'badge tag-filter-btn ' + (activeTags.has(tag) ? 'badge-task' : 'badge-muted');
+    btn.textContent = tag;
+    btn.addEventListener('click', function () {
+      if (activeTags.has(tag)) activeTags.delete(tag);
+      else activeTags.add(tag);
+      renderTagFilters(sourceItems);
+      applyFilters();
+    });
+    tagFiltersEl.appendChild(btn);
+  });
 }
 
 function applyFilters() {
-  const type = getActiveType();
+  const typeParam = getTypeParam();
   const query = document.getElementById('searchInput').value.trim().toLowerCase();
+  const sort = document.getElementById('sortSelect').value;
 
-  const filtered = allItems.filter(function (item) {
-    const matchType = type === 'all' || item.type + 's' === type;
+  let filtered = allItems.filter(function (item) {
+    const matchType = !typeParam || item.type + 's' === typeParam;
     const matchQuery = !query ||
       item.slug.toLowerCase().includes(query) ||
       item.task.toLowerCase().includes(query) ||
       item.author.toLowerCase().includes(query);
-    return matchType && matchQuery;
+    const matchTags = activeTags.size === 0 ||
+      [item.task, item.framework, item.license].some(function (t) { return t && activeTags.has(t); });
+    return matchType && matchQuery && matchTags;
   });
 
-  renderCards(filtered);
+  if (sort === 'stars') filtered.sort(function (a, b) { return b.stars - a.stars; });
+  else if (sort === 'downloads') filtered.sort(function (a, b) { return b.downloads - a.downloads; });
+
+  const list = document.getElementById('cardList');
+  const count = document.getElementById('resultsCount');
+  list.innerHTML = filtered.map(buildCard).join('');
+  count.textContent = filtered.length;
 }
 
 async function init() {
@@ -76,23 +104,25 @@ async function init() {
     ...datasets.map(function (d) { return Object.assign({}, d, { type: 'dataset' }); }),
   ];
 
-  // Pre-select radio and highlight nav from URL ?type=
-  const typeParam = new URLSearchParams(window.location.search).get('type');
-  if (typeParam === 'models' || typeParam === 'datasets') {
-    const radio = document.getElementById(typeParam === 'models' ? 'typeModels' : 'typeDatasets');
-    if (radio) radio.checked = true;
-    const navEl = document.getElementById(typeParam === 'models' ? 'navModels' : 'navDatasets');
-    if (navEl) navEl.classList.add('active');
-  } else {
-    document.getElementById('typeAll').checked = true;
-  }
+  const typeParam = getTypeParam();
+
+  // Заголовок страницы
+  const titleEl = document.getElementById('pageTitle');
+  if (titleEl && TYPE_TITLES[typeParam]) titleEl.textContent = TYPE_TITLES[typeParam];
+
+  // Подсветка активного пункта navbar
+  const navEl = document.getElementById(typeParam === 'models' ? 'navModels' : typeParam === 'datasets' ? 'navDatasets' : null);
+  if (navEl) navEl.classList.add('active');
+
+  // Тег-фильтры строим только из элементов нужного типа
+  const typeItems = allItems.filter(function (item) {
+    return !typeParam || item.type + 's' === typeParam;
+  });
+  renderTagFilters(typeItems);
 
   applyFilters();
 
-  document.querySelectorAll('input[name="type"]').forEach(function (radio) {
-    radio.addEventListener('change', applyFilters);
-  });
-
+  document.getElementById('sortSelect').addEventListener('change', applyFilters);
   document.getElementById('searchInput').addEventListener('input', applyFilters);
 }
 
