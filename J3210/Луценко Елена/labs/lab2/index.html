@@ -145,7 +145,7 @@
             })
         });
 
-        const newStudentsCount = (course.studentsCount || 0) + 1;
+        const newStudentsCount = course.studentsCount + 1;
         await apiRequest(`/courses/${courseId}`, {
             method: "PATCH",
             body: JSON.stringify({
@@ -171,7 +171,7 @@
         document.getElementById('modalCourseLevel').innerText = course.level;
         document.getElementById('modalCourseCategory').innerText = course.category;
         document.getElementById('modalCoursePrice').innerText = course.price + " ₽";
-        document.getElementById('modalCourseDescription').innerText = course.description || "Этот курс поможет вам освоить " + course.title + " с нуля до продвинутого уровня. В программу входят практические задания и видео-уроки";
+        document.getElementById('modalCourseDescription').innerText = course.description;
 
         const actionButtons = document.getElementById('modalActionButtons');
         const user = getCurrentUser();
