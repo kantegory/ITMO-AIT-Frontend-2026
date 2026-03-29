@@ -40,13 +40,13 @@ function getTypeParam() {
   return new URLSearchParams(window.location.search).get('type') || '';
 }
 
-function renderTagFilters(sourceItems) {
+function renderTagFilters(sourceItems, typeParam) {
   const tagFiltersEl = document.getElementById('tagFilters');
   const tags = new Set();
   sourceItems.forEach(function (item) {
     if (item.task) tags.add(item.task);
-    if (item.framework) tags.add(item.framework);
-    if (item.license) tags.add(item.license);
+    if (typeParam === 'models' && item.framework) tags.add(item.framework);
+    if (typeParam === 'datasets' && item.license) tags.add(item.license);
   });
 
   tagFiltersEl.innerHTML = '';
@@ -57,7 +57,7 @@ function renderTagFilters(sourceItems) {
     btn.addEventListener('click', function () {
       if (activeTags.has(tag)) activeTags.delete(tag);
       else activeTags.add(tag);
-      renderTagFilters(sourceItems);
+      renderTagFilters(sourceItems, typeParam);
       applyFilters();
     });
     tagFiltersEl.appendChild(btn);
@@ -70,7 +70,9 @@ function applyFilters() {
   const sort = document.getElementById('sortSelect').value;
 
   let filtered = allItems.filter(function (item) {
-    const matchType = !typeParam || item.type + 's' === typeParam;
+    let matchType = true;
+    if (typeParam === 'models') matchType = item.type === 'model';
+    else if (typeParam === 'datasets') matchType = item.type === 'dataset';
     const matchQuery = !query ||
       item.slug.toLowerCase().includes(query) ||
       item.task.toLowerCase().includes(query) ||
@@ -118,7 +120,7 @@ async function init() {
   const typeItems = allItems.filter(function (item) {
     return !typeParam || item.type + 's' === typeParam;
   });
-  renderTagFilters(typeItems);
+  renderTagFilters(typeItems, typeParam);
 
   applyFilters();
 
