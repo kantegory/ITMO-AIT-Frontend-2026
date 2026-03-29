@@ -39,25 +39,17 @@
   <!-- # Блок с обсуждениями (список тем) # -->
   <section class="mb-4">
     <h2 class="h5 mb-3">Обсуждения</h2>
-    <ul class="list-group">
-      <li class="list-group-item">
-        Как организовать первое рабочее пространство?
-        <div class="small text-muted">3 ответа · последняя активность: сегодня</div>
-      </li>
-      <li class="list-group-item">
-        Идеи для автоматизации в n3n
-        <div class="small text-muted">5 ответов · последняя активность: вчера</div>
-      </li>
+    <ul class="list-group" id="topics-list">
+      <!-- Темы форума подставит JS -->
     </ul>
   </section>
 
   <!-- # Блок "Форум" с демо-кнопкой создания темы # -->
   <section class="mb-4">
     <h2 class="h5 mb-3">Форум</h2>
-    <p class="small text-muted">Здесь могла бы быть полноценная интеграция с движком форума.</p>
     <button type="button" class="btn btn-outline-primary btn-sm"
             data-bs-toggle="modal" data-bs-target="#newTopicModal">
-      Создать тему (демо)
+      Создать тему
     </button>
   </section>
 
@@ -65,35 +57,7 @@
   <section>
     <h2 class="h5 mb-3">FAQ</h2>
     <div class="accordion" id="faqAccordion">
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="faqOne">
-          <button class="accordion-button collapsed" type="button"
-                  data-bs-toggle="collapse" data-bs-target="#faqOneContent">
-            Что такое n3n?
-          </button>
-        </h2>
-        <div id="faqOneContent" class="accordion-collapse collapse"
-             data-bs-parent="#faqAccordion">
-          <div class="accordion-body">
-            n3n — учебный клон сервиса визуальной автоматизации n8n.
-          </div>
-        </div>
-      </div>
-
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="faqTwo">
-          <button class="accordion-button collapsed" type="button"
-                  data-bs-toggle="collapse" data-bs-target="#faqTwoContent">
-            Где настраиваются рабочие пространства?
-          </button>
-        </h2>
-        <div id="faqTwoContent" class="accordion-collapse collapse"
-             data-bs-parent="#faqAccordion">
-          <div class="accordion-body">
-            На странице «Рабочие пространства», а также на странице конкретного рабочего пространства.
-          </div>
-        </div>
-      </div>
+      <!-- Вопросы FAQ подставит JS -->
     </div>
   </section>
 </main>
@@ -103,11 +67,23 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Новая тема (демо)</h5>
+        <h5 class="modal-title">Новая тема</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        Здесь в будущем будет форма создания темы форума.
+        <form id="new-topic-form">
+          <div class="mb-3">
+            <label class="form-label">Заголовок темы</label>
+            <input type="text" class="form-control" id="new-topic-title" name="title"
+                   placeholder="Введите заголовок">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Первое сообщение</label>
+            <textarea class="form-control" id="new-topic-body" name="body"
+                      rows="3" placeholder="Кратко опишите вопрос"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Создать тему</button>
+        </form>
       </div>
     </div>
   </div>
