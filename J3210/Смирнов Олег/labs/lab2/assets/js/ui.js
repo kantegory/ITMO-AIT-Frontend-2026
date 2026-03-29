@@ -2,7 +2,6 @@
   const user = JSON.parse(localStorage.getItem('user') || 'null');
   const paths = window.APP_PATHS || {};
 
-  // Route guard — вызывается на защищённых страницах
   function requireAuth() {
     if (!user) {
       window.location.href = paths.login;
@@ -36,21 +35,7 @@
     }
   }
 
-  function renderDashboardProfile() {
-    if (!user) return;
-    const initial = user.name.charAt(0).toUpperCase();
-    document.querySelectorAll('.avatar').forEach(function (el) {
-      el.textContent = initial;
-    });
-    document.querySelectorAll('[data-user-name]').forEach(function (el) {
-      el.textContent = user.name;
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    renderNavbar();
-    renderDashboardProfile();
-  });
+  document.addEventListener('DOMContentLoaded', renderNavbar);
 
   window.AppUI = { requireAuth };
 })();

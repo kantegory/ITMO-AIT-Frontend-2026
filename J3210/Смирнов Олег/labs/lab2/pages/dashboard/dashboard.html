@@ -32,10 +32,10 @@
       <div class="card mb-4">
         <div class="card-body">
           <div class="d-flex align-items-center gap-4 flex-wrap">
-            <div class="avatar avatar-lg"></div>
+            <div class="avatar avatar-lg" id="profileAvatar"></div>
             <div>
-              <h1 class="h4 mb-1" data-user-name>Пользователь</h1>
-              <p class="text-muted mb-0">ML-инженер &middot; Москва</p>
+              <h1 class="h4 mb-1" id="profileName">Пользователь</h1>
+              <p class="text-muted mb-0" id="profileSubtitle"></p>
             </div>
             <div class="ms-auto">
               <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#editProfileModal"><i class="bi bi-pencil"></i> Редактировать</button>
@@ -65,66 +65,13 @@
 
       <div class="tab-content">
         <div class="tab-pane fade show active" id="tab-models" role="tabpanel">
-          <div class="row g-3">
-            <div class="col-md-6 col-lg-4">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h5 class="card-title"><a href="../../data/model.html">ivanov/sentiment-bert</a></h5>
-                  <p class="card-text small">BERT для анализа тональности текста.</p>
-                  <div class="d-flex flex-wrap gap-1 mb-3">
-                    <span class="badge badge-task">классификация</span>
-                    <span class="badge badge-framework">PyTorch</span>
-                  </div>
-                  <div class="d-flex gap-3 text-muted small">
-                    <span><i class="bi bi-star-fill text-warning"></i> 42</span>
-                    <span><i class="bi bi-download"></i> 1.2K</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <p class="text-muted">У вас пока нет загруженных моделей.</p>
         </div>
-
         <div class="tab-pane fade" id="tab-datasets" role="tabpanel">
-          <div class="row g-3">
-            <div class="col-md-6 col-lg-4">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h5 class="card-title"><a href="../../data/dataset.html">ivanov/reviews-ru</a></h5>
-                  <p class="card-text small">50K отзывов на русском языке с метками тональности.</p>
-                  <div class="d-flex flex-wrap gap-1 mb-3">
-                    <span class="badge badge-task">текстовый корпус</span>
-                    <span class="badge badge-license">MIT</span>
-                  </div>
-                  <div class="d-flex gap-3 text-muted small">
-                    <span><i class="bi bi-star-fill text-warning"></i> 18</span>
-                    <span><i class="bi bi-download"></i> 340</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <p class="text-muted">У вас пока нет загруженных датасетов.</p>
         </div>
-
         <div class="tab-pane fade" id="tab-starred" role="tabpanel">
-          <div class="row g-3">
-            <div class="col-md-6 col-lg-4">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h5 class="card-title"><a href="../../data/model.html">meta/llama-3-70b</a></h5>
-                  <p class="card-text small">Открытая языковая модель для генерации текста.</p>
-                  <div class="d-flex flex-wrap gap-1 mb-3">
-                    <span class="badge badge-task">генерация текста</span>
-                    <span class="badge badge-framework">PyTorch</span>
-                  </div>
-                  <div class="d-flex gap-3 text-muted small">
-                    <span><i class="bi bi-star-fill text-warning"></i> 9.8k</span>
-                    <span><i class="bi bi-download"></i> 1.5M</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <p class="text-muted">Вы пока ни на что не подписаны.</p>
         </div>
       </div>
     </div>
@@ -189,22 +136,22 @@
         <div class="modal-body">
           <form>
             <div class="mb-3">
-              <label for="profileName" class="form-label">Имя</label>
-              <input type="text" class="form-control" id="profileName" value="Иван Иванов">
+              <label for="editName" class="form-label">Имя</label>
+              <input type="text" class="form-control" id="editName">
             </div>
             <div class="mb-3">
-              <label for="profileBio" class="form-label">О себе</label>
-              <input type="text" class="form-control" id="profileBio" value="ML-инженер">
+              <label for="editBio" class="form-label">О себе</label>
+              <input type="text" class="form-control" id="editBio">
             </div>
             <div class="mb-3">
-              <label for="profileLocation" class="form-label">Город</label>
-              <input type="text" class="form-control" id="profileLocation" value="Москва">
+              <label for="editLocation" class="form-label">Город</label>
+              <input type="text" class="form-control" id="editLocation">
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-light btn-sm" data-bs-dismiss="modal">Отмена</button>
-          <button type="button" class="btn btn-accent btn-sm" data-bs-dismiss="modal">Сохранить</button>
+          <button type="button" class="btn btn-accent btn-sm" id="saveProfileBtn">Сохранить</button>
         </div>
       </div>
     </div>
@@ -218,8 +165,10 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/api.js"></script>
   <script>window.APP_PATHS = { home: '../../index.html', login: '../auth/login.html', register: '../auth/register.html' };</script>
   <script src="../../assets/js/ui.js"></script>
   <script>AppUI.requireAuth();</script>
+  <script src="../../assets/js/dashboard.js"></script>
 </body>
 </html>

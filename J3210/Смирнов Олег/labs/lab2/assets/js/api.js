@@ -32,3 +32,12 @@ async function registerUser(userData) {
   });
   return res.json();
 }
+
+async function updateUser(id, data) {
+  const res = await fetch(`${API_URL}/users/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  return res.json();
+}

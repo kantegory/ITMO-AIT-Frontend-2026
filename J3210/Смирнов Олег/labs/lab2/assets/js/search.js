@@ -9,6 +9,10 @@ function formatCount(n) {
   return String(n);
 }
 
+function getTypeParam() {
+  return new URLSearchParams(window.location.search).get('type') || '';
+}
+
 function buildCard(item) {
   const isModel = item.type === 'model';
   const badge2 = isModel
@@ -36,14 +40,10 @@ function buildCard(item) {
     </div>`;
 }
 
-function getTypeParam() {
-  return new URLSearchParams(window.location.search).get('type') || '';
-}
-
-function renderTagFilters(sourceItems, typeParam) {
+function renderTagFilters(typeParam) {
   const tagFiltersEl = document.getElementById('tagFilters');
   const tags = new Set();
-  sourceItems.forEach(function (item) {
+  allItems.forEach(function (item) {
     if (item.task) tags.add(item.task);
     if (typeParam === 'models' && item.framework) tags.add(item.framework);
     if (typeParam === 'datasets' && item.license) tags.add(item.license);
@@ -57,7 +57,7 @@ function renderTagFilters(sourceItems, typeParam) {
     btn.addEventListener('click', function () {
       if (activeTags.has(tag)) activeTags.delete(tag);
       else activeTags.add(tag);
-      renderTagFilters(sourceItems, typeParam);
+      renderTagFilters(typeParam);
       applyFilters();
     });
     tagFiltersEl.appendChild(btn);
@@ -65,21 +65,17 @@ function renderTagFilters(sourceItems, typeParam) {
 }
 
 function applyFilters() {
-  const typeParam = getTypeParam();
   const query = document.getElementById('searchInput').value.trim().toLowerCase();
   const sort = document.getElementById('sortSelect').value;
 
   let filtered = allItems.filter(function (item) {
-    let matchType = true;
-    if (typeParam === 'models') matchType = item.type === 'model';
-    else if (typeParam === 'datasets') matchType = item.type === 'dataset';
     const matchQuery = !query ||
       item.slug.toLowerCase().includes(query) ||
       item.task.toLowerCase().includes(query) ||
       item.author.toLowerCase().includes(query);
     const matchTags = activeTags.size === 0 ||
       [item.task, item.framework, item.license].some(function (t) { return t && activeTags.has(t); });
-    return matchType && matchQuery && matchTags;
+    return matchQuery && matchTags;
   });
 
   if (sort === 'stars') filtered.sort(function (a, b) { return b.stars - a.stars; });
@@ -92,20 +88,6 @@ function applyFilters() {
 }
 
 async function init() {
-  let models, datasets;
-  try {
-    [models, datasets] = await Promise.all([getModels(), getDatasets()]);
-  } catch {
-    document.getElementById('cardList').innerHTML =
-      '<p class="text-danger">Не удалось загрузить данные. Убедитесь, что json-server запущен (<code>npx json-server db.json</code>).</p>';
-    return;
-  }
-
-  allItems = [
-    ...models.map(function (m) { return Object.assign({}, m, { type: 'model' }); }),
-    ...datasets.map(function (d) { return Object.assign({}, d, { type: 'dataset' }); }),
-  ];
-
   const typeParam = getTypeParam();
 
   // Заголовок страницы
@@ -113,15 +95,33 @@ async function init() {
   if (titleEl && TYPE_TITLES[typeParam]) titleEl.textContent = TYPE_TITLES[typeParam];
 
   // Подсветка активного пункта navbar
-  const navEl = document.getElementById(typeParam === 'models' ? 'navModels' : typeParam === 'datasets' ? 'navDatasets' : null);
-  if (navEl) navEl.classList.add('active');
+  if (typeParam === 'models' || typeParam === 'datasets') {
+    const navEl = document.getElementById(typeParam === 'models' ? 'navModels' : 'navDatasets');
+    if (navEl) navEl.classList.add('active');
+  }
 
-  // Тег-фильтры строим только из элементов нужного типа
-  const typeItems = allItems.filter(function (item) {
-    return !typeParam || item.type + 's' === typeParam;
-  });
-  renderTagFilters(typeItems, typeParam);
+  // Грузим ТОЛЬКО нужный тип — не оба
+  try {
+    if (typeParam === 'models') {
+      const models = await getModels();
+      allItems = models.map(function (m) { return Object.assign({}, m, { type: 'model' }); });
+    } else if (typeParam === 'datasets') {
+      const datasets = await getDatasets();
+      allItems = datasets.map(function (d) { return Object.assign({}, d, { type: 'dataset' }); });
+    } else {
+      const [models, datasets] = await Promise.all([getModels(), getDatasets()]);
+      allItems = [
+        ...models.map(function (m) { return Object.assign({}, m, { type: 'model' }); }),
+        ...datasets.map(function (d) { return Object.assign({}, d, { type: 'dataset' }); }),
+      ];
+    }
+  } catch {
+    document.getElementById('cardList').innerHTML =
+      '<p class="text-danger">Не удалось загрузить данные. Убедитесь, что json-server запущен.</p>';
+    return;
+  }
 
+  renderTagFilters(typeParam);
   applyFilters();
 
   document.getElementById('sortSelect').addEventListener('change', applyFilters);

@@ -1,5 +1,15 @@
 const SERVER_ERROR = 'Не удалось подключиться к серверу. Убедитесь, что json-server запущен.';
 
+function saveUserToStorage(user) {
+  localStorage.setItem('user', JSON.stringify({
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    bio: user.bio || '',
+    location: user.location || '',
+  }));
+}
+
 // Login
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
@@ -25,7 +35,7 @@ if (loginForm) {
     }
 
     errorEl.classList.add('d-none');
-    localStorage.setItem('user', JSON.stringify({ id: user.id, name: user.name, email: user.email }));
+    saveUserToStorage(user);
     window.location.href = '../dashboard/dashboard.html';
   });
 }
@@ -37,6 +47,8 @@ if (registerForm) {
     e.preventDefault();
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
+    const bio = (document.getElementById('bio') || {}).value || '';
+    const location = (document.getElementById('location') || {}).value || '';
     const password = document.getElementById('password').value;
     const passwordConfirm = document.getElementById('password-confirm').value;
     const errorEl = document.getElementById('registerError');
@@ -63,7 +75,7 @@ if (registerForm) {
     }
 
     try {
-      user = await registerUser({ name, email, password });
+      user = await registerUser({ name, email, password, bio, location });
     } catch {
       errorEl.textContent = SERVER_ERROR;
       errorEl.classList.remove('d-none');
@@ -71,7 +83,7 @@ if (registerForm) {
     }
 
     errorEl.classList.add('d-none');
-    localStorage.setItem('user', JSON.stringify({ id: user.id, name: user.name, email: user.email }));
+    saveUserToStorage(user);
     window.location.href = '../dashboard/dashboard.html';
   });
 }
