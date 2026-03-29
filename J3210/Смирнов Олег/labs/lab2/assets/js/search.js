@@ -62,18 +62,27 @@ function applyFilters() {
 }
 
 async function init() {
-  const [models, datasets] = await Promise.all([getModels(), getDatasets()]);
+  let models, datasets;
+  try {
+    [models, datasets] = await Promise.all([getModels(), getDatasets()]);
+  } catch {
+    document.getElementById('cardList').innerHTML =
+      '<p class="text-danger">Не удалось загрузить данные. Убедитесь, что json-server запущен (<code>npx json-server db.json</code>).</p>';
+    return;
+  }
 
   allItems = [
     ...models.map(function (m) { return Object.assign({}, m, { type: 'model' }); }),
     ...datasets.map(function (d) { return Object.assign({}, d, { type: 'dataset' }); }),
   ];
 
-  // Pre-select radio from URL ?type=
+  // Pre-select radio and highlight nav from URL ?type=
   const typeParam = new URLSearchParams(window.location.search).get('type');
   if (typeParam === 'models' || typeParam === 'datasets') {
     const radio = document.getElementById(typeParam === 'models' ? 'typeModels' : 'typeDatasets');
     if (radio) radio.checked = true;
+    const navEl = document.getElementById(typeParam === 'models' ? 'navModels' : 'navDatasets');
+    if (navEl) navEl.classList.add('active');
   } else {
     document.getElementById('typeAll').checked = true;
   }

@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const countEl = btn.querySelector(isStarBtn ? '.star-count' : '.fork-count');
       if (!countEl) return;
 
-      const raw = countEl.textContent.replace(/,/g, '');
+      const raw = countEl.textContent.replace(/[\s,]/g, '');
       let count = parseInt(raw, 10);
 
       if (btn.classList.contains('active')) {

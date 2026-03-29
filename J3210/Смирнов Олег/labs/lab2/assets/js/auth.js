@@ -1,3 +1,5 @@
+const SERVER_ERROR = 'Не удалось подключиться к серверу. Убедитесь, что json-server запущен.';
+
 // Login
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
@@ -7,7 +9,14 @@ if (loginForm) {
     const password = document.getElementById('password').value;
     const errorEl = document.getElementById('loginError');
 
-    const user = await loginUser(email, password);
+    let user;
+    try {
+      user = await loginUser(email, password);
+    } catch {
+      errorEl.textContent = SERVER_ERROR;
+      errorEl.classList.remove('d-none');
+      return;
+    }
 
     if (!user) {
       errorEl.textContent = 'Неверный email или пароль.';
@@ -38,15 +47,30 @@ if (registerForm) {
       return;
     }
 
-    const existing = await getUserByEmail(email);
+    let existing, user;
+    try {
+      existing = await getUserByEmail(email);
+    } catch {
+      errorEl.textContent = SERVER_ERROR;
+      errorEl.classList.remove('d-none');
+      return;
+    }
+
     if (existing) {
       errorEl.textContent = 'Пользователь с таким email уже существует.';
       errorEl.classList.remove('d-none');
       return;
     }
 
+    try {
+      user = await registerUser({ name, email, password });
+    } catch {
+      errorEl.textContent = SERVER_ERROR;
+      errorEl.classList.remove('d-none');
+      return;
+    }
+
     errorEl.classList.add('d-none');
-    const user = await registerUser({ name, email, password });
     localStorage.setItem('user', JSON.stringify({ id: user.id, name: user.name, email: user.email }));
     window.location.href = '../dashboard/dashboard.html';
   });
