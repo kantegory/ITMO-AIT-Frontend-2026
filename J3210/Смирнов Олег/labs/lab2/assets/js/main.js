@@ -36,61 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Filter search results by URL parameter ?type=models or ?type=datasets
-  const params = new URLSearchParams(window.location.search);
-  const typeParam = params.get('type');
-  const cards = document.querySelectorAll('[data-type]');
-  const countEl = document.querySelector('.text-muted.small.mb-3');
-
-  if (typeParam && cards.length > 0) {
-    let visible = 0;
-    cards.forEach(function (card) {
-      if (typeParam === 'models' && card.dataset.type !== 'model') {
-        card.style.display = 'none';
-      } else if (typeParam === 'datasets' && card.dataset.type !== 'dataset') {
-        card.style.display = 'none';
-      } else {
-        visible++;
-      }
-    });
-
-    if (countEl) {
-      countEl.textContent = 'Найдено: ' + visible;
-    }
-
-    // Pre-select radio
-    if (typeParam === 'models') {
-      const rModels = document.getElementById('typeModels');
-      if (rModels) rModels.checked = true;
-    } else if (typeParam === 'datasets') {
-      const rDatasets = document.getElementById('typeDatasets');
-      if (rDatasets) rDatasets.checked = true;
-    }
-  }
-
-  // Radio filter click handling
-  document.querySelectorAll('input[name="type"]').forEach(function (radio) {
-    radio.addEventListener('change', function () {
-      const selected = this.id; // typeAll, typeModels, typeDatasets
-      let visible = 0;
-      cards.forEach(function (card) {
-        if (selected === 'typeAll') {
-          card.style.display = '';
-          visible++;
-        } else if (selected === 'typeModels') {
-          card.style.display = card.dataset.type === 'model' ? '' : 'none';
-          if (card.dataset.type === 'model') visible++;
-        } else if (selected === 'typeDatasets') {
-          card.style.display = card.dataset.type === 'dataset' ? '' : 'none';
-          if (card.dataset.type === 'dataset') visible++;
-        }
-      });
-      if (countEl) {
-        countEl.textContent = 'Найдено: ' + visible;
-      }
-    });
-  });
-
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener('click', function (e) {
