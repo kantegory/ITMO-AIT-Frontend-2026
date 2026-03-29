@@ -1,8 +1,6 @@
 let allItems = [];
 let activeTags = new Set();
 
-const TYPE_TITLES = { models: 'Модели', datasets: 'Датасеты' };
-
 function formatCount(n) {
   if (n >= 1000000) return (n / 1000000).toFixed(1).replace('.0', '') + 'M';
   if (n >= 1000) return (n / 1000).toFixed(1).replace('.0', '') + 'k';
@@ -65,10 +63,13 @@ function renderTagFilters(typeParam) {
 }
 
 function applyFilters() {
+  const typeParam = getTypeParam();
   const query = document.getElementById('searchInput').value.trim().toLowerCase();
   const sort = document.getElementById('sortSelect').value;
 
   let filtered = allItems.filter(function (item) {
+    if (typeParam === 'models' && item.type !== 'model') return false;
+    if (typeParam === 'datasets' && item.type !== 'dataset') return false;
     const matchQuery = !query ||
       item.slug.toLowerCase().includes(query) ||
       item.task.toLowerCase().includes(query) ||
@@ -89,16 +90,6 @@ function applyFilters() {
 
 async function init() {
   const typeParam = getTypeParam();
-
-  // Заголовок страницы
-  const titleEl = document.getElementById('pageTitle');
-  if (titleEl && TYPE_TITLES[typeParam]) titleEl.textContent = TYPE_TITLES[typeParam];
-
-  // Подсветка активного пункта navbar
-  if (typeParam === 'models' || typeParam === 'datasets') {
-    const navEl = document.getElementById(typeParam === 'models' ? 'navModels' : 'navDatasets');
-    if (navEl) navEl.classList.add('active');
-  }
 
   // Грузим ТОЛЬКО нужный тип — не оба
   try {
