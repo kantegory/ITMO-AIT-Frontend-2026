@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>meta/llama-3-70b — AI Hub</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="../../assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="../../index.html"><i class="bi bi-cpu"></i> AI Hub</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="../../index.html">Главная</a></li>
+          <li class="nav-item"><a class="nav-link" href="search.html?type=models">Модели</a></li>
+          <li class="nav-item"><a class="nav-link" href="search.html?type=datasets">Датасеты</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <a href="../dashboard/dashboard.html" class="btn btn-outline-light btn-sm"><i class="bi bi-person"></i> Личный кабинет</a>
+          <a href="../auth/login.html" class="btn btn-outline-light btn-sm">Войти</a>
+          <a href="../auth/register.html" class="btn btn-accent btn-sm">Регистрация</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="py-4">
+    <div class="container">
+      <header class="mb-4">
+        <div class="d-flex align-items-start justify-content-between flex-wrap gap-3">
+          <div>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb small mb-2">
+                <li class="breadcrumb-item"><a href="search.html?type=models">Модели</a></li>
+                <li class="breadcrumb-item active">meta/llama-3-70b</li>
+              </ol>
+            </nav>
+            <h1 class="h3 mb-1">meta/llama-3-70b</h1>
+            <p class="text-muted mb-2">Автор: <a href="#">meta</a></p>
+            <div class="d-flex flex-wrap gap-1">
+              <span class="badge badge-task">генерация текста</span>
+              <span class="badge badge-framework">PyTorch</span>
+              <span class="badge badge-license">Llama 3</span>
+            </div>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="stat-btn" id="starBtn">
+              <i class="bi bi-star"></i> <span class="star-count">9,832</span>
+            </button>
+            <button class="stat-btn" id="forkBtn">
+              <i class="bi bi-diagram-2"></i> <span class="fork-count">1,204</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <ul class="nav nav-tabs mb-4" role="tablist">
+        <li class="nav-item">
+          <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-description" type="button">Описание</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-metrics" type="button">Метрики</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-usage" type="button">Примеры</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-files" type="button">Файлы</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-discussions" type="button">Обсуждения</button>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <!-- Описание -->
+        <div class="tab-pane fade show active" id="tab-description" role="tabpanel">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="h5">Llama 3 70B</h2>
+              <p>Открытая языковая модель от Meta для генерации текста, рассуждений и написания кода. Контекстное окно — 8K токенов.</p>
+              <h3 class="h6 mt-3">Возможности</h3>
+              <ul>
+                <li>Генерация и суммаризация текста</li>
+                <li>Написание кода на популярных языках</li>
+                <li>Мультиязычная поддержка</li>
+              </ul>
+              <h3 class="h6 mt-3">Ограничения</h3>
+              <ul>
+                <li>Может генерировать некорректную информацию</li>
+                <li>Качество зависит от языка запроса</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Метрики -->
+        <div class="tab-pane fade" id="tab-metrics" role="tabpanel">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="h5 mb-3">Результаты бенчмарков</h2>
+              <div class="table-responsive">
+                <table class="table table-dark-custom table-striped">
+                  <thead>
+                    <tr>
+                      <th>Бенчмарк</th>
+                      <th>Результат</th>
+                      <th>Метрика</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>MMLU</td>
+                      <td><strong>82.0%</strong></td>
+                      <td>Accuracy (5-shot)</td>
+                    </tr>
+                    <tr>
+                      <td>HumanEval</td>
+                      <td><strong>81.7%</strong></td>
+                      <td>Pass@1</td>
+                    </tr>
+                    <tr>
+                      <td>GSM8K</td>
+                      <td><strong>93.0%</strong></td>
+                      <td>Accuracy (CoT)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Примеры -->
+        <div class="tab-pane fade" id="tab-usage" role="tabpanel">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="h5 mb-3">Пример использования</h2>
+              <div class="code-block">
+<pre>from transformers import AutoTokenizer, AutoModelForCausalLM
+
+tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3-70B")
+model = AutoModelForCausalLM.from_pretrained("meta-llama/Meta-Llama-3-70B")
+
+inputs = tokenizer("Привет, как дела?", return_tensors="pt")
+outputs = model.generate(**inputs, max_new_tokens=100)
+print(tokenizer.decode(outputs[0], skip_special_tokens=True))</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Файлы -->
+        <div class="tab-pane fade" id="tab-files" role="tabpanel">
+          <div class="card">
+            <div class="card-body p-0">
+              <div class="file-item">
+                <div>
+                  <i class="bi bi-file-text text-muted me-2"></i>
+                  <span>README.md</span>
+                  <span class="text-muted small ms-2">3.1 KB</span>
+                </div>
+                <a href="#" class="btn btn-sm btn-outline-light"><i class="bi bi-download"></i></a>
+              </div>
+              <div class="file-item">
+                <div>
+                  <i class="bi bi-file-code text-muted me-2"></i>
+                  <span>config.json</span>
+                  <span class="text-muted small ms-2">1.2 KB</span>
+                </div>
+                <a href="#" class="btn btn-sm btn-outline-light"><i class="bi bi-download"></i></a>
+              </div>
+              <div class="file-item">
+                <div>
+                  <i class="bi bi-file-binary text-muted me-2"></i>
+                  <span>model.safetensors</span>
+                  <span class="text-muted small ms-2">140 GB</span>
+                </div>
+                <a href="#" class="btn btn-sm btn-outline-light"><i class="bi bi-download"></i></a>
+              </div>
+              <div class="file-item">
+                <div>
+                  <i class="bi bi-file-code text-muted me-2"></i>
+                  <span>tokenizer.json</span>
+                  <span class="text-muted small ms-2">8.7 MB</span>
+                </div>
+                <a href="#" class="btn btn-sm btn-outline-light"><i class="bi bi-download"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Обсуждения -->
+        <div class="tab-pane fade" id="tab-discussions" role="tabpanel">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="h5 mb-3">Обсуждения</h2>
+
+              <div class="comment">
+                <div class="d-flex gap-3">
+                  <div class="avatar">А</div>
+                  <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between">
+                      <span class="comment-author">alex_ml</span>
+                      <span class="comment-date">2 часа назад</span>
+                    </div>
+                    <p class="comment-body mt-1 mb-0">Кто-нибудь пробовал квантизацию до 4-bit? Интересует потеря качества.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="comment">
+                <div class="d-flex gap-3">
+                  <div class="avatar" style="background-color: var(--success);">М</div>
+                  <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between">
+                      <span class="comment-author">maria_dev</span>
+                      <span class="comment-date">1 день назад</span>
+                    </div>
+                    <p class="comment-body mt-1 mb-0">Отлично работает на русском языке, рекомендую.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4 pt-3 border-top" style="border-color: var(--border) !important;">
+                <h3 class="h6">Написать комментарий</h3>
+                <form>
+                  <div class="mb-3">
+                    <textarea class="form-control" rows="3" placeholder="Ваш комментарий..."></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-accent btn-sm">Отправить</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 mt-4">
+    <div class="container text-center">
+      <small class="text-muted">&copy; 2026 AI Hub</small>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>
