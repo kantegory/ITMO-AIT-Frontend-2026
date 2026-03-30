@@ -136,6 +136,14 @@
           <input type="text" id="eventVenue" class="form-control" placeholder="Адрес места проведения">
         </div>
         <div class="mb-3">
+          <label class="form-label" for="eventDescription">Описание</label>
+          <textarea id="eventDescription" class="form-control" rows="3" placeholder="Описание мероприятия"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="eventImageUrl">Ссылка на фото</label>
+          <input type="url" id="eventImageUrl" class="form-control" placeholder="https://example.com/image.jpg">
+        </div>
+        <div class="mb-3">
           <label class="form-label" for="eventDate">Дата</label>
           <input type="date" id="eventDate" class="form-control">
         </div>
@@ -278,11 +286,13 @@
       const type = document.getElementById('eventType').value
       const city = document.getElementById('eventCity').value
       const venue = document.getElementById('eventVenue').value
+      const description = document.getElementById('eventDescription').value
+      const imageUrl = document.getElementById('eventImageUrl').value
       const dateInput = document.getElementById('eventDate').value
       const price = document.getElementById('eventPrice').value
       const capacity = document.getElementById('eventCapacity').value
 
-      console.log('Form data:', { title, type, city, venue, dateInput, price, capacity })
+      console.log('Form data:', { title, type, city, venue, description, imageUrl, dateInput, price, capacity })
 
       if (!title || !dateInput || !price) {
         alert('Заполните обязательные поля: Название, Дата, Цена')
@@ -296,6 +306,8 @@
         type: type,
         city: city,
         venue: venue,
+        description: description || '',
+        imageUrl: imageUrl || 'https://placebear.com/800/400',
         date: formattedDate,
         price: parseInt(price),
         capacity: parseInt(capacity) || 50,
@@ -319,6 +331,8 @@
 
       document.getElementById('eventTitle').value = ''
       document.getElementById('eventVenue').value = ''
+      document.getElementById('eventDescription').value = ''
+      document.getElementById('eventImageUrl').value = ''
       document.getElementById('eventDate').value = ''
       document.getElementById('eventPrice').value = ''
 
