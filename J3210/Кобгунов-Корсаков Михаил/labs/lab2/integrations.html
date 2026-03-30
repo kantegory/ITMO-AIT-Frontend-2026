@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интеграции</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <div class="container">
+
+            <a class="navbar-brand" href="index.html">
+                Финансы от Михалыча
+            </a>
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.html">
+                        Кабинет
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="transactions.html">
+                        Транзакции
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="reports.html">
+                        Отчёты
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="integrations.html">
+                        Интеграции
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="container py-4">
+        <h2 class="mb-4">Интеграции</h2>
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header">
+                Подключённые сервисы
+            </div>
+
+            <table class="table mb-0">
+
+                <thead>
+                    <tr>
+                        <th>Сервис</th>
+                        <th>Статус</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Тинькофф</td>
+                        <td>Подключен</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-danger">
+                                Отключить
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Сбербанк</td>
+                        <td>Не подключен</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary">
+                                Подключить
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+
+                    <div class="card-body">
+                        <h5>Импорт транзакций</h5>
+                        <p class="text-muted">
+                            Загрузка операций из подключённых банковских аккаунтов.
+                        </p>
+                        <button
+                            class="btn btn-primary"
+                            onclick="stub()"
+                        >
+                            Импортировать
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5>Настройка правил</h5>
+                        <p class="text-muted">
+                            Автоматическая категоризация транзакций.
+                        </p>
+                        <ul>
+                            <li>Супермаркет → Продукты</li>
+                            <li>Такси → Транспорт</li>
+                            <li>Кино → Развлечения</li>
+                        </ul>
+                        <button
+                            class="btn btn-secondary"
+                            onclick="stub()"
+                        >
+                            Сохранить правила
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const user = localStorage.getItem("user");
+
+        if (!user) {
+            window.location.href = "login.html";
+        }
+
+        function stub() {
+            alert("заглушка");
+        }
+
+    </script>
+</body>
+</html>
