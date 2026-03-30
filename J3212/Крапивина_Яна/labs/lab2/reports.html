@@ -15,9 +15,7 @@
 <div class="offcanvas offcanvas-start" tabindex="-1" id="mySidebar" style="background-color: #112240; color: #E0DED8;">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title">MyFinance</h5>
-        <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#mySidebar">
-            ☰ Меню
-        </button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
         <nav class="nav flex-column">
@@ -45,21 +43,19 @@
     <div class="widget-card mb-4">
         <div class="row g-3 align-items-center">
             <div class="col-6 col-md-3">
-                <select class="custom-input m-0">
-                    <option>Март 2026</option>
-                    <option>Февраль 2026</option>
-                    <option>Январь 2026</option>
+                <select id="monthFilter" class="custom-input m-0">
+                    <option value="03">Март 2026</option>
+                    <option value="02">Февраль 2026</option>
+                    <option value="01">Январь 2026</option>
                     <option>Весь 2025 год</option>
                 </select>
             </div>
             <div class="col-6 col-md-3">
-                <select class="custom-input m-0">
-                    <option>Все счета</option>
-                    <option>Карта Т-Банк</option>
-                    <option>Карта Сбербанк</option>
-                    <option>Наличные</option>
-                    <option>Накопительный счет</option>
-                    <option>Кредитная карта</option>
+                <select id="accountFilter" class="custom-input m-0">
+                    <option value="all">Bce счета</option>
+                    <option value="T-Банк">Карта T-Банк</option>
+                    <option value="Сбербанк">Карта Сбербанк</option>
+                    <option value="Наличные">Наличные</option>
                 </select>
             </div>
             <div class="col-12 col-md-2">
@@ -73,9 +69,12 @@
             <div class="widget-card">
                 <h5 class="text-cold-beige mb-3">Расходы по категориям</h5>
                 <div class="row align-items-center">
-                    <div class="col-5"><div style="width: 120px; height: 120px; border-radius: 50%; background: conic-gradient(#6610f2 0% 30%, #20c997 30% 60%, #fd7e14 60% 100%);"></div></div>
+                    <div class="col-5 d-flex justify-content-center">
+                        <div id="pieChart" style="width: 150px; height: 150px; border-radius: 50%; border: 2px solid #233554;"></div>
+                    </div>
+
                     <div id="categoriesList" class="col-7 text-cold-beige">
-                        <p class="text-muted">Загрузка данных...</p>
+                        <p class="text-muted text-center">Загрузка данных...</p>
                     </div>
                 </div>
             </div>
@@ -83,7 +82,7 @@
 
         <div class="col-lg-6">
             <div class="widget-card">
-                <h5 class="text-cold-beige mb-3">Сравнение с прошлым месяцем</h5>
+                <h5 class="text-cold-beige mb-3">Сравнение c прошлым месяцем</h5>
                 <p>Транспорт: 22к (было 18к)</p>
                 <div class="progress-container"><div class="progress-fill" style="width: 70%;"></div></div>
                 <p>Кафе: 45к (было 40к)</p>

@@ -22,13 +22,18 @@ body {
     width: 100%;
     padding: 10px 15px;
     background-color: #0A192F; 
-    color: #E0DED8; 
     border: 1px solid #233554;
     border-radius: 6px;
     margin-bottom: 20px;
     box-sizing: border-box;
     transition: all 0.3s ease; 
+    color: #FFFFFF !important;
 }
+
+.custom-input::placeholder {
+    color: #8892B0 !important; 
+}
+
 .custom-input:hover { background-color: #1A365D; border-color: #3b82f6; }
 .custom-input:focus { background-color: #172A45; border-color: #FFFFFF; color: #FFFFFF; outline: none; box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1); }
 
@@ -101,6 +106,10 @@ body {
     overflow-x: auto; 
 }
 
+.table-hover tbody tr:hover td {
+    color: #FFFFFF !important; 
+}
+
 .text-cold-beige { color: #E0DED8; }
 .link-custom { color: #E0DED8; text-decoration: none; border-bottom: 1px dashed #E0DED8; }
 .link-custom:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
@@ -120,8 +129,15 @@ body {
 }
 
 .offcanvas { border-right: 1px solid #233554; }
-.btn-outline-light { border-color: #233554; }
-.btn-outline-light:hover { background-color: #112240; }
+.btn-outline-light { border-color: #233554  !important; color: #E0DED8 !important; }
+
+.btn-outline-light:hover, 
+.btn-outline-light:focus, 
+.btn-outline-light:active {
+    background-color: #172A45 !important; 
+    color: #FFFFFF !important;
+    border-color: #E0DED8 !important;
+}
 
 .menu-btn-container {
     padding: 20px 20px 0 20px;
