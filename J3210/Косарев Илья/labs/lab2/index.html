@@ -25,7 +25,7 @@
             <div class="dropdown ms-auto">
                 <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="userMenuToggle" data-bs-toggle="dropdown">
                     <img src="https://www.placekittens.com/32/32" alt="Аватар пользователя" width="32" height="32" class="rounded-circle me-2">
-                    <span>Иван Иванов</span>
+                    <span>Гость</span>
                 </a>
                 
                 <ul class="dropdown-menu dropdown-menu-dark shadow" id="userMenuDropdown">
@@ -84,10 +84,7 @@
                     <div class="d-flex align-items-center">
                         <img src="https://www.placekittens.com/80/80" alt="Avatar" class="rounded-circle me-4" id="profileAvatar">
                         <div>
-                            <h1 class="display-6 fw-bold" id="profileName">Иван Иванов</h1>
-                            <p class="text-muted mb-2 fw-bold" id="profileRole">
-                                Data Scientist <i class="bi bi-pencil text-muted small ms-1"></i>
-                            </p>
+                            <h1 class="display-6 fw-bold" id="profileName">Гость</h1>
 
                             <div class="d-flex gap-3 small text-secondary">
                                 <span><strong id="profileModelsCount">1</strong> Моделей</span>
@@ -121,35 +118,16 @@
 
                     <div class="tab-content" id="profileTabsContent">
                         <div class="tab-pane fade active show" id="models">
-                            <div class="row g-4" id="profileModelsGrid">
-                                <div class="col-12 col-md-6 col-xl-4">
-                                    <article class="card h-100 border-2">
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between mb-2">
-                                                <h5 class="card-title mb-0">ResNet-50 Custom</h5>
-                                                <i class="bi bi-cpu text-muted"></i>
-                                            </div>
-                                            
-                                            <div class="mb-2 d-flex flex-nowrap gap-2 overflow-x-auto overflow-y-hidden">
-                                                <span class="badge bg-primary flex-shrink-0">Computer Vision</span>
-                                                <span class="badge bg-secondary flex-shrink-0">PyTorch</span>
-                                            </div>
-                                            <p class="card-text text-muted small">Дообученная модель ResNet для классификации медицинских снимков с точностью 94%.</p>
-                                        </div>
-                                        
-                                        <div class="card-footer bg-white d-flex justify-content-end align-items-center">
-                                            <small class="text-muted me-2"><i class="bi bi-eye-fill"></i> 3.2k</small>
-                                            <small class="text-muted me-2"><i class="bi bi-chat-left-text-fill"></i> 128</small>
-                                            <small class="text-muted me-2"><i class="bi bi-diagram-3-fill"></i> 302</small>
-                                            <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 42</small>
-                                        </div>
-                                    </article>
-                                </div>
+                            <div class="row g-4" id="profileModelsGrid"></div>
+                            <div class="text-center py-5 d-none" id="profileModelsEmptyState">
+                                <i class="bi bi-cpu display-1 text-muted opacity-25"></i>
+                                <p class="text-muted mt-3">Вы пока не загрузили ни одной модели.</p>
                             </div>
                         </div>
 
                         <div class="tab-pane fade" id="datasets" role="tabpanel">
-                            <div class="text-center py-5">
+                            <div class="row g-4" id="profileDatasetsGrid"></div>
+                            <div class="text-center py-5 d-none" id="profileDatasetsEmptyState">
                                 <i class="bi bi-database display-1 text-muted opacity-25"></i>
                                 <p class="text-muted mt-3">Вы пока не загрузили ни одного датасета.</p>
                                 <button class="btn bg-primary text-white mt-1" id="uploadDatasetButton" type="button">Загрузить датасет</button>
@@ -167,5 +145,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="js/api.js"></script>
+    <script src="js/profile.js"></script>
 </body>
 </html>
