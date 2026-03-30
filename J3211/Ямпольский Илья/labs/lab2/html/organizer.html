@@ -89,6 +89,7 @@
               <th style="min-width: 200px;" scope="col">Событие</th>
               <th style="min-width: 120px;" scope="col">Дата</th>
               <th style="min-width: 100px;" scope="col">Город</th>
+              <th style="min-width: 100px;" scope="col">Место</th>
               <th style="min-width: 100px;" scope="col">Цена</th>
               <th style="min-width: 100px;" scope="col">Продано</th>
               <th style="min-width: 120px;" scope="col">Выручка</th>
@@ -108,42 +109,48 @@
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="modal-title" id="createModalLabel">Создать событие</h2>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть модальное окно"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
       </div>
       <div class="modal-body">
-        <form id="createEventForm">
-          <div class="mb-3">
-            <label class="form-label" for="eventTitle">Название</label>
-            <input type="text" id="eventTitle" class="form-control" placeholder="Название мероприятия" aria-required="true">
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="eventCity">Город</label>
-            <select id="eventCity" class="form-select" aria-required="true">
-              <option value="Москва">Москва</option>
-              <option value="СПб">СПб</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="eventVenue">Место проведения</label>
-            <input type="text" id="eventVenue" class="form-control" placeholder="Адрес">
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="eventDate">Дата</label>
-            <input type="date" id="eventDate" class="form-control" aria-required="true">
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="eventPrice">Цена</label>
-            <input type="number" id="eventPrice" class="form-control" placeholder="500" aria-required="true" min="0">
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="eventCapacity">Количество мест</label>
-            <input type="number" id="eventCapacity" class="form-control" placeholder="50" value="50" min="1">
-          </div>
-        </form>
+        <div class="mb-3">
+          <label class="form-label" for="eventTitle">Название</label>
+          <input type="text" id="eventTitle" class="form-control" placeholder="Название мероприятия">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="eventType">Тип</label>
+          <select id="eventType" class="form-select">
+            <option value="Концерт">Концерт</option>
+            <option value="Театр">Театр</option>
+            <option value="Выставка">Выставка</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="eventCity">Город</label>
+          <select id="eventCity" class="form-select">
+            <option value="Москва">Москва</option>
+            <option value="СПб">СПб</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="eventVenue">Место проведения</label>
+          <input type="text" id="eventVenue" class="form-control" placeholder="Адрес места проведения">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="eventDate">Дата</label>
+          <input type="date" id="eventDate" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="eventPrice">Цена</label>
+          <input type="number" id="eventPrice" class="form-control" placeholder="500" min="0">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="eventCapacity">Количество мест</label>
+          <input type="number" id="eventCapacity" class="form-control" placeholder="50" value="50" min="1">
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-        <button type="button" class="btn btn-primary" onclick="createEvent()">Создать</button>
+        <button type="button" class="btn btn-primary" id="createEventBtn">Создать</button>
       </div>
     </div>
   </div>
@@ -161,6 +168,18 @@
     return config
   })
 
+  function formatDate(dateString) {
+    if (!dateString) return ''
+    if (dateString.includes('-')) {
+      const parts = dateString.split('-')
+      if (parts[0].length === 4) {
+        return `${parts[2]}-${parts[1]}-${parts[0]}`
+      }
+      return dateString
+    }
+    return dateString
+  }
+
   function checkAuth() {
     if (!localStorage.accessToken) {
       window.location.href = "login.html"
@@ -168,7 +187,11 @@
   }
 
   function getUser() {
-    return JSON.parse(localStorage.getItem('user'))
+    try {
+      return JSON.parse(localStorage.getItem('user'))
+    } catch (e) {
+      return null
+    }
   }
 
   async function loadEvents() {
@@ -181,7 +204,7 @@
       renderEvents(events, tickets)
       renderStats(events, tickets)
     } catch (error) {
-      console.error('Error:', error)
+      console.error('Error loading events:', error)
     }
   }
 
@@ -200,25 +223,26 @@
   function renderEvents(events, tickets) {
     const tbody = document.getElementById('eventsTable')
     if (!events || events.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">Нет мероприятий</td></tr>'
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted">Нет мероприятий</td></tr>'
       return
     }
     tbody.innerHTML = events.map(event => {
       const soldCount = getSoldCountForEvent(event.id, tickets)
       const revenue = soldCount * event.price
       return `
-                    <tr>
-                        <td style="border: 1px solid gray; padding: 8px;">${event.title}</td>
-                        <td style="border: 1px solid gray; padding: 8px;">${event.date}</td>
-                        <td style="border: 1px solid gray; padding: 8px;">${event.city}</td>
-                        <td style="border: 1px solid gray; padding: 8px;">${event.price.toLocaleString()} ₽</td>
-                        <td style="border: 1px solid gray; padding: 8px;">${soldCount} / ${event.capacity || 50}</td>
-                        <td style="border: 1px solid gray; padding: 8px;">${revenue.toLocaleString()} ₽</td>
-                        <td style="border: 1px solid gray; padding: 8px;">
-                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteEvent(${event.id})" aria-label="Удалить событие ${event.title}">Удалить</button>
-                        </td>
-                    </tr>
-                `
+                <tr>
+                    <td style="border: 1px solid gray; padding: 8px;">${event.title}</td>
+                    <td style="border: 1px solid gray; padding: 8px;">${formatDate(event.date)}</td>
+                    <td style="border: 1px solid gray; padding: 8px;">${event.city}</td>
+                    <td style="border: 1px solid gray; padding: 8px;">${event.venue || '-'}</td>
+                    <td style="border: 1px solid gray; padding: 8px;">${event.price.toLocaleString()} ₽</td>
+                    <td style="border: 1px solid gray; padding: 8px;">${soldCount} / ${event.capacity || 50}</td>
+                    <td style="border: 1px solid gray; padding: 8px;">${revenue.toLocaleString()} ₽</td>
+                    <td style="border: 1px solid gray; padding: 8px;">
+                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteEvent(${event.id})">Удалить</button>
+                    </td>
+                </tr>
+            `
     }).join('')
   }
 
@@ -239,15 +263,42 @@
   }
 
   async function createEvent() {
+    console.log('createEvent called')
+
     try {
       const user = getUser()
+      console.log('User:', user)
+
+      if (!user) {
+        alert('Пользователь не авторизован')
+        return
+      }
+
+      const title = document.getElementById('eventTitle').value
+      const type = document.getElementById('eventType').value
+      const city = document.getElementById('eventCity').value
+      const venue = document.getElementById('eventVenue').value
+      const dateInput = document.getElementById('eventDate').value
+      const price = document.getElementById('eventPrice').value
+      const capacity = document.getElementById('eventCapacity').value
+
+      console.log('Form data:', { title, type, city, venue, dateInput, price, capacity })
+
+      if (!title || !dateInput || !price) {
+        alert('Заполните обязательные поля: Название, Дата, Цена')
+        return
+      }
+
+      const formattedDate = formatDate(dateInput)
+
       const eventData = {
-        title: document.getElementById('eventTitle').value,
-        city: document.getElementById('eventCity').value,
-        venue: document.getElementById('eventVenue').value,
-        date: document.getElementById('eventDate').value,
-        price: parseInt(document.getElementById('eventPrice').value),
-        capacity: parseInt(document.getElementById('eventCapacity').value) || 50,
+        title: title,
+        type: type,
+        city: city,
+        venue: venue,
+        date: formattedDate,
+        price: parseInt(price),
+        capacity: parseInt(capacity) || 50,
         userId: user.id,
         seats: {
           sold: [],
@@ -255,12 +306,10 @@
         }
       }
 
-      if (!eventData.title || !eventData.date || !eventData.price) {
-        alert('Заполните обязательные поля')
-        return
-      }
+      console.log('Sending event data:', eventData)
 
-      await axios.post('/events', eventData)
+      const response = await axios.post('/events', eventData)
+      console.log('Response:', response)
 
       const modalElement = document.getElementById('createModal')
       const modal = bootstrap.Modal.getInstance(modalElement)
@@ -274,10 +323,11 @@
       document.getElementById('eventPrice').value = ''
 
       await loadEvents()
-      alert('Событие создано!')
+      alert('Событие создано! Теперь оно доступно на главной странице и в поиске.')
     } catch (error) {
       console.error('Error creating event:', error)
-      alert('Ошибка создания события')
+      console.error('Error response:', error.response)
+      alert('Ошибка создания события: ' + (error.response?.data || error.message))
     }
   }
 
@@ -299,8 +349,15 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded')
     checkAuth()
     loadEvents()
+
+    const createBtn = document.getElementById('createEventBtn')
+    if (createBtn) {
+      createBtn.addEventListener('click', createEvent)
+      console.log('Create button listener attached')
+    }
   })
 </script>
 </body>
