@@ -32,14 +32,14 @@ function renderProfileCards(items, type, gridId, emptyId) {
         let badges = item.task ? `<span class="badge bg-primary flex-shrink-0">${dictionaries.task[item.task] || item.task}</span>` : '';
 
         if (isDataset) {
-            if (item.modality) badges += `<span class="badge bg-success flex-shrink-0">${dictionaries.modality[item.modality] || item.modality}</span>`;
-            if (item.format) badges += `<span class="badge bg-info text-dark flex-shrink-0">${item.format.toUpperCase()}</span>`;
+            if (item.modality) badges += `<span class="badge bg-success flex-shrink-0">${dictionaries.modality[item.modality]}</span>`;
+            if (item.format) badges += `<span class="badge bg-info text-dark flex-shrink-0">${item.format}</span>`;
         } 
         else {
-            if (item.framework) badges += `<span class="badge bg-secondary flex-shrink-0">${dictionaries.framework[item.framework] || item.framework}</span>`;
+            if (item.framework) badges += `<span class="badge bg-secondary flex-shrink-0">${dictionaries.framework[item.framework]}</span>`;
         }
         
-        if (item.license) badges += `<span class="badge border text-secondary bg-light flex-shrink-0">${dictionaries.license[item.license] || item.license}</span>`;
+        if (item.license) badges += `<span class="badge border text-secondary bg-light flex-shrink-0">${dictionaries.license[item.license]}</span>`;
 
         return `
             <div class="col-12 col-md-6 col-xl-4">
@@ -50,13 +50,13 @@ function renderProfileCards(items, type, gridId, emptyId) {
                             <i class="bi ${icon} text-muted"></i>
                         </div>
                         <div class="mb-2 d-flex flex-wrap gap-2">${badges}</div>
-                        <p class="card-text text-muted small">${item.description || 'Описание отсутствует'}</p>
+                        <p class="card-text text-muted small">${item.description}</p>
                     </div>
                     <div class="card-footer bg-white d-flex justify-content-end align-items-center">
-                        <small class="text-muted me-2"><i class="bi bi-eye-fill"></i> ${item.views || 0}</small>
-                        <small class="text-muted me-2"><i class="bi bi-chat-left-text-fill"></i> ${item.comments || 0}</small>
-                        <small class="text-muted me-2"><i class="bi bi-diagram-3-fill"></i> ${item.forks || 0}</small>
-                        <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> ${item.stars || 0}</small>
+                        <small class="text-muted me-2"><i class="bi bi-eye-fill"></i> ${item.views}</small>
+                        <small class="text-muted me-2"><i class="bi bi-chat-left-text-fill"></i> ${item.comments}</small>
+                        <small class="text-muted me-2"><i class="bi bi-diagram-3-fill"></i> ${item.forks}</small>
+                        <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> ${item.stars}</small>
                     </div>
                 </article>
             </div>

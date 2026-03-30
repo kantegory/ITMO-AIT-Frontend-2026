@@ -7,8 +7,7 @@ const getStoredToken = () => localStorage.getItem('jwt_token') || '';
 const getStoredUser = () => JSON.parse(localStorage.getItem('user_info') || 'null');
 
 function getUserDisplayName(user) {
-    const fullName = [user.firstName, user.lastName].filter(Boolean).join(' ').trim();
-    return fullName || user.username || user.email;
+    return [user.firstName, user.lastName].join(' ').trim();
 }
 
 function saveAuthSession(token, user) {
@@ -22,9 +21,9 @@ function clearAuthSession() {
 }
 
 function enforceProtectedRoutes() {
-    const page = window.location.pathname.split('/').pop() || 'index.html';
+    const page = window.location.pathname.split('/').pop();
     if ((page === 'index.html' || page === 'subscriptions.html') && !getStoredToken()) {
-        window.location.href = 'register.html';
+        window.location.href = 'login.html';
         return false;
     }
     return true;
@@ -36,7 +35,7 @@ function bindLogoutButtons() {
         link.addEventListener('click', (event) => {
             event.preventDefault();
             clearAuthSession();
-            window.location.href = 'register.html';
+            window.location.href = 'login.html';
         });
     });
 }

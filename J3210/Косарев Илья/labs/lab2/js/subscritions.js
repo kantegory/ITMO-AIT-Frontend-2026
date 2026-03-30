@@ -46,9 +46,9 @@ function render() {
             </div>
             <div class="d-flex align-items-center justify-content-between justify-content-lg-end gap-3">
                 <div class="d-flex gap-3 text-center">
-                    <div><div class="fw-bold">${(u.modelIds || []).length}</div><div class="text-muted">Моделей</div></div>
+                    <div><div class="fw-bold">${(u.modelIds).length}</div><div class="text-muted">Моделей</div></div>
                     <div class="vr"></div>
-                    <div><div class="fw-bold">${(u.datasetIds || []).length}</div><div class="text-muted">Датасетов</div></div>
+                    <div><div class="fw-bold">${(u.datasetIds).length}</div><div class="text-muted">Датасетов</div></div>
                 </div>
                 <button class="btn btn-outline-danger btn-sm rounded-pill px-3 flex-shrink-0 unsubscribe-btn" data-id="${u.id}">
                     <i class="bi bi-person-x-fill me-1"></i> Отписаться
@@ -77,7 +77,7 @@ async function loadData() {
     const userResponse = await api.get(`/users/${storedUser.id}`);
     state.user = userResponse.data;
 
-    const ids = state.user.subscriptions || [];
+    const ids = state.user.subscriptions;
     if (ids.length === 0) {
         state.items = [];
         render();
