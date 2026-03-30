@@ -61,27 +61,27 @@
                     <fieldset class="mb-3">
                         <legend class="form-label small">Тип</legend>
                         <label>
-                            <select class="form-select form-select-sm">
-                                <option>Все</option>
-                                <option>Концерт</option>
-                                <option>Театр</option>
-                                <option>Выставка</option>
+                            <select class="form-select form-select-sm" id="filterType">
+                                <option value="">Все</option>
+                                <option value="Концерт">Концерт</option>
+                                <option value="Театр">Театр</option>
+                                <option value="Выставка">Выставка</option>
                             </select>
                         </label>
                     </fieldset>
                     <fieldset class="mb-3">
                         <legend class="form-label small">Город</legend>
                         <label>
-                            <select class="form-select form-select-sm">
-                                <option>Все</option>
-                                <option>Москва</option>
-                                <option>СПб</option>
+                            <select class="form-select form-select-sm" id="filterCity">
+                                <option value="">Все</option>
+                                <option value="Москва">Москва</option>
+                                <option value="СПб">СПб</option>
                             </select>
                         </label>
                     </fieldset>
                     <footer>
-                        <button class="btn btn-primary btn-sm w-100 mb-2">Применить</button>
-                        <button class="btn btn-secondary btn-sm w-100">Сброс</button>
+                        <button class="btn btn-primary btn-sm w-100 mb-2" onclick="applyFilters()">Применить</button>
+                        <button class="btn btn-secondary btn-sm w-100" onclick="resetFilters()">Сброс</button>
                     </footer>
                 </section>
             </aside>
@@ -327,12 +327,32 @@
         }
     }
 
-    async function loadEvents(searchTerm = '') {
+    function getFilterParams() {
+        const params = {}
+        const searchTerm = document.getElementById('searchInput').value
+        const typeFilter = document.getElementById('filterType').value
+        const cityFilter = document.getElementById('filterCity').value
+
+        if (searchTerm) params.q = searchTerm
+        if (typeFilter && typeFilter !== '') params.type = typeFilter
+        if (cityFilter && cityFilter !== '') params.city = cityFilter
+
+        return params
+    }
+
+    function buildQueryUrl(params) {
+        if (Object.keys(params).length === 0) return '/events'
+
+        const queryString = Object.entries(params)
+            .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+            .join('&')
+
+        return `/events?${queryString}`
+    }
+
+    async function loadEvents(params = {}) {
         try {
-            let url = '/events'
-            if (searchTerm) {
-                url = `${url}?q=${encodeURIComponent(searchTerm)}`
-            }
+            const url = buildQueryUrl(params)
             const response = await axios.get(url)
             eventsData = response.data
             renderEvents(response.data)
@@ -368,8 +388,20 @@
     }
 
     function searchEvents() {
-        const searchTerm = document.getElementById('searchInput').value
-        loadEvents(searchTerm)
+        const params = getFilterParams()
+        loadEvents(params)
+    }
+
+    function applyFilters() {
+        const params = getFilterParams()
+        loadEvents(params)
+    }
+
+    function resetFilters() {
+        document.getElementById('searchInput').value = ''
+        document.getElementById('filterType').value = ''
+        document.getElementById('filterCity').value = ''
+        loadEvents()
     }
 
     async function loadSoldSeats(eventId) {
@@ -467,7 +499,7 @@
 
             selectedSeats[eventId] = []
             updatePriceCounter(eventId, event.price)
-            await loadEvents()
+            await loadEvents(getFilterParams())
         } catch (error) {
             console.error('Error buying tickets:', error)
             alert('Ошибка покупки билетов')
@@ -581,10 +613,8 @@
         const query = params.get('q')
         if (query) {
             document.getElementById('searchInput').value = query
-            loadEvents(query)
-        } else {
-            loadEvents()
         }
+        loadEvents(getFilterParams())
     })
 </script>
 </body>
