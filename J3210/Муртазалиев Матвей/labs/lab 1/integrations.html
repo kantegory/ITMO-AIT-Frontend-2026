@@ -35,13 +35,17 @@
           <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav mx-auto gap-lg-2">
               <li class="nav-item"><a class="nav-link" href="./index.html">Главная</a></li>
-              <li class="nav-item"><a class="nav-link" href="./login.html">Вход</a></li>
-              <li class="nav-item"><a class="nav-link" href="./register.html">Регистрация</a></li>
               <li class="nav-item"><a class="nav-link" href="./dashboard.html">Кабинет</a></li>
               <li class="nav-item"><a class="nav-link" href="./reports.html">Отчёты</a></li>
               <li class="nav-item"><a class="nav-link active" href="./integrations.html">Интеграции</a></li>
             </ul>
-            <a class="btn btn-accent btn-sm px-3" href="./dashboard.html">К операциям</a>
+            <div class="d-flex gap-2 flex-wrap align-items-start">
+              <a class="btn btn-accent btn-sm px-3" href="./dashboard.html">К операциям</a>
+              <div class="d-flex gap-2 flex-wrap" data-navbar-auth>
+                <a class="btn btn-outline-dark btn-sm px-3" href="./login.html">Войти</a>
+                <a class="btn btn-accent btn-sm px-3" href="./register.html">Регистрация</a>
+              </div>
+            </div>
           </div>
         </div>
       </nav>
@@ -80,7 +84,7 @@
                   <h2 class="h3 mt-2 mb-0">Банки и кошельки</h2>
                 </div>
               </div>
-              <div class="row g-3 mt-1">
+              <div class="row g-3 mt-1" data-integrations-list>
                 <div class="col-md-6">
                   <article class="integration-card">
                     <div class="d-flex justify-content-between align-items-start">
@@ -161,7 +165,7 @@
               <form class="row g-3 mt-2" data-rule-form>
                 <div class="col-12">
                   <label class="form-label" for="ruleKeyword">Ключевое слово</label>
-                  <input class="form-control" id="ruleKeyword" type="text" placeholder="Например, Market" />
+                  <input class="form-control" id="ruleKeyword" type="text" placeholder="Например, Market" required />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label" for="ruleCategory">Категория</label>
@@ -187,13 +191,16 @@
                   </div>
                 </div>
                 <div class="col-12">
-                  <button class="btn btn-accent w-100" type="button">Сохранить правило</button>
+                  <button class="btn btn-accent w-100" type="submit">Сохранить правило</button>
+                </div>
+                <div class="col-12">
+                  <div class="alert d-none mb-0" data-rule-message></div>
                 </div>
               </form>
 
               <div class="tip-box mt-4">
                 <h3>Уже настроено</h3>
-                <ul class="list-unstyled mb-0 text-secondary">
+                <ul class="list-unstyled mb-0 text-secondary" data-rules-list>
                   <li class="py-1">Spotify → Подписки</li>
                   <li class="py-1">Yandex Taxi → Транспорт</li>
                   <li class="py-1">Perekrestok → Еда</li>
@@ -235,7 +242,7 @@
             </div>
           </div>
           <div class="modal-footer border-0">
-            <button type="button" class="btn btn-accent w-100" data-bs-dismiss="modal">Начать импорт</button>
+            <button type="button" class="btn btn-accent w-100" data-import-submit>Начать импорт</button>
           </div>
         </div>
       </div>
@@ -246,6 +253,6 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script src="./assets/script.js"></script>
+    <script type="module" src="./assets/js/main.js"></script>
   </body>
 </html>

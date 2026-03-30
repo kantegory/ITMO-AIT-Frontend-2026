@@ -35,13 +35,17 @@
           <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav mx-auto gap-lg-2">
               <li class="nav-item"><a class="nav-link" href="./index.html">Главная</a></li>
-              <li class="nav-item"><a class="nav-link" href="./login.html">Вход</a></li>
-              <li class="nav-item"><a class="nav-link" href="./register.html">Регистрация</a></li>
               <li class="nav-item"><a class="nav-link active" href="./dashboard.html">Кабинет</a></li>
               <li class="nav-item"><a class="nav-link" href="./reports.html">Отчёты</a></li>
               <li class="nav-item"><a class="nav-link" href="./integrations.html">Интеграции</a></li>
             </ul>
-            <a class="btn btn-accent btn-sm px-3" href="./reports.html">Открыть аналитику</a>
+            <div class="d-flex gap-2 flex-wrap align-items-start">
+              <a class="btn btn-accent btn-sm px-3" href="./reports.html">Открыть аналитику</a>
+              <div class="d-flex gap-2 flex-wrap" data-navbar-auth>
+                <a class="btn btn-outline-dark btn-sm px-3" href="./login.html">Войти</a>
+                <a class="btn btn-accent btn-sm px-3" href="./register.html">Регистрация</a>
+              </div>
+            </div>
           </div>
         </div>
       </nav>
@@ -52,8 +56,8 @@
         <section class="page-banner">
           <div>
             <span class="section-label">Личный кабинет</span>
-            <h1 class="section-title mt-3">Добрый вечер, Матвей</h1>
-            <p class="page-banner__copy">
+            <h1 class="section-title mt-3" data-dashboard-greeting>Добрый вечер, Матвей</h1>
+            <p class="page-banner__copy" data-dashboard-summary>
               На этой неделе расходы ниже среднего на 8%. Основная нагрузка сейчас у
               категорий «Дом» и «Подписки».
             </p>
@@ -86,29 +90,29 @@
           <div class="col-sm-6 col-xl-3">
             <article class="metric-card">
               <div class="metric-card__label">Общий баланс</div>
-              <div class="metric-card__value">₽ 248 900</div>
-              <div class="status-pill positive">+₽ 18 200 за месяц</div>
+              <div class="metric-card__value" data-metric-balance>₽ 248 900</div>
+              <div class="status-pill positive" data-metric-balance-status>+₽ 18 200 за месяц</div>
             </article>
           </div>
           <div class="col-sm-6 col-xl-3">
             <article class="metric-card">
               <div class="metric-card__label">Расходы марта</div>
-              <div class="metric-card__value">₽ 73 450</div>
-              <div class="status-pill warning">72% лимита</div>
+              <div class="metric-card__value" data-metric-spend>₽ 73 450</div>
+              <div class="status-pill warning" data-metric-spend-status>72% лимита</div>
             </article>
           </div>
           <div class="col-sm-6 col-xl-3">
             <article class="metric-card">
               <div class="metric-card__label">Накопления</div>
-              <div class="metric-card__value">₽ 94 200</div>
-              <div class="status-pill positive">Цель 61%</div>
+              <div class="metric-card__value" data-metric-savings>₽ 94 200</div>
+              <div class="status-pill positive" data-metric-savings-status>Цель 61%</div>
             </article>
           </div>
           <div class="col-sm-6 col-xl-3">
             <article class="metric-card">
               <div class="metric-card__label">Риск перерасхода</div>
-              <div class="metric-card__value">2 категории</div>
-              <div class="status-pill negative">Требуют внимания</div>
+              <div class="metric-card__value" data-metric-risk>2 категории</div>
+              <div class="status-pill negative" data-metric-risk-status>Требуют внимания</div>
             </article>
           </div>
         </section>
@@ -121,10 +125,10 @@
                   <span class="section-label">Счета и транзакции</span>
                   <h2 class="h3 mt-2 mb-0">Основной денежный поток</h2>
                 </div>
-                <a class="btn btn-outline-dark btn-sm" href="./integrations.html">Настроить импорт</a>
+                <a class="btn btn-outline-dark btn-sm align-self-start" href="./integrations.html">Настроить импорт</a>
               </div>
 
-              <div class="row g-3 mt-1">
+              <div class="row g-3 mt-1" data-accounts-list>
                 <div class="col-md-4">
                   <div class="account-card">
                     <div class="d-flex justify-content-between align-items-start">
@@ -300,33 +304,35 @@
                   <h2 class="h3 mt-2 mb-0">Лимиты категорий</h2>
                 </div>
               </div>
-              <div class="budget-item">
-                <div class="d-flex justify-content-between">
-                  <strong>Еда</strong>
-                  <span>₽ 18 400 / ₽ 25 000</span>
+              <div data-budgets-list>
+                <div class="budget-item">
+                  <div class="d-flex justify-content-between">
+                    <strong>Еда</strong>
+                    <span>₽ 18 400 / ₽ 25 000</span>
+                  </div>
+                  <div class="progress soft-progress mt-2"><div class="progress-bar" style="width: 74%"></div></div>
                 </div>
-                <div class="progress soft-progress mt-2"><div class="progress-bar" style="width: 74%"></div></div>
-              </div>
-              <div class="budget-item">
-                <div class="d-flex justify-content-between">
-                  <strong>Дом</strong>
-                  <span>₽ 22 300 / ₽ 24 000</span>
+                <div class="budget-item">
+                  <div class="d-flex justify-content-between">
+                    <strong>Дом</strong>
+                    <span>₽ 22 300 / ₽ 24 000</span>
+                  </div>
+                  <div class="progress soft-progress mt-2"><div class="progress-bar warning-bar" style="width: 93%"></div></div>
                 </div>
-                <div class="progress soft-progress mt-2"><div class="progress-bar warning-bar" style="width: 93%"></div></div>
-              </div>
-              <div class="budget-item">
-                <div class="d-flex justify-content-between">
-                  <strong>Подписки</strong>
-                  <span>₽ 2 790 / ₽ 3 500</span>
+                <div class="budget-item">
+                  <div class="d-flex justify-content-between">
+                    <strong>Подписки</strong>
+                    <span>₽ 2 790 / ₽ 3 500</span>
+                  </div>
+                  <div class="progress soft-progress mt-2"><div class="progress-bar" style="width: 80%"></div></div>
                 </div>
-                <div class="progress soft-progress mt-2"><div class="progress-bar" style="width: 80%"></div></div>
-              </div>
-              <div class="budget-item mb-0">
-                <div class="d-flex justify-content-between">
-                  <strong>Транспорт</strong>
-                  <span>₽ 6 200 / ₽ 9 000</span>
+                <div class="budget-item mb-0">
+                  <div class="d-flex justify-content-between">
+                    <strong>Транспорт</strong>
+                    <span>₽ 6 200 / ₽ 9 000</span>
+                  </div>
+                  <div class="progress soft-progress mt-2"><div class="progress-bar" style="width: 69%"></div></div>
                 </div>
-                <div class="progress soft-progress mt-2"><div class="progress-bar" style="width: 69%"></div></div>
               </div>
             </div>
           </div>
@@ -376,6 +382,6 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script src="./assets/script.js"></script>
+    <script type="module" src="./assets/js/main.js"></script>
   </body>
 </html>

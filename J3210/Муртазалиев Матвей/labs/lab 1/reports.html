@@ -35,13 +35,17 @@
           <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav mx-auto gap-lg-2">
               <li class="nav-item"><a class="nav-link" href="./index.html">Главная</a></li>
-              <li class="nav-item"><a class="nav-link" href="./login.html">Вход</a></li>
-              <li class="nav-item"><a class="nav-link" href="./register.html">Регистрация</a></li>
               <li class="nav-item"><a class="nav-link" href="./dashboard.html">Кабинет</a></li>
               <li class="nav-item"><a class="nav-link active" href="./reports.html">Отчёты</a></li>
               <li class="nav-item"><a class="nav-link" href="./integrations.html">Интеграции</a></li>
             </ul>
-            <a class="btn btn-outline-dark btn-sm px-3" href="./dashboard.html">Назад к кабинету</a>
+            <div class="d-flex gap-2 flex-wrap align-items-start">
+              <a class="btn btn-outline-dark btn-sm px-3" href="./dashboard.html">Назад к кабинету</a>
+              <div class="d-flex gap-2 flex-wrap" data-navbar-auth>
+                <a class="btn btn-outline-dark btn-sm px-3" href="./login.html">Войти</a>
+                <a class="btn btn-accent btn-sm px-3" href="./register.html">Регистрация</a>
+              </div>
+            </div>
           </div>
         </div>
       </nav>
@@ -53,7 +57,7 @@
           <div>
             <span class="section-label">Финансовая аналитика</span>
             <h1 class="section-title mt-3">Отчёт по расходам и прогнозам</h1>
-            <p class="page-banner__copy">
+            <p class="page-banner__copy" data-report-summary>
               Переключайте период, чтобы увидеть динамику расходов, крупнейшие категории
               и ожидаемый остаток к концу месяца.
             </p>
@@ -70,28 +74,28 @@
             <article class="metric-card">
               <div class="metric-card__label">Траты за период</div>
               <div class="metric-card__value" data-kpi-spend>₽ 18 900</div>
-              <div class="status-pill warning">+6% к прошлому периоду</div>
+              <div class="status-pill warning" data-kpi-spend-status>+6% к прошлому периоду</div>
             </article>
           </div>
           <div class="col-sm-6 col-xl-3">
             <article class="metric-card">
               <div class="metric-card__label">Средний чек</div>
               <div class="metric-card__value" data-kpi-average>₽ 1 720</div>
-              <div class="status-pill positive">Стабильно</div>
+              <div class="status-pill positive" data-kpi-average-status>Стабильно</div>
             </article>
           </div>
           <div class="col-sm-6 col-xl-3">
             <article class="metric-card">
               <div class="metric-card__label">Лидер категории</div>
               <div class="metric-card__value" data-kpi-category>Дом</div>
-              <div class="status-pill negative">35% всех расходов</div>
+              <div class="status-pill negative" data-kpi-category-status>35% всех расходов</div>
             </article>
           </div>
           <div class="col-sm-6 col-xl-3">
             <article class="metric-card">
               <div class="metric-card__label">Прогноз остатка</div>
               <div class="metric-card__value" data-kpi-forecast>₽ 41 500</div>
-              <div class="status-pill positive">Без дефицита</div>
+              <div class="status-pill positive" data-kpi-forecast-status>Без дефицита</div>
             </article>
           </div>
         </section>
@@ -170,7 +174,7 @@
               </div>
               <div class="tip-box mt-4">
                 <h3>Сигнал</h3>
-                <p class="mb-0">
+                <p class="mb-0" data-report-tip>
                   Самый резкий рост наблюдается в категории «Дом». Проверьте,
                   запланированы ли крупные коммунальные платежи на следующую неделю.
                 </p>
@@ -205,6 +209,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <script src="./assets/script.js"></script>
+    <script type="module" src="./assets/js/main.js"></script>
   </body>
 </html>

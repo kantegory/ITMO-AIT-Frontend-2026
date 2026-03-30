@@ -35,12 +35,14 @@
           <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav mx-auto gap-lg-2">
               <li class="nav-item"><a class="nav-link" href="./index.html">Главная</a></li>
-              <li class="nav-item"><a class="nav-link active" href="./login.html">Вход</a></li>
-              <li class="nav-item"><a class="nav-link" href="./register.html">Регистрация</a></li>
               <li class="nav-item"><a class="nav-link" href="./dashboard.html">Кабинет</a></li>
               <li class="nav-item"><a class="nav-link" href="./reports.html">Отчёты</a></li>
               <li class="nav-item"><a class="nav-link" href="./integrations.html">Интеграции</a></li>
             </ul>
+            <div class="d-flex gap-2 flex-wrap" data-navbar-auth>
+              <a class="btn btn-outline-dark btn-sm px-3" href="./login.html">Войти</a>
+              <a class="btn btn-accent btn-sm px-3" href="./register.html">Регистрация</a>
+            </div>
           </div>
         </div>
       </nav>
@@ -60,7 +62,7 @@
             <form class="row g-3 auth-form" data-auth-form>
               <div class="col-12">
                 <label class="form-label" for="loginEmail">Email</label>
-                <input class="form-control form-control-lg" id="loginEmail" type="email" placeholder="demo@finflow.ru" />
+                <input class="form-control form-control-lg" id="loginEmail" type="email" placeholder="demo@finflow.ru" required />
               </div>
               <div class="col-12">
                 <label class="form-label" for="loginPassword">Пароль</label>
@@ -71,6 +73,7 @@
                     type="password"
                     placeholder="Введите пароль"
                     data-password-input
+                    required
                   />
                   <button class="btn btn-outline-secondary" type="button" data-password-toggle>
                     <i class="bi bi-eye"></i>
@@ -92,7 +95,10 @@
                 </button>
               </div>
               <div class="col-12">
-                <a class="btn btn-accent btn-lg w-100" href="./dashboard.html">Войти в кабинет</a>
+                <button class="btn btn-accent btn-lg w-100" type="submit">Войти в кабинет</button>
+              </div>
+              <div class="col-12">
+                <div class="alert d-none mb-0" data-form-message></div>
               </div>
               <div class="col-12">
                 <div class="divider-text"><span>или продолжить через</span></div>
@@ -139,6 +145,6 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script src="./assets/script.js"></script>
+    <script type="module" src="./assets/js/main.js"></script>
   </body>
 </html>
