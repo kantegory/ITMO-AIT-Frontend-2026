@@ -75,7 +75,6 @@ async function renderEnrollments(me) {
     })
     .join("");
 
-  // Progress summary
   const avgEl = qs('[data-progress="avg"]');
   const lastEl = qs('[data-progress="last"]');
   const nextEl = qs('[data-progress="next"]');

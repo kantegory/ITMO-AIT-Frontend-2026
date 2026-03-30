@@ -31,7 +31,6 @@ async function renderMyCourses(me) {
 
   setText(qs("[data-teacher='count']"), String(mine.length));
 
-  // update selects to show teacher's courses
   for (const id of ["#uploadCourseId", "#lessonCourseId", "#seminarCourseId"]) {
     const select = qs(id);
     if (select) {
@@ -137,7 +136,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   await renderMyCourses(me);
   await renderStats(me);
 
-  // Create course
   const createForm = qs("#createCourseForm");
   if (createForm) {
     createForm.addEventListener("submit", async (e) => {

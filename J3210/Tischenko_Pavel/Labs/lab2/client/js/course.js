@@ -158,10 +158,8 @@ async function loadCourse() {
           }
         }
       } catch {
-        // ignore
       }
 
-      // Switch lesson on click
       videoEl.querySelectorAll("[data-lesson-id]").forEach((btn) => {
         btn.addEventListener("click", () => {
           const lessonId = btn.getAttribute("data-lesson-id");
@@ -304,7 +302,6 @@ async function loadCourse() {
           return;
         }
 
-        // Go to checkout instead of instant enrollment
         window.location.href = `/checkout.html?courseId=${encodeURIComponent(course.id)}`;
       } catch (e) {
         showAlert(alertBox, { type: "danger", message: e?.message || "Не удалось записаться." });

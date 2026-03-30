@@ -91,12 +91,10 @@ function allowReadElseAuth(req, res, next) {
   return requireAuth(req, res, next);
 }
 
-// Healthcheck
 server.get("/api/health", (req, res) => {
   res.json({ ok: true });
 });
 
-// Auth: register
 server.post("/api/auth/register", async (req, res) => {
   const { email, password, firstName, lastName, role } = req.body || {};
   if (!email || !password) {
@@ -140,7 +138,6 @@ server.post("/api/auth/register", async (req, res) => {
   });
 });
 
-// Auth: login
 server.post("/api/auth/login", async (req, res) => {
   const { email, password } = req.body || {};
   if (!email || !password) {
@@ -178,7 +175,6 @@ server.post("/api/auth/login", async (req, res) => {
   });
 });
 
-// Auth: me
 server.get("/api/auth/me", requireAuth, (req, res) => {
   const db = readDb();
   const user = db.get("users").find({ id: req.user.sub }).value();
@@ -195,7 +191,6 @@ server.get("/api/auth/me", requireAuth, (req, res) => {
   });
 });
 
-// Protect sensitive collections (direct access)
 server.use("/api/users", requireRole("teacher"));
 server.use("/api/enrollments", requireAuth);
 server.use("/api/courses", allowReadElseRole("teacher"));
@@ -206,11 +201,9 @@ server.use("/api/threads", allowReadElseAuth);
 server.use("/api/messages", allowReadElseAuth);
 server.use("/api/certificates", requireAuth);
 
-// Mount json-server router under /api
 server.use("/api", router);
 
 server.listen(PORT, () => {
-  // eslint-disable-next-line no-console
   console.log(`Lab2 server running on http://localhost:${PORT}`);
 });
 

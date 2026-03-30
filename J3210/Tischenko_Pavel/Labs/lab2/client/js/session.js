@@ -39,7 +39,6 @@ export async function initSessionUI() {
         [me.firstName, me.lastName].filter(Boolean).join(" ") || me.email;
       setLoggedIn(label);
 
-      // Role-based navigation visibility
       if (me.role === "student") {
         teacherNav.forEach((el) => el.classList.add("d-none"));
         studentNav.forEach((el) => el.classList.remove("d-none"));

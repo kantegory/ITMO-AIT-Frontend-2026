@@ -96,7 +96,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const btn = qs("#filterButton");
   if (btn) btn.addEventListener("click", () => loadCoursesFromFilters());
 
-  // initial load
   await loadCoursesFromFilters();
 });
 

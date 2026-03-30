@@ -338,10 +338,7 @@ const db = {
 
 await fs.writeFile(path.join(__dirname, "db.json"), JSON.stringify(db, null, 2));
 
-// eslint-disable-next-line no-console
 console.log("db.json reset complete");
-// eslint-disable-next-line no-console
 console.log(`Admin login: ${ADMIN_EMAIL}`);
-// eslint-disable-next-line no-console
 console.log(`Admin password: ${ADMIN_PASSWORD}`);
 

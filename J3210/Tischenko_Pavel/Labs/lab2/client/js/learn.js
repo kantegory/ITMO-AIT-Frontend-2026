@@ -195,7 +195,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   updateProgressUi();
   setTab("lessons");
 
-  // Tabs switching
   document.querySelectorAll("[data-learn-tab]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const next = btn.getAttribute("data-learn-tab");
@@ -230,7 +229,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         renderCurrent();
         renderList();
 
-        // Issue certificate on 100%
         if (progress >= 1) {
           const myCerts = await CertificatesApi.my().catch(() => []);
           const exists = Array.isArray(myCerts) && myCerts.some((c) => c.courseId === courseId);
@@ -247,7 +245,6 @@ document.addEventListener("DOMContentLoaded", async () => {
               title: "Поздравляем!",
               message: "Курс завершён. Сертификат выдан и доступен в кабинете.",
             });
-            // optional: open certificate
             if (newCert?.id) {
               window.setTimeout(() => {
                 window.location.href = `/certificate.html?id=${encodeURIComponent(newCert.id)}`;

@@ -75,7 +75,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   qs("#loginSubmit")?.addEventListener("click", handleLogin);
   qs("#registerSubmit")?.addEventListener("click", handleRegister);
 
-  // allow Enter to submit
   qs("#login")?.addEventListener("submit", (e) => {
     e.preventDefault();
     handleLogin();
