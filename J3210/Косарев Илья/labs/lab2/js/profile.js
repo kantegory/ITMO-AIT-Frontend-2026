@@ -6,40 +6,19 @@ const dictionaries = {
 };
 
 function applyProfileStats(user) {
-    const getCount = (arr) => Array.isArray(arr) ? arr.length : 0;
-
-    const modelsCountNode = document.getElementById('profileModelsCount');
-    const datasetsCountNode = document.getElementById('profileDatasetsCount');
-    const ratingCountNode = document.getElementById('profileRatingCount');
-    const subscriptionsCountNode = document.getElementById('profileSubscriptionsCount');
-
-    if (modelsCountNode) {
-        modelsCountNode.innerText = String(getCount(user.modelIds));
-    }
-
-    if (datasetsCountNode) {
-        datasetsCountNode.innerText = String(getCount(user.datasetIds));
-    }
-
-    if (ratingCountNode) {
-        ratingCountNode.innerText = String(Number(user.starsCount ?? 0));
-    }
-    
-    const subsCount = Array.isArray(user.subscriptions) ? user.subscriptions.length : Number(user.subscriptionsCount ?? 0);
-    if (subscriptionsCountNode) {
-        subscriptionsCountNode.innerText = String(subsCount);
-    }
+    document.getElementById('profileModelsCount').innerText = String((user.modelIds || []).length);
+    document.getElementById('profileDatasetsCount').innerText = String((user.datasetIds || []).length);
+    document.getElementById('profileRatingCount').innerText = String(user.starsCount || 0);
+    document.getElementById('profileSubscriptionsCount').innerText = String((user.subscriptions || []).length);
 }
 
 function renderProfileCards(items, type, gridId, emptyId) {
     const grid = document.getElementById(gridId);
     const emptyState = document.getElementById(emptyId);
-    if (!grid) return;
+    const isEmpty = items.length === 0;
 
-    const isEmpty = !items || items.length === 0;
-    
     grid.classList.toggle('d-none', isEmpty);
-    if (emptyState) emptyState.classList.toggle('d-none', !isEmpty);
+    emptyState.classList.toggle('d-none', !isEmpty);
 
     if (isEmpty) {
         grid.innerHTML = '';
@@ -49,13 +28,13 @@ function renderProfileCards(items, type, gridId, emptyId) {
     const isDataset = type === 'dataset';
     const icon = isDataset ? 'bi-database' : 'bi-cpu';
 
-    grid.innerHTML = items.map(item => {
+    grid.innerHTML = items.map((item) => {
         let badges = item.task ? `<span class="badge bg-primary flex-shrink-0">${dictionaries.task[item.task] || item.task}</span>` : '';
-        
+
         if (isDataset) {
             if (item.modality) badges += `<span class="badge bg-success flex-shrink-0">${dictionaries.modality[item.modality] || item.modality}</span>`;
             if (item.format) badges += `<span class="badge bg-info text-dark flex-shrink-0">${item.format.toUpperCase()}</span>`;
-        }
+        } 
         else {
             if (item.framework) badges += `<span class="badge bg-secondary flex-shrink-0">${dictionaries.framework[item.framework] || item.framework}</span>`;
         }
@@ -86,40 +65,30 @@ function renderProfileCards(items, type, gridId, emptyId) {
 }
 
 async function fetchItemsByIds(resource, ids) {
-    if (!ids || ids.length === 0) return [];
+    if (ids.length === 0) return [];
 
     const params = new URLSearchParams();
-    ids.forEach(id => params.append('id', String(id)));
+    ids.forEach((id) => params.append('id', String(id)));
 
-    const { data } = await api.get(`/${resource}`, { params });
-    const dataArray = Array.isArray(data) ? data : (data ? [data] : []);
-    const itemsById = new Map(dataArray.map(item => [Number(item.id), item]));
-    const orderedItems = ids.map(id => itemsById.get(Number(id))).filter(Boolean);
+    const response = await api.get(`/${resource}`, { params });
+    const items = response.data;
+    const itemsById = new Map(items.map((item) => [Number(item.id), item]));
 
-    return orderedItems;
+    return ids.map((id) => itemsById.get(Number(id))).filter(Boolean);
 }
 
 async function loadProfilePageData() {
-    const storedUser = window.authSession?.getStoredUser();
+    const storedUser = window.authSession.getStoredUser();
+    const userResponse = await api.get(`/users/${storedUser.id}`);
+    const user = userResponse.data;
 
-    try {
-        const response = await api.get("/users/" + storedUser.id);
-        const user = response.data;
-        applyProfileStats(user);
+    applyProfileStats(user);
 
-        const [models, datasets] = await Promise.all([
-            fetchItemsByIds('models', user.modelIds),
-            fetchItemsByIds('datasets', user.datasetIds)
-        ]);
+    const models = await fetchItemsByIds('models', user.modelIds || []);
+    const datasets = await fetchItemsByIds('datasets', user.datasetIds || []);
 
-        renderProfileCards(models, 'model', 'profileModelsGrid', 'profileModelsEmptyState');
-        renderProfileCards(datasets, 'dataset', 'profileDatasetsGrid', 'profileDatasetsEmptyState');
-    }
-    catch (error) {
-        applyProfileStats(storedUser || {});
-        renderProfileCards([], 'model', 'profileModelsGrid', 'profileModelsEmptyState');
-        renderProfileCards([], 'dataset', 'profileDatasetsGrid', 'profileDatasetsEmptyState');
-    }
+    renderProfileCards(models, 'model', 'profileModelsGrid', 'profileModelsEmptyState');
+    renderProfileCards(datasets, 'dataset', 'profileDatasetsGrid', 'profileDatasetsEmptyState');
 }
 
 window.addEventListener('DOMContentLoaded', loadProfilePageData);

@@ -7,87 +7,124 @@ const applyFiltersButton = document.getElementById('applyFilters');
 const activeFilterChips = document.getElementById('activeFilterChips');
 
 const dictionaries = {
-    task: {
-        'cv': 'Computer Vision', 'nlp': 'NLP', 'audio': 'Audio', 'rl': 'Reinforcement Learning',
-        'img_clf': 'Image Search', 'obj_det': 'Object Detection', 'text_gen': 'Text Generation', 'translation': 'Translation'
-    },
+    task: { 'cv': 'Computer Vision', 'nlp': 'NLP', 'audio': 'Audio', 'rl': 'Reinforcement Learning', 'img_clf': 'Image Search', 'obj_det': 'Object Detection', 'text_gen': 'Text Generation', 'translation': 'Translation' },
     framework: { 'pytorch': 'PyTorch', 'tensorflow': 'TensorFlow', 'jax': 'JAX' },
     license: { 'mit': 'MIT', 'apache-2.0': 'Apache 2.0', 'gpl-3.0': 'GPL-3.0', 'cc-by-4.0': 'CC BY 4.0', 'cc0': 'CC0' },
     modality: { 'images': 'Изображения', 'text': 'Текст', 'tabular': 'Таблицы', 'audio-video': 'Аудио/Видео' }
 };
 
-const filterConfig = {
-    modelTask: { queryKey: 'task', dictKey: 'task', mode: 'single' },
-    modelFramework: { queryKey: 'framework_like', dictKey: 'framework', mode: 'multiRegex' },
-    modelLicense: { queryKey: 'license_like', dictKey: 'license', mode: 'multiRegex' },
-    datasetTask: { queryKey: 'task', dictKey: 'task', mode: 'single' },
-    datasetModality: { queryKey: 'modality_like', dictKey: 'modality', mode: 'multiRegex' },
-    datasetLicense: { queryKey: 'license_like', dictKey: 'license', mode: 'multiRegex' }
+const fieldMap = {
+    modelTask: { queryKey: 'task', dict: dictionaries.task, multi: false },
+    modelFramework: { queryKey: 'framework_like', dict: dictionaries.framework, multi: true },
+    modelLicense: { queryKey: 'license_like', dict: dictionaries.license, multi: true },
+    datasetTask: { queryKey: 'task', dict: dictionaries.task, multi: false },
+    datasetModality: { queryKey: 'modality_like', dict: dictionaries.modality, multi: true },
+    datasetLicense: { queryKey: 'license_like', dict: dictionaries.license, multi: true }
 };
 
-async function loadHubData() {
-    const activeTab = document.querySelector('#filtersTab .nav-link.active');
-    const isDataset = activeTab?.id === 'filter-datasets-tab';
-    const endpoint = isDataset ? 'datasets' : 'models';
-    const itemType = isDataset ? 'dataset' : 'model';
+function getHubContext() {
+    const isDataset = document.getElementById('filter-datasets-tab').classList.contains('active');
+    return {
+        isDataset,
+        endpoint: isDataset ? 'datasets' : 'models',
+        itemType: isDataset ? 'dataset' : 'model',
+        panelSelector: isDataset ? '#filter-datasets' : '#filter-models'
+    };
+}
 
+function buildQueryAndChips(ctx) {
     const params = new URLSearchParams();
-    const chipsData = [];
+    const chips = [];
 
-    const query = searchInput?.value.trim();
+    const query = searchInput.value.trim();
     if (query) {
         params.append('q', query);
-        chipsData.push({ label: `Поиск: ${query}`, name: 'q', value: query });
+        chips.push({ label: `Поиск: ${query}`, name: 'q', value: query });
     }
 
-    const tabContentId = isDataset ? '#filter-datasets' : '#filter-models';
-    const activeInputs = document.querySelectorAll(`${tabContentId} input:checked, ${tabContentId} select`);
     const groupedFilters = {};
+    const inputs = document.querySelectorAll(`${ctx.panelSelector} input:checked, ${ctx.panelSelector} select`);
 
-    activeInputs.forEach(input => {
+    inputs.forEach((input) => {
         if (!input.value) return;
-
         if (!groupedFilters[input.name]) groupedFilters[input.name] = [];
         groupedFilters[input.name].push(input.value);
     });
 
-    Object.entries(groupedFilters).forEach(([inputName, values]) => {
-        const cfg = filterConfig[inputName];
-
-        if (cfg.mode === 'multiRegex') {
-            params.append(cfg.queryKey, `^(${values.join('|')})$`);
-        } else {
-            params.append(cfg.queryKey, values[0]);
-        }
-
-        const dict = dictionaries[cfg.dictKey];
+    Object.entries(groupedFilters).forEach(([name, values]) => {
+        const cfg = fieldMap[name];
+        params.append(cfg.queryKey, cfg.multi ? `^(${values.join('|')})$` : values[0]);
         values.forEach((value) => {
-            const label = dict[value];
-            chipsData.push({ label, name: inputName, value });
+            chips.push({ label: cfg.dict[value] || value, name, value });
         });
     });
 
-    renderChips(chipsData);
+    return { params, chips };
+}
+
+function getCardHtml(item, type) {
+    const isDataset = type === 'dataset';
+    const iconClass = isDataset ? 'bi-database' : 'bi-cpu';
+    const pageUrl = `${type}_page.html?id=${item.id}`;
+
+    const taskBadge = item.task ? `<span class="badge bg-primary flex-shrink-0">${dictionaries.task[item.task] || item.task}</span>` : '';
+    const licenseBadge = item.license ? `<span class="badge border text-secondary bg-light flex-shrink-0">${dictionaries.license[item.license] || item.license}</span>` : '';
+
+    let extraBadges = '';
+    if (isDataset) {
+        if (item.modality) extraBadges += `<span class="badge bg-success flex-shrink-0">${dictionaries.modality[item.modality] || item.modality}</span>`;
+        if (item.format) extraBadges += `<span class="badge bg-info text-dark flex-shrink-0">${item.format.toUpperCase()}</span>`;
+        if (item.size_gb != null) extraBadges += `<span class="badge border text-dark bg-white flex-shrink-0">${item.size_gb} GB</span>`;
+    } else {
+        if (item.framework) extraBadges += `<span class="badge bg-secondary flex-shrink-0">${dictionaries.framework[item.framework] || item.framework}</span>`;
+    }
+
+    return `
+        <div class="col-12 col-md-6 col-xl-4">
+            <article class="card h-100 border-2">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <a href="${pageUrl}" class="text-decoration-none text-dark h5 mb-0 stretched-link">${item.name}</a>
+                        <i class="bi ${iconClass} text-muted"></i>
+                    </div>
+                    <div class="mb-2 d-flex flex-wrap gap-2">${taskBadge} ${extraBadges} ${licenseBadge}</div>
+                    <p class="card-text text-muted small">${item.description || 'Описание отсутствует'}</p>
+                </div>
+                <div class="card-footer bg-white d-flex justify-content-end align-items-center">
+                    <small class="text-muted me-2"><i class="bi bi-eye-fill"></i> ${item.views || 0}</small>
+                    <small class="text-muted me-2"><i class="bi bi-chat-left-text-fill"></i> ${item.comments || 0}</small>
+                    <small class="text-muted me-2"><i class="bi bi-diagram-3-fill"></i> ${item.forks || 0}</small>
+                    <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> ${item.stars || 0}</small>
+                </div>
+            </article>
+        </div>
+    `;
+}
+
+async function loadHubData() {
+    const ctx = getHubContext();
+    const queryData = buildQueryAndChips(ctx);
+    renderChips(queryData.chips);
 
     try {
-        resultsGrid.innerHTML = '';
-        const { data } = await api.get(`/${endpoint}`, { params });
+        const response = await api.get(`/${ctx.endpoint}`, { params: queryData.params });
+        const data = response.data;
+        const typeLabel = ctx.isDataset ? 'датасетов' : 'моделей';
 
-        renderCards(data, itemType);
+        searchResultsCount.textContent = `Найдено: ${data.length} ${typeLabel}`;
 
-        const typeLabel = isDataset ? 'датасетов' : 'моделей';
-        if (searchResultsCount) searchResultsCount.textContent = `Найдено: ${data.length} ${typeLabel}`;
-        if (data.length === 0) resultsGrid.innerHTML = '<div class="col-12"><p class="text-muted fs-5">По вашему запросу ничего не найдено.</p></div>';
+        if (!data.length) {
+            resultsGrid.innerHTML = '<div class="col-12"><p class="text-muted fs-5">По вашему запросу ничего не найдено.</p></div>';
+            return;
+        }
 
-    }
-    catch (error) {
+        resultsGrid.innerHTML = data.map((item) => getCardHtml(item, ctx.itemType)).join('');
+    } catch (error) {
         resultsGrid.innerHTML = '<div class="col-12"><p class="text-danger">Ошибка подключения к серверу.</p></div>';
     }
 }
 
 function renderChips(chips) {
-    if (!activeFilterChips) return;
-    
     if (chips.length === 0) {
         activeFilterChips.innerHTML = '<span class="text-muted">Нет активных фильтров</span>';
         return;
@@ -103,66 +140,18 @@ function renderChips(chips) {
         </span>
     `).join('');
 }
-
-function renderCards(items, type) {
-    items.forEach(item => {
-        const pageUrl = `${type}_page.html?id=${item.id}`;
-        const isDataset = type === 'dataset';
-        const iconClass = isDataset ? 'bi-database' : 'bi-cpu';
-        
-        let extraBadges = '';
-        if (isDataset) {
-            if (item.modality) extraBadges += `<span class="badge bg-success flex-shrink-0">${dictionaries.modality[item.modality] || item.modality}</span>`;
-
-            if (item.format) extraBadges += `<span class="badge bg-info text-dark flex-shrink-0">${item.format.toUpperCase()}</span>`;
-
-            if (item.size_gb != null) extraBadges += `<span class="badge border text-dark bg-white flex-shrink-0">${item.size_gb} GB</span>`;
-        }
-        else {
-            if (item.framework) extraBadges += `<span class="badge bg-secondary flex-shrink-0">${dictionaries.framework[item.framework] || item.framework}</span>`;
-        }
-
-        const taskBadge = item.task ? `<span class="badge bg-primary flex-shrink-0">${dictionaries.task[item.task] || item.task}</span>` : '';
-        const licenseBadge = item.license ? `<span class="badge border text-secondary bg-light flex-shrink-0">${dictionaries.license[item.license] || item.license}</span>` : '';
-
-        const cardHTML = `
-            <div class="col-12 col-md-6 col-xl-4">
-                <article class="card h-100 border-2">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between mb-2">
-                            <a href="${pageUrl}" class="text-decoration-none text-dark h5 mb-0 stretched-link">${item.name}</a>
-                            <i class="bi ${iconClass} text-muted"></i>
-                        </div>
-                        <div class="mb-2 d-flex flex-wrap gap-2">
-                            ${taskBadge} ${extraBadges} ${licenseBadge}
-                        </div>
-                        <p class="card-text text-muted small">${item.description || 'Описание отсутствует'}</p>
-                    </div>
-                    <div class="card-footer bg-white d-flex justify-content-end align-items-center">
-                        <small class="text-muted me-2"><i class="bi bi-eye-fill"></i> ${item.views || 0}</small>
-                        <small class="text-muted me-2"><i class="bi bi-chat-left-text-fill"></i> ${item.comments || 0}</small>
-                        <small class="text-muted me-2"><i class="bi bi-diagram-3-fill"></i> ${item.forks || 0}</small>
-                        <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> ${item.stars || 0}</small>
-                    </div>
-                </article>
-            </div>
-        `;
-        resultsGrid.insertAdjacentHTML('beforeend', cardHTML);
-    });
-}
-
-hubSearchForm?.addEventListener('submit', (e) => {
+hubSearchForm.addEventListener('submit', (e) => {
     e.preventDefault();
     loadHubData();
 });
 
-applyFiltersButton?.addEventListener('click', loadHubData);
+applyFiltersButton.addEventListener('click', loadHubData);
 
-filtersForm?.addEventListener('reset', () => {
+filtersForm.addEventListener('reset', () => {
     setTimeout(loadHubData, 0); 
 });
 
-activeFilterChips?.addEventListener('click', (e) => {
+activeFilterChips.addEventListener('click', (e) => {
     const removeBtn = e.target.closest('.filter-chip-remove');
     if (!removeBtn) return;
 
@@ -172,12 +161,10 @@ activeFilterChips?.addEventListener('click', (e) => {
         searchInput.value = '';
     } else {
         const input = document.querySelector(`[name="${name}"][value="${value}"], select[name="${name}"]`);
-        if (input) {
-            if (input.type === 'checkbox') input.checked = false;
-            else input.value = '';
-        }
+        if (input.type === 'checkbox') input.checked = false;
+        else input.value = '';
     }
-    
+
     loadHubData();
 });
 

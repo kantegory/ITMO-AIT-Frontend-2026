@@ -14,13 +14,10 @@ if (loginForm) {
 
         try {
             const response = await api.post('/login', { email, password });
-            
-            const { accessToken, user } = response.data;
-
+            const accessToken = response.data.accessToken;
+            const user = response.data.user;
             window.authSession.saveAuthSession(accessToken, user);
-
             window.location.href = 'index.html';
-
         } catch (error) {
             alert('Неверный email или пароль. Попробуйте снова.');
         }
@@ -44,20 +41,17 @@ if (registerForm) {
         }
 
         try {
-            const response = await api.post('/register', { 
-                email, 
-                password, 
-                firstName, 
+            const response = await api.post('/register', {
+                email,
+                password,
+                firstName,
                 lastName,
                 username
             });
-            
-            const { accessToken, user } = response.data;
-
+            const accessToken = response.data.accessToken;
+            const user = response.data.user;
             window.authSession.saveAuthSession(accessToken, user);
-
             window.location.href = 'index.html';
-
         } catch (error) {
             alert('Ошибка при регистрации. Возможно, такой email уже используется.');
         }
