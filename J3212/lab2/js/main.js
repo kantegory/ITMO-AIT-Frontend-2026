@@ -1,6 +1,10 @@
 (function () {
   'use strict';
 
+  if (typeof window !== 'undefined' && (window.ProjectHubAuthPage || window.ProjectHubDashboardPage || window.ProjectHubProjectPage || window.ProjectHubSearchPage)) {
+    return;
+  }
+
   var AUTH_STORAGE_KEY = 'projecthub_user';
 
   function getCurrentUser() {
