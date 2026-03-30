@@ -9,39 +9,41 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
 </head>
 <body>
+<a href="#main-content" class="visually-hidden-focusable">Перейти к основному контенту</a>
 
-<header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+<header role="banner">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" role="navigation" aria-label="Основная навигация">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">Яндекс Афиша</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <a class="navbar-brand" href="index.html" aria-label="Яндекс Афиша - на главную">Яндекс Афиша</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-expanded="false" aria-controls="navbarContent" aria-label="Переключить навигацию">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Главная</a>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" role="menubar">
+                    <li class="nav-item" role="none">
+                        <a class="nav-link" href="index.html" role="menuitem">Главная</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="search.html">Поиск</a>
+                    <li class="nav-item" role="none">
+                        <a class="nav-link" href="search.html" role="menuitem">Поиск</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="dashboard.html">Мои билеты</a>
+                    <li class="nav-item" role="none">
+                        <a class="nav-link" href="dashboard.html" role="menuitem">Мои билеты</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="returns.html">Возвраты</a>
+                    <li class="nav-item" role="none">
+                        <a class="nav-link active" href="returns.html" aria-current="page" role="menuitem">Возвраты</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="organizer.html">Организатор</a>
+                    <li class="nav-item" role="none">
+                        <a class="nav-link" href="organizer.html" role="menuitem">Организатор</a>
                     </li>
                 </ul>
-                <form class="d-flex mx-auto my-2 my-lg-0" role="search" action="search.html">
-                    <input class="form-control me-2" type="search" name="q" placeholder="Поиск..." aria-label="Search">
+                <form class="d-flex mx-auto my-2 my-lg-0" role="search" action="search.html" aria-label="Поиск по сайту">
+                    <label for="returnsSearch" class="visually-hidden">Поиск мероприятий</label>
+                    <input class="form-control me-2" type="search" name="q" id="returnsSearch" placeholder="Поиск..." aria-label="Поиск мероприятий">
                     <button class="btn btn-outline-success" type="submit">Поиск</button>
                 </form>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link text-danger" href="#" onclick="logout()">Выход</a>
+                        <a class="nav-link text-danger" href="#" onclick="logout()" role="menuitem">Выход</a>
                     </li>
                 </ul>
             </div>
@@ -49,18 +51,20 @@
     </nav>
 </header>
 
-<main style="padding-top: 1rem;">
-    <section class="returns-content container py-4">
+<main id="main-content" style="padding-top: 1rem;" role="main">
+    <section class="returns-content container py-4" aria-labelledby="returns-heading">
         <header>
-            <h4 class="mb-4">Возвраты билетов</h4>
+            <h1 id="returns-heading" class="mb-4">Возвраты билетов</h1>
         </header>
-        <aside class="alert alert-info mb-4">
+        <aside class="alert alert-info mb-4" role="note">
             Полный возврат возможен не позднее чем за 24 часа до начала мероприятия.
             Средства возвращаются в течение 3-5 рабочих дней.
         </aside>
-        <article class="row g-4" id="returnsContainer"></article>
+        <article class="row g-4" id="returnsContainer" aria-live="polite"></article>
     </section>
 </main>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -69,10 +73,22 @@
     axios.interceptors.request.use(config => {
         const token = localStorage.accessToken
         if (token) {
-            config.headers.Authorization = 'Bearer ' + token
+            config.headers.Authorization = `Bearer ${token}`
         }
         return config
     })
+
+    function formatDate(dateString) {
+        if (!dateString) return ''
+        if (dateString.includes('-')) {
+            const parts = dateString.split('-')
+            if (parts[0].length === 4) {
+                return `${parts[2]}-${parts[1]}-${parts[0]}`
+            }
+            return dateString
+        }
+        return dateString
+    }
 
     function checkAuth() {
         if (!localStorage.accessToken) {
@@ -98,7 +114,7 @@
         const ticketsMap = {}
         for (const returnItem of returns) {
             try {
-                const response = await axios.get('/tickets/' + returnItem.ticketId)
+                const response = await axios.get(`/tickets/${returnItem.ticketId}`)
                 ticketsMap[returnItem.ticketId] = response.data
             } catch (error) {
                 ticketsMap[returnItem.ticketId] = null
@@ -117,7 +133,7 @@
         loadTicketsForReturns(returns).then(ticketsMap => {
             container.innerHTML = returns.map(ret => {
                 const ticket = ticketsMap[ret.ticketId]
-                const eventName = ticket ? ticket.eventName : 'Билет #' + ret.ticketId
+                const eventName = ticket ? ticket.eventName : `Билет #${ret.ticketId}`
                 const seats = ticket ? ticket.seats : ''
 
                 let statusBadge = ''
@@ -146,8 +162,8 @@
                                     </section>
                                     <footer class="text-end">
                                         <span class="badge ${statusBadge} mb-2">${statusText}</span>
-                                        <p class="text-muted small mb-0">Запрос от: ${ret.requestDate}</p>
-                                        ${ret.returnDate ? '<p class="text-muted small mb-0">Возврат: ' + ret.returnDate + '</p>' : ''}
+                                        <p class="text-muted small mb-0">Запрос от: ${formatDate(ret.requestDate)}</p>
+                                        ${ret.returnDate ? `<p class="text-muted small mb-0">Возврат: ${formatDate(ret.returnDate)}</p>` : ''}
                                     </footer>
                                 </header>
                             </section>
