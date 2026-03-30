@@ -101,26 +101,53 @@ main.col-12 .btn-primary {
     border-radius: 10px;
     justify-content: flex-start;
     width: 100%;
+    min-height: 200px;
 }
 
 .seat {
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
-    flex-shrink: 0;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 4px !important;
+    flex-shrink: 0 !important;
+    border: 2px solid gray !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
+    display: inline-block !important;
 }
 
 .seat.available {
-    background: green !important;
+    background: #28a745 !important;
+    border-color: #1e7e34 !important;
+}
+
+.seat.available:hover {
+    background: #218838 !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.5) !important;
 }
 
 .seat.selected {
-    background: yellow !important;
+    background: #ffc107 !important;
+    border-color: #d39e00 !important;
+}
+
+.seat.selected:hover {
+    background: #e0a800 !important;
 }
 
 .seat.sold {
-    background: red !important;
-    cursor: not-allowed;
+    background: #dc3545 !important;
+    border-color: #bd2130 !important;
+    cursor: not-allowed !important;
+    opacity: 0.6 !important;
 }
 
 .legend-seat {
@@ -130,18 +157,19 @@ main.col-12 .btn-primary {
     display: inline-block;
     margin-right: 4px;
     vertical-align: middle;
+    border: 1px solid gray;
 }
 
 .legend-seat.available {
-    background: green !important;
+    background: #28a745 !important;
 }
 
 .legend-seat.selected {
-    background: yellow !important;
+    background: #ffc107 !important;
 }
 
 .legend-seat.sold {
-    background: red !important;
+    background: #dc3545 !important;
 }
 
 .nav-link.active {
@@ -220,22 +248,20 @@ main.col-12 .btn-primary {
     border: 1px solid gray;
 }
 
-.rating-select span {
+.rating-select button {
     width: 35px;
     height: 35px;
-    line-height: 35px;
     border: 2px solid gray;
     border-radius: 5px;
     margin-right: 5px;
     cursor: pointer;
     transition: all 0.2s;
     font-weight: bold;
-    text-align: center;
-    display: inline-block;
+    background: white;
 }
 
-.rating-select span:hover,
-.rating-select span.active {
+.rating-select button:hover,
+.rating-select button.active {
     background: yellow;
     border-color: yellow;
     color: black;

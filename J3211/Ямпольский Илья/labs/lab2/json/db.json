@@ -2,17 +2,10 @@
   "users": [
     {
       "id": 1,
-      "email": "sergo0_@mail.ru",
-      "password": "1337228007zzz",
+      "email": "sergo0_1337228007zzz",
+      "password": "$2a$10$YUqF5kLaSlma7IcFNrcKhu9Yy4s3S3tw02T28JsUzbiZk37myZIfK",
       "firstName": "Сергей",
       "lastName": "Кубанец"
-    },
-    {
-      "email": "fromhellboyyy@gmail.com",
-      "password": "$2a$10$KsQqeOt3U65GwVFk6ytG/upXsrvXYKpG4ugEJejouIknKk.HziETS",
-      "firstName": "Илья",
-      "lastName": "Ямпольский",
-      "id": 2
     }
   ],
   "events": [
@@ -23,6 +16,7 @@
       "city": "Москва",
       "venue": "ВТБ Арена",
       "price": 150000,
+      "capacity": 50,
       "userId": 1
     },
     {
@@ -32,6 +26,7 @@
       "city": "СПб",
       "venue": "Александринский театр",
       "price": 2000,
+      "capacity": 50,
       "userId": 1
     },
     {
@@ -41,6 +36,7 @@
       "city": "Москва",
       "venue": "МАММ",
       "price": 500,
+      "capacity": 50,
       "userId": 1
     },
     {
@@ -50,6 +46,7 @@
       "city": "СПб",
       "venue": "Филармония",
       "price": 3000,
+      "capacity": 50,
       "userId": 1
     }
   ],
@@ -57,18 +54,32 @@
     {
       "id": 1,
       "eventId": 1,
+      "eventName": "zxcursed концерт",
       "userId": 1,
       "seats": "12, 13",
       "totalPrice": 300000,
-      "status": "active"
+      "status": "returned",
+      "purchaseDate": "2026-10-01"
     },
     {
       "id": 2,
       "eventId": 4,
+      "eventName": "Концерт Барбоскиных",
       "userId": 1,
       "seats": "5",
       "totalPrice": 3000,
-      "status": "active"
+      "status": "returned",
+      "purchaseDate": "2026-10-05"
+    },
+    {
+      "eventId": 2,
+      "eventName": "Представление \"От вайбкодинга до отчисления\"",
+      "userId": 1,
+      "seats": "12",
+      "totalPrice": 2000,
+      "status": "active",
+      "purchaseDate": "2026-03-30",
+      "id": 3
     }
   ],
   "returns": [
@@ -78,16 +89,65 @@
       "userId": 1,
       "status": "processing",
       "requestDate": "2026-10-12",
-      "amount": 150000
+      "amount": 300000
+    },
+    {
+      "ticketId": 2,
+      "userId": 1,
+      "status": "processing",
+      "requestDate": "2026-03-30",
+      "amount": 3000,
+      "id": 2
+    },
+    {
+      "ticketId": 1,
+      "userId": 1,
+      "status": "processing",
+      "requestDate": "2026-03-30",
+      "amount": 300000,
+      "id": 3
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "eventId": 1,
+      "userId": 1,
+      "userName": "Shadow Fiend",
+      "rating": 1,
+      "text": "dead inside trash",
+      "anonymous": false,
+      "date": "2026-10-16"
     },
     {
       "id": 2,
-      "ticketId": 2,
+      "eventId": 2,
       "userId": 1,
-      "status": "completed",
-      "requestDate": "2026-10-01",
-      "returnDate": "2026-10-05",
-      "amount": 3000
+      "userName": "Евгений",
+      "rating": 2,
+      "text": "Вот так я и отлетел с комсы",
+      "anonymous": false,
+      "date": "2026-10-21"
+    },
+    {
+      "id": 3,
+      "eventId": 3,
+      "userId": 1,
+      "userName": "Маркиз",
+      "rating": 5,
+      "text": "Нежные нотки кала уловить дано не каждому!",
+      "anonymous": false,
+      "date": "2026-10-26"
+    },
+    {
+      "id": 4,
+      "eventId": 4,
+      "userId": 1,
+      "userName": "Малыш",
+      "rating": 5,
+      "text": "ГАВ! ГАВ! ГАВ!",
+      "anonymous": false,
+      "date": "2026-11-06"
     }
   ]
 }
