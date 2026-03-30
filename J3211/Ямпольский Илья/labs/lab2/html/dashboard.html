@@ -19,21 +19,21 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0" role="menubar">
-          <li class="nav-item" role="none">
-            <a class="nav-link" href="index.html" role="menuitem">Главная</a>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Главная</a>
           </li>
-          <li class="nav-item" role="none">
-            <a class="nav-link" href="search.html" role="menuitem">Поиск</a>
+          <li class="nav-item">
+            <a class="nav-link" href="search.html">Поиск</a>
           </li>
-          <li class="nav-item" role="none">
-            <a class="nav-link active" href="dashboard.html" aria-current="page" role="menuitem">Мои билеты</a>
+          <li class="nav-item">
+            <a class="nav-link active" href="dashboard.html" aria-current="page" >Мои билеты</a>
           </li>
-          <li class="nav-item" role="none">
-            <a class="nav-link" href="returns.html" role="menuitem">Возвраты</a>
+          <li class="nav-item">
+            <a class="nav-link" href="returns.html">Возвраты</a>
           </li>
-          <li class="nav-item" role="none">
-            <a class="nav-link" href="organizer.html" role="menuitem">Организатор</a>
+          <li class="nav-item">
+            <a class="nav-link" href="organizer.html">Организатор</a>
           </li>
         </ul>
         <form class="d-flex mx-auto my-2 my-lg-0" role="search" action="search.html" aria-label="Поиск по сайту">
@@ -43,7 +43,7 @@
         </form>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link text-danger" href="#" onclick="logout()" role="menuitem">Выход</a>
+            <a class="nav-link logout-link" href="#" onclick="logout()" aria-label="Выйти из аккаунта">Выход</a>
           </li>
         </ul>
       </div>
@@ -115,7 +115,7 @@
                 <article class="card shadow-sm ticket-item h-100">
                     <section class="card-body">
                         <header class="d-flex justify-content-between">
-                            <h5 class="mb-1">${ticket.eventName || `Билет #${ticket.id}`}</h5>
+                            <h2 class="mb-1">${ticket.eventName || `Билет #${ticket.id}`}</h2>
                             <span class="badge bg-success">${ticket.totalPrice.toLocaleString()} ₽</span>
                         </header>
                         <p class="text-muted mb-1">Места: ${ticket.seats}</p>

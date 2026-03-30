@@ -19,21 +19,21 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0" role="menubar">
-                    <li class="nav-item" role="none">
-                        <a class="nav-link" href="index.html" role="menuitem">Главная</a>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Главная</a>
                     </li>
-                    <li class="nav-item" role="none">
-                        <a class="nav-link active" href="search.html" aria-current="page" role="menuitem">Поиск</a>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="search.html" aria-current="page">Поиск</a>
                     </li>
-                    <li class="nav-item" role="none">
-                        <a class="nav-link" href="dashboard.html" role="menuitem">Мои билеты</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Мои билеты</a>
                     </li>
-                    <li class="nav-item" role="none">
-                        <a class="nav-link" href="returns.html" role="menuitem">Возвраты</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="returns.html">Возвраты</a>
                     </li>
-                    <li class="nav-item" role="none">
-                        <a class="nav-link" href="organizer.html" role="menuitem">Организатор</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="organizer.html">Организатор</a>
                     </li>
                 </ul>
                 <form class="d-flex mx-auto my-2 my-lg-0" role="search" aria-label="Поиск по сайту" onsubmit="event.preventDefault(); searchEvents();">
@@ -43,7 +43,7 @@
                 </form>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link text-danger" href="#" onclick="logout()" role="menuitem">Выход</a>
+                        <a class="nav-link logout-link" href="#" onclick="logout()" aria-label="Выйти из аккаунта">Выход</a>
                     </li>
                 </ul>
             </div>
@@ -51,7 +51,7 @@
     </nav>
 </header>
 
-<main id="main-content" style="padding-top: 1rem;" role="main">
+<main id="main-content" style="padding-top: 1rem;">
     <section class="container-fluid py-4">
         <button class="btn btn-outline-primary w-100 mb-3 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse" aria-expanded="false" aria-controls="filtersCollapse">Фильтры</button>
         <article class="row">
@@ -213,7 +213,7 @@
                     <article class="card h-100 event-card" onclick="openEventModal(${event.id})" style="cursor: pointer;">
                         <section class="card-body d-flex flex-column">
                             <header class="flex-grow-1">
-                                <h5 class="card-title">${event.title}</h5>
+                                <h4 class="card-title">${event.title}</h4>
                                 <p class="card-text text-muted">${formatDate(event.date)} - ${event.city}${event.venue ? ', ' + event.venue : ''}</p>
                             </header>
                             <footer class="mt-auto">

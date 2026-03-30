@@ -19,21 +19,21 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0" role="menubar">
-                    <li class="nav-item" role="none">
-                        <a class="nav-link active" href="index.html" aria-current="page" role="menuitem">Главная</a>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html" aria-current="page">Главная</a>
                     </li>
-                    <li class="nav-item" role="none">
-                        <a class="nav-link" href="search.html" role="menuitem">Поиск</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search.html">Поиск</a>
                     </li>
-                    <li class="nav-item" role="none">
-                        <a class="nav-link" href="dashboard.html" role="menuitem">Мои билеты</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Мои билеты</a>
                     </li>
-                    <li class="nav-item" role="none">
-                        <a class="nav-link" href="returns.html" role="menuitem">Возвраты</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="returns.html">Возвраты</a>
                     </li>
-                    <li class="nav-item" role="none">
-                        <a class="nav-link" href="organizer.html" role="menuitem">Организатор</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="organizer.html">Организатор</a>
                     </li>
                 </ul>
                 <form class="d-flex mx-auto my-2 my-lg-0" role="search" action="search.html" aria-label="Поиск по сайту">
@@ -43,7 +43,7 @@
                 </form>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link text-danger" href="#" onclick="logout()" role="menuitem">Выход</a>
+                        <a class="nav-link logout-link" href="#" onclick="logout()" aria-label="Выйти из аккаунта">Выход</a>
                     </li>
                 </ul>
             </div>
@@ -51,7 +51,7 @@
     </nav>
 </header>
 
-<main id="main-content" style="padding-top: 1rem;" role="main">
+<main id="main-content" style="padding-top: 1rem;">
     <section class="event-content container py-4" aria-labelledby="events-heading">
         <header>
             <h1 id="events-heading" class="mb-3">Популярные мероприятия</h1>
@@ -152,7 +152,7 @@
                     <article class="card h-100 event-card" onclick="openEventModal(${event.id})" style="cursor: pointer;">
                         <section class="card-body d-flex flex-column">
                             <header class="flex-grow-1">
-                                <h5 class="card-title">${event.title}</h5>
+                                <h4 class="card-title">${event.title}</h4>
                                 <p class="card-text text-muted">${formatDate(event.date)} - ${event.city}${event.venue ? ', ' + event.venue : ''}</p>
                             </header>
                             <footer class="mt-auto">
