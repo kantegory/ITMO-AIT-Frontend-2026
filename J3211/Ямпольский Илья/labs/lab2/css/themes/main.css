@@ -1,0 +1,653 @@
+:root {
+    --bg-color: #f8f9fa;
+    --bg-secondary: #ffffff;
+    --text-color: #333333;
+    --text-muted: #555555;
+    --text-inverse: #ffffff;
+    --border-color: #444444;
+    --border-light: #666666;
+    --primary-color: #6610f2;
+    --primary-hover: #520dc2;
+    --success-color: #1e7e34;
+    --success-hover: #19692c;
+    --danger-color: #8b0000;
+    --danger-hover: #600000;
+    --warning-color: #d39e00;
+    --info-bg: #d1ecf1;
+    --info-text: #0c5460;
+    --card-shadow: rgba(0, 0, 0, 0.2);
+    --card-shadow-hover: rgba(0, 0, 0, 0.3);
+    --seat-available: #28a745;
+    --seat-available-hover: #218838;
+    --seat-selected: #ffc107;
+    --seat-selected-hover: #e0a800;
+    --seat-sold: #dc3545;
+    --seat-sold-border: #bd2130;
+    --legend-border: #666666;
+    --navbar-bg: #ffffff;
+    --navbar-border: gray;
+    --navbar-shadow: black;
+    --filter-box-bg: #ffffff;
+    --filter-box-border: #444444;
+    --table-header-bg: #e9ecef;
+    --table-border: #666666;
+    --input-bg: #ffffff;
+    --input-border: #666666;
+    --input-focus-border: #6610f2;
+    --focus-outline: #6610f2;
+    --badge-success-bg: #1e7e34;
+    --badge-warning-bg: #d39e00;
+    --badge-warning-text: #000000;
+    --badge-danger-bg: #8b0000;
+    --link-color: #0056b3;
+    --link-hover: #003d82;
+    --logout-border: #8b0000;
+    --logout-hover-bg: #8b0000;
+    --logout-hover-border: #600000;
+    --theme-btn-border: #6610f2;
+    --theme-btn-text: #6610f2;
+    --theme-btn-hover-bg: #6610f2;
+    --theme-btn-hover-text: #ffffff;
+}
+
+h1, h2, h3, h4, h5, h6, p, span, div, label, legend, small, strong, b, i, em, a, td, th, li, ul, ol {
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}
+
+.card *, .card-body *, .card-title, .card-text, .modal-content *, .modal-header *, .modal-body *, .modal-footer *, .filter-box *, .stat-box *, .event-card *, .ticket-item *, .returns-content .card *, .dashboard-content .card *, .organizer-content .card * {
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+
+.card, .card-body, .modal-content, .modal-header, .modal-body, .modal-footer, .filter-box, .stat-box, .event-card, .ticket-item, .returns-content .card, .dashboard-content .card, .organizer-content .card {
+    background: var(--bg-secondary) !important;
+    box-shadow: 0 2px 6px var(--card-shadow) !important;
+}
+
+body {
+    width: 100vw;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    max-height: 100vh;
+    overflow-y: auto;
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+html {
+    height: -webkit-fill-available;
+}
+
+main {
+    height: 100%;
+    height: -webkit-fill-available;
+    max-height: calc(100vh - 56px);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.navbar {
+    height: 56px;
+    border-bottom: 2px solid var(--navbar-border);
+    box-shadow: 0 2px 4px var(--navbar-shadow);
+    z-index: 1030;
+    background: var(--navbar-bg) !important;
+}
+
+.navbar-collapse {
+    background: var(--bg-secondary);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 12px var(--card-shadow);
+    z-index: 1030;
+}
+
+.navbar-brand {
+    color: var(--text-color) !important;
+    font-weight: 600;
+}
+
+.nav-link {
+    color: var(--text-color) !important;
+}
+
+.nav-link:hover {
+    color: var(--primary-color) !important;
+}
+
+.nav-link.active {
+    background: var(--primary-color) !important;
+    color: var(--text-inverse) !important;
+}
+
+.nav-link.logout-link {
+    border: 2px solid var(--logout-border) !important;
+    border-radius: 6px !important;
+    padding: 0.25rem 0.75rem !important;
+    transition: all 0.2s !important;
+    color: var(--logout-border) !important;
+}
+
+.nav-link.logout-link:hover {
+    background: var(--logout-hover-bg) !important;
+    color: var(--text-inverse) !important;
+    border-color: var(--logout-hover-border) !important;
+}
+
+.nav-link.logout-link:focus-visible {
+    outline: 3px solid var(--focus-outline) !important;
+    outline-offset: 2px !important;
+}
+
+.nav-link#themeToggle {
+    border: 2px solid var(--theme-btn-border) !important;
+    border-radius: 6px !important;
+    padding: 0.25rem 0.75rem !important;
+    transition: all 0.2s !important;
+    color: var(--theme-btn-text) !important;
+    background: transparent !important;
+    cursor: pointer !important;
+}
+
+.nav-link#themeToggle:hover {
+    background: var(--theme-btn-hover-bg) !important;
+    color: var(--theme-btn-hover-text) !important;
+    border-color: var(--theme-btn-hover-bg) !important;
+}
+
+.nav-link#themeToggle:focus-visible {
+    outline: 3px solid var(--focus-outline) !important;
+    outline-offset: 2px !important;
+}
+
+main.col-12 > .d-flex {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: calc(100vh - 56px) !important;
+    padding: 2rem 1rem;
+    width: 100%;
+}
+
+main.col-12 .card {
+    width: 100% !important;
+    max-width: 400px !important;
+}
+
+main.col-12 .card-body {
+    padding: 2rem !important;
+}
+
+main.col-12 .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+main.col-12 .form-control {
+    width: 100% !important;
+}
+
+main.col-12 .btn-primary {
+    width: 100% !important;
+}
+
+.event-card, .ticket-item, .returns-content .card, .dashboard-content .card {
+    border: 3px solid var(--border-color) !important;
+    border-left: 5px solid var(--primary-color) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 6px var(--card-shadow) !important;
+    transition: transform 0.2s, box-shadow 0.2s !important;
+    background: var(--bg-secondary) !important;
+    color: var(--text-color) !important;
+}
+
+.event-card:hover, .ticket-item:hover, .returns-content .card:hover, .dashboard-content .card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 10px var(--card-shadow-hover) !important;
+}
+
+.event-card .card-body, .ticket-item .card-body, .returns-content .card .card-body, .dashboard-content .card .card-body {
+    color: var(--text-color) !important;
+    padding: 1.25rem !important;
+}
+
+.event-card .card-title, .ticket-item .card-title, .returns-content .card .card-title, .dashboard-content .card .card-title {
+    color: var(--text-color) !important;
+    font-size: 1.25rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.event-card .card-text, .ticket-item .card-text, .returns-content .card .card-text, .dashboard-content .card .card-text {
+    color: var(--text-muted) !important;
+    margin-bottom: 1rem !important;
+}
+
+.event-card .badge {
+    background: var(--badge-success-bg) !important;
+    padding: 0.5rem 1rem !important;
+    color: var(--text-inverse) !important;
+    display: inline-block;
+    width: auto !important;
+    max-width: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.seat-map {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 20px;
+    background: var(--border-light);
+    border-radius: 10px;
+    justify-content: flex-start;
+    width: 100%;
+    min-height: 200px;
+}
+
+.seat {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 4px !important;
+    flex-shrink: 0 !important;
+    border: 2px solid var(--legend-border) !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
+    display: inline-block !important;
+}
+
+.seat.available {
+    background: var(--seat-available) !important;
+    border-color: var(--seat-available-hover) !important;
+}
+
+.seat.available:hover {
+    background: var(--seat-available-hover) !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.5) !important;
+}
+
+.seat.selected {
+    background: var(--seat-selected) !important;
+    border-color: var(--seat-selected-hover) !important;
+}
+
+.seat.selected:hover {
+    background: var(--seat-selected-hover) !important;
+}
+
+.seat.sold {
+    background: var(--seat-sold) !important;
+    border-color: var(--seat-sold-border) !important;
+    cursor: not-allowed !important;
+    opacity: 0.6 !important;
+}
+
+.legend-seat {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-right: 4px;
+    vertical-align: middle;
+    border: 1px solid var(--legend-border);
+}
+
+.legend-seat.available {
+    background: var(--seat-available) !important;
+}
+
+.legend-seat.selected {
+    background: var(--seat-selected) !important;
+}
+
+.legend-seat.sold {
+    background: var(--seat-sold) !important;
+}
+
+.stat-box {
+    border: 3px solid var(--border-color) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 2px 6px var(--card-shadow) !important;
+    background: var(--bg-secondary) !important;
+    padding: 20px !important;
+    text-align: center !important;
+    width: 100% !important;
+    min-height: 120px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+
+.stat-box h4 {
+    color: var(--primary-color) !important;
+    margin-bottom: 5px !important;
+}
+
+.filter-box {
+    border: 3px solid var(--filter-box-border);
+    border-radius: 14px;
+    box-shadow: 0 2px 6px var(--card-shadow);
+    background: var(--filter-box-bg);
+}
+
+.btn-primary {
+    background: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+}
+
+.btn-primary:focus, .btn-primary:active, .btn-primary.active {
+    background: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: none !important;
+}
+
+.btn-primary:focus-visible {
+    outline: 3px solid var(--focus-outline) !important;
+    outline-offset: 2px !important;
+}
+
+.btn-outline-danger {
+    border: 2px solid var(--danger-color) !important;
+    color: var(--danger-color) !important;
+    background: var(--bg-secondary) !important;
+}
+
+.btn-outline-danger:hover {
+    background: var(--danger-color) !important;
+    color: var(--text-inverse) !important;
+    border-color: var(--danger-color) !important;
+}
+
+.btn-outline-danger:focus, .btn-outline-danger:active, .btn-outline-danger.active {
+    background: var(--danger-color) !important;
+    color: var(--text-inverse) !important;
+    box-shadow: none !important;
+}
+
+.btn-outline-danger:focus-visible {
+    outline: 3px solid var(--focus-outline) !important;
+    outline-offset: 2px !important;
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--link-color) !important;
+    color: var(--link-color) !important;
+    background: var(--bg-secondary) !important;
+}
+
+.btn-outline-primary:hover {
+    background: var(--link-color) !important;
+    color: var(--text-inverse) !important;
+    border-color: var(--link-color) !important;
+}
+
+.btn-outline-primary:focus-visible {
+    outline: 3px solid var(--focus-outline) !important;
+    outline-offset: 2px !important;
+}
+
+.btn-success {
+    background: var(--success-color) !important;
+    border-color: var(--success-color) !important;
+}
+
+.btn-success:hover {
+    background: var(--success-hover) !important;
+    border-color: var(--success-hover) !important;
+}
+
+.btn-success:focus-visible {
+    outline: 3px solid var(--focus-outline) !important;
+    outline-offset: 2px !important;
+}
+
+.form-control, .form-select {
+    border-radius: 10px;
+    border: 2px solid var(--input-border);
+    background: var(--input-bg);
+    color: var(--text-color);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--input-focus-border);
+    outline: 3px solid rgba(102, 16, 242, 0.25);
+}
+
+.rating-select button {
+    width: 35px;
+    height: 35px;
+    border: 2px solid var(--legend-border);
+    border-radius: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: bold;
+    background: var(--bg-secondary);
+    color: var(--text-color);
+}
+
+.rating-select button:hover, .rating-select button.active {
+    background: var(--seat-selected);
+    border-color: var(--seat-selected-hover);
+    color: var(--text-color);
+}
+
+.rating-select button:focus-visible {
+    outline: 3px solid var(--focus-outline) !important;
+    outline-offset: 2px !important;
+}
+
+.organizer-content .card {
+    width: 100% !important;
+}
+
+.organizer-content .table-responsive {
+    width: 100% !important;
+    overflow-x: auto;
+}
+
+.organizer-content table {
+    width: 100% !important;
+    min-width: 1000px !important;
+    table-layout: fixed;
+}
+
+.organizer-content table th, .organizer-content table td {
+    white-space: nowrap;
+    padding: 8px;
+    border: 2px solid var(--table-border);
+    color: var(--text-color) !important;
+}
+
+.organizer-content table th {
+    background: var(--table-header-bg) !important;
+    color: var(--text-color) !important;
+}
+
+.organizer-content table td {
+    color: var(--text-color) !important;
+}
+
+.organizer-content .stat-box h4 {
+    color: var(--primary-color) !important;
+}
+
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.visually-hidden-focusable:focus {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    padding: inherit !important;
+    margin: inherit !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+}
+
+*:focus-visible {
+    outline: 3px solid var(--focus-outline) !important;
+    outline-offset: 2px !important;
+}
+
+a.visually-hidden-focusable {
+    background: var(--primary-color);
+    color: var(--text-inverse);
+    padding: 8px 16px;
+    text-decoration: none;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+}
+
+.card {
+    background: var(--bg-secondary) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+}
+
+.modal-content {
+    background: var(--bg-secondary) !important;
+    color: var(--text-color) !important;
+}
+
+.modal-header {
+    background: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
+}
+
+.modal-body {
+    background: var(--bg-secondary) !important;
+    color: var(--text-color) !important;
+}
+
+.modal-footer {
+    background: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
+}
+
+.table-light {
+    background: var(--table-header-bg) !important;
+    color: var(--text-color) !important;
+}
+
+.alert {
+    background: var(--bg-secondary) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+}
+
+a {
+    color: var(--link-color);
+}
+
+a:hover {
+    color: var(--link-hover);
+}
+
+footer {
+    background: var(--bg-color);
+    color: var(--text-muted);
+}
+
+.ticket-item .text-muted, .returns-content .text-muted, .dashboard-content .text-muted {
+    color: var(--text-muted) !important;
+}
+
+.ticket-item a, .returns-content a, .dashboard-content a {
+    color: var(--link-color) !important;
+}
+
+.ticket-item a:hover, .returns-content a:hover, .dashboard-content a:hover {
+    color: var(--link-hover) !important;
+}
+
+.badge {
+    background: var(--badge-success-bg) !important;
+    color: var(--text-inverse) !important;
+    border: none !important;
+    box-shadow: none !important;
+    background-clip: padding-box !important;
+}
+
+.badge.bg-success {
+    background: var(--badge-success-bg) !important;
+    color: var(--text-inverse) !important;
+}
+
+.badge.bg-warning {
+    background: var(--badge-warning-bg) !important;
+    color: var(--badge-warning-text) !important;
+}
+
+.badge.bg-danger {
+    background: var(--badge-danger-bg) !important;
+    color: var(--text-inverse) !important;
+}
+
+.alert-info {
+    border: 2px solid var(--info-text) !important;
+    background: var(--info-bg) !important;
+    color: var(--info-text) !important;
+}
+
+.card-title { color: var(--text-color) !important; }
+.card-text { color: var(--text-muted) !important; }
+.modal-title { color: var(--text-color) !important; }
+h1, h2, h3, h4, h5, h6 { color: var(--text-color) !important; }
+p { color: var(--text-muted) !important; }
+small { color: var(--text-muted) !important; }
+
+@media (prefers-contrast: more) {
+    .seat.available { background: #006400 !important; }
+    .seat.selected { background: #ffd700 !important; }
+    .seat.sold { background: #8b0000 !important; }
+    .btn-outline-danger { border: 3px solid #8b0000 !important; }
+    .ticket-item, .returns-content .card, .dashboard-content .card {
+        border: 4px solid #000 !important;
+    }
+}
+
+@media (prefers-contrast: less) {
+    .seat.available { background: #90EE90 !important; }
+    .seat.selected { background: #FFE4B5 !important; }
+    .seat.sold { background: #FFB6C1 !important; }
+    .ticket-item, .returns-content .card, .dashboard-content .card {
+        border: 2px solid #ccc !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+}
