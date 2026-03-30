@@ -71,12 +71,12 @@ main.col-12 .btn-primary {
 .ticket-item,
 .returns-content .card,
 .dashboard-content .card {
-    border: 2px solid gray !important;
-    border-left: 4px solid purple !important;
+    border: 3px solid #444 !important;
+    border-left: 5px solid #6610f2 !important;
     border-radius: 10px !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
     transition: transform 0.2s, box-shadow 0.2s !important;
-    background: white !important;
+    background: #fff !important;
 }
 
 .event-card:hover,
@@ -88,8 +88,9 @@ main.col-12 .btn-primary {
 }
 
 .event-card .badge {
-    background: green;
+    background: #1e7e34;
     padding: 0.5rem 1rem;
+    color: white;
 }
 
 .seat-map {
@@ -181,8 +182,27 @@ main.col-12 .btn-primary {
     background: pink !important;
 }
 
+.nav-link.logout-link {
+    border: 2px solid #8b0000 !important;
+    border-radius: 6px !important;
+    padding: 0.25rem 0.75rem !important;
+    transition: all 0.2s !important;
+    color: #8b0000 !important;
+}
+
+.nav-link.logout-link:hover {
+    background: #8b0000 !important;
+    color: white !important;
+    border-color: #600000 !important;
+}
+
+.nav-link.logout-link:focus-visible {
+    outline: 3px solid #6610f2 !important;
+    outline-offset: 2px !important;
+}
+
 .stat-box {
-    border: 2px solid gray !important;
+    border: 3px solid #444 !important;
     border-radius: 14px !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
     background: white !important;
@@ -201,7 +221,7 @@ main.col-12 .btn-primary {
 }
 
 .filter-box {
-    border: 2px solid gray;
+    border: 3px solid #444;
     border-radius: 14px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
@@ -224,28 +244,78 @@ main.col-12 .btn-primary {
     box-shadow: none !important;
 }
 
+.btn-primary:focus-visible {
+    outline: 3px solid #6610f2 !important;
+    outline-offset: 2px !important;
+}
+
 .btn-outline-danger {
-    border-color: red !important;
-    color: red !important;
+    border: 2px solid #8b0000 !important;
+    color: #8b0000 !important;
+    background: white !important;
 }
 
 .btn-outline-danger:hover {
-    background: red !important;
+    background: #8b0000 !important;
     color: white !important;
+    border-color: #8b0000 !important;
 }
 
 .btn-outline-danger:focus,
 .btn-outline-danger:active,
 .btn-outline-danger.active {
-    background: red !important;
+    background: #8b0000 !important;
     color: white !important;
     box-shadow: none !important;
+}
+
+.btn-outline-danger:focus-visible {
+    outline: 3px solid #6610f2 !important;
+    outline-offset: 2px !important;
+}
+
+.btn-outline-primary {
+    border: 2px solid #0056b3 !important;
+    color: #0056b3 !important;
+    background: white !important;
+}
+
+.btn-outline-primary:hover {
+    background: #0056b3 !important;
+    color: white !important;
+    border-color: #0056b3 !important;
+}
+
+.btn-outline-primary:focus-visible {
+    outline: 3px solid #6610f2 !important;
+    outline-offset: 2px !important;
+}
+
+.btn-success {
+    background: #1e7e34 !important;
+    border-color: #1e7e34 !important;
+}
+
+.btn-success:hover {
+    background: #19692c !important;
+    border-color: #19692c !important;
+}
+
+.btn-success:focus-visible {
+    outline: 3px solid #6610f2 !important;
+    outline-offset: 2px !important;
 }
 
 .form-control,
 .form-select {
     border-radius: 10px;
-    border: 1px solid gray;
+    border: 2px solid #666;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #6610f2;
+    outline: 3px solid rgba(102, 16, 242, 0.25);
 }
 
 .rating-select button {
@@ -258,13 +328,19 @@ main.col-12 .btn-primary {
     transition: all 0.2s;
     font-weight: bold;
     background: white;
+    color: #333;
 }
 
 .rating-select button:hover,
 .rating-select button.active {
     background: yellow;
-    border-color: yellow;
+    border-color: #d39e00;
     color: black;
+}
+
+.rating-select button:focus-visible {
+    outline: 3px solid #6610f2 !important;
+    outline-offset: 2px !important;
 }
 
 .organizer-content .card {
@@ -286,7 +362,16 @@ main.col-12 .btn-primary {
 .organizer-content table td {
     white-space: nowrap;
     padding: 8px;
-    border: 1px solid gray;
+    border: 2px solid #666;
+}
+
+.organizer-content table th {
+    background: #e9ecef !important;
+    color: #333 !important;
+}
+
+.organizer-content table td {
+    color: #333 !important;
 }
 
 .visually-hidden {
@@ -305,11 +390,46 @@ main.col-12 .btn-primary {
     position: static !important;
     width: auto !important;
     height: auto !important;
+    padding: inherit !important;
+    margin: inherit !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
 }
 
 *:focus-visible {
-    outline: 3px solid #6610f2;
-    outline-offset: 2px;
+    outline: 3px solid #6610f2 !important;
+    outline-offset: 2px !important;
+}
+
+a.visually-hidden-focusable {
+    background: #6610f2;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+}
+
+@media (prefers-contrast: high) {
+    .seat.available {
+        background: #006400 !important;
+    }
+    .seat.selected {
+        background: #ffd700 !important;
+    }
+    .seat.sold {
+        background: #8b0000 !important;
+    }
+    .btn-outline-danger {
+        border: 3px solid #8b0000 !important;
+    }
+    .ticket-item,
+    .returns-content .card,
+    .dashboard-content .card {
+        border: 4px solid #000 !important;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -319,21 +439,65 @@ main.col-12 .btn-primary {
     }
 }
 
-.nav-link.logout-link {
-    border: 2px solid red !important;
-    border-radius: 6px !important;
-    padding: 0.25rem 0.75rem !important;
-    transition: all 0.2s !important;
-    color: red !important;
+.ticket-item .text-muted,
+.returns-content .text-muted,
+.dashboard-content .text-muted {
+    color: #555 !important;
 }
 
-.nav-link.logout-link:hover {
-    background: red !important;
+.ticket-item a,
+.returns-content a,
+.dashboard-content a {
+    color: #0056b3 !important;
+}
+
+.ticket-item a:hover,
+.returns-content a:hover,
+.dashboard-content a:hover {
+    color: #003d82 !important;
+}
+
+.badge.bg-success {
+    background: #1e7e34 !important;
     color: white !important;
-    border-color: darkred !important;
 }
 
-.nav-link.logout-link:focus-visible {
-    outline: 3px solid #6610f2 !important;
-    outline-offset: 2px !important;
+.badge.bg-warning {
+    background: #d39e00 !important;
+    color: black !important;
+}
+
+.badge.bg-danger {
+    background: #8b0000 !important;
+    color: white !important;
+}
+
+.alert-info {
+    border: 2px solid #0c5460 !important;
+    background: #d1ecf1 !important;
+    color: #0c5460 !important;
+}
+
+.card-title {
+    color: #333 !important;
+}
+
+.card-text {
+    color: #555 !important;
+}
+
+.modal-title {
+    color: #333 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #333 !important;
+}
+
+p {
+    color: #555 !important;
+}
+
+small {
+    color: #666 !important;
 }
