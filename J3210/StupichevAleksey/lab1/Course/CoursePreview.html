@@ -4,13 +4,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Python разработка — Обзор курса</title>
+    <title>Обзор курса</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="AU-styles.css" />
+    <link rel="stylesheet" href="../UserCourses/AU-styles.css" />
     <link rel="stylesheet" href="preview.css" />
-
 </head>
 
 <body>
@@ -25,7 +24,7 @@
                     <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
                         aria-label="Search">
                 </form>
-                <div class="text-end">
+                <div class="text-end" id="authButtons">
                     <a href="../signIn.html" class="btn btn-outline-light me-2">Login</a>
                     <a href="../registration.html" class="btn btn-warning">Sign-up</a>
                 </div>
@@ -42,29 +41,17 @@
                             <li class="breadcrumb-item"><a href="../index.html"
                                     class="text-white-50 text-decoration-none">Главная</a></li>
                             <li class="breadcrumb-item"><a href="../index.html"
-                                    class="text-white-50 text-decoration-none">Программирование</a></li>
-                            <li class="breadcrumb-item active text-white" aria-current="page">Python разработка</li>
+                                    class="text-white-50 text-decoration-none" id="heroCategoryLink">Программирование</a></li>
+                            <li class="breadcrumb-item active text-white" aria-current="page" id="heroTitle">Загрузка...</li>
                         </ol>
                     </nav>
-                    <h1 class="fw-bold mb-3">Python разработка</h1>
-                    <p class="lead mb-3" style="opacity:.85">Научитесь программировать на Python c нуля. Курс охватывает
-                        переменные, циклы, функции, ООП и работу с популярными библиотеками.</p>
-                    <div class="d-flex flex-wrap gap-2 mb-3">
-                        <span class="info-badge"><i class="bi bi-star-fill text-warning"></i> 4.8 (342 отзыва)</span>
-                        <span class="info-badge"><i class="bi bi-people"></i> 1 284 студента</span>
-                        <span class="info-badge"><i class="bi bi-clock"></i> 42 часа</span>
-                        <span class="info-badge"><i class="bi bi-translate"></i> Русский</span>
-                    </div>
-                    <div class="instructor-card">
-                        <img src="../images/jinx.png" alt="Преподаватель">
-                        <div>
-                            <div class="fw-semibold">Анна Петрова</div>
-                            <div class="small" style="opacity:.7">Веб-разработчик, 8 лет опыта</div>
-                        </div>
-                    </div>
+                    <h1 class="fw-bold mb-3" id="courseTitle">Загрузка...</h1>
+                    <p class="lead mb-3" style="opacity:.85" id="courseDesc"></p>
+                    <div class="d-flex flex-wrap gap-2 mb-3" id="courseInfo"></div>
+                    <div class="instructor-card" id="instructorCard"></div>
                 </div>
                 <div class="col-lg-5">
-                    <img src="../images/images-2.jpeg" alt="Top lane">
+                    <img src="" alt="" id="courseImage" style="display:none">
                 </div>
             </div>
         </div>
@@ -74,244 +61,21 @@
         <div class="row g-5">
             <div class="col-lg-8">
 
-                <div class="mb-5">
+                <div class="mb-5" id="learnSection" style="display:none">
                     <h3 class="fw-bold mb-3">Чему вы научитесь</h3>
-                    <div class="row g-2">
-                        <div class="col-md-6 d-flex gap-2"><i
-                                class="bi bi-check-circle-fill text-success mt-1"></i><span>Каких персонажей
-                                выбирать</span></div>
-                        <div class="col-md-6 d-flex gap-2"><i
-                                class="bi bi-check-circle-fill text-success mt-1"></i><span>Как менеджить волны</span>
-                        </div>
-                        <div class="col-md-6 d-flex gap-2"><i
-                                class="bi bi-check-circle-fill text-success mt-1"></i><span>Циклы, условия и
-                                функции</span></div>
-                        <div class="col-md-6 d-flex gap-2"><i
-                                class="bi bi-check-circle-fill text-success mt-1"></i><span>Объектно-ориентированное
-                                программирование</span></div>
-                        <div class="col-md-6 d-flex gap-2"><i
-                                class="bi bi-check-circle-fill text-success mt-1"></i><span>Работа с файлами и
-                                API</span></div>
-                        <div class="col-md-6 d-flex gap-2"><i
-                                class="bi bi-check-circle-fill text-success mt-1"></i><span>Библиотеки: requests,
-                                pandas, Flask</span></div>
-                    </div>
-                </div>
-
-                <div class="mb-5">
-                    <h3 class="fw-bold mb-3">Требования</h3>
-                    <ul>
-                        <li>Базовое владение компьютером</li>
-                        <li>Никаких предварительных знаний программирования не требуется</li>
-                    </ul>
+                    <div class="row g-2" id="learnItems"></div>
                 </div>
 
                 <div class="mb-5">
                     <h3 class="fw-bold mb-3">Содержание курса</h3>
-                    <p class="text-muted small mb-3">5 модулей &bull; 30 уроков &bull; 42 часа</p>
-
-                    <div class="accordion module-accordion" id="courseModules">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#mod1">
-                                    Модуль 1: Введение в Python
-                                    <span class="badge bg-secondary ms-auto me-2">6 уроков &bull; 8 ч</span>
-                                </button>
-                            </h2>
-                            <div id="mod1" class="accordion-collapse collapse show" data-bs-parent="#courseModules">
-                                <div class="accordion-body p-0">
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Что такое Python <span
-                                            class="ms-auto small text-muted">12:30</span></div>
-                                    <div class="lesson-item border-bottom"><i class="bi bi-file-text text-success"></i>
-                                        Установка и настройка <span class="ms-auto small text-muted">08:15</span></div>
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Первая программа <span
-                                            class="ms-auto small text-muted">15:40</span></div>
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Переменные <span
-                                            class="ms-auto small text-muted">18:20</span></div>
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Типы данных <span
-                                            class="ms-auto small text-muted">22:10</span></div>
-                                    <div class="lesson-item"><i class="bi bi-pencil-square text-info"></i> Тест: Основы
-                                        <span class="ms-auto small text-muted">10 вопросов</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#mod2">
-                                    Модуль 2: Управляющие конструкции
-                                    <span class="badge bg-secondary ms-auto me-2">7 уроков &bull; 10 ч</span>
-                                </button>
-                            </h2>
-                            <div id="mod2" class="accordion-collapse collapse" data-bs-parent="#courseModules">
-                                <div class="accordion-body p-0">
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Условные операторы <span
-                                            class="ms-auto small text-muted">20:00</span></div>
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Циклы for и while <span
-                                            class="ms-auto small text-muted">25:30</span></div>
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Вложенные циклы <span
-                                            class="ms-auto small text-muted">18:45</span></div>
-                                    <div class="lesson-item border-bottom"><i class="bi bi-file-text text-success"></i>
-                                        Практика: задачи на циклы <span class="ms-auto small text-muted">Задание</span>
-                                    </div>
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Списки и кортежи <span
-                                            class="ms-auto small text-muted">28:10</span></div>
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Словари и множества <span
-                                            class="ms-auto small text-muted">24:00</span></div>
-                                    <div class="lesson-item"><i class="bi bi-pencil-square text-info"></i> Тест:
-                                        Конструкции <span class="ms-auto small text-muted">15 вопросов</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#mod3">
-                                    Модуль 3: Функции
-                                    <span class="badge bg-secondary ms-auto me-2">5 уроков &bull; 8 ч</span>
-                                </button>
-                            </h2>
-                            <div id="mod3" class="accordion-collapse collapse" data-bs-parent="#courseModules">
-                                <div class="accordion-body p-0">
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Определение функций <span
-                                            class="ms-auto small text-muted">16:20</span></div>
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Аргументы и возврат <span
-                                            class="ms-auto small text-muted">22:15</span></div>
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Lambda и map/filter <span
-                                            class="ms-auto small text-muted">19:40</span></div>
-                                    <div class="lesson-item border-bottom"><i class="bi bi-file-text text-success"></i>
-                                        Практика: функции <span class="ms-auto small text-muted">Задание</span></div>
-                                    <div class="lesson-item"><i class="bi bi-pencil-square text-info"></i> Тест: Функции
-                                        <span class="ms-auto small text-muted">12 вопросов</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#mod4">
-                                    Модуль 4: ООП
-                                    <span class="badge bg-secondary ms-auto me-2">6 уроков &bull; 9 ч</span>
-                                </button>
-                            </h2>
-                            <div id="mod4" class="accordion-collapse collapse" data-bs-parent="#courseModules">
-                                <div class="accordion-body p-0">
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Классы и объекты <span
-                                            class="ms-auto small text-muted">24:00</span></div>
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Наследование <span
-                                            class="ms-auto small text-muted">20:30</span></div>
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Полиморфизм <span
-                                            class="ms-auto small text-muted">18:50</span></div>
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Магические методы <span
-                                            class="ms-auto small text-muted">22:10</span></div>
-                                    <div class="lesson-item border-bottom"><i class="bi bi-file-text text-success"></i>
-                                        Проект: мини-игра <span class="ms-auto small text-muted">Задание</span></div>
-                                    <div class="lesson-item"><i class="bi bi-pencil-square text-info"></i> Тест: ООП
-                                        <span class="ms-auto small text-muted">15 вопросов</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#mod5">
-                                    Модуль 5: Библиотеки и проект
-                                    <span class="badge bg-secondary ms-auto me-2">6 уроков &bull; 7 ч</span>
-                                </button>
-                            </h2>
-                            <div id="mod5" class="accordion-collapse collapse" data-bs-parent="#courseModules">
-                                <div class="accordion-body p-0">
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Работа с файлами <span
-                                            class="ms-auto small text-muted">14:20</span></div>
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> HTTP-запросы и API <span
-                                            class="ms-auto small text-muted">20:15</span></div>
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Основы pandas <span
-                                            class="ms-auto small text-muted">26:40</span></div>
-                                    <div class="lesson-item border-bottom"><i
-                                            class="bi bi-play-circle text-primary"></i> Введение в Flask <span
-                                            class="ms-auto small text-muted">30:00</span></div>
-                                    <div class="lesson-item border-bottom"><i class="bi bi-file-text text-success"></i>
-                                        Финальный проект <span class="ms-auto small text-muted">Задание</span></div>
-                                    <div class="lesson-item"><i class="bi bi-pencil-square text-info"></i> Итоговый тест
-                                        <span class="ms-auto small text-muted">25 вопросов</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="text-muted small mb-3" id="modulesInfo"></p>
+                    <div class="accordion module-accordion" id="courseModules"></div>
                 </div>
 
                 <div class="mb-5">
                     <h3 class="fw-bold mb-3">Отзывы студентов</h3>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <div class="review-card">
-                                <div class="d-flex align-items-center gap-2 mb-2">
-                                    <div class="review-avatar">А</div>
-                                    <div>
-                                        <div class="fw-semibold small">Алексей М.</div>
-                                        <div class="rating-stars small"><i class="bi bi-star-fill"></i><i
-                                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                                    </div>
-                                </div>
-                                <p class="small mb-0">Отличный курс для новичков. Всё объясняется простым языком, много
-                                    практики. Рекомендую!</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="review-card">
-                                <div class="d-flex align-items-center gap-2 mb-2">
-                                    <div class="review-avatar">М</div>
-                                    <div>
-                                        <div class="fw-semibold small">Мария К.</div>
-                                        <div class="rating-stars small"><i class="bi bi-star-fill"></i><i
-                                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                                class="bi bi-star-fill"></i><i class="bi bi-star"></i></div>
-                                    </div>
-                                </div>
-                                <p class="small mb-0">Хороший курс, но хотелось бы больше задач на ООП. В целом доступно
-                                    и понятно.</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="review-card">
-                                <div class="d-flex align-items-center gap-2 mb-2">
-                                    <div class="review-avatar">Д</div>
-                                    <div>
-                                        <div class="fw-semibold small">Дмитрий В.</div>
-                                        <div class="rating-stars small"><i class="bi bi-star-fill"></i><i
-                                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                                    </div>
-                                </div>
-                                <p class="small mb-0">Прошёл за 3 недели. Финальный проект помог закрепить знания. Уже
-                                    устроился на стажировку!</p>
-                            </div>
-                        </div>
+                    <div class="row g-3" id="reviewsList">
+                        <div class="text-center py-3"><div class="spinner-border spinner-border-sm text-primary"></div></div>
                     </div>
                 </div>
             </div>
@@ -319,19 +83,13 @@
             <div class="col-lg-4">
                 <div class="sticky-buy">
                     <div class="buy-card">
-                        <div class="price mb-1">Бесплатно</div>
+                        <div class="price mb-1" id="coursePrice">Загрузка...</div>
                         <p class="small text-muted mb-3">Полный доступ ко всем материалам</p>
-                        <a href="signUp.html" class="btn btn-primary w-100 py-2 mb-3">
+                        <button class="btn btn-primary w-100 py-2 mb-3" id="enrollBtn" onclick="enrollCourse()" disabled>
                             <i class="bi bi-cart-plus me-1"></i>Записаться на курс
-                        </a>
-                        <ul class="list-unstyled small mb-0">
-                            <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>30 уроков</li>
-                            <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>42 часа видео</li>
-                            <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>5 практических заданий</li>
-                            <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>Сертификат по окончании</li>
-                            <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>Пожизненный доступ</li>
-                            <li><i class="bi bi-check2 text-success me-2"></i>Поддержка преподавателя</li>
-                        </ul>
+                        </button>
+                        <div id="enrollAlert" class="d-none"></div>
+                        <ul class="list-unstyled small mb-0" id="courseFeatures"></ul>
                     </div>
                 </div>
             </div>
@@ -352,7 +110,256 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
+    <script src="../auth.js"></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const courseId = parseInt(params.get('id'));
+        let currentCourse = null;
 
+        function updateHeader() {
+            if (isLoggedIn()) {
+                const user = getUser();
+                const cabinetUrl = user && user.role === 'teacher'
+                    ? '../TeacherCourses/TeacherCourses.html'
+                    : '../UserCourses/View.html';
+                document.getElementById('authButtons').innerHTML = `
+                    <div class="d-flex align-items-center gap-2">
+                        <a href="${cabinetUrl}" class="btn btn-outline-light">
+                            <i class="bi bi-person-circle me-1"></i>Кабинет
+                        </a>
+                        <button class="btn btn-warning" onclick="logout()">Sign out</button>
+                    </div>
+                `;
+            }
+        }
+
+        function getLessonIcon(type) {
+            if (type === 'video') return '<i class="bi bi-play-circle text-primary"></i>';
+            if (type === 'quiz') return '<i class="bi bi-pencil-square text-info"></i>';
+            return '<i class="bi bi-file-text text-success"></i>';
+        }
+
+        function getStars(rating) {
+            let html = '';
+            for (let i = 1; i <= 5; i++) {
+                html += i <= rating
+                    ? '<i class="bi bi-star-fill"></i>'
+                    : '<i class="bi bi-star"></i>';
+            }
+            return html;
+        }
+
+        async function loadCourse() {
+            if (!courseId) {
+                document.getElementById('courseTitle').textContent = 'Курс не найден';
+                return;
+            }
+
+            try {
+                const response = await axios.get(`${API_URL}/courses/${courseId}`);
+                currentCourse = response.data;
+                renderCourse(currentCourse);
+                loadReviews();
+                checkEnrollment();
+            } catch (err) {
+                console.error('Error:', err);
+                document.getElementById('courseTitle').textContent = 'Курс не найден';
+            }
+        }
+
+        function renderCourse(c) {
+            document.title = c.title + ' — Обзор курса';
+            document.getElementById('heroTitle').textContent = c.title;
+            document.getElementById('heroCategoryLink').textContent = c.category;
+            document.getElementById('courseTitle').textContent = c.title;
+            document.getElementById('courseDesc').textContent = c.fullDescription || c.shortDescription;
+
+            const img = document.getElementById('courseImage');
+            img.src = c.image;
+            img.alt = c.title;
+            img.style.display = 'block';
+            img.className = 'rounded';
+            img.style.width = '100%';
+            img.style.maxHeight = '320px';
+            img.style.objectFit = 'cover';
+            img.style.boxShadow = '0 8px 32px rgba(0,0,0,.35)';
+
+            document.getElementById('courseInfo').innerHTML = `
+                <span class="info-badge"><i class="bi bi-star-fill text-warning"></i> ${c.rating} (${c.reviewsCount} отзывов)</span>
+                <span class="info-badge"><i class="bi bi-people"></i> ${c.studentsCount} студентов</span>
+                <span class="info-badge"><i class="bi bi-clock"></i> ${c.duration}</span>
+                <span class="info-badge"><i class="bi bi-translate"></i> ${c.language}</span>
+            `;
+
+            document.getElementById('instructorCard').innerHTML = `
+                <img src="../images/jinx.png" alt="Преподаватель">
+                <div>
+                    <div class="fw-semibold">${c.teacherName}</div>
+                    <div class="small" style="opacity:.7">${c.category}</div>
+                </div>
+            `;
+
+            document.getElementById('coursePrice').textContent = c.price === 0 ? 'Бесплатно' : c.price + ' ₽';
+
+            const totalLessons = c.modules ? c.modules.reduce((sum, m) => sum + m.lessons.length, 0) : c.lessonsTotal;
+            document.getElementById('courseFeatures').innerHTML = `
+                <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>${totalLessons} уроков</li>
+                <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>${c.duration} видео</li>
+                ${c.hasCertificate ? '<li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>Сертификат по окончании</li>' : ''}
+                <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>Пожизненный доступ</li>
+                <li><i class="bi bi-check2 text-success me-2"></i>Поддержка преподавателя</li>
+            `;
+
+            if (c.modules && c.modules.length > 0) {
+                const totalModules = c.modules.length;
+                const totalModuleLessons = c.modules.reduce((sum, m) => sum + m.lessons.length, 0);
+                document.getElementById('modulesInfo').textContent =
+                    `${totalModules} модулей • ${totalModuleLessons} уроков • ${c.duration}`;
+
+                document.getElementById('courseModules').innerHTML = c.modules.map((mod, idx) => `
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button ${idx > 0 ? 'collapsed' : ''}" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#mod${mod.id}">
+                                Модуль ${idx + 1}: ${mod.title}
+                                <span class="badge bg-secondary ms-auto me-2">${mod.lessons.length} уроков</span>
+                            </button>
+                        </h2>
+                        <div id="mod${mod.id}" class="accordion-collapse collapse ${idx === 0 ? 'show' : ''}"
+                            data-bs-parent="#courseModules">
+                            <div class="accordion-body p-0">
+                                ${mod.lessons.map(lesson => `
+                                    <div class="lesson-item border-bottom">
+                                        ${getLessonIcon(lesson.type)} ${lesson.title}
+                                        <span class="ms-auto small text-muted">${lesson.duration}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('modulesInfo').textContent = 'Содержание пока не заполнено';
+            }
+
+            document.getElementById('enrollBtn').disabled = false;
+        }
+
+        async function loadReviews() {
+            try {
+                const response = await axios.get(`${API_URL}/reviews`, { params: { courseId } });
+                const reviews = response.data;
+
+                if (reviews.length === 0) {
+                    document.getElementById('reviewsList').innerHTML = '<p class="text-muted">Пока нет отзывов</p>';
+                    return;
+                }
+
+                document.getElementById('reviewsList').innerHTML = reviews.map(r => `
+                    <div class="col-md-6">
+                        <div class="review-card">
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <div class="review-avatar">${r.userName.charAt(0)}</div>
+                                <div>
+                                    <div class="fw-semibold small">${r.userName}</div>
+                                    <div class="rating-stars small">${getStars(r.rating)}</div>
+                                </div>
+                            </div>
+                            <p class="small mb-0">${r.text}</p>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error('Reviews error:', err);
+            }
+        }
+
+        async function checkEnrollment() {
+            if (!isLoggedIn()) return;
+
+            const user = getUser();
+            try {
+                const resp = await axios.get(`${API_URL}/users/${user.id}`);
+                const userData = resp.data;
+                const enrolled = userData.enrolledCourses || [];
+
+                if (enrolled.includes(courseId)) {
+                    const btn = document.getElementById('enrollBtn');
+                    btn.innerHTML = '<i class="bi bi-play-fill me-1"></i>Перейти к обучению';
+                    btn.classList.remove('btn-primary');
+                    btn.classList.add('btn-success');
+                    btn.disabled = false;
+                    btn.onclick = function () {
+                        window.location.href = 'CourseView.html?id=' + courseId;
+                    };
+
+                    const alertDiv = document.getElementById('enrollAlert');
+                    alertDiv.className = 'small text-success mt-2';
+                    alertDiv.innerHTML = '<i class="bi bi-check-circle me-1"></i>Вы записаны на этот курс';
+                }
+            } catch (err) {
+                console.error('Check enrollment error:', err);
+            }
+        }
+
+        async function enrollCourse() {
+            if (!isLoggedIn()) {
+                window.location.href = '../signIn.html';
+                return;
+            }
+
+            const user = getUser();
+            const btn = document.getElementById('enrollBtn');
+            const alertDiv = document.getElementById('enrollAlert');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Записываем...';
+
+            try {
+                const userResp = await axios.get(`${API_URL}/users/${user.id}`);
+                const userData = userResp.data;
+                const enrolled = userData.enrolledCourses || [];
+
+                if (enrolled.includes(courseId)) {
+                    btn.textContent = 'Вы уже записаны';
+                    btn.classList.remove('btn-primary');
+                    btn.classList.add('btn-success');
+                    return;
+                }
+
+                enrolled.push(courseId);
+                await axios.patch(`${API_URL}/users/${user.id}`, {
+                    enrolledCourses: enrolled
+                });
+
+                if (currentCourse) {
+                    await axios.patch(`${API_URL}/courses/${courseId}`, {
+                        studentsCount: (currentCourse.studentsCount || 0) + 1
+                    });
+                }
+
+                btn.innerHTML = '<i class="bi bi-check-lg me-1"></i>Вы записаны!';
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-success');
+
+                alertDiv.className = 'alert alert-success mt-2';
+                alertDiv.innerHTML = 'Курс добавлен! <a href="CourseView.html?id=' + courseId + '" class="alert-link fw-bold">Начать обучение →</a>';
+
+            } catch (err) {
+                console.error('Enroll error:', err);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bi bi-cart-plus me-1"></i>Записаться на курс';
+
+                alertDiv.className = 'alert alert-danger mt-2';
+                alertDiv.textContent = 'Ошибка записи. Попробуйте ещё раз.';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateHeader();
+            loadCourse();
+        });
+    </script>
 </body>
 
 </html>
