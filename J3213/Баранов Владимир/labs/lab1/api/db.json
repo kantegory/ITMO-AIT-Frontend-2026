@@ -1,0 +1,379 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "student",
+      "email": "student@mail.com",
+      "password": "$2a$10$hS28spH0uHw8Ro37Y42Dkue2jx34dQ6p3w6Oa6nHP4jXtMBT3tNE6"
+    },
+    {
+      "email": "yaloh@mail.ru",
+      "password": "$2a$10$EzXlleYwmGigYi5dzyMJnO8Tq4iWS9RRGEAzEv7n94vLtEou7b8Y6",
+      "username": "loh",
+      "id": 2
+    }
+  ],
+  "experiments": [
+    {
+      "id": 12,
+      "userId": 1,
+      "name": "ResNet50 CIFAR10",
+      "status": "Running",
+      "stage": "Eval",
+      "description": "Классический baseline на CIFAR10. Цель: проверить устойчивость пайплайна и качество аугментаций.",
+      "metricName": "Accuracy",
+      "metricValue": 0.91,
+      "modelId": 1,
+      "modelName": "ResNet50 CIFAR10",
+      "date": "2026-03-10",
+      "tags": [
+        "image",
+        "resnet",
+        "baseline"
+      ],
+      "author": "student",
+      "logs": [
+        "[10:00:01] Начало обучения.",
+        "[10:00:10] Epoch 1/10 - loss=1.23, accuracy=0.55",
+        "[10:01:20] Epoch 5/10 - loss=0.62, accuracy=0.82",
+        "[10:02:45] Epoch 10/10 - loss=0.28, accuracy=0.91",
+        "[10:03:00] Эксперимент завершен успешно.",
+        "[26.03.2026, 12:01:46] Статус изменен на Running",
+        "[26.03.2026, 12:01:48] Статус изменен на Completed",
+        "[26.03.2026, 12:01:49] Статус изменен на Failed",
+        "[26.03.2026, 12:01:49] Статус изменен на Completed",
+        "[26.03.2026, 12:01:50] Статус изменен на Failed",
+        "[26.03.2026, 12:01:50] Статус изменен на Completed",
+        "[26.03.2026, 12:01:51] Статус изменен на Running"
+      ]
+    },
+    {
+      "id": 11,
+      "userId": 1,
+      "name": "XGBoost Credit Score",
+      "status": "Completed",
+      "stage": "Eval",
+      "description": "Скоринговая модель для табличных данных. Проверка качества после tuning.",
+      "metricName": "ROC-AUC",
+      "metricValue": 0.87,
+      "modelId": 2,
+      "modelName": "XGBoost Credit Score",
+      "date": "2026-03-09",
+      "tags": [
+        "tabular",
+        "xgboost"
+      ],
+      "author": "student",
+      "logs": [
+        "[15:20:00] Запуск обучения.",
+        "[15:22:10] Подбор параметров завершен.",
+        "[15:25:00] ROC-AUC=0.87",
+        "[15:26:00] Эксперимент завершен."
+      ]
+    },
+    {
+      "id": 10,
+      "userId": 1,
+      "name": "Baseline Logistic Regression",
+      "status": "Running",
+      "stage": "Train",
+      "description": "Быстрый baseline для сравнения с более сложными моделями.",
+      "metricName": "Accuracy",
+      "metricValue": null,
+      "modelId": 3,
+      "modelName": "Baseline Logistic Regression",
+      "date": "2026-03-09",
+      "tags": [
+        "baseline",
+        "tabular"
+      ],
+      "author": "student",
+      "logs": [
+        "[12:00:00] Запуск обучения.",
+        "[12:02:00] Epoch 1/20 - loss=1.10",
+        "[12:04:00] Epoch 2/20 - loss=0.95"
+      ]
+    },
+    {
+      "id": 9,
+      "userId": 1,
+      "name": "LightGBM Click Prediction",
+      "status": "Completed",
+      "stage": "DeployCheck",
+      "description": "Прогноз кликов. Проверка F1-score и стабильности на holdout.",
+      "metricName": "F1-score",
+      "metricValue": 0.76,
+      "modelId": 4,
+      "modelName": "LightGBM Click Prediction",
+      "date": "2026-03-05",
+      "tags": [
+        "tabular",
+        "lgbm"
+      ],
+      "author": "student",
+      "logs": [
+        "[09:00:00] Старт.",
+        "[09:10:00] Обучение завершено.",
+        "[09:11:00] F1-score=0.76",
+        "[26.03.2026, 12:02:08] Статус изменен на Failed",
+        "[26.03.2026, 12:02:09] Статус изменен на Running",
+        "[26.03.2026, 12:02:10] Статус изменен на Completed",
+        "[26.03.2026, 12:02:18] Добавлен артефакт 1 (config)"
+      ]
+    },
+    {
+      "userId": 2,
+      "name": "yolov8-test",
+      "status": "Failed",
+      "stage": "Train",
+      "description": "Тест детектора на малом датасете.",
+      "metricName": "ROC-AUC",
+      "metricValue": 0.97,
+      "modelId": 5,
+      "modelName": "YOLOv8",
+      "author": "loh",
+      "logs": [
+        "[10:00:00] Старт эксперимента",
+        "[10:08:00] Первый прогон завершен"
+      ],
+      "tags": [],
+      "date": "2026-03-26",
+      "id": 13
+    },
+    {
+      "userId": 2,
+      "author": "loh",
+      "name": "deploychecktest",
+      "description": "",
+      "stage": "DeployCheck",
+      "status": "Running",
+      "metricName": "F1-score",
+      "metricValue": 0.8,
+      "modelId": 5,
+      "modelName": "YOLOv8",
+      "tags": [],
+      "logs": [],
+      "date": "2026-03-26",
+      "id": 14
+    },
+    {
+      "userId": 1,
+      "author": "student",
+      "name": "Yolov8 test",
+      "description": "test cv model",
+      "stage": "Train",
+      "status": "Running",
+      "metricName": "F1-score",
+      "metricValue": 0.91,
+      "modelId": 6,
+      "modelName": "YOLOv8",
+      "tags": [
+        "cv"
+      ],
+      "logs": [
+        "[26.03.2026, 12:08:12] Статус изменен на Running",
+        "[26.03.2026, 12:08:20] Добавлена метрика F1=0.9"
+      ],
+      "date": "2026-03-26",
+      "id": 15
+    },
+    {
+      "userId": 1,
+      "author": "student",
+      "name": "test",
+      "description": "",
+      "stage": "Train",
+      "status": "Draft",
+      "metricName": "ROC-AUC",
+      "metricValue": 1,
+      "modelId": null,
+      "modelName": null,
+      "tags": [],
+      "logs": [],
+      "date": "2026-03-27",
+      "id": 16
+    }
+  ],
+  "metrics": [
+    {
+      "id": 1,
+      "userId": 1,
+      "experimentId": 12,
+      "name": "Accuracy",
+      "value": 0.91
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "experimentId": 12,
+      "name": "Loss",
+      "value": 0.28
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "experimentId": 12,
+      "name": "Precision",
+      "value": 0.89
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "experimentId": 12,
+      "name": "Recall",
+      "value": 0.88
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "experimentId": 11,
+      "name": "ROC-AUC",
+      "value": 0.87
+    },
+    {
+      "id": 6,
+      "userId": 1,
+      "experimentId": 11,
+      "name": "Logloss",
+      "value": 0.41
+    },
+    {
+      "id": 7,
+      "userId": 1,
+      "experimentId": 9,
+      "name": "F1-score",
+      "value": 0.76
+    },
+    {
+      "id": 8,
+      "userId": 1,
+      "experimentId": 9,
+      "name": "Precision",
+      "value": 0.74
+    },
+    {
+      "id": 9,
+      "userId": 1,
+      "experimentId": 9,
+      "name": "Recall",
+      "value": 0.78
+    },
+    {
+      "userId": 1,
+      "experimentId": 15,
+      "name": "F1",
+      "value": 0.9,
+      "id": 10
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 1,
+      "userId": 1,
+      "experimentId": 12,
+      "name": "model.pt",
+      "type": "model",
+      "createdAt": "2026-03-10"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "experimentId": 12,
+      "name": "confusion_matrix.png",
+      "type": "image",
+      "createdAt": "2026-03-10"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "experimentId": 12,
+      "name": "training_config.json",
+      "type": "config",
+      "createdAt": "2026-03-10"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "experimentId": 12,
+      "name": "metrics.json",
+      "type": "metrics",
+      "createdAt": "2026-03-10"
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "experimentId": 11,
+      "name": "model.pkl",
+      "type": "model",
+      "createdAt": "2026-03-09"
+    },
+    {
+      "id": 6,
+      "userId": 1,
+      "experimentId": 11,
+      "name": "params.json",
+      "type": "config",
+      "createdAt": "2026-03-09"
+    },
+    {
+      "userId": 1,
+      "experimentId": 9,
+      "name": "1",
+      "type": "config",
+      "createdAt": "2026-03-26",
+      "id": 7
+    }
+  ],
+  "models": [
+    {
+      "id": 1,
+      "userId": 1,
+      "name": "ResNet50 CIFAR10",
+      "version": "v3",
+      "status": "Архив",
+      "date": "2026-03-10"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "name": "XGBoost Credit Score",
+      "version": "v2",
+      "status": "В проде",
+      "date": "2026-03-09"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "name": "Baseline Logistic Regression",
+      "version": "v1",
+      "status": "Архив",
+      "date": "2026-03-01"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "name": "LightGBM Click Prediction",
+      "version": "v4",
+      "status": "Архив",
+      "date": "2026-03-05"
+    },
+    {
+      "userId": 2,
+      "name": "YOLOv8",
+      "version": "v8.0",
+      "framework": "PyTorch",
+      "status": "В проде",
+      "date": "2026-03-26",
+      "id": 5
+    },
+    {
+      "userId": 1,
+      "name": "YOLOv8",
+      "version": "v8.0",
+      "framework": "PyTorch",
+      "status": "Тестирование",
+      "date": "2026-03-26",
+      "id": 6
+    }
+  ]
+}
