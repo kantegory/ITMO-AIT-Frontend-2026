@@ -36,7 +36,7 @@
                         <a class="nav-link" href="organizer.html" role="menuitem">Организатор</a>
                     </li>
                 </ul>
-                <form class="d-flex mx-auto my-2 my-lg-0" role="search" aria-label="Поиск по сайту">
+                <form class="d-flex mx-auto my-2 my-lg-0" role="search" aria-label="Поиск по сайту" onsubmit="event.preventDefault(); searchEvents();">
                     <label for="searchInput" class="visually-hidden">Поиск мероприятий</label>
                     <input class="form-control me-2" type="search" name="q" id="searchInput" placeholder="Поиск..." aria-label="Поиск мероприятий">
                     <button class="btn btn-outline-success" type="button" onclick="searchEvents()">Поиск</button>
@@ -171,7 +171,7 @@
         const typeFilter = document.getElementById('filterType').value
         const cityFilter = document.getElementById('filterCity').value
 
-        if (searchTerm) params.q = searchTerm
+        if (searchTerm && searchTerm.trim() !== '') params.q = searchTerm.trim()
         if (typeFilter && typeFilter !== '') params.type = typeFilter
         if (cityFilter && cityFilter !== '') params.city = cityFilter
 
@@ -191,6 +191,7 @@
     async function loadEvents(params = {}) {
         try {
             const url = buildQueryUrl(params)
+            console.log('Loading events from:', url)
             const response = await axios.get(url)
             eventsData = response.data
             renderEvents(response.data)
@@ -231,39 +232,40 @@
 
         events.forEach((event) => {
             const modalHtml = `
-            <div class="modal fade" id="eventModal${event.id}" tabindex="-1" aria-labelledby="eventModal${event.id}Label" aria-hidden="true" role="dialog" aria-modal="true">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title" id="eventModal${event.id}Label">${event.title}</h2>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                        </div>
-                        <div class="modal-body">
-                            <img src="${event.imageUrl || 'https://placebear.com/800/400'}" class="img-fluid rounded mb-3 w-100" alt="${event.title}" style="max-height: 400px; object-fit: cover;">
-                            <div class="row">
-                                <div class="col-lg-8">
-                                    <p class="text-muted">${event.type || 'Мероприятие'}</p>
-                                    <p class="text-muted">Место: ${event.city}${event.venue ? ', ' + event.venue : ''}</p>
-                                    <p class="text-muted">${event.description || ''}</p>
-                                    <h3 class="mt-4">Схема зала</h3>
-                                    <div class="seat-map" id="seatMap${event.id}" role="group" aria-label="Схема зала"></div>
-                                    <div class="mt-2 d-flex gap-3 small flex-wrap" role="list" aria-label="Легенда">
-                                        <span role="listitem"><span class="legend-seat available" aria-hidden="true"></span>Свободно</span>
-                                        <span role="listitem"><span class="legend-seat selected" aria-hidden="true"></span>Выбрано</span>
-                                        <span role="listitem"><span class="legend-seat sold" aria-hidden="true"></span>Продано</span>
+                <div class="modal fade" id="eventModal${event.id}" tabindex="-1" aria-labelledby="eventModal${event.id}Label" aria-hidden="true" role="dialog" aria-modal="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title" id="eventModal${event.id}Label">${event.title}</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="${event.imageUrl || 'https://placebear.com/800/400'}" class="img-fluid rounded mb-3 w-100" alt="${event.title}" style="max-height: 400px; object-fit: cover;">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <p class="text-muted">${event.type || 'Мероприятие'}</p>
+                                        <p class="text-muted">Место: ${event.city}${event.venue ? ', ' + event.venue : ''}</p>
+                                        <p class="text-muted">${event.description || ''}</p>
+                                        <h3 class="mt-4">Схема зала</h3>
+                                        <div class="seat-map" id="seatMap${event.id}" role="group" aria-label="Схема зала"></div>
+                                        <div class="mt-2 d-flex gap-3 small flex-wrap" role="list" aria-label="Легенда">
+                                            <span role="listitem"><span class="legend-seat available" aria-hidden="true"></span>Свободно</span>
+                                            <span role="listitem"><span class="legend-seat selected" aria-hidden="true"></span>Выбрано</span>
+                                            <span role="listitem"><span class="legend-seat sold" aria-hidden="true"></span>Продано</span>
+                                        </div>
+                                        <h3 class="mt-4">Отзывы</h3>
+                                        <div id="reviewsContainer${event.id}" aria-live="polite"></div>
+                                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="openReviewModal(${event.id})" aria-label="Оставить отзыв">Оставить отзыв</button>
                                     </div>
-                                    <h3 class="mt-4">Отзывы</h3>
-                                    <div id="reviewsContainer${event.id}" aria-live="polite"></div>
-                                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="openReviewModal(${event.id})" aria-label="Оставить отзыв">Оставить отзыв</button>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="card bg-light text-center">
-                                        <div class="card-body">
-                                            <h3 class="text-muted">Цена</h3>
-                                            <p class="text-primary" id="priceDisplay${event.id}">${event.price.toLocaleString()} ₽</p>
-                                            <div class="mb-2"><small>Выбрано мест:</small><strong id="selectedCount${event.id}" aria-live="polite">0</strong></div>
-                                            <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice${event.id}" aria-live="polite">0 ₽</strong></div>
-                                            <button type="button" class="btn btn-success w-100" onclick="buyTickets(${event.id})">Купить билеты</button>
+                                    <div class="col-lg-4">
+                                        <div class="card bg-light text-center">
+                                            <div class="card-body">
+                                                <h3 class="text-muted">Цена</h3>
+                                                <p class="text-primary" id="priceDisplay${event.id}">${event.price.toLocaleString()} ₽</p>
+                                                <div class="mb-2"><small>Выбрано мест:</small><strong id="selectedCount${event.id}" aria-live="polite">0</strong></div>
+                                                <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice${event.id}" aria-live="polite">0 ₽</strong></div>
+                                                <button type="button" class="btn btn-success w-100" onclick="buyTickets(${event.id})">Купить билеты</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -271,8 +273,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        `
+            `
             container.innerHTML += modalHtml
         })
     }
@@ -290,11 +291,13 @@
 
     function searchEvents() {
         const params = getFilterParams()
+        console.log('Search params:', params)
         loadEvents(params)
     }
 
     function applyFilters() {
         const params = getFilterParams()
+        console.log('Apply filters params:', params)
         loadEvents(params)
     }
 
