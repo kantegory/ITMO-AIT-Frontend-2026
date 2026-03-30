@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Яндекс Афиша - Поиск</title>
+    <meta name="description" content="Поиск мероприятий на Яндекс Афише. Найдите концерты, театры и выставки по названию, городу и типу события.">
+    <meta name="keywords" content="поиск, афиша, мероприятия, фильтры, концерты, театр">
+    <meta name="author" content="Ямпольский Илья">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+
+    <title>Яндекс Афиша - Поиск</title>
 </head>
 <body>
 <a href="#main-content" class="visually-hidden-focusable">Перейти к основному контенту</a>
 
 <header role="banner">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" role="navigation" aria-label="Основная навигация">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html" aria-label="Яндекс Афиша - на главную">Яндекс Афиша</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-expanded="false" aria-controls="navbarContent" aria-label="Переключить навигацию">
+            <a class="navbar-brand" href="index.html">Яндекс Афиша</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarContent">
@@ -24,7 +30,7 @@
                         <a class="nav-link" href="index.html">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="search.html" aria-current="page">Поиск</a>
+                        <a class="nav-link active" href="search.html">Поиск</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="dashboard.html">Мои билеты</a>
@@ -32,18 +38,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="returns.html">Возвраты</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item organizer-only">
                         <a class="nav-link" href="organizer.html">Организатор</a>
                     </li>
                 </ul>
-                <form class="d-flex mx-auto my-2 my-lg-0" role="search" aria-label="Поиск по сайту" onsubmit="event.preventDefault(); searchEvents();">
+                <form class="d-flex mx-auto my-2 my-lg-0" role="search" id="searchForm">
                     <label for="searchInput" class="visually-hidden">Поиск мероприятий</label>
                     <input class="form-control me-2" type="search" name="q" id="searchInput" placeholder="Поиск..." aria-label="Поиск мероприятий">
-                    <button class="btn btn-outline-success" type="button" onclick="searchEvents()">Поиск</button>
+                    <button class="btn btn-outline-success" type="submit">Поиск</button>
                 </form>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link logout-link" href="#" onclick="logout()" aria-label="Выйти из аккаунта">Выход</a>
+                        <a class="nav-link logout-link" href="#" onclick="logout()">Выход</a>
                     </li>
                 </ul>
             </div>
@@ -53,31 +59,29 @@
 
 <main id="main-content" style="padding-top: 1rem;">
     <section class="container-fluid py-4">
-        <button class="btn btn-outline-primary w-100 mb-3 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse" aria-expanded="false" aria-controls="filtersCollapse">Фильтры</button>
+        <button class="btn btn-outline-primary w-100 mb-3 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse">Фильтры</button>
         <article class="row">
             <aside class="col-12 col-lg-3 mb-4">
                 <section class="filter-box p-4 collapse d-lg-block" id="filtersCollapse">
                     <header><h2 class="h6 mb-3">Фильтры</h2></header>
                     <fieldset class="mb-3">
                         <legend class="form-label small">Тип</legend>
-                        <label>
-                            <select class="form-select form-select-sm" id="filterType">
-                                <option value="">Все</option>
-                                <option value="Концерт">Концерт</option>
-                                <option value="Театр">Театр</option>
-                                <option value="Выставка">Выставка</option>
-                            </select>
-                        </label>
+                        <label for="filterType" class="visually-hidden">Тип мероприятия</label>
+                        <select class="form-select form-select-sm" id="filterType">
+                            <option value="">Все</option>
+                            <option value="Концерт">Концерт</option>
+                            <option value="Театр">Театр</option>
+                            <option value="Выставка">Выставка</option>
+                        </select>
                     </fieldset>
                     <fieldset class="mb-3">
                         <legend class="form-label small">Город</legend>
-                        <label>
-                            <select class="form-select form-select-sm" id="filterCity">
-                                <option value="">Все</option>
-                                <option value="Москва">Москва</option>
-                                <option value="СПб">СПб</option>
-                            </select>
-                        </label>
+                        <label for="filterCity" class="visually-hidden">Город</label>
+                        <select class="form-select form-select-sm" id="filterCity">
+                            <option value="">Все</option>
+                            <option value="Москва">Москва</option>
+                            <option value="СПб">СПб</option>
+                        </select>
                     </fieldset>
                     <footer>
                         <button class="btn btn-primary btn-sm w-100 mb-2" onclick="applyFilters()">Применить</button>
@@ -87,7 +91,7 @@
             </aside>
             <section class="col-12 col-lg-9">
                 <header><h1 class="h4 mb-3">Результаты поиска</h1></header>
-                <article class="row g-4" id="eventsContainer" aria-live="polite"></article>
+                <article class="row g-4" id="eventsContainer"></article>
             </section>
         </article>
     </section>
@@ -95,7 +99,7 @@
 
 <div id="dynamicModalsContainer"></div>
 
-<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true" role="dialog" aria-modal="true">
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -105,18 +109,18 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label class="form-label" id="ratingLabel">Ваша оценка</label>
-                    <div class="rating-select" id="ratingSelect" role="radiogroup" aria-labelledby="ratingLabel">
-                        <button type="button" data-value="1" role="radio" aria-checked="false" aria-label="1 звезда">1</button>
-                        <button type="button" data-value="2" role="radio" aria-checked="false" aria-label="2 звезды">2</button>
-                        <button type="button" data-value="3" role="radio" aria-checked="false" aria-label="3 звезды">3</button>
-                        <button type="button" data-value="4" role="radio" aria-checked="false" aria-label="4 звезды">4</button>
-                        <button type="button" data-value="5" role="radio" aria-checked="false" aria-label="5 звезд">5</button>
+                    <div class="rating-select" id="ratingSelect">
+                        <button type="button" data-value="1">1</button>
+                        <button type="button" data-value="2">2</button>
+                        <button type="button" data-value="3">3</button>
+                        <button type="button" data-value="4">4</button>
+                        <button type="button" data-value="5">5</button>
                     </div>
                     <input type="hidden" id="selectedRating" value="0">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="reviewText">Ваш отзыв</label>
-                    <textarea class="form-control" id="reviewText" rows="4" placeholder="Напишите ваш отзыв..." aria-required="true"></textarea>
+                    <textarea class="form-control" id="reviewText" rows="4" placeholder="Напишите ваш отзыв..."></textarea>
                 </div>
                 <div class="form-check mb-3">
                     <input class="form-check-input" type="checkbox" id="reviewAnon">
@@ -131,14 +135,15 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 <script>
     axios.defaults.baseURL = 'http://localhost:3000'
 
-    axios.interceptors.request.use(config => {
+    axios.interceptors.request.use(function(config) {
         const token = localStorage.accessToken
         if (token) {
-            config.headers.Authorization = `Bearer ${token}`
+            config.headers.Authorization = 'Bearer ' + token
         }
         return config
     })
@@ -148,7 +153,7 @@
         if (dateString.includes('-')) {
             const parts = dateString.split('-')
             if (parts[0].length === 4) {
-                return `${parts[2]}-${parts[1]}-${parts[0]}`
+                return parts[2] + '-' + parts[1] + '-' + parts[0]
             }
             return dateString
         }
@@ -165,15 +170,25 @@
         }
     }
 
+    function checkOrganizerAccess() {
+        const user = JSON.parse(localStorage.getItem('user'))
+        const organizerLinks = document.querySelectorAll('.organizer-only')
+        if (user && user.email !== 'sergo0_1337228007zzz@mail.ru') {
+            organizerLinks.forEach(function(link) {
+                link.style.display = 'none'
+            })
+        }
+    }
+
     function getFilterParams() {
         const params = {}
         const searchTerm = document.getElementById('searchInput').value
         const typeFilter = document.getElementById('filterType').value
         const cityFilter = document.getElementById('filterCity').value
 
-        if (searchTerm && searchTerm.trim() !== '') params.q = searchTerm.trim()
-        if (typeFilter && typeFilter !== '') params.type = typeFilter
-        if (cityFilter && cityFilter !== '') params.city = cityFilter
+        if (searchTerm && searchTerm.trim() !== '') params.q = String(searchTerm.trim())
+        if (typeFilter && typeFilter !== '') params.type = String(typeFilter)
+        if (cityFilter && cityFilter !== '') params.city = String(cityFilter)
 
         return params
     }
@@ -182,22 +197,22 @@
         if (Object.keys(params).length === 0) return '/events'
 
         const queryString = Object.entries(params)
-            .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+            .map(function(entry) { return entry[0] + '=' + encodeURIComponent(String(entry[1])) })
             .join('&')
 
-        return `/events?${queryString}`
+        return '/events?' + queryString
     }
 
-    async function loadEvents(params = {}) {
+    async function loadEvents(params) {
+        params = params || {}
         try {
             const url = buildQueryUrl(params)
-            console.log('Loading events from:', url)
             const response = await axios.get(url)
             eventsData = response.data
             renderEvents(response.data)
             createDynamicModals(response.data)
         } catch (error) {
-            console.error('Error:', error)
+            console.error('Ошибка:', error)
         }
     }
 
@@ -207,13 +222,13 @@
             container.innerHTML = '<p class="text-muted">Ничего не найдено</p>'
             return
         }
-        container.innerHTML = events.map((event) => {
+        container.innerHTML = events.map(function(event) {
             return `
                 <div class="col-12 col-md-6 col-xl-4">
                     <article class="card h-100 event-card" onclick="openEventModal(${event.id})" style="cursor: pointer;">
                         <section class="card-body d-flex flex-column">
                             <header class="flex-grow-1">
-                                <h4 class="card-title">${event.title}</h4>
+                                <h2 class="card-title h5 mb-1">${event.title}</h2>
                                 <p class="card-text text-muted">${formatDate(event.date)} - ${event.city}${event.venue ? ', ' + event.venue : ''}</p>
                             </header>
                             <footer class="mt-auto">
@@ -230,9 +245,9 @@
         const container = document.getElementById('dynamicModalsContainer')
         container.innerHTML = ''
 
-        events.forEach((event) => {
+        events.forEach(function(event) {
             const modalHtml = `
-                <div class="modal fade" id="eventModal${event.id}" tabindex="-1" aria-labelledby="eventModal${event.id}Label" aria-hidden="true" role="dialog" aria-modal="true">
+                <div class="modal fade" id="eventModal${event.id}" tabindex="-1" aria-labelledby="eventModal${event.id}Label" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -247,23 +262,23 @@
                                         <p class="text-muted">Место: ${event.city}${event.venue ? ', ' + event.venue : ''}</p>
                                         <p class="text-muted">${event.description || ''}</p>
                                         <h3 class="mt-4">Схема зала</h3>
-                                        <div class="seat-map" id="seatMap${event.id}" role="group" aria-label="Схема зала"></div>
-                                        <div class="mt-2 d-flex gap-3 small flex-wrap" role="list" aria-label="Легенда">
-                                            <span role="listitem"><span class="legend-seat available" aria-hidden="true"></span>Свободно</span>
-                                            <span role="listitem"><span class="legend-seat selected" aria-hidden="true"></span>Выбрано</span>
-                                            <span role="listitem"><span class="legend-seat sold" aria-hidden="true"></span>Продано</span>
+                                        <div class="seat-map" id="seatMap${event.id}"></div>
+                                        <div class="mt-2 d-flex gap-3 small flex-wrap">
+                                            <span><span class="legend-seat available"></span>Свободно</span>
+                                            <span><span class="legend-seat selected"></span>Выбрано</span>
+                                            <span><span class="legend-seat sold"></span>Продано</span>
                                         </div>
                                         <h3 class="mt-4">Отзывы</h3>
-                                        <div id="reviewsContainer${event.id}" aria-live="polite"></div>
-                                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="openReviewModal(${event.id})" aria-label="Оставить отзыв">Оставить отзыв</button>
+                                        <div id="reviewsContainer${event.id}"></div>
+                                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="openReviewModal(${event.id})">Оставить отзыв</button>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="card bg-light text-center">
                                             <div class="card-body">
                                                 <h3 class="text-muted">Цена</h3>
                                                 <p class="text-primary" id="priceDisplay${event.id}">${event.price.toLocaleString()} ₽</p>
-                                                <div class="mb-2"><small>Выбрано мест:</small><strong id="selectedCount${event.id}" aria-live="polite">0</strong></div>
-                                                <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice${event.id}" aria-live="polite">0 ₽</strong></div>
+                                                <div class="mb-2"><small>Выбрано мест:</small><strong id="selectedCount${event.id}">0</strong></div>
+                                                <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice${event.id}">0 ₽</strong></div>
                                                 <button type="button" class="btn btn-success w-100" onclick="buyTickets(${event.id})">Купить билеты</button>
                                             </div>
                                         </div>
@@ -279,10 +294,10 @@
     }
 
     function openEventModal(eventId) {
-        const modal = new bootstrap.Modal(document.getElementById(`eventModal${eventId}`))
+        const modal = new bootstrap.Modal(document.getElementById('eventModal' + eventId))
         modal.show()
 
-        const event = eventsData.find(e => e.id === eventId)
+        const event = eventsData.find(function(e) { return e.id === eventId })
         if (event) {
             generateSeatMap(eventId, event)
             loadReviews(eventId)
@@ -291,13 +306,11 @@
 
     function searchEvents() {
         const params = getFilterParams()
-        console.log('Search params:', params)
         loadEvents(params)
     }
 
     function applyFilters() {
         const params = getFilterParams()
-        console.log('Apply filters params:', params)
         loadEvents(params)
     }
 
@@ -310,24 +323,24 @@
 
     async function loadSoldSeats(eventId) {
         try {
-            const response = await axios.get(`/tickets?eventId=${eventId}`)
+            const response = await axios.get('/tickets?eventId=' + eventId)
             const tickets = response.data
             const soldSeats = []
-            tickets.forEach(ticket => {
+            tickets.forEach(function(ticket) {
                 if (ticket.seats) {
-                    const seatNumbers = ticket.seats.split(',').map(s => parseInt(s.trim()))
-                    soldSeats.push(...seatNumbers)
+                    const seatNumbers = ticket.seats.split(',').map(function(s) { return parseInt(s.trim()) })
+                    soldSeats.push.apply(soldSeats, seatNumbers)
                 }
             })
             return soldSeats
         } catch (error) {
-            console.error('Error loading sold seats:', error)
+            console.error('Ошибка загрузки мест:', error)
             return []
         }
     }
 
     async function generateSeatMap(eventId, event) {
-        const container = document.getElementById(`seatMap${eventId}`)
+        const container = document.getElementById('seatMap' + eventId)
         if (!container) return
 
         const capacity = event.capacity || 50
@@ -337,18 +350,18 @@
 
         let html = ''
         for (let i = 1; i <= capacity; i++) {
-            let className = 'seat available'
+            let className = 'seat available';
             if (soldSeats.includes(i)) {
                 className = 'seat sold'
             }
-            html += `<button type="button" class="${className}" data-seat="${i}" data-event-id="${eventId}" onclick="toggleSeat(${i}, ${eventId}, ${price})"></button>`
+            html += '<button type="button" class="' + className + '" data-seat="' + i + '" data-event-id="' + eventId + '" onclick="toggleSeat(' + i + ', ' + eventId + ', ' + price + ')"></button>'
         }
         container.innerHTML = html
         updatePriceCounter(eventId, price)
     }
 
     function toggleSeat(seatNumber, eventId, price) {
-        const button = document.querySelector(`#seatMap${eventId} button[data-seat="${seatNumber}"]`)
+        const button = document.querySelector('#seatMap' + eventId + ' button[data-seat="' + seatNumber + '"]')
         if (!button || button.classList.contains('sold')) return
 
         const index = selectedSeats[eventId].indexOf(seatNumber)
@@ -365,13 +378,13 @@
     }
 
     function updatePriceCounter(eventId, price) {
-        const countElement = document.getElementById(`selectedCount${eventId}`)
-        const totalElement = document.getElementById(`totalPrice${eventId}`)
+        const countElement = document.getElementById('selectedCount' + eventId)
+        const totalElement = document.getElementById('totalPrice' + eventId)
         if (countElement && totalElement) {
             const count = selectedSeats[eventId] ? selectedSeats[eventId].length : 0
             const total = count * price
             countElement.textContent = count
-            totalElement.textContent = `${total.toLocaleString()} ₽`
+            totalElement.textContent = total.toLocaleString() + ' ₽'
         }
     }
 
@@ -382,7 +395,7 @@
         }
         try {
             const user = JSON.parse(localStorage.getItem('user'))
-            const event = eventsData.find(e => e.id === eventId)
+            const event = eventsData.find(function(e) { return e.id === eventId })
             const totalPrice = selectedSeats[eventId].length * event.price
 
             const ticketData = {
@@ -396,37 +409,37 @@
             }
 
             await axios.post('/tickets', ticketData)
-            alert(`Билеты куплены!\nМеста: ${selectedSeats[eventId].join(', ')}\nСумма: ${totalPrice.toLocaleString()} ₽`)
+            alert('Билеты куплены!\nМеста: ' + selectedSeats[eventId].join(', ') + '\nСумма: ' + totalPrice.toLocaleString() + ' ₽')
 
-            const modal = bootstrap.Modal.getInstance(document.getElementById(`eventModal${eventId}`))
+            const modal = bootstrap.Modal.getInstance(document.getElementById('eventModal' + eventId))
             if (modal) modal.hide()
 
             selectedSeats[eventId] = []
             updatePriceCounter(eventId, event.price)
             await loadEvents(getFilterParams())
         } catch (error) {
-            console.error('Error buying tickets:', error)
+            console.error('Ошибка покупки:', error)
             alert('Ошибка покупки билетов')
         }
     }
 
     async function loadReviews(eventId) {
         try {
-            const response = await axios.get(`/reviews?eventId=${eventId}`)
+            const response = await axios.get('/reviews?eventId=' + eventId)
             renderReviews(eventId, response.data)
         } catch (error) {
-            console.error('Error loading reviews:', error)
+            console.error('Ошибка загрузки отзывов:', error)
         }
     }
 
     function renderReviews(eventId, reviews) {
-        const container = document.getElementById(`reviewsContainer${eventId}`)
+        const container = document.getElementById('reviewsContainer' + eventId)
         if (!container) return
         if (!reviews || reviews.length === 0) {
             container.innerHTML = '<p class="text-muted small">Пока нет отзывов</p>'
             return
         }
-        container.innerHTML = reviews.map(review => {
+        container.innerHTML = reviews.map(function(review) {
             const userName = review.anonymous ? 'Аноним' : review.userName
             return `
                 <div class="card bg-light border-0 mb-2">
@@ -464,7 +477,7 @@
             const reviewData = {
                 eventId: currentEventId,
                 userId: user.id,
-                userName: anonymous ? 'Аноним' : `${user.firstName} ${user.lastName}`,
+                userName: anonymous ? 'Аноним' : user.firstName + ' ' + user.lastName,
                 rating: parseInt(rating),
                 text: text,
                 anonymous: anonymous,
@@ -480,17 +493,17 @@
             document.getElementById('selectedRating').value = '0'
             document.getElementById('reviewText').value = ''
             document.getElementById('reviewAnon').checked = false
-            document.querySelectorAll('.rating-select button').forEach(b => b.classList.remove('active'))
+            document.querySelectorAll('.rating-select button').forEach(function(b) { b.classList.remove('active') })
             await loadReviews(currentEventId)
         } catch (error) {
-            console.error('Error submitting review:', error)
-            alert(`Ошибка отправки отзыва: ${error.response?.data || error.message}`)
+            console.error('Ошибка отправки отзыва:', error)
+            alert('Ошибка отправки отзыва: ' + (error.response?.data || error.message))
         }
     }
 
     document.querySelectorAll('.rating-select button').forEach(function(btn) {
         btn.addEventListener('click', function() {
-            document.querySelectorAll('.rating-select button').forEach(b => b.classList.remove('active'))
+            document.querySelectorAll('.rating-select button').forEach(function(b) { b.classList.remove('active') })
             this.classList.add('active')
             document.getElementById('selectedRating').value = this.getAttribute('data-value')
         })
@@ -501,8 +514,18 @@
         window.location.href = "login.html"
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', function() {
         checkAuth()
+        checkOrganizerAccess()
+
+        const searchForm = document.getElementById('searchForm')
+        if (searchForm) {
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault()
+                searchEvents()
+            })
+        }
+
         const params = new URLSearchParams(window.location.search)
         const query = params.get('q')
         if (query) {

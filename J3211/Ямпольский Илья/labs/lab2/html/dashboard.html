@@ -3,19 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Яндекс Афиша - Мои билеты</title>
+  <meta name="description" content="Мои билеты - просмотр и управление купленными билетами на Яндекс Афише.">
+  <meta name="keywords" content="билеты, мои заказы, возврат, история покупок">
+  <meta name="author" content="Ямпольский Илья">
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+
+  <title>Яндекс Афиша - Мои билеты</title>
 </head>
 <body>
 <a href="#main-content" class="visually-hidden-focusable">Перейти к основному контенту</a>
 
 <header role="banner">
-  <nav class="navbar navbar-expand-lg bg-body-tertiary" role="navigation" aria-label="Основная навигация">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="index.html" aria-label="Яндекс Афиша - на главную">Яндекс Афиша</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-expanded="false" aria-controls="navbarContent" aria-label="Переключить навигацию">
+      <a class="navbar-brand" href="index.html">Яндекс Афиша</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarContent">
@@ -27,23 +33,23 @@
             <a class="nav-link" href="search.html">Поиск</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="dashboard.html" aria-current="page" >Мои билеты</a>
+            <a class="nav-link active" href="dashboard.html">Мои билеты</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="returns.html">Возвраты</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item organizer-only">
             <a class="nav-link" href="organizer.html">Организатор</a>
           </li>
         </ul>
-        <form class="d-flex mx-auto my-2 my-lg-0" role="search" action="search.html" aria-label="Поиск по сайту">
+        <form class="d-flex mx-auto my-2 my-lg-0" role="search" action="search.html">
           <label for="dashboardSearch" class="visually-hidden">Поиск мероприятий</label>
           <input class="form-control me-2" type="search" name="q" id="dashboardSearch" placeholder="Поиск..." aria-label="Поиск мероприятий">
           <button class="btn btn-outline-success" type="submit">Поиск</button>
         </form>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link logout-link" href="#" onclick="logout()" aria-label="Выйти из аккаунта">Выход</a>
+            <a class="nav-link logout-link" href="#" onclick="logout()">Выход</a>
           </li>
         </ul>
       </div>
@@ -51,23 +57,26 @@
   </nav>
 </header>
 
-<main id="main-content" style="padding-top: 1rem;" role="main">
-  <section class="dashboard-content container py-4" aria-labelledby="tickets-heading">
+<main id="main-content" style="padding-top: 1rem;">
+  <section class="dashboard-content container py-4">
     <header>
-      <h1 id="tickets-heading" class="mb-4">Мои билеты</h1>
+      <h1 class="h4 mb-4">Мои билеты</h1>
     </header>
-    <article class="row g-4" id="ticketsContainer" aria-live="polite"></article>
+    <article class="row g-4" id="ticketsContainer">
+      <p class="text-muted">Загрузка...</p>
+    </article>
   </section>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 <script>
   axios.defaults.baseURL = 'http://localhost:3000'
 
-  axios.interceptors.request.use(config => {
+  axios.interceptors.request.use(function(config) {
     const token = localStorage.accessToken
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+      config.headers.Authorization = 'Bearer ' + token
     }
     return config
   })
@@ -77,7 +86,7 @@
     if (dateString.includes('-')) {
       const parts = dateString.split('-')
       if (parts[0].length === 4) {
-        return `${parts[2]}-${parts[1]}-${parts[0]}`
+        return parts[2] + '-' + parts[1] + '-' + parts[0]
       }
       return dateString
     }
@@ -90,17 +99,36 @@
     }
   }
 
+  function checkOrganizerAccess() {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const organizerLinks = document.querySelectorAll('.organizer-only')
+    if (user && user.email !== 'sergo0_1337228007zzz@mail.ru') {
+      organizerLinks.forEach(function(link) {
+        link.style.display = 'none'
+      })
+    }
+  }
+
   function getUser() {
-    return JSON.parse(localStorage.getItem('user'))
+    try {
+      return JSON.parse(localStorage.getItem('user'))
+    } catch (e) {
+      return null
+    }
   }
 
   async function loadTickets() {
     try {
+      const container = document.getElementById('ticketsContainer')
+      container.innerHTML = '<p class="text-muted">Загрузка...</p>'
+
       const user = getUser()
       const response = await axios.get('/tickets', { params: { userId: user.id, status: 'active' } })
       renderTickets(response.data)
     } catch (error) {
-      console.error('Error:', error)
+      console.error('Ошибка загрузки билетов:', error)
+      const container = document.getElementById('ticketsContainer')
+      container.innerHTML = '<p class="text-danger">Ошибка загрузки. Убедитесь что сервер запущен (npm start в папке json)</p>'
     }
   }
 
@@ -110,24 +138,26 @@
       container.innerHTML = '<p class="text-muted">У вас пока нет билетов</p>'
       return
     }
-    container.innerHTML = tickets.map(ticket => `
-            <div class="col-12 col-lg-6">
-                <article class="card shadow-sm ticket-item h-100">
-                    <section class="card-body">
-                        <header class="d-flex justify-content-between">
-                            <h2 class="mb-1">${ticket.eventName || `Билет #${ticket.id}`}</h2>
-                            <span class="badge bg-success">${ticket.totalPrice.toLocaleString()} ₽</span>
-                        </header>
-                        <p class="text-muted mb-1">Места: ${ticket.seats}</p>
-                        <p class="text-muted mb-1">Дата покупки: ${formatDate(ticket.purchaseDate)}</p>
-                        <footer class="d-flex justify-content-between align-items-center mt-2">
-                            <small class="text-muted">Заказ #${ticket.id}</small>
-                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="returnTicket(${ticket.id}, ${ticket.totalPrice})">Вернуть</button>
-                        </footer>
-                    </section>
-                </article>
-            </div>
-        `).join('')
+    container.innerHTML = tickets.map(function(ticket) {
+      return `
+                <div class="col-12 col-lg-6">
+                    <article class="card shadow-sm ticket-item h-100">
+                        <section class="card-body">
+                            <header class="d-flex justify-content-between">
+                                <h2 class="h5 mb-1">${ticket.eventName || 'Билет #' + ticket.id}</h2>
+                                <span class="badge bg-success">${ticket.totalPrice.toLocaleString()} ₽</span>
+                            </header>
+                            <p class="text-muted mb-1">Места: ${ticket.seats}</p>
+                            <p class="text-muted mb-1">Дата покупки: ${formatDate(ticket.purchaseDate)}</p>
+                            <footer class="d-flex justify-content-between align-items-center mt-2">
+                                <small class="text-muted">Заказ #${ticket.id}</small>
+                                <button type="button" class="btn btn-sm btn-outline-danger" onclick="returnTicket(${ticket.id}, ${ticket.totalPrice})">Вернуть</button>
+                            </footer>
+                        </section>
+                    </article>
+                </div>
+            `
+    }).join('')
   }
 
   async function returnTicket(ticketId, amount) {
@@ -144,11 +174,11 @@
         amount: amount
       }
       await axios.post('/returns', returnData)
-      await axios.patch(`/tickets/${ticketId}`, { status: 'returned' })
+      await axios.patch('/tickets/' + ticketId, { status: 'returned' })
       alert('Заявка на возврат создана!')
       await loadTickets()
     } catch (error) {
-      console.error('Error returning ticket:', error)
+      console.error('Ошибка возврата:', error)
       alert('Ошибка при создании заявки на возврат')
     }
   }
@@ -158,8 +188,9 @@
     window.location.href = "login.html"
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', function() {
     checkAuth()
+    checkOrganizerAccess()
     loadTickets()
   })
 </script>

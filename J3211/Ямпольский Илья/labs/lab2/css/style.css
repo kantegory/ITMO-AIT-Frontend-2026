@@ -5,6 +5,8 @@ body {
     max-height: 100vh;
     overflow-y: auto;
     background: #f8f9fa;
+    color: #333;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 html {
@@ -33,6 +35,30 @@ main {
     margin-top: 0.5rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1030;
+}
+
+.nav-link.active {
+    background: purple !important;
+    color: white !important;
+}
+
+.nav-link.logout-link {
+    border: 2px solid #8b0000 !important;
+    border-radius: 6px !important;
+    padding: 0.25rem 0.75rem !important;
+    transition: all 0.2s !important;
+    color: #8b0000 !important;
+}
+
+.nav-link.logout-link:hover {
+    background: #8b0000 !important;
+    color: white !important;
+    border-color: #600000 !important;
+}
+
+.nav-link.logout-link:focus-visible {
+    outline: 3px solid #6610f2 !important;
+    outline-offset: 2px !important;
 }
 
 main.col-12 > .d-flex {
@@ -171,34 +197,6 @@ main.col-12 .btn-primary {
 
 .legend-seat.sold {
     background: #dc3545 !important;
-}
-
-.nav-link.active {
-    background: purple !important;
-    color: white !important;
-}
-
-.nav-link.text-danger:hover {
-    background: pink !important;
-}
-
-.nav-link.logout-link {
-    border: 2px solid #8b0000 !important;
-    border-radius: 6px !important;
-    padding: 0.25rem 0.75rem !important;
-    transition: all 0.2s !important;
-    color: #8b0000 !important;
-}
-
-.nav-link.logout-link:hover {
-    background: #8b0000 !important;
-    color: white !important;
-    border-color: #600000 !important;
-}
-
-.nav-link.logout-link:focus-visible {
-    outline: 3px solid #6610f2 !important;
-    outline-offset: 2px !important;
 }
 
 .stat-box {
@@ -412,7 +410,7 @@ a.visually-hidden-focusable {
     left: 0;
 }
 
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
     .seat.available {
         background: #006400 !important;
     }
@@ -429,6 +427,23 @@ a.visually-hidden-focusable {
     .returns-content .card,
     .dashboard-content .card {
         border: 4px solid #000 !important;
+    }
+}
+
+@media (prefers-contrast: less) {
+    .seat.available {
+        background: #90EE90 !important;
+    }
+    .seat.selected {
+        background: #FFE4B5 !important;
+    }
+    .seat.sold {
+        background: #FFB6C1 !important;
+    }
+    .ticket-item,
+    .returns-content .card,
+    .dashboard-content .card {
+        border: 2px solid #ccc !important;
     }
 }
 

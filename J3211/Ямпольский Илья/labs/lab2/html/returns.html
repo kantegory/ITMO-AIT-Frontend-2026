@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Яндекс Афиша - Возвраты</title>
+    <meta name="description" content="Возвраты билетов - статус заявок на возврат средств. Отслеживайте обработку возвратов на Яндекс Афише.">
+    <meta name="keywords" content="возврат билетов, возврат средств, статус заявки">
+    <meta name="author" content="Ямпольский Илья">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+
+    <title>Яндекс Афиша - Возвраты</title>
 </head>
 <body>
 <a href="#main-content" class="visually-hidden-focusable">Перейти к основному контенту</a>
 
 <header role="banner">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" role="navigation" aria-label="Основная навигация">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html" aria-label="Яндекс Афиша - на главную">Яндекс Афиша</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-expanded="false" aria-controls="navbarContent" aria-label="Переключить навигацию">
+            <a class="navbar-brand" href="index.html">Яндекс Афиша</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarContent">
@@ -30,20 +36,20 @@
                         <a class="nav-link" href="dashboard.html">Мои билеты</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="returns.html" aria-current="page">Возвраты</a>
+                        <a class="nav-link active" href="returns.html">Возвраты</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="organizer.html">Организатор</a>
                     </li>
                 </ul>
-                <form class="d-flex mx-auto my-2 my-lg-0" role="search" action="search.html" aria-label="Поиск по сайту">
+                <form class="d-flex mx-auto my-2 my-lg-0" role="search" action="search.html">
                     <label for="returnsSearch" class="visually-hidden">Поиск мероприятий</label>
                     <input class="form-control me-2" type="search" name="q" id="returnsSearch" placeholder="Поиск..." aria-label="Поиск мероприятий">
                     <button class="btn btn-outline-success" type="submit">Поиск</button>
                 </form>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link logout-link" href="#" onclick="logout()" aria-label="Выйти из аккаунта">Выход</a>
+                        <a class="nav-link logout-link" href="#" onclick="logout()">Выход</a>
                     </li>
                 </ul>
             </div>
@@ -52,21 +58,20 @@
 </header>
 
 <main id="main-content" style="padding-top: 1rem;">
-    <section class="returns-content container py-4" aria-labelledby="returns-heading">
+    <section class="returns-content container py-4">
         <header>
-            <h1 id="returns-heading" class="mb-4">Возвраты билетов</h1>
+            <h1 class="h4 mb-4">Возвраты билетов</h1>
         </header>
-        <aside class="alert alert-info mb-4" role="note">
+        <aside class="alert alert-info mb-4">
             Полный возврат возможен не позднее чем за 24 часа до начала мероприятия.
             Средства возвращаются в течение 3-5 рабочих дней.
         </aside>
-        <article class="row g-4" id="returnsContainer" aria-live="polite"></article>
+        <article class="row g-4" id="returnsContainer"></article>
     </section>
 </main>
 
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js" ></script>
 <script>
     axios.defaults.baseURL = 'http://localhost:3000'
 
@@ -97,7 +102,11 @@
     }
 
     function getUser() {
-        return JSON.parse(localStorage.getItem('user'))
+        try {
+            return JSON.parse(localStorage.getItem('user'))
+        } catch (e) {
+            return null
+        }
     }
 
     async function loadReturns() {
@@ -133,7 +142,7 @@
         loadTicketsForReturns(returns).then(ticketsMap => {
             container.innerHTML = returns.map(ret => {
                 const ticket = ticketsMap[ret.ticketId]
-                const eventName = ticket ? ticket.eventName : `Билет #${ret.ticketId}`
+                const eventName = ticket ? ticket.eventName : 'Билет #' + ret.ticketId
                 const seats = ticket ? ticket.seats : ''
 
                 let statusBadge = ''
@@ -155,7 +164,7 @@
                             <section class="card-body">
                                 <header class="d-flex justify-content-between align-items-start">
                                     <section>
-                                        <h2 class="mb-1">${eventName}</h2>
+                                        <h2 class="h6 mb-1">${eventName}</h2>
                                         <p class="text-muted small mb-1">Места: ${seats}</p>
                                         <p class="text-muted small mb-1">Сумма: ${ret.amount.toLocaleString()} ₽</p>
                                         <p class="text-muted small mb-0">Заказ #${ret.ticketId}</p>
@@ -163,7 +172,7 @@
                                     <footer class="text-end">
                                         <span class="badge ${statusBadge} mb-2">${statusText}</span>
                                         <p class="text-muted small mb-0">Запрос от: ${formatDate(ret.requestDate)}</p>
-                                        ${ret.returnDate ? `<p class="text-muted small mb-0">Возврат: ${formatDate(ret.returnDate)}</p>` : ''}
+                                        ${ret.returnDate ? '<p class="text-muted small mb-0">Возврат: ' + formatDate(ret.returnDate) + '</p>' : ''}
                                     </footer>
                                 </header>
                             </section>
@@ -181,6 +190,11 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         checkAuth()
+        const user = JSON.parse(localStorage.getItem('user'))
+        const organizerLink = document.querySelector('a[href="organizer.html"]')
+        if (organizerLink && user && user.email !== 'sergo0_1337228007zzz@mail.ru') {
+            organizerLink.parentElement.style.display = 'none'
+        }
         loadReturns()
     })
 </script>
