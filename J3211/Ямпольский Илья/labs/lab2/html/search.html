@@ -125,7 +125,7 @@
                         <div class="card bg-light text-center">
                             <div class="card-body">
                                 <h6 class="text-muted">Цена</h6>
-                                <h3 class="text-primary" id="priceDisplay1">150 000 ₽</h3>
+                                <h3 class="text-primary" id="priceDisplay1">150,000 ₽</h3>
                                 <div class="mb-2"><small>Выбрано мест: </small><strong id="selectedCount1">0</strong></div>
                                 <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice1">0 ₽</strong></div>
                                 <button type="button" class="btn btn-success w-100" onclick="buyTickets(1)">Купить билеты</button>
@@ -166,7 +166,7 @@
                         <div class="card bg-light text-center">
                             <div class="card-body">
                                 <h6 class="text-muted">Цена</h6>
-                                <h3 class="text-primary" id="priceDisplay2">2 000 ₽</h3>
+                                <h3 class="text-primary" id="priceDisplay2">2,000 ₽</h3>
                                 <div class="mb-2"><small>Выбрано мест: </small><strong id="selectedCount2">0</strong></div>
                                 <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice2">0 ₽</strong></div>
                                 <button type="button" class="btn btn-success w-100" onclick="buyTickets(2)">Купить билеты</button>
@@ -248,7 +248,7 @@
                         <div class="card bg-light text-center">
                             <div class="card-body">
                                 <h6 class="text-muted">Цена</h6>
-                                <h3 class="text-primary" id="priceDisplay4">3 000 ₽</h3>
+                                <h3 class="text-primary" id="priceDisplay4">3,000 ₽</h3>
                                 <div class="mb-2"><small>Выбрано мест: </small><strong id="selectedCount4">0</strong></div>
                                 <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice4">0 ₽</strong></div>
                                 <button type="button" class="btn btn-success w-100" onclick="buyTickets(4)">Купить билеты</button>
@@ -350,7 +350,7 @@
                                 <p class="card-text text-muted">${event.date} - ${event.city}, ${event.venue}</p>
                             </header>
                             <footer class="mt-auto">
-                                <span class="badge bg-success">от ${event.price} ₽</span>
+                                <span class="badge bg-success">от ${event.price.toLocaleString()} ₽</span>
                             </footer>
                         </section>
                     </article>
@@ -438,7 +438,7 @@
             const total = count * price
 
             countElement.textContent = count
-            totalElement.textContent = total.toLocaleString() + ' ₽'
+            totalElement.textContent = `${total.toLocaleString()} ₽`
         }
     }
 

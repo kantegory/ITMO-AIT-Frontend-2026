@@ -9,39 +9,41 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
 </head>
 <body>
+<a href="#main-content" class="visually-hidden-focusable">Перейти к основному контенту</a>
 
-<header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+<header role="banner">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" role="navigation" aria-label="Основная навигация">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">Яндекс Афиша</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <a class="navbar-brand" href="index.html" aria-label="Яндекс Афиша - на главную">Яндекс Афиша</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-expanded="false" aria-controls="navbarContent" aria-label="Переключить навигацию">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Главная</a>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" role="menubar">
+                    <li class="nav-item" role="none">
+                        <a class="nav-link active" href="index.html" aria-current="page" role="menuitem">Главная</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="search.html">Поиск</a>
+                    <li class="nav-item" role="none">
+                        <a class="nav-link" href="search.html" role="menuitem">Поиск</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="dashboard.html">Мои билеты</a>
+                    <li class="nav-item" role="none">
+                        <a class="nav-link" href="dashboard.html" role="menuitem">Мои билеты</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="returns.html">Возвраты</a>
+                    <li class="nav-item" role="none">
+                        <a class="nav-link" href="returns.html" role="menuitem">Возвраты</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="organizer.html">Организатор</a>
+                    <li class="nav-item" role="none">
+                        <a class="nav-link" href="organizer.html" role="menuitem">Организатор</a>
                     </li>
                 </ul>
-                <form class="d-flex mx-auto my-2 my-lg-0" role="search" action="search.html">
-                    <input class="form-control me-2" type="search" name="q" placeholder="Поиск..." aria-label="Search">
+                <form class="d-flex mx-auto my-2 my-lg-0" role="search" action="search.html" aria-label="Поиск по сайту">
+                    <label for="mainSearch" class="visually-hidden">Поиск мероприятий</label>
+                    <input class="form-control me-2" type="search" name="q" id="mainSearch" placeholder="Поиск..." aria-label="Поиск мероприятий">
                     <button class="btn btn-outline-success" type="submit">Поиск</button>
                 </form>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link text-danger" href="#" onclick="logout()">Выход</a>
+                        <a class="nav-link text-danger" href="#" onclick="logout()" role="menuitem">Выход</a>
                     </li>
                 </ul>
             </div>
@@ -49,47 +51,48 @@
     </nav>
 </header>
 
-<main style="padding-top: 1rem;">
-    <section class="event-content container py-4">
+<main id="main-content" style="padding-top: 1rem;" role="main">
+    <section class="event-content container py-4" aria-labelledby="events-heading">
         <header>
-            <h4 class="mb-3">Популярные мероприятия</h4>
+            <h1 id="events-heading" class="mb-3">Популярные мероприятия</h1>
             <p class="text-muted mb-4">Нажмите на карточку, чтобы увидеть детали.</p>
         </header>
-        <article class="row g-4 justify-content-center" id="eventsContainer"></article>
+        <article class="row g-4 justify-content-center" id="eventsContainer" aria-live="polite" aria-busy="false">
+        </article>
     </section>
 </main>
 
-<div class="modal fade" id="eventModal1" tabindex="-1" aria-labelledby="eventModal1Label" aria-hidden="true">
+<div class="modal fade" id="eventModal1" tabindex="-1" aria-labelledby="eventModal1Label" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="eventModal1Label">zxcursed концерт</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h2 class="modal-title" id="eventModal1Label">zxcursed концерт</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть модальное окно"></button>
             </div>
             <div class="modal-body">
-                <img src="https://placebear.com/1000/600" class="img-fluid rounded mb-3 w-100" alt="zxcursed концерт">
+                <img src="https://placebear.com/1000/600" class="img-fluid rounded mb-3 w-100" alt="Фотография концерта zxcursed">
                 <div class="row">
                     <div class="col-lg-8">
                         <p class="text-muted">Величайший дота-репер Украины приезжает в МСК</p>
                         <p class="text-muted">Место: Москва, ВТБ Арена</p>
-                        <h6 class="mt-4">Схема зала</h6>
-                        <div class="seat-map" id="seatMap1" data-event-id="1"></div>
-                        <div class="mt-2 d-flex gap-3 small flex-wrap">
-                            <span><span class="legend-seat available"></span>Свободно</span>
-                            <span><span class="legend-seat selected"></span>Выбрано</span>
-                            <span><span class="legend-seat sold"></span>Продано</span>
+                        <h3 class="mt-4">Схема зала</h3>
+                        <div class="seat-map" id="seatMap1" role="group" aria-label="Схема зала - выбор мест"></div>
+                        <div class="mt-2 d-flex gap-3 small flex-wrap" role="list" aria-label="Легенда схемы зала">
+                            <span role="listitem"><span class="legend-seat available" aria-hidden="true"></span>Свободно</span>
+                            <span role="listitem"><span class="legend-seat selected" aria-hidden="true"></span>Выбрано</span>
+                            <span role="listitem"><span class="legend-seat sold" aria-hidden="true"></span>Продано</span>
                         </div>
-                        <h6 class="mt-4">Отзывы</h6>
-                        <div id="reviewsContainer1"></div>
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="openReviewModal(1)">Оставить отзыв</button>
+                        <h3 class="mt-4">Отзывы</h3>
+                        <div id="reviewsContainer1" aria-live="polite"></div>
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="openReviewModal(1)" aria-label="Оставить отзыв о мероприятии">Оставить отзыв</button>
                     </div>
                     <div class="col-lg-4">
                         <div class="card bg-light text-center">
                             <div class="card-body">
-                                <h6 class="text-muted">Цена</h6>
-                                <h3 class="text-primary" id="priceDisplay1">150 000 ₽</h3>
-                                <div class="mb-2"><small>Выбрано мест: </small><strong id="selectedCount1">0</strong></div>
-                                <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice1">0 ₽</strong></div>
+                                <h3 class="text-muted">Цена</h3>
+                                <p class="text-primary" aria-label="Цена билета 150000 рублей" id="priceDisplay1">150,000 ₽</p>
+                                <div class="mb-2"><small>Выбрано мест:</small><strong id="selectedCount1" aria-live="polite">0</strong></div>
+                                <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice1" aria-live="polite">0 ₽</strong></div>
                                 <button type="button" class="btn btn-success w-100" onclick="buyTickets(1)">Купить билеты</button>
                             </div>
                         </div>
@@ -100,12 +103,12 @@
     </div>
 </div>
 
-<div class="modal fade" id="eventModal2" tabindex="-1" aria-labelledby="eventModal2Label" aria-hidden="true">
+<div class="modal fade" id="eventModal2" tabindex="-1" aria-labelledby="eventModal2Label" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="eventModal2Label">Представление "От вайбкодинга до отчисления"</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h2 class="modal-title" id="eventModal2Label">Представление "От вайбкодинга до отчисления"</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть модальное окно"></button>
             </div>
             <div class="modal-body">
                 <img src="https://placebear.com/1920/1080" class="img-fluid rounded mb-3 w-100" alt="Представление">
@@ -113,24 +116,24 @@
                     <div class="col-lg-8">
                         <p class="text-muted">Пост-модерн постановка Ямпольского Ильи</p>
                         <p class="text-muted">Место: СПб, Александринский театр</p>
-                        <h6 class="mt-4">Схема зала</h6>
-                        <div class="seat-map" id="seatMap2" data-event-id="2"></div>
-                        <div class="mt-2 d-flex gap-3 small flex-wrap">
-                            <span><span class="legend-seat available"></span>Свободно</span>
-                            <span><span class="legend-seat selected"></span>Выбрано</span>
-                            <span><span class="legend-seat sold"></span>Продано</span>
+                        <h3 class="mt-4">Схема зала</h3>
+                        <div class="seat-map" id="seatMap2" role="group" aria-label="Схема зала - выбор мест"></div>
+                        <div class="mt-2 d-flex gap-3 small flex-wrap" role="list" aria-label="Легенда схемы зала">
+                            <span role="listitem"><span class="legend-seat available" aria-hidden="true"></span>Свободно</span>
+                            <span role="listitem"><span class="legend-seat selected" aria-hidden="true"></span>Выбрано</span>
+                            <span role="listitem"><span class="legend-seat sold" aria-hidden="true"></span>Продано</span>
                         </div>
-                        <h6 class="mt-4">Отзывы</h6>
-                        <div id="reviewsContainer2"></div>
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="openReviewModal(2)">Оставить отзыв</button>
+                        <h3 class="mt-4">Отзывы</h3>
+                        <div id="reviewsContainer2" aria-live="polite"></div>
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="openReviewModal(2)" aria-label="Оставить отзыв о мероприятии">Оставить отзыв</button>
                     </div>
                     <div class="col-lg-4">
                         <div class="card bg-light text-center">
                             <div class="card-body">
-                                <h6 class="text-muted">Цена</h6>
-                                <h3 class="text-primary" id="priceDisplay2">2 000 ₽</h3>
-                                <div class="mb-2"><small>Выбрано мест: </small><strong id="selectedCount2">0</strong></div>
-                                <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice2">0 ₽</strong></div>
+                                <h3 class="text-muted">Цена</h3>
+                                <p class="text-primary" aria-label="Цена билета 2000 рублей" id="priceDisplay2">2,000 ₽</p>
+                                <div class="mb-2"><small>Выбрано мест:</small><strong id="selectedCount2" aria-live="polite">0</strong></div>
+                                <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice2" aria-live="polite">0 ₽</strong></div>
                                 <button type="button" class="btn btn-success w-100" onclick="buyTickets(2)">Купить билеты</button>
                             </div>
                         </div>
@@ -141,12 +144,12 @@
     </div>
 </div>
 
-<div class="modal fade" id="eventModal3" tabindex="-1" aria-labelledby="eventModal3Label" aria-hidden="true">
+<div class="modal fade" id="eventModal3" tabindex="-1" aria-labelledby="eventModal3Label" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="eventModal3Label">Выставка копрофилов</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h2 class="modal-title" id="eventModal3Label">Выставка копрофилов</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть модальное окно"></button>
             </div>
             <div class="modal-body">
                 <img src="https://placebear.com/228/228" class="img-fluid rounded mb-3 w-100" alt="Выставка">
@@ -154,24 +157,24 @@
                     <div class="col-lg-8">
                         <p class="text-muted">Выставка для истинных ценителей искусства</p>
                         <p class="text-muted">Место: Москва, МАММ</p>
-                        <h6 class="mt-4">Схема зала</h6>
-                        <div class="seat-map" id="seatMap3" data-event-id="3"></div>
-                        <div class="mt-2 d-flex gap-3 small flex-wrap">
-                            <span><span class="legend-seat available"></span>Свободно</span>
-                            <span><span class="legend-seat selected"></span>Выбрано</span>
-                            <span><span class="legend-seat sold"></span>Продано</span>
+                        <h3 class="mt-4">Схема зала</h3>
+                        <div class="seat-map" id="seatMap3" role="group" aria-label="Схема зала - выбор мест"></div>
+                        <div class="mt-2 d-flex gap-3 small flex-wrap" role="list" aria-label="Легенда схемы зала">
+                            <span role="listitem"><span class="legend-seat available" aria-hidden="true"></span>Свободно</span>
+                            <span role="listitem"><span class="legend-seat selected" aria-hidden="true"></span>Выбрано</span>
+                            <span role="listitem"><span class="legend-seat sold" aria-hidden="true"></span>Продано</span>
                         </div>
-                        <h6 class="mt-4">Отзывы</h6>
-                        <div id="reviewsContainer3"></div>
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="openReviewModal(3)">Оставить отзыв</button>
+                        <h3 class="mt-4">Отзывы</h3>
+                        <div id="reviewsContainer3" aria-live="polite"></div>
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="openReviewModal(3)" aria-label="Оставить отзыв о мероприятии">Оставить отзыв</button>
                     </div>
                     <div class="col-lg-4">
                         <div class="card bg-light text-center">
                             <div class="card-body">
-                                <h6 class="text-muted">Цена</h6>
-                                <h3 class="text-primary" id="priceDisplay3">500 ₽</h3>
-                                <div class="mb-2"><small>Выбрано мест: </small><strong id="selectedCount3">0</strong></div>
-                                <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice3">0 ₽</strong></div>
+                                <h3 class="text-muted">Цена</h3>
+                                <p class="text-primary" aria-label="Цена билета 500 рублей" id="priceDisplay3">500 ₽</p>
+                                <div class="mb-2"><small>Выбрано мест:</small><strong id="selectedCount3" aria-live="polite">0</strong></div>
+                                <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice3" aria-live="polite">0 ₽</strong></div>
                                 <button type="button" class="btn btn-success w-100" onclick="buyTickets(3)">Купить билеты</button>
                             </div>
                         </div>
@@ -182,12 +185,12 @@
     </div>
 </div>
 
-<div class="modal fade" id="eventModal4" tabindex="-1" aria-labelledby="eventModal4Label" aria-hidden="true">
+<div class="modal fade" id="eventModal4" tabindex="-1" aria-labelledby="eventModal4Label" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="eventModal4Label">Концерт Барбоскиных</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h2 class="modal-title" id="eventModal4Label">Концерт Барбоскиных</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть модальное окно"></button>
             </div>
             <div class="modal-body">
                 <img src="https://placebear.com/666/333" class="img-fluid rounded mb-3 w-100" alt="Барбоскины">
@@ -195,24 +198,24 @@
                     <div class="col-lg-8">
                         <p class="text-muted">Знаменитая на всю страну семья впервые в Питере!</p>
                         <p class="text-muted">Место: СПб, Филармония</p>
-                        <h6 class="mt-4">Схема зала</h6>
-                        <div class="seat-map" id="seatMap4" data-event-id="4"></div>
-                        <div class="mt-2 d-flex gap-3 small flex-wrap">
-                            <span><span class="legend-seat available"></span>Свободно</span>
-                            <span><span class="legend-seat selected"></span>Выбрано</span>
-                            <span><span class="legend-seat sold"></span>Продано</span>
+                        <h3 class="mt-4">Схема зала</h3>
+                        <div class="seat-map" id="seatMap4" role="group" aria-label="Схема зала - выбор мест"></div>
+                        <div class="mt-2 d-flex gap-3 small flex-wrap" role="list" aria-label="Легенда схемы зала">
+                            <span role="listitem"><span class="legend-seat available" aria-hidden="true"></span>Свободно</span>
+                            <span role="listitem"><span class="legend-seat selected" aria-hidden="true"></span>Выбрано</span>
+                            <span role="listitem"><span class="legend-seat sold" aria-hidden="true"></span>Продано</span>
                         </div>
-                        <h6 class="mt-4">Отзывы</h6>
-                        <div id="reviewsContainer4"></div>
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="openReviewModal(4)">Оставить отзыв</button>
+                        <h3 class="mt-4">Отзывы</h3>
+                        <div id="reviewsContainer4" aria-live="polite"></div>
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="openReviewModal(4)" aria-label="Оставить отзыв о мероприятии">Оставить отзыв</button>
                     </div>
                     <div class="col-lg-4">
                         <div class="card bg-light text-center">
                             <div class="card-body">
-                                <h6 class="text-muted">Цена</h6>
-                                <h3 class="text-primary" id="priceDisplay4">3 000 ₽</h3>
-                                <div class="mb-2"><small>Выбрано мест: </small><strong id="selectedCount4">0</strong></div>
-                                <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice4">0 ₽</strong></div>
+                                <h3 class="text-muted">Цена</h3>
+                                <p class="text-primary" aria-label="Цена билета 3000 рублей" id="priceDisplay4">3,000 ₽</p>
+                                <div class="mb-2"><small>Выбрано мест:</small><strong id="selectedCount4" aria-live="polite">0</strong></div>
+                                <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice4" aria-live="polite">0 ₽</strong></div>
                                 <button type="button" class="btn btn-success w-100" onclick="buyTickets(4)">Купить билеты</button>
                             </div>
                         </div>
@@ -223,28 +226,28 @@
     </div>
 </div>
 
-<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="reviewModalLabel">Оставить отзыв</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h2 class="modal-title" id="reviewModalLabel">Оставить отзыв</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть модальное окно"></button>
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label class="form-label">Ваша оценка</label>
-                    <div class="rating-select" id="ratingSelect">
-                        <button type="button" data-value="1">1</button>
-                        <button type="button" data-value="2">2</button>
-                        <button type="button" data-value="3">3</button>
-                        <button type="button" data-value="4">4</button>
-                        <button type="button" data-value="5">5</button>
+                    <label class="form-label" id="ratingLabel">Ваша оценка</label>
+                    <div class="rating-select" id="ratingSelect" role="radiogroup" aria-labelledby="ratingLabel">
+                        <button type="button" data-value="1" role="radio" aria-checked="false" aria-label="1 звезда">1</button>
+                        <button type="button" data-value="2" role="radio" aria-checked="false" aria-label="2 звезды">2</button>
+                        <button type="button" data-value="3" role="radio" aria-checked="false" aria-label="3 звезды">3</button>
+                        <button type="button" data-value="4" role="radio" aria-checked="false" aria-label="4 звезды">4</button>
+                        <button type="button" data-value="5" role="radio" aria-checked="false" aria-label="5 звезд">5</button>
                     </div>
                     <input type="hidden" id="selectedRating" value="0">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Ваш отзыв</label>
-                    <label for="reviewText"></label><textarea class="form-control" id="reviewText" rows="4" placeholder="Напишите ваш отзыв..."></textarea>
+                    <label class="form-label" for="reviewText">Ваш отзыв</label>
+                    <textarea class="form-control" id="reviewText" rows="4" placeholder="Напишите ваш отзыв..." aria-required="true"></textarea>
                 </div>
                 <div class="form-check mb-3">
                     <input class="form-check-input" type="checkbox" id="reviewAnon">
@@ -266,7 +269,7 @@
     axios.interceptors.request.use(config => {
         const token = localStorage.accessToken
         if (token) {
-            config.headers.Authorization = 'Bearer ' + token
+            config.headers.Authorization = `Bearer ${token}`
         }
         return config
     })
@@ -294,22 +297,22 @@
     function renderEvents(events) {
         const container = document.getElementById('eventsContainer')
         container.innerHTML = events.map((event, index) => {
-            const modalId = 'eventModal' + (index + 1)
+            const modalId = `eventModal${index + 1}`
             return `
-                <div class="col-12 col-md-6 col-xl-4">
-                    <article class="card h-100 event-card" data-bs-toggle="modal" data-bs-target="#${modalId}" onclick="setCurrentEventId(${event.id})">
-                        <section class="card-body d-flex flex-column">
-                            <header class="flex-grow-1">
-                                <h5 class="card-title">${event.title}</h5>
-                                <p class="card-text text-muted">${event.date} - ${event.city}, ${event.venue}</p>
-                            </header>
-                            <footer class="mt-auto">
-                                <span class="badge bg-success">от ${event.price} ₽</span>
-                            </footer>
-                        </section>
-                    </article>
-                </div>
-            `
+                    <div class="col-12 col-md-6 col-xl-4">
+                        <article class="card h-100 event-card" data-bs-toggle="modal" data-bs-target="#${modalId}" onclick="setCurrentEventId(${event.id})">
+                            <section class="card-body d-flex flex-column">
+                                <header class="flex-grow-1">
+                                    <h5 class="card-title">${event.title}</h5>
+                                    <p class="card-text text-muted">${event.date} - ${event.city}, ${event.venue}</p>
+                                </header>
+                                <footer class="mt-auto">
+                                    <span class="badge bg-success">от ${event.price.toLocaleString()} ₽</span>
+                                </footer>
+                            </section>
+                        </article>
+                    </div>
+                `
         }).join('')
     }
 
@@ -319,7 +322,7 @@
 
     async function loadSoldSeats(eventId) {
         try {
-            const response = await axios.get('/tickets?eventId=' + eventId)
+            const response = await axios.get(`/tickets?eventId=${eventId}`)
             const tickets = response.data
 
             const soldSeats = []
@@ -338,7 +341,7 @@
     }
 
     async function generateSeatMap(eventId, event) {
-        const container = document.getElementById('seatMap' + eventId)
+        const container = document.getElementById(`seatMap${eventId}`)
         if (!container) return
 
         const capacity = event.capacity || 50
@@ -354,7 +357,7 @@
             if (soldSeats.includes(i)) {
                 className = 'seat sold'
             }
-            html += '<button type="button" class="' + className + '" data-seat="' + i + '" data-event-id="' + eventId + '" onclick="toggleSeat(' + i + ', ' + eventId + ', ' + price + ')"></button>'
+            html += `<button type="button" class="${className}" data-seat="${i}" data-event-id="${eventId}" onclick="toggleSeat(${i}, ${eventId}, ${price})"></button>`
         }
         container.innerHTML = html
 
@@ -362,7 +365,7 @@
     }
 
     function toggleSeat(seatNumber, eventId, price) {
-        const button = document.querySelector('#seatMap' + eventId + ' button[data-seat="' + seatNumber + '"]')
+        const button = document.querySelector(`#seatMap${eventId} button[data-seat="${seatNumber}"]`)
         if (!button || button.classList.contains('sold')) {
             return
         }
@@ -383,15 +386,15 @@
     }
 
     function updatePriceCounter(eventId, price) {
-        const countElement = document.getElementById('selectedCount' + eventId)
-        const totalElement = document.getElementById('totalPrice' + eventId)
+        const countElement = document.getElementById(`selectedCount${eventId}`)
+        const totalElement = document.getElementById(`totalPrice${eventId}`)
 
         if (countElement && totalElement) {
             const count = selectedSeats[eventId] ? selectedSeats[eventId].length : 0
             const total = count * price
 
             countElement.textContent = count
-            totalElement.textContent = total.toLocaleString() + ' ₽'
+            totalElement.textContent = `${total.toLocaleString()} ₽`
         }
     }
 
@@ -418,9 +421,9 @@
 
             await axios.post('/tickets', ticketData)
 
-            alert('Билеты куплены!\nМеста: ' + selectedSeats[eventId].join(', ') + '\nСумма: ' + totalPrice.toLocaleString() + ' ₽')
+            alert(`Билеты куплены!\nМеста: ${selectedSeats[eventId].join(', ')}\nСумма: ${totalPrice.toLocaleString()} ₽`)
 
-            const modalElement = document.getElementById('eventModal' + eventId)
+            const modalElement = document.getElementById(`eventModal${eventId}`)
             const modal = bootstrap.Modal.getInstance(modalElement)
             if (modal) {
                 modal.hide()
@@ -438,7 +441,7 @@
 
     async function loadReviews(eventId) {
         try {
-            const response = await axios.get('/reviews?eventId=' + eventId)
+            const response = await axios.get(`/reviews?eventId=${eventId}`)
             renderReviews(eventId, response.data)
         } catch (error) {
             console.error('Error loading reviews:', error)
@@ -446,7 +449,7 @@
     }
 
     function renderReviews(eventId, reviews) {
-        const container = document.getElementById('reviewsContainer' + eventId)
+        const container = document.getElementById(`reviewsContainer${eventId}`)
         if (!container) return
 
         if (!reviews || reviews.length === 0) {
@@ -457,13 +460,13 @@
         container.innerHTML = reviews.map(review => {
             const userName = review.anonymous ? 'Аноним' : review.userName
             return `
-                <div class="card bg-light border-0 mb-2">
-                    <div class="card-body p-2">
-                        <small><strong>${userName}</strong> [${review.rating}/5]</small>
-                        <p class="mb-0 small">${review.text}</p>
+                    <div class="card bg-light border-0 mb-2">
+                        <div class="card-body p-2">
+                            <small><strong>${userName}</strong> [${review.rating}/5]</small>
+                            <p class="mb-0 small">${review.text}</p>
+                        </div>
                     </div>
-                </div>
-            `
+                `
         }).join('')
     }
 
@@ -493,7 +496,7 @@
             const reviewData = {
                 eventId: currentEventId,
                 userId: user.id,
-                userName: anonymous ? 'Аноним' : (user.firstName + ' ' + user.lastName),
+                userName: anonymous ? 'Аноним' : `${user.firstName} ${user.lastName}`,
                 rating: parseInt(rating),
                 text: text,
                 anonymous: anonymous,
@@ -517,7 +520,7 @@
             await loadReviews(currentEventId)
         } catch (error) {
             console.error('Error submitting review:', error)
-            alert('Ошибка отправки отзыва: ' + (error.response?.data || error.message))
+            alert(`Ошибка отправки отзыва: ${error.response?.data || error.message}`)
         }
     }
 
