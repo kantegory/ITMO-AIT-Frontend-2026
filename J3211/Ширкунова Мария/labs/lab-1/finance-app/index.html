@@ -19,7 +19,7 @@
                     <li class="nav-item"><a class="nav-link active" href="index.html">Обзор</a></li>
                     <li class="nav-item"><a class="nav-link" href="transactions.html">Транзакции</a></li>
                     <li class="nav-item"><a class="nav-link" href="reports.html">Отчёты</a></li>
-                    <li class="nav-item"><a class="nav-link" href="login.html">Выход</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger" href="#" onclick="logout()">Выход</a></li>
                 </ul>
             </div>
         </nav>
@@ -33,31 +33,7 @@
             </button>
         </div>
 
-        <section class="row mb-5">
-            <article class="col-md-4 mb-3">
-                <div class="card account-card account-card--primary h-100 shadow">
-                    <div class="card-body p-4 d-flex flex-column justify-content-between">
-                        <p class="account-card__label">Зарплатная карта</p>
-                        <h3 class="fw-bold mb-0">125 000 ₽</h3>
-                    </div>
-                </div>
-            </article>
-            <article class="col-md-4 mb-3">
-                <div class="card account-card account-card--success h-100 shadow">
-                    <div class="card-body p-4 d-flex flex-column justify-content-between">
-                        <p class="account-card__label">Наличные</p>
-                        <h3 class="fw-bold mb-0">14 500 ₽</h3>
-                    </div>
-                </div>
-            </article>
-            <article class="col-md-4 mb-3">
-                <div class="card account-card account-card--credit h-100 shadow">
-                    <div class="card-body p-4 d-flex flex-column justify-content-between">
-                        <p class="account-card__label">Кредитная карта</p>
-                        <h3 class="fw-bold mb-0">- 30 000 ₽</h3>
-                    </div>
-                </div>
-            </article>
+        <section class="row mb-5" id="accountsContainer">
         </section>
 
     </main>
@@ -69,17 +45,17 @@
                     <h5 class="modal-title">Новая транзакция</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                 </div>
-                                <div class="modal-body">
+                <div class="modal-body">
                     <form id="transactionForm">
                         <div class="mb-3">
                             <label class="form-label">Тип операции</label>
                             <div class="d-flex gap-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="transType" id="typeExpense" checked>
+                                    <input class="form-check-input" type="radio" name="transType" id="typeExpense" value="expense" checked>
                                     <label class="form-check-label text-danger" for="typeExpense">Расход</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="transType" id="typeIncome">
+                                    <input class="form-check-input" type="radio" name="transType" id="typeIncome" value="income">
                                     <label class="form-check-label text-success" for="typeIncome">Доход</label>
                                 </div>
                             </div>
@@ -87,27 +63,33 @@
 
                         <div class="mb-3">
                             <label class="form-label">Счёт</label>
-                            <select class="form-select" id="transAccount">
-                                <option value="salary">Зарплатная карта</option>
-                                <option value="cash">Наличные</option>
-                                <option value="credit">Кредитная карта</option>
+                            <select class="form-select" id="transAccount" name="accountName">
+                                <option value="Зарплатная карта">Зарплатная карта</option>
+                                <option value="Наличные">Наличные</option>
+                                <option value="Кредитная карта">Кредитная карта</option>
                             </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Описание</label>
+                            <input type="text" class="form-control" name="description" placeholder="Например: Пятерочка" required>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Сумма (₽)</label>
-                            <input type="number" class="form-control" placeholder="Например: 1500" required>
+                            <input type="number" class="form-control" name="amount" placeholder="Например: 1500" required>
                         </div>
+
                         <div class="mb-3">
                             <label class="form-label">Категория</label>
-                            <select class="form-select">
-                                <option>Супермаркеты</option>
-                                <option>Транспорт</option>
-                                <option>Зарплата</option>
-                                <option>Переводы</option>
+                            <select class="form-select" name="category">
+                                <option value="food">Супермаркеты</option>
+                                <option value="transport">Транспорт</option>
+                                <option value="income">Зарплата</option>
+                                <option value="transfers">Переводы</option>
                             </select>
                         </div>
-                        <button type="button" class="btn btn-primary w-100" id="saveTransactionBtn">Сохранить</button>
+                        <button type="submit" class="btn btn-primary w-100">Сохранить</button>
                     </form>
                 </div>
             </div>
@@ -128,3 +110,4 @@
     <script src="js/main.js"></script>
 </body>
 </html>
+
