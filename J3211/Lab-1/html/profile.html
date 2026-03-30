@@ -56,7 +56,7 @@
                     </div>
                     <h4 class="fw-bold mb-1" id="profileDisplayName">Иван Иванов</h4>
                     <p class="text-muted mb-4" id="profileDisplayEmail">ivan@labelflow.ai</p>
-                    <a href="login.html" class="btn btn-outline-danger btn-sm w-100">Выйти из аккаунта</a>
+                    <button id="logoutBtn" class="btn btn-outline-danger btn-sm w-100">Выйти из аккаунта</button>
                 </div>
             </div>
         </div>
@@ -69,12 +69,15 @@
                     <form id="profileForm">
                         <div class="mb-3">
                             <label for="profileName" class="form-label">Полное имя</label>
-                            <input type="text" class="form-control" id="profileName" value="Иван Иванов">
+                            <input type="text" class="form-control" id="profileName" required>
                         </div>
                         <div class="mb-4">
-                            <label for="profileEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="profileEmail" value="ivan@labelflow.ai">
+                            <label for="profileEmail" class="form-label">Email <span class="text-muted fw-normal small">(изменение недоступно)</span></label>
+                            <input type="email" class="form-control bg-light text-muted" id="profileEmail" readonly>
                         </div>
+                        <small id="profileUpdateSuccess" class="text-success d-none fw-medium d-block mb-3">
+                            Данные успешно обновлены!
+                        </small>
                         <button type="submit" class="btn btn-primary">Сохранить изменения</button>
                     </form>
                 </div>

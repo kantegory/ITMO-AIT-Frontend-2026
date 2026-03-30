@@ -64,21 +64,7 @@
                     <th class="px-4 py-3 text-end">Действия</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td class="px-4 py-3 fw-medium">Иван Иванов</td>
-                    <td><span class="badge bg-secondary">Владелец</span></td>
-                    <td>340 файлов</td>
-                    <td class="text-success fw-bold">98%</td>
-                    <td class="px-4 py-3 text-end"><button class="btn btn-sm btn-light text-muted">Ред.</button></td>
-                </tr>
-                <tr>
-                    <td class="px-4 py-3 fw-medium">Анна Смирнова</td>
-                    <td><span class="badge bg-info text-dark">Разметчик</span></td>
-                    <td>890 файлов</td>
-                    <td class="text-success fw-bold">95%</td>
-                    <td class="px-4 py-3 text-end"><button class="btn btn-sm btn-light text-muted">Ред.</button></td>
-                </tr>
+                <tbody id="workersContainer">
                 </tbody>
             </table>
         </div>
@@ -121,18 +107,20 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="mb-3">
-                    <label class="form-label">Email адрес</label>
-                    <input type="email" class="form-control" placeholder="colleague@example.com">
-                </div>
-                <div class="mb-4">
-                    <label class="form-label">Роль</label>
-                    <select class="form-select">
-                        <option>Разметчик (Только выполнение задач)</option>
-                        <option>Менеджер (Управление проектами)</option>
-                    </select>
-                </div>
-                <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">Отправить приглашение</button>
+                <form id="inviteForm">
+                    <div class="mb-3">
+                        <label class="form-label">Email адрес</label>
+                        <input type="email" class="form-control" id="inviteEmail" placeholder="colleague@example.com" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Роль</label>
+                        <select class="form-select" id="inviteRole">
+                            <option value="Разметчик">Разметчик (Только выполнение задач)</option>
+                            <option value="Менеджер">Менеджер (Управление проектами)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Отправить приглашение</button>
+                </form>
             </div>
         </div>
     </div>
