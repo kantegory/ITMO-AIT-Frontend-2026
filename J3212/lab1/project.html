@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Веб-приложение — ProjectHub</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">ProjectHub</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="dashboard.html">Личный кабинет</a></li>
+          <li class="nav-item"><a class="nav-link" href="search.html">Поиск</a></li>
+          <li class="nav-item"><a class="nav-link active" href="project.html">Веб-приложение</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+      <h1 class="h3 mb-0">Веб-приложение</h1>
+      <div class="d-flex gap-2">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddTask">Добавить задачу</button>
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalRoles">Роли и права в команде</button>
+      </div>
+    </div>
+
+    <ul class="nav nav-tabs mb-4" id="projectTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="board-tab" data-bs-toggle="tab" data-bs-target="#board" type="button" role="tab">Доска задач</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="deadlines-tab" data-bs-toggle="tab" data-bs-target="#deadlines" type="button" role="tab">Сроки</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="files-tab" data-bs-toggle="tab" data-bs-target="#files" type="button" role="tab">Файлы</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="discussions-tab" data-bs-toggle="tab" data-bs-target="#discussions" type="button" role="tab">Обсуждения</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="projectTabsContent">
+      <div class="tab-pane fade show active" id="board" role="tabpanel">
+        <div class="row g-3">
+          <div class="col-md-3">
+            <div class="kanban-column p-3 rounded">
+              <h6 class="text-muted mb-3">Новая</h6>
+              <div class="kanban-column-cards" data-column="new">
+                <div class="card kanban-card mb-2">
+                  <div class="card-body py-2">
+                    <span class="badge badge-priority-high mb-1">Высокий</span>
+                    <p class="mb-0 small">Добавить страницу поиска</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="kanban-column p-3 rounded">
+              <h6 class="text-muted mb-3">В работе</h6>
+              <div class="kanban-column-cards" data-column="progress">
+                <div class="card kanban-card mb-2">
+                  <div class="card-body py-2">
+                    <span class="badge badge-priority-high mb-1">Высокий</span>
+                    <p class="mb-0 small">Настроить авторизацию</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="kanban-column p-3 rounded">
+              <h6 class="text-muted mb-3">На проверке</h6>
+              <div class="kanban-column-cards" data-column="review">
+                <div class="card kanban-card mb-2">
+                  <div class="card-body py-2">
+                    <span class="badge badge-priority-low mb-1">Низкий</span>
+                    <p class="mb-0 small">Ревью дизайна</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="kanban-column p-3 rounded">
+              <h6 class="text-muted mb-3">Выполнена</h6>
+              <div class="kanban-column-cards" data-column="done">
+                <div class="card kanban-card mb-2">
+                  <div class="card-body py-2">
+                    <p class="mb-0 small">Главная страница</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="deadlines" role="tabpanel">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Задача</th>
+                <th>Исполнитель</th>
+                <th>Срок</th>
+                <th>Статус</th>
+              </tr>
+            </thead>
+            <tbody id="deadlines-tbody">
+              <tr>
+                <td>Настроить авторизацию</td>
+                <td>Иван Петров</td>
+                <td>05.03.2026</td>
+                <td><span class="badge bg-primary">В работе</span></td>
+              </tr>
+              <tr>
+                <td>Ревью дизайна</td>
+                <td>Алексей Козлов</td>
+                <td>01.03.2026</td>
+                <td><span class="badge bg-warning text-dark">На проверке</span></td>
+              </tr>
+              <tr>
+                <td>Добавить страницу поиска</td>
+                <td>Мария Сидорова</td>
+                <td>10.03.2026</td>
+                <td><span class="badge bg-info">Новая</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="files" role="tabpanel">
+        <div class="list-group">
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <span>Макет_главная.fig</span>
+            <span class="badge bg-secondary">2.1 MB</span>
+          </div>
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <span>Требования.pdf</span>
+            <span class="badge bg-secondary">450 KB</span>
+          </div>
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <span>API_spec.yaml</span>
+            <span class="badge bg-secondary">15 KB</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="discussions" role="tabpanel">
+        <div id="discussions-list">
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-2">
+                <strong>Иван Петров</strong>
+                <small class="text-muted">26.02.2026, 14:30</small>
+              </div>
+              <p class="mb-0">Предлагаю для авторизации использовать JWT. Кто за?</p>
+            </div>
+          </div>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-2">
+                <strong>Мария Сидорова</strong>
+                <small class="text-muted">27.02.2026, 09:15</small>
+              </div>
+              <p class="mb-0">Согласна, плюс refresh token в httpOnly cookie.</p>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <textarea id="discussion-message" class="form-control" rows="2" placeholder="Написать сообщение..."></textarea>
+          <button type="button" id="discussion-send" class="btn btn-primary mt-2">Отправить</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalAddTask" tabindex="-1" aria-labelledby="modalAddTaskLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalAddTaskLabel">Новая задача</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <form id="form-add-task">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="task-title" class="form-label">Название</label>
+                <input type="text" class="form-control" id="task-title" required placeholder="Название задачи">
+              </div>
+              <div class="mb-3">
+                <label for="task-status" class="form-label">Статус</label>
+                <select class="form-select" id="task-status">
+                  <option value="new">Новая</option>
+                  <option value="progress">В работе</option>
+                  <option value="review">На проверке</option>
+                  <option value="done">Выполнена</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="task-priority" class="form-label">Приоритет</label>
+                <select class="form-select" id="task-priority">
+                  <option value="low">Низкий</option>
+                  <option value="medium">Средний</option>
+                  <option value="high">Высокий</option>
+                  <option value="critical">Критический</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="task-assignee" class="form-label">Исполнитель</label>
+                <select class="form-select" id="task-assignee">
+                  <option>Иван Петров</option>
+                  <option>Мария Сидорова</option>
+                  <option>Алексей Козлов</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="task-deadline" class="form-label">Срок</label>
+                <input type="date" class="form-control" id="task-deadline">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+              <button type="submit" class="btn btn-primary">Добавить</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalRoles" tabindex="-1" aria-labelledby="modalRolesLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalRolesLabel">Роли и права в команде</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted small mb-3">Участники проекта и их роли:</p>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item role-admin px-0">
+                <strong>Иван Петров</strong> — Администратор
+                <span class="d-block small text-muted">Управление проектом, участниками и настройками</span>
+              </li>
+              <li class="list-group-item role-member px-0">
+                <strong>Мария Сидорова</strong> — Участник
+                <span class="d-block small text-muted">Создание и редактирование задач, доступ к файлам и обсуждениям</span>
+              </li>
+              <li class="list-group-item role-member px-0">
+                <strong>Алексей Козлов</strong> — Участник
+                <span class="d-block small text-muted">Создание и редактирование задач, доступ к файлам и обсуждениям</span>
+              </li>
+              <li class="list-group-item role-viewer px-0">
+                <strong>Ольга Новикова</strong> — Наблюдатель
+                <span class="d-block small text-muted">Только просмотр доски, сроков и обсуждений</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-light py-3 mt-auto">
+    <div class="container text-center text-muted small">&copy; 2026 ProjectHub</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
