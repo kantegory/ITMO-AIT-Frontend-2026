@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Learning: от MLP до GPT - Vital Courses</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/course.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+</head>
+
+
+<body class="d-flex flex-column min-vh-100">
+
+
+<header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom sticky-top shadow-sm">
+        <a class="navbar-brand fw-bold ms-3" href="index.html">
+            <i class="fa-solid fa-graduation-cap me-1 text-primary"></i>
+            Vital <span class="text-primary">Courses</span>
+        </a>
+
+        <button class="navbar-toggler border-0"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarContent"
+                aria-controls="navbarContent"
+                aria-expanded="false"
+                aria-label="Переключить навигацию">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-center" id="navbarContent">
+            <ul class="navbar-nav align-items-center">
+                <li class="nav-item"><a class="nav-link" aria-current="page" href="index.html">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">О платформе</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Преподавателям</a></li>
+                <li class="nav-item"><a class="nav-link active" href="catalog.html">Каталог курсов</a></li>
+            </ul>
+
+
+            <div class="d-flex align-items-center gap-2 ms-lg-1">
+                <button class="btn btn-outline-primary px-3 d-flex align-items-center transition-hover"
+                        data-bs-toggle="modal"
+                        data-bs-target="#loginModal">
+                    <i class="fa-solid fa-right-to-bracket me-2"></i> Вход
+                </button>
+
+                <button class="btn btn-primary px-3 shadow-sm d-flex align-items-center transition-hover"
+                        data-bs-toggle="modal"
+                        data-bs-target="#registerModal">
+                    <i class="fa-solid fa-user-plus me-2"></i> Регистрация
+                </button>
+            </div>
+        </div>
+
+        <div class="dropdown position-relative me-3">
+            <a class="dropdown-toggle d-flex align-items-center text-body text-decoration-none"
+               href="#" id="accountDropdown" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="m-2 d-flex align-items-center justify-content-center">
+                    <i class="fa-solid fa-user text-secondary"></i>
+                </div>
+                <span class="fw-medium text-body">Профиль</span>
+                <i class="fa-solid fa-chevron-down ms-2 fa-xs text-muted"></i>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow-lg">
+                <li>
+                    <a class="dropdown-item fw-semibold py-2" href="profile.html"><i class="fa-solid fa-id-card me-2 text-primary"></i>Личный кабинет</a>
+                </li>
+
+                <li>
+                    <a class="dropdown-item fw-semibold py-2" href="teacher-profile.html"><i class="fa-solid fa-chalkboard-user me-2 text-primary"></i>Личный кабинет преподавателя</a>
+                </li>
+
+                <li><hr class="dropdown-divider"></li>
+
+                <li>
+                    <a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>Настройки</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="#"><i class="fa-solid fa-circle-question me-2"></i>Помощь и поддержка</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="#"><i class="fa-solid fa-bell me-2"></i>Уведомления</a>
+                </li>
+
+                <li><hr class="dropdown-divider"></li>
+
+                <li>
+                    <a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>Выйти</a>
+                </li>
+            </ul>
+        </div>
+
+        <button class="btn btn-outline-secondary theme-toggle me-3" id="themeToggle" aria-label="Переключить тему">
+            <i class="fa-solid fa-sun"></i>
+            <i class="fa-solid fa-moon"></i>
+        </button>
+    </nav>
+</header>
+
+<main class="flex-grow-1">
+    <section class="course-header bg-dark text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <span class="badge tag-deep mb-3">Deep Learning</span>
+                    <h1 class="display-6 fw-bold mb-3">Deep Learning: от MLP до GPT</h1>
+                    <p class="lead hero-lead text-white-50 mb-4">
+                        Постройте свою первую нейросеть, а затем - ту, что предскажет будущее. PyTorch, TensorFlow и магия трансформеров.
+                    </p>
+
+                    <div class="d-flex flex-wrap align-items-center gap-4">
+                        <div class="d-flex align-items-center gap-2">
+                            <div>
+                                <div class="fw-semibold">Д. Эпштейн</div>
+                                <div class="small text-white-50">
+                                    <i class="fa-solid fa-star text-warning me-1"></i>5.0
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-clock text-white-50"></i>
+                            <span>42 часа</span>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-users text-white-50"></i>
+                            <span>12,453 студента</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="course-content py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-0">
+                            <div class="ratio ratio-16x9 bg-dark">
+                                <div class="d-flex align-items-center justify-content-center h-100 text-white">
+                                    <div class="text-center">
+                                        <i class="fa-solid fa-circle-play fa-4x mb-3 opacity-75"></i>
+                                        <p class="mb-0">Лекция 66: Трансформеры и Attention Mechanism</p>
+                                        <small class="text-white-50">0:0 / 60:00</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="nav nav-tabs mb-4" id="courseTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab">
+                                <i class="fa-solid fa-list me-2"></i>Обзор
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="materials-tab" data-bs-toggle="tab" data-bs-target="#materials" type="button" role="tab">
+                                <i class="fa-solid fa-folder-open me-2"></i>Материалы
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="assignments-tab" data-bs-toggle="tab" data-bs-target="#assignments" type="button" role="tab">
+                                <i class="fa-solid fa-file-pen me-2"></i>Задания
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="discussions-tab" data-bs-toggle="tab" data-bs-target="#discussions" type="button" role="tab">
+                                <i class="fa-solid fa-comments me-2"></i>Обсуждения
+                                <span class="badge bg-primary ms-1">24</span>
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="courseTabsContent">
+                        <div class="tab-pane fade show active" id="overview" role="tabpanel">
+                            <div class="card border-0 shadow-sm mb-4">
+                                <div class="card-body">
+                                    <h5 class="fw-bold mb-3">О курсе</h5>
+                                    <p class="text-muted mb-4">
+                                        Этот курс проведёт вас от основ нейронных сетей до современных архитектур трансформеров.
+                                        Вы изучите теорию и закрепите знания на практике, создав собственные модели для решения реальных задач.
+                                    </p>
+
+                                    <h6 class="fw-semibold mb-3">Что вы изучите:</h6>
+                                    <ul class="list-unstyled mb-4">
+                                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i>Основы глубокого обучения и backpropagation</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i>Архитектуры MLP, CNN, RNN</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i>Трансформеры и механизм внимания</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i>Фреймворки PyTorch и TensorFlow</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i>Развёртывание моделей в production</li>
+                                    </ul>
+
+                                    <h6 class="fw-semibold mb-3">Требования:</h6>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="fa-solid fa-circle-info text-primary me-2"></i>Базовые знания Python</li>
+                                        <li class="mb-2"><i class="fa-solid fa-circle-info text-primary me-2"></i>Линейная алгебра и математический анализ</li>
+                                        <li class="mb-2"><i class="fa-solid fa-circle-info text-primary me-2"></i>Основы машинного обучения</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="materials" role="tabpanel">
+                            <div class="card border-0 shadow-sm mb-4">
+                                <div class="card-body">
+                                    <h5 class="fw-bold mb-4">Материалы лекции</h5>
+
+                                    <div class="list-group list-group-flush">
+                                        <a href="#" class="list-group-item list-group-item-action d-flex align-items-center py-3">
+                                            <i class="fa-solid fa-file-pdf text-danger fa-lg me-3"></i>
+                                            <div class="flex-grow-1">
+                                                <div class="fw-semibold">Презентация: Трансформеры.pdf</div>
+                                                <small class="text-muted">2.4 MB • Обновлено 2 дня назад</small>
+                                            </div>
+                                            <i class="fa-solid fa-download text-muted"></i>
+                                        </a>
+
+                                        <a href="#" class="list-group-item list-group-item-action d-flex align-items-center py-3">
+                                            <i class="fa-solid fa-file-code text-primary fa-lg me-3"></i>
+                                            <div class="flex-grow-1">
+                                                <div class="fw-semibold">Код лекции: transformer.ipynb</div>
+                                                <small class="text-muted">156 KB • Jupyter Notebook</small>
+                                            </div>
+                                            <i class="fa-solid fa-download text-muted"></i>
+                                        </a>
+
+                                        <a href="#" class="list-group-item list-group-item-action d-flex align-items-center py-3">
+                                            <i class="fa-solid fa-book text-success fa-lg me-3"></i>
+                                            <div class="flex-grow-1">
+                                                <div class="fw-semibold">Дополнительные материалы</div>
+                                                <small class="text-muted">Ссылки на статьи и документацию</small>
+                                            </div>
+                                            <i class="fa-solid fa-external-link-alt text-muted"></i>
+                                        </a>
+
+                                        <a href="#" class="list-group-item list-group-item-action d-flex align-items-center py-3">
+                                            <i class="fa-solid fa-database text-warning fa-lg me-3"></i>
+                                            <div class="flex-grow-1">
+                                                <div class="fw-semibold">Датасет для практики</div>
+                                                <small class="text-muted">500 MB • CSV формат</small>
+                                            </div>
+                                            <i class="fa-solid fa-download text-muted"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="assignments" role="tabpanel">
+                            <div class="card border-0 shadow-sm mb-4">
+                                <div class="card-body">
+                                    <h5 class="fw-bold mb-4">Задания курса</h5>
+
+                                    <div class="mb-4">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="fw-semibold">Общий прогресс заданий</span>
+                                            <span class="text-primary">3/8</span>
+                                        </div>
+                                        <div class="progress" style="height: 8px;">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 37.5%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="list-group list-group-flush">
+                                        <div class="list-group-item d-flex align-items-center py-3 border-bottom">
+                                            <div class="form-check me-3">
+                                                <input class="form-check-input" type="checkbox" checked disabled>
+                                            </div>
+                                            <i class="fa-solid fa-circle-check text-success fa-lg me-3"></i>
+                                            <div class="flex-grow-1">
+                                                <div class="fw-semibold">Задание 1: Перцептрон с нуля</div>
+                                                <small class="text-muted">Срок: 15.02.2026 • Сдано 14.02.2026</small>
+                                            </div>
+                                            <span class="badge bg-success">95/100</span>
+                                        </div>
+
+                                        <div class="list-group-item d-flex align-items-center py-3 border-bottom">
+                                            <div class="form-check me-3">
+                                                <input class="form-check-input" type="checkbox" checked disabled>
+                                            </div>
+                                            <i class="fa-solid fa-circle-check text-success fa-lg me-3"></i>
+                                            <div class="flex-grow-1">
+                                                <div class="fw-semibold">Задание 2: CNN для классификации</div>
+                                                <small class="text-muted">Срок: 01.03.2026 • Сдано 28.02.2026</small>
+                                            </div>
+                                            <span class="badge bg-success">88/100</span>
+                                        </div>
+
+                                        <div class="list-group-item d-flex align-items-center py-3 border-bottom bg-primary bg-opacity-10">
+                                            <div class="form-check me-3">
+                                                <input class="form-check-input" type="checkbox">
+                                            </div>
+                                            <i class="fa-solid fa-circle-exclamation text-primary fa-lg me-3"></i>
+                                            <div class="flex-grow-1">
+                                                <div class="fw-semibold">Задание 3: Реализация Attention</div>
+                                                <small class="text-muted">Срок: 25.03.2026 • <span class="text-danger">Осталось 9 дней</span></small>
+                                            </div>
+                                            <span class="badge bg-primary">В работе</span>
+                                        </div>
+
+                                        <div class="list-group-item d-flex align-items-center py-3">
+                                            <div class="form-check me-3">
+                                                <input class="form-check-input" type="checkbox" disabled>
+                                            </div>
+                                            <i class="fa-solid fa-lock text-muted fa-lg me-3"></i>
+                                            <div class="flex-grow-1">
+                                                <div class="fw-semibold text-muted">Задание 4: Fine-tuning BERT</div>
+                                                <small class="text-muted">Срок: 10.04.2026 • Откроется после задания 3</small>
+                                            </div>
+                                            <span class="badge bg-secondary">Заблокировано</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="discussions" role="tabpanel">
+                            <div class="card border-0 shadow-sm mb-4">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <h5 class="fw-bold mb-0">Обсуждения</h5>
+                                        <button class="btn btn-primary btn-sm">
+                                            <i class="fa-solid fa-plus me-1"></i>Новая тема
+                                        </button>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-body-tertiary"><i class="fa-solid fa-search"></i></span>
+                                            <input type="text" class="form-control" placeholder="Поиск по обсуждениям...">
+                                        </div>
+                                    </div>
+
+                                    <div class="list-group list-group-flush">
+                                        <a href="#" class="list-group-item list-group-item-action py-3">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1 fw-semibold">Вопрос по реализации multi-head attention</h6>
+                                                <small class="text-muted">2ч назад</small>
+                                            </div>
+                                            <div class="d-flex align-items-center mt-2">
+                                                <img src="https://ui-avatars.com/api/?name=Алексей+К&background=random" class="rounded-circle me-2" width="24" height="24">
+                                                <small class="text-muted me-3">Алексей К.</small>
+                                                <span class="badge bg-primary me-2">12 ответов</span>
+                                                <span class="text-muted small"><i class="fa-solid fa-heart me-1"></i>34</span>
+                                            </div>
+                                        </a>
+
+                                        <a href="#" class="list-group-item list-group-item-action py-3">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1 fw-semibold">Ошибка в задании 3: не сходится градиент</h6>
+                                                <small class="text-muted">5ч назад</small>
+                                            </div>
+                                            <div class="d-flex align-items-center mt-2">
+                                                <img src="https://ui-avatars.com/api/?name=Мария+С&background=random" class="rounded-circle me-2" width="24" height="24">
+                                                <small class="text-muted me-3">Мария С.</small>
+                                                <span class="badge bg-success me-2">✓ Решено</span>
+                                                <span class="badge bg-primary me-2">8 ответов</span>
+                                                <span class="text-muted small"><i class="fa-solid fa-heart me-1"></i>21</span>
+                                            </div>
+                                        </a>
+
+                                        <a href="#" class="list-group-item list-group-item-action py-3">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1 fw-semibold">Полезные ресурсы по трансформерам</h6>
+                                                <small class="text-muted">1д назад</small>
+                                            </div>
+                                            <div class="d-flex align-items-center mt-2">
+                                                <img src="https://ui-avatars.com/api/?name=Д.+Эпштейн&background=9f78b3&color=fff" class="rounded-circle me-2" width="24" height="24">
+                                                <small class="text-muted me-3">Д. Эпштейн <i class="fa-solid fa-certificate text-primary"></i></small>
+                                                <span class="badge bg-primary me-2">24 ответа</span>
+                                                <span class="text-muted small"><i class="fa-solid fa-heart me-1"></i>89</span>
+                                            </div>
+                                        </a>
+
+                                        <a href="#" class="list-group-item list-group-item-action py-3">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1 fw-semibold">Как настроить learning rate scheduler?</h6>
+                                                <small class="text-muted">2д назад</small>
+                                            </div>
+                                            <div class="d-flex align-items-center mt-2">
+                                                <img src="https://ui-avatars.com/api/?name=Иван+П&background=random" class="rounded-circle me-2" width="24" height="24">
+                                                <small class="text-muted me-3">Иван П.</small>
+                                                <span class="badge bg-primary me-2">5 ответов</span>
+                                                <span class="text-muted small"><i class="fa-solid fa-heart me-1"></i>15</span>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <nav aria-label="Пагинация обсуждений" class="mt-4">
+                                        <ul class="pagination justify-content-center">
+                                            <li class="page-item disabled"><a class="page-link" href="#">Назад</a></li>
+                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">Вперёд</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-4 mt-lg-0">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-transparent border-bottom">
+                            <h6 class="fw-bold mb-0">Преподаватель</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div>
+                                    <div class="fw-semibold">Д. Эпштейн</div>
+                                    <div class="small text-muted">Senior ML Engineer</div>
+                                </div>
+                            </div>
+                            <p class="text-muted small mb-3">
+                                10+ лет опыта в ML. Работал в Yandex, Sber AI. Автор 5 научных публикаций по NLP.
+                            </p>
+                            <div class="d-flex gap-2">
+                                <a href="#" class="btn btn-outline-secondary btn-sm flex-grow-1">
+                                    <i class="fa-brands fa-github me-1"></i>GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-transparent border-bottom">
+                            <h6 class="fw-bold mb-0">Статистика курса</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <div class="text-center p-3 rounded">
+                                        <div class="h4 fw-bold text-primary mb-0">4.9</div>
+                                        <small class="text-muted">Рейтинг</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-center p-3 rounded">
+                                        <div class="h4 fw-bold text-primary mb-0">12K+</div>
+                                        <small class="text-muted">Студентов</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-center p-3 rounded">
+                                        <div class="h4 fw-bold text-primary mb-0">42ч</div>
+                                        <small class="text-muted">Контента</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="mt-auto py-5 bg-dark text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-lg-3">
+                <h5 class="text-uppercase fw-bold mb-3">
+                    <i class="fa-solid fa-graduation-cap me-2"></i>Курсы
+                </h5>
+                <ul class="list-unstyled d-flex flex-column gap-2">
+                    <li><a href="#" class="text-white text-decoration-none opacity-75">Deep Learning</a></li>
+                    <li><a href="#" class="text-white text-decoration-none opacity-75">NLP</a></li>
+                    <li><a href="#" class="text-white text-decoration-none opacity-75">Computer Vision</a></li>
+                    <li><a href="#" class="text-white text-decoration-none opacity-75">Reinforcement Learning</a></li>
+                    <li><a href="#" class="text-white text-decoration-none opacity-75">Generative AI</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <h5 class="text-uppercase fw-bold mb-3">
+                    <i class="fa-solid fa-circle-question me-2"></i>Помощь
+                </h5>
+                <ul class="list-unstyled d-flex flex-column gap-2">
+                    <li><a href="#" class="text-white text-decoration-none opacity-75">FAQ</a></li>
+                    <li><a href="#" class="text-white text-decoration-none opacity-75">Поддержка</a></li>
+                    <li><a href="#" class="text-white text-decoration-none opacity-75">Блог</a></li>
+                    <li><a href="#" class="text-white text-decoration-none opacity-75">Сертификаты</a></li>
+                    <li><a href="#" class="text-white text-decoration-none opacity-75">Партнёры</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <h5 class="text-uppercase fw-bold mb-3">
+                    <i class="fa-solid fa-address-book me-2"></i>Контакты
+                </h5>
+                <ul class="list-unstyled d-flex flex-column gap-3">
+                    <li>
+                        <a href="tel:88005553535" class="text-white text-decoration-none d-flex align-items-center gap-2 opacity-75">
+                            <i class="fa-solid fa-phone"></i>
+                            <span>8 (800) 555-35-35</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:ronimizy@itmo.ru" class="text-white text-decoration-none d-flex align-items-center gap-2 opacity-75">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>ronimizy@itmo.ru</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <h5 class="text-uppercase fw-bold mb-3">
+                    <i class="fa-solid fa-share-nodes me-2"></i>Мы в соцсетях
+                </h5>
+                <div class="d-flex gap-3">
+                    <a href="#" class="text-white fs-5 opacity-75" title="Telegram">
+                        <i class="fa-brands fa-telegram"></i>
+                    </a>
+                    <a href="#" class="text-white fs-5 opacity-75" title="VK">
+                        <i class="fa-brands fa-vk"></i>
+                    </a>
+                    <a href="#" class="text-white fs-5 opacity-75" title="YouTube">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                    <a href="#" class="text-white fs-5 opacity-75" title="GitHub">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-top border-secondary mt-4 pt-4">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <span class="text-white-50">
+                        <i class="fa-regular fa-copyright me-1"></i>2026 VitalCourses. Все права защищены.
+                    </span>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="d-flex justify-content-center justify-content-md-end gap-3 small">
+                        <a href="#" class="text-white-50 text-decoration-none hover-text-white">Политика конфиденциальности</a>
+                        <a href="#" class="text-white-50 text-decoration-none hover-text-white">Пользовательское соглашение</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold" id="loginModalLabel">
+                    <i class="fa-solid fa-right-to-bracket text-primary me-2"></i>Вход в аккаунт
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body pt-4">
+                <form id="loginForm" novalidate>
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="loginEmail"
+                               placeholder="name@example.com" required>
+                        <div class="invalid-feedback">Пожалуйста, введите корректный email</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Пароль</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="loginPassword"
+                                   placeholder="••••••••" required minlength="6">
+                            <button class="btn btn-outline-secondary toggle-password"
+                                    type="button" data-target="loginPassword">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                            <div class="invalid-feedback">Пароль должен содержать минимум 6 символов</div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Запомнить меня</label>
+                        </div>
+                        <a href="#" class="text-decoration-none text-primary small">Забыли пароль?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2">
+                        <i class="fa-solid fa-right-to-bracket me-2"></i>Войти
+                    </button>
+                </form>
+                <div class="text-center mt-4">
+                    <span class="text-muted small">Нет аккаунта?</span>
+                    <button class="btn btn-link text-decoration-none p-0 ms-1"
+                            data-bs-toggle="modal" data-bs-target="#registerModal"
+                            data-bs-dismiss="modal">
+                        Зарегистрироваться
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold" id="registerModalLabel">
+                    <i class="fa-solid fa-user-plus text-primary me-2"></i>Создать аккаунт
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body pt-4">
+                <form id="registerForm" novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="registerName" class="form-label">Имя</label>
+                            <input type="text" class="form-control" id="registerName"
+                                   placeholder="Никита" required>
+                            <div class="invalid-feedback">Пожалуйста, введите ваше имя</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="registerSurname" class="form-label">Фамилия</label>
+                            <input type="text" class="form-control" id="registerSurname"
+                                   placeholder="Дубовик" required>
+                            <div class="invalid-feedback">Пожалуйста, введите вашу фамилию</div>
+                        </div>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="registerEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="registerEmail"
+                               placeholder="name@example.com" required>
+                        <div class="invalid-feedback">Пожалуйста, введите корректный email</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="registerPassword" class="form-label">Пароль</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="registerPassword"
+                                   placeholder="Минимум 6 символов" required minlength="6">
+                            <button class="btn btn-outline-secondary toggle-password"
+                                    type="button" data-target="registerPassword">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                            <div class="invalid-feedback">Пароль должен содержать минимум 6 символов</div>
+                        </div>
+                        <div class="form-text small">
+                            <i class="fa-solid fa-circle-info me-1"></i>
+                            Используйте буквы, цифры и специальные символы
+                            <div class="password-strength mt-2">
+                                <div class="strength-bar"></div>
+                            </div>
+                            <small class="strength-text text-muted">Слабый пароль</small>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="registerConfirm" class="form-label">Подтвердите пароль</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="registerConfirm"
+                                   placeholder="Повторите пароль" required>
+                            <button class="btn btn-outline-secondary toggle-password"
+                                    type="button" data-target="registerConfirm">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                            <div class="invalid-feedback">Пароли не совпадают</div>
+                        </div>
+                    </div>
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                        <label class="form-check-label small" for="agreeTerms">
+                            Я согласен с <a href="#" class="text-primary">условиями использования</a>
+                            и <a href="#" class="text-primary">политикой конфиденциальности</a>
+                        </label>
+                        <div class="invalid-feedback d-block">
+                            Необходимо принять условия использования
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2">
+                        <i class="fa-solid fa-user-plus me-2"></i>Зарегистрироваться
+                    </button>
+                </form>
+                <div class="text-center mt-4">
+                    <span class="text-muted small">Уже есть аккаунт?</span>
+                    <button class="btn btn-link text-decoration-none p-0 ms-1"
+                            data-bs-toggle="modal" data-bs-target="#loginModal"
+                            data-bs-dismiss="modal">
+                        Войти
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src='js/main.js'></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+</body>
+
+
+</html>
