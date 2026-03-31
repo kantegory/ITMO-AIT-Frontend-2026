@@ -93,8 +93,11 @@ main {
 
 .navbar {
     height: 56px;
-    border-bottom: 2px solid var(--navbar-border);
-    box-shadow: 0 2px 4px var(--navbar-shadow);
+    border: 3px solid var(--navbar-border) !important;
+    border-radius: 10px !important;
+    margin: 5px 10px !important;
+    width: calc(100% - 20px) !important;
+    box-shadow: 0 2px 8px var(--card-shadow) !important;
     z-index: 1030;
     background: var(--navbar-bg) !important;
 }
@@ -113,17 +116,40 @@ main {
     font-weight: 600;
 }
 
+.navbar-toggler {
+    border: 2px solid currentColor !important;
+    padding: 0.25rem 0.5rem !important;
+}
+
+.navbar-toggler-icon {
+    background-image: none !important;
+    width: 1.5em !important;
+    height: 1.5em !important;
+}
+
+.navbar-toggler .icon {
+    width: 1.5em !important;
+    height: 1.5em !important;
+    margin: 0 !important;
+}
+
 .nav-link {
     color: var(--text-color) !important;
+    border: 2px solid transparent !important;
+    border-radius: 6px !important;
+    padding: 0.5rem 1rem !important;
+    margin: 0 0.25rem !important;
 }
 
 .nav-link:hover {
     color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
 }
 
 .nav-link.active {
     background: var(--primary-color) !important;
     color: var(--text-inverse) !important;
+    border-color: var(--primary-color) !important;
 }
 
 .nav-link.logout-link {
@@ -471,6 +497,7 @@ main.col-12 .btn-primary {
     width: 100% !important;
     min-width: 1000px !important;
     table-layout: fixed;
+    border-collapse: collapse;
 }
 
 .organizer-content table th, .organizer-content table td {
@@ -478,15 +505,24 @@ main.col-12 .btn-primary {
     padding: 8px;
     border: 2px solid var(--table-border);
     color: var(--text-color) !important;
+    vertical-align: middle;
+    background: transparent !important;
 }
 
 .organizer-content table th {
     background: var(--table-header-bg) !important;
     color: var(--text-color) !important;
+    font-weight: 600;
+    text-align: left;
 }
 
 .organizer-content table td {
     color: var(--text-color) !important;
+}
+
+.organizer-content table .icon {
+    vertical-align: middle;
+    margin-right: 0.25rem;
 }
 
 .organizer-content .stat-box h4 {
@@ -629,6 +665,48 @@ h1, h2, h3, h4, h5, h6 { color: var(--text-color) !important; }
 p { color: var(--text-muted) !important; }
 small { color: var(--text-muted) !important; }
 
+.event-content p.text-muted, .dashboard-content p.text-muted, .returns-content p.text-muted, .search-content p.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.event-content h1, .dashboard-content h1, .returns-content h1, .search-content h1 {
+    color: var(--text-color) !important;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.modal-body h3, .modal-body .text-muted, .modal-body small, .modal-body strong {
+    color: var(--text-muted) !important;
+}
+
+.modal-body .text-primary {
+    color: var(--primary-color) !important;
+}
+
+.modal-body .text-success {
+    color: var(--success-color) !important;
+}
+
+.modal-body .card {
+    background: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
+}
+
+.modal-body .card-body {
+    background: var(--bg-secondary) !important;
+}
+
+.modal-body .card.bg-light {
+    background: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
+}
+
+.seat-map {
+    background: var(--border-light) !important;
+}
+
 @media (prefers-contrast: more) {
     .seat.available { background: #006400 !important; }
     .seat.selected { background: #ffd700 !important; }
@@ -650,4 +728,40 @@ small { color: var(--text-muted) !important; }
 
 @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; animation: none !important; }
+}
+
+/* SVG Icons */
+.icon {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.icon--sm {
+    width: 16px;
+    height: 16px;
+}
+
+.icon--lg {
+    width: 24px;
+    height: 24px;
+}
+
+.icon--xl {
+    width: 32px;
+    height: 32px;
+}
+
+.nav-link .icon, .btn .icon {
+    margin-right: 0.5rem;
+}
+
+.btn .icon {
+    margin-right: 0.25rem;
 }
