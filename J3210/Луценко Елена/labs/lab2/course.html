@@ -26,10 +26,11 @@
 
     <div class="row">
         <div class="col-lg-8">
-            <div class="ratio ratio-16x9 video mb-4">
-                <div class="video-content">
+            <div class="ratio ratio-16x9 video mb-4" id="video-container">
+                <div class="video-content" id="video-placeholder">
                     <div class="text-center">
                         <div class="display-4">▶</div>
+                        <div class="spinner-border text-light" role="status"></div>
                         <h4 id="videoTitle" class="fw-bold mt-2"></h4>
                     </div>
                 </div>
@@ -154,6 +155,8 @@
         document.getElementById('lessonDesc').innerText = lesson.description;
         document.getElementById('lessonTask').innerText = lesson.task;
 
+        await loadExternalVideo(lesson.title, lessonIndex, course.title);
+
         const finishBtn = document.querySelector('.btn-success.w-100');
         if (user.role === 'teacher') {
             if (finishBtn) {
@@ -273,6 +276,48 @@
                 alert("Поздравляем! Вы завершили весь курс!");
                 window.location.href = "profile.html";
             }
+        }
+    }
+
+    async function loadExternalVideo(lessonTitle, lessonIndex, courseTitle) {
+        const container = document.getElementById('video-container');
+        const API_KEY = 'oIPivGII5t0bLqhIo6RKy3KdLCCtGygx5GlIBLAJ1kh5YjTbTtYDER4M';
+
+        const lowerCourse = courseTitle.toLowerCase();
+        const lowerLesson = lessonTitle.toLowerCase();
+
+        let query = "coding technology";
+
+        if (lowerCourse.includes("java")) {
+            query = "java programming";
+        } else if (lowerCourse.includes("c++") || lowerCourse.includes("cpp")) {
+            query = "cpp programming";
+        } else if (lowerCourse.includes("python")) {
+            query = "python code";
+        } else if (lowerCourse.includes("дизайн") || lowerCourse.includes("design")) {
+            query = "web design";
+        }
+
+        const smartQuery = lowerLesson.replace(/урок \d+:/i, '').trim() + " " + query;
+
+        const url = `https://api.pexels.com/videos/search?query=${encodeURIComponent(smartQuery)}&per_page=1`;
+
+        try {
+            const response = await fetch(url, {headers: {'Authorization': API_KEY}});
+            const data = await response.json();
+
+            if (data.videos && data.videos.length > 0) {
+                const videoData = data.videos[0];
+                const videoUrl = videoData.video_files[0].link;
+
+                container.innerHTML = `
+                    <video controls autoplay muted loop class="w-100 h-100 rounded" style="object-fit: cover;">
+                        <source src="${videoUrl}" type="video/mp4">
+                    </video>`;
+            }
+        } catch (err) {
+            console.error("Ошибка API:", err);
+            container.innerHTML = `<div class="bg-dark text-white d-flex align-items-center justify-content-center h-100">Видео временно недоступно (</div>`;
         }
     }
 </script>
