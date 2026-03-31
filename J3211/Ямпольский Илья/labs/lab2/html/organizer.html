@@ -37,7 +37,9 @@
     <div class="container-fluid">
       <a class="navbar-brand" href="index.html">Яндекс Афиша</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-        <span class="navbar-toggler-icon"></span>
+        <svg class="icon">
+          <use href="../svg/sprite.svg#icon-menu"></use>
+        </svg>
       </button>
       <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -64,10 +66,20 @@
         </form>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <button class="nav-link" id="themeToggle" aria-label="Переключить тему" style="cursor: pointer;">Тема</button>
+            <button class="nav-link" id="themeToggle" aria-label="Переключить тему" style="cursor: pointer;">
+              <svg class="icon icon--sm">
+                <use href="../svg/sprite.svg#icon-theme"></use>
+              </svg>
+              Тема
+            </button>
           </li>
           <li class="nav-item">
-            <a class="nav-link logout-link" href="#" onclick="logout()">Выход</a>
+            <a class="nav-link logout-link" href="#" onclick="logout()">
+              <svg class="icon icon--sm">
+                <use href="../svg/sprite.svg#icon-logout"></use>
+              </svg>
+              Выход
+            </a>
           </li>
         </ul>
       </div>
@@ -84,20 +96,50 @@
     <article class="row g-3 mb-4">
       <div class="col-md-4">
         <article class="stat-box">
-          <h4 id="eventsCount">0</h4>
-          <p class="mb-0">Событий</p>
+          <h4 id="eventsCount">
+            <svg class="icon icon--lg me-2">
+              <use href="../svg/sprite.svg#icon-calendar"></use>
+            </svg>
+            0
+          </h4>
+          <p class="mb-0">
+            <svg class="icon icon--sm me-1">
+              <use href="../svg/sprite.svg#icon-ticket"></use>
+            </svg>
+            Событий
+          </p>
         </article>
       </div>
       <div class="col-md-4">
         <article class="stat-box">
-          <h4 id="ticketsSold">0</h4>
-          <p class="mb-0">Продано билетов</p>
+          <h4 id="ticketsSold">
+            <svg class="icon icon--lg me-2">
+              <use href="../svg/sprite.svg#icon-ticket"></use>
+            </svg>
+            0
+          </h4>
+          <p class="mb-0">
+            <svg class="icon icon--sm me-1">
+              <use href="../svg/sprite.svg#icon-seats"></use>
+            </svg>
+            Продано билетов
+          </p>
         </article>
       </div>
       <div class="col-md-4">
         <article class="stat-box">
-          <h4 id="revenue">0 ₽</h4>
-          <p class="mb-0">Выручка</p>
+          <h4 id="revenue">
+            <svg class="icon icon--lg me-2">
+              <use href="../svg/sprite.svg#icon-chart"></use>
+            </svg>
+            0 ₽
+          </h4>
+          <p class="mb-0">
+            <svg class="icon icon--sm me-1">
+              <use href="../svg/sprite.svg#icon-star"></use>
+            </svg>
+            Выручка
+          </p>
         </article>
       </div>
     </article>
@@ -273,19 +315,49 @@
       const soldCount = getSoldCountForEvent(event.id, tickets)
       const revenue = soldCount * event.price
       return `
-                <tr>
-                    <td style="border: 1px solid gray; padding: 8px;">${event.title}</td>
-                    <td style="border: 1px solid gray; padding: 8px;">${formatDate(event.date)}</td>
-                    <td style="border: 1px solid gray; padding: 8px;">${event.city}</td>
-                    <td style="border: 1px solid gray; padding: 8px;">${event.venue || '-'}</td>
-                    <td style="border: 1px solid gray; padding: 8px;">${event.price.toLocaleString()} ₽</td>
-                    <td style="border: 1px solid gray; padding: 8px;">${soldCount} / ${event.capacity || 50}</td>
-                    <td style="border: 1px solid gray; padding: 8px;">${revenue.toLocaleString()} ₽</td>
-                    <td style="border: 1px solid gray; padding: 8px;">
-                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteEvent(${event.id})">Удалить</button>
-                    </td>
-                </tr>
-            `
+            <tr>
+                <td style="border: 1px solid gray; padding: 8px;">
+                    <svg class="icon icon--sm me-2">
+                        <use href="../svg/sprite.svg#icon-ticket"></use>
+                    </svg>
+                    ${event.title}
+                </td>
+                <td style="border: 1px solid gray; padding: 8px;">
+                    <svg class="icon icon--sm me-2">
+                        <use href="../svg/sprite.svg#icon-calendar"></use>
+                    </svg>
+                    ${formatDate(event.date)}
+                </td>
+                <td style="border: 1px solid gray; padding: 8px;">
+                    <svg class="icon icon--sm me-2">
+                        <use href="../svg/sprite.svg#icon-location"></use>
+                    </svg>
+                    ${event.city}
+                </td>
+                <td style="border: 1px solid gray; padding: 8px;">${event.venue || '-'}</td>
+                <td style="border: 1px solid gray; padding: 8px;">${event.price.toLocaleString()} ₽</td>
+                <td style="border: 1px solid gray; padding: 8px;">
+                    <svg class="icon icon--sm me-2">
+                        <use href="../svg/sprite.svg#icon-seats"></use>
+                    </svg>
+                    ${soldCount} / ${event.capacity || 50}
+                </td>
+                <td style="border: 1px solid gray; padding: 8px;">
+                    <svg class="icon icon--sm me-2">
+                        <use href="../svg/sprite.svg#icon-chart"></use>
+                    </svg>
+                    ${revenue.toLocaleString()} ₽
+                </td>
+                <td style="border: 1px solid gray; padding: 8px;">
+                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteEvent(${event.id})">
+                        <svg class="icon icon--sm">
+                            <use href="../svg/sprite.svg#icon-close"></use>
+                        </svg>
+                        Удалить
+                    </button>
+                </td>
+            </tr>
+        `
     }).join('')
   }
 

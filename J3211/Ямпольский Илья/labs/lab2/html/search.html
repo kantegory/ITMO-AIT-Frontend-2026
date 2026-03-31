@@ -37,7 +37,9 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html">Яндекс Афиша</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
+                <svg class="icon">
+                    <use href="../svg/sprite.svg#icon-menu"></use>
+                </svg>
             </button>
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -60,14 +62,29 @@
                 <form class="d-flex mx-auto my-2 my-lg-0" role="search" id="searchForm">
                     <label for="searchInput" class="visually-hidden">Поиск мероприятий</label>
                     <input class="form-control me-2" type="search" name="q" id="searchInput" placeholder="Поиск..." aria-label="Поиск мероприятий">
-                    <button class="btn btn-outline-success" type="submit">Поиск</button>
+                    <button class="btn btn-outline-success" type="submit">
+                        <svg class="icon icon--sm">
+                            <use href="../svg/sprite.svg#icon-search"></use>
+                        </svg>
+                        Поиск
+                    </button>
                 </form>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <button class="nav-link" id="themeToggle" aria-label="Переключить тему" style="cursor: pointer;">Тема</button>
+                        <button class="nav-link" id="themeToggle" aria-label="Переключить тему" style="cursor: pointer;">
+                            <svg class="icon icon--sm">
+                                <use href="../svg/sprite.svg#icon-theme"></use>
+                            </svg>
+                            Тема
+                        </button>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link logout-link" href="#" onclick="logout()">Выход</a>
+                        <a class="nav-link logout-link" href="#" onclick="logout()">
+                            <svg class="icon icon--sm">
+                                <use href="../svg/sprite.svg#icon-logout"></use>
+                            </svg>
+                            Выход
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -246,11 +263,30 @@
                     <article class="card h-100 event-card" onclick="openEventModal(${event.id})" style="cursor: pointer;">
                         <section class="card-body d-flex flex-column">
                             <header class="flex-grow-1">
-                                <h2 class="card-title h5 mb-1">${event.title}</h2>
-                                <p class="card-text text-muted">${formatDate(event.date)} - ${event.city}${event.venue ? ', ' + event.venue : ''}</p>
+                                <h2 class="card-title h5 mb-1">
+                                    <svg class="icon icon--sm me-2">
+                                        <use href="../svg/sprite.svg#icon-ticket"></use>
+                                    </svg>
+                                    ${event.title}
+                                </h2>
+                                <p class="card-text text-muted">
+                                    <svg class="icon icon--sm me-1">
+                                        <use href="../svg/sprite.svg#icon-calendar"></use>
+                                    </svg>
+                                    ${formatDate(event.date)}
+                                    <svg class="icon icon--sm ms-2 me-1">
+                                        <use href="../svg/sprite.svg#icon-location"></use>
+                                    </svg>
+                                    ${event.city}${event.venue ? ', ' + event.venue : ''}
+                                </p>
                             </header>
                             <footer class="mt-auto">
-                                <span class="badge bg-success">от ${event.price.toLocaleString()} ₽</span>
+                                <span class="badge bg-success">
+                                    <svg class="icon icon--sm me-1">
+                                        <use href="../svg/sprite.svg#icon-star"></use>
+                                    </svg>
+                                    от ${event.price.toLocaleString()} ₽
+                                </span>
                             </footer>
                         </section>
                     </article>
@@ -296,7 +332,7 @@
                                                 <h3 class="text-muted">Цена</h3>
                                                 <p class="text-primary" id="priceDisplay${event.id}">${event.price.toLocaleString()} ₽</p>
                                                 <div class="mb-2"><small>Выбрано мест: </small><strong id="selectedCount${event.id}">0</strong></div>
-                                                <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice${event.id}">0 ₽</strong></div>
+                                                <div class="mb-3"><small>Итого: </small><strong class="text-success" id="totalPrice${event.id}">0 ₽</strong></div>
                                                 <button type="button" class="btn btn-success w-100" onclick="buyTickets(${event.id})">Купить билеты</button>
                                             </div>
                                         </div>

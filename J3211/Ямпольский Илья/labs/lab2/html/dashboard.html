@@ -37,7 +37,9 @@
     <div class="container-fluid">
       <a class="navbar-brand" href="index.html">Яндекс Афиша</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-        <span class="navbar-toggler-icon"></span>
+        <svg class="icon">
+          <use href="../svg/sprite.svg#icon-menu"></use>
+        </svg>
       </button>
       <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -64,10 +66,20 @@
         </form>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <button class="nav-link" id="themeToggle" aria-label="Переключить тему" style="cursor: pointer;">Тема</button>
+            <button class="nav-link" id="themeToggle" aria-label="Переключить тему" style="cursor: pointer;">
+              <svg class="icon icon--sm">
+                <use href="../svg/sprite.svg#icon-theme"></use>
+              </svg>
+              Тема
+            </button>
           </li>
           <li class="nav-item">
-            <a class="nav-link logout-link" href="#" onclick="logout()">Выход</a>
+            <a class="nav-link logout-link" href="#" onclick="logout()">
+              <svg class="icon icon--sm">
+                <use href="../svg/sprite.svg#icon-logout"></use>
+              </svg>
+              Выход
+            </a>
           </li>
         </ul>
       </div>
@@ -158,23 +170,43 @@
     }
     container.innerHTML = tickets.map(function(ticket) {
       return `
-                <div class="col-12 col-lg-6">
-                    <article class="card shadow-sm ticket-item h-100">
-                        <section class="card-body">
-                            <header class="d-flex justify-content-between">
-                                <h2 class="h5 mb-1">${ticket.eventName || 'Билет #' + ticket.id}</h2>
-                                <span class="badge bg-success">${ticket.totalPrice.toLocaleString()} ₽</span>
-                            </header>
-                            <p class="text-muted mb-1">Места: ${ticket.seats}</p>
-                            <p class="text-muted mb-1">Дата покупки: ${formatDate(ticket.purchaseDate)}</p>
-                            <footer class="d-flex justify-content-between align-items-center mt-2">
-                                <small class="text-muted">Заказ #${ticket.id}</small>
-                                <button type="button" class="btn btn-sm btn-outline-danger" onclick="returnTicket(${ticket.id}, ${ticket.totalPrice})">Вернуть</button>
-                            </footer>
-                        </section>
-                    </article>
-                </div>
-            `
+            <div class="col-12 col-lg-6">
+                <article class="card shadow-sm ticket-item h-100">
+                    <section class="card-body">
+                        <header class="d-flex justify-content-between">
+                            <h2 class="h5 mb-1">
+                                <svg class="icon icon--sm me-2">
+                                    <use href="../svg/sprite.svg#icon-ticket"></use>
+                                </svg>
+                                ${ticket.eventName || 'Билет #' + ticket.id}
+                            </h2>
+                            <span class="badge bg-success">${ticket.totalPrice.toLocaleString()} ₽</span>
+                        </header>
+                        <p class="text-muted mb-1">
+                            <svg class="icon icon--sm me-1">
+                                <use href="../svg/sprite.svg#icon-seats"></use>
+                            </svg>
+                            Места: ${ticket.seats}
+                        </p>
+                        <p class="text-muted mb-1">
+                            <svg class="icon icon--sm me-1">
+                                <use href="../svg/sprite.svg#icon-calendar"></use>
+                            </svg>
+                            Дата покупки: ${formatDate(ticket.purchaseDate)}
+                        </p>
+                        <footer class="d-flex justify-content-between align-items-center mt-2">
+                            <small class="text-muted">Заказ #${ticket.id}</small>
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="returnTicket(${ticket.id}, ${ticket.totalPrice})">
+                                <svg class="icon icon--sm me-1">
+                                    <use href="../svg/sprite.svg#icon-return"></use>
+                                </svg>
+                                Вернуть
+                            </button>
+                        </footer>
+                    </section>
+                </article>
+            </div>
+        `
     }).join('')
   }
 
