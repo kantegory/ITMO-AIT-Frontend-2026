@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Личный кабинет — ProjectHub</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">ProjectHub</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Меню">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link active" href="dashboard.html">Личный кабинет</a></li>
+          <li class="nav-item"><a class="nav-link" href="search.html">Поиск</a></li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Пользователь</a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="dashboard.html">Кабинет</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="index.html">Выйти</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    <h1 class="mb-4">Личный кабинет</h1>
+
+    <section class="dashboard-section">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h5 mb-0">Мои проекты</h2>
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddProject">Добавить проект</button>
+      </div>
+      <div class="row g-3" id="projects-list">
+        <div class="col-md-6 col-lg-4">
+          <div class="card card-body task-card h-100">
+            <h5 class="card-title"><a href="project.html" class="text-decoration-none text-dark">Веб-приложение</a></h5>
+            <p class="card-text small text-muted mb-0">12 задач · 3 участника</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card card-body task-card h-100">
+            <h5 class="card-title"><a href="project.html" class="text-decoration-none text-dark">Мобильное приложение</a></h5>
+            <p class="card-text small text-muted mb-0">8 задач · 2 участника</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card card-body task-card h-100">
+            <h5 class="card-title"><a href="project.html" class="text-decoration-none text-dark">Документация API</a></h5>
+            <p class="card-text small text-muted mb-0">5 задач · 4 участника</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard-section">
+      <h2 class="h5 mb-3">Мои задачи</h2>
+      <div class="list-group">
+        <a href="project.html" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span>Настроить авторизацию</span>
+          <span class="badge bg-primary rounded-pill">В работе</span>
+        </a>
+        <a href="project.html" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span>Добавить страницу поиска</span>
+          <span class="badge bg-info rounded-pill">Новая</span>
+        </a>
+        <a href="project.html" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span>Ревью дизайна</span>
+          <span class="badge bg-warning text-dark rounded-pill">На проверке</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="dashboard-section">
+      <h2 class="h5 mb-3">Уведомления</h2>
+      <div class="list-group">
+        <div class="list-group-item notification-item unread">
+          <div class="d-flex w-100 justify-content-between">
+            <h6 class="mb-1">Новая задача назначена вам</h6>
+            <small>10 мин назад</small>
+          </div>
+          <p class="mb-0 small text-muted">В проекте «Веб-приложение» добавлена задача «Настроить авторизацию».</p>
+        </div>
+        <div class="list-group-item notification-item">
+          <div class="d-flex w-100 justify-content-between">
+            <h6 class="mb-1">Срок задачи истекает завтра</h6>
+            <small>1 ч назад</small>
+          </div>
+          <p class="mb-0 small text-muted">Задача «Ревью дизайна» — дедлайн 01.03.2026.</p>
+        </div>
+        <div class="list-group-item notification-item">
+          <div class="d-flex w-100 justify-content-between">
+            <h6 class="mb-1">Новый участник в проекте</h6>
+            <small>Вчера</small>
+          </div>
+          <p class="mb-0 small text-muted">Алексей присоединился к проекту «Мобильное приложение».</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal fade" id="modalAddProject" tabindex="-1" aria-labelledby="modalAddProjectLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalAddProjectLabel">Новый проект</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <form id="form-add-project">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="project-name" class="form-label">Название</label>
+              <input type="text" class="form-control" id="project-name" required placeholder="Название проекта">
+            </div>
+            <div class="mb-3">
+              <label for="project-desc" class="form-label">Описание (необязательно)</label>
+              <input type="text" class="form-control" id="project-desc" placeholder="Краткое описание">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-light py-3 mt-auto">
+    <div class="container text-center text-muted small">&copy; 2026 ProjectHub</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
