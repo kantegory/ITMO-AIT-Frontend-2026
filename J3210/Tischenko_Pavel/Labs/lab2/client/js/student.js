@@ -20,7 +20,7 @@ async function ensureAuth() {
 
 function renderProfile(me) {
   setText(qs("[data-profile='name']"), [me.firstName, me.lastName].filter(Boolean).join(" ") || me.email);
-  setText(qs("[data-profile='role']"), me.role === "teacher" ? "преподаватель" : "студент");
+  setText(qs("[data-profile='role']"), me.role === "teacher" ? "тренер" : "студент");
 }
 
 async function renderEnrollments(me) {

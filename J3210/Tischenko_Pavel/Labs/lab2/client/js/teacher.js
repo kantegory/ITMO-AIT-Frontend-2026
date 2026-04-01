@@ -44,7 +44,7 @@ async function renderMyCourses(me) {
     grid.innerHTML = `
       <div class="col-12">
         <div class="alert alert-secondary small mb-0" role="status">
-          Пока нет опубликованных курсов для этого преподавателя.
+          Пока нет опубликованных курсов для этого тренера.
         </div>
       </div>
     `;

@@ -97,10 +97,22 @@ html[data-theme="dark"] .course-card {
 .hero-title {
   font-size: 2rem;
   font-weight: 600;
+  line-height: 1.15;
+  text-wrap: balance;
 }
 
 .hero-subtitle {
   color: var(--muted);
+  max-width: 52ch;
+  line-height: 1.55;
+}
+
+.hero-title span {
+  display: inline-block;
+  background: linear-gradient(120deg, rgba(139, 92, 246, 0.95), rgba(56, 189, 248, 0.9));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 html[data-theme="dark"] .text-muted {
@@ -233,12 +245,58 @@ html[data-theme="dark"] .form-select:focus {
   border: 1px solid var(--border);
   font-size: 0.85rem;
   background-color: var(--surface);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .filter-chip.active {
   background-color: var(--surface);
   color: var(--text);
   border-color: var(--border);
+  box-shadow: 0 8px 18px rgba(2, 6, 23, 0.08);
+}
+
+.filter-chip:hover {
+  transform: translateY(-1px);
+}
+
+#search.tab-card {
+  position: relative;
+  overflow: hidden;
+}
+
+#search.tab-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.8), rgba(56, 189, 248, 0.8), transparent);
+}
+
+[data-courses="grid"] .course-card {
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+[data-courses="grid"] .course-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
+}
+
+[data-courses="grid"] .btn-outline-soft {
+  font-weight: 500;
+}
+
+html[data-theme="dark"] .hero-title span {
+  background: linear-gradient(120deg, rgba(196, 181, 253, 0.98), rgba(103, 232, 249, 0.94));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+html[data-theme="dark"] #search.tab-card::before {
+  background: linear-gradient(90deg, transparent, rgba(196, 181, 253, 0.95), rgba(103, 232, 249, 0.95), transparent);
+}
+
+html[data-theme="dark"] [data-courses="grid"] .course-card:hover {
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.42);
 }
 
 .badge-soft {
@@ -276,6 +334,136 @@ html[data-theme="dark"] .form-select:focus {
 
 .course-card .card-text {
   min-height: 3.5rem;
+}
+
+body[data-course-style="powerlifting"] {
+  background-image:
+    radial-gradient(840px 320px at 8% 0%, rgba(239, 68, 68, 0.14), transparent 64%),
+    radial-gradient(780px 340px at 95% 6%, rgba(148, 163, 184, 0.16), transparent 60%),
+    linear-gradient(180deg, #0e1117 0%, #0b0f15 100%);
+}
+
+body[data-course-style="powerlifting"] .glass-card,
+body[data-course-style="powerlifting"] .tab-card {
+  border-color: rgba(148, 163, 184, 0.28);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.52), inset 0 0 0 1px rgba(239, 68, 68, 0.16);
+}
+
+body[data-course-style="powerlifting"] .section-title,
+body[data-course-style="powerlifting"] h1[data-course="title"] {
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+body[data-course-style="powerlifting"] .badge-soft {
+  border-color: rgba(239, 68, 68, 0.30);
+  background: linear-gradient(180deg, rgba(51, 65, 85, 0.58), rgba(30, 41, 59, 0.62));
+  color: rgba(241, 245, 249, 0.95);
+}
+
+body[data-course-style="powerlifting"] #enrollBtn.btn-gradient {
+  background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 55%, #b91c1c 100%);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+body[data-course-style="powerlifting"] #enrollBtn.btn-gradient:hover {
+  filter: brightness(1.06);
+}
+
+body[data-course-style="powerlifting"] .fake-video {
+  border-color: rgba(239, 68, 68, 0.28);
+  background:
+    linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.98)),
+    repeating-linear-gradient(
+      135deg,
+      rgba(239, 68, 68, 0.05) 0px,
+      rgba(239, 68, 68, 0.05) 9px,
+      rgba(148, 163, 184, 0.05) 9px,
+      rgba(148, 163, 184, 0.05) 18px
+    );
+}
+
+body[data-course-style="fitness"] {
+  background-image:
+    radial-gradient(880px 320px at 10% 0%, rgba(20, 184, 166, 0.10), transparent 64%),
+    radial-gradient(760px 300px at 90% 8%, rgba(56, 189, 248, 0.10), transparent 60%),
+    linear-gradient(180deg, #f8fafc 0%, #f0fdfa 100%);
+}
+
+body[data-course-style="fitness"] .glass-card,
+body[data-course-style="fitness"] .tab-card {
+  border-color: rgba(148, 163, 184, 0.24);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12), inset 0 0 0 1px rgba(20, 184, 166, 0.10);
+}
+
+body[data-course-style="fitness"] .badge-soft {
+  border-color: rgba(148, 163, 184, 0.30);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(240, 253, 250, 0.9));
+}
+
+body[data-course-style="fitness"] #enrollBtn.btn-gradient {
+  background: linear-gradient(135deg, #0d9488 0%, #14b8a6 52%, #0ea5e9 100%);
+  border-color: rgba(15, 23, 42, 0.12);
+}
+
+body[data-course-style="fitness"] .fake-video {
+  border-color: rgba(148, 163, 184, 0.24);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(240, 253, 250, 0.94)),
+    repeating-linear-gradient(
+      135deg,
+      rgba(20, 184, 166, 0.035) 0px,
+      rgba(20, 184, 166, 0.035) 10px,
+      rgba(56, 189, 248, 0.035) 10px,
+      rgba(56, 189, 248, 0.035) 20px
+    );
+}
+
+body[data-course-style="crossfit"] {
+  background-image:
+    radial-gradient(820px 300px at 8% 0%, rgba(217, 70, 239, 0.30), transparent 60%),
+    radial-gradient(760px 320px at 92% 9%, rgba(34, 211, 238, 0.26), transparent 58%),
+    linear-gradient(180deg, #030712 0%, #0b1020 100%);
+}
+
+body[data-course-style="crossfit"] .glass-card,
+body[data-course-style="crossfit"] .tab-card {
+  border-color: rgba(34, 211, 238, 0.48);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(217, 70, 239, 0.24), 0 0 26px rgba(34, 211, 238, 0.16);
+}
+
+body[data-course-style="crossfit"] .section-title,
+body[data-course-style="crossfit"] h1[data-course="title"] {
+  letter-spacing: 0.02em;
+}
+
+body[data-course-style="crossfit"] .badge-soft {
+  border-color: rgba(34, 211, 238, 0.54);
+  background: linear-gradient(180deg, rgba(76, 29, 149, 0.46), rgba(8, 47, 73, 0.5));
+  color: rgba(224, 242, 254, 0.98);
+}
+
+body[data-course-style="crossfit"] #enrollBtn.btn-gradient {
+  background: linear-gradient(135deg, #a21caf 0%, #d946ef 52%, #22d3ee 100%);
+  border-color: rgba(34, 211, 238, 0.55);
+  box-shadow: 0 0 24px rgba(217, 70, 239, 0.32);
+}
+
+body[data-course-style="crossfit"] .fake-video {
+  border-color: rgba(34, 211, 238, 0.52);
+  background:
+    linear-gradient(180deg, rgba(7, 10, 23, 0.96), rgba(2, 6, 23, 0.98)),
+    repeating-linear-gradient(
+      145deg,
+      rgba(217, 70, 239, 0.08) 0px,
+      rgba(217, 70, 239, 0.08) 8px,
+      rgba(34, 211, 238, 0.08) 8px,
+      rgba(34, 211, 238, 0.08) 16px
+    );
+}
+
+main > .glass-card:first-child {
+  backdrop-filter: blur(1.5px);
 }
 
 input[type=number] {

@@ -89,6 +89,13 @@ async function loadCourse() {
 
   setText(titleEl, "Загружаем курс…");
   const course = await CoursesApi.get(id);
+  const allowedStyles = new Set(["powerlifting", "fitness", "crossfit"]);
+  const styleKey = String(course?.direction || "").toLowerCase();
+  if (allowedStyles.has(styleKey)) {
+    document.body.setAttribute("data-course-style", styleKey);
+  } else {
+    document.body.removeAttribute("data-course-style");
+  }
   setText(titleEl, course.title);
   metaEl.innerHTML = `
     <span class="badge-soft px-2 py-1">Направление: ${escapeHtml(course.direction)}</span>
