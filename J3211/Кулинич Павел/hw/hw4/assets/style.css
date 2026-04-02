@@ -1,0 +1,247 @@
+:root {
+  --primary: #6f42c1;
+  --primary-hover: #5b36a4;
+
+  --bg-color: #ffffff;
+  --text-color: #1f2937;
+  --muted-color: #6b7280;
+
+  --dark-bg: #111827;
+  --soft-bg: #f5f7fb;
+  --section-bg: #f8f9ff;
+
+  --card-bg: #ffffff;
+  --card-border: #eef2f7;
+  --seat-bg: #e9d8fd;
+  --seat-text: #4c1d95;
+
+  --scene-bg: #111827;
+  --scene-text: #ffffff;
+
+  --shadow-color: rgba(17, 24, 39, 0.06);
+  --review-border: #6f42c1;
+
+  --card-radius: 1.5rem;
+}
+
+body.dark-theme {
+  --primary: #8b5cf6;
+  --primary-hover: #7c3aed;
+
+  --bg-color: #111827;
+  --text-color: #f3f4f6;
+  --muted-color: #9ca3af;
+
+  --dark-bg: #030712;
+  --soft-bg: #1f2937;
+  --section-bg: #0f172a;
+
+  --card-bg: #1f2937;
+  --card-border: #374151;
+  --seat-bg: #312e81;
+  --seat-text: #e0e7ff;
+
+  --scene-bg: #000000;
+  --scene-text: #ffffff;
+
+  --shadow-color: rgba(0, 0, 0, 0.35);
+  --review-border: #8b5cf6;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.hero-section {
+  background: linear-gradient(180deg, var(--section-bg) 0%, var(--bg-color) 100%);
+}
+
+.hero-image,
+.event-banner {
+  width: 100%;
+  object-fit: cover;
+}
+
+.hero-image {
+  min-height: 360px;
+  max-height: 440px;
+}
+
+.feature-icon {
+  color: var(--primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+  display: inline-block;
+  fill: currentColor;
+}
+
+.stat-card,
+.info-box,
+.hall-schema,
+.auth-card {
+  background: var(--soft-bg);
+  color: var(--text-color);
+}
+
+.scene {
+  background: var(--scene-bg);
+  color: var(--scene-text);
+  padding: 1rem;
+  border-radius: 1rem;
+  font-weight: 700;
+}
+
+.seat-block {
+  background: var(--seat-bg);
+  color: var(--seat-text);
+  padding: 1rem 0;
+  border-radius: 1rem;
+  font-weight: 700;
+}
+
+.review-item {
+  border-left: 4px solid var(--review-border);
+  padding-left: 1rem;
+}
+
+.sticky-card {
+  position: sticky;
+  top: 90px;
+}
+
+.auth-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--soft-bg) 0%, var(--bg-color) 100%);
+}
+
+.auth-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 72px);
+}
+
+.auth-card {
+  max-width: 720px;
+  width: 100%;
+}
+
+.ticket-card,
+.organizer-event-card,
+.card,
+.modal-content,
+.stat-card {
+  background: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 10px 30px var(--shadow-color);
+}
+
+.event-card img {
+  height: 220px;
+  object-fit: cover;
+}
+
+.navbar-brand {
+  letter-spacing: 0.3px;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.btn-outline-dark {
+  color: var(--text-color);
+  border-color: var(--text-color);
+}
+
+.btn-outline-dark:hover,
+.btn-outline-dark:focus {
+  background-color: var(--text-color);
+  color: var(--bg-color);
+}
+
+.rounded-4 {
+  border-radius: var(--card-radius) !important;
+}
+
+footer {
+  margin-top: auto;
+}
+
+.text-secondary,
+.small.text-secondary,
+p.text-secondary,
+.lead.text-secondary {
+  color: var(--muted-color) !important;
+}
+
+.list-group-item {
+  background: var(--card-bg);
+  color: var(--text-color);
+  border-color: var(--card-border);
+}
+
+.form-control,
+.form-select,
+textarea {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-color: var(--card-border);
+}
+
+.form-control::placeholder,
+textarea::placeholder {
+  color: var(--muted-color);
+}
+
+.form-control:focus,
+.form-select:focus,
+textarea:focus {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
+}
+
+.modal-body,
+.modal-title,
+.modal-header,
+.modal-footer {
+  color: var(--text-color);
+}
+
+.badge.text-bg-light {
+  background-color: var(--soft-bg) !important;
+  color: var(--text-color) !important;
+}
+
+.bg-light {
+  background-color: var(--soft-bg) !important;
+}
+
+.theme-toggle-btn {
+  min-width: 120px;
+}
+
+@media (max-width: 991.98px) {
+  .sticky-card {
+    position: static;
+  }
+}
