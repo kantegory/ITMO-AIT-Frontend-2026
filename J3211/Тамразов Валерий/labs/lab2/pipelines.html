@@ -98,146 +98,10 @@
                 </div>
             </div>
 
-            <!-- Список пайплайнов -->
+            <!-- Список пайплайнов (загружается из API) -->
             <div class="col-lg-9">
                 <div id="pipelinesList">
-                    <div class="pipeline-card" data-status="success" data-env="production" data-owner="tamrazov" data-name="fraud-detection-model">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div>
-                                <h6 class="mb-1">
-                                    <a href="pipeline.html" class="text-decoration-none">fraud-detection-model</a>
-                                    <span class="deploy-strategy strategy-bluegreen ms-2">Blue/Green</span>
-                                </h6>
-                                <small class="text-muted">
-                                    <i class="bi bi-person me-1"></i>Тамразов В. &middot;
-                                    <i class="bi bi-cloud me-1"></i>production &middot;
-                                    2 часа назад
-                                </small>
-                            </div>
-                            <span class="status-badge status-success">Успешно</span>
-                        </div>
-                        <div class="mt-2">
-                            <div class="progress" style="height: 4px;">
-                                <div class="progress-bar bg-success" style="width: 100%"></div>
-                            </div>
-                            <small class="text-muted">4/4 шагов завершено &middot; 12м 34с</small>
-                        </div>
-                    </div>
-
-                    <div class="pipeline-card" data-status="running" data-env="staging" data-owner="tamrazov" data-name="recommendation-engine-v2">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div>
-                                <h6 class="mb-1">
-                                    <a href="pipeline.html" class="text-decoration-none">recommendation-engine-v2</a>
-                                    <span class="deploy-strategy strategy-canary ms-2">Canary</span>
-                                </h6>
-                                <small class="text-muted">
-                                    <i class="bi bi-person me-1"></i>Тамразов В. &middot;
-                                    <i class="bi bi-cloud me-1"></i>staging &middot;
-                                    5 часов назад
-                                </small>
-                            </div>
-                            <span class="status-badge status-running">Запущен</span>
-                        </div>
-                        <div class="mt-2">
-                            <div class="progress" style="height: 4px;">
-                                <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" style="width: 60%"></div>
-                            </div>
-                            <small class="text-muted">2/4 шагов завершено &middot; идёт валидация...</small>
-                        </div>
-                    </div>
-
-                    <div class="pipeline-card" data-status="failed" data-env="development" data-owner="ivanov" data-name="text-classifier-bert">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div>
-                                <h6 class="mb-1">
-                                    <a href="pipeline.html" class="text-decoration-none">text-classifier-bert</a>
-                                    <span class="deploy-strategy strategy-rolling ms-2">Rolling</span>
-                                </h6>
-                                <small class="text-muted">
-                                    <i class="bi bi-person me-1"></i>Иванов А. &middot;
-                                    <i class="bi bi-cloud me-1"></i>development &middot;
-                                    вчера
-                                </small>
-                            </div>
-                            <span class="status-badge status-failed">Ошибка</span>
-                        </div>
-                        <div class="mt-2">
-                            <div class="progress" style="height: 4px;">
-                                <div class="progress-bar bg-danger" style="width: 50%"></div>
-                            </div>
-                            <small class="text-muted">2/4 шагов &middot; Ошибка на этапе валидации</small>
-                        </div>
-                    </div>
-
-                    <div class="pipeline-card" data-status="success" data-env="staging" data-owner="petrov" data-name="image-segmentation-unet">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div>
-                                <h6 class="mb-1">
-                                    <a href="pipeline.html" class="text-decoration-none">image-segmentation-unet</a>
-                                    <span class="deploy-strategy strategy-bluegreen ms-2">Blue/Green</span>
-                                </h6>
-                                <small class="text-muted">
-                                    <i class="bi bi-person me-1"></i>Петров С. &middot;
-                                    <i class="bi bi-cloud me-1"></i>staging &middot;
-                                    3 дня назад
-                                </small>
-                            </div>
-                            <span class="status-badge status-success">Успешно</span>
-                        </div>
-                        <div class="mt-2">
-                            <div class="progress" style="height: 4px;">
-                                <div class="progress-bar bg-success" style="width: 100%"></div>
-                            </div>
-                            <small class="text-muted">4/4 шагов завершено &middot; 8м 15с</small>
-                        </div>
-                    </div>
-
-                    <div class="pipeline-card" data-status="pending" data-env="production" data-owner="ivanov" data-name="anomaly-detector-lstm">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div>
-                                <h6 class="mb-1">
-                                    <a href="pipeline.html" class="text-decoration-none">anomaly-detector-lstm</a>
-                                    <span class="deploy-strategy strategy-canary ms-2">Canary</span>
-                                </h6>
-                                <small class="text-muted">
-                                    <i class="bi bi-person me-1"></i>Иванов А. &middot;
-                                    <i class="bi bi-cloud me-1"></i>production &middot;
-                                    ожидает одобрения
-                                </small>
-                            </div>
-                            <span class="status-badge status-pending">Ожидание</span>
-                        </div>
-                        <div class="mt-2">
-                            <div class="progress" style="height: 4px;">
-                                <div class="progress-bar bg-warning" style="width: 0%"></div>
-                            </div>
-                            <small class="text-muted">0/4 шагов &middot; Требуется одобрение ревьюера</small>
-                        </div>
-                    </div>
-
-                    <div class="pipeline-card" data-status="success" data-env="development" data-owner="petrov" data-name="speech-recognition-whisper">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div>
-                                <h6 class="mb-1">
-                                    <a href="pipeline.html" class="text-decoration-none">speech-recognition-whisper</a>
-                                    <span class="deploy-strategy strategy-rolling ms-2">Rolling</span>
-                                </h6>
-                                <small class="text-muted">
-                                    <i class="bi bi-person me-1"></i>Петров С. &middot;
-                                    <i class="bi bi-cloud me-1"></i>development &middot;
-                                    4 дня назад
-                                </small>
-                            </div>
-                            <span class="status-badge status-success">Успешно</span>
-                        </div>
-                        <div class="mt-2">
-                            <div class="progress" style="height: 4px;">
-                                <div class="progress-bar bg-success" style="width: 100%"></div>
-                            </div>
-                            <small class="text-muted">4/4 шагов завершено &middot; 15м 42с</small>
-                        </div>
-                    </div>
+                    <p class="text-muted text-center mt-4">Загрузка...</p>
                 </div>
 
                 <p class="text-muted text-center mt-3 d-none" id="noResults">Пайплайны не найдены по заданным фильтрам</p>
@@ -324,6 +188,163 @@
     <script>
         checkAuth();
         updateNavbar();
+
+        var allPipelines = [];
+
+        var statusLabels = {
+            success: 'Успешно',
+            running: 'Запущен',
+            failed: 'Ошибка',
+            pending: 'Ожидание'
+        };
+
+        var strategyLabels = {
+            bluegreen: 'Blue/Green',
+            canary: 'Canary',
+            rolling: 'Rolling'
+        };
+
+        var statusColors = {
+            success: 'success',
+            running: 'info',
+            failed: 'danger',
+            pending: 'warning'
+        };
+
+        function renderPipeline(p) {
+            var card = document.createElement('div');
+            card.className = 'pipeline-card';
+            card.setAttribute('data-status', p.status);
+            card.setAttribute('data-env', p.env);
+            card.setAttribute('data-name', p.name);
+
+            var progress = p.stepsTotal > 0 ? Math.round((p.stepsDone / p.stepsTotal) * 100) : 0;
+            var progressClass = 'bg-' + statusColors[p.status];
+            var animated = p.status === 'running' ? ' progress-bar-striped progress-bar-animated' : '';
+
+            var stepsText = p.stepsDone + '/' + p.stepsTotal + ' шагов';
+            if (p.status === 'success') stepsText += ' завершено';
+            if (p.duration) stepsText += ' \u00b7 ' + p.duration;
+
+            var topRow = document.createElement('div');
+            topRow.className = 'd-flex justify-content-between align-items-start';
+
+            var info = document.createElement('div');
+            var h6 = document.createElement('h6');
+            h6.className = 'mb-1';
+            var link = document.createElement('a');
+            link.href = 'pipeline.html?id=' + p.id;
+            link.className = 'text-decoration-none';
+            link.textContent = p.name;
+            h6.appendChild(link);
+
+            var strategySpan = document.createElement('span');
+            strategySpan.className = 'deploy-strategy strategy-' + p.strategy + ' ms-2';
+            strategySpan.textContent = strategyLabels[p.strategy] || p.strategy;
+            h6.appendChild(strategySpan);
+            info.appendChild(h6);
+
+            var meta = document.createElement('small');
+            meta.className = 'text-muted';
+            meta.textContent = p.ownerName + ' \u00b7 ' + p.env + ' \u00b7 ' + p.lastRun;
+            info.appendChild(meta);
+
+            var badge = document.createElement('span');
+            badge.className = 'status-badge status-' + p.status;
+            badge.textContent = statusLabels[p.status];
+
+            topRow.appendChild(info);
+            topRow.appendChild(badge);
+            card.appendChild(topRow);
+
+            var progressWrap = document.createElement('div');
+            progressWrap.className = 'mt-2';
+            var progressBar = document.createElement('div');
+            progressBar.className = 'progress';
+            progressBar.style.height = '4px';
+            var bar = document.createElement('div');
+            bar.className = 'progress-bar ' + progressClass + animated;
+            bar.style.width = progress + '%';
+            progressBar.appendChild(bar);
+            progressWrap.appendChild(progressBar);
+
+            var stepsSmall = document.createElement('small');
+            stepsSmall.className = 'text-muted';
+            stepsSmall.textContent = stepsText;
+            progressWrap.appendChild(stepsSmall);
+            card.appendChild(progressWrap);
+
+            return card;
+        }
+
+        function loadPipelines() {
+            fetch(API_URL + '/600/pipelines', {
+                headers: authHeaders()
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                allPipelines = data;
+                applyFilters();
+            })
+            .catch(function(err) {
+                var list = document.getElementById('pipelinesList');
+                list.textContent = '';
+                var errP = document.createElement('p');
+                errP.className = 'text-danger text-center mt-4';
+                errP.textContent = 'Ошибка загрузки: ' + err.message;
+                list.appendChild(errP);
+            });
+        }
+
+        function applyFilters() {
+            var searchText = (document.getElementById('searchInput').value || '').toLowerCase();
+            var envVal = document.getElementById('envFilter').value;
+            var ownerVal = document.getElementById('ownerFilter').value;
+
+            var checkedStatuses = [];
+            document.querySelectorAll('.filter-status').forEach(function(cb) {
+                if (cb.checked) checkedStatuses.push(cb.value);
+            });
+
+            var filtered = allPipelines.filter(function(p) {
+                var matchName = p.name.toLowerCase().indexOf(searchText) !== -1;
+                var matchStatus = checkedStatuses.indexOf(p.status) !== -1;
+                var matchEnv = envVal === 'all' || p.env === envVal;
+                var matchOwner = ownerVal === 'all' || (ownerVal === 'tamrazov' && p.userId === 1) || (ownerVal === 'ivanov' && p.userId === 2) || (ownerVal === 'petrov' && p.userId === 3);
+                return matchName && matchStatus && matchEnv && matchOwner;
+            });
+
+            var list = document.getElementById('pipelinesList');
+            list.textContent = '';
+
+            filtered.forEach(function(p) {
+                list.appendChild(renderPipeline(p));
+            });
+
+            var noResults = document.getElementById('noResults');
+            if (filtered.length === 0) {
+                noResults.classList.remove('d-none');
+            } else {
+                noResults.classList.add('d-none');
+            }
+        }
+
+        // Привязка фильтров
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+        document.getElementById('envFilter').addEventListener('change', applyFilters);
+        document.getElementById('ownerFilter').addEventListener('change', applyFilters);
+        document.querySelectorAll('.filter-status').forEach(function(cb) {
+            cb.addEventListener('change', applyFilters);
+        });
+        document.getElementById('resetFilters').addEventListener('click', function() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('envFilter').value = 'all';
+            document.getElementById('ownerFilter').value = 'all';
+            document.querySelectorAll('.filter-status').forEach(function(cb) { cb.checked = true; });
+            applyFilters();
+        });
+
+        loadPipelines();
     </script>
 </body>
 </html>
