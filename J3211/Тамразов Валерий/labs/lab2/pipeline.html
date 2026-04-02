@@ -15,6 +15,7 @@
             <a class="navbar-brand" href="index.html">
                 <i class="bi bi-gear-wide-connected me-1"></i> MLOps Deploy
             </a>
+            <button class="theme-toggle me-2" type="button" id="themeToggle" aria-label="Переключить тему"><i class="bi bi-sun-fill" aria-hidden="true"></i></button>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Навигация">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -155,6 +156,7 @@
         </div>
     </footer>
 
+    <script src="js/theme.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/api.js"></script>
     <script src="js/main.js"></script>
@@ -175,8 +177,13 @@
         var params = new URLSearchParams(window.location.search);
         var pipelineId = params.get('id') || '1';
 
-        fetch(API_URL + '/600/pipelines/' + pipelineId, { headers: authHeaders() })
+        fetch(API_URL + '/pipelines/' + pipelineId, { headers: authHeaders() })
             .then(function(res) {
+                if (res.status === 401) {
+                    localStorage.removeItem('accessToken');
+                    window.location.href = 'login.html';
+                    throw new Error('Сессия истекла');
+                }
                 if (!res.ok) throw new Error('Пайплайн не найден');
                 return res.json();
             })
@@ -303,10 +310,12 @@
                 infoCard.appendChild(table);
 
                 // Артефакты
-                return fetch(API_URL + '/600/artifacts?pipelineId=' + p.id, { headers: authHeaders() });
+                return fetch(API_URL + '/artifacts?pipelineId=' + p.id, { headers: authHeaders() });
             })
             .then(function(res) { return res.json(); })
             .then(function(artifacts) {
+                if (!Array.isArray(artifacts)) artifacts = [];
+
                 var card = document.getElementById('artifactsCard');
                 card.textContent = '';
                 var h5 = document.createElement('h5');
