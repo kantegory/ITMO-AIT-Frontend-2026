@@ -1,20 +1,21 @@
 body {
-    background-color: #FCFCFC;
+    background-color: var(--bg-color);
     font-family: Arial, sans-serif;
-    color: #333333;
+    color: var(--text-color);
     margin: 0;
 }
 
 .app-layout {
     display: flex;
     height: 100vh;
+    overflow: hidden;
 }
 
 
 .sidebar {
     display: flex;
     width: 250px;
-    background-color: #333333;
+    background-color: var(--sidebar-bg);
     color: white;
     flex-direction: column;
 }
@@ -23,7 +24,7 @@ body {
     font-size: 24px;
     font-weight: bold;
     padding: 16px;
-    border-bottom: 2px solid #403D3D;
+    border-bottom: 2px solid var(--sidebar-border);
     margin-bottom: 20px;
 }
 
@@ -40,28 +41,27 @@ body {
 }
 
 .sidebar__link {
-    color: #e0e0e0;
+    color: var(--sidebar-text);
     text-decoration: none;
     padding: 12px 20px;
     display: flex;
 }
 
 .sidebar__link:hover {
-    background-color: #403D3D;
+    background-color: var(--sidebar-border);
     color: white;
 }
 
 .sidebar__link--active {
-    background-color: royalblue;
+    background-color: var(--primary-color);
     color: white;
     font-weight: bold;
 }
 
 .sidebar__footer {
-    border-top: 2px solid #403D3D;
+    border-top: 2px solid var(--sidebar-border);
     display: block;
 }
-
 
 .main-content {
     flex-grow: 1;
@@ -74,19 +74,19 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
-    border-bottom: 1px solid #403D3D;
+    border-bottom: 1px solid var(--sidebar-border);
     padding-bottom: 15px;
 }
 
 .main-content__header h1 {
     margin: 0;
     font-size: 28px;
-    color: #333333;
+    color: var(--text-color);
 }
 
 
 .stat-card {
-    background-color: white;
+    background-color: var(--card-bg);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.15);
@@ -95,24 +95,24 @@ body {
 .stat-card h3 {
     margin: 0;
     font-size: 32px;
-    color: black;
+    color: var(--text-color);
 }
 
 .stat-card p {
     margin: 5px 0 0 0;
-    color: dimgrey;
+    color: var(--text-muted);
     font-size: 14px;
 }
 
 
 .auth-card {
-    background-color: white;
+    background-color: var(--card-bg);
     width: 100%;
     max-width: 400px;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    border-top: 4px solid royalblue;
+    border-top: 4px solid var(--primary-color);
 }
 
 .auth-card__header {
@@ -123,13 +123,13 @@ body {
 .auth-card__title {
     font-size: 28px;
     font-weight: bold;
-    color: #333333;
+    color: var(--text-color);
 }
 
 .auth-card__subtitle {
     font-size: 14px;
     margin: 5px 0 0 0;
-    color: dimgrey;
+    color: var(--text-muted);
 }
 
 
@@ -180,19 +180,21 @@ body {
 @media (max-width: 768px) {
     .app-layout {
         flex-direction: column;
+        height: auto;
+        overflow-y: visible;
     }
 
     .sidebar {
         width: 100%;
         min-height: auto;
         border-right: none;
-        border-bottom: 2px solid #403D3D;
+        border-bottom: 2px solid var(--sidebar-border);
     }
 
     .sidebar__logo {
         padding: 15px 20px;
         margin-bottom: 0;
-        border-bottom: 1px solid #403D3D;
+        border-bottom: 1px solid var(--sidebar-border);
     }
 
     .sidebar__scroll-wrapper {
@@ -200,7 +202,7 @@ body {
         align-items: center;
         overflow-x: auto;
         white-space: nowrap;
-        border-bottom: 2px solid #403D3D;
+        border-bottom: 2px solid var(--sidebar-border);
     }
 
     .sidebar__nav {
@@ -216,12 +218,13 @@ body {
     .sidebar__footer {
         display: block;
         border-top: none;
-        border-left: 2px solid #403D3D;
+        border-left: 2px solid var(--sidebar-border);
         margin-left: auto;
     }
 
     .main-content {
         padding: 15px;
+        overflow-y: visible;
     }
 
     .main-content__header {
@@ -248,6 +251,10 @@ body {
         overflow-y: hidden;
         white-space: nowrap;
         border-bottom: 1px solid #dee2e6;
+        scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar {
+        display: none;
     }
 }
 
@@ -256,4 +263,86 @@ body {
         max-width: 1200px;
         margin: 0 auto;
     }
+}
+
+
+[data-theme='dark'] .table {
+    color: var(--text-color);
+}
+
+[data-theme='dark'] .table-light {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+[data-theme='dark'] .table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-color);
+}
+
+[data-theme='dark'] .table > :not(caption) > * > * {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: #403D3D;
+}
+
+[data-theme='dark'] .card {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color);
+}
+
+[data-theme='dark'] h2, [data-theme='dark'] h5 {
+    color: var(--text-color) !important;
+}
+
+[data-theme='dark'] .text-muted {
+    color: var(--text-muted) !important;
+}
+
+[data-theme='dark'] .modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--sidebar-border);
+}
+
+[data-theme='dark'] .modal-header,
+[data-theme='dark'] .modal-footer {
+    border-color: var(--sidebar-border);
+}
+
+[data-theme='dark'] .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+[data-theme='dark'] .form-control,
+[data-theme='dark'] .form-select {
+    background-color: #2b2b2b;
+    color: var(--text-color);
+    border-color: #403D3D;
+}
+
+[data-theme='dark'] .card-header {
+    background-color: var(--card-bg) !important;
+    border-color: var(--sidebar-border);
+}
+
+[data-theme='dark'] .card-header h5 {
+    color: var(--text-color) !important;
+}
+
+.content-panel {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    margin-bottom: 25px;
+}
+
+[data-theme='dark'] .form-control::placeholder {
+    color: #9ca3af !important;
+    opacity: 1;
+}
+
+[data-theme='dark'] .table-bordered > :not(caption) > * > * {
+    border-color: #403D3D;
 }
