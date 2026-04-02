@@ -43,124 +43,9 @@
             </button>
         </div>
 
-        <!-- Среды -->
-        <div class="row g-4 mb-5">
-            <div class="col-md-4">
-                <div class="env-card">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="mb-0">
-                            <i class="bi bi-circle-fill text-success me-1" style="font-size: 0.6rem;"></i>
-                            Production
-                        </h5>
-                        <span class="deploy-strategy strategy-bluegreen">Blue/Green</span>
-                    </div>
-                    <div class="small mb-2">
-                        <div class="d-flex justify-content-between mb-1">
-                            <span class="text-muted">Активные модели:</span>
-                            <span>5</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-1">
-                            <span class="text-muted">Запросов/мин:</span>
-                            <span>2,340</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-1">
-                            <span class="text-muted">Uptime:</span>
-                            <span>99.97%</span>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <span class="text-muted">Последний деплой:</span>
-                            <span>2ч назад</span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-outline-secondary btn-sm flex-grow-1">
-                            <i class="bi bi-gear me-1"></i> Настроить
-                        </button>
-                        <button class="btn btn-outline-warning btn-sm" title="Заморозить деплой" data-bs-toggle="modal" data-bs-target="#freezeModal">
-                            <i class="bi bi-snow"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="env-card">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="mb-0">
-                            <i class="bi bi-circle-fill text-warning me-1" style="font-size: 0.6rem;"></i>
-                            Staging
-                        </h5>
-                        <span class="deploy-strategy strategy-canary">Canary</span>
-                    </div>
-                    <div class="small mb-2">
-                        <div class="d-flex justify-content-between mb-1">
-                            <span class="text-muted">Активные модели:</span>
-                            <span>8</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-1">
-                            <span class="text-muted">Запросов/мин:</span>
-                            <span>156</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-1">
-                            <span class="text-muted">Uptime:</span>
-                            <span>99.5%</span>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <span class="text-muted">Последний деплой:</span>
-                            <span>5ч назад</span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-outline-secondary btn-sm flex-grow-1">
-                            <i class="bi bi-gear me-1"></i> Настроить
-                        </button>
-                        <button class="btn btn-outline-success btn-sm" title="Промоут в production" data-bs-toggle="modal" data-bs-target="#promoteModal">
-                            <i class="bi bi-arrow-up-circle"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="env-card">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="mb-0">
-                            <i class="bi bi-circle-fill text-info me-1" style="font-size: 0.6rem;"></i>
-                            Development
-                        </h5>
-                        <span class="deploy-strategy strategy-rolling">Rolling</span>
-                    </div>
-                    <div class="small mb-2">
-                        <div class="d-flex justify-content-between mb-1">
-                            <span class="text-muted">Активные модели:</span>
-                            <span>12</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-1">
-                            <span class="text-muted">Запросов/мин:</span>
-                            <span>42</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-1">
-                            <span class="text-muted">Uptime:</span>
-                            <span>98.2%</span>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <span class="text-muted">Последний деплой:</span>
-                            <span>1д назад</span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-outline-secondary btn-sm flex-grow-1">
-                            <i class="bi bi-gear me-1"></i> Настроить
-                        </button>
-                        <button class="btn btn-outline-success btn-sm" title="Промоут в staging">
-                            <i class="bi bi-arrow-up-circle"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+        <!-- Среды (загружаются из API) -->
+        <div class="row g-4 mb-5" id="envsContainer">
+            <p class="text-muted">Загрузка сред...</p>
         </div>
 
         <!-- Роли и разрешения -->
@@ -174,90 +59,10 @@
                         <th>Development</th>
                         <th>Staging</th>
                         <th>Production</th>
-                        <th>Действия</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div style="width:32px;height:32px;background:var(--accent-dim);border:1px solid var(--accent);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-family:var(--font-mono);font-size:0.75rem;font-weight:600;margin-right:10px;">ВТ</div>
-                                <div>
-                                    <div>Тамразов Валерий</div>
-                                    <small class="text-muted">valery@mlops-deploy.ru</small>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="role-badge bg-primary text-white">Админ</span></td>
-                        <td><i class="bi bi-check-circle-fill text-success"></i> Полный</td>
-                        <td><i class="bi bi-check-circle-fill text-success"></i> Полный</td>
-                        <td><i class="bi bi-check-circle-fill text-success"></i> Полный</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editRoleModal">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div style="width:32px;height:32px;background:rgba(88,166,255,0.1);border:1px solid var(--info);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--info);font-family:var(--font-mono);font-size:0.75rem;font-weight:600;margin-right:10px;">АИ</div>
-                                <div>
-                                    <div>Иванов Алексей</div>
-                                    <small class="text-muted">ivanov@mlops-deploy.ru</small>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="role-badge bg-info text-white">Разработчик</span></td>
-                        <td><i class="bi bi-check-circle-fill text-success"></i> Полный</td>
-                        <td><i class="bi bi-check-circle-fill text-success"></i> Деплой</td>
-                        <td><i class="bi bi-eye-fill text-muted"></i> Просмотр</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editRoleModal">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div style="width:32px;height:32px;background:rgba(210,153,34,0.1);border:1px solid var(--warning);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--warning);font-family:var(--font-mono);font-size:0.75rem;font-weight:600;margin-right:10px;">СП</div>
-                                <div>
-                                    <div>Петров Сергей</div>
-                                    <small class="text-muted">petrov@mlops-deploy.ru</small>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="role-badge bg-info text-white">Разработчик</span></td>
-                        <td><i class="bi bi-check-circle-fill text-success"></i> Полный</td>
-                        <td><i class="bi bi-check-circle-fill text-success"></i> Деплой</td>
-                        <td><i class="bi bi-eye-fill text-muted"></i> Просмотр</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editRoleModal">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div style="width:32px;height:32px;background:rgba(139,148,158,0.1);border:1px solid var(--text-muted);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-family:var(--font-mono);font-size:0.75rem;font-weight:600;margin-right:10px;">ЕК</div>
-                                <div>
-                                    <div>Козлова Елена</div>
-                                    <small class="text-muted">kozlova@mlops-deploy.ru</small>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="role-badge bg-secondary text-white">Наблюдатель</span></td>
-                        <td><i class="bi bi-eye-fill text-muted"></i> Просмотр</td>
-                        <td><i class="bi bi-eye-fill text-muted"></i> Просмотр</td>
-                        <td><i class="bi bi-eye-fill text-muted"></i> Просмотр</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editRoleModal">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-                        </td>
-                    </tr>
+                <tbody id="rolesBody">
+                    <tr><td colspan="5" class="text-muted">Загрузка...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -474,6 +279,146 @@
     <script>
         checkAuth();
         updateNavbar();
+
+        var strategyLabels = { bluegreen: 'Blue/Green', canary: 'Canary', rolling: 'Rolling' };
+        var envColors = { Production: 'success', Staging: 'warning', Development: 'info' };
+        var roleLabels = { admin: 'Админ', developer: 'Разработчик', viewer: 'Наблюдатель' };
+        var roleBadgeClass = { admin: 'bg-primary', developer: 'bg-info', viewer: 'bg-secondary' };
+        var accessLabels = { full: 'Полный', deploy: 'Деплой', view: 'Просмотр' };
+
+        function renderAccessCell(access) {
+            var td = document.createElement('td');
+            if (access === 'full' || access === 'deploy') {
+                var icon = document.createElement('i');
+                icon.className = 'bi bi-check-circle-fill text-success me-1';
+                td.appendChild(icon);
+            } else {
+                var icon = document.createElement('i');
+                icon.className = 'bi bi-eye-fill text-muted me-1';
+                td.appendChild(icon);
+            }
+            td.appendChild(document.createTextNode(accessLabels[access] || access));
+            return td;
+        }
+
+        // Загрузка сред
+        fetch(API_URL + '/600/environments', { headers: authHeaders() })
+            .then(function(res) { return res.json(); })
+            .then(function(envs) {
+                var container = document.getElementById('envsContainer');
+                container.textContent = '';
+
+                envs.forEach(function(env) {
+                    var col = document.createElement('div');
+                    col.className = 'col-md-4';
+
+                    var card = document.createElement('div');
+                    card.className = 'env-card';
+
+                    // Заголовок
+                    var header = document.createElement('div');
+                    header.className = 'd-flex justify-content-between align-items-center mb-3';
+                    var h5 = document.createElement('h5');
+                    h5.className = 'mb-0';
+                    var dot = document.createElement('i');
+                    dot.className = 'bi bi-circle-fill text-' + (envColors[env.name] || 'secondary') + ' me-1';
+                    dot.style.fontSize = '0.6rem';
+                    h5.appendChild(dot);
+                    h5.appendChild(document.createTextNode(' ' + env.name));
+                    header.appendChild(h5);
+                    var stratSpan = document.createElement('span');
+                    stratSpan.className = 'deploy-strategy strategy-' + env.strategy;
+                    stratSpan.textContent = strategyLabels[env.strategy] || env.strategy;
+                    header.appendChild(stratSpan);
+                    card.appendChild(header);
+
+                    // Метрики
+                    var metrics = document.createElement('div');
+                    metrics.className = 'small mb-2';
+                    var rows = [
+                        ['Активные модели:', env.models],
+                        ['Запросов/мин:', env.rpm],
+                        ['Uptime:', env.uptime],
+                        ['Последний деплой:', env.lastDeploy]
+                    ];
+                    rows.forEach(function(r) {
+                        var row = document.createElement('div');
+                        row.className = 'd-flex justify-content-between mb-1';
+                        var label = document.createElement('span');
+                        label.className = 'text-muted';
+                        label.textContent = r[0];
+                        var val = document.createElement('span');
+                        val.textContent = r[1];
+                        row.appendChild(label);
+                        row.appendChild(val);
+                        metrics.appendChild(row);
+                    });
+                    card.appendChild(metrics);
+
+                    var hr = document.createElement('hr');
+                    card.appendChild(hr);
+
+                    var btns = document.createElement('div');
+                    btns.className = 'd-flex gap-2';
+                    var settingsBtn = document.createElement('button');
+                    settingsBtn.className = 'btn btn-outline-secondary btn-sm flex-grow-1';
+                    settingsBtn.textContent = 'Настроить';
+                    btns.appendChild(settingsBtn);
+                    card.appendChild(btns);
+
+                    col.appendChild(card);
+                    container.appendChild(col);
+                });
+            });
+
+        // Загрузка ролей
+        fetch(API_URL + '/600/roles', { headers: authHeaders() })
+            .then(function(res) { return res.json(); })
+            .then(function(roles) {
+                var tbody = document.getElementById('rolesBody');
+                tbody.textContent = '';
+
+                roles.forEach(function(r) {
+                    var tr = document.createElement('tr');
+
+                    // Пользователь
+                    var tdUser = document.createElement('td');
+                    var userDiv = document.createElement('div');
+                    userDiv.className = 'd-flex align-items-center';
+
+                    var avatar = document.createElement('div');
+                    avatar.style.cssText = 'width:32px;height:32px;background:var(--accent-dim);border:1px solid var(--border-accent);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-family:var(--font-mono);font-size:0.75rem;font-weight:600;margin-right:10px;';
+                    avatar.textContent = r.initials;
+                    userDiv.appendChild(avatar);
+
+                    var nameDiv = document.createElement('div');
+                    var nameText = document.createElement('div');
+                    nameText.textContent = r.name;
+                    nameDiv.appendChild(nameText);
+                    var emailText = document.createElement('small');
+                    emailText.className = 'text-muted';
+                    emailText.textContent = r.email;
+                    nameDiv.appendChild(emailText);
+                    userDiv.appendChild(nameDiv);
+                    tdUser.appendChild(userDiv);
+                    tr.appendChild(tdUser);
+
+                    // Роль
+                    var tdRole = document.createElement('td');
+                    var roleBadge = document.createElement('span');
+                    roleBadge.className = 'role-badge ' + (roleBadgeClass[r.role] || 'bg-secondary') + ' text-white';
+                    roleBadge.textContent = roleLabels[r.role] || r.role;
+                    tdRole.appendChild(roleBadge);
+                    tr.appendChild(tdRole);
+
+                    // Доступы
+                    tr.appendChild(renderAccessCell(r.devAccess));
+                    tr.appendChild(renderAccessCell(r.stagingAccess));
+                    tr.appendChild(renderAccessCell(r.prodAccess));
+
+                    tbody.appendChild(tr);
+                });
+            });
     </script>
 </body>
 </html>
