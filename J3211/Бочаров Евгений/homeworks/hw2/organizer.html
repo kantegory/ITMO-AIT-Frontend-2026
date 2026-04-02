@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Организатор - Билетопоиск</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">MAX афиша</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.html">Вход</a></li>
+                <li class="nav-item"><a class="nav-link" href="register.html">Регистрация</a></li>
+                <li class="nav-item"><a class="nav-link" href="profile.html">Личный кабинет</a></li>
+                <li class="nav-item"><a class="nav-link active" href="organizer.html">Организатору</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Панель организатора</h2>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createEventModal">
+            + Создать событие
+        </button>
+    </div>
+
+    <div class="modal fade" id="createEventModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Новое событие</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control mb-2" placeholder="Название" disabled>
+                    <textarea class="form-control" placeholder="Описание" disabled></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary" disabled>Сохранить (неактивно)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4>Мои мероприятия</h4>
+    <table class="table table-striped table-hover shadow-sm">
+        <thead class="table-dark">
+        <tr>
+            <th>Событие</th>
+            <th>Дата</th>
+            <th>Продано билетов</th>
+            <th>Выручка</th>
+            <th>Статус</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Вишневый сад</td>
+            <td>20.03.2026</td>
+            <td>120 / 300</td>
+            <td>240 000 ₽</td>
+            <td><span class="badge bg-success">Прошло</span></td>
+        </tr>
+        <tr>
+            <td>ivanzolo2004</td>
+            <td>25.12.2026</td>
+            <td>450 / 500</td>
+            <td>1 350 000 ₽</td>
+            <td><span class="badge bg-warning text-dark">Скоро</span></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <div class="container">
+        <span>&copy; 2026 eugeron52</span>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
