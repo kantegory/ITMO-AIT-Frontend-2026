@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     function setSubscribeButtonState(button, subscribed) {
         if (!button) return;
         button.textContent = subscribed ? "Unsubscribe" : "Subscribe";
+        button.setAttribute("aria-pressed", String(subscribed));
         button.classList.toggle("btn-outline-primary", !subscribed);
         button.classList.toggle("btn-outline-danger", subscribed);
     }
@@ -82,9 +83,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <p class="mb-1 text-muted small">${escapeHtml(comment.text)}</p>
 
                     <div class="mt-2 d-none reply-form" id="reply-form-${comment.id}">
-                        <textarea class="form-control form-control-sm mb-1" id="reply-input-${comment.id}" rows="1" placeholder="Write a reply..."></textarea>
-                        <button class="btn btn-primary btn-sm submit-reply-btn" data-parent-id="${comment.id}" data-parent-author="${escapeHtml(comment.userName || "User")}">Send</button>
-                        <button class="btn btn-secondary btn-sm cancel-reply-btn" data-parent-id="${comment.id}">Cancel</button>
+                        <textarea class="form-control form-control-sm mb-1" id="reply-input-${comment.id}" rows="1" placeholder="Write a reply..." aria-label="Reply text"></textarea>
+                        <button type="button" class="btn btn-primary btn-sm submit-reply-btn" data-parent-id="${comment.id}" data-parent-author="${escapeHtml(comment.userName || "User")}">Send</button>
+                        <button type="button" class="btn btn-secondary btn-sm cancel-reply-btn" data-parent-id="${comment.id}">Cancel</button>
                     </div>
 
                     ${children.map((child) => renderNode(child, level + 1)).join("")}
@@ -196,6 +197,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const isStarred = storage.getStarred().includes(String(item.id));
                 starBtn.textContent = `★ ${item.stars}`;
                 starBtn.className = `btn ${isStarred ? "btn-warning" : "btn-outline-warning"}`;
+                starBtn.setAttribute("aria-pressed", String(isStarred));
 
                 starBtn.onclick = async () => {
                     if (!storage.getIsLoggedIn()) {
@@ -218,10 +220,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                         if (currentlyStarred) {
                             storage.setStarred(starred.filter((id) => id !== String(item.id)));
                             starBtn.className = "btn btn-outline-warning";
+                            starBtn.setAttribute("aria-pressed", "false");
                         } else {
                             starred.push(String(item.id));
                             storage.setStarred(starred);
                             starBtn.className = "btn btn-warning";
+                            starBtn.setAttribute("aria-pressed", "true");
                         }
 
                         starBtn.textContent = `★ ${newStarsCount}`;
@@ -240,7 +244,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.getElementById("detail-metrics").textContent = item.metrics;
                 document.getElementById("detail-dl").textContent = item.downloads;
 
-                const dlButton = document.getElementById("detail-dl").parentElement;
+                const dlButton = document.getElementById("detail-download-btn");
                 dlButton.onclick = async () => {
                     let currentCount = parseDownloads(item.downloads);
                     currentCount += 1;

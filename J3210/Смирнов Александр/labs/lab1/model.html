@@ -8,17 +8,18 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="site-header"></div>
 
-    <main class="container">
+    <main id="main-content" class="container" tabindex="-1">
         <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h1 id="detail-name">Loading...</h1>
             <p class="text-muted"><span id="detail-type" class="badge bg-primary">...</span></p>
         </div>
         <div>
-            <button class="btn btn-outline-secondary" id="detail-stars">Star</button>
-            <button class="btn btn-outline-primary ms-2" id="btn-subscribe" style="display: none;">Subscribe</button>
+            <button type="button" class="btn btn-outline-secondary" id="detail-stars" aria-label="Add star">Star</button>
+            <button type="button" class="btn btn-outline-primary ms-2" id="btn-subscribe" style="display: none;" aria-label="Subscribe to updates">Subscribe</button>
         </div>
     </div>
 
@@ -34,11 +35,12 @@
                 <div class="mt-4">
                     <h4>Discussions & Reproducibility</h4>
                     <div class="item-card mb-3">
-                        <div id="comments-list"></div>
+                        <div id="comments-list" aria-live="polite"></div>
                         
                         <div class="mt-3">
+                            <label for="comment-input" class="form-label">Comment</label>
                             <textarea id="comment-input" class="form-control mb-2" rows="2" placeholder="Start a discussion..."></textarea>
-                            <button id="post-comment-btn" class="btn btn-sm btn-primary">Post Comment</button>
+                            <button type="button" id="post-comment-btn" class="btn btn-sm btn-primary">Post Comment</button>
                         </div>
                     </div>
                 </div>
@@ -54,7 +56,7 @@
                         <li class="mb-2"><strong>Framework:</strong> <span id="detail-fw">...</span></li>
                         <li class="mb-2"><strong>Metrics:</strong> <br><span id="detail-metrics" class="text-success fw-bold">...</span></li>
                     </ul>
-                    <button class="btn btn-primary w-100 mt-3">Download (<span id="detail-dl">...</span>)</button>
+                    <button type="button" id="detail-download-btn" class="btn btn-primary w-100 mt-3" aria-label="Download item">Download (<span id="detail-dl">...</span>)</button>
                 </div>
             </div>
         </div>

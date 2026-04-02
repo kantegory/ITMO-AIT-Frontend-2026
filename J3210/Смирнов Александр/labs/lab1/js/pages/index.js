@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     function renderCards(data) {
         if (data.length === 0) {
             catalogContainer.innerHTML = "<p>No matches found.</p>";
+            catalogContainer.setAttribute("aria-busy", "false");
             return;
         }
 
@@ -69,22 +70,26 @@ document.addEventListener("DOMContentLoaded", async () => {
                             <span class="badge bg-secondary">Downloads: ${escapeHtml(String(item.downloads))}</span>
                         </div>
                         <div class="mt-3 d-flex gap-2">
-                            <button class="btn ${btnStarClass} btn-sm star-btn" data-star-id="${item.id}" data-stars="${item.stars}">★ ${item.stars}</button>
-                            <button class="btn ${btnSubClass} btn-sm subscribe-btn" data-subscribe-id="${item.id}">${btnSubText}</button>
+                            <button class="btn ${btnStarClass} btn-sm star-btn" data-star-id="${item.id}" data-stars="${item.stars}" aria-label="Toggle star for ${escapeHtml(item.name)}">★ ${item.stars}</button>
+                            <button class="btn ${btnSubClass} btn-sm subscribe-btn" data-subscribe-id="${item.id}" aria-label="${btnSubText} to ${escapeHtml(item.name)}">${btnSubText}</button>
                         </div>
                     </div>
                 `;
             })
             .join("");
+
+        catalogContainer.setAttribute("aria-busy", "false");
     }
 
     catalogContainer.innerHTML = '<div class="text-center my-5"><p>Loading data from API...</p></div>';
+    catalogContainer.setAttribute("aria-busy", "true");
     renderCards(await fetchAllItems());
 
     const applyBtn = document.getElementById("apply-filters");
     if (applyBtn) {
         applyBtn.addEventListener("click", async () => {
             catalogContainer.innerHTML = '<div class="text-center my-5"><p>Loading...</p></div>';
+            catalogContainer.setAttribute("aria-busy", "true");
 
             const typeVal = document.getElementById("filter-type").value;
             const taskVal = document.getElementById("filter-task").value;

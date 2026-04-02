@@ -8,23 +8,25 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="site-header"></div>
 
-    <main class="container">
+    <main id="main-content" class="container" tabindex="-1">
+        <h1 class="visually-hidden">Registration</h1>
         <div class="form-container">
             <h2 class="text-center mb-4">Register</h2>
             <form id="register-form" action="login.html">
                 <div class="mb-3">
-                    <label class="form-label">Username</label>
-                    <input type="text" id="register-username" class="form-control" required>
+                    <label for="register-username" class="form-label">Username</label>
+                    <input type="text" id="register-username" class="form-control" autocomplete="username" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-control" required>
+                    <label for="register-email" class="form-label">Email</label>
+                    <input type="email" id="register-email" class="form-control" autocomplete="email" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-control" required>
+                    <label for="register-password" class="form-label">Password</label>
+                    <input type="password" id="register-password" class="form-control" autocomplete="new-password" required>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Create account</button>
             </form>

@@ -8,31 +8,33 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="site-header"></div>
 
-    <main class="container">
+    <main id="main-content" class="container" tabindex="-1">
+        <h1 class="visually-hidden">AI Hub catalog</h1>
         <div class="row">
             <!-- Sidebar filters -->
-            <aside class="col-md-3">
+            <aside class="col-md-3" aria-label="Catalog filters">
                 <div class="sidebar-filters">
                     <h4>Filters</h4>
                     <hr>
                     
-                    <label class="form-label fw-bold small">Type</label>
+                    <label for="filter-type" class="form-label fw-bold small">Type</label>
                     <select id="filter-type" class="form-select form-select-sm mb-3">
                         <option value="all">All</option>
                         <option value="model">Models</option>
                         <option value="dataset">Datasets</option>
                     </select>
 
-                    <label class="form-label fw-bold small">Task</label>
+                    <label for="filter-task" class="form-label fw-bold small">Task</label>
                     <select id="filter-task" class="form-select form-select-sm mb-3">
                         <option value="all">All</option>
                         <option value="cv">Computer Vision</option>
                         <option value="nlp">NLP</option>
                     </select>
 
-                    <label class="form-label fw-bold small">License</label>
+                    <label for="filter-license" class="form-label fw-bold small">License</label>
                     <select id="filter-license" class="form-select form-select-sm mb-3">
                         <option value="all">All</option>
                         <option value="mit">MIT</option>
@@ -40,16 +42,17 @@
                         <option value="cc">Creative Commons</option>
                     </select>
 
-                    <button id="apply-filters" class="btn btn-outline-primary w-100 mt-2">Apply Filters</button>
+                    <button id="apply-filters" type="button" class="btn btn-outline-primary w-100 mt-2">Apply Filters</button>
                 </div>
             </aside>
 
             <!-- Catalog -->
             <section class="col-md-9">
                 <div class="mb-4">
-                    <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="Search by name...">
+                    <label for="searchInput" class="form-label">Search by name</label>
+                    <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="Search by name..." autocomplete="off">
                 </div>
-                <div id="catalog-container"></div>
+                <div id="catalog-container" role="status" aria-live="polite" aria-busy="false"></div>
             </section>
         </div>
     </main>

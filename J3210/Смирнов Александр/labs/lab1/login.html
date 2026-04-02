@@ -8,20 +8,22 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="site-header"></div>
 
     <!-- Content -->
-    <main class="container">
+    <main id="main-content" class="container" tabindex="-1">
+        <h1 class="visually-hidden">Log in</h1>
         <div class="form-container">
             <h2 class="text-center mb-4">Log in</h2>
             <form id="login-form" action="profile.html">
                 <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-control" required>
+                    <label for="login-email" class="form-label">Email</label>
+                    <input type="email" id="login-email" class="form-control" autocomplete="email" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-control" required>
+                    <label for="login-password" class="form-label">Password</label>
+                    <input type="password" id="login-password" class="form-control" autocomplete="current-password" required>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Log in</button>
             </form>

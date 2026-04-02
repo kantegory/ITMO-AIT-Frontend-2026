@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (loginForm) {
         loginForm.addEventListener("submit", async (e) => {
             e.preventDefault();
-            const email = loginForm.querySelector('input[type="email"]').value;
-            const password = loginForm.querySelector('input[type="password"]').value;
+            const email = document.getElementById("login-email").value;
+            const password = document.getElementById("login-password").value;
 
             try {
                 const res = await fetch(`${API_URL}/users?email=${email}&password=${password}`);
@@ -38,8 +38,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         registerForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             const username = document.getElementById("register-username").value.trim();
-            const email = registerForm.querySelector('input[type="email"]').value;
-            const password = registerForm.querySelector('input[type="password"]').value;
+            const email = document.getElementById("register-email").value;
+            const password = document.getElementById("register-password").value;
 
             try {
                 const check = await fetch(`${API_URL}/users?email=${email}`);

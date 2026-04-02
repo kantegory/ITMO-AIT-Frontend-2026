@@ -59,7 +59,7 @@ export async function loadNotifications() {
                     <a href="model.html?id=${n.itemId}" class="text-decoration-none text-dark flex-grow-1 me-3">
                         <small><strong>${escapeHtml(n.actorName)}</strong> ${n.type === "reply" ? "replied to your comment" : "commented on your item"}.</small>
                     </a>
-                    <button class="btn btn-sm text-danger p-0 ms-2 delete-notif-btn" data-id="${n.id}" style="z-index: 10;">&times;</button>
+                    <button class="btn btn-sm text-danger p-0 ms-2 delete-notif-btn" data-id="${n.id}" aria-label="Delete notification" title="Delete notification" style="z-index: 10;">&times;</button>
                 </li>
             `
             )
@@ -77,10 +77,10 @@ export function updateAuthNav() {
         authNav.innerHTML = `
             <div class="d-flex align-items-center gap-3">
                 <div class="dropdown position-relative">
-                    <button class="btn btn-outline-light position-relative" type="button" id="notifDropdown">
+                    <button class="btn btn-outline-light position-relative" type="button" id="notifDropdown" aria-expanded="false" aria-controls="notif-list" aria-haspopup="true" aria-label="Notifications">
                         🔔 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="notif-badge" style="font-size: 0.65rem;">0</span>
                     </button>
-                    <ul class="dropdown-menu shadow position-absolute" id="notif-list" style="width: 300px; max-height: 400px; overflow-y: auto; right: 0; left: auto; top: 100%;">
+                    <ul class="dropdown-menu shadow position-absolute" id="notif-list" role="menu" aria-label="Notifications" style="width: 300px; max-height: 400px; overflow-y: auto; right: 0; left: auto; top: 100%;">
                         <li><span class="dropdown-item text-muted">Loading...</span></li>
                     </ul>
                 </div>
@@ -104,9 +104,13 @@ export function bindHeaderInteractions({ onLogout } = {}) {
         const notifMenu = document.getElementById("notif-list");
 
         if (notifDropdown && notifMenu) {
-            notifMenu.classList.toggle("show");
+            const nextState = !notifMenu.classList.contains("show");
+            notifMenu.classList.toggle("show", nextState);
+            notifDropdown.setAttribute("aria-expanded", String(nextState));
         } else if (notifMenu && !e.target.closest(".dropdown")) {
             notifMenu.classList.remove("show");
+            const notifBtn = document.getElementById("notifDropdown");
+            if (notifBtn) notifBtn.setAttribute("aria-expanded", "false");
         }
 
         if (e.target.classList.contains("delete-notif-btn")) {
