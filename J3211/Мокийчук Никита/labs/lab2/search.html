@@ -3,23 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Каталог курсов - MokiichukKnowledge</title>
+  <meta name="description" content="Каталог онлайн-курсов MokiichukKnowledge — программирование, дизайн, маркетинг, аналитика и другие направления.">
+  <title>Каталог курсов — MokiichukKnowledge</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="style.css?v=3" rel="stylesheet">
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg fixed-top">
+  <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+  <nav class="navbar navbar-expand-lg fixed-top" aria-label="Основная навигация">
     <div class="container">
-      <a class="navbar-brand" href="index.html"><i class="bi bi-mortarboard-fill"></i> MokiichukKnowledge</a>
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
+      <a class="navbar-brand" href="index.html">
+        <i class="bi bi-mortarboard-fill" aria-hidden="true"></i> MokiichukKnowledge
+      </a>
+      <button
+        class="navbar-toggler border-0"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Открыть меню навигации">
+        <span class="navbar-toggler-icon" aria-hidden="true"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto ms-3">
           <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
-          <li class="nav-item"><a class="nav-link active" href="search.html">Каталог</a></li>
+          <li class="nav-item">
+            <a class="nav-link active" href="search.html" aria-current="page">Каталог</a>
+          </li>
           <li class="nav-item teacher-only d-none">
             <a class="nav-link" href="teacher.html">Преподавателям</a>
           </li>
@@ -34,125 +48,208 @@
 
   <div class="mt-navbar-lg"></div>
 
-  <section class="py-4 bg-white">
-    <div class="container">
-      <h2 class="section-title mb-3">Каталог курсов</h2>
-      <div class="row g-3 align-items-center">
-        <div class="col-lg-8">
-          <div class="search-bar">
-            <i class="bi bi-search"></i>
-            <input type="text" class="form-control" id="courseSearch" placeholder="Поиск по названию курса...">
+  <main id="main-content" tabindex="-1">
+
+    <section class="py-4 bg-white" aria-labelledby="catalog-heading">
+      <div class="container">
+        <h1 class="section-title mb-3" id="catalog-heading">Каталог курсов</h1>
+        <div class="row g-3 align-items-center">
+          <div class="col-lg-8">
+            <div class="search-bar">
+              <i class="bi bi-search" aria-hidden="true"></i>
+              <label for="courseSearch" class="visually-hidden">Поиск по названию курса</label>
+              <input
+                type="search"
+                class="form-control"
+                id="courseSearch"
+                name="q"
+                placeholder="Поиск по названию курса..."
+                autocomplete="off"
+                aria-controls="catalogCoursesList"
+                aria-label="Поиск по названию курса">
+            </div>
           </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="d-flex gap-2 align-items-center justify-content-lg-end">
-            <span class="text-muted" class="search-count">Найдено: <strong id="courseCount">8</strong> курсов</span>
-            <div class="dropdown">
-              <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown">
-                Сортировка
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item sort-option" href="#" data-sort="popular">По популярности</a></li>
-                <li><a class="dropdown-item sort-option" href="#" data-sort="rating">По рейтингу</a></li>
-                <li><a class="dropdown-item sort-option" href="#" data-sort="price-asc">Сначала дешевые</a></li>
-                <li><a class="dropdown-item sort-option" href="#" data-sort="price-desc">Сначала дорогие</a></li>
-                <li><a class="dropdown-item sort-option" href="#" data-sort="new">Новинки</a></li>
-              </ul>
+          <div class="col-lg-4">
+            <div class="d-flex gap-2 align-items-center justify-content-lg-end">
+              <p class="text-muted search-count mb-0" aria-live="polite" aria-atomic="true">
+                Найдено: <strong id="courseCount">8</strong> курсов
+              </p>
+              <div class="dropdown">
+                <button
+                  class="btn btn-outline-secondary btn-sm dropdown-toggle"
+                  type="button"
+                  id="sortDropdown"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  aria-label="Сортировка курсов">
+                  Сортировка
+                </button>
+                <ul class="dropdown-menu" role="listbox" aria-labelledby="sortDropdown">
+                  <li role="option">
+                    <a class="dropdown-item sort-option" href="#" data-sort="popular">По популярности</a>
+                  </li>
+                  <li role="option">
+                    <a class="dropdown-item sort-option" href="#" data-sort="rating">По рейтингу</a>
+                  </li>
+                  <li role="option">
+                    <a class="dropdown-item sort-option" href="#" data-sort="price-asc">Сначала дешевые</a>
+                  </li>
+                  <li role="option">
+                    <a class="dropdown-item sort-option" href="#" data-sort="price-desc">Сначала дорогие</a>
+                  </li>
+                  <li role="option">
+                    <a class="dropdown-item sort-option" href="#" data-sort="new">Новинки</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section pt-reduced">
-    <div class="container">
-      <div class="row g-4">
-        <div class="col-lg-3">
-          <div class="filter-panel">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h5 class="fw-bold mb-0">Фильтры</h5>
-              <button class="btn btn-sm btn-link text-decoration-none p-0" id="resetFilters">Сбросить</button>
-            </div>
+    <section class="section pt-reduced" aria-label="Фильтры и результаты поиска курсов">
+      <div class="container">
+        <div class="row g-4">
 
-            <h6><i class="bi bi-bookmark me-2"></i>Предмет</h6>
-            <div class="form-check mb-1">
-              <input class="form-check-input filter-check filter-subject" type="checkbox" value="programming" id="fProg">
-              <label class="form-check-label" for="fProg">Программирование</label>
-            </div>
-            <div class="form-check mb-1">
-              <input class="form-check-input filter-check filter-subject" type="checkbox" value="design" id="fDesign">
-              <label class="form-check-label" for="fDesign">Дизайн</label>
-            </div>
-            <div class="form-check mb-1">
-              <input class="form-check-input filter-check filter-subject" type="checkbox" value="marketing" id="fMark">
-              <label class="form-check-label" for="fMark">Маркетинг</label>
-            </div>
-            <div class="form-check mb-1">
-              <input class="form-check-input filter-check filter-subject" type="checkbox" value="analytics" id="fAnal">
-              <label class="form-check-label" for="fAnal">Аналитика</label>
-            </div>
-            <div class="form-check mb-3">
-              <input class="form-check-input filter-check filter-subject" type="checkbox" value="languages" id="fLang">
-              <label class="form-check-label" for="fLang">Языки</label>
-            </div>
+          <div class="col-lg-3">
+            <nav class="filter-panel" aria-label="Фильтры курсов">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h5 fw-bold mb-0">Фильтры</h2>
+                <button
+                  class="btn btn-sm btn-link text-decoration-none p-0"
+                  id="resetFilters"
+                  aria-label="Сбросить все фильтры">
+                  Сбросить
+                </button>
+              </div>
 
-            <h6><i class="bi bi-bar-chart-steps me-2"></i>Уровень</h6>
-            <div class="form-check mb-1">
-              <input class="form-check-input filter-check filter-level" type="checkbox" value="beginner" id="fBeg">
-              <label class="form-check-label" for="fBeg">Начальный</label>
-            </div>
-            <div class="form-check mb-1">
-              <input class="form-check-input filter-check filter-level" type="checkbox" value="intermediate" id="fInt">
-              <label class="form-check-label" for="fInt">Средний</label>
-            </div>
-            <div class="form-check mb-3">
-              <input class="form-check-input filter-check filter-level" type="checkbox" value="advanced" id="fAdv">
-              <label class="form-check-label" for="fAdv">Продвинутый</label>
-            </div>
+              <fieldset>
+                <legend class="h6 mb-2">
+                  <i class="bi bi-bookmark me-2" aria-hidden="true"></i>Предмет
+                </legend>
+                <div class="form-check mb-1">
+                  <input class="form-check-input filter-check filter-subject" type="checkbox" value="programming" id="fProg">
+                  <label class="form-check-label" for="fProg">Программирование</label>
+                </div>
+                <div class="form-check mb-1">
+                  <input class="form-check-input filter-check filter-subject" type="checkbox" value="design" id="fDesign">
+                  <label class="form-check-label" for="fDesign">Дизайн</label>
+                </div>
+                <div class="form-check mb-1">
+                  <input class="form-check-input filter-check filter-subject" type="checkbox" value="marketing" id="fMark">
+                  <label class="form-check-label" for="fMark">Маркетинг</label>
+                </div>
+                <div class="form-check mb-1">
+                  <input class="form-check-input filter-check filter-subject" type="checkbox" value="analytics" id="fAnal">
+                  <label class="form-check-label" for="fAnal">Аналитика</label>
+                </div>
+                <div class="form-check mb-3">
+                  <input class="form-check-input filter-check filter-subject" type="checkbox" value="languages" id="fLang">
+                  <label class="form-check-label" for="fLang">Языки</label>
+                </div>
+              </fieldset>
 
-            <h6><i class="bi bi-currency-dollar me-2"></i>Цена до: <span id="priceValue">10 000+</span> ₽</h6>
-            <input type="range" class="form-range" id="priceRange" min="0" max="10000" step="500" value="10000">
-            <div class="d-flex justify-content-between" class="text-filter-hint">
-              <span>Бесплатно</span>
-              <span>10 000+ ₽</span>
+              <fieldset>
+                <legend class="h6 mb-2">
+                  <i class="bi bi-bar-chart-steps me-2" aria-hidden="true"></i>Уровень
+                </legend>
+                <div class="form-check mb-1">
+                  <input class="form-check-input filter-check filter-level" type="checkbox" value="beginner" id="fBeg">
+                  <label class="form-check-label" for="fBeg">Начальный</label>
+                </div>
+                <div class="form-check mb-1">
+                  <input class="form-check-input filter-check filter-level" type="checkbox" value="intermediate" id="fInt">
+                  <label class="form-check-label" for="fInt">Средний</label>
+                </div>
+                <div class="form-check mb-3">
+                  <input class="form-check-input filter-check filter-level" type="checkbox" value="advanced" id="fAdv">
+                  <label class="form-check-label" for="fAdv">Продвинутый</label>
+                </div>
+              </fieldset>
+
+              <div>
+                <label for="priceRange" class="h6 mb-1">
+                  <i class="bi bi-currency-dollar me-2" aria-hidden="true"></i>
+                  Цена до: <span id="priceValue" aria-live="polite" aria-atomic="true">10 000+</span> ₽
+                </label>
+                <input
+                  type="range"
+                  class="form-range"
+                  id="priceRange"
+                  name="priceRange"
+                  min="0"
+                  max="10000"
+                  step="500"
+                  value="10000"
+                  aria-valuemin="0"
+                  aria-valuemax="10000"
+                  aria-valuenow="10000"
+                  aria-valuetext="10 000 рублей и выше"
+                  aria-describedby="priceRangeHint">
+                <div class="d-flex justify-content-between text-filter-hint" id="priceRangeHint" aria-hidden="true">
+                  <span>Бесплатно</span>
+                  <span>10 000+ ₽</span>
+                </div>
+              </div>
+            </nav>
+
+            <button
+              class="btn btn-outline-primary w-100 d-lg-none mt-3"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#mobileFilters"
+              aria-controls="mobileFilters"
+              aria-expanded="false"
+              aria-label="Показать или скрыть фильтры">
+              <i class="bi bi-funnel me-2" aria-hidden="true"></i>Показать фильтры
+            </button>
+          </div>
+
+          <div class="col-lg-9">
+            <div
+              class="row g-4"
+              id="catalogCoursesList"
+              aria-live="polite"
+              aria-atomic="false"
+              aria-label="Результаты поиска курсов">
             </div>
           </div>
 
-          <button class="btn btn-outline-primary w-100 d-lg-none mt-3" data-bs-toggle="collapse" data-bs-target="#mobileFilters">
-            <i class="bi bi-funnel me-2"></i>Показать фильтры
-          </button>
         </div>
-
-        <div class="col-lg-9">
-          <div class="row g-4" id="catalogCoursesList"></div>
-        </div>
-
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer class="footer">
+  </main>
+
+  <footer class="footer" aria-label="Подвал сайта">
     <div class="container">
       <div class="row g-4">
         <div class="col-lg-4">
-          <h5 class="fw-bold mb-3"><i class="bi bi-mortarboard-fill me-2"></i>MokiichukKnowledge</h5>
+          <p class="h5 fw-bold mb-3">
+            <i class="bi bi-mortarboard-fill me-2" aria-hidden="true"></i>MokiichukKnowledge
+          </p>
           <p class="footer-description">Современная платформа для онлайн-обучения.</p>
         </div>
         <div class="col-6 col-lg-2">
-          <h6>Платформа</h6>
-          <div class="d-flex flex-column gap-2">
-            <a href="search.html">Каталог</a>
-            <a href="teacher.html">Преподавателям</a>
-          </div>
+          <nav aria-label="Навигация по платформе">
+            <h2 class="h6">Платформа</h2>
+            <div class="d-flex flex-column gap-2">
+              <a href="search.html" aria-current="page">Каталог</a>
+              <a href="teacher.html">Преподавателям</a>
+            </div>
+          </nav>
         </div>
         <div class="col-6 col-lg-2">
-          <h6>Аккаунт</h6>
-          <div class="d-flex flex-column gap-2">
-            <a href="login.html">Войти</a>
-            <a href="register.html">Регистрация</a>
-            <a href="profile.html">Профиль</a>
-          </div>
+          <nav aria-label="Навигация по аккаунту">
+            <h2 class="h6">Аккаунт</h2>
+            <div class="d-flex flex-column gap-2">
+              <a href="login.html">Войти</a>
+              <a href="register.html">Регистрация</a>
+              <a href="profile.html">Профиль</a>
+            </div>
+          </nav>
         </div>
       </div>
     </div>

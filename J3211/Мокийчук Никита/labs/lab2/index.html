@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MokiichukKnowledge — более 500 онлайн-курсов по программированию, дизайну, маркетингу и аналитике данных.">
   <title>MokiichukKnowledge - Онлайн-курсы</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -10,16 +11,31 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg fixed-top">
+  <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+  <nav class="navbar navbar-expand-lg fixed-top" aria-label="Основная навигация">
     <div class="container">
-      <a class="navbar-brand" href="index.html"><i class="bi bi-mortarboard-fill"></i> MokiichukKnowledge</a>
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
+      <a class="navbar-brand" href="index.html">
+        <i class="bi bi-mortarboard-fill" aria-hidden="true"></i> MokiichukKnowledge
+      </a>
+
+      <button
+        class="navbar-toggler border-0"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Открыть меню навигации">
+        <span class="navbar-toggler-icon" aria-hidden="true"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto ms-3">
-          <li class="nav-item"><a class="nav-link active" href="index.html">Главная</a></li>
-          <li class="nav-item"><a class="nav-link" href="search.html">Каталог</a></li>
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html" aria-current="page">Главная</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="search.html">Каталог</a>
+          </li>
           <li class="nav-item teacher-only d-none">
             <a class="nav-link" href="teacher.html">Преподавателям</a>
           </li>
@@ -32,182 +48,213 @@
     </div>
   </nav>
 
-  <section class="hero-section mt-navbar">
-    <div class="container position-relative z-1">
-      <div class="row align-items-center">
-        <div class="col-lg-7">
-          <h1>Учитесь новому<br>с лучшими преподавателями</h1>
-          <p>Более 500 онлайн-курсов по программированию, дизайну, маркетингу, аналитике данных и другим направлениям. Начните обучение уже сегодня!</p>
-          <div class="d-flex gap-3 flex-wrap">
-            <a href="search.html" class="btn btn-light-custom btn-lg"><i class="bi bi-search me-2"></i>Найти курс</a>
-            <a href="register.html" class="btn btn-accent btn-lg">Начать бесплатно</a>
-          </div>
-        </div>
-        <div class="col-lg-5 d-none d-lg-block text-center">
-          <div class="hero-decoration"><i class="bi bi-laptop"></i></div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <main id="main-content" tabindex="-1">
 
-  <section class="stats-section">
-    <div class="container">
-      <div class="row">
-        <div class="col-6 col-md-3">
-          <div class="stat-item">
-            <div class="stat-number">500+</div>
-            <div class="stat-label">Курсов</div>
+    <section class="hero-section mt-navbar" aria-labelledby="hero-heading">
+      <div class="container position-relative z-1">
+        <div class="row align-items-center">
+          <div class="col-lg-7">
+            <h1 id="hero-heading">Учитесь новому<br>с лучшими преподавателями</h1>
+            <p>Более 500 онлайн-курсов по программированию, дизайну, маркетингу, аналитике данных и другим направлениям. Начните обучение уже сегодня!</p>
+            <div class="d-flex gap-3 flex-wrap">
+              <a href="search.html" class="btn btn-light-custom btn-lg">
+                <i class="bi bi-search me-2" aria-hidden="true"></i>Найти курс
+              </a>
+              <a href="register.html" class="btn btn-accent btn-lg">Начать бесплатно</a>
+            </div>
           </div>
-        </div>
-        <div class="col-6 col-md-3">
-          <div class="stat-item">
-            <div class="stat-number">120+</div>
-            <div class="stat-label">Преподавателей</div>
-          </div>
-        </div>
-        <div class="col-6 col-md-3">
-          <div class="stat-item">
-            <div class="stat-number">50K</div>
-            <div class="stat-label">Студентов</div>
-          </div>
-        </div>
-        <div class="col-6 col-md-3">
-          <div class="stat-item">
-            <div class="stat-number">98%</div>
-            <div class="stat-label">Довольных</div>
+          <div class="col-lg-5 d-none d-lg-block text-center" aria-hidden="true">
+            <div class="hero-decoration"><i class="bi bi-laptop"></i></div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section bg-gray-100">
-    <div class="container">
-      <h2 class="section-title">Популярные курсы</h2>
-      <p class="section-subtitle">Самые востребованные программы обучения на платформе</p>
-      <div class="row g-4" id="popularCoursesList"></div>
-      <div class="text-center mt-5">
-        <a href="search.html" class="btn btn-primary btn-lg"><i class="bi bi-grid me-2"></i>Все курсы</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section bg-white-bordered">
-    <div class="container">
-      <h2 class="section-title text-center">Как это работает</h2>
-      <p class="section-subtitle text-center">Три простых шага до новых знаний</p>
-      <div class="row g-4 mt-2">
-        <div class="col-md-4 text-center">
-          <div class="step-icon step-icon-primary">
-            <i class="bi bi-person-plus"></i>
+    <section class="stats-section" aria-label="Статистика платформы">
+      <div class="container">
+        <div class="row">
+          <div class="col-6 col-md-3">
+            <div class="stat-item">
+              <div class="stat-number" aria-label="Более 500 курсов">500+</div>
+              <div class="stat-label" aria-hidden="true">Курсов</div>
+            </div>
           </div>
-          <h5 class="fw-bold">1. Зарегистрируйтесь</h5>
-          <p class="text-muted">Создайте аккаунт за 30 секунд и получите доступ к бесплатным курсам</p>
-        </div>
-        <div class="col-md-4 text-center">
-          <div class="step-icon step-icon-accent">
-            <i class="bi bi-search"></i>
+          <div class="col-6 col-md-3">
+            <div class="stat-item">
+              <div class="stat-number" aria-label="Более 120 преподавателей">120+</div>
+              <div class="stat-label" aria-hidden="true">Преподавателей</div>
+            </div>
           </div>
-          <h5 class="fw-bold">2. Выберите курс</h5>
-          <p class="text-muted">Найдите подходящий курс с помощью удобных фильтров и рекомендаций</p>
-        </div>
-        <div class="col-md-4 text-center">
-          <div class="step-icon step-icon-teal">
-            <i class="bi bi-award"></i>
+          <div class="col-6 col-md-3">
+            <div class="stat-item">
+              <div class="stat-number" aria-label="50 тысяч студентов">50K</div>
+              <div class="stat-label" aria-hidden="true">Студентов</div>
+            </div>
           </div>
-          <h5 class="fw-bold">3. Получите сертификат</h5>
-          <p class="text-muted">Пройдите курс, выполните задания и получите сертификат</p>
+          <div class="col-6 col-md-3">
+            <div class="stat-item">
+              <div class="stat-number" aria-label="98 процентов довольных студентов">98%</div>
+              <div class="stat-label" aria-hidden="true">Довольных</div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section bg-gray-100">
-    <div class="container">
-      <h2 class="section-title">Направления обучения</h2>
-      <p class="section-subtitle">Выберите интересующую вас область</p>
-      <div class="row g-3">
-        <div class="col-6 col-md-4 col-lg-2">
-          <a href="search.html" class="text-decoration-none">
-            <div class="card-custom text-center p-4">
-              <i class="bi bi-code-slash" class="category-icon color-primary"></i>
-              <div class="fw-bold mt-2 category-label">Разработка</div>
-            </div>
-          </a>
+    <section class="section bg-gray-100" aria-labelledby="popular-courses-heading">
+      <div class="container">
+        <h2 class="section-title" id="popular-courses-heading">Популярные курсы</h2>
+        <p class="section-subtitle">Самые востребованные программы обучения на платформе</p>
+        <div
+          class="row g-4"
+          id="popularCoursesList"
+          aria-live="polite"
+          aria-atomic="false"
+          aria-label="Список популярных курсов">
         </div>
-        <div class="col-6 col-md-4 col-lg-2">
-          <a href="search.html" class="text-decoration-none">
-            <div class="card-custom text-center p-4">
-              <i class="bi bi-brush" class="category-icon color-accent"></i>
-              <div class="fw-bold mt-2 category-label">Дизайн</div>
-            </div>
-          </a>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2">
-          <a href="search.html" class="text-decoration-none">
-            <div class="card-custom text-center p-4">
-              <i class="bi bi-graph-up-arrow" class="category-icon color-green"></i>
-              <div class="fw-bold mt-2 category-label">Маркетинг</div>
-            </div>
-          </a>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2">
-          <a href="search.html" class="text-decoration-none">
-            <div class="card-custom text-center p-4">
-              <i class="bi bi-database" class="category-icon color-teal"></i>
-              <div class="fw-bold mt-2 category-label">Аналитика</div>
-            </div>
-          </a>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2">
-          <a href="search.html" class="text-decoration-none">
-            <div class="card-custom text-center p-4">
-              <i class="bi bi-translate" class="category-icon color-orange"></i>
-              <div class="fw-bold mt-2 category-label">Языки</div>
-            </div>
-          </a>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2">
-          <a href="search.html" class="text-decoration-none">
-            <div class="card-custom text-center p-4">
-              <i class="bi bi-briefcase" class="category-icon color-secondary"></i>
-              <div class="fw-bold mt-2 category-label">Бизнес</div>
-            </div>
+        <div class="text-center mt-5">
+          <a href="search.html" class="btn btn-primary btn-lg">
+            <i class="bi bi-grid me-2" aria-hidden="true"></i>Все курсы
           </a>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer class="footer">
+    <section class="section bg-white-bordered" aria-labelledby="how-it-works-heading">
+      <div class="container">
+        <h2 class="section-title text-center" id="how-it-works-heading">Как это работает</h2>
+        <p class="section-subtitle text-center">Три простых шага до новых знаний</p>
+        <ol class="row g-4 mt-2 list-unstyled">
+          <li class="col-md-4 text-center">
+            <div class="step-icon step-icon-primary" aria-hidden="true">
+              <i class="bi bi-person-plus"></i>
+            </div>
+            <h3 class="h5 fw-bold">1. Зарегистрируйтесь</h3>
+            <p class="text-muted">Создайте аккаунт за 30 секунд и получите доступ к бесплатным курсам</p>
+          </li>
+          <li class="col-md-4 text-center">
+            <div class="step-icon step-icon-accent" aria-hidden="true">
+              <i class="bi bi-search"></i>
+            </div>
+            <h3 class="h5 fw-bold">2. Выберите курс</h3>
+            <p class="text-muted">Найдите подходящий курс с помощью удобных фильтров и рекомендаций</p>
+          </li>
+          <li class="col-md-4 text-center">
+            <div class="step-icon step-icon-teal" aria-hidden="true">
+              <i class="bi bi-award"></i>
+            </div>
+            <h3 class="h5 fw-bold">3. Получите сертификат</h3>
+            <p class="text-muted">Пройдите курс, выполните задания и получите сертификат</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section bg-gray-100" aria-labelledby="categories-heading">
+      <div class="container">
+        <h2 class="section-title" id="categories-heading">Направления обучения</h2>
+        <p class="section-subtitle">Выберите интересующую вас область</p>
+        <div class="row g-3">
+          <div class="col-6 col-md-4 col-lg-2">
+            <a href="search.html?category=programming" class="text-decoration-none" aria-label="Каталог: Разработка">
+              <div class="card-custom text-center p-4">
+                <i class="bi bi-code-slash category-icon color-primary" aria-hidden="true"></i>
+                <div class="fw-bold mt-2 category-label">Разработка</div>
+              </div>
+            </a>
+          </div>
+          <div class="col-6 col-md-4 col-lg-2">
+            <a href="search.html?category=design" class="text-decoration-none" aria-label="Каталог: Дизайн">
+              <div class="card-custom text-center p-4">
+                <i class="bi bi-brush category-icon color-accent" aria-hidden="true"></i>
+                <div class="fw-bold mt-2 category-label">Дизайн</div>
+              </div>
+            </a>
+          </div>
+          <div class="col-6 col-md-4 col-lg-2">
+            <a href="search.html?category=marketing" class="text-decoration-none" aria-label="Каталог: Маркетинг">
+              <div class="card-custom text-center p-4">
+                <i class="bi bi-graph-up-arrow category-icon color-green" aria-hidden="true"></i>
+                <div class="fw-bold mt-2 category-label">Маркетинг</div>
+              </div>
+            </a>
+          </div>
+          <div class="col-6 col-md-4 col-lg-2">
+            <a href="search.html?category=analytics" class="text-decoration-none" aria-label="Каталог: Аналитика">
+              <div class="card-custom text-center p-4">
+                <i class="bi bi-database category-icon color-teal" aria-hidden="true"></i>
+                <div class="fw-bold mt-2 category-label">Аналитика</div>
+              </div>
+            </a>
+          </div>
+          <div class="col-6 col-md-4 col-lg-2">
+            <a href="search.html?category=languages" class="text-decoration-none" aria-label="Каталог: Иностранные языки">
+              <div class="card-custom text-center p-4">
+                <i class="bi bi-translate category-icon color-orange" aria-hidden="true"></i>
+                <div class="fw-bold mt-2 category-label">Языки</div>
+              </div>
+            </a>
+          </div>
+          <div class="col-6 col-md-4 col-lg-2">
+            <a href="search.html?category=business" class="text-decoration-none" aria-label="Каталог: Бизнес">
+              <div class="card-custom text-center p-4">
+                <i class="bi bi-briefcase category-icon color-secondary" aria-hidden="true"></i>
+                <div class="fw-bold mt-2 category-label">Бизнес</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer" aria-label="Подвал сайта">
     <div class="container">
       <div class="row g-4">
         <div class="col-lg-4">
-          <h5 class="fw-bold mb-3"><i class="bi bi-mortarboard-fill me-2"></i>MokiichukKnowledge</h5>
+          <p class="h5 fw-bold mb-3">
+            <i class="bi bi-mortarboard-fill me-2" aria-hidden="true"></i>MokiichukKnowledge
+          </p>
           <p class="footer-description">Современная платформа для онлайн-обучения. Развивайте навыки с лучшими экспертами индустрии.</p>
         </div>
         <div class="col-6 col-lg-2">
-          <h6>Платформа</h6>
-          <div class="d-flex flex-column gap-2">
-            <a href="search.html">Каталог курсов</a>
-            <a href="teacher.html">Преподавателям</a>
-            <a href="register.html">Регистрация</a>
-          </div>
+          <nav aria-label="Навигация по платформе">
+            <h2 class="h6">Платформа</h2>
+            <div class="d-flex flex-column gap-2">
+              <a href="search.html">Каталог курсов</a>
+              <a href="teacher.html">Преподавателям</a>
+              <a href="register.html">Регистрация</a>
+            </div>
+          </nav>
         </div>
         <div class="col-6 col-lg-2">
-          <h6>Направления</h6>
-          <div class="d-flex flex-column gap-2">
-            <a href="search.html">Разработка</a>
-            <a href="search.html">Дизайн</a>
-            <a href="search.html">Маркетинг</a>
-          </div>
+          <nav aria-label="Навигация по направлениям">
+            <h2 class="h6">Направления</h2>
+            <div class="d-flex flex-column gap-2">
+              <a href="search.html?category=programming">Разработка</a>
+              <a href="search.html?category=design">Дизайн</a>
+              <a href="search.html?category=marketing">Маркетинг</a>
+            </div>
+          </nav>
         </div>
         <div class="col-lg-4">
-          <h6>Подписка на новости</h6>
-          <form class="d-flex gap-2" onsubmit="event.preventDefault(); showToast('Вы подписались на рассылку!','success');">
-            <input type="email" class="form-control form-control-sm" placeholder="Ваш email" required
-              class="footer-input">
-            <button type="submit" class="btn btn-primary btn-sm" class="nowrap">Подписаться</button>
+          <h2 class="h6">Подписка на новости</h2>
+          <form
+            class="d-flex gap-2"
+            aria-label="Форма подписки на email-рассылку"
+            onsubmit="event.preventDefault(); showToast('Вы подписались на рассылку!','success');">
+            <label for="newsletterEmail" class="visually-hidden">Ваш email для подписки</label>
+            <input
+              type="email"
+              class="form-control form-control-sm"
+              id="newsletterEmail"
+              name="email"
+              placeholder="Ваш email"
+              autocomplete="email"
+              required
+              aria-required="true">
+            <button type="submit" class="btn btn-primary btn-sm" style="white-space:nowrap">Подписаться</button>
           </form>
         </div>
       </div>
