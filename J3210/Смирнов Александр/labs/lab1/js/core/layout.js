@@ -3,6 +3,11 @@ import { storage } from "./storage.js";
 import { escapeHtml } from "./utils.js";
 
 const THEME_STORAGE_KEY = "theme";
+const ICON_SPRITE = "components/icons-sprite.svg";
+
+function iconUse(iconId, className = "icon") {
+    return `<svg class="${className}" aria-hidden="true" focusable="false"><use href="${ICON_SPRITE}#${iconId}"></use></svg>`;
+}
 
 function getPreferredTheme() {
     const saved = localStorage.getItem(THEME_STORAGE_KEY);
@@ -25,7 +30,7 @@ function applyTheme(theme) {
     btn.setAttribute("aria-pressed", String(isDark));
     btn.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
     btn.setAttribute("title", isDark ? "Switch to light theme" : "Switch to dark theme");
-    btn.textContent = isDark ? "☀️" : "🌙";
+    btn.innerHTML = iconUse(isDark ? "icon-sun" : "icon-moon");
 }
 
 function initTheme() {
@@ -89,7 +94,7 @@ export async function loadNotifications() {
                     <a href="model.html?id=${n.itemId}" class="text-decoration-none text-dark flex-grow-1 me-3">
                         <small><strong>${escapeHtml(n.actorName)}</strong> ${n.type === "reply" ? "replied to your comment" : "commented on your item"}.</small>
                     </a>
-                    <button class="btn btn-sm text-danger p-0 ms-2 delete-notif-btn" data-id="${n.id}" aria-label="Delete notification" title="Delete notification" style="z-index: 10;">&times;</button>
+                    <button class="btn btn-sm text-danger p-0 ms-2 delete-notif-btn" data-id="${n.id}" aria-label="Delete notification" title="Delete notification" style="z-index: 10;">${iconUse("icon-close")}</button>
                 </li>
             `
             )
@@ -108,7 +113,7 @@ export function updateAuthNav() {
             <div class="d-flex align-items-center gap-3">
                 <div class="dropdown position-relative">
                     <button class="btn btn-outline-light position-relative" type="button" id="notifDropdown" aria-expanded="false" aria-controls="notif-list" aria-haspopup="true" aria-label="Notifications">
-                        🔔 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="notif-badge" style="font-size: 0.65rem;">0</span>
+                        ${iconUse("icon-bell")} <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="notif-badge" style="font-size: 0.65rem;">0</span>
                     </button>
                     <ul class="dropdown-menu shadow position-absolute" id="notif-list" role="menu" aria-label="Notifications" style="width: 300px; max-height: 400px; overflow-y: auto; right: 0; left: auto; top: 100%;">
                         <li><span class="dropdown-item text-muted">Loading...</span></li>
@@ -130,7 +135,8 @@ export function updateAuthNav() {
 
 export function bindHeaderInteractions({ onLogout } = {}) {
     document.addEventListener("click", async (e) => {
-        if (e.target.id === "theme-toggle-btn") {
+        const themeToggleBtn = e.target.closest("#theme-toggle-btn");
+        if (themeToggleBtn) {
             const current = document.documentElement.getAttribute("data-theme") || "light";
             applyTheme(current === "dark" ? "light" : "dark");
         }
@@ -148,15 +154,17 @@ export function bindHeaderInteractions({ onLogout } = {}) {
             if (notifBtn) notifBtn.setAttribute("aria-expanded", "false");
         }
 
-        if (e.target.classList.contains("delete-notif-btn")) {
+        const deleteBtn = e.target.closest(".delete-notif-btn");
+        if (deleteBtn) {
             e.preventDefault();
             e.stopPropagation();
-            const id = e.target.getAttribute("data-id");
+            const id = deleteBtn.getAttribute("data-id");
             await fetch(`${API_URL}/notifications/${id}`, { method: "DELETE" });
             loadNotifications();
         }
 
-        if (e.target.id === "logout-btn") {
+        const logoutBtn = e.target.closest("#logout-btn");
+        if (logoutBtn) {
             if (!window.confirm("Are you sure you want to log out?")) return;
             storage.setIsLoggedIn(false);
             updateAuthNav();

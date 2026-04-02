@@ -3,6 +3,9 @@ import { initSharedPage } from "../core/layout.js";
 import { storage } from "../core/storage.js";
 import { escapeHtml } from "../core/utils.js";
 
+const ICON_SPRITE = "components/icons-sprite.svg";
+const starIcon = `<svg class="icon icon-sm" aria-hidden="true" focusable="false"><use href="${ICON_SPRITE}#icon-star"></use></svg>`;
+
 document.addEventListener("DOMContentLoaded", async () => {
     await initSharedPage();
 
@@ -70,7 +73,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                             <span class="badge bg-secondary">Downloads: ${escapeHtml(String(item.downloads))}</span>
                         </div>
                         <div class="mt-3 d-flex gap-2">
-                            <button class="btn ${btnStarClass} btn-sm star-btn" data-star-id="${item.id}" data-stars="${item.stars}" aria-label="Toggle star for ${escapeHtml(item.name)}">★ ${item.stars}</button>
+                            <button class="btn ${btnStarClass} btn-sm star-btn" data-star-id="${item.id}" data-stars="${item.stars}" aria-label="Toggle star for ${escapeHtml(item.name)}">${starIcon} <span>${item.stars}</span></button>
                             <button class="btn ${btnSubClass} btn-sm subscribe-btn" data-subscribe-id="${item.id}" aria-label="${btnSubText} to ${escapeHtml(item.name)}">${btnSubText}</button>
                         </div>
                     </div>
@@ -150,7 +153,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             currentStars = newStarsCount;
             starBtn.setAttribute("data-stars", String(currentStars));
-            starBtn.textContent = `★ ${currentStars}`;
+            starBtn.innerHTML = `${starIcon} <span>${currentStars}</span>`;
         } catch (err) {
             console.error("Failed to star", err);
         }

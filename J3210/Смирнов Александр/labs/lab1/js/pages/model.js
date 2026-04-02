@@ -3,6 +3,10 @@ import { initSharedPage } from "../core/layout.js";
 import { storage } from "../core/storage.js";
 import { escapeHtml, formatDownloads, parseDownloads } from "../core/utils.js";
 
+const ICON_SPRITE = "components/icons-sprite.svg";
+const starIcon = `<svg class="icon icon-sm" aria-hidden="true" focusable="false"><use href="${ICON_SPRITE}#icon-star"></use></svg>`;
+const replyIcon = `<svg class="icon icon-sm" aria-hidden="true" focusable="false"><use href="${ICON_SPRITE}#icon-reply"></use></svg>`;
+
 document.addEventListener("DOMContentLoaded", async () => {
     await initSharedPage();
 
@@ -78,7 +82,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <div class="${leftMarginClass} mb-3 border-bottom pb-2">
                     <div class="d-flex justify-content-between align-items-start gap-2">
                         <strong>${escapeHtml(comment.userName || "User")}</strong>
-                        <button class="btn btn-sm btn-link p-0 text-secondary text-decoration-none reply-btn" data-parent-id="${comment.id}" data-parent-author="${escapeHtml(comment.userName || "User")}" title="Reply" aria-label="Reply">↪</button>
+                        <button class="btn btn-sm btn-link p-0 text-secondary text-decoration-none reply-btn" data-parent-id="${comment.id}" data-parent-author="${escapeHtml(comment.userName || "User")}" title="Reply" aria-label="Reply">${replyIcon}</button>
                     </div>
                     <p class="mb-1 text-muted small">${escapeHtml(comment.text)}</p>
 
@@ -195,7 +199,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 const starBtn = document.getElementById("detail-stars");
                 const isStarred = storage.getStarred().includes(String(item.id));
-                starBtn.textContent = `★ ${item.stars}`;
+                starBtn.innerHTML = `${starIcon} <span>${item.stars}</span>`;
                 starBtn.className = `btn ${isStarred ? "btn-warning" : "btn-outline-warning"}`;
                 starBtn.setAttribute("aria-pressed", String(isStarred));
 
@@ -228,7 +232,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                             starBtn.setAttribute("aria-pressed", "true");
                         }
 
-                        starBtn.textContent = `★ ${newStarsCount}`;
+                        starBtn.innerHTML = `${starIcon} <span>${newStarsCount}</span>`;
                     } catch (err) {
                         console.error(err);
                     }
@@ -310,27 +314,30 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     document.addEventListener("click", async (e) => {
-        if (e.target.classList.contains("reply-btn")) {
+        const replyBtn = e.target.closest(".reply-btn");
+        if (replyBtn) {
             if (!storage.getIsLoggedIn()) {
                 window.location.href = "login.html";
                 return;
             }
 
-            const pid = e.target.getAttribute("data-parent-id");
+            const pid = replyBtn.getAttribute("data-parent-id");
             document.getElementById(`reply-form-${pid}`).classList.remove("d-none");
-            e.target.classList.add("d-none");
+            replyBtn.classList.add("d-none");
         }
 
-        if (e.target.classList.contains("cancel-reply-btn")) {
-            const pid = e.target.getAttribute("data-parent-id");
+        const cancelReplyBtn = e.target.closest(".cancel-reply-btn");
+        if (cancelReplyBtn) {
+            const pid = cancelReplyBtn.getAttribute("data-parent-id");
             document.getElementById(`reply-form-${pid}`).classList.add("d-none");
             document.querySelector(`.reply-btn[data-parent-id="${pid}"]`).classList.remove("d-none");
             document.getElementById(`reply-input-${pid}`).value = "";
         }
 
-        if (e.target.classList.contains("submit-reply-btn")) {
-            const pid = e.target.getAttribute("data-parent-id");
-            const parentAuthor = (e.target.getAttribute("data-parent-author") || "User").trim();
+        const submitReplyBtn = e.target.closest(".submit-reply-btn");
+        if (submitReplyBtn) {
+            const pid = submitReplyBtn.getAttribute("data-parent-id");
+            const parentAuthor = (submitReplyBtn.getAttribute("data-parent-author") || "User").trim();
             const input = document.getElementById(`reply-input-${pid}`);
             const text = input.value.trim();
             if (!text) return;
