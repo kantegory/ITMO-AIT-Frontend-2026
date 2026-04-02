@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
+  initTheme();
   initNavbarShadow();
   initPasswordToggles();
   initSidebarTabs();
@@ -31,6 +32,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     await initTeacherPage();
   }
 });
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('theme');
+
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-theme');
+  }
+
+  const themeToggle = document.getElementById('themeToggle');
+  if (!themeToggle) return;
+
+  themeToggle.checked = document.body.classList.contains('dark-theme');
+
+  themeToggle.addEventListener('change', function () {
+    document.body.classList.toggle('dark-theme', this.checked);
+    localStorage.setItem('theme', this.checked ? 'dark' : 'light');
+    showToast(this.checked ? 'Тёмная тема включена' : 'Светлая тема включена', 'success');
+  });
+}
 
 function initNavbarShadow() {
   const navbar = document.querySelector('.navbar');
