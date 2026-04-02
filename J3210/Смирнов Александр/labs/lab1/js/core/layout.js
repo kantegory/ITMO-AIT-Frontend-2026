@@ -2,6 +2,36 @@ import { API_URL } from "./api.js";
 import { storage } from "./storage.js";
 import { escapeHtml } from "./utils.js";
 
+const THEME_STORAGE_KEY = "theme";
+
+function getPreferredTheme() {
+    const saved = localStorage.getItem(THEME_STORAGE_KEY);
+    if (saved === "dark" || saved === "light") return saved;
+
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+}
+
+function applyTheme(theme) {
+    const normalized = theme === "dark" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", normalized);
+    localStorage.setItem(THEME_STORAGE_KEY, normalized);
+
+    const btn = document.getElementById("theme-toggle-btn");
+    if (!btn) return;
+
+    const isDark = normalized === "dark";
+    btn.setAttribute("aria-pressed", String(isDark));
+    btn.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
+    btn.setAttribute("title", isDark ? "Switch to light theme" : "Switch to dark theme");
+    btn.textContent = isDark ? "☀️" : "🌙";
+}
+
+function initTheme() {
+    applyTheme(getPreferredTheme());
+}
+
 export async function injectSharedLayout() {
     const headerSlot = document.getElementById("site-header");
     const footerSlot = document.getElementById("site-footer");
@@ -100,6 +130,11 @@ export function updateAuthNav() {
 
 export function bindHeaderInteractions({ onLogout } = {}) {
     document.addEventListener("click", async (e) => {
+        if (e.target.id === "theme-toggle-btn") {
+            const current = document.documentElement.getAttribute("data-theme") || "light";
+            applyTheme(current === "dark" ? "light" : "dark");
+        }
+
         const notifDropdown = e.target.closest("#notifDropdown");
         const notifMenu = document.getElementById("notif-list");
 
@@ -131,7 +166,9 @@ export function bindHeaderInteractions({ onLogout } = {}) {
 }
 
 export async function initSharedPage(options = {}) {
+    initTheme();
     await injectSharedLayout();
+    initTheme();
     updateAuthNav();
     bindHeaderInteractions(options);
 }
