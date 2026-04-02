@@ -45,8 +45,8 @@
                     </div>
                 </div>
                 <div class="col">
-                    <h3 class="mb-1">Тамразов Валерий</h3>
-                    <p class="mb-0" style="color: var(--text-secondary);">ML-инженер &middot; Команда Alpha &middot; valery@mlops-deploy.ru</p>
+                    <h3 class="mb-1" id="profileName">Загрузка...</h3>
+                    <p class="mb-0" style="color: var(--text-secondary);" id="profileInfo"></p>
                 </div>
                 <div class="col-auto">
                     <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#editProfileModal">
@@ -61,25 +61,25 @@
         <div class="row g-3 mb-4">
             <div class="col-6 col-md-3">
                 <div class="stat-card">
-                    <div class="number">12</div>
+                    <div class="number" id="statPipelines">-</div>
                     <div class="label">Пайплайнов</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="stat-card">
-                    <div class="number">47</div>
+                    <div class="number" id="statRuns">-</div>
                     <div class="label">Запусков</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="stat-card">
-                    <div class="number">8</div>
+                    <div class="number" id="statArtifacts">-</div>
                     <div class="label">Артефактов</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="stat-card">
-                    <div class="number">3</div>
+                    <div class="number" id="statPolicies">-</div>
                     <div class="label">Политики</div>
                 </div>
             </div>
@@ -99,126 +99,15 @@
 
         <div class="tab-content">
             <div class="tab-pane fade show active" id="tabPipelines" role="tabpanel">
-                <div class="pipeline-card">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-1">
-                                <a href="pipeline.html" class="text-decoration-none">fraud-detection-model</a>
-                            </h6>
-                            <small class="text-muted">Последний запуск: 2 часа назад &middot; staging</small>
-                        </div>
-                        <span class="status-badge status-success">Успешно</span>
-                    </div>
-                </div>
-                <div class="pipeline-card">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-1">
-                                <a href="pipeline.html" class="text-decoration-none">recommendation-engine-v2</a>
-                            </h6>
-                            <small class="text-muted">Последний запуск: 5 часов назад &middot; production</small>
-                        </div>
-                        <span class="status-badge status-running">Запущен</span>
-                    </div>
-                </div>
-                <div class="pipeline-card">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-1">
-                                <a href="pipeline.html" class="text-decoration-none">text-classifier-bert</a>
-                            </h6>
-                            <small class="text-muted">Последний запуск: вчера &middot; development</small>
-                        </div>
-                        <span class="status-badge status-failed">Ошибка</span>
-                    </div>
-                </div>
-                <div class="pipeline-card">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-1">
-                                <a href="pipeline.html" class="text-decoration-none">image-segmentation-unet</a>
-                            </h6>
-                            <small class="text-muted">Последний запуск: 3 дня назад &middot; staging</small>
-                        </div>
-                        <span class="status-badge status-success">Успешно</span>
-                    </div>
-                </div>
+                <p class="text-muted">Загрузка...</p>
             </div>
 
             <div class="tab-pane fade" id="tabArtifacts" role="tabpanel">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Название</th>
-                                <th>Тип</th>
-                                <th>Размер</th>
-                                <th>Версия</th>
-                                <th>Дата</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><i class="bi bi-file-earmark-zip me-1"></i> fraud_model_v3.pkl</td>
-                                <td>Модель</td>
-                                <td>245 MB</td>
-                                <td>v3.1.0</td>
-                                <td>01.04.2026</td>
-                            </tr>
-                            <tr>
-                                <td><i class="bi bi-file-earmark-zip me-1"></i> rec_engine_weights.pt</td>
-                                <td>Модель</td>
-                                <td>1.2 GB</td>
-                                <td>v2.0.4</td>
-                                <td>30.03.2026</td>
-                            </tr>
-                            <tr>
-                                <td><i class="bi bi-filetype-json me-1"></i> bert_config.json</td>
-                                <td>Конфиг</td>
-                                <td>4 KB</td>
-                                <td>v1.0.0</td>
-                                <td>28.03.2026</td>
-                            </tr>
-                            <tr>
-                                <td><i class="bi bi-file-earmark me-1"></i> test_dataset_march.csv</td>
-                                <td>Датасет</td>
-                                <td>89 MB</td>
-                                <td>—</td>
-                                <td>25.03.2026</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <p class="text-muted">Загрузка...</p>
             </div>
 
             <div class="tab-pane fade" id="tabPolicies" role="tabpanel">
-                <div class="pipeline-card">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-1">Автоматический откат</h6>
-                            <small class="text-muted">Откат при падении accuracy ниже 0.85 в течение 10 минут</small>
-                        </div>
-                        <span class="badge bg-success">Активна</span>
-                    </div>
-                </div>
-                <div class="pipeline-card">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-1">Обязательный code review</h6>
-                            <small class="text-muted">Деплой в production только после одобрения 2+ ревьюеров</small>
-                        </div>
-                        <span class="badge bg-success">Активна</span>
-                    </div>
-                </div>
-                <div class="pipeline-card">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-1">Canary-лимит</h6>
-                            <small class="text-muted">Максимум 10% трафика на canary в первые 30 минут</small>
-                        </div>
-                        <span class="badge bg-warning text-dark">На паузе</span>
-                    </div>
-                </div>
+                <p class="text-muted">Загрузка...</p>
             </div>
         </div>
     </div>
@@ -297,6 +186,161 @@
     <script>
         checkAuth();
         updateNavbar();
+
+        var user = getUser();
+        var statusLabels = { success: 'Успешно', running: 'Запущен', failed: 'Ошибка', pending: 'Ожидание' };
+
+        // Заполнить шапку профиля
+        if (user) {
+            document.getElementById('profileName').textContent = (user.firstName || '') + ' ' + (user.lastName || '');
+            document.getElementById('profileInfo').textContent = (user.role || '') + ' \u00b7 ' + (user.company || '') + ' \u00b7 ' + user.email;
+        }
+
+        // Загрузить пайплайны пользователя
+        fetch(API_URL + '/600/pipelines?userId=' + user.id, { headers: authHeaders() })
+            .then(function(res) { return res.json(); })
+            .then(function(pipelines) {
+                document.getElementById('statPipelines').textContent = pipelines.length;
+                var total = 0;
+                pipelines.forEach(function(p) { total += p.stepsDone; });
+                document.getElementById('statRuns').textContent = total;
+
+                var container = document.getElementById('tabPipelines');
+                container.textContent = '';
+
+                if (pipelines.length === 0) {
+                    var empty = document.createElement('p');
+                    empty.className = 'text-muted';
+                    empty.textContent = 'У вас пока нет пайплайнов';
+                    container.appendChild(empty);
+                    return;
+                }
+
+                pipelines.forEach(function(p) {
+                    var card = document.createElement('div');
+                    card.className = 'pipeline-card';
+
+                    var row = document.createElement('div');
+                    row.className = 'd-flex justify-content-between align-items-center';
+
+                    var info = document.createElement('div');
+                    var h6 = document.createElement('h6');
+                    h6.className = 'mb-1';
+                    var link = document.createElement('a');
+                    link.href = 'pipeline.html?id=' + p.id;
+                    link.className = 'text-decoration-none';
+                    link.textContent = p.name;
+                    h6.appendChild(link);
+                    info.appendChild(h6);
+
+                    var meta = document.createElement('small');
+                    meta.className = 'text-muted';
+                    meta.textContent = 'Последний запуск: ' + p.lastRun + ' \u00b7 ' + p.env;
+                    info.appendChild(meta);
+
+                    var badge = document.createElement('span');
+                    badge.className = 'status-badge status-' + p.status;
+                    badge.textContent = statusLabels[p.status] || p.status;
+
+                    row.appendChild(info);
+                    row.appendChild(badge);
+                    card.appendChild(row);
+                    container.appendChild(card);
+                });
+            });
+
+        // Загрузить артефакты
+        fetch(API_URL + '/600/artifacts?userId=' + user.id, { headers: authHeaders() })
+            .then(function(res) { return res.json(); })
+            .then(function(artifacts) {
+                document.getElementById('statArtifacts').textContent = artifacts.length;
+
+                var container = document.getElementById('tabArtifacts');
+                container.textContent = '';
+
+                if (artifacts.length === 0) {
+                    var empty = document.createElement('p');
+                    empty.className = 'text-muted';
+                    empty.textContent = 'Нет артефактов';
+                    container.appendChild(empty);
+                    return;
+                }
+
+                var wrapper = document.createElement('div');
+                wrapper.className = 'table-responsive';
+                var table = document.createElement('table');
+                table.className = 'table';
+
+                var thead = document.createElement('thead');
+                var headRow = document.createElement('tr');
+                ['Название', 'Тип', 'Размер', 'Версия', 'Дата'].forEach(function(t) {
+                    var th = document.createElement('th');
+                    th.textContent = t;
+                    headRow.appendChild(th);
+                });
+                thead.appendChild(headRow);
+                table.appendChild(thead);
+
+                var tbody = document.createElement('tbody');
+                artifacts.forEach(function(a) {
+                    var tr = document.createElement('tr');
+                    var cols = [a.name, a.type, a.size, a.version || '\u2014', a.date];
+                    cols.forEach(function(val) {
+                        var td = document.createElement('td');
+                        td.textContent = val;
+                        tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+                table.appendChild(tbody);
+                wrapper.appendChild(table);
+                container.appendChild(wrapper);
+            });
+
+        // Загрузить политики
+        fetch(API_URL + '/600/policies?userId=' + user.id, { headers: authHeaders() })
+            .then(function(res) { return res.json(); })
+            .then(function(policies) {
+                document.getElementById('statPolicies').textContent = policies.length;
+
+                var container = document.getElementById('tabPolicies');
+                container.textContent = '';
+
+                if (policies.length === 0) {
+                    var empty = document.createElement('p');
+                    empty.className = 'text-muted';
+                    empty.textContent = 'Нет политик';
+                    container.appendChild(empty);
+                    return;
+                }
+
+                policies.forEach(function(pol) {
+                    var card = document.createElement('div');
+                    card.className = 'pipeline-card';
+
+                    var row = document.createElement('div');
+                    row.className = 'd-flex justify-content-between align-items-center';
+
+                    var info = document.createElement('div');
+                    var h6 = document.createElement('h6');
+                    h6.className = 'mb-1';
+                    h6.textContent = pol.name;
+                    info.appendChild(h6);
+                    var desc = document.createElement('small');
+                    desc.className = 'text-muted';
+                    desc.textContent = pol.description;
+                    info.appendChild(desc);
+
+                    var badge = document.createElement('span');
+                    badge.className = 'badge ' + (pol.status === 'active' ? 'bg-success' : 'bg-warning');
+                    badge.textContent = pol.status === 'active' ? 'Активна' : 'На паузе';
+
+                    row.appendChild(info);
+                    row.appendChild(badge);
+                    card.appendChild(row);
+                    container.appendChild(card);
+                });
+            });
     </script>
 </body>
 </html>
