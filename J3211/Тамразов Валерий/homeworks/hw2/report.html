@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Отчёт — Домашняя работа 2</title>
+    <style>
+        @page { size: A4; margin: 2cm; }
+        body { font-family: 'Times New Roman', Times, serif; font-size: 14pt; line-height: 1.5; color: #000; max-width: 210mm; margin: 0 auto; padding: 2cm; }
+        .title-page { text-align: center; page-break-after: always; padding-top: 2cm; }
+        .title-page .university { font-weight: bold; font-size: 16pt; text-transform: uppercase; margin-bottom: 2cm; }
+        .title-page .discipline { font-weight: bold; font-size: 16pt; margin-bottom: 0.5cm; }
+        .title-page .report-title { font-size: 14pt; margin-bottom: 0.3cm; }
+        .title-page .info-right { text-align: right; margin-top: 2cm; font-size: 14pt; }
+        .title-page .bottom { position: relative; margin-top: 4cm; font-size: 14pt; }
+        h2 { font-size: 16pt; font-weight: bold; margin-top: 1.5cm; margin-bottom: 0.5cm; }
+        h3 { font-size: 14pt; font-weight: bold; margin-top: 1cm; }
+        p { text-align: justify; margin-bottom: 0.5cm; }
+        ul { margin-bottom: 0.5cm; }
+        li { margin-bottom: 0.3cm; }
+        code { font-family: 'Courier New', monospace; font-size: 12pt; background: #f0f0f0; padding: 1px 4px; }
+        table { border-collapse: collapse; width: 100%; margin: 0.5cm 0; font-size: 12pt; }
+        th, td { border: 1px solid #999; padding: 6px 10px; text-align: left; }
+        th { background: #f0f0f0; font-weight: bold; }
+        @media print { body { padding: 0; } }
+    </style>
+</head>
+<body>
+
+<div class="title-page">
+    <div class="university">Санкт-Петербургский национальный исследовательский университет ИТМО</div>
+    <div class="discipline">Дисциплина: Фронт-энд разработка</div>
+    <div class="report-title">Отчет</div>
+    <div class="report-title">Домашняя работа 2: доступность в HTML</div>
+    <div class="info-right">
+        Выполнил:<br>
+        Тамразов Валерий<br>
+        Группа J3211<br><br>
+        Проверил:<br>
+        Добряков Д. И.
+    </div>
+    <div class="bottom">
+        Санкт-Петербург<br>
+        2026 г.
+    </div>
+</div>
+
+<h2>Задача</h2>
+<p>Улучшить доступность ранее реализованного сайта. Добавить необходимые HTML-атрибуты ко всему контенту на странице и проверить это с помощью инструментов из Dev Tools браузера Firefox и сервиса Google Lighthouse.</p>
+
+<h2>Ход работы</h2>
+
+<p>Работа по улучшению доступности была проведена на всех 7 страницах сайта MLOps Deploy. Ниже описаны внесённые изменения по категориям.</p>
+
+<h3>1. Ссылка для пропуска навигации (skip-nav)</h3>
+<p>На каждую из 7 страниц добавлена скрытая ссылка "Перейти к основному содержанию", которая становится видимой при фокусе клавиатурой (Tab). Это позволяет пользователям скринридеров и клавиатурной навигации быстро перейти к основному контенту, минуя навигационную панель.</p>
+<pre style="font-size: 11pt; background: #f5f5f5; padding: 8px; border: 1px solid #ddd;">&lt;a class="visually-hidden-focusable" href="#main-content"&gt;
+  Перейти к основному содержанию
+&lt;/a&gt;</pre>
+<p>Соответственно, тегу <code>&lt;main&gt;</code> на каждой странице добавлен <code>id="main-content"</code>.</p>
+
+<h3>2. ARIA-метки на навигации</h3>
+<ul>
+    <li>Всем тегам <code>&lt;nav&gt;</code> добавлен атрибут <code>aria-label="Основная навигация"</code>.</li>
+    <li>Кнопке-гамбургеру добавлен <code>aria-label="Открыть меню навигации"</code>.</li>
+    <li>На активных ссылках навигации добавлен <code>aria-current="page"</code> для обозначения текущей страницы.</li>
+</ul>
+
+<h3>3. Декоративные иконки</h3>
+<p>Все декоративные иконки Bootstrap Icons (<code>&lt;i class="bi bi-..."&gt;</code>) помечены атрибутом <code>aria-hidden="true"</code>, чтобы скринридеры их игнорировали. Всего помечено 15 иконок на разных страницах.</p>
+
+<h3>4. Автозаполнение форм</h3>
+<p>На страницах входа и регистрации добавлены атрибуты <code>autocomplete</code>:</p>
+<table>
+    <tr><th>Поле</th><th>autocomplete</th><th>Страница</th></tr>
+    <tr><td>Email</td><td><code>email</code></td><td>login, register</td></tr>
+    <tr><td>Пароль (вход)</td><td><code>current-password</code></td><td>login</td></tr>
+    <tr><td>Пароль (регистрация)</td><td><code>new-password</code></td><td>register</td></tr>
+    <tr><td>Имя</td><td><code>given-name</code></td><td>register</td></tr>
+    <tr><td>Фамилия</td><td><code>family-name</code></td><td>register</td></tr>
+    <tr><td>Организация</td><td><code>organization</code></td><td>register</td></tr>
+</table>
+
+<h3>5. ARIA-метки на интерактивных элементах</h3>
+<ul>
+    <li>Кнопка показа/скрытия пароля: <code>aria-label="Показать пароль"</code>.</li>
+    <li>Все кнопки закрытия модальных окон: <code>aria-label="Закрыть"</code> (13 кнопок).</li>
+    <li>Панель фильтров: <code>role="search" aria-label="Фильтры пайплайнов"</code>.</li>
+    <li>Поле поиска: <code>aria-label="Поиск пайплайнов"</code>.</li>
+</ul>
+
+<h3>6. Динамический контент (aria-live)</h3>
+<p>Контейнеры, содержимое которых обновляется через JavaScript (загрузка из API), помечены атрибутом <code>aria-live="polite"</code>:</p>
+<ul>
+    <li>Список пайплайнов на pipelines.html</li>
+    <li>Три вкладки профиля (пайплайны, артефакты, политики) на profile.html</li>
+    <li>Контейнер шагов на pipeline.html</li>
+    <li>Контейнер сред на environments.html</li>
+</ul>
+<p>Сообщение "Пайплайны не найдены" помечено <code>role="status"</code>.</p>
+
+<h3>7. Таблицы</h3>
+<p>Заголовкам таблицы ролей на environments.html добавлен атрибут <code>scope="col"</code> для правильного связывания заголовков с ячейками данных.</p>
+
+<h3>8. Стили доступности в CSS</h3>
+<ul>
+    <li>Добавлены стили <code>:focus-visible</code> для кнопок и полей ввода с зелёным контуром (<code>outline: 2px solid var(--accent)</code>).</li>
+    <li>Добавлен медиа-запрос <code>@media (prefers-reduced-motion: reduce)</code>, отключающий все анимации для пользователей с настройкой "уменьшить движение".</li>
+    <li>Стили для класса <code>.visually-hidden-focusable</code> для ссылки пропуска навигации.</li>
+</ul>
+
+<h2>Сводная таблица изменений</h2>
+<table>
+    <tr><th>Категория</th><th>Количество</th><th>Страницы</th></tr>
+    <tr><td>Skip-навигация</td><td>7</td><td>Все</td></tr>
+    <tr><td>aria-label на nav</td><td>7</td><td>Все</td></tr>
+    <tr><td>aria-hidden на иконках</td><td>15</td><td>Все</td></tr>
+    <tr><td>id="main-content"</td><td>7</td><td>Все</td></tr>
+    <tr><td>aria-current="page"</td><td>4</td><td>pipelines, profile, environments</td></tr>
+    <tr><td>autocomplete</td><td>8</td><td>login, register</td></tr>
+    <tr><td>aria-live="polite"</td><td>6</td><td>pipelines, profile, pipeline, environments</td></tr>
+    <tr><td>aria-label на кнопках</td><td>15</td><td>Все с модалками</td></tr>
+    <tr><td>scope="col" на th</td><td>5</td><td>environments</td></tr>
+    <tr><td>focus-visible стили</td><td>1</td><td>style.css</td></tr>
+    <tr><td>prefers-reduced-motion</td><td>1</td><td>style.css</td></tr>
+</table>
+
+<h2>Вывод</h2>
+<p>В ходе выполнения домашней работы доступность сайта MLOps Deploy была улучшена по нескольким направлениям: навигация с клавиатуры (skip-nav, focus-visible), поддержка скринридеров (aria-label, aria-hidden, aria-live, aria-current, role), семантика форм (autocomplete, label/for), таблицы (scope), и учёт пользовательских настроек (prefers-reduced-motion). Изменения затронули все 7 страниц сайта и файл стилей.</p>
+
+</body>
+</html>

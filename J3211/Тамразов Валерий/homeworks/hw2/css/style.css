@@ -1,0 +1,797 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-primary: #0b0e14;
+    --bg-secondary: #111820;
+    --bg-card: #151c28;
+    --bg-card-hover: #1a2332;
+    --border-color: #1e2a3a;
+    --border-accent: #2a3a4e;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-muted: #586069;
+    --accent: #00d4aa;
+    --accent-dim: rgba(0, 212, 170, 0.12);
+    --accent-glow: rgba(0, 212, 170, 0.3);
+    --danger: #f85149;
+    --warning: #d29922;
+    --info: #58a6ff;
+    --success: #3fb950;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-sans: 'IBM Plex Sans', -apple-system, sans-serif;
+}
+
+* {
+    border-color: var(--border-color);
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+}
+
+a {
+    color: var(--accent);
+}
+
+a:hover {
+    color: #33e0be;
+}
+
+/* === Навбар === */
+
+.navbar {
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.6rem 0;
+}
+
+.navbar-brand {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--accent) !important;
+    font-size: 1.1rem;
+}
+
+.navbar-brand i {
+    color: var(--accent);
+}
+
+.nav-link {
+    color: var(--text-secondary) !important;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.15s;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--text-primary) !important;
+}
+
+/* === Кнопки === */
+
+.btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg-primary);
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background: #33e0be;
+    border-color: #33e0be;
+    color: var(--bg-primary);
+}
+
+.btn-outline-light {
+    border-color: var(--border-accent);
+    color: var(--text-secondary);
+}
+
+.btn-outline-light:hover {
+    background: var(--bg-card);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
+}
+
+.btn-outline-primary {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.btn-outline-primary:hover {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.btn-outline-secondary {
+    border-color: var(--border-accent);
+    color: var(--text-secondary);
+}
+
+.btn-outline-secondary:hover {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border-color: var(--text-muted);
+}
+
+.btn-outline-danger {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+.btn-outline-danger:hover {
+    background: rgba(248, 81, 73, 0.12);
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+.btn-outline-warning {
+    border-color: var(--warning);
+    color: var(--warning);
+}
+
+.btn-outline-success {
+    border-color: var(--success);
+    color: var(--success);
+}
+
+.btn-danger {
+    background: var(--danger);
+    border-color: var(--danger);
+}
+
+.btn-secondary {
+    background: var(--bg-card);
+    border-color: var(--border-accent);
+    color: var(--text-secondary);
+}
+
+.btn-warning {
+    background: var(--warning);
+    border-color: var(--warning);
+    color: var(--bg-primary);
+}
+
+.btn-success {
+    background: var(--success);
+    border-color: var(--success);
+    color: var(--bg-primary);
+}
+
+/* === Формы === */
+
+.form-control, .form-select {
+    background: var(--bg-secondary);
+    border-color: var(--border-accent);
+    color: var(--text-primary);
+}
+
+.form-control:focus, .form-select:focus {
+    background: var(--bg-secondary);
+    border-color: var(--accent);
+    color: var(--text-primary);
+    box-shadow: 0 0 0 2px var(--accent-dim);
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.form-label {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.form-check-input {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-accent);
+}
+
+.form-check-input:checked {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+.form-check-label {
+    color: var(--text-secondary);
+}
+
+.input-group .btn {
+    border-color: var(--border-accent);
+}
+
+/* === Модальные окна === */
+
+.modal-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border-accent);
+}
+
+.modal-header {
+    border-bottom-color: var(--border-color);
+}
+
+.modal-footer {
+    border-top-color: var(--border-color);
+}
+
+.modal-title {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+}
+
+.btn-close {
+    filter: invert(1);
+}
+
+/* === Таблицы === */
+
+.table {
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.table th {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    border-bottom-color: var(--border-color);
+}
+
+.table td {
+    border-bottom-color: var(--border-color);
+    vertical-align: middle;
+}
+
+.table-borderless td, .table-borderless th {
+    border: none;
+}
+
+/* === Навигационные табы === */
+
+.nav-tabs {
+    border-bottom-color: var(--border-color);
+}
+
+.nav-tabs .nav-link {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-muted) !important;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    padding: 0.6rem 1rem;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--text-secondary) !important;
+    border-bottom-color: var(--border-accent);
+}
+
+.nav-tabs .nav-link.active {
+    background: transparent;
+    color: var(--accent) !important;
+    border-bottom-color: var(--accent);
+}
+
+/* === Хлебные крошки === */
+
+.breadcrumb {
+    background: none;
+    padding: 0;
+}
+
+.breadcrumb-item a {
+    color: var(--text-muted);
+}
+
+.breadcrumb-item.active {
+    color: var(--text-secondary);
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: var(--text-muted);
+}
+
+/* === Алерты === */
+
+.alert-warning {
+    background: rgba(210, 153, 34, 0.1);
+    border-color: rgba(210, 153, 34, 0.2);
+    color: var(--warning);
+}
+
+.alert-info {
+    background: rgba(88, 166, 255, 0.1);
+    border-color: rgba(88, 166, 255, 0.2);
+    color: var(--info);
+}
+
+/* === Бейджи === */
+
+.badge.bg-success {
+    background: rgba(63, 185, 80, 0.15) !important;
+    color: var(--success);
+}
+
+.badge.bg-warning {
+    background: rgba(210, 153, 34, 0.15) !important;
+    color: var(--warning);
+}
+
+.badge.bg-light {
+    background: var(--bg-secondary) !important;
+    color: var(--text-secondary) !important;
+    border: 1px solid var(--border-color);
+}
+
+.badge.bg-primary {
+    background: var(--accent-dim) !important;
+    color: var(--accent);
+}
+
+/* === Прогресс-бары === */
+
+.progress {
+    background: var(--bg-secondary);
+    border-radius: 2px;
+}
+
+.progress-bar.bg-success {
+    background-color: var(--success) !important;
+}
+
+.progress-bar.bg-primary {
+    background-color: var(--accent) !important;
+}
+
+.progress-bar.bg-danger {
+    background-color: var(--danger) !important;
+}
+
+.progress-bar.bg-warning {
+    background-color: var(--warning) !important;
+}
+
+/* === Сайдбар фильтров === */
+
+.sidebar-filter {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.sidebar-filter h5 {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+/* === Карточки пайплайнов === */
+
+.pipeline-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin-bottom: 8px;
+    transition: border-color 0.15s;
+}
+
+.pipeline-card:hover {
+    border-color: var(--border-accent);
+}
+
+.pipeline-card h6 a {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.pipeline-card h6 a:hover {
+    color: var(--accent);
+}
+
+/* === Статус-бейджи === */
+
+.status-badge {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.status-success {
+    background: rgba(63, 185, 80, 0.12);
+    color: var(--success);
+}
+
+.status-running {
+    background: rgba(88, 166, 255, 0.12);
+    color: var(--info);
+}
+
+.status-failed {
+    background: rgba(248, 81, 73, 0.12);
+    color: var(--danger);
+}
+
+.status-pending {
+    background: rgba(210, 153, 34, 0.12);
+    color: var(--warning);
+}
+
+/* === Шаги пайплайна === */
+
+.step-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 4px;
+}
+
+.step-number {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    background: var(--accent);
+    color: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.8rem;
+    margin-right: 14px;
+    flex-shrink: 0;
+}
+
+.step-number.done {
+    background: var(--success);
+}
+
+.step-number.fail {
+    background: var(--danger);
+}
+
+.step-number.wait {
+    background: var(--text-muted);
+}
+
+.step-connector {
+    width: 1px;
+    height: 16px;
+    background: var(--border-accent);
+    margin-left: 13px;
+}
+
+/* === Карточки среды === */
+
+.env-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 12px;
+}
+
+.env-card h5 {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.env-card hr {
+    border-color: var(--border-color);
+    opacity: 1;
+}
+
+/* === Авторизация === */
+
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(0, 212, 170, 0.04) 0%, transparent 50%),
+        var(--bg-primary);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 400px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 36px 28px;
+}
+
+.auth-card h2 {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 4px;
+}
+
+.auth-card .subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+}
+
+/* === Профиль === */
+
+.profile-header {
+    background:
+        linear-gradient(135deg, rgba(0, 212, 170, 0.08) 0%, transparent 60%),
+        var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 32px 0 24px;
+    margin-bottom: 24px;
+}
+
+.profile-header h3 {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+/* === Статистика === */
+
+.stat-card {
+    text-align: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 18px;
+}
+
+.stat-card .number {
+    font-family: var(--font-mono);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+}
+
+.stat-card .label {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+
+/* === Герой на главной === */
+
+.hero-section {
+    background:
+        radial-gradient(ellipse at 30% 0%, rgba(0, 212, 170, 0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 100%, rgba(88, 166, 255, 0.04) 0%, transparent 60%),
+        var(--bg-primary);
+    color: var(--text-primary);
+    padding: 80px 0 60px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hero-section h1 {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 2.4rem;
+    margin-bottom: 12px;
+    letter-spacing: -1px;
+}
+
+.hero-section p {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    max-width: 520px;
+    margin: 0 auto 28px;
+    line-height: 1.6;
+}
+
+/* === Карточки фич === */
+
+.feature-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 24px 20px;
+    text-align: left;
+    height: 100%;
+    transition: border-color 0.15s;
+}
+
+.feature-card:hover {
+    border-color: var(--accent);
+}
+
+.feature-card i {
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin-bottom: 12px;
+}
+
+.feature-card h5 {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+}
+
+.feature-card p {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+/* === Футер === */
+
+footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    padding: 24px 0;
+    margin-top: 48px;
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+/* === Роли === */
+
+.role-badge {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.3px;
+}
+
+.role-badge.bg-primary {
+    background: var(--accent-dim) !important;
+    color: var(--accent) !important;
+}
+
+.role-badge.bg-info {
+    background: rgba(88, 166, 255, 0.12) !important;
+    color: var(--info) !important;
+}
+
+.role-badge.bg-secondary {
+    background: rgba(139, 148, 158, 0.12) !important;
+    color: var(--text-secondary) !important;
+}
+
+/* === Стратегии деплоя === */
+
+.deploy-strategy {
+    font-family: var(--font-mono);
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+.strategy-bluegreen {
+    background: rgba(88, 166, 255, 0.1);
+    color: var(--info);
+}
+
+.strategy-canary {
+    background: rgba(210, 153, 34, 0.1);
+    color: var(--warning);
+}
+
+.strategy-rolling {
+    background: rgba(63, 185, 80, 0.1);
+    color: var(--success);
+}
+
+/* === Анимации === */
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+main {
+    animation: fadeUp 0.3s ease-out;
+}
+
+/* === Утилиты === */
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+code {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+small.text-muted, .small.text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* Аватары в таблице ролей */
+.env-card .small span, .env-card .small div {
+    color: var(--text-secondary);
+}
+
+/* Скроллбар */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-accent);
+    border-radius: 3px;
+}
+
+/* === Доступность === */
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
+.form-control:focus-visible,
+.form-select:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-dim);
+}
+
+.visually-hidden-focusable:not(:focus) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
