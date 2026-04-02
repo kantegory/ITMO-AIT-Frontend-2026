@@ -43,7 +43,9 @@
             <h2 class="text-center">Регистрация</h2>
             <p class="subtitle text-center">Создайте аккаунт для работы с платформой</p>
 
-            <form>
+            <div id="regError" class="alert alert-danger d-none" role="alert"></div>
+
+            <form id="registerForm">
                 <div class="row mb-3">
                     <div class="col">
                         <label for="firstName" class="form-label">Имя</label>
@@ -85,7 +87,7 @@
                         Согласен с <a href="#">условиями использования</a>
                     </label>
                 </div>
-                <button type="submit" class="btn btn-primary w-100 mb-3">Создать аккаунт</button>
+                <button type="submit" class="btn btn-primary w-100 mb-3" id="regBtn">Создать аккаунт</button>
                 <p class="text-center text-muted small mb-0">
                     Уже есть аккаунт? <a href="login.html">Войти</a>
                 </p>
@@ -94,6 +96,68 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        if (isLoggedIn()) {
+            window.location.href = 'profile.html';
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var errorEl = document.getElementById('regError');
+            errorEl.classList.add('d-none');
+
+            var password = document.getElementById('regPassword').value;
+            var confirm = document.getElementById('confirmPassword').value;
+
+            if (password !== confirm) {
+                errorEl.textContent = 'Пароли не совпадают';
+                errorEl.classList.remove('d-none');
+                return;
+            }
+
+            if (password.length < 8) {
+                errorEl.textContent = 'Пароль должен быть не менее 8 символов';
+                errorEl.classList.remove('d-none');
+                return;
+            }
+
+            var userData = {
+                email: document.getElementById('email').value,
+                password: password,
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                company: document.getElementById('company').value,
+                role: document.getElementById('role').value
+            };
+
+            document.getElementById('regBtn').textContent = 'Регистрация...';
+            document.getElementById('regBtn').disabled = true;
+
+            fetch(API_URL + '/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userData)
+            })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Ошибка регистрации. Возможно, email уже занят');
+                }
+                return response.json();
+            })
+            .then(function(data) {
+                localStorage.setItem('accessToken', data.accessToken);
+                localStorage.setItem('user', JSON.stringify(data.user));
+                window.location.href = 'profile.html';
+            })
+            .catch(function(err) {
+                errorEl.textContent = err.message;
+                errorEl.classList.remove('d-none');
+                document.getElementById('regBtn').textContent = 'Создать аккаунт';
+                document.getElementById('regBtn').disabled = false;
+            });
+        });
+    </script>
 </body>
 </html>
