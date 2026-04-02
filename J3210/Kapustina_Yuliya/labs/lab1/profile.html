@@ -6,165 +6,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Профиль</title>
+    <title>Профиль | FanFicLib</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <style>
-        body {
-            background: white;
-        }
-
-        .navbar {
-            background: linear-gradient(90deg, #ffa676, #fd7f59);
-        }
-
-        .profile-header {
-            background: linear-gradient(120deg, #ffa676, #fd7f59);
-            color: white;
-            padding: 40px;
-            border-radius: 10px;
-        }
-
-        .avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 4px solid white;
-            object-fit: cover;
-        }
-
-        .stats-box {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .card {
-            border: none;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: 0.3s;
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(253, 121, 68, 0.25);
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        .card-title {
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-        }
-
-        .card-title a {
-            color: #2d3748;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .card-title a:hover {
-            color: #ff7043;
-        }
-
-        .fandom-tag {
-            display: inline-block;
-            background: #ffd8c4;
-            color: #f4511e;
-            padding: 0.2rem 1rem;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-        }
-
-        .tag {
-            background: #ffe0b2;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            margin-right: 5px;
-            display: inline-block;
-            color: #d84315;
-        }
-
-        .fic-meta {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            color: #2d3748;
-            font-size: 0.9rem;
-        }
-
-        .fic-meta i {
-            color: #ff7043;
-            margin-right: 0.25rem;
-        }
-
-        .btn-main {
-            background: #ff7043;
-            color: white;
-        }
-
-        .btn-main:hover {
-            background: #f4511e;
-            color: white;
-        }
-
-        .nav-tabs {
-            border-bottom: 2px solid #ffccb2;
-            margin-top: 2rem;
-        }
-
-        .nav-tabs .nav-link {
-            border: none;
-            color: #2d3748;
-            font-weight: 600;
-            padding: 10px 20px;
-            border-radius: 30px 30px 0 0;
-            transition: 0.2s;
-            background: transparent;
-        }
-
-        .nav-tabs .nav-link:hover {
-            color: #ff7043;
-            background: rgba(255, 215, 196, 0.3);
-        }
-
-        .nav-tabs .nav-link.active {
-            color: #d84315;
-            background: transparent;
-            border-bottom: 3px solid #ff7043;
-            font-weight: 700;
-        }
-
-        .tab-pane p {
-            color: #2d3748;
-            font-weight: 500;
-        }
-
-        .nav-tabs .nav-link i {
-            margin-right: 6px;
-            font-size: 1rem;
-        }
-    </style>
-
+    <link rel="stylesheet" href="style.css">
+    <script src="js/api.js"></script>
 </head>
 
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#">FanFicLib</a>
+            <a class="navbar-brand fw-bold" href="index.html">FanFicLib</a>
             <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -174,7 +28,7 @@
                     <li class="nav-item"><a class="nav-link" href="search.html">Поиск</a></li>
                     <li class="nav-item"><a class="nav-link" href="write.html">Написать фанфик</a></li>
                 </ul>
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto" id="navRight">
                     <li class="nav-item"><a class="nav-link" href="profile.html">Профиль</a></li>
                 </ul>
             </div>
@@ -186,25 +40,20 @@
         <div class="profile-header">
             <div class="row align-items-center">
                 <div class="col-md-2 text-center">
-                    <img src="pics/ava.jpg" class="avatar">
+                    <img src="pics/ava.jpg" class="avatar" id="avatarImg">
                 </div>
 
                 <div class="col-md-7">
 
-                    <h2>User123</h2>
+                    <h2 id="usernameDisplay">Загрузка...</h2>
 
-                    <p>
-                        Интересная жизнь.
+                    <p id="bioDisplay">
+                        Загрузка...
                     </p>
 
                 </div>
 
-                <div class="col-md-3 text-end">
-
-                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-                        Редактировать профиль
-                    </button>
-
+                <div class="col-md-3 text-end" id="actionButtons">
                 </div>
 
             </div>
@@ -212,59 +61,61 @@
         </div>
 
 
-        <div class="row text-center mt-4 g-3">
-
-            <div class="col-md-3 col-sm-6">
-                <div class="stats-box">
-                    <h4>12</h4>
-                    <p>Фанфиков</p>
+        <div class="row g-3 mb-5 text-center">
+            <div class="col-6 col-md-3">
+                <div class="stats-box-clean p-3 h-100 shadow-sm rounded-3 bg-white">
+                    <h2 class="display-6 fw-bold text-dark mb-0" id="ficsCount">0</h2>
+                    <p class="text-secondary-emphasis mb-0">Фанфиков</p>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="stats-box">
-                    <h4>4500</h4>
-                    <p>Просмотров</p>
+            <div class="col-6 col-md-3">
+                <div class="stats-box-clean p-3 h-100 shadow-sm rounded-3 bg-white">
+                    <h2 class="display-6 fw-bold text-dark mb-0" id="viewsCount">0</h2>
+                    <p class="text-secondary-emphasis mb-0">Просмотров</p>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="stats-box">
-                    <h4>340</h4>
-                    <p>Лайков</p>
+            <div class="col-6 col-md-3">
+                <div class="stats-box-clean p-3 h-100 shadow-sm rounded-3 bg-white">
+                    <h2 class="display-6 fw-bold text-dark mb-0" id="likesCount">0</h2>
+                    <p class="text-secondary-emphasis mb-0">Лайков</p>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="stats-box">
-                    <h4>28</h4>
-                    <p>Подписчиков</p>
+            <div class="col-6 col-md-3">
+                <div class="stats-box-clean p-3 h-100 shadow-sm rounded-3 bg-white">
+                    <h2 class="display-6 fw-bold text-dark mb-0" id="subscribersCount">0</h2>
+                    <p class="text-secondary-emphasis mb-0">Подписчиков</p>
                 </div>
             </div>
         </div>
 
-        <div class="text-center my-5 py-3">
-            <a href="write.html" class="btn btn-main btn-lg px-5">
-                Создать новую работу
-            </a>
+        <div id="createWorkSection" class="text-center my-5 py-3" style="display: none;">
+            <a href="write.html" class="btn btn-main btn-lg px-5">Создать новую работу</a>
         </div>
 
-        <ul class="nav nav-tabs mt-5">
+        <ul class="nav nav-tabs mt-5 border-0" id="profileTabs">
             <li class="nav-item">
-                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#works">
-                    <i class="bi bi-grid"></i> Мои фанфики
+                <button class="nav-link active fw-semibold px-4 py-2" data-bs-toggle="tab" data-bs-target="#works">
+                    Фанфики
+                </button>
+            </li>
+            <li class="nav-item" id="draftsTab" style="display: none;">
+                <button class="nav-link fw-semibold px-4 py-2" data-bs-toggle="tab" data-bs-target="#drafts">
+                    Черновики
                 </button>
             </li>
             <li class="nav-item">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#favorites">
-                    <i class="bi bi-bookmark-heart"></i> Избранное
+                <button class="nav-link fw-semibold px-4 py-2" data-bs-toggle="tab" data-bs-target="#favorites">
+                    Избранное
                 </button>
             </li>
             <li class="nav-item">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#history">
-                    <i class="bi bi-clock-history"></i> История чтения
+                <button class="nav-link fw-semibold px-4 py-2" data-bs-toggle="tab" data-bs-target="#history">
+                    История
                 </button>
             </li>
-            <li class="nav-item">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#drafts">
-                    <i class="bi bi-file-earmark"></i> Черновики
+            <li class="nav-item" id="subscriptionsTab" style="display: none;">
+                <button class="nav-link fw-semibold px-4 py-2" data-bs-toggle="tab" data-bs-target="#subscriptions">
+                    Подписки
                 </button>
             </li>
         </ul>
@@ -273,88 +124,36 @@
         <div class="tab-content mt-4">
 
             <div class="tab-pane fade show active" id="works">
-
-                <div class="row g-4 mt-2">
-                    <div class="col-md-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <span class="fandom-tag"><i class="bi bi-wand"></i> Harry Potter</span>
-                                <h5 class="card-title"><a href="fic.html">Тайна Хогвартса</a></h5>
-                                <p class="small text-muted">История о скрытых комнатах школы магии, где скрытые комнаты
-                                    Хогвартса таят древние тайны...</p>
-                                <div class="mb-2">
-                                    <span class="tag">магия</span>
-                                    <span class="tag">приключения</span>
-                                </div>
-                                <div class="fic-meta">
-                                    <span><i class="bi bi-heart-fill"></i> 342</span>
-                                    <span><i class="bi bi-chat-fill"></i> 28</span>
-                                    <span><i class="bi bi-eye-fill"></i> 1.2k</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <span class="fandom-tag"><i class="bi bi-ninja"></i> Naruto</span>
-                                <h5 class="card-title"><a href="fic.html">Путь шиноби</a></h5>
-                                <p class="small text-muted">Альтернативная история Наруто, где он попадает в другой мир
-                                    и становится сильнейшим шиноби.</p>
-                                <div class="mb-2">
-                                    <span class="tag">аниме</span>
-                                    <span class="tag">боевик</span>
-                                    <span class="tag">дружба</span>
-                                </div>
-                                <div class="fic-meta">
-                                    <span><i class="bi bi-heart-fill"></i> 256</span>
-                                    <span><i class="bi bi-chat-fill"></i> 19</span>
-                                    <span><i class="bi bi-eye-fill"></i> 890</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <span class="fandom-tag"><i class="bi bi-shield"></i> Marvel</span>
-                                <h5 class="card-title"><a href="fic.html">Железный человек</a></h5>
-                                <p class="small text-muted">Что если бы Тони Старк не погиб, а продолжил развивать
-                                    технологии?</p>
-                                <div class="mb-2">
-                                    <span class="tag">экшн</span>
-                                    <span class="tag">техно</span>
-                                </div>
-                                <div class="fic-meta">
-                                    <span><i class="bi bi-heart-fill"></i> 567</span>
-                                    <span><i class="bi bi-chat-fill"></i> 43</span>
-                                    <span><i class="bi bi-eye-fill"></i> 2.1k</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div id="worksList" class="row g-4 mt-2">
+                    <p class="text-center">Загрузка фанфиков...</p>
                 </div>
-
-            </div>
-
-            <div class="tab-pane fade" id="favorites">
-                <p>Здесь будут сохраненные фанфики.</p>
-            </div>
-
-
-            <div class="tab-pane fade" id="history">
-                <p>История прочитанных фанфиков.</p>
             </div>
 
             <div class="tab-pane fade" id="drafts">
-                <p>Здесь будут черновики ваших фанфиков.</p>
+                <div id="draftsList" class="row g-4 mt-2">
+                    <p class="text-center">Загрузка черновиков...</p>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="favorites">
+                <div id="favoritesList" class="row g-4 mt-2">
+                    <p class="text-center">Загрузка избранного...</p>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="history">
+                <div id="historyList" class="row g-4 mt-2">
+                    <p class="text-center">Загрузка истории...</p>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="subscriptions">
+                <div id="subscriptionsList" class="row g-4 mt-2">
+                    <p class="text-center">Загрузка подписок...</p>
+                </div>
             </div>
 
         </div>
-
-    </div>
 
     </div>
 
@@ -373,23 +172,25 @@
 
                 <div class="modal-body">
 
-                    <form>
-
+                    <form id="editProfileForm">
                         <div class="mb-3">
                             <label class="form-label">Имя пользователя</label>
-                            <input type="text" class="form-control" value="User123">
+                            <input type="text" class="form-control" id="editUsername">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Описание</label>
-                            <textarea class="form-control" rows="3">Интересная жизнь.</textarea>
+                            <textarea class="form-control" rows="3" id="editBio"></textarea>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Аватар</label>
-                            <input type="file" class="form-control">
-                        </div>
-
+    <label class="form-label">Аватар</label>
+    <input type="file" class="form-control" id="editAvatar" accept="image/jpeg,image/png,image/gif,image/webp">
+    <div id="avatarPreview" class="mt-2" style="display: none;">
+        <img id="previewImage" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+    </div>
+    <small class="text-muted">Допустимые форматы: JPEG, PNG, GIF, WEBP. Максимальный размер: 5 МБ</small>
+</div>
                     </form>
 
                 </div>
@@ -399,7 +200,7 @@
                         Отмена
                     </button>
 
-                    <button class="btn btn-main">
+                    <button class="btn btn-main" id="saveProfileBtn">
                         Сохранить
                     </button>
                 </div>
@@ -410,7 +211,511 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_URL = 'http://localhost:3000/api';
 
+        // Получаем имя пользователя из URL (если есть)
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetUsername = urlParams.get('username');
+
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        const currentUserData = localStorage.getItem('user') || sessionStorage.getItem('user');
+        const currentUser = currentUserData ? JSON.parse(currentUserData) : null;
+
+        // Определяем, чей это профиль
+        let isOwnProfile = false;
+        let profileUsername = '';
+
+        if (targetUsername) {
+            profileUsername = targetUsername;
+            isOwnProfile = currentUser && currentUser.username === targetUsername;
+        } else {
+            if (currentUser) {
+                profileUsername = currentUser.username;
+                isOwnProfile = true;
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+
+        function updateNav() {
+            const navRight = document.getElementById('navRight');
+            if (navRight) {
+                if (currentUser) {
+                    navRight.innerHTML = `
+                        <li class="nav-item"><a class="nav-link" href="profile.html">Профиль</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" id="navLogoutBtn">Выйти</a></li>
+                    `;
+                    document.getElementById('navLogoutBtn')?.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        logout();
+                    });
+                } else {
+                    navRight.innerHTML = `
+                        <li class="nav-item"><a class="nav-link" href="login.html">Вход</a></li>
+                        <li class="nav-item"><a class="nav-link" href="register.html">Регистрация</a></li>
+                    `;
+                }
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        // Загрузка профиля
+        async function loadProfile() {
+            try {
+                const response = await fetch(`${API_URL}/profile/${profileUsername}`, {
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+
+                    document.getElementById('usernameDisplay').textContent = data.user.username;
+                    document.getElementById('bioDisplay').textContent = data.user.bio || 'Нет описания';
+
+                    if (data.user.avatar && data.user.avatar !== 'default-avatar.png') {
+                        document.getElementById('avatarImg').src = `pics/${data.user.avatar}`;
+                    }
+
+                    document.getElementById('ficsCount').textContent = data.stats.ficsCount;
+                    document.getElementById('viewsCount').textContent = data.stats.totalViews;
+                    document.getElementById('likesCount').textContent = data.stats.totalLikes;
+                    document.getElementById('subscribersCount').textContent = data.stats.subscribers || 0;
+
+                    setupActionButtons(data.user);
+
+                    if (isOwnProfile) {
+                        const publishedFics = data.fics.filter(f => f.status !== 'draft');
+                        const draftFics = data.fics.filter(f => f.status === 'draft');
+                        displayFics(publishedFics, 'worksList', false, true);
+                        displayFics(draftFics, 'draftsList', true, true);
+
+                        document.getElementById('createWorkSection').style.display = 'block';
+                        document.getElementById('draftsTab').style.display = 'block';
+                        document.getElementById('subscriptionsTab').style.display = 'block'; // Добавляем эту строку
+
+                        loadLikedFics();
+                        loadHistoryFics();
+                        loadSubscriptions();
+                    } else {
+                        const publishedFics = data.fics.filter(f => f.status !== 'draft');
+                        displayFics(publishedFics, 'worksList', false, false);
+
+                        document.getElementById('createWorkSection').style.display = 'none';
+                        document.getElementById('draftsTab').style.display = 'none';
+                        document.getElementById('subscriptionsTab').style.display = 'none'; // Добавляем эту строку
+                        document.getElementById('favorites').style.display = 'none';
+                        document.getElementById('history').style.display = 'none';
+
+                        const favoritesTab = document.querySelector('button[data-bs-target="#favorites"]');
+                        const historyTab = document.querySelector('button[data-bs-target="#history"]');
+                        const subscriptionsTab = document.querySelector('button[data-bs-target="#subscriptions"]');
+                        if (favoritesTab) favoritesTab.parentElement.style.display = 'none';
+                        if (historyTab) historyTab.parentElement.style.display = 'none';
+                        if (subscriptionsTab) subscriptionsTab.parentElement.style.display = 'none';
+                    }
+
+                } else {
+                    document.getElementById('usernameDisplay').textContent = 'Пользователь не найден';
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+            }
+        }
+
+        function setupActionButtons(user) {
+            const container = document.getElementById('actionButtons');
+
+            if (isOwnProfile) {
+                container.innerHTML = `
+                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        Редактировать профиль
+                    </button>
+                `;
+                document.getElementById('editUsername').value = user.username;
+                document.getElementById('editBio').value = user.bio || '';
+            } else if (currentUser) {
+                container.innerHTML = `
+                    <button class="btn btn-light" id="subscribeBtn">
+                        Подписаться
+                    </button>
+                `;
+                checkSubscription();
+                document.getElementById('subscribeBtn')?.addEventListener('click', toggleSubscribe);
+            } else {
+                container.innerHTML = `
+                    <a href="login.html" class="btn btn-light">Войти, чтобы подписаться</a>
+                `;
+            }
+        }
+
+        async function checkSubscription() {
+            try {
+                const response = await fetch(`${API_URL}/user/subscriptions`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    const subscriptions = await response.json();
+                    const isSubscribed = subscriptions.includes(profileUsername);
+                    const subscribeBtn = document.getElementById('subscribeBtn');
+                    if (subscribeBtn) {
+                        subscribeBtn.textContent = isSubscribed ? 'Отписаться' : 'Подписаться';
+                        subscribeBtn.classList.remove('btn-light');
+                        subscribeBtn.classList.add(isSubscribed ? 'btn-secondary' : 'btn-light');
+                    }
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+            }
+        }
+
+        async function toggleSubscribe() {
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            if (currentUser.username === profileUsername) {
+                alert('Нельзя подписаться на самого себя');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/user/subscribe/${profileUsername}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const subscribeBtn = document.getElementById('subscribeBtn');
+                    if (subscribeBtn) {
+                        subscribeBtn.textContent = data.subscribed ? 'Отписаться' : 'Подписаться';
+                        subscribeBtn.classList.remove('btn-light', 'btn-secondary');
+                        subscribeBtn.classList.add(data.subscribed ? 'btn-secondary' : 'btn-light');
+                    }
+                    document.getElementById('subscribersCount').textContent = data.subscribersCount;
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Ошибка при подписке');
+            }
+        }
+
+        function displayFics(fics, containerId, isDraft, showEditButton) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            if (!fics || fics.length === 0) {
+                container.innerHTML = '<p class="text-center text-muted">Нет фанфиков</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+
+            fics.forEach(fic => {
+                const statusText = fic.status === 'completed' ? 'Закончен' : (fic.status === 'in_progress' ? 'В процессе' : 'Черновик');
+                const statusClass = fic.status === 'completed' ? 'text-success' : (fic.status === 'in_progress' ? 'text-warning' : 'text-secondary');
+
+                const ficCard = `
+                    <div class="col-12 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div class="flex-grow-1">
+                                        <a href="fic.html?id=${fic.id}" class="fic-title">${escapeHtml(fic.title)}</a>
+                                        <span class="rating-tag">${fic.rating}</span>
+                                        <span class="ms-2 ${statusClass}">${statusText}</span>
+                                        <p class="text-muted mb-2 mt-2">
+                                            <span class="author-info">${escapeHtml(fic.authorName)}</span>
+                                            <span class="ms-3 date-info">${formatDate(fic.createdAt)}</span>
+                                        </p>
+                                        <span class="fandom-tag">${escapeHtml(fic.fandom)}</span>
+                                        <p class="mt-2 mb-2 small">${escapeHtml(fic.description.substring(0, 100))}${fic.description.length > 100 ? '...' : ''}</p>
+                                        <div class="mb-2">
+                                            ${fic.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}
+                                        </div>
+                                        <div class="fic-meta">
+                                            <span class="meta-heart">${fic.likes}</span>
+                                            <span class="meta-chat">${fic.commentsCount}</span>
+                                            <span class="meta-eye">${fic.views}</span>
+                                        </div>
+                                    </div>
+                                    ${showEditButton ? `
+                                        <div class="ms-3">
+                                            <button class="btn btn-main btn-sm" onclick="editFic(${fic.id})">Редактировать</button>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += ficCard;
+            });
+        }
+
+        async function loadLikedFics() {
+            try {
+                const response = await fetch(`${API_URL}/user/likes`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (response.ok) {
+                    const likedFics = await response.json();
+                    displayFics(likedFics, 'favoritesList', false, false);
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+            }
+        }
+
+        async function loadHistoryFics() {
+            try {
+                const response = await fetch(`${API_URL}/user/history`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (response.ok) {
+                    const historyFics = await response.json();
+                    displayHistoryFics(historyFics, 'historyList');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+            }
+        }
+
+        function displayHistoryFics(fics, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            if (!fics || fics.length === 0) {
+                container.innerHTML = '<p class="text-center text-muted">История просмотров пуста</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+
+            fics.forEach(fic => {
+                const statusText = fic.status === 'completed' ? 'Закончен' : 'В процессе';
+                const ficCard = `
+                    <div class="col-12 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <a href="fic.html?id=${fic.id}" class="fic-title">${escapeHtml(fic.title)}</a>
+                                <span class="rating-tag">${fic.rating}</span>
+                                <span class="ms-2 text-${fic.status === 'completed' ? 'success' : 'warning'}">${statusText}</span>
+                                <p class="text-muted mb-2 mt-2">
+                                    <span class="author-info">${escapeHtml(fic.authorName)}</span>
+                                    <span class="ms-3 date-info">${formatDate(fic.createdAt)}</span>
+                                </p>
+                                <span class="fandom-tag">${escapeHtml(fic.fandom)}</span>
+                                <p class="mt-2 mb-2 small">${escapeHtml(fic.description.substring(0, 100))}...</p>
+                                <small class="text-muted">Просмотрено: ${formatDateTime(fic.viewedAt)}</small>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += ficCard;
+            });
+        }
+
+        function editFic(ficId) {
+            window.location.href = `write.html?id=${ficId}`;
+        }
+
+        async function saveProfile() {
+    const username = document.getElementById('editUsername').value.trim();
+    const bio = document.getElementById('editBio').value;
+    const avatarFile = document.getElementById('editAvatar').files[0];
+    
+    // Проверка имени пользователя
+    if (!username) {
+        alert('Имя пользователя не может быть пустым');
+        return;
+    }
+    
+    if (username.length < 3) {
+        alert('Имя пользователя должно быть не менее 3 символов');
+        return;
+    }
+    
+    // Проверка файла аватара
+    if (avatarFile) {
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+        const fileExtension = avatarFile.name.split('.').pop().toLowerCase();
+        
+        if (!allowedTypes.includes(avatarFile.type) || !['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(fileExtension)) {
+            alert('❌ Неверный формат. Можно загружать только изображения (JPEG, PNG, GIF, WEBP)');
+            return;
+        }
+        
+        const maxSize = 5 * 1024 * 1024;
+        if (avatarFile.size > maxSize) {
+            const mbSize = (avatarFile.size / (1024 * 1024)).toFixed(2);
+            alert(`❌ Файл слишком большой (${mbSize} МБ). Максимальный размер: 5 МБ`);
+            return;
+        }
+        
+        if (avatarFile.size === 0) {
+            alert('❌ Файл поврежден или пуст');
+            return;
+        }
+    }
+    
+    // Создаем FormData для отправки
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('bio', bio);
+    if (avatarFile) {
+        formData.append('avatar', avatarFile);
+    }
+    
+    try {
+        const response = await fetch(`${API_URL}/profile`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: formData
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            
+            if (localStorage.getItem('user')) {
+                localStorage.setItem('user', JSON.stringify(data.user));
+            } else {
+                sessionStorage.setItem('user', JSON.stringify(data.user));
+            }
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editProfileModal'));
+            modal.hide();
+            
+            location.reload();
+        } else {
+            const error = await response.json();
+            alert(error.error || 'Ошибка при сохранении профиля');
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
+        alert('Ошибка подключения к серверу');
+    }
+}
+        async function loadSubscriptions() {
+            try {
+                const response = await fetch(`${API_URL}/user/subscriptions`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    const subscriptions = await response.json();
+                    displaySubscriptions(subscriptions, 'subscriptionsList');
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки подписок:', error);
+                document.getElementById('subscriptionsList').innerHTML = '<p class="text-center text-muted">Ошибка загрузки подписок</p>';
+            }
+        }
+
+        async function displaySubscriptions(subscriptions, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            if (!subscriptions || subscriptions.length === 0) {
+                container.innerHTML = '<p class="text-center text-muted">Вы ни на кого не подписаны</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+
+            for (const username of subscriptions) {
+                try {
+                    const response = await fetch(`${API_URL}/profile/${username}`);
+                    if (response.ok) {
+                        const userData = await response.json();
+                        const user = userData.user;
+
+                        const userCard = `
+                    <div class="col-12 mb-3">
+                        <a href="profile.html?username=${escapeHtml(username)}" class="text-decoration-none">
+                            <div class="card hover-card">
+                                <div class="card-body d-flex align-items-center">
+                                    <div class="me-3">
+                                        <img src="${user.avatar && user.avatar !== 'default-avatar.png' ? `pics/${user.avatar}` : 'pics/ava.jpg'}" 
+                                             class="rounded-circle" 
+                                             style="width: 50px; height: 50px; object-fit: cover;">
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0" style="color: #ff7043;">${escapeHtml(username)}</h5>
+                                        <p class="text-muted small mb-0">${escapeHtml(user.bio?.substring(0, 60) || 'Нет описания')}${user.bio?.length > 60 ? '...' : ''}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                `;
+                        container.innerHTML += userCard;
+                    } else {
+                        const userCard = `
+                    <div class="col-12 mb-3">
+                        <a href="profile.html?username=${escapeHtml(username)}" class="text-decoration-none">
+                            <div class="card hover-card">
+                                <div class="card-body d-flex align-items-center">
+                                    <div class="me-3">
+                                        <img src="pics/ava.jpg" 
+                                             class="rounded-circle" 
+                                             style="width: 50px; height: 50px; object-fit: cover;">
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0" style="color: #ff7043;">${escapeHtml(username)}</h5>
+                                        <p class="text-muted small mb-0">Нет описания</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                `;
+                        container.innerHTML += userCard;
+                    }
+                } catch (error) {
+                    console.error('Ошибка загрузки пользователя:', username, error);
+                }
+            }
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString('ru-RU');
+        }
+
+        function formatDateTime(dateString) {
+            return new Date(dateString).toLocaleString('ru-RU');
+        }
+
+        document.getElementById('saveProfileBtn')?.addEventListener('click', saveProfile);
+
+        updateNav();
+        loadProfile();
+
+        window.editFic = editFic;
+        window.unsubscribe = unsubscribe;
+    </script>
 </body>
 
 </html>

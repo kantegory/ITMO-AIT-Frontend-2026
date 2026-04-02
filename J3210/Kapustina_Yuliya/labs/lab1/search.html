@@ -6,101 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Поиск фанфиков — FanFicLib</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <style>
-        body {
-            background: white;
-        }
 
-        .navbar {
-            background: linear-gradient(90deg, #ffa676, #fd7f59);
-        }
-
-        .filter-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .card {
-            border: none;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: 0.3s;
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        .fic-title {
-            text-decoration: none;
-            color: #2d3748;
-            font-weight: 700;
-            font-size: 1.3rem;
-            display: inline-block;
-            transition: color 0.3s;
-            margin-bottom: 5px;
-        }
-
-        .fic-title:hover {
-            color: #ff5722;
-        }
-
-        .fandom-tag {
-            display: inline-block;
-            background: #ffd8c4;
-            color: #f4511e;
-            padding: 0.2rem 1rem;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .tag {
-            background: #ffdfd1;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            margin-right: 5px;
-            display: inline-block;
-            color: #f4511e;
-        }
-
-        .fic-meta {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            color: #795548;
-            font-size: 0.9rem;
-        }
-
-        .fic-meta i {
-            color: #ff7043;
-            margin-right: 0.25rem;
-        }
-
-        .btn-main {
-            background: #ff7043;
-            color: white;
-        }
-
-        .btn-main:hover {
-            background: #f4511e;
-        }
-
-        .footer {
-            background: #ff8a65;
-            color: white;
-            padding: 30px;
-            margin-top: 60px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="js/api.js"></script>
 </head>
 
 <body>
@@ -114,11 +22,12 @@
             <div class="collapse navbar-collapse" id="nav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="#">Поиск</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="search.html">Поиск</a></li>
                     <li class="nav-item"><a class="nav-link" href="write.html">Написать фанфик</a></li>
                 </ul>
-                <a class="btn btn-light me-2" href="login.html">Вход</a>
-                <a class="btn btn-dark" href="register.html">Регистрация</a>
+                <ul class="navbar-nav ms-auto" id="navRight">
+
+                </ul>
             </div>
         </div>
     </nav>
@@ -136,25 +45,29 @@
 
                     <div class="mb-3">
                         <label class="form-label" for="filter-title">Название</label>
-                        <input id="filter-title" class="form-control">
+                        <input id="filter-title" class="form-control" placeholder="Введите название">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="filter-fandom">Фандом</label>
                         <select id="filter-fandom" class="form-select">
-                            <option>Любой</option>
+                            <option value="">Любой</option>
                             <option>Harry Potter</option>
                             <option>Naruto</option>
                             <option>Marvel</option>
+                            <option>Star Wars</option>
+                            <option>Lord of the Rings</option>
+                            <option>Оригинальный</option>
                         </select>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="filter-rating">Рейтинг</label>
                         <select id="filter-rating" class="form-select">
-                            <option>Любой</option>
+                            <option value="">Любой</option>
                             <option>G</option>
                             <option>PG</option>
+                            <option>PG-13</option>
                             <option>R</option>
                         </select>
                     </div>
@@ -162,116 +75,25 @@
                     <div class="mb-3">
                         <label class="form-label" for="filter-status">Статус</label>
                         <select id="filter-status" class="form-select">
-                            <option>Любой</option>
-                            <option>Закончен</option>
-                            <option>В процессе</option>
+                            <option value="">Любой</option>
+                            <option>completed">Закончен</option>
+                            <option>in_progress">В процессе</option>
                         </select>
                     </div>
 
                     <button class="btn btn-main w-100" id="filter-btn">Найти</button>
+                    <button class="btn btn-outline-secondary w-100 mt-2" id="reset-btn">Сбросить</button>
                 </div>
             </aside>
 
             <section class="col-md-9" id="results">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <p class="text-muted mb-0">Найдено: 24 фанфика</p>
+                    <p class="text-muted mb-0" id="results-count">Загрузка...</p>
                 </div>
-                
-                <article class="card mb-3">
-                    <div class="card-body">
-                        <header>
-                            <a href="fic.html" class="fic-title">Тайна Хогвартса</a>
-                            <p class="text-muted mb-2">
-                                <i class="bi bi-person-circle"></i> Alex 
-                                <span class="ms-3"><i class="bi bi-calendar3"></i> 15.03.2026</span>
-                            </p>
-                            <span class="fandom-tag"><i class="bi bi-wand"></i> Harry Potter</span>
-                        </header>
-                        <p class="mt-2 mb-2">История о скрытых комнатах школы магии, где скрытые комнаты Хогвартса таят древние тайны...</p>
-                        <div class="mb-2">
-                            <span class="tag">магия</span>
-                            <span class="tag">приключения</span>
-                            <span class="tag">драма</span>
-                        </div>
-                        <div class="fic-meta">
-                            <span><i class="bi bi-heart-fill"></i> 2.3k</span>
-                            <span><i class="bi bi-chat-fill"></i> 158</span>
-                            <span><i class="bi bi-bookmark-fill"></i> 432</span>
-                        </div>
-                    </div>
-                </article>
 
-                <article class="card mb-3">
-                    <div class="card-body">
-                        <header>
-                            <a href="fic.html" class="fic-title">Путь шиноби</a>
-                            <p class="text-muted mb-2">
-                                <i class="bi bi-person-circle"></i> Kate
-                                <span class="ms-3"><i class="bi bi-calendar3"></i> 10.03.2026</span>
-                            </p>
-                            <span class="fandom-tag"><i class="bi bi-ninja"></i> Naruto</span>
-                        </header>
-                        <p class="mt-2 mb-2">Альтернативная история Наруто, где он попадает в другой мир и становится сильнейшим шиноби.</p>
-                        <div class="mb-2">
-                            <span class="tag">аниме</span>
-                            <span class="tag">боевик</span>
-                            <span class="tag">приключения</span>
-                        </div>
-                        <div class="fic-meta">
-                            <span><i class="bi bi-heart-fill"></i> 1.8k</span>
-                            <span><i class="bi bi-chat-fill"></i> 124</span>
-                            <span><i class="bi bi-bookmark-fill"></i> 310</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="card mb-3">
-                    <div class="card-body">
-                        <header>
-                            <a href="fic.html" class="fic-title">Железный человек: Новая эра</a>
-                            <p class="text-muted mb-2">
-                                <i class="bi bi-person-circle"></i> TonyFan
-                                <span class="ms-3"><i class="bi bi-calendar3"></i> 05.03.2026</span>
-                            </p>
-                            <span class="fandom-tag"> Marvel</span>
-                        </header>
-                        <p class="mt-2 mb-2">Что если бы Тони Старк не погиб, а продолжил развивать технологии и создал новую команду?</p>
-                        <div class="mb-2">
-                            <span class="tag">экшн</span>
-                            <span class="tag">техно</span>
-                            <span class="tag">герои</span>
-                        </div>
-                        <div class="fic-meta">
-                            <span><i class="bi bi-heart-fill"></i> 3.2k</span>
-                            <span><i class="bi bi-chat-fill"></i> 215</span>
-                            <span><i class="bi bi-bookmark-fill"></i> 567</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="card mb-3">
-                    <div class="card-body">
-                        <header>
-                            <a href="fic.html" class="fic-title">Кольцо Всевластия</a>
-                            <p class="text-muted mb-2">
-                                <i class="bi bi-person-circle"></i> FrodoFan
-                                <span class="ms-3"><i class="bi bi-calendar3"></i> 01.03.2026</span>
-                            </p>
-                            <span class="fandom-tag"><i class="bi bi-ring"></i> Lord of the Rings</span>
-                        </header>
-                        <p class="mt-2 mb-2">Альтернативный взгляд на путешествие Фродо, где ему помогают новые союзники.</p>
-                        <div class="mb-2">
-                            <span class="tag">фэнтези</span>
-                            <span class="tag">приключения</span>
-                            <span class="tag">эпос</span>
-                        </div>
-                        <div class="fic-meta">
-                            <span><i class="bi bi-heart-fill"></i> 2.1k</span>
-                            <span><i class="bi bi-chat-fill"></i> 98</span>
-                            <span><i class="bi bi-bookmark-fill"></i> 245</span>
-                        </div>
-                    </div>
-                </article>
+                <div id="results-container">
+                    <p class="text-center text-muted">Загрузка фанфиков...</p>
+                </div>
             </section>
         </section>
     </main>
@@ -282,6 +104,186 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+        let allFics = [];
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('q');
+
+        if (searchQuery) {
+            const searchInput = document.getElementById('filter-title');
+            if (searchInput) {
+                searchInput.value = searchQuery;
+            }
+        }
+
+        function updateNav() {
+            const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+            const user = localStorage.getItem('user') || sessionStorage.getItem('user');
+
+            const navRight = document.getElementById('navRight');
+
+            if (token && user) {
+                navRight.innerHTML = `
+            <li class="nav-item"><a class="nav-link" href="profile.html">Профиль</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" id="logoutBtn">Выйти</a></li>
+        `;
+                document.getElementById('logoutBtn')?.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    sessionStorage.removeItem('token');
+                    sessionStorage.removeItem('user');
+                    window.location.href = 'index.html';
+                });
+            } else {
+                navRight.innerHTML = `
+            <li class="nav-item">
+                <a class="btn btn-light me-2" href="login.html">Вход</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-dark" href="register.html">Регистрация</a>
+            </li>
+        `;
+            }
+        }
+
+        // Загрузка всех фанфиков
+        async function loadFics() {
+            try {
+                const response = await fetch(`${API_URL}/fics`);
+                if (response.ok) {
+                    allFics = await response.json();
+                    if (searchQuery) {
+                        performSearch();
+                    } else {
+                        displayFics(allFics);
+                    }
+                } else {
+                    document.getElementById('results-container').innerHTML = '<p class="text-danger text-center">Ошибка загрузки фанфиков</p>';
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                document.getElementById('results-container').innerHTML = '<p class="text-danger text-center">Ошибка подключения к серверу</p>';
+            }
+        }
+
+        function performSearch() {
+            const titleFilter = document.getElementById('filter-title').value.toLowerCase().trim();
+            const fandomFilter = document.getElementById('filter-fandom').value;
+            const ratingFilter = document.getElementById('filter-rating').value;
+            const statusFilter = document.getElementById('filter-status').value;
+
+            let filtered = [...allFics];
+
+            if (titleFilter) {
+                filtered = filtered.filter(fic =>
+                    fic.title.toLowerCase().includes(titleFilter)
+                );
+            }
+
+            if (fandomFilter && fandomFilter !== '') {
+                filtered = filtered.filter(fic => fic.fandom === fandomFilter);
+            }
+
+            if (ratingFilter && ratingFilter !== '') {
+                filtered = filtered.filter(fic => fic.rating === ratingFilter);
+            }
+
+            if (statusFilter && statusFilter !== '') {
+                filtered = filtered.filter(fic => fic.status === statusFilter);
+            }
+
+            displayFics(filtered);
+        }
+
+        function displayFics(fics) {
+            const container = document.getElementById('results-container');
+            const countSpan = document.getElementById('results-count');
+
+            if (!fics || fics.length === 0) {
+                container.innerHTML = '<p class="text-center text-muted">Ничего не найдено</p>';
+                countSpan.textContent = 'Найдено: 0 фанфиков';
+                return;
+            }
+
+            countSpan.textContent = `Найдено: ${fics.length} фанфиков`;
+            container.innerHTML = '';
+
+            fics.forEach(fic => {
+                const statusText = fic.status === 'completed' ? 'Закончен' : (fic.status === 'in_progress' ? 'В процессе' : 'Опубликован');
+                const statusClass = fic.status === 'completed' ? 'text-success' : (fic.status === 'in_progress' ? 'text-warning' : 'text-secondary');
+
+                const ficCard = `
+                <article class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <a href="fic.html?id=${fic.id}" class="fic-title">${escapeHtml(fic.title)}</a>
+                                <span class="rating-tag">${fic.rating}</span>
+                                <span class="ms-2 ${statusClass}">${statusText}</span>
+                                <p class="text-muted mb-2 mt-2">
+                                    <span class="author-info">${escapeHtml(fic.authorName)}</span>
+                                    <span class="ms-3 date-info">${formatDate(fic.createdAt)}</span>
+                                </p>
+                                <span class="fandom-tag">${escapeHtml(fic.fandom)}</span>
+                                <p class="mt-2 mb-2">${escapeHtml(fic.description.substring(0, 150))}${fic.description.length > 150 ? '...' : ''}</p>
+                                <div class="mb-2">
+                                    ${fic.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}
+                                </div>
+                                <div class="fic-meta">
+                                    <span class="meta-heart">${fic.likes}</span>
+                                    <span class="meta-chat">${fic.commentsCount}</span>
+                                    <span class="meta-eye">${fic.views}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            `;
+                container.innerHTML += ficCard;
+            });
+        }
+
+        function filterFics() {
+            performSearch();
+        }
+
+        function resetFilters() {
+            document.getElementById('filter-title').value = '';
+            document.getElementById('filter-fandom').value = '';
+            document.getElementById('filter-rating').value = '';
+            document.getElementById('filter-status').value = '';
+            displayFics(allFics);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU');
+        }
+
+        // Обработчики
+        document.getElementById('filter-btn')?.addEventListener('click', filterFics);
+        document.getElementById('reset-btn')?.addEventListener('click', resetFilters);
+
+        document.getElementById('filter-title')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                filterFics();
+            }
+        });
+
+        // Загрузка
+        updateNav();
+        loadFics();
+    </script>
 </body>
 
 </html>

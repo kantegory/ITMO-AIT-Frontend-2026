@@ -6,126 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Написать фанфик</title>
+    <title>Написать фанфик | FanFicLib</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <style>
-        body {
-            background: white;
-        }
-
-        .navbar {
-            background: linear-gradient(90deg, #ffa676, #fd7f59);
-        }
-
-        .editor-box {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .toolbar button {
-            margin-right: 5px;
-        }
-
-        textarea {
-            resize: none;
-        }
-
-        .tag {
-            background: #ffdfd1;
-            color: #d84315;
-            padding: 5px 12px;
-            border-radius: 20px;
-            margin-right: 6px;
-            margin-bottom: 6px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            display: inline-block;
-            transition: 0.2s;
-            border: 1px solid transparent;
-        }
-
-        .tag:hover {
-            background: #ffb999;
-            transform: translateY(-2px);
-        }
-
-        .tag-remove {
-            margin-left: 6px;
-            cursor: pointer;
-            color: #d84315;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: 0.2s;
-        }
-
-        .tag-remove:hover {
-            color: #d32f2f;
-            transform: scale(1.2);
-        }
-
-        .tag-input-group {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .tag-input {
-            flex: 1;
-            padding: 8px 12px;
-            border: 1px solid #ced4da;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            transition: 0.2s;
-        }
-
-        .tag-input:focus {
-            border-color: #ff7043;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(255, 112, 67, 0.1);
-        }
-
-        .tag-add-btn {
-            background: #fd835e;
-            border: none;
-            border-radius: 6px;
-            padding: 8px 18px;
-            color: white;
-            transition: 0.2s;
-            white-space: nowrap;
-        }
-
-        .tag-add-btn:hover {
-            background: #f4511e;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(244, 81, 30, 0.2);
-        }
-
-        .btn-main {
-            background: #ff7043;
-            color: white;
-        }
-
-        .btn-main:hover {
-            background: #f4511e;
-        }
-
-        .btn-outline-main {
-            border: 1px solid #ff7043;
-            color: #ff7043;
-            background: transparent;
-        }
-
-        .btn-outline-main:hover {
-            background: #ff7043;
-            color: white;
-        }
-    </style>
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -140,9 +26,9 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
                     <li class="nav-item"><a class="nav-link" href="search.html">Поиск</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="#">Написать фанфик</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="write.html">Написать фанфик</a></li>
                 </ul>
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto" id="navRight">
                     <li class="nav-item"><a class="nav-link" href="profile.html">Профиль</a></li>
                 </ul>
             </div>
@@ -152,11 +38,11 @@
 
     <div class="container mt-4">
 
-        <h2 class="mb-4">Создание фанфика</h2>
+        <h2 class="mb-4" id="pageTitle">Создание фанфика</h2>
 
         <div class="editor-box">
 
-            <form>
+            <form id="ficForm">
 
                 <div class="row">
 
@@ -166,7 +52,7 @@
 
                             <label class="form-label">Название фанфика</label>
 
-                            <input class="form-control" placeholder="Введите название">
+                            <input class="form-control" id="title" placeholder="Введите название" required>
 
                         </div>
 
@@ -178,14 +64,14 @@
 
                             <label class="form-label">Фандом</label>
 
-                            <select class="form-select">
-
-                                <option>Выберите фандом</option>
+                            <select class="form-select" id="fandom" required>
+                                <option value="">Выберите фандом</option>
                                 <option>Harry Potter</option>
                                 <option>Naruto</option>
                                 <option>Marvel</option>
                                 <option>Star Wars</option>
-
+                                <option>Lord of the Rings</option>
+                                <option>Оригинальный</option>
                             </select>
 
                         </div>
@@ -194,67 +80,42 @@
 
                 </div>
 
-
                 <div class="mb-3">
-
                     <label class="form-label">Описание</label>
-
-                    <textarea class="form-control" rows="3"></textarea>
-
+                    <textarea class="form-control" id="description" rows="3" required></textarea>
                 </div>
 
-
                 <div class="row">
-
                     <div class="col-md-4">
-
                         <label class="form-label">Рейтинг</label>
-
-                        <select class="form-select">
-
-                            <option>G</option>
-                            <option>PG</option>
-                            <option>PG-13</option>
-                            <option>R</option>
-
+                        <select class="form-select" id="rating" required>
+                            <option value="G">G</option>
+                            <option value="PG">PG</option>
+                            <option value="PG-13">PG-13</option>
+                            <option value="R">R</option>
                         </select>
-
                     </div>
 
                     <div class="col-md-4">
-
                         <label class="form-label">Статус</label>
-
-                        <select class="form-select">
-
-                            <option>В процессе</option>
-                            <option>Закончен</option>
-
+                        <select class="form-select" id="status">
+                            <option value="in_progress">В процессе</option>
+                            <option value="completed">Закончен</option>
                         </select>
-
                     </div>
-
-                    <div class="col-md-4">
-
-                        <label class="form-label">Обложка</label>
-
-                        <input type="file" class="form-control">
-
-                    </div>
-
                 </div>
 
 
                 <div class="mt-3">
                     <label class="form-label">Метки</label>
-                    
+
                     <div class="tag-input-group">
                         <input type="text" class="tag-input" id="tagInput" placeholder="Введите тег">
                         <button type="button" class="tag-add-btn" id="addTagBtn">
                             Добавить
                         </button>
                     </div>
-                    
+
                     <div class="d-flex flex-wrap align-items-center" id="tagsContainer">
                         <span class="tag" data-tag="романтика">
                             романтика
@@ -281,45 +142,39 @@
                             <span class="tag-remove" onclick="this.parentElement.remove()">×</span>
                         </span>
                     </div>
-                    
+
                     <small class="text-muted mt-2 d-block">
                         <i class="bi bi-info-circle"></i> Нажмите на крестик, чтобы удалить тег
                     </small>
                 </div>
 
-
                 <hr class="mt-4">
 
-
-                <h5>Текст главы</h5>
-
-                <div class="toolbar mb-2">
-
-                    <button type="button" class="btn btn-outline-secondary btn-sm">
-                        <i class="bi bi-type-bold"></i>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">Главы</h5>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="addChapterBtn">
+                        <i class="bi bi-plus-circle"></i> Добавить главу
                     </button>
-
-                    <button type="button" class="btn btn-outline-secondary btn-sm">
-                        <i class="bi bi-type-italic"></i>
-                    </button>
-
-                    <button type="button" class="btn btn-outline-secondary btn-sm">
-                        H1
-                    </button>
-
                 </div>
 
+                <div class="chapter-navigation mb-3" id="chapterNav">
+                    <div class="btn-group btn-group-sm flex-wrap" id="chapterNavButtons">
+                    </div>
+                </div>
 
-                <textarea class="form-control" rows="12" placeholder="Начните писать свою историю..."></textarea>
-
+                <div id="chaptersContainer">
+                </div>
 
                 <div class="mt-4 text-end">
 
-                    <button class="btn btn-outline-main me-2"> Сохранить черновик</button>
-
-                    <button class="btn btn-main">Опубликовать</button>
+                    <button type="button" class="btn btn-outline-main me-2" id="saveDraftBtn">Сохранить
+                        черновик</button>
+                    <button type="submit" class="btn btn-main" id="submitBtn">Опубликовать</button>
 
                 </div>
+
+                <div id="errorMessage" class="alert alert-danger mt-3" style="display: none;"></div>
+                <div id="successMessage" class="alert alert-success mt-3" style="display: none;"></div>
 
             </form>
 
@@ -327,12 +182,510 @@
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
     <footer class="text-center mt-5 p-4">
         <p>© 2026 FanFicLib</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+
+        // Получаем ID из URL (если есть)
+        const urlParams = new URLSearchParams(window.location.search);
+        const ficId = urlParams.get('id');
+        const isEditMode = !!ficId;
+
+        // Проверка авторизации
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        const userData = localStorage.getItem('user') || sessionStorage.getItem('user');
+
+        if (!token || !userData) {
+            window.location.href = 'index.html';
+        }
+
+        let chapterCount = 0;
+        let currentChapterIndex = 0;
+
+        // Настройка интерфейса в зависимости от режима
+        function setupUIMode() {
+            if (isEditMode) {
+                document.getElementById('pageTitle').textContent = 'Редактирование фанфика';
+                document.getElementById('submitBtn').textContent = 'Сохранить изменения';
+            } else {
+                document.getElementById('pageTitle').textContent = 'Создание фанфика';
+                document.getElementById('submitBtn').textContent = 'Опубликовать';
+            }
+        }
+
+        // Парсинг HTML в текст с форматированием
+        function parseContentToChapters(htmlContent) {
+            const chapters = [];
+            const h2Regex = /<h2>(.*?)<\/h2>/g;
+            let lastIndex = 0;
+            let match;
+            const titles = [];
+
+            while ((match = h2Regex.exec(htmlContent)) !== null) {
+                titles.push(match[1]);
+            }
+
+            if (titles.length === 0) {
+                let content = htmlContent
+                    .replace(/<br\s*\/?>/g, '\n')
+                    .replace(/<strong>(.*?)<\/strong>/g, '**$1**')
+                    .replace(/<em>(.*?)<\/em>/g, '*$1*')
+                    .replace(/<[^>]*>/g, '');
+                chapters.push({
+                    title: 'Глава 1',
+                    content: content
+                });
+            } else {
+                let currentPos = 0;
+                for (let i = 0; i < titles.length; i++) {
+                    const titlePattern = new RegExp(`<h2>${escapeRegex(titles[i])}<\\/h2>`, 'i');
+                    const matchObj = titlePattern.exec(htmlContent.substring(currentPos));
+
+                    if (matchObj) {
+                        const startPos = currentPos + matchObj.index + matchObj[0].length;
+                        const endPos = i < titles.length - 1
+                            ? currentPos + htmlContent.substring(currentPos).search(new RegExp(`<h2>${escapeRegex(titles[i + 1])}<\\/h2>`, 'i'))
+                            : htmlContent.length;
+
+                        let content = htmlContent.substring(startPos, endPos)
+                            .replace(/<br\s*\/?>/g, '\n')
+                            .replace(/<strong>(.*?)<\/strong>/g, '**$1**')
+                            .replace(/<em>(.*?)<\/em>/g, '*$1*')
+                            .replace(/<[^>]*>/g, '')
+                            .trim();
+
+                        chapters.push({
+                            title: titles[i],
+                            content: content
+                        });
+                        currentPos = endPos;
+                    }
+                }
+            }
+
+            return chapters;
+        }
+
+        function escapeRegex(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function buildFullContent() {
+            const chapters = document.querySelectorAll('.chapter-card');
+            let fullContent = '';
+
+            chapters.forEach((chapter, idx) => {
+                const titleInput = chapter.querySelector(`input[id^="chapterTitle"]`);
+                const contentTextarea = chapter.querySelector(`textarea[id^="chapterContent"]`);
+
+                const title = titleInput ? titleInput.value : `Глава ${idx + 1}`;
+                let content = contentTextarea ? contentTextarea.value : '';
+
+                if (content.trim()) {
+                    fullContent += `<h2>${escapeHtml(title)}</h2>\n`;
+                    let formattedContent = content
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                        .replace(/\n/g, '<br>');
+                    fullContent += formattedContent;
+                    fullContent += '\n\n';
+                }
+            });
+
+            return fullContent;
+        }
+
+        function switchChapter(index) {
+            document.querySelectorAll('.chapter-card').forEach(card => {
+                card.style.display = 'none';
+            });
+
+            const selectedCard = document.querySelector(`.chapter-card[data-chapter-index="${index}"]`);
+            if (selectedCard) {
+                selectedCard.style.display = 'block';
+                currentChapterIndex = index;
+            }
+
+            document.querySelectorAll('#chapterNavButtons .btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.backgroundColor = '';
+                btn.style.borderColor = '';
+                btn.style.color = '';
+            });
+
+            const activeBtn = document.querySelector(`#chapterNavButtons .btn[data-chapter="${index}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+                activeBtn.style.backgroundColor = '#ff7043';
+                activeBtn.style.borderColor = '#ff7043';
+                activeBtn.style.color = 'white';
+            }
+        }
+
+        function updateChapterNavigation() {
+            const navContainer = document.getElementById('chapterNavButtons');
+            const chapters = document.querySelectorAll('.chapter-card');
+
+            navContainer.innerHTML = '';
+
+            chapters.forEach((chapter, idx) => {
+                const titleInput = chapter.querySelector(`input[id^="chapterTitle"]`);
+                const title = titleInput ? titleInput.value : `Глава ${idx + 1}`;
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `btn btn-outline-primary btn-sm ${idx === currentChapterIndex ? 'active' : ''}`;
+                btn.setAttribute('data-chapter', idx);
+                btn.textContent = title.length > 20 ? title.substring(0, 17) + '...' : title;
+                btn.onclick = () => switchChapter(idx);
+                navContainer.appendChild(btn);
+            });
+        }
+
+        function formatText(chapterIndex, type) {
+            const textarea = document.getElementById(`chapterContent${chapterIndex}`);
+            if (!textarea) return;
+
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const text = textarea.value;
+            let selectedText = text.substring(start, end);
+            let formattedText = '';
+
+            if (type === 'bold') {
+                formattedText = `**${selectedText}**`;
+            } else if (type === 'italic') {
+                formattedText = `*${selectedText}*`;
+            } else if (type === 'heading') {
+                formattedText = `\n<h2>${selectedText || 'Название главы'}</h2>\n`;
+            }
+
+            const newText = text.substring(0, start) + formattedText + text.substring(end);
+            textarea.value = newText;
+            textarea.focus();
+        }
+
+        function addChapter() {
+            const container = document.getElementById('chaptersContainer');
+            const chapterIndex = chapterCount;
+
+            const chapterHtml = `
+                <div class="chapter-card" data-chapter-index="${chapterIndex}" style="display: none;">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <input type="text" class="form-control form-control-sm w-50" placeholder="Название главы" id="chapterTitle${chapterIndex}" value="Глава ${chapterCount + 1}">
+                            <button type="button" class="btn btn-danger btn-sm" onclick="removeChapter(${chapterIndex})">Удалить</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="toolbar mb-2">
+                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="formatText(${chapterIndex}, 'bold')">
+                                    <i class="bi bi-type-bold"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="formatText(${chapterIndex}, 'italic')">
+                                    <i class="bi bi-type-italic"></i>
+                                </button>
+                            </div>
+                            <textarea class="form-control chapter-content" id="chapterContent${chapterIndex}" rows="12" placeholder="Напишите текст главы..." style="font-family: monospace; white-space: pre-wrap;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.insertAdjacentHTML('beforeend', chapterHtml);
+            updateChapterNavigation();
+            switchChapter(chapterIndex);
+            chapterCount++;
+        }
+
+        function removeChapter(chapterIndex) {
+            const chapters = document.querySelectorAll('.chapter-card');
+            if (chapters.length <= 1) {
+                alert('Нельзя удалить единственную главу');
+                return;
+            }
+
+            const chapter = document.querySelector(`.chapter-card[data-chapter-index="${chapterIndex}"]`);
+            if (chapter) {
+                chapter.remove();
+
+                const remainingChapters = document.querySelectorAll('.chapter-card');
+                remainingChapters.forEach((ch, idx) => {
+                    ch.setAttribute('data-chapter-index', idx);
+                    const titleInput = ch.querySelector('input[id^="chapterTitle"]');
+                    const contentTextarea = ch.querySelector('textarea[id^="chapterContent"]');
+                    if (titleInput) titleInput.id = `chapterTitle${idx}`;
+                    if (contentTextarea) contentTextarea.id = `chapterContent${idx}`;
+                });
+
+                chapterCount = remainingChapters.length;
+                updateChapterNavigation();
+
+                if (currentChapterIndex === chapterIndex || currentChapterIndex >= remainingChapters.length) {
+                    switchChapter(0);
+                } else {
+                    switchChapter(currentChapterIndex);
+                }
+            }
+        }
+
+        function getTags() {
+            const tags = [];
+            const tagElements = document.querySelectorAll('#tagsContainer .tag');
+            tagElements.forEach(tag => {
+                const tagName = tag.getAttribute('data-tag');
+                if (tagName) tags.push(tagName);
+            });
+            return tags;
+        }
+
+        function addTag() {
+            const tagInput = document.getElementById('tagInput');
+            const tagValue = tagInput.value.trim().toLowerCase();
+            if (tagValue === '') return;
+
+            const existingTags = getTags();
+            if (existingTags.includes(tagValue)) {
+                alert('Такой тег уже добавлен');
+                tagInput.value = '';
+                return;
+            }
+
+            const tagsContainer = document.getElementById('tagsContainer');
+            const newTag = document.createElement('span');
+            newTag.className = 'tag';
+            newTag.setAttribute('data-tag', tagValue);
+            newTag.innerHTML = `${tagValue}<span class="tag-remove" onclick="this.parentElement.remove()">×</span>`;
+            tagsContainer.appendChild(newTag);
+            tagInput.value = '';
+        }
+
+        // Загрузка данных для редактирования
+        async function loadFicData() {
+            try {
+                const response = await fetch(`${API_URL}/fics/${ficId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const fic = data.fic;
+
+                    document.getElementById('title').value = fic.title;
+                    document.getElementById('fandom').value = fic.fandom;
+                    document.getElementById('description').value = fic.description;
+                    document.getElementById('rating').value = fic.rating;
+                    document.getElementById('status').value = fic.status;
+
+                    const tagsContainer = document.getElementById('tagsContainer');
+                    tagsContainer.innerHTML = '';
+                    fic.tags.forEach(tag => {
+                        const tagSpan = document.createElement('span');
+                        tagSpan.className = 'tag';
+                        tagSpan.setAttribute('data-tag', tag);
+                        tagSpan.innerHTML = `${tag}<span class="tag-remove" onclick="this.parentElement.remove()">×</span>`;
+                        tagsContainer.appendChild(tagSpan);
+                    });
+
+                    const chapters = parseContentToChapters(fic.content);
+                    const container = document.getElementById('chaptersContainer');
+                    container.innerHTML = '';
+
+                    chapters.forEach((chapter, idx) => {
+                        const chapterHtml = `
+                            <div class="chapter-card" data-chapter-index="${idx}" style="display: none;">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <input type="text" class="form-control form-control-sm w-50" placeholder="Название главы" id="chapterTitle${idx}" value="${escapeHtml(chapter.title)}">
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="removeChapter(${idx})">Удалить</button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="toolbar mb-2">
+                                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="formatText(${idx}, 'bold')">
+                                                <i class="bi bi-type-bold"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="formatText(${idx}, 'italic')">
+                                                <i class="bi bi-type-italic"></i>
+                                            </button>
+                                        </div>
+                                        <textarea class="form-control chapter-content" id="chapterContent${idx}" rows="12" placeholder="Напишите текст главы..." style="font-family: monospace; white-space: pre-wrap;">${escapeHtml(chapter.content)}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        container.insertAdjacentHTML('beforeend', chapterHtml);
+                    });
+
+                    chapterCount = chapters.length;
+                    updateChapterNavigation();
+                    if (chapterCount > 0) switchChapter(0);
+
+                } else {
+                    showError('Фанфик не найден');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showError('Ошибка загрузки фанфика');
+            }
+        }
+
+        // Сохранение фанфика
+        async function saveFic(isDraft = false) {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+
+            const title = document.getElementById('title').value.trim();
+            const fandom = document.getElementById('fandom').value;
+            const description = document.getElementById('description').value.trim();
+            const rating = document.getElementById('rating').value;
+            const tags = getTags();
+            const content = buildFullContent();
+
+            let status;
+            if (isDraft) {
+                status = 'draft';
+            } else {
+                status = document.getElementById('status').value;
+            }
+
+            if (!title) { showError('Введите название фанфика'); return; }
+            if (!fandom) { showError('Выберите фандом'); return; }
+            if (!description) { showError('Введите описание'); return; }
+            if (!content.trim()) { showError('Введите текст хотя бы одной главы'); return; }
+            if (tags.length === 0) { showError('Добавьте хотя бы один тег'); return; }
+
+            try {
+                let url = `${API_URL}/fics`;
+                let method = 'POST';
+                
+                if (isEditMode) {
+                    url = `${API_URL}/fics/${ficId}`;
+                    method = 'PUT';
+                }
+
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ title, fandom, description, rating, content, tags, status })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    const message = status === 'draft' ? 'Черновик сохранен!' : (isEditMode ? 'Изменения сохранены!' : 'Фанфик успешно опубликован!');
+                    document.getElementById('successMessage').textContent = message + ' Перенаправление...';
+                    document.getElementById('successMessage').style.display = 'block';
+
+                    setTimeout(() => {
+                        window.location.href = `fic.html?id=${data.id || ficId}`;
+                    }, 2000);
+                } else {
+                    showError(data.error || 'Ошибка при сохранении');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showError('Ошибка подключения к серверу');
+            }
+        }
+
+        function showError(message) {
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorMessage').style.display = 'block';
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function updateNav() {
+            const navRight = document.getElementById('navRight');
+            const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+            const user = localStorage.getItem('user') || sessionStorage.getItem('user');
+
+            if (token && user) {
+                navRight.innerHTML = `
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Профиль</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" id="logoutBtn">Выйти</a></li>
+                `;
+                document.getElementById('logoutBtn')?.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    sessionStorage.removeItem('token');
+                    sessionStorage.removeItem('user');
+                    window.location.href = 'index.html';
+                });
+            } else {
+                navRight.innerHTML = `
+                    <li class="nav-item"><a class="nav-link" href="login.html">Вход</a></li>
+                    <li class="nav-item"><a class="nav-link" href="register.html">Регистрация</a></li>
+                `;
+            }
+        }
+
+        // Инициализация
+        setupUIMode();
+        updateNav();
+        
+        if (isEditMode) {
+            loadFicData();
+        } else {
+            const container = document.getElementById('chaptersContainer');
+            const chapterHtml = `
+                <div class="chapter-card" data-chapter-index="0">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <input type="text" class="form-control form-control-sm w-50" placeholder="Название главы" id="chapterTitle0" value="Глава 1">
+                            <button type="button" class="btn btn-danger btn-sm" onclick="removeChapter(0)" style="display: none;">Удалить</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="toolbar mb-2">
+                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="formatText(0, 'bold')">
+                                    <i class="bi bi-type-bold"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="formatText(0, 'italic')">
+                                    <i class="bi bi-type-italic"></i>
+                                </button>
+                            </div>
+                            <textarea class="form-control chapter-content" id="chapterContent0" rows="12" placeholder="Напишите текст главы..." style="font-family: monospace; white-space: pre-wrap;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = chapterHtml;
+            chapterCount = 1;
+            updateChapterNavigation();
+            switchChapter(0);
+        }
+
+        // Обработчики
+        document.getElementById('addTagBtn').addEventListener('click', addTag);
+        document.getElementById('tagInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') { e.preventDefault(); addTag(); }
+        });
+        document.getElementById('addChapterBtn').addEventListener('click', addChapter);
+        document.getElementById('ficForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await saveFic(false);
+        });
+        document.getElementById('saveDraftBtn').addEventListener('click', async () => {
+            await saveFic(true);
+        });
+
+        // Делаем функции глобальными
+        window.removeChapter = removeChapter;
+        window.formatText = formatText;
+        window.switchChapter = switchChapter;
+    </script>
 </body>
 
 </html>
