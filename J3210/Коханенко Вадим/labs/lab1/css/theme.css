@@ -1,0 +1,244 @@
+/* Основное */
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-card: #ffffff;
+    --bg-input: #ffffff;
+    --bg-footer: #f8f9fa;
+    
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --text-muted: #6c757d;
+    
+    --border-color: rgba(0, 0, 0, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --shadow-hover: rgba(0, 0, 0, 0.25);
+    
+    --bs-body-bg: #ffffff;
+    --bs-body-color: #212529;
+    --bs-light-bg-subtle: #f8f9fa;
+    --bs-dark-bg-subtle: #e9ecef;
+}
+
+[data-theme="dark"] {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --bg-card: #2d2d2d;
+    --bg-input: #3d3d3d;
+    --bg-footer: #2d2d2d;
+    
+    --text-primary: #e9ecef;
+    --text-secondary: #adb5bd;
+    --text-muted: #adb5bd;
+    
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --shadow-hover: rgba(0, 0, 0, 0.4);
+    
+    --bs-body-bg: #1a1a1a;
+    --bs-body-color: #e9ecef;
+    --bs-light-bg-subtle: #2d2d2d;
+    --bs-dark-bg-subtle: #3d3d3d;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.bg-light {
+    background-color: var(--bg-secondary) !important;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* Карточки */
+.card, .stat-card, .info-card, .note-card, .route-card, .destination-card {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+.card:hover, .stat-card:hover, .note-card:hover, .route-card:hover, .destination-card:hover {
+    box-shadow: 0 5px 15px var(--shadow-hover);
+}
+
+.card-header {
+    background-color: var(--bg-card);
+    border-bottom-color: var(--border-color);
+}
+
+/* Фильтры и формы */
+.filter-section, .empty-state {
+    background-color: var(--bg-card);
+}
+
+.empty-state {
+    background-color: var(--bg-secondary);
+}
+
+.form-control, .form-select, .input-group-text {
+    background-color: var(--bg-input);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border-color: var(--bs-green);
+    box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+/* Кнопки */
+.btn-outline-success {
+    color: var(--bs-green);
+    border-color: var(--bs-green);
+}
+
+.btn-outline-success:hover {
+    background-color: var(--bs-green);
+    border-color: var(--bs-green);
+    color: white;
+}
+
+.btn-outline-secondary {
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+/* Навигация  */
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: white;
+}
+
+/* Табы и бейджи */
+.nav-tabs {
+    border-bottom-color: var(--border-color);
+}
+
+.nav-tabs .nav-link {
+    color: var(--text-secondary);
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.nav-tabs .nav-link.active {
+    background-color: var(--bg-primary);
+    border-color: var(--border-color);
+    border-bottom-color: var(--bg-primary);
+    color: var(--bs-green);
+}
+
+.badge.bg-light.text-dark {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+}
+
+.badge.bg-light.text-dark:hover {
+    background-color: var(--bg-secondary);
+}
+
+/* Модалки */
+.modal-content {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+.modal-header {
+    border-bottom-color: var(--border-color);
+}
+
+.modal-footer {
+    border-top-color: var(--border-color);
+}
+
+.btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* Футер */
+footer.bg-light {
+    background-color: var(--bg-footer) !important;
+}
+
+footer.bg-light p {
+    color: var(--text-secondary);
+}
+
+/* Верхние секции */
+[data-theme="dark"] .welcome-section {
+    background: var(--bg-card);
+}
+
+[data-theme="dark"] .hero-search {
+    background: var(--bg-card);
+}
+
+/* Кнопка переключения темы */
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    margin-left: 10px;
+}
+
+.theme-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.theme-toggle-btn i {
+    font-size: 1rem;
+}
+
+/* Страница направлений */
+.destination-hero-overlay {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.175));
+}
+
+.quick-info-icon {
+    color: var(--bs-green);
+}
+
+/* Скроллбар  */
+[data-theme="dark"] ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 5px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
