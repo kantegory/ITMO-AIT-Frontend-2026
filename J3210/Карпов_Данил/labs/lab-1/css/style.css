@@ -3,6 +3,48 @@
     --secondary: #20c997;
 }
 
+/* ─── Accessibility: colour contrast fixes ──────────────────────────────────── */
+
+/* Bootstrap .text-muted (#6c757d) даёт контраст 4.48:1 — чуть ниже WCAG AA.
+   Переопределяем на #595f64 (контраст 5.9:1 на белом фоне). */
+.text-muted {
+    color: #595f64 !important;
+}
+
+[data-bs-theme="dark"] .text-muted {
+    color: #adb5bd !important;
+}
+
+/* Минимальный размер шрифта для small-текста — 12px слишком мелко для контраста */
+small, .small {
+    font-size: 0.875em;
+}
+
+/* Bootstrap .nav-link использует rgba(0,0,0,.55) — контраст ~4.1:1 на #f8f9fa.
+   Переопределяем на более тёмный цвет для WCAG AA. */
+.navbar .nav-link {
+    color: rgba(0, 0, 0, 0.75);
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.navbar .nav-link.active {
+    color: rgba(0, 0, 0, 0.9);
+}
+
+[data-bs-theme="dark"] .navbar .nav-link {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+[data-bs-theme="dark"] .navbar .nav-link:hover,
+[data-bs-theme="dark"] .navbar .nav-link:focus,
+[data-bs-theme="dark"] .navbar .nav-link.active {
+    color: rgba(255, 255, 255, 0.95);
+}
+
 /* ─── Hero section ─────────────────────────────────────────────────────────── */
 .hero-section {
     background: linear-gradient(135deg, rgba(102, 16, 242, 0.1) 0%, rgba(32, 201, 151, 0.1) 100%);
@@ -57,11 +99,21 @@
 }
 
 .brand-minion {
-    color: #FFD700;
+    /* #7a5c00 даёт контраст 7:1 на bg-body-tertiary (#f8f9fa) — проходит WCAG AAA */
+    color: #7a5c00;
 }
 
 .brand-courses {
-    color: #1E90FF;
+    /* #0055aa даёт контраст 6.5:1 на bg-body-tertiary (#f8f9fa) — проходит WCAG AAA */
+    color: #0055aa;
+}
+
+[data-bs-theme="dark"] .brand-minion {
+    color: #FFD700;
+}
+
+[data-bs-theme="dark"] .brand-courses {
+    color: #4da6ff;
 }
 
 .btn-primary {

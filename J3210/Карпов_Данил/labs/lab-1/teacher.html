@@ -3,49 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Кабинет преподавателя Minion Courses — управление курсами и просмотр статистики.">
     <title>Кабинет преподавателя - Minion Courses</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <a href="#main-content" class="visually-hidden-focusable btn btn-primary position-absolute top-0 start-0 m-2">
+        Перейти к основному содержимому
+    </a>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" role="navigation" aria-label="Основная навигация">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <i class="bi bi-mortarboard-fill"></i> <span class="brand-minion">Minion</span> <span class="brand-courses">Courses</span>
+            <a class="navbar-brand" href="index.html" aria-label="Minion Courses — на главную">
+                <i class="bi bi-mortarboard-fill" aria-hidden="true"></i> <span class="brand-minion">Minion</span> <span class="brand-courses">Courses</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Открыть меню навигации">
+                <span class="navbar-toggler-icon" aria-hidden="true"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
+                <ul class="navbar-nav me-auto" role="list">
+                    <li class="nav-item" role="listitem">
                         <a class="nav-link" href="search.html">Каталог</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="teacher.html">Мой кабинет</a>
+                    <li class="nav-item" role="listitem">
+                        <a class="nav-link active" href="teacher.html" aria-current="page">Мой кабинет</a>
                     </li>
                 </ul>
                 <div class="d-flex align-items-center gap-3">
-                    <span class="theme-toggle" onclick="toggleTheme()">
-                        <i class="bi bi-moon-fill" id="themeIcon"></i>
-                    </span>
+                    <button class="theme-toggle btn btn-link p-0 border-0"
+                            onclick="toggleTheme()"
+                            aria-label="Переключить тему оформления"
+                            title="Переключить тему">
+                        <i class="bi bi-moon-fill" id="themeIcon" aria-hidden="true"></i>
+                    </button>
                     <!-- Кнопки для неавторизованных -->
-                    <div id="authButtons" class="d-flex gap-2">
+                    <div id="authButtons" class="d-flex gap-2" role="group" aria-label="Действия авторизации">
                         <a href="login.html" class="btn btn-outline-primary btn-sm">Войти</a>
                         <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
                     </div>
                     <!-- Дропдаун для авторизованных -->
                     <div id="userDropdown" class="dropdown d-none">
-                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle fs-4 me-2"></i>
+                        <button type="button" class="btn btn-link d-flex align-items-center text-decoration-none dropdown-toggle p-0 border-0"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false"
+                           aria-label="Меню пользователя">
+                            <i class="bi bi-person-circle fs-4 me-2" aria-hidden="true"></i>
                             <span id="userDropdownName" class="d-none d-md-inline"></span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person me-2"></i>Мой профиль</a></li>
-                            <li><a class="dropdown-item active" href="teacher.html"><i class="bi bi-easel me-2"></i>Кабинет преподавателя</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="bi bi-box-arrow-right me-2"></i>Выйти</a></li>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" role="menu">
+                            <li role="none"><a class="dropdown-item" href="profile.html" role="menuitem"><i class="bi bi-person me-2" aria-hidden="true"></i>Мой профиль</a></li>
+                            <li role="none"><a class="dropdown-item active" href="teacher.html" role="menuitem" aria-current="page"><i class="bi bi-easel me-2" aria-hidden="true"></i>Кабинет преподавателя</a></li>
+                            <li role="none"><hr class="dropdown-divider" aria-hidden="true"></li>
+                            <li role="none"><a class="dropdown-item text-danger" href="#" role="menuitem" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="bi bi-box-arrow-right me-2" aria-hidden="true"></i>Выйти</a></li>
                         </ul>
                     </div>
                 </div>
@@ -53,121 +69,165 @@
         </div>
     </nav>
 
-    <main class="container py-4">
+    <main class="container py-4" id="main-content">
 
         <!-- Алерт для неавторизованных -->
-        <div id="notAuthAlert" class="alert alert-warning d-none">
-            <i class="bi bi-lock me-2"></i>
+        <div id="notAuthAlert" class="alert alert-warning d-none" role="alert">
+            <i class="bi bi-lock me-2" aria-hidden="true"></i>
             Кабинет преподавателя доступен только авторизованным пользователям.
             <a href="login.html" class="alert-link">Войти</a>
         </div>
 
         <div id="teacherContent" class="row">
+            <!-- Боковая панель преподавателя -->
             <div class="col-lg-3 mb-4">
-                <div class="card p-4 text-center">
-                    <i class="bi bi-person-circle text-primary mb-2" style="font-size:4rem;"></i>
-                    <h5 id="teacherName">—</h5>
+                <section class="card p-4 text-center" aria-labelledby="teacher-name">
+                    <i class="bi bi-person-circle text-primary mb-2" style="font-size:4rem;" aria-hidden="true"></i>
+                    <h1 class="h5" id="teacherName">—</h1>
                     <p class="text-muted small" id="teacherEmail">—</p>
-                    <span class="badge bg-warning text-dark">🎓 Преподаватель</span>
-                </div>
+                    <span class="badge bg-warning text-dark"><span aria-hidden="true">🎓</span> Преподаватель</span>
+                </section>
 
-                <div class="card p-3 mt-3">
-                    <div class="list-group list-group-flush">
-                        <a href="#" class="list-group-item list-group-item-action active">
-                            <i class="bi bi-grid me-2"></i>Мои курсы
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <i class="bi bi-bar-chart me-2"></i>Статистика
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <i class="bi bi-gear me-2"></i>Настройки
-                        </a>
+                <nav class="card p-3 mt-3" aria-label="Навигация по кабинету преподавателя">
+                    <div class="list-group list-group-flush" role="list">
+                        <button type="button" class="list-group-item list-group-item-action active"
+                           role="listitem"
+                           aria-current="true"
+                           aria-label="Мои курсы (текущий раздел)">
+                            <i class="bi bi-grid me-2" aria-hidden="true"></i>Мои курсы
+                        </button>
+                        <button type="button" class="list-group-item list-group-item-action" role="listitem" aria-label="Статистика (в разработке)" disabled>
+                            <i class="bi bi-bar-chart me-2" aria-hidden="true"></i>Статистика
+                        </button>
+                        <button type="button" class="list-group-item list-group-item-action" role="listitem" aria-label="Настройки (в разработке)" disabled>
+                            <i class="bi bi-gear me-2" aria-hidden="true"></i>Настройки
+                        </button>
                     </div>
-                </div>
+                </nav>
             </div>
 
+            <!-- Основной контент -->
             <div class="col-lg-9">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3>Мои курсы</h3>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newCourseModal">
-                        <i class="bi bi-plus-lg me-1"></i>Создать курс
+                    <h2>Мои курсы</h2>
+                    <button class="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#newCourseModal"
+                            aria-haspopup="dialog">
+                        <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>Создать курс
                     </button>
                 </div>
 
                 <!-- Статистика -->
-                <div id="statsLoading" class="row mb-4">
-                    <div class="col-md-4"><div class="card p-3 text-center skeleton-card"><div class="skeleton-line w-50 mx-auto mb-1" style="height:28px;"></div><div class="skeleton-line w-75 mx-auto" style="height:12px;"></div></div></div>
-                    <div class="col-md-4"><div class="card p-3 text-center skeleton-card"><div class="skeleton-line w-50 mx-auto mb-1" style="height:28px;"></div><div class="skeleton-line w-75 mx-auto" style="height:12px;"></div></div></div>
-                    <div class="col-md-4"><div class="card p-3 text-center skeleton-card"><div class="skeleton-line w-50 mx-auto mb-1" style="height:28px;"></div><div class="skeleton-line w-75 mx-auto" style="height:12px;"></div></div></div>
-                </div>
-                <div id="statsContainer" class="row mb-4 d-none">
-                    <div class="col-md-4">
-                        <div class="card p-3 text-center">
-                            <div class="fs-3 fw-bold text-primary" id="statCourses">—</div>
-                            <small class="text-muted">Курсов</small>
+                <section aria-labelledby="stats-heading" class="mb-4">
+                    <h3 class="visually-hidden" id="stats-heading">Статистика преподавателя</h3>
+                    <div id="statsLoading" class="row" role="status" aria-label="Загрузка статистики">
+                        <div class="col-md-4"><div class="card p-3 text-center skeleton-card" aria-hidden="true"><div class="skeleton-line w-50 mx-auto mb-1" style="height:28px;"></div><div class="skeleton-line w-75 mx-auto" style="height:12px;"></div></div></div>
+                        <div class="col-md-4"><div class="card p-3 text-center skeleton-card" aria-hidden="true"><div class="skeleton-line w-50 mx-auto mb-1" style="height:28px;"></div><div class="skeleton-line w-75 mx-auto" style="height:12px;"></div></div></div>
+                        <div class="col-md-4"><div class="card p-3 text-center skeleton-card" aria-hidden="true"><div class="skeleton-line w-50 mx-auto mb-1" style="height:28px;"></div><div class="skeleton-line w-75 mx-auto" style="height:12px;"></div></div></div>
+                    </div>
+                    <div id="statsContainer" class="row d-none" aria-live="polite">
+                        <div class="col-md-4">
+                            <div class="card p-3 text-center">
+                                <dl class="mb-0">
+                                    <dt class="visually-hidden">Количество курсов</dt>
+                                    <dd class="fs-3 fw-bold text-primary mb-0" id="statCourses">—</dd>
+                                    <small class="text-muted" aria-hidden="true">Курсов</small>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card p-3 text-center">
+                                <dl class="mb-0">
+                                    <dt class="visually-hidden">Количество студентов</dt>
+                                    <dd class="fs-3 fw-bold text-primary mb-0" id="statStudents">—</dd>
+                                    <small class="text-muted" aria-hidden="true">Студентов</small>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card p-3 text-center">
+                                <dl class="mb-0">
+                                    <dt class="visually-hidden">Средний рейтинг</dt>
+                                    <dd class="fs-3 fw-bold text-primary mb-0" id="statRating">—</dd>
+                                    <small class="text-muted" aria-hidden="true">Средний рейтинг</small>
+                                </dl>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card p-3 text-center">
-                            <div class="fs-3 fw-bold text-primary" id="statStudents">—</div>
-                            <small class="text-muted">Студентов</small>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card p-3 text-center">
-                            <div class="fs-3 fw-bold text-primary" id="statRating">—</div>
-                            <small class="text-muted">Средний рейтинг</small>
-                        </div>
-                    </div>
-                </div>
+                </section>
 
                 <!-- Курсы преподавателя -->
-                <div id="coursesLoading">
-                    <div class="card mb-3 skeleton-card"><div class="row g-0"><div class="col-md-3 skeleton-img-sm"></div><div class="col-md-9 p-3"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
-                    <div class="card mb-3 skeleton-card"><div class="row g-0"><div class="col-md-3 skeleton-img-sm"></div><div class="col-md-9 p-3"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
-                </div>
-                <div id="coursesContainer"></div>
+                <section aria-labelledby="teacher-courses-heading">
+                    <h3 class="visually-hidden" id="teacher-courses-heading">Список курсов</h3>
+                    <div id="coursesLoading" role="status" aria-label="Загрузка курсов">
+                        <div class="card mb-3 skeleton-card" aria-hidden="true"><div class="row g-0"><div class="col-md-3 skeleton-img-sm"></div><div class="col-md-9 p-3"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
+                        <div class="card mb-3 skeleton-card" aria-hidden="true"><div class="row g-0"><div class="col-md-3 skeleton-img-sm"></div><div class="col-md-9 p-3"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
+                    </div>
+                    <div id="coursesContainer" aria-live="polite" aria-atomic="false"></div>
+                </section>
             </div>
         </div>
     </main>
 
     <!-- Модалка создания курса -->
-    <div class="modal fade" id="newCourseModal" tabindex="-1">
+    <div class="modal fade" id="newCourseModal" tabindex="-1"
+         role="dialog"
+         aria-labelledby="newCourseModalLabel"
+         aria-modal="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Создать новый курс</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h2 class="modal-title h5" id="newCourseModalLabel">Создать новый курс</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть форму создания курса"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="newCourseForm">
+                    <form id="newCourseForm" aria-labelledby="newCourseModalLabel" novalidate>
                         <div class="mb-3">
-                            <label class="form-label">Название курса</label>
-                            <input type="text" class="form-control" id="newCourseTitle" placeholder="Введите название" required>
+                            <label for="newCourseTitle" class="form-label">Название курса <span aria-hidden="true" class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="newCourseTitle"
+                                   placeholder="Введите название"
+                                   required
+                                   aria-required="true"
+                                   aria-describedby="newCourseTitle-error">
+                            <div class="invalid-feedback" id="newCourseTitle-error" role="alert">Введите название курса</div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Категория</label>
-                            <select class="form-select" id="newCourseCategory">
+                            <label for="newCourseCategory" class="form-label">Категория</label>
+                            <select class="form-select" id="newCourseCategory" aria-label="Выберите категорию курса">
                                 <option value="programming">Программирование</option>
                                 <option value="design">Дизайн</option>
                                 <option value="data">Data Science</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Описание</label>
-                            <textarea class="form-control" id="newCourseDesc" rows="3" placeholder="Краткое описание курса" required></textarea>
+                            <label for="newCourseDesc" class="form-label">Описание <span aria-hidden="true" class="text-danger">*</span></label>
+                            <textarea class="form-control" id="newCourseDesc"
+                                      rows="3"
+                                      placeholder="Краткое описание курса"
+                                      required
+                                      aria-required="true"
+                                      aria-describedby="newCourseDesc-error"></textarea>
+                            <div class="invalid-feedback" id="newCourseDesc-error" role="alert">Введите описание курса</div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Цена (₽)</label>
-                            <input type="number" class="form-control" id="newCoursePrice" placeholder="0 = бесплатно" min="0" value="0">
+                            <label for="newCoursePrice" class="form-label">Цена (₽)</label>
+                            <input type="number" class="form-control" id="newCoursePrice"
+                                   placeholder="0 = бесплатно"
+                                   min="0"
+                                   value="0"
+                                   aria-describedby="newCoursePrice-hint">
+                            <div class="form-text" id="newCoursePrice-hint">Введите 0, чтобы сделать курс бесплатным</div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-primary" onclick="createCourse()">
+                    <button type="button" class="btn btn-primary" onclick="createCourse()" aria-live="polite">
                         <span id="createBtnText">Создать</span>
-                        <span id="createBtnSpinner" class="spinner-border spinner-border-sm d-none ms-1"></span>
+                        <span id="createBtnSpinner" class="spinner-border spinner-border-sm d-none ms-1"
+                              role="status"
+                              aria-label="Создание курса..."></span>
                     </button>
                 </div>
             </div>
@@ -175,15 +235,19 @@
     </div>
 
     <!-- Модалка выхода -->
-    <div class="modal fade" id="logoutModal" tabindex="-1">
+    <div class="modal fade" id="logoutModal" tabindex="-1"
+         role="dialog"
+         aria-labelledby="logoutModalLabel"
+         aria-describedby="logoutModalDesc"
+         aria-modal="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Выход</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="logoutModalLabel">Выход</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть диалог выхода"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Вы уверены, что хотите выйти из аккаунта?</p>
+                    <p id="logoutModalDesc">Вы уверены, что хотите выйти из аккаунта?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
@@ -204,40 +268,40 @@
                 : `<span class="badge bg-primary">${course.price.toLocaleString('ru-RU')} ₽</span>`;
 
             return `
-                <div class="card mb-3">
+                <article class="card mb-3">
                     <div class="row g-0">
                         <div class="col-md-3">
                             <img src="${course.image}" class="img-fluid rounded-start h-100"
                                  style="object-fit:cover; min-height:120px;"
-                                 alt="${course.title}"
+                                 alt="${course.title} — обложка курса"
                                  onerror="this.src='https://placehold.co/300x120/6610f2/white?text=Course'">
                         </div>
                         <div class="col-md-9">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-start mb-1">
-                                    <h5 class="card-title mb-0">${course.title}</h5>
+                                    <h3 class="card-title h5 mb-0">${course.title}</h3>
                                     ${statusBadge}
                                 </div>
                                 <p class="text-muted small mb-2">
-                                    <i class="bi bi-people me-1"></i>${course.studentsCount.toLocaleString('ru-RU')} студентов
+                                    <i class="bi bi-people me-1" aria-hidden="true"></i>${course.studentsCount.toLocaleString('ru-RU')} студентов
                                     &nbsp;•&nbsp;
-                                    <i class="bi bi-star-fill text-warning me-1"></i>${course.rating} (${course.reviewsCount} отзывов)
+                                    <i class="bi bi-star-fill text-warning me-1" aria-hidden="true"></i>${course.rating} (${course.reviewsCount} отзывов)
                                 </p>
-                                <div class="d-flex gap-2 flex-wrap">
-                                    <button class="btn btn-outline-primary btn-sm">
-                                        <i class="bi bi-pencil me-1"></i>Редактировать
+                                <div class="d-flex gap-2 flex-wrap" role="group" aria-label="Действия с курсом «${course.title}»">
+                                    <button class="btn btn-outline-primary btn-sm" aria-label="Редактировать курс «${course.title}»">
+                                        <i class="bi bi-pencil me-1" aria-hidden="true"></i>Редактировать
                                     </button>
-                                    <a href="course.html?id=${course.id}" class="btn btn-outline-secondary btn-sm">
-                                        <i class="bi bi-eye me-1"></i>Просмотр
+                                    <a href="course.html?id=${course.id}" class="btn btn-outline-secondary btn-sm" aria-label="Просмотреть курс «${course.title}»">
+                                        <i class="bi bi-eye me-1" aria-hidden="true"></i>Просмотр
                                     </a>
-                                    <button class="btn btn-outline-danger btn-sm">
-                                        <i class="bi bi-eye-slash me-1"></i>Скрыть
+                                    <button class="btn btn-outline-danger btn-sm" aria-label="Скрыть курс «${course.title}»">
+                                        <i class="bi bi-eye-slash me-1" aria-hidden="true"></i>Скрыть
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </article>
             `;
         }
 
@@ -274,7 +338,7 @@
                 document.getElementById('coursesLoading').classList.add('d-none');
                 if (courses.length === 0) {
                     document.getElementById('coursesContainer').innerHTML =
-                        '<div class="text-center py-4 text-muted"><i class="bi bi-journal-x" style="font-size:2rem;"></i><p class="mt-2">У вас пока нет курсов. Создайте первый!</p></div>';
+                        '<div class="text-center py-4 text-muted" role="status"><i class="bi bi-journal-x" style="font-size:2rem;" aria-hidden="true"></i><p class="mt-2">У вас пока нет курсов. Создайте первый!</p></div>';
                 } else {
                     document.getElementById('coursesContainer').innerHTML = courses.map(renderTeacherCourseCard).join('');
                 }
@@ -283,7 +347,7 @@
                 console.error('Ошибка загрузки данных преподавателя:', err);
                 document.getElementById('coursesLoading').classList.add('d-none');
                 document.getElementById('coursesContainer').innerHTML =
-                    `<div class="alert alert-warning">Ошибка загрузки: ${err.message}</div>`;
+                    `<div class="alert alert-warning" role="alert">Ошибка загрузки: ${err.message}</div>`;
             }
         }
 

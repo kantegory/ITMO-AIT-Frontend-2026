@@ -3,47 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Minion Courses — платформа онлайн-обучения. Более 1000 курсов по программированию, дизайну и аналитике от лучших преподавателей.">
     <title>Minion Courses - Онлайн обучение</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <a href="#main-content" class="visually-hidden-focusable btn btn-primary position-absolute top-0 start-0 m-2">
+        Перейти к основному содержимому
+    </a>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" role="navigation" aria-label="Основная навигация">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <i class="bi bi-mortarboard-fill"></i> <span class="brand-minion">Minion</span> <span class="brand-courses">Courses</span>
+            <a class="navbar-brand" href="index.html" aria-label="Minion Courses — на главную">
+                <i class="bi bi-mortarboard-fill" aria-hidden="true"></i> <span class="brand-minion">Minion</span> <span class="brand-courses">Courses</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Открыть меню навигации">
+                <span class="navbar-toggler-icon" aria-hidden="true"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
+                <ul class="navbar-nav me-auto" role="list">
+                    <li class="nav-item" role="listitem">
                         <a class="nav-link" href="search.html">Каталог</a>
                     </li>
                 </ul>
                 <div class="d-flex align-items-center gap-3">
-                    <span class="theme-toggle" onclick="toggleTheme()">
-                        <i class="bi bi-moon-fill" id="themeIcon"></i>
-                    </span>
+                    <button class="theme-toggle btn btn-link p-0 border-0"
+                            onclick="toggleTheme()"
+                            aria-label="Переключить тему оформления"
+                            title="Переключить тему">
+                        <i class="bi bi-moon-fill" id="themeIcon" aria-hidden="true"></i>
+                    </button>
                     <!-- Кнопки для неавторизованных -->
-                    <div id="authButtons" class="d-flex gap-2">
+                    <div id="authButtons" class="d-flex gap-2" role="group" aria-label="Действия авторизации">
                         <a href="login.html" class="btn btn-outline-primary">Войти</a>
                         <a href="register.html" class="btn btn-primary">Регистрация</a>
                     </div>
                     <!-- Дропдаун для авторизованных -->
                     <div id="userDropdown" class="dropdown d-none">
-                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                        <button type="button" class="btn btn-link d-flex align-items-center text-decoration-none dropdown-toggle p-0 border-0"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false"
+                           aria-label="Меню пользователя">
                             <div class="user-avatar-nav me-2">
-                                <i class="bi bi-person-circle fs-4"></i>
+                                <i class="bi bi-person-circle fs-4" aria-hidden="true"></i>
                             </div>
                             <span id="userDropdownName" class="d-none d-md-inline"></span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person me-2"></i>Мой профиль</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="bi bi-box-arrow-right me-2"></i>Выйти</a></li>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" role="menu">
+                            <li role="none"><a class="dropdown-item" href="profile.html" role="menuitem"><i class="bi bi-person me-2" aria-hidden="true"></i>Мой профиль</a></li>
+                            <li role="none"><hr class="dropdown-divider" aria-hidden="true"></li>
+                            <li role="none"><a class="dropdown-item text-danger" href="#" role="menuitem" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="bi bi-box-arrow-right me-2" aria-hidden="true"></i>Выйти</a></li>
                         </ul>
                     </div>
                 </div>
@@ -51,10 +67,10 @@
         </div>
     </nav>
 
-    <main>
-        <section class="py-5 text-center hero-section">
+    <main id="main-content">
+        <section class="py-5 text-center hero-section" aria-labelledby="hero-heading">
             <div class="container py-5">
-                <h1 class="display-4 fw-bold mb-3">Учитесь новому каждый день</h1>
+                <h1 class="display-4 fw-bold mb-3" id="hero-heading">Учитесь новому каждый день</h1>
                 <p class="lead text-muted mb-4">Более 1000 курсов от лучших преподавателей. Начните обучение прямо сейчас!</p>
                 <div class="d-flex justify-content-center gap-3">
                     <a href="search.html" class="btn btn-primary btn-lg">Смотреть курсы</a>
@@ -63,23 +79,23 @@
             </div>
         </section>
 
-        <section class="py-5">
+        <section class="py-5" aria-labelledby="popular-courses-heading">
             <div class="container">
-                <h2 class="text-center mb-5">Популярные курсы</h2>
+                <h2 class="text-center mb-5" id="popular-courses-heading">Популярные курсы</h2>
 
                 <!-- Скелетон-загрузка -->
-                <div id="coursesLoading" class="row">
-                    <div class="col-md-4 mb-4"><div class="card h-100 skeleton-card"><div class="skeleton-img"></div><div class="card-body"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
-                    <div class="col-md-4 mb-4"><div class="card h-100 skeleton-card"><div class="skeleton-img"></div><div class="card-body"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
-                    <div class="col-md-4 mb-4"><div class="card h-100 skeleton-card"><div class="skeleton-img"></div><div class="card-body"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
+                <div id="coursesLoading" class="row" role="status" aria-label="Загрузка курсов">
+                    <div class="col-md-4 mb-4"><div class="card h-100 skeleton-card" aria-hidden="true"><div class="skeleton-img"></div><div class="card-body"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
+                    <div class="col-md-4 mb-4"><div class="card h-100 skeleton-card" aria-hidden="true"><div class="skeleton-img"></div><div class="card-body"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
+                    <div class="col-md-4 mb-4"><div class="card h-100 skeleton-card" aria-hidden="true"><div class="skeleton-img"></div><div class="card-body"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
                 </div>
 
                 <!-- Контейнер курсов -->
-                <div id="coursesContainer" class="row d-none"></div>
+                <div id="coursesContainer" class="row d-none" aria-live="polite" aria-atomic="false"></div>
 
                 <!-- Ошибка загрузки -->
-                <div id="coursesError" class="alert alert-warning d-none">
-                    <i class="bi bi-exclamation-triangle me-2"></i>
+                <div id="coursesError" class="alert alert-warning d-none" role="alert">
+                    <i class="bi bi-exclamation-triangle me-2" aria-hidden="true"></i>
                     Не удалось загрузить курсы. Убедитесь, что сервер запущен (<code>npm start</code>).
                 </div>
 
@@ -89,22 +105,23 @@
             </div>
         </section>
 
-        <section class="py-5 bg-body-tertiary">
+        <section class="py-5 bg-body-tertiary" aria-labelledby="features-heading">
+            <h2 class="visually-hidden" id="features-heading">Преимущества платформы</h2>
             <div class="container">
                 <div class="row text-center">
                     <div class="col-md-4 mb-4">
-                        <i class="bi bi-play-circle text-primary" style="font-size: 3rem;"></i>
-                        <h4 class="mt-3">1000+ курсов</h4>
+                        <i class="bi bi-play-circle text-primary" style="font-size: 3rem;" aria-hidden="true"></i>
+                        <h3 class="h4 mt-3">1000+ курсов</h3>
                         <p class="text-muted">Курсы по программированию, дизайну, аналитике и многому другому</p>
                     </div>
                     <div class="col-md-4 mb-4">
-                        <i class="bi bi-people text-primary" style="font-size: 3rem;"></i>
-                        <h4 class="mt-3">50 000+ студентов</h4>
+                        <i class="bi bi-people text-primary" style="font-size: 3rem;" aria-hidden="true"></i>
+                        <h3 class="h4 mt-3">50 000+ студентов</h3>
                         <p class="text-muted">Присоединяйтесь к сообществу учащихся со всего мира</p>
                     </div>
                     <div class="col-md-4 mb-4">
-                        <i class="bi bi-award text-primary" style="font-size: 3rem;"></i>
-                        <h4 class="mt-3">Сертификаты</h4>
+                        <i class="bi bi-award text-primary" style="font-size: 3rem;" aria-hidden="true"></i>
+                        <h3 class="h4 mt-3">Сертификаты</h3>
                         <p class="text-muted">Получайте сертификаты по окончании курсов</p>
                     </div>
                 </div>
@@ -112,22 +129,26 @@
         </section>
     </main>
 
-    <footer class="py-4 bg-body-tertiary">
+    <footer class="py-4 bg-body-tertiary" role="contentinfo">
         <div class="container text-center">
             <p class="text-muted mb-0">© 2026 Minion Courses. Все права защищены.</p>
         </div>
     </footer>
 
     <!-- Модалка выхода -->
-    <div class="modal fade" id="logoutModal" tabindex="-1">
+    <div class="modal fade" id="logoutModal" tabindex="-1"
+         role="dialog"
+         aria-labelledby="logoutModalLabel"
+         aria-describedby="logoutModalDesc"
+         aria-modal="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Выход</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="logoutModalLabel">Выход</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть диалог выхода"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Вы уверены, что хотите выйти из аккаунта?</p>
+                    <p id="logoutModalDesc">Вы уверены, что хотите выйти из аккаунта?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
@@ -152,11 +173,11 @@
             let stars = '';
             for (let i = 1; i <= 5; i++) {
                 if (rating >= i) {
-                    stars += '<i class="bi bi-star-fill"></i>';
+                    stars += '<i class="bi bi-star-fill" aria-hidden="true"></i>';
                 } else if (rating >= i - 0.5) {
-                    stars += '<i class="bi bi-star-half"></i>';
+                    stars += '<i class="bi bi-star-half" aria-hidden="true"></i>';
                 } else {
-                    stars += '<i class="bi bi-star"></i>';
+                    stars += '<i class="bi bi-star" aria-hidden="true"></i>';
                 }
             }
             return stars;
@@ -173,28 +194,30 @@
         // Рендер карточки курса
         function renderCourseCard(course) {
             const badge = course.badge
-                ? `<span class="badge bg-${course.badgeColor} position-absolute" style="top:10px;left:10px;">${course.badge}</span>`
+                ? `<span class="badge bg-${course.badgeColor} position-absolute" style="top:10px;left:10px;" aria-label="${course.badge}">${course.badge}</span>`
                 : '';
+
+            const priceLabel = course.priceType === 'free' ? 'Бесплатно' : `${course.price.toLocaleString('ru-RU')} ₽`;
 
             return `
                 <div class="col-md-4 mb-4">
-                    <div class="card course-card h-100">
-                        <img src="${course.image}" class="card-img-top" alt="${course.title}"
+                    <article class="card course-card h-100">
+                        <img src="${course.image}" class="card-img-top" alt="${course.title} — обложка курса"
                              onerror="this.src='https://placehold.co/400x160/6610f2/white?text=Course'">
                         ${badge}
                         <div class="card-body">
-                            <h5 class="card-title">${course.title}</h5>
+                            <h3 class="card-title h5">${course.title}</h3>
                             <p class="card-text text-muted small">${course.description.substring(0, 60)}...</p>
-                            <div class="rating mb-2">
+                            <div class="rating mb-2" role="img" aria-label="Рейтинг: ${course.rating} из 5, ${course.reviewsCount} отзывов">
                                 ${renderStars(course.rating)}
-                                <span class="text-muted small ms-1">(${course.reviewsCount})</span>
+                                <span class="text-muted small ms-1" aria-hidden="true">(${course.reviewsCount})</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
                                 ${formatPrice(course)}
-                                <a href="course.html?id=${course.id}" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                                <a href="course.html?id=${course.id}" class="btn btn-outline-primary btn-sm" aria-label="Подробнее о курсе «${course.title}»">Подробнее</a>
                             </div>
                         </div>
-                    </div>
+                    </article>
                 </div>
             `;
         }

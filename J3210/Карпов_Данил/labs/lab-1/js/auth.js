@@ -112,6 +112,11 @@ function updateNavbar() {
             userDropdown.style.removeProperty('display');
             const nameEl = document.getElementById('userDropdownName');
             if (nameEl) nameEl.textContent = user.name;
+            // Обновляем aria-label кнопки дропдауна с именем пользователя
+            const toggleBtn = userDropdown.querySelector('[data-bs-toggle="dropdown"]');
+            if (toggleBtn) {
+                toggleBtn.setAttribute('aria-label', `Меню пользователя ${user.name}`);
+            }
         }
     } else {
         if (authButtons) {
