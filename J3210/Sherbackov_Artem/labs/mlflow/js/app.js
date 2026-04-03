@@ -5,6 +5,7 @@ import { initExperimentsListPage } from './pages/experiments_list.js';
 import { initExperimentEntityPage } from './pages/experiment_entity.js';
 import { initModelsListPage } from './pages/models_list.js';
 import { initModelEntityPage } from './pages/model_entity.js';
+import { initRunEntityPage } from './pages/run_entity.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const userData = JSON.parse(localStorage.getItem('user'));
@@ -45,5 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (document.getElementById('modelNameDisplay')) {
         initModelEntityPage();
+    }
+
+    if (document.getElementById('runName')) {
+        initRunEntityPage();
     }
 });

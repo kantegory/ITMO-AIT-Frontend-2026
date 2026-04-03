@@ -13,7 +13,7 @@ export async function initModelEntityPage() {
     const user = JSON.parse(localStorage.getItem('user'));
 
     try {
-        const modelRes = await api.get(`/660/models/${modelId}`);
+        const modelRes = await api.get(`/660/modelss/${modelId}`);
         const model = modelRes.data;
 
         const expRes = await api.get(`/660/experiments?userId=${user.id}&model=${model.name}`);
