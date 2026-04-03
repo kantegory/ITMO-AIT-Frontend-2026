@@ -1,4 +1,5 @@
-﻿body {
+﻿/* ========== ОРИГИНАЛЬНЫЕ СТИЛИ (СОХРАНЯЕМ ВСЁ) ========== */
+body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -90,4 +91,197 @@ main {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+:root {
+    --body-bg: #f8f9fa;
+    --text-color: #212529;
+    --card-bg: #ffffff;
+    --card-text: #212529;
+    --border-color: #dee2e6;
+    --input-bg: #ffffff;
+    --input-text: #212529;
+    --link-color: #0d6efd;
+    --table-bg: #ffffff;
+    --table-striped-bg: #f2f2f2;
+    --modal-bg: #ffffff;
+    --modal-text: #212529;
+    --navbar-bg: #212529;
+    --navbar-text: #ffffff;
+    --footer-bg: #212529;
+    --footer-text: #ffffff;
+    --badge-bg: #6c757d;
+    --badge-text: #ffffff;
+    --transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.dark-theme {
+    --body-bg: #121212;
+    --text-color: #e0e0e0;
+    --card-bg: #1e1e1e;
+    --card-text: #e0e0e0;
+    --border-color: #444;
+    --input-bg: #2c2c2c;
+    --input-text: #e0e0e0;
+    --link-color: #6ea8fe;
+    --table-bg: #979797;
+    --table-striped-bg: #939393;
+    --modal-bg: #1e1e1e;
+    --modal-text: #e0e0e0;
+    --navbar-bg: #0a0a0a;
+    --navbar-text: #e0e0e0;
+    --footer-bg: #0a0a0a;
+    --footer-text: #e0e0e0;
+    --badge-bg: #495057;
+    --badge-text: #e0e0e0;
+}
+
+/* Применение переменных к элементам */
+body {
+    background-color: var(--body-bg);
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+.navbar, footer.bg-dark {
+    background-color: var(--navbar-bg) !important;
+    color: var(--navbar-text);
+}
+.navbar-dark .navbar-nav .nav-link,
+.navbar-dark .navbar-brand {
+    color: var(--navbar-text);
+}
+footer.bg-dark {
+    background-color: var(--footer-bg) !important;
+    color: var(--footer-text);
+}
+
+.card {
+    background-color: var(--card-bg);
+    color: var(--card-text);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+.card .text-muted {
+    color: var(--card-text) !important;
+    opacity: 0.75;
+}
+
+.table {
+    background-color: var(--table-bg);
+    color: var(--text-color);
+}
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: var(--table-striped-bg);
+}
+.table td, .table th {
+    border-color: var(--border-color);
+}
+.table-dark {
+    background-color: var(--navbar-bg);
+    color: var(--navbar-text);
+}
+
+.form-control, .form-select, .input-group-text {
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    border-color: var(--border-color);
+}
+.form-control:focus, .form-select:focus {
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    border-color: var(--link-color);
+}
+.input-group-text {
+    border-color: var(--border-color);
+}
+
+a:not(.btn) {
+    color: var(--link-color);
+    transition: var(--transition);
+}
+a:not(.btn):hover {
+    filter: brightness(0.85);
+}
+
+.modal-content {
+    background-color: var(--modal-bg);
+    color: var(--modal-text);
+    border-color: var(--border-color);
+}
+.modal-header, .modal-footer {
+    border-color: var(--border-color);
+}
+.btn-close {
+    filter: var(--close-btn-filter, invert(0));
+}
+.dark-theme .btn-close {
+    filter: invert(1);
+}
+
+.badge {
+    background-color: var(--badge-bg) !important;
+    color: var(--badge-text) !important;
+}
+
+.nav-tabs .nav-link {
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+.nav-tabs .nav-link.active {
+    background-color: var(--card-bg);
+    color: var(--link-color);
+    border-color: var(--border-color);
+    border-bottom-color: var(--card-bg);
+}
+.nav-tabs .nav-link:hover:not(.active) {
+    border-color: var(--border-color);
+    background-color: rgba(0,0,0,0.05);
+}
+
+.list-group-item {
+    background-color: var(--card-bg);
+    color: var(--card-text);
+    border-color: var(--border-color);
+}
+.list-group-item .badge {
+    background-color: var(--badge-bg);
+    color: var(--badge-text);
+}
+
+.breadcrumb-item a {
+    color: var(--link-color);
+}
+.breadcrumb-item.active {
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+.hall-scheme-placeholder {
+    background-color: var(--card-bg);
+    color: var(--card-text);
+}
+.dark-theme .hall-scheme-placeholder {
+    background-color: #2a2a2a;
+}
+
+.review-item {
+    border-bottom-color: var(--border-color);
+}
+
+.alert-primary {
+    background-color: var(--card-bg);
+    color: var(--link-color);
+    border-color: var(--border-color);
+}
+.alert-primary .alert-link {
+    color: var(--link-color);
+}
+
+.bg-light {
+    background-color: var(--card-bg) !important;
+}
+.text-muted {
+    color: var(--text-color) !important;
+    opacity: 0.7;
 }
