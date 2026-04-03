@@ -9,16 +9,16 @@ async function initDashboardPage() {
     const coursesContainer = document.getElementById("myCoursesList");
     coursesContainer.innerHTML = `
         <div class="col-12 text-center my-5 py-5">
-            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
-            <p class="mt-3 text-muted">Загрузка данных...</p>
+            <div class="spinner-border text-primary" role="status" aria-label="Загрузка"><span class="visually-hidden">Загрузка...</span></div>
+            <p class="mt-3 text-muted" aria-live="polite">Загрузка данных...</p>
         </div>`;
 
     const createdContainer = document.getElementById("createdCoursesList");
     if (createdContainer) {
         createdContainer.innerHTML = `
             <div class="col-12 text-center my-5 py-5">
-                <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
-                <p class="mt-3 text-muted">Загрузка данных...</p>
+                <div class="spinner-border text-primary" role="status" aria-label="Загрузка"><span class="visually-hidden">Загрузка...</span></div>
+                <p class="mt-3 text-muted" aria-live="polite">Загрузка данных...</p>
             </div>`;
     }
 
@@ -85,7 +85,7 @@ function renderEnrolledCourses(courses, enrollments) {
         const isCompleted = enrollment?.completed || false;
 
         container.insertAdjacentHTML("beforeend", `
-            <div class="col-md-6 col-xl-4">
+            <article class="col-md-6 col-xl-4" aria-label="Курс: ${course.title}">
                 <div class="card dashboard-course-card h-100 shadow-sm">
                     <div class="card-body d-flex flex-column">
                         <div class="d-flex justify-content-between mb-3">
@@ -94,7 +94,7 @@ function renderEnrolledCourses(courses, enrollments) {
                                 ? '<span class="badge bg-success text-white">Завершён</span>'
                                 : `<span class="badge bg-light text-dark">${course.level || "—"}</span>`}
                         </div>
-                        <h5 class="card-title mb-2">${course.title}</h5>
+                        <h3 class="card-title mb-2 h5">${course.title}</h3>
                         <p class="dashboard-course-description flex-grow-1">
                             ${course.desc || "Описание отсутствует"}
                         </p>
@@ -104,7 +104,7 @@ function renderEnrolledCourses(courses, enrollments) {
                                 <span>Прогресс</span>
                                 <span>${progress}%</span>
                             </div>
-                            <div class="progress">
+                            <div class="progress" role="progressbar" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" aria-label="Прогресс обучения: ${progress}%">
                                 <div class="progress-bar" style="width: ${progress}%"></div>
                             </div>
                         </div>` : ''}
@@ -116,7 +116,7 @@ function renderEnrolledCourses(courses, enrollments) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </article>
         `);
     });
 }
@@ -143,14 +143,14 @@ function renderCreatedCourses(courses) {
 
     courses.forEach(course => {
         container.insertAdjacentHTML("beforeend", `
-            <div class="col-md-6 col-xl-4">
+            <article class="col-md-6 col-xl-4" aria-label="Созданный курс: ${course.title}">
                 <div class="card dashboard-course-card h-100 shadow-sm">
                     <div class="card-body d-flex flex-column">
                         <div class="d-flex justify-content-between mb-3">
                             <span class="badge badge-subject">${course.subject || "Без категории"}</span>
                             <span class="badge bg-light text-dark">${course.level || "—"}</span>
                         </div>
-                        <h5 class="card-title mb-2">${course.title}</h5>
+                        <h3 class="card-title mb-2 h5">${course.title}</h3>
                         <p class="dashboard-course-description flex-grow-1">
                             ${course.desc || "Описание отсутствует"}
                         </p>
@@ -166,7 +166,7 @@ function renderCreatedCourses(courses) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </article>
         `);
     });
 }
@@ -199,7 +199,7 @@ function renderDashboardError(errorMsg = "") {
     const container = document.getElementById("myCoursesList");
     container.innerHTML = `
         <div class="col-12">
-            <div class="alert alert-danger text-center p-4">
+            <div class="alert alert-danger text-center p-4" role="alert">
                 <h5>Не удалось загрузить данные</h5>
                 <p class="mb-3">${errorMsg || "Проверьте подключение к серверу"}</p>
                 <button onclick="location.reload()" class="btn btn-outline-primary">

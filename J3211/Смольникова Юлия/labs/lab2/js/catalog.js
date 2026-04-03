@@ -39,8 +39,8 @@ async function loadCourses() {
 
     container.innerHTML = `
         <div class="col-12 text-center my-5 py-5">
-            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
-            <p class="mt-3 text-muted">Загрузка каталога курсов...</p>
+            <div class="spinner-border text-primary" role="status" aria-label="Загрузка каталога"><span class="visually-hidden">Загрузка...</span></div>
+            <p class="mt-3 text-muted" aria-live="polite">Загрузка каталога курсов...</p>
         </div>`;
 
     try {
@@ -52,7 +52,7 @@ async function loadCourses() {
         console.error(err);
         container.innerHTML = `
             <div class="col-12">
-                <div class="alert alert-danger text-center p-4">
+                <div class="alert alert-danger text-center p-4" role="alert">
                     <h5>Не удалось загрузить курсы</h5>
                     <p class="mb-3">${err.message || "Проверьте подключение к серверу"}</p>
                     <button class="btn btn-outline-custom btn-sm" id="retryLoadBtn">Повторить попытку</button>
@@ -76,7 +76,7 @@ function renderCourses(list = []) {
         container.innerHTML = `
             <div class="col-12">
                 <div class="card text-center p-5">
-                    <h4>Курсы не найдены</h4>
+                    <h3>Курсы не найдены</h3>
                     <p class="text-muted">Попробуйте изменить фильтры</p>
                 </div>
             </div>`;
@@ -102,22 +102,22 @@ function createCourseCard(course) {
     const isAuth = isAuthenticated();
     const detailsAction = isAuth
         ? `<a href="course.html?id=${course.id}" class="btn btn-outline-custom btn-sm flex-fill me-2">Подробнее</a>`
-        : `<a href="#" class="btn btn-outline-custom btn-sm flex-fill me-2 btn-preview-course" data-course-id="${course.id}">Подробнее</a>`;
+        : `<a href="#" class="btn btn-outline-custom btn-sm flex-fill me-2 btn-preview-course" data-course-id="${course.id}" aria-label="Подробнее — ${course.title}">Подробнее</a>`;
 
     const enrollAction = isAuth
         ? `<button class="btn btn-primary-custom btn-sm flex-fill btn-enroll-course" data-course-id="${course.id}">Записаться</button>`
         : ``;
 
     return `
-        <article class="col-md-6 col-xl-4 mb-4">
+        <article class="col-md-6 col-xl-4 mb-4" aria-label="Карточка курса: ${course.title}">
             <div class="card course-card h-100 shadow-sm">
-                <div class="card-category-bar"></div>
+                <div class="card-category-bar" aria-hidden="true"></div>
                 <div class="card-body d-flex flex-column">
                     <div class="d-flex justify-content-between mb-3">
                         <span class="badge badge-subject">${course.subject || "Без категории"}</span>
                         <span class="badge badge-price">${price}</span>
                     </div>
-                    <h5 class="card-title">${course.title}</h5>
+                    <h3 class="card-title h5">${course.title}</h3>
                     <p class="course-description flex-grow-1">${course.desc || "Описание отсутствует"}</p>
                     
                     <div class="course-actions mt-auto">
@@ -200,20 +200,20 @@ function renderPagination(totalPages) {
     }
 
     let html = `
-        <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-            <a class="page-link" href="#" data-page="prev">Назад</a>
+        <li class="page-item ${currentPage === 1 ? 'disabled' : ''}" ${currentPage === 1 ? 'aria-disabled="true"' : ''}>
+            <a class="page-link" href="#" data-page="prev" ${currentPage === 1 ? 'tabindex="-1" aria-disabled="true"' : ''} aria-label="Назад">Назад</a>
         </li>`;
 
     for (let i = 1; i <= totalPages; i++) {
         html += `
-            <li class="page-item ${i === currentPage ? 'active' : ''}">
-                <a class="page-link" href="#" data-page="${i}">${i}</a>
+            <li class="page-item ${i === currentPage ? 'active' : ''}" ${i === currentPage ? 'aria-current="page"' : ''}>
+                <a class="page-link" href="#" data-page="${i}" ${i === currentPage ? 'aria-current="page"' : ''}>${i}</a>
             </li>`;
     }
 
     html += `
-        <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-            <a class="page-link" href="#" data-page="next">Вперёд</a>
+        <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}" ${currentPage === totalPages ? 'aria-disabled="true"' : ''}>
+            <a class="page-link" href="#" data-page="next" ${currentPage === totalPages ? 'tabindex="-1" aria-disabled="true"' : ''} aria-label="Вперёд">Вперёд</a>
         </li>`;
 
     container.innerHTML = html;

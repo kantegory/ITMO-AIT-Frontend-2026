@@ -10,7 +10,7 @@ function renderNavbar() {
     const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
     const authButtons = isAuth
-        ? `<button onclick="logout()" class="btn btn-outline-custom btn-sm">Выход</button>`
+        ? `<button onclick="logout()" class="btn btn-outline-custom btn-sm" aria-label="Выйти из аккаунта">Выход</button>`
         : `<a href="login.html" class="btn btn-outline-custom btn-sm">Вход</a>
            <a href="register.html" class="btn btn-primary-custom btn-sm">Регистрация</a>`;
 
@@ -33,9 +33,9 @@ function renderNavbar() {
     `;
 
     container.innerHTML = `
-        <nav class="navbar navbar-expand-lg sticky-top">
+        <nav class="navbar navbar-expand-lg sticky-top" aria-label="Основная навигация">
             <div class="container">
-                <a class="navbar-brand fw-bold" href="index.html">Learnify</a>
+                <a class="navbar-brand fw-bold" href="index.html" aria-label="Learnify — на главную">Learnify</a>
                 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
                         data-bs-target="#mainNavbar" aria-controls="mainNavbar" 

@@ -67,8 +67,8 @@ function renderRestrictedAccess() {
     document.getElementById("courseDescPage").textContent = "Для просмотра видео и материалов необходимо сначала записаться на этот курс в каталоге.";
     
     document.getElementById("videoPlayer").innerHTML = `
-        <div class="d-flex align-items-center justify-content-center h-100 bg-dark rounded-4 text-white flex-column">
-            <span style="font-size: 3rem;">🔒</span>
+        <div class="d-flex align-items-center justify-content-center h-100 bg-dark rounded-4 text-white flex-column" role="alert">
+            <span style="font-size: 3rem;" aria-hidden="true">🔒</span>
             <p class="mt-2 mb-0">Доступ закрыт</p>
         </div>`;
         
@@ -115,7 +115,7 @@ function renderLessons(lessons) {
 
     lessons.forEach((lesson, i) => {
         container.insertAdjacentHTML("beforeend", `
-            <li class="list-group-item lesson-item ${i === 0 ? 'active' : ''}" data-video-src="${lesson.videoId || ''}">
+            <li class="list-group-item lesson-item ${i === 0 ? 'active' : ''}" data-video-src="${lesson.videoId || ''}" ${i === 0 ? 'aria-current="true"' : ''} role="button" tabindex="0" aria-label="Урок: ${lesson.title || 'Урок'}${lesson.duration ? ', длительность ' + lesson.duration : ''}">
                 <div class="d-flex justify-content-between align-items-center">
                     <span>${lesson.title || "Урок"}</span>
                     <small class="${i === 0 ? 'text-white' : 'text-muted'}">${lesson.duration || ""}</small>
@@ -144,8 +144,8 @@ function renderMaterials(materials) {
             <div class="list-group-item d-flex justify-content-between align-items-center">
                 <div class="fw-semibold">${m.title}</div>
                 ${hasLink
-                ? `<a href="${m.link}" target="_blank" class="btn btn-sm btn-outline-custom">Открыть</a>`
-                : `<button class="btn btn-sm btn-outline-custom" disabled>Нет ссылки</button>`
+                ? `<a href="${m.link}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-custom" aria-label="Открыть материал: ${m.title}">Открыть</a>`
+                : `<span class="btn btn-sm btn-outline-custom disabled" aria-disabled="true">Нет ссылки</span>`
             }
             </div>
         `);
@@ -171,7 +171,7 @@ function renderTasks(tasks) {
         container.insertAdjacentHTML("beforeend", `
             <div class="card border-0 bg-light mb-3">
                 <div class="card-body">
-                    <h6 class="fw-bold">Задание ${i + 1}</h6>
+                    <h3 class="fw-bold h6">Задание ${i + 1}</h3>
                     <p class="mb-2">${title}</p>
                     <p class="text-muted small mb-0">Срок: ${deadline}</p>
                 </div>
@@ -217,14 +217,16 @@ function loadVideo(videoSrc, activeItem = null) {
     if (embedUrl.startsWith("DIRECT_VIDEO:")) {
         const mp4Url = embedUrl.replace("DIRECT_VIDEO:", "");
         playerContainer.innerHTML = `
-            <video controls autoplay style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-lg);">
+            <video controls autoplay style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-lg);" aria-label="Видео урока">
                 <source src="${mp4Url}" type="video/mp4">
+                Ваш браузер не поддерживает воспроизведение видео.
             </video>`;
     } else {
         playerContainer.innerHTML = `
-            <iframe src="${embedUrl}" title="Видео курса" 
+            <iframe src="${embedUrl}" title="Видео урока" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;">
+                    allowfullscreen style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;"
+                    loading="lazy">
             </iframe>`;
     }
 }

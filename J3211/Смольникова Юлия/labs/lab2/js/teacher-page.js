@@ -7,7 +7,7 @@ async function initTeacherPage() {
     initForms();
 
     const coursesContainer = document.getElementById("teacherCoursesList");
-    coursesContainer.innerHTML = `<tr><td colspan="4" class="text-center py-4">Загрузка...</td></tr>`;
+    coursesContainer.innerHTML = `<tr><td colspan="4" class="text-center py-4"><span class="spinner-border spinner-border-sm" role="status" aria-label="Загрузка"><span class="visually-hidden">Загрузка...</span></span> Загрузка...</td></tr>`;
 
     try {
         const [coursesData, allEnrollmentsRaw] = await Promise.all([
@@ -42,7 +42,7 @@ function renderTeacherCourses(courses, enrollments) {
     container.innerHTML = "";
 
     if (!courses.length) {
-        container.innerHTML = `<tr><td colspan="4" class="text-center text-muted py-4">У вас пока нет курсов</td></tr>`;
+            container.innerHTML = `<tr><td colspan="4" class="text-center text-muted py-4" role="status">У вас пока нет курсов</td></tr>`;
         return;
     }
 
@@ -50,17 +50,17 @@ function renderTeacherCourses(courses, enrollments) {
         const studentsCount = enrollments.filter(e => e.courseId === course.id).length;
         container.insertAdjacentHTML("beforeend", `
             <tr>
-                <td>
+                <th scope="row">
                     <div class="fw-semibold">${course.title}</div>
                     <div class="small text-muted">${course.subject || "—"}</div>
-                </td>
-                <td>${studentsCount}</td>
+                </th>
+                <td aria-label="Студентов: ${studentsCount}">${studentsCount}</td>
                 <td><span class="badge text-bg-success">Активный</span></td>
                 <td>
                     <div class="d-flex flex-wrap gap-1">
-                        <button onclick="openEditModal(${course.id})" class="btn btn-sm btn-outline-custom">Изменить</button>
-                        <a href="course.html?id=${course.id}" class="btn btn-sm btn-outline-custom">Открыть</a>
-                        <button onclick="confirmDeleteCourse(${course.id}, '${course.title.replace(/'/g, "\\'")}')" class="btn btn-sm btn-outline-danger">Удалить</button>
+                        <button onclick="openEditModal(${course.id})" class="btn btn-sm btn-outline-custom" aria-label="Изменить курс: ${course.title}">Изменить</button>
+                        <a href="course.html?id=${course.id}" class="btn btn-sm btn-outline-custom" aria-label="Открыть курс: ${course.title}">Открыть</a>
+                        <button onclick="confirmDeleteCourse(${course.id}, '${course.title.replace(/'/g, "\\'")}')" class="btn btn-sm btn-outline-danger" aria-label="Удалить курс: ${course.title}">Удалить</button>
                     </div>
                 </td>
             </tr>
@@ -83,7 +83,7 @@ function renderTeacherError() {
     document.getElementById("teacherCoursesCount").textContent = "0";
     document.getElementById("teacherStudentsCount").textContent = "0";
     document.getElementById("teacherActiveCoursesCount").textContent = "0";
-    document.getElementById("teacherCoursesList").innerHTML = `<tr><td colspan="4" class="text-center text-danger py-4">Не удалось загрузить данные</td></tr>`;
+    document.getElementById("teacherCoursesList").innerHTML = `<tr><td colspan="4" class="text-center text-danger py-4" role="alert">Не удалось загрузить данные</td></tr>`;
 }
 
 function initForms() {
