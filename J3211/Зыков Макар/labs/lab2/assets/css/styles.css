@@ -1,3 +1,11 @@
+html {
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
 :root {
   --brand-primary: #1039a5;
   --brand-primary-soft: #e8efff;
@@ -24,10 +32,49 @@
   --seat-disabled-bg: #d9dde4;
   --seat-disabled-text: #64748b;
   --card-shadow: 0 10px 30px rgba(16, 57, 165, 0.08);
+  --navbar-bg: rgba(6, 15, 38, 0.95);
+  --footer-border: rgba(255, 255, 255, 0.08);
+  --theme-toggle-bg: rgba(255, 255, 255, 0.08);
+  --theme-toggle-text: #ffffff;
+  --theme-toggle-border: rgba(255, 255, 255, 0.18);
+}
+
+html[data-theme="dark"] {
+  --brand-primary: #88a7ff;
+  --brand-primary-soft: rgba(77, 104, 194, 0.22);
+  --brand-accent: #ff9b54;
+  --brand-bg: #0b1220;
+  --brand-bg-gradient: radial-gradient(circle at top right, #16233f 0%, #0b1220 48%, #050913 100%);
+  --brand-surface: rgba(13, 22, 40, 0.9);
+  --brand-surface-strong: #0f172a;
+  --brand-surface-soft: #17223d;
+  --brand-text: #edf2ff;
+  --brand-muted: #a2aec7;
+  --brand-border: rgba(136, 167, 255, 0.16);
+  --hero-gradient: linear-gradient(135deg, #08142f 0%, #14316f 55%, #1760c4 100%);
+  --auth-gradient: linear-gradient(160deg, #081326 0%, #13366f 100%);
+  --stage-gradient: linear-gradient(90deg, #3553a5, #17306c);
+  --footer-bg: #040816;
+  --footer-text: #c8d5f6;
+  --command-bg: #020617;
+  --command-text: #e2e8f0;
+  --focus-ring: rgba(255, 155, 84, 0.35);
+  --seat-border: rgba(136, 167, 255, 0.35);
+  --seat-text: #d6e3ff;
+  --seat-selected: #5d84ff;
+  --seat-disabled-bg: #324055;
+  --seat-disabled-text: #94a3b8;
+  --card-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+  --navbar-bg: rgba(2, 8, 23, 0.92);
+  --footer-border: rgba(136, 167, 255, 0.14);
+  --theme-toggle-bg: rgba(148, 163, 184, 0.12);
+  --theme-toggle-text: #edf2ff;
+  --theme-toggle-border: rgba(148, 163, 184, 0.26);
 }
 
 body {
   font-family: "Manrope", "Segoe UI", sans-serif;
+  background-color: var(--brand-bg);
   background: var(--brand-bg-gradient);
   color: var(--brand-text);
   min-height: 100vh;
@@ -78,8 +125,9 @@ a:hover {
 }
 
 .navbar {
-  background: rgba(6, 15, 38, 0.95) !important;
+  background: var(--navbar-bg) !important;
   backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--brand-border);
 }
 
 .navbar-brand {
@@ -268,6 +316,32 @@ a:hover {
   font-weight: 700;
 }
 
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--theme-toggle-border);
+  background: var(--theme-toggle-bg);
+  color: var(--theme-toggle-text);
+  border-radius: 999px;
+  min-height: 31px;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--theme-toggle-text);
+  transform: translateY(-1px);
+}
+
+.theme-toggle:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
 .hero-status-grid {
   display: grid;
   gap: 1rem;
@@ -325,6 +399,7 @@ a:hover {
 footer {
   background: var(--footer-bg);
   color: var(--footer-text);
+  border-top: 1px solid var(--footer-border);
 }
 
 .quick-chip {
@@ -405,6 +480,22 @@ footer {
 
 .toast {
   box-shadow: var(--card-shadow);
+}
+
+.navbar,
+.card,
+.stats-tile,
+.page-loading,
+.review-card,
+.auth-panel,
+.seat-zone,
+.demo-credentials-card,
+.modal-content,
+.form-control,
+.form-select,
+.list-group-item,
+footer {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {

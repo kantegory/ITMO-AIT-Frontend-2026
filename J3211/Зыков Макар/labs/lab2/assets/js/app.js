@@ -1,5 +1,7 @@
 const API_BASE_URL = "http://localhost:3000";
 const SESSION_STORAGE_KEY = "makars-event-lab2-session";
+const THEME_STORAGE_KEY = "makars-event-lab2-theme";
+const DARK_COLOR_SCHEME_QUERY = "(prefers-color-scheme: dark)";
 const KNOWN_PAGES = [
   "index.html",
   "events.html",
@@ -10,7 +12,10 @@ const KNOWN_PAGES = [
   "organizer-cabinet.html"
 ];
 
+applyTheme(resolvePreferredTheme());
+
 document.addEventListener("DOMContentLoaded", () => {
+  initTheme();
   setCurrentYear();
   renderNavigationAuth();
   initLogoutButtons();
@@ -21,6 +26,92 @@ document.addEventListener("DOMContentLoaded", () => {
   void initOrganizerCabinetPage();
   void initHomePage();
 });
+
+function initTheme() {
+  renderThemeToggle();
+  syncThemeToggleState();
+
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest(".js-theme-toggle");
+    if (!button) return;
+
+    const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    saveThemePreference(nextTheme);
+    applyTheme(nextTheme);
+    syncThemeToggleState();
+  });
+
+  const mediaQuery = window.matchMedia(DARK_COLOR_SCHEME_QUERY);
+  const handleSystemThemeChange = (event) => {
+    if (getStoredThemePreference()) return;
+
+    applyTheme(event.matches ? "dark" : "light");
+    syncThemeToggleState();
+  };
+
+  if (typeof mediaQuery.addEventListener === "function") {
+    mediaQuery.addEventListener("change", handleSystemThemeChange);
+  } else if (typeof mediaQuery.addListener === "function") {
+    mediaQuery.addListener(handleSystemThemeChange);
+  }
+}
+
+function renderThemeToggle() {
+  document.querySelectorAll(".nav-actions").forEach((container) => {
+    let button = container.querySelector(".js-theme-toggle");
+
+    if (!button) {
+      button = document.createElement("button");
+      button.type = "button";
+      button.className = "theme-toggle js-theme-toggle";
+      container.prepend(button);
+    }
+  });
+}
+
+function syncThemeToggleState() {
+  const currentTheme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+  const themeLabel = currentTheme === "dark" ? "тёмная" : "светлая";
+  const nextThemeLabel = currentTheme === "dark" ? "светлую" : "тёмную";
+
+  document.querySelectorAll(".js-theme-toggle").forEach((button) => {
+    button.textContent = `Тема: ${themeLabel}`;
+    button.setAttribute("aria-pressed", String(currentTheme === "dark"));
+    button.setAttribute("aria-label", `Текущая тема: ${themeLabel}. Нажмите, чтобы переключить на ${nextThemeLabel}.`);
+    button.title = `Переключить на ${nextThemeLabel} тему`;
+  });
+}
+
+function getStoredThemePreference() {
+  try {
+    const value = localStorage.getItem(THEME_STORAGE_KEY);
+    return value === "light" || value === "dark" ? value : "";
+  } catch (error) {
+    return "";
+  }
+}
+
+function getSystemThemePreference() {
+  return window.matchMedia(DARK_COLOR_SCHEME_QUERY).matches ? "dark" : "light";
+}
+
+function resolvePreferredTheme() {
+  return getStoredThemePreference() || getSystemThemePreference();
+}
+
+function saveThemePreference(theme) {
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch (error) {
+    // Ignore storage errors and keep the theme only for the current session.
+  }
+}
+
+function applyTheme(theme) {
+  const safeTheme = theme === "dark" ? "dark" : "light";
+  document.documentElement.dataset.theme = safeTheme;
+  document.documentElement.setAttribute("data-bs-theme", safeTheme);
+}
 
 function setCurrentYear() {
   document.querySelectorAll(".js-current-year").forEach((el) => {
