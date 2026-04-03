@@ -663,7 +663,12 @@ function fillEventPage(event, reviews, similarEvents) {
   }
 
   if (dateChip) {
-    dateChip.textContent = formatEventDateTime(event.dateTime);
+    dateChip.innerHTML = `
+      <span class="icon-text">
+        ${renderSpriteIcon("calendar")}
+        <span>${escapeHtml(formatEventDateTime(event.dateTime))}</span>
+      </span>
+    `;
   }
 
   if (locationChip) {
@@ -733,11 +738,20 @@ function renderEventsGrid(grid, events) {
         <div class="card-body d-flex flex-column">
           <div class="d-flex justify-content-between align-items-center mb-2 gap-2">
             <span class="badge ${getBadgeClassByType(event.type)}">${escapeHtml(event.typeLabel)}</span>
-            <span class="event-meta">${escapeHtml(formatDate(event.dateTime))}</span>
+            <span class="event-meta icon-text">
+              ${renderSpriteIcon("calendar")}
+              <span>${escapeHtml(formatDate(event.dateTime))}</span>
+            </span>
           </div>
           <h2 id="event-card-title-${event.id}" class="h5">${escapeHtml(event.title)}</h2>
           <p class="text-secondary mb-2">${escapeHtml(event.cityLabel)}, ${escapeHtml(event.venue)}</p>
-          <p class="small text-secondary mb-2">От ${formatCurrency(event.price)} · Свободно мест: ${event.seatsAvailable}</p>
+          <p class="small text-secondary mb-2 event-meta-inline">
+            <span class="icon-text">
+              ${renderSpriteIcon("ticket")}
+              <span>От ${formatCurrency(event.price)}</span>
+            </span>
+            <span>Свободно мест: ${event.seatsAvailable}</span>
+          </p>
           <p class="small text-secondary">${escapeHtml(shortText(event.description, 110))}</p>
           <a class="btn btn-outline-primary mt-auto" href="event.html?id=${event.id}">Подробнее</a>
         </div>
@@ -1106,6 +1120,13 @@ function formatCompactCurrency(value) {
 
 function formatNumber(value) {
   return Number(value || 0).toLocaleString("ru-RU");
+}
+
+function renderSpriteIcon(name) {
+  const safeName = String(name || "").trim().toLowerCase();
+  if (!safeName) return "";
+
+  return `<svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#icon-${safeName}"></use></svg>`;
 }
 
 function applyAlertAccessibility(element, variant) {

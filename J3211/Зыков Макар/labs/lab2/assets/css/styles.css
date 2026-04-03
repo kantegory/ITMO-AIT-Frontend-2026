@@ -139,6 +139,24 @@ a:hover {
   font-weight: 600;
 }
 
+.icon {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+  flex: 0 0 auto;
+}
+
+.icon-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon-text svg {
+  width: 1rem;
+  height: 1rem;
+}
+
 .nav-actions {
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -203,6 +221,18 @@ a:hover {
 .event-meta {
   color: var(--brand-muted);
   font-size: 0.95rem;
+}
+
+.event-meta-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  color: var(--brand-muted);
+  font-size: 0.9rem;
+}
+
+.event-meta-inline .icon-text {
+  gap: 0.4rem;
 }
 
 .ticket-card {
@@ -402,6 +432,30 @@ footer {
   border-top: 1px solid var(--footer-border);
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--footer-text);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-link:hover {
+  color: #ffffff;
+}
+
+.footer-meta {
+  display: grid;
+  gap: 0.3rem;
+}
+
 .quick-chip {
   border-radius: 50rem;
   background: var(--brand-primary-soft);
@@ -517,6 +571,10 @@ footer {
   .nav-actions {
     justify-content: flex-start;
     margin-top: 1rem;
+  }
+
+  .footer-links {
+    gap: 0.75rem;
   }
 
   .seat-grid {
