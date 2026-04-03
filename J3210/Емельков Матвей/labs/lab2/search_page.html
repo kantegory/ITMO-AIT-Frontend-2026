@@ -21,27 +21,33 @@
 
                 <nav class="sidebar__nav" aria-label="Главное меню">
                     <a href="index.html" class="sidebar__link">
+                        <svg width="20" height="20" class="me-2"><use href="img/sprite.svg#icon-home"></use></svg>
                         Личный кабинет
                     </a>
                     <a href="search_page.html" class="sidebar__link sidebar__link--active">
+                        <svg width="20" height="20" class="me-2"><use xlink:href="img/sprite.svg#icon-experiments"></use></svg>
                         Эксперименты
                     </a>
                     <a href="models.html" class="sidebar__link">
+                        <svg width="20" height="20" class="me-2"><use xlink:href="img/sprite.svg#icon-models"></use></svg>
                         Модели
                     </a>
                 </nav>
 
                 <footer class="sidebar__footer dropdown">
-                    <a href="#" class="sidebar__link dropdown-toggle text-decoration-none text-truncate" id="userNameDisplay" data-bs-toggle="dropdown" aria-expanded="false">
-                        Иван Иванов
+                    <a href="#" class="sidebar__link dropdown-toggle text-decoration-none text-truncate" data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg width="20" height="20" class="me-2">
+                            <use href="img/sprite.svg#icon-user"></use>
+                        </svg>
+                        <span id="userNameDisplay">Загрузка...</span>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="userName">
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="userNameDisplay">
                         <li>
                             <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#settingsModal">
                                 Настройки
                             </a>
                         </li>
-                        <li><a class="dropdown-item text-danger" href="login.html">Выйти</a></li>
+                        <li><a class="dropdown-item text-danger" id="logoutBtn" href="login.html">Выйти</a></li>
                     </ul>
                 </footer>
             </div>
