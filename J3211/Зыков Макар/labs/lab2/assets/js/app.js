@@ -194,13 +194,13 @@ async function initHomePage() {
     counter.textContent = String(events.length);
     if (status) {
       status.textContent = "Mock API подключено и отвечает.";
-      status.className = "status-note text-success mb-0";
+      status.className = "status-note text-success mb-0 mt-3";
     }
   } catch (error) {
     counter.textContent = "0";
     if (status) {
       status.textContent = "Mock API недоступно. Сначала запустите `npm run api`.";
-      status.className = "status-note text-danger mb-0";
+      status.className = "status-note text-danger mb-0 mt-3";
     }
   }
 }
@@ -242,10 +242,12 @@ async function initEventsPage() {
   try {
     events = await fetchJson("/events");
     loading?.classList.add("d-none");
+    grid.setAttribute("aria-busy", "false");
     hideAlert(feedback);
     render();
   } catch (error) {
     loading?.classList.add("d-none");
+    grid.setAttribute("aria-busy", "false");
     setAlertMessage(feedback, `${error.message} Запустите mock API командой \`npm run api\`.`, "danger");
   }
 }
@@ -273,9 +275,10 @@ async function initEventPage() {
 
   const renderSelection = () => {
     const seats = Array.from(selectedSeats).sort();
+    const hasSelection = seats.length > 0;
 
     if (selectedList) {
-      selectedList.textContent = seats.length ? seats.join(", ") : "Нет";
+      selectedList.textContent = hasSelection ? seats.join(", ") : "места не выбраны";
     }
 
     if (selectedCount) {
@@ -283,7 +286,8 @@ async function initEventPage() {
     }
 
     if (purchaseButton) {
-      purchaseButton.disabled = seats.length === 0;
+      purchaseButton.disabled = !hasSelection;
+      purchaseButton.setAttribute("aria-disabled", String(!hasSelection));
     }
   };
 
@@ -308,7 +312,10 @@ async function initEventPage() {
             type="button"
             class="${classNames}"
             data-seat="${seat}"
-            ${isBusy ? 'aria-disabled="true"' : ""}
+            aria-pressed="${isSelected ? "true" : "false"}"
+            aria-disabled="${isBusy ? "true" : "false"}"
+            aria-label="${escapeHtml(getSeatAriaLabel(seat, isBusy, isSelected))}"
+            ${isBusy ? "disabled" : ""}
           >
             ${seat}
           </button>
@@ -607,7 +614,7 @@ function fillEventPage(event, reviews, similarEvents) {
   if (reviewsList) {
     reviewsList.innerHTML = reviews.length
       ? reviews.map((review) => `
-          <article class="review-card">
+          <article class="review-card" role="listitem">
             <h3 class="h6 mb-1">${escapeHtml(review.author)}</h3>
             <p class="small text-secondary mb-2">Оценка: ${review.rating}/5</p>
             <p class="mb-0">${escapeHtml(review.text)}</p>
@@ -619,7 +626,7 @@ function fillEventPage(event, reviews, similarEvents) {
   if (similarList) {
     similarList.innerHTML = similarEvents.length
       ? similarEvents.map((item) => `
-          <a href="event.html?id=${item.id}" class="text-decoration-none d-block">
+          <a href="event.html?id=${item.id}" class="text-decoration-none d-block" role="listitem" aria-label="Открыть похожее событие: ${escapeHtml(item.title)}">
             ${escapeHtml(item.title)}, ${escapeHtml(formatDate(item.dateTime))}
           </a>
         `).join("")
@@ -629,15 +636,15 @@ function fillEventPage(event, reviews, similarEvents) {
 
 function renderEventsGrid(grid, events) {
   grid.innerHTML = events.map((event) => `
-    <div class="col-md-6 event-card">
-      <article class="card h-100">
+    <div class="col-md-6 event-card" role="listitem">
+      <article class="card h-100" aria-labelledby="event-card-title-${event.id}">
         <img src="${event.image}" class="card-img-top event-card-image" alt="${escapeHtml(event.title)}">
         <div class="card-body d-flex flex-column">
           <div class="d-flex justify-content-between align-items-center mb-2 gap-2">
             <span class="badge ${getBadgeClassByType(event.type)}">${escapeHtml(event.typeLabel)}</span>
             <span class="event-meta">${escapeHtml(formatDate(event.dateTime))}</span>
           </div>
-          <h2 class="h5">${escapeHtml(event.title)}</h2>
+          <h2 id="event-card-title-${event.id}" class="h5">${escapeHtml(event.title)}</h2>
           <p class="text-secondary mb-2">${escapeHtml(event.cityLabel)}, ${escapeHtml(event.venue)}</p>
           <p class="small text-secondary mb-2">От ${formatCurrency(event.price)} · Свободно мест: ${event.seatsAvailable}</p>
           <p class="small text-secondary">${escapeHtml(shortText(event.description, 110))}</p>
@@ -704,10 +711,10 @@ function renderUserTickets(tickets) {
 
   list.innerHTML = activeTickets.length
     ? activeTickets.map((ticket) => `
-        <article class="card ticket-card" data-ticket-id="${ticket.id}">
+        <article class="card ticket-card" data-ticket-id="${ticket.id}" role="listitem" aria-labelledby="ticket-title-${ticket.id}">
           <div class="card-body p-4">
             <div class="d-flex flex-wrap justify-content-between gap-2 mb-2">
-              <h2 class="h5 mb-0">${escapeHtml(ticket.event?.title || "Событие")}</h2>
+              <h2 id="ticket-title-${ticket.id}" class="h5 mb-0">${escapeHtml(ticket.event?.title || "Событие")}</h2>
               <span class="badge text-bg-success ticket-status">Оплачен</span>
             </div>
             <p class="event-meta mb-2">${escapeHtml(formatEventDateTime(ticket.event?.dateTime))} · ${escapeHtml(ticket.event?.venue || "-")} · Места: ${escapeHtml(ticket.seats.join(", "))}</p>
@@ -806,7 +813,7 @@ function renderOrganizerDashboard(response) {
   if (salesBody) {
     salesBody.innerHTML = response.sales.map((item) => `
       <tr>
-        <td>${escapeHtml(item.title)}</td>
+        <th scope="row">${escapeHtml(item.title)}</th>
         <td>${formatNumber(item.soldTickets)}</td>
         <td>
           <div class="progress" role="progressbar" aria-label="Заполняемость ${escapeHtml(item.title)}" aria-valuenow="${item.occupancyPercent}" aria-valuemin="0" aria-valuemax="100">
@@ -820,7 +827,7 @@ function renderOrganizerDashboard(response) {
   if (eventsBody) {
     eventsBody.innerHTML = response.events.map((event) => `
       <tr>
-        <td>${escapeHtml(event.title)}</td>
+        <th scope="row">${escapeHtml(event.title)}</th>
         <td>${escapeHtml(event.venue)}</td>
         <td>${escapeHtml(formatDate(event.dateTime))}</td>
         <td>${formatCurrency(event.price)}</td>
@@ -891,6 +898,8 @@ function toggleButtonBusy(button, isBusy, labelWhenIdle) {
   }
 
   button.disabled = isBusy;
+  button.setAttribute("aria-disabled", String(isBusy));
+  button.setAttribute("aria-busy", String(isBusy));
   button.textContent = isBusy ? labelWhenIdle || "Загрузка..." : button.dataset.originalLabel;
 }
 
@@ -904,6 +913,7 @@ function setAlertMessage(element, message, variant = "secondary") {
 
   element.className = `alert alert-${variant}`;
   element.textContent = message;
+  applyAlertAccessibility(element, variant);
 }
 
 function setAlertHtml(element, message, variant = "secondary") {
@@ -916,6 +926,7 @@ function setAlertHtml(element, message, variant = "secondary") {
 
   element.className = `alert alert-${variant}`;
   element.innerHTML = message;
+  applyAlertAccessibility(element, variant);
 }
 
 function hideAlert(element) {
@@ -923,6 +934,10 @@ function hideAlert(element) {
 
   element.className = "alert d-none";
   element.textContent = "";
+  element.removeAttribute("role");
+  element.removeAttribute("aria-live");
+  element.removeAttribute("aria-atomic");
+  element.removeAttribute("tabindex");
 }
 
 function getCurrentEventId() {
@@ -1000,6 +1015,32 @@ function formatCompactCurrency(value) {
 
 function formatNumber(value) {
   return Number(value || 0).toLocaleString("ru-RU");
+}
+
+function applyAlertAccessibility(element, variant) {
+  const isAssertive = variant === "danger" || variant === "warning";
+  element.setAttribute("role", isAssertive ? "alert" : "status");
+  element.setAttribute("aria-live", isAssertive ? "assertive" : "polite");
+  element.setAttribute("aria-atomic", "true");
+  element.setAttribute("tabindex", "-1");
+
+  if (isAssertive) {
+    window.requestAnimationFrame(() => {
+      element.focus({ preventScroll: false });
+    });
+  }
+}
+
+function getSeatAriaLabel(seat, isBusy, isSelected) {
+  if (isBusy) {
+    return `Место ${seat}, недоступно`;
+  }
+
+  if (isSelected) {
+    return `Место ${seat}, выбрано`;
+  }
+
+  return `Место ${seat}, доступно`;
 }
 
 function shortText(text, maxLength) {
