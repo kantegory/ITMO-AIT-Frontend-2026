@@ -134,7 +134,7 @@ function renderChips(chips) {
         <span class="badge rounded-pill text-bg-primary d-flex align-items-center gap-1 flex-shrink-0 py-2 px-3 fs-6 fw-normal">
             ${chip.label}
             <button type="button" class="btn btn-link p-0 border-0 text-white filter-chip-remove" 
-                    data-name="${chip.name}" data-value="${chip.value}">
+                    data-name="${chip.name}" data-value="${chip.value}" aria-label="Удалить фильтр">
                 <i class="bi bi-x-lg ms-2"></i>
             </button>
         </span>

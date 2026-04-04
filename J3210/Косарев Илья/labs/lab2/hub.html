@@ -14,7 +14,7 @@
     <header class="navbar navbar-expand-md">
         <div class="container-fluid">
             
-            <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
+            <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Открыть боковое меню">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -23,10 +23,10 @@
             </a>
             
             <div class="dropdown ms-auto">
-                <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="userMenuToggle" data-bs-toggle="dropdown">
+                <button class="btn p-0 border-0 bg-transparent d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="userMenuToggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Открыть меню пользователя">
                     <img src="https://www.placekittens.com/32/32" alt="Аватар пользователя" width="32" height="32" class="rounded-circle me-2">
                     <span>Гость</span>
-                </a>
+                </button>
                 
                 <ul class="dropdown-menu dropdown-menu-dark shadow" id="userMenuDropdown">
                     <li><a class="dropdown-item" href="index.html">Личный кабинет</a></li>
@@ -42,13 +42,13 @@
     <div class="container-fluid">
         <div class="row">
             <aside class="col-md-3 col-lg-2 p-0 border-end" id="sidebarMenuWrapper">
-                <div class="offcanvas-md offcanvas-start" id="sidebarMenu">
+                <div class="offcanvas-md offcanvas-start" id="sidebarMenu" tabindex="-1" aria-labelledby="sidebarMenuLabel">
                     
                     <div class="offcanvas-header">
                         <h4 class="offcanvas-title" id="sidebarMenuLabel">
                             <a class="navbar-brand" href="index.html">MLShare</a>
                         </h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Закрыть боковое меню"></button>
                     </div>
 
                     <nav class="offcanvas-body p-0 sidebar-menu-scroll-area">
@@ -69,9 +69,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="#">
+                                <button class="nav-link text-dark" aria-label="Загрузить">
                                     <i class="bi bi-cloud-upload me-2"></i> Загрузить
-                                </a>
+                                </button>
                             </li>
                         </ul>
                     </nav>
@@ -88,6 +88,7 @@
 
                 <section class="mb-3">
                     <form id="hubSearchForm">
+                    <label class="visually-hidden" for="searchInput">Поиск моделей и датасетов</label>
                     <div class="input-group input-group-lg rounded" id="hubSearchBar">
                         <span class="input-group-text bg-white border-end-0 text-muted">
                             <i class="bi bi-search"></i>
@@ -124,7 +125,7 @@
         <div class="modal-content">
             <div class="modal-header bg-light">
                 <h5 class="modal-title" id="filtersModalLabel"><i class="bi bi-sliders me-2"></i> Расширенный поиск</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть фильтры"></button>
             </div>
             
             <div class="modal-body">
@@ -145,7 +146,7 @@
                 <div class="tab-content" id="filtersTabContent">
 
                     <div class="tab-pane fade show active" id="filter-models" role="tabpanel">
-                        <h6 class="fw-bold mb-2">Задача (Task)</h6>
+                        <label class="form-label fw-bold mb-2" for="modelTaskSelect">Задача (Task)</label>
                         <select class="form-select mb-4" id="modelTaskSelect" name="modelTask">
                             <option value="" selected>Любая задача</option>
                             <option value="cv">Computer Vision</option>
@@ -190,7 +191,7 @@
 
                     <div class="tab-pane fade" id="filter-datasets" role="tabpanel">
                         
-                        <h6 class="fw-bold mb-2">Применимость (Task)</h6>
+                        <label class="form-label fw-bold mb-2" for="datasetTaskSelect">Применимость (Task)</label>
                         <select class="form-select mb-4" id="datasetTaskSelect" name="datasetTask">
                             <option value="" selected>Любая задача</option>
                             <option value="img_clf">Классификация изображений</option>

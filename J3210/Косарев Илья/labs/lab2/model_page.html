@@ -15,7 +15,7 @@
     <header class="navbar navbar-expand-md">
         <div class="container-fluid">
             
-            <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
+            <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Открыть боковое меню">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -24,10 +24,10 @@
             </a>
             
             <div class="dropdown ms-auto">
-                <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="userMenuToggle" data-bs-toggle="dropdown">
+                <button class="btn p-0 border-0 bg-transparent d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="userMenuToggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Открыть меню пользователя">
                     <img src="https://www.placekittens.com/32/32" alt="Аватар пользователя" width="32" height="32" class="rounded-circle me-2">
                     <span>Гость</span>
-                </a>
+                </button>
                 
                 <ul class="dropdown-menu dropdown-menu-dark shadow" id="userMenuDropdown">
                     <li><a class="dropdown-item" href="index.html">Личный кабинет</a></li>
@@ -43,13 +43,13 @@
     <div class="container-fluid">
         <div class="row">
             <aside class="col-md-3 col-lg-2 p-0 border-end" id="sidebarMenuWrapper">
-                <div class="offcanvas-md offcanvas-start" id="sidebarMenu">
+                <div class="offcanvas-md offcanvas-start" id="sidebarMenu" tabindex="-1" aria-labelledby="sidebarMenuLabel">
                     
                     <div class="offcanvas-header">
                         <h4 class="offcanvas-title" id="sidebarMenuLabel">
                             <a class="navbar-brand" href="index.html">MLShare</a>
                         </h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Закрыть боковое меню"></button>
                     </div>
 
                     <nav class="offcanvas-body p-0 sidebar-menu-scroll-area">
@@ -90,7 +90,7 @@
                     </div>
                     
                     <article class="d-flex align-items-center gap-2 bg-white rounded-pill flex-shrink-0">
-                        <img src="https://placekittens.com/32/32" class="rounded-circle" width="32" height="32">
+                        <img src="https://placekittens.com/32/32" alt="Аватар автора" class="rounded-circle" width="32" height="32">
                         <div>
                             <div class="small text-muted">Создатель</div>
                             <a href="#" class="text-decoration-none text-dark">ultralytics</a>
@@ -123,7 +123,7 @@
                         </button>
 
                         <div class="dropdown">
-                            <button class="btn btn-outline-secondary rounded-circle" id="modelActionsMenuButton" type="button" data-bs-toggle="dropdown">
+                            <button class="btn btn-outline-secondary rounded-circle" id="modelActionsMenuButton" type="button" data-bs-toggle="dropdown" aria-label="Открыть меню действий с моделью">
                                 <i class="bi bi-three-dots"></i>
                             </button>
                             <ul class="dropdown-menu" id="modelActionsMenu">
@@ -213,7 +213,7 @@ results = model.predict("https://ultralytics.com/images/bus.jpg")</code></pre>
                                     </div>
                                     <p class="mb-1">При попытке экспорта модели в формат ONNX получаю ошибку Tensor mismatch...</p>
                                 </li>
-                                <li href="#" class="list-group-item list-group-item-action py-3">
+                                <li class="list-group-item py-3">
                                     <div class="d-flex justify-content-between">
                                         <h6 class="mb-1 fw-bold">How to fine-tune on custom dataset?</h6>
                                         <small class="text-muted">Неделю назад</small>
@@ -266,16 +266,16 @@ results = model.predict("https://ultralytics.com/images/bus.jpg")</code></pre>
     </div>
 
 
-    <div class="modal fade" id="useCodeModal">
+    <div class="modal fade" id="useCodeModal" tabindex="-1" aria-labelledby="useCodeModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-light">
                     <h5 class="modal-title fw-bold" id="useCodeModalLabel"><i class="bi bi-code-slash me-2"></i> Использование модели</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть окно"></button>
                 </div>
                 
                 <div class="modal-body p-4">
-
+                    <label class="visually-hidden" for="modelRuntimeSelect">Среда выполнения</label>
                     <select class="form-select mb-4 fw-semibold border-secondary" id="modelRuntimeSelect">
                         <option value="python" selected>Python (ultralytics)</option>
                         <option value="pytorch">Python (PyTorch Hub)</option>
