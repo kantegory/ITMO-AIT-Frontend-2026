@@ -1,23 +1,111 @@
+function showNotification(message, type = 'info', containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) {
+        console.warn(`Контейнер уведомлений #${containerId} не найден`);
+        return;
+    }
+    
+    container.textContent = '';
+    container.className = `alert alert-${type} mt-3`;
+    container.setAttribute('role', 'alert');
+    container.setAttribute('aria-live', 'assertive');
+    container.setAttribute('aria-atomic', 'true');
+    
+    container.textContent = message;
+    container.classList.remove('visually-hidden');
+    
+    container.focus?.();
+    
+    if (type === 'success') {
+        setTimeout(() => {
+            container.classList.add('visually-hidden');
+            container.textContent = '';
+        }, 5000);
+    }
+}
+
+function showFieldError(fieldId, message) {
+    const field = document.getElementById(fieldId);
+    const errorContainer = document.getElementById(`${fieldId}-error`);
+    
+    if (!field || !errorContainer) return;
+    
+    field.classList.add('is-invalid');
+    field.setAttribute('aria-invalid', 'true');
+    
+    errorContainer.textContent = message;
+    errorContainer.classList.remove('visually-hidden');
+    
+    field.setAttribute('aria-describedby', `${fieldId}-hint ${fieldId}-error`);
+    
+    field.focus();
+}
+
+function clearFieldError(fieldId) {
+    const field = document.getElementById(fieldId);
+    const errorContainer = document.getElementById(`${fieldId}-error`);
+    
+    if (field) {
+        field.classList.remove('is-invalid');
+        field.setAttribute('aria-invalid', 'false');
+        field.setAttribute('aria-describedby', `${fieldId}-hint`);
+    }
+    if (errorContainer) {
+        errorContainer.textContent = '';
+        errorContainer.classList.add('visually-hidden');
+    }
+}
+
 function initLogin() {
     const loginForm = document.getElementById('login-form');
     if (!loginForm) return;
     
+    const emailInput = document.getElementById('login-email');
+    const passwordInput = document.getElementById('login-password');
+    const errorContainer = document.getElementById('login-error');
+    
+    [emailInput, passwordInput].forEach(input => {
+        input?.addEventListener('input', () => {
+            clearFieldError(input.id);
+            if (errorContainer) {
+                errorContainer.classList.add('visually-hidden');
+                errorContainer.textContent = '';
+            }
+        });
+    });
+    
     loginForm.addEventListener('submit', async function(event) {
         event.preventDefault();
         
-        const email = document.getElementById('email')?.value;
-        const password = document.getElementById('password')?.value;
-        
-        if (!email || !password) {
-            alert('Пожалуйста, заполните все поля');
-            return;
+        clearFieldError('login-email');
+        clearFieldError('login-password');
+        if (errorContainer) {
+            errorContainer.classList.add('visually-hidden');
+            errorContainer.textContent = '';
         }
         
+        const email = emailInput?.value.trim();
+        const password = passwordInput?.value;
+        
+        let hasErrors = false;
+        
+        if (!email) {
+            showFieldError('login-email', 'Введите email');
+            hasErrors = true;
+        } else if (!isValidEmail(email)) {
+            showFieldError('login-email', 'Введите корректный email');
+            hasErrors = true;
+        }
+        
+        if (!password) {
+            showFieldError('login-password', 'Введите пароль');
+            hasErrors = true;
+        }
+        
+        if (hasErrors) return;
+        
         try {
-            const response = await api.get('/users', {
-                params: { email }
-            });
-            
+            const response = await api.get('/users', { params: { email } });
             const user = response.data[0];
             
             if (user && user.password === password) {
@@ -25,13 +113,18 @@ function initLogin() {
                 localStorage.setItem('userEmail', user.email);
                 
                 console.log('Вход выполнен:', user.email);
-                window.location.href = 'dashboard.html';
+                showNotification('Вход выполнен успешно!', 'success', 'login-error');
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1000);
             } else {
-                alert('Неверный email или пароль');
+                showNotification('Неверный email или пароль', 'danger', 'login-error');
+                passwordInput?.focus();
             }
         } catch (error) {
             console.error('Ошибка входа:', error);
-            alert('Ошибка сервера');
+            showNotification('Ошибка сервера. Попробуйте позже', 'danger', 'login-error');
         }
     });
 }
@@ -40,53 +133,103 @@ function initRegister() {
     const registerForm = document.getElementById('register-form');
     if (!registerForm) return;
     
+    const emailInput = document.getElementById('register-email');
+    const usernameInput = document.getElementById('register-username');
+    const passwordInput = document.getElementById('register-password');
+    const passwordConfirmInput = document.getElementById('register-password-confirm');
+    const termsCheckbox = document.getElementById('register-terms');
+    const errorContainer = document.getElementById('register-error');
+    
+    [emailInput, usernameInput, passwordInput, passwordConfirmInput].forEach(input => {
+        input?.addEventListener('input', () => clearFieldError(input.id));
+    });
+    termsCheckbox?.addEventListener('change', () => {
+        if (errorContainer) {
+            errorContainer.classList.add('visually-hidden');
+            errorContainer.textContent = '';
+        }
+    });
+    
     registerForm.addEventListener('submit', async function(event) {
         event.preventDefault();
         
-        const email = document.getElementById('email')?.value;
-        const username = document.getElementById('username')?.value;
-        const password = document.getElementById('password')?.value;
-        const passwordConfirm = document.getElementById('password-confirm')?.value;
-        const terms = document.getElementById('terms')?.checked;
-        
-        if (!email || !username || !password || !passwordConfirm) {
-            alert('Пожалуйста, заполните все поля');
-            return;
+        ['register-email', 'register-username', 'register-password', 'register-password-confirm'].forEach(clearFieldError);
+        if (errorContainer) {
+            errorContainer.classList.add('visually-hidden');
+            errorContainer.textContent = '';
         }
         
-        if (password !== passwordConfirm) {
-            alert('Пароли не совпадают');
-            return;
+        const email = emailInput?.value.trim();
+        const username = usernameInput?.value.trim();
+        const password = passwordInput?.value;
+        const passwordConfirm = passwordConfirmInput?.value;
+        const terms = termsCheckbox?.checked;
+        
+        let hasErrors = false;
+        
+        if (!email) {
+            showFieldError('register-email', 'Введите email');
+            hasErrors = true;
+        } else if (!isValidEmail(email)) {
+            showFieldError('register-email', 'Введите корректный email');
+            hasErrors = true;
         }
         
-        if (password.length < 8) {
-            alert('Пароль должен быть не менее 8 символов');
-            return;
+        if (!username) {
+            showFieldError('register-username', 'Введите имя пользователя');
+            hasErrors = true;
+        }
+        
+        if (!password) {
+            showFieldError('register-password', 'Введите пароль');
+            hasErrors = true;
+        } else if (password.length < 8) {
+            showFieldError('register-password', 'Пароль должен быть не менее 8 символов');
+            hasErrors = true;
+        }
+        
+        if (!passwordConfirm) {
+            showFieldError('register-password-confirm', 'Подтвердите пароль');
+            hasErrors = true;
+        } else if (password !== passwordConfirm) {
+            showFieldError('register-password-confirm', 'Пароли не совпадают');
+            hasErrors = true;
         }
         
         if (!terms) {
-            alert('Необходимо принять условия использования');
-            return;
+            showNotification('Необходимо принять условия использования', 'warning', 'register-error');
+            termsCheckbox?.focus();
+            hasErrors = true;
         }
         
+        if (hasErrors) return;
+        
         try {
-            const response = await api.post('/users', {
+            await api.post('/users', {
                 email,
                 username,
                 password,
                 createdAt: new Date().toISOString().split('T')[0]
             });
             
-            console.log('Регистрация успешна:', response.data);
-            alert('Регистрация успешна! Теперь вы можете войти');
-            window.location.href = 'index.html';
+            console.log('Регистрация успешна');
+            showNotification('Регистрация успешна! Теперь вы можете войти', 'success', 'register-error');
+            
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
         } catch (error) {
             console.error('Ошибка регистрации:', error);
-            alert('Ошибка при регистрации. Попробуйте другой email');
+            showNotification('Ошибка при регистрации. Попробуйте другой email', 'danger', 'register-error');
+            emailInput?.focus();
         }
     });
 }
 
+
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
 
 function logout() {
     localStorage.removeItem('token');
@@ -98,14 +241,12 @@ function logout() {
 function checkAuth() {
     const token = localStorage.getItem('token');
     const isAuthPage = document.getElementById('login-form') || document.getElementById('register-form');
-
+    
     if (!isAuthPage && !token) {
         console.log('Пользователь не авторизован, редирект на вход');
         window.location.href = 'index.html';
-        return;
     }
 }
-
 
 document.addEventListener('DOMContentLoaded', function() {
     initLogin();

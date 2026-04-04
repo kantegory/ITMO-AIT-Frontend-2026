@@ -6,183 +6,209 @@
     <title>ML Pipeline — Детали эксперимента</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .tab-content-section {
+            display: none;
+        }
+        .tab-content-section.active {
+            display: block;
+        }
+        .nav-pills .nav-link {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <header class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a href="#main-content" class="skip-link">Перейти к основному содержимому</a>
+    
+    <header class="navbar navbar-expand-lg navbar-dark bg-dark" role="banner">
         <div class="container">
-            <a class="navbar-brand" href="index.html">ML Pipeline</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <a class="navbar-brand" href="../html/index.html">ML Pipeline</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" 
+                    aria-expanded="false" aria-label="Переключить навигацию">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Платформа управления ML-экспериментами</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="dashboard.html">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="experiments.html">Эксперименты</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="models.html">Модели</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="logout()">Выйти</a>
-                    </li>
-                </ul>
-            </div>
+            <nav role="navigation" aria-label="Дополнительная навигация">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../html/index.html">Платформа управления ML-экспериментами</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../html/index.html" onclick="logout()">Выйти</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
     </header>
 
-    <main class="container py-4">
-        <section class="mb-4">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h1 id="exp-name">Загрузка...</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar" role="navigation" aria-label="Основная навигация">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="dashboard.html">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="experiments.html">Эксперименты</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="models.html">Модели</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main id="main-content" class="col-md-10 ms-sm-auto px-md-4 py-4" role="main">
+                <div id="experiment-error" role="alert" aria-live="assertive" 
+                     aria-atomic="true" class="visually-hidden" tabindex="-1"></div>
+
+                <section aria-label="Информация об эксперименте">
+                    <h1 id="exp-name" aria-live="polite">Загрузка...</h1>
                     <p class="text-muted">
                         ID: <span id="exp-id">—</span> | 
-                        Статус: <span id="exp-status">—</span> |
+                        Статус: <span id="exp-status" role="status">—</span> |
                         Дата: <span id="exp-date">—</span>
                     </p>
-                </div>
-                <div>
-                    <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#cloneModal">Клонировать</button>
-                    <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Удалить</button>
-                </div>
-            </div>
-        </section>
+                    <div class="mb-3">
+                        <button class="btn btn-primary" id="btn-clone" data-bs-toggle="modal" data-bs-target="#cloneModal">Клонировать</button>
+                        <button class="btn btn-danger" id="btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal">Удалить</button>
+                    </div>
+                </section>
 
-        <nav>
-            <ul class="nav nav-tabs mb-4" id="expTabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#metrics" data-bs-toggle="tab">Метрики</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#logs" data-bs-toggle="tab">Логи</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#artifacts" data-bs-toggle="tab">Артефакты</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#params" data-bs-toggle="tab">Параметры</a>
-                </li>
-            </ul>
-        </nav>
+                <nav aria-label="Навигация по разделам эксперимента">
+                    <ul class="nav nav-pills mb-4" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="metrics-tab" data-bs-toggle="pill" 
+                                    data-bs-target="#metrics" type="button" role="tab" 
+                                    aria-controls="metrics" aria-selected="true">Метрики</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="logs-tab" data-bs-toggle="pill" 
+                                    data-bs-target="#logs" type="button" role="tab" 
+                                    aria-controls="logs" aria-selected="false">Логи</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="artifacts-tab" data-bs-toggle="pill" 
+                                    data-bs-target="#artifacts" type="button" role="tab" 
+                                    aria-controls="artifacts" aria-selected="false">Артефакты</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="params-tab" data-bs-toggle="pill" 
+                                    data-bs-target="#params" type="button" role="tab" 
+                                    aria-controls="params" aria-selected="false">Параметры</button>
+                        </li>
+                    </ul>
+                </nav>
 
-        <section class="tab-content">
-            <section class="tab-pane fade show active" id="metrics">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <h5>Accuracy</h5>
-                                <h2 id="metric-accuracy">—</h2>
-                                <p class="text-muted">Итоговое значение</p>
+                <div class="tab-content">
+                    <section id="metrics" class="tab-content-section active mb-5" role="tabpanel" 
+                             aria-labelledby="metrics-tab">
+                        <h2 class="h5 mb-3">Метрики</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="card-title h6">Accuracy</h3>
+                                        <p class="display-4 mb-0" id="metric-accuracy" role="status" aria-live="polite">—</p>
+                                        <small class="text-muted">Итоговое значение</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="card-title h6">Loss</h3>
+                                        <p class="display-4 mb-0" id="metric-loss" role="status" aria-live="polite">—</p>
+                                        <small class="text-muted">Итоговое значение</small>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card mb-4">
+                    </section>
+
+                    <section id="logs" class="tab-content-section mb-5" role="tabpanel" 
+                             aria-labelledby="logs-tab" hidden>
+                        <h2 class="h5 mb-3">Логи обучения</h2>
+                        <div class="card">
                             <div class="card-body">
-                                <h5>Loss</h5>
-                                <h2 id="metric-loss">—</h2>
-                                <p class="text-muted">Итоговое значение</p>
+                                <pre id="logs-container" class="bg-light p-3 rounded" 
+                                     aria-live="polite" aria-atomic="true" style="max-height: 300px; overflow-y: auto;">Загрузка логов...
+                                </pre>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
+                    </section>
 
-            <section class="tab-pane fade" id="logs">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Логи обучения</h5>
-                    </div>
-                    <div class="card-body">
-                        <div id="logs-container" style="max-height: 400px; overflow-y: auto; font-family: monospace; font-size: 0.9em;">
-                            <p class="text-muted">Загрузка логов...</p>
+                    <section id="artifacts" class="tab-content-section mb-5" role="tabpanel" 
+                             aria-labelledby="artifacts-tab" hidden>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h2 class="h5 mb-0">Артефакты</h2>
+                            <button class="btn btn-sm btn-outline-primary">Загрузить артефакт</button>
                         </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="tab-pane fade" id="artifacts">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Артефакты</h5>
-                        <button class="btn btn-sm btn-primary">Загрузить артефакт</button>
-                    </div>
-                    <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-hover">
+                            <table class="table table-hover" id="artifacts-table">
+                                <caption class="visually-hidden">Список артефактов эксперимента: название, тип, размер, дата, действия</caption>
                                 <thead class="table-light">
                                     <tr>
-                                        <th>Название</th>
-                                        <th>Тип</th>
-                                        <th>Размер</th>
-                                        <th>Дата</th>
-                                        <th>Действия</th>
+                                        <th scope="col">Название</th>
+                                        <th scope="col">Тип</th>
+                                        <th scope="col">Размер</th>
+                                        <th scope="col">Дата</th>
+                                        <th scope="col">Действия</th>
                                     </tr>
                                 </thead>
-                                <tbody id="artifacts-tbody">
-                                    <tr>
-                                        <td colspan="5" class="text-center text-muted">Загрузка артефактов...</td>
-                                    </tr>
+                                <tbody id="artifacts-tbody" aria-live="polite">
+                                    <tr><td colspan="5" class="text-center text-muted">Загрузка артефактов...</td></tr>
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
-            </section>
+                    </section>
 
-            <section class="tab-pane fade" id="params">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Параметры эксперимента</h5>
-                    </div>
-                    <div class="card-body">
+                    <section id="params" class="tab-content-section mb-5" role="tabpanel" 
+                             aria-labelledby="params-tab" hidden>
+                        <h2 class="h5 mb-3">Параметры эксперимента</h2>
                         <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table table-hover" id="params-table">
+                                <caption class="visually-hidden">Параметры конфигурации эксперимента</caption>
                                 <thead class="table-light">
                                     <tr>
-                                        <th>Параметр</th>
-                                        <th>Значение</th>
+                                        <th scope="col">Параметр</th>
+                                        <th scope="col">Значение</th>
                                     </tr>
                                 </thead>
-                                <tbody id="params-tbody">
-                                    <tr>
-                                        <td colspan="2" class="text-center text-muted">Загрузка параметров...</td>
-                                    </tr>
+                                <tbody id="params-tbody" aria-live="polite">
+                                    <tr><td colspan="2" class="text-center text-muted">Загрузка параметров...</td></tr>
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </section>
                 </div>
-            </section>
-        </section>
-    </main>
+            </main>
+        </div>
+    </div>
 
-    <footer class="bg-light py-3 mt-auto">
+    <footer class="footer mt-auto py-3 bg-light" role="contentinfo">
         <div class="container text-center text-muted">
-            © 2026 ML Pipeline. Все права защищены.
+            <p>&copy; 2026 ML Pipeline. Все права защищены.</p>
         </div>
     </footer>
 
-    <div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Удалить эксперимент</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="deleteModalLabel">Удалить эксперимент</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть модальное окно"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Вы уверены, что хотите удалить эксперимент?</p>
-                    <p class="text-danger">Это действие нельзя отменить.</p>
-                    <input type="hidden" id="delete-exp-id" value="">
+                    <p>Вы уверены, что хотите удалить эксперимент <strong id="delete-exp-name"></strong>?</p>
+                    <p class="text-danger small">Это действие нельзя отменить.</p>
+                    <input type="hidden" id="delete-exp-id">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
@@ -192,21 +218,24 @@
         </div>
     </div>
 
-    <div class="modal fade" id="cloneModal" tabindex="-1">
+    <div class="modal fade" id="cloneModal" tabindex="-1" aria-labelledby="cloneModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Клонировать эксперимент</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="cloneModalLabel">Клонировать эксперимент</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть модальное окно"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Новое название</label>
-                        <input type="text" id="clone-name" class="form-control" placeholder="model_v1_training_copy">
+                        <label for="clone-name" class="form-label">Новое название</label>
+                        <input type="text" class="form-control" id="clone-name" 
+                               aria-describedby="clone-name-hint" required aria-required="true">
+                        <small id="clone-name-hint" class="form-text text-muted visually-hidden">Введите название для клонированного эксперимента</small>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Описание</label>
-                        <textarea id="clone-description" class="form-control" rows="3"></textarea>
+                        <label for="clone-description" class="form-label">Описание</label>
+                        <textarea class="form-control" id="clone-description" rows="3" 
+                                  placeholder="Необязательно"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

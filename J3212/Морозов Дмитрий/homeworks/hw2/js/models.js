@@ -1,11 +1,35 @@
+function showNotification(message, type = 'info', containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) {
+        console.warn(`Контейнер уведомлений #${containerId} не найден`);
+        return;
+    }
+    
+    container.textContent = '';
+    container.className = `alert alert-${type} mt-3`;
+    container.setAttribute('role', 'alert');
+    container.setAttribute('aria-live', 'assertive');
+    container.setAttribute('aria-atomic', 'true');
+    
+    container.textContent = message;
+    container.classList.remove('visually-hidden');
+    container.focus?.();
+    
+    if (type === 'success') {
+        setTimeout(() => {
+            container.classList.add('visually-hidden');
+            container.textContent = '';
+        }, 5000);
+    }
+}
+
 async function initModels() {
     const tableBody = document.querySelector('#models-tbody');
     if (!tableBody) return;
-
+    
     let allModels = [];
     let allExperiments = [];
 
-    // Загрузка моделей из API
     async function loadModels() {
         try {
             const response = await api.get('/models');
@@ -14,7 +38,7 @@ async function initModels() {
             updateStats(allModels);
         } catch (error) {
             console.error('Ошибка загрузки моделей:', error);
-            alert('Не удалось загрузить модели');
+            showNotification('Не удалось загрузить модели', 'danger', 'models-error');
         }
     }
 
@@ -60,9 +84,12 @@ async function initModels() {
                 <td><a href="experiment-detail.html?id=${model.experimentId || ''}">${model.experimentId || '—'}</a></td>
                 <td>${model.date || '—'}</td>
                 <td>
-                    <button class="btn btn-sm btn-primary deploy-btn" data-bs-toggle="modal" data-bs-target="#deployModal">Deploy</button>
-                    <button class="btn btn-sm btn-secondary view-btn" data-bs-toggle="modal" data-bs-target="#infoModal">View</button>
-                    <button class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                    <button class="btn btn-sm btn-primary deploy-btn" data-bs-toggle="modal" data-bs-target="#deployModal" 
+                            aria-label="Развернуть модель ${model.name}">Deploy</button>
+                    <button class="btn btn-sm btn-secondary view-btn" data-bs-toggle="modal" data-bs-target="#infoModal" 
+                            aria-label="Посмотреть информацию о модели ${model.name}">View</button>
+                    <button class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#deleteModal" 
+                            aria-label="Удалить модель ${model.name}">Delete</button>
                 </td>
             `;
             
@@ -71,7 +98,7 @@ async function initModels() {
         
         if (typeof window.updateModelsPagination === 'function') {
             window.updateModelsPagination();
-        }
+        } 
     }
 
     function updateStats(models) {
@@ -84,7 +111,7 @@ async function initModels() {
         const statArchived = document.getElementById('stat-archived');
         
         if (statProd) statProd.textContent = productionCount;
-        if (statStaging) statStaging.textContent = stagingCount;
+        if (statStaging) statStaging.textContent = stagingCount; 
         if (statArchived) statArchived.textContent = archivedCount;
     }
 
@@ -97,8 +124,10 @@ async function initModels() {
                     document.getElementById('info-model-name').textContent = model.name;
                     document.getElementById('info-model-version').textContent = model.version;
                     document.getElementById('info-model-status').textContent = model.status;
-                    document.getElementById('info-experiment-link').href = `experiment-detail.html?id=${model.experimentId || ''}`;
-                    document.getElementById('info-experiment-link').textContent = model.experimentId || '—';
+                    
+                    const expLink = document.getElementById('info-experiment-link');
+                    expLink.href = `experiment-detail.html?id=${model.experimentId || ''}`;
+                    expLink.textContent = model.experimentId || '—';
                     
                     if (model.metrics) {
                         document.getElementById('info-metric-accuracy').textContent = model.metrics.accuracy?.toFixed(2) || '—';
@@ -121,7 +150,7 @@ async function initModels() {
                 }
             }
         }
-
+     
         if (e.target.classList.contains('delete-btn')) {
             const row = e.target.closest('tr');
             if (row) {
@@ -133,9 +162,9 @@ async function initModels() {
                     deleteIdInput.value = modelId;
                 }
                 
-                const deleteModalBody = document.querySelector('#deleteModal .modal-body p');
-                if (deleteModalBody) {
-                    deleteModalBody.textContent = `Вы уверены, что хотите удалить модель "${modelName}"?`;
+                const deleteNameEl = document.getElementById('delete-model-name');
+                if (deleteNameEl) {
+                    deleteNameEl.textContent = `"${modelName}"`;
                 }
             }
         }
@@ -151,7 +180,7 @@ async function initModels() {
             const fileInput = document.getElementById('model-file')?.files[0];
             
             if (!name || !version) {
-                alert('Заполните все обязательные поля!');
+                showNotification('Заполните все обязательные поля!', 'warning', 'models-error');
                 return;
             }
             
@@ -168,36 +197,32 @@ async function initModels() {
                     date: new Date().toISOString().split('T')[0],
                     metrics: { accuracy: 0, precision: 0, recall: 0, f1: 0 }
                 });
-                
+                 
                 if (experimentId) {
                     const expResponse = await api.get(`/experiments/${experimentId}`);
                     const experiment = expResponse.data;
-                    
                     const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
-                    const newLog = `[${timestamp}] INFO: Model ${name} ${version} registered from this experiment`;
-                    const updatedLogs = [...(experiment.logs || []), newLog];
-                    
-                    const newArtifact = {
-                        name: fileInput ? fileInput.name : `${name}_${version}.pkl`,
-                        type: 'Model',
-                        size: fileInput ? `${(fileInput.size / 1024 / 1024).toFixed(2)} MB` : 'N/A',
-                        date: new Date().toISOString().split('T')[0]
-                    };
-                    const updatedArtifacts = [...(experiment.artifacts || []), newArtifact];
+                    const newLog = `[${timestamp}] INFO: Model ${name} ${version} registered`;
                     
                     await api.patch(`/experiments/${experimentId}`, {
-                        logs: updatedLogs,
-                        artifacts: updatedArtifacts
+                        logs: [...(experiment.logs || []), newLog],
+                        artifacts: [...(experiment.artifacts || []), {
+                            name: fileInput ? fileInput.name : `${name}_${version}.pkl`,
+                            type: 'Model',
+                            size: fileInput ? `${(fileInput.size / 1024 / 1024).toFixed(2)} MB` : 'N/A',
+                            date: new Date().toISOString().split('T')[0]
+                        }]
                     });
-                    
-                    console.log('Эксперимент обновлён: добавлен лог и артефакт');
                 }
                 
-                alert('Модель добавлена!');
-                window.location.reload();
+                showNotification('Модель добавлена!', 'success', 'models-error');
+                const modal = bootstrap.Modal.getInstance(document.getElementById('addModelModal'));
+                if (modal) modal.hide();
+                
+                await loadModels();
             } catch (error) {
                 console.error('Ошибка добавления модели:', error);
-                alert('Ошибка при добавлении модели');
+                showNotification('Ошибка при добавлении модели', 'danger', 'models-error');
             }
         });
     }
@@ -209,7 +234,7 @@ async function initModels() {
             const environment = document.getElementById('deploy-environment')?.value;
             
             if (!modelNameInput) {
-                alert('Ошибка: имя модели не найдено');
+                showNotification('Ошибка: имя модели не найдено', 'danger', 'models-error');
                 return;
             }
 
@@ -217,27 +242,26 @@ async function initModels() {
             const modelToUpdate = allModels.find(m => m.name === name && m.version === version);
 
             if (!modelToUpdate) {
-                alert('Ошибка: модель не найдена в списке');
+                showNotification('Ошибка: модель не найдена в списке', 'danger', 'models-error');
                 return;
             }
 
             try {
-                await api.patch(`/models/${modelToUpdate.id}`, {
-                    status: environment
-                });
-
-                console.log(`Модель ${modelToUpdate.id} обновлена: ${environment}`);
+                await api.patch(`/models/${modelToUpdate.id}`, { status: environment });
                 
-                if (environment === 'Archived') {
-                    alert(`Модель "${modelNameInput}" архивирована`);
-                } else {
-                    alert(`Модель "${modelNameInput}" развернута в ${environment}`);
-                }
+                let msg = environment === 'Archived' 
+                    ? `Модель "${modelNameInput}" архивирована` 
+                    : `Модель "${modelNameInput}" развернута в ${environment}`;
                 
-                window.location.reload();
+                showNotification(msg, 'success', 'models-error');
+                
+                const modal = bootstrap.Modal.getInstance(document.getElementById('deployModal'));
+                if (modal) modal.hide();
+                
+                await loadModels();
             } catch (error) {
                 console.error('Ошибка обновления статуса:', error);
-                alert('Ошибка при изменении статуса модели');
+                showNotification('Ошибка при изменении статуса модели', 'danger', 'models-error');
             }
         });
     }
@@ -248,32 +272,43 @@ async function initModels() {
             const deleteModelId = document.getElementById('delete-model-id')?.value;
             
             if (!deleteModelId) {
-                alert('Ошибка: ID модели не найден');
+                showNotification('Ошибка: ID модели не найден', 'danger', 'models-error');
                 return;
             }
 
             try {
                 await api.delete(`/models/${deleteModelId}`);
+                showNotification('Модель успешно удалена', 'success', 'models-error');
                 
-                console.log(`Модель ${deleteModelId} удалена`);
-                alert('Модель успешно удалена');
-                window.location.reload();
+                const modal = bootstrap.Modal.getInstance(document.getElementById('deleteModal'));
+                if (modal) modal.hide();
+                
+                await loadModels();
             } catch (error) {
                 console.error('Ошибка удаления модели:', error);
-                alert('Ошибка при удалении модели');
+                showNotification('Ошибка при удалении модели', 'danger', 'models-error');
             }
         });
+    }
+
+    const addModal = document.getElementById('addModelModal');
+    if (addModal) {
+        addModal.addEventListener('shown.bs.modal', () => document.getElementById('model-name')?.focus());
+    }
+    
+    const deployModalEl = document.getElementById('deployModal');
+    if (deployModalEl) {
+        deployModalEl.addEventListener('shown.bs.modal', () => document.getElementById('deploy-environment')?.focus());
     }
 
     await loadModels();
     await loadExperimentsForSelect();
 }
 
-
 function initModelsPagination() {
     const tbody = document.getElementById('models-tbody');
     if (!tbody) return;
-
+    
     const rowsPerPage = 6;
     let allRows = [];
     let totalPages = 1;
@@ -288,7 +323,7 @@ function initModelsPagination() {
     }
 
     function showPage(page) {
-        const start = (page - 1) * rowsPerPage;
+        const start = (page - 1) * rowsPerPage; 
         const end = start + rowsPerPage;
         
         allRows.forEach(function(row, index) {
@@ -308,23 +343,20 @@ function initModelsPagination() {
         pageLinks.forEach(function(link) {
             const parent = link.parentElement;
             parent.classList.remove('active');
+            link.removeAttribute('aria-current');
             
             const linkPage = parseInt(link.getAttribute('data-page'));
             if (linkPage === currentPage) {
                 parent.classList.add('active');
+                link.setAttribute('aria-current', 'page');
             }
         });
         
         const prevBtn = document.getElementById('prev-page');
         const nextBtn = document.getElementById('next-page');
         
-        if (prevBtn) {
-            prevBtn.classList.toggle('disabled', currentPage === 1);
-        }
-        
-        if (nextBtn) {
-            nextBtn.classList.toggle('disabled', currentPage === totalPages);
-        }
+        if (prevBtn) prevBtn.classList.toggle('disabled', currentPage === 1);
+        if (nextBtn) nextBtn.classList.toggle('disabled', currentPage === totalPages);
     }
 
     const pageLinks = document.querySelectorAll('#models-pagination .page-link');
@@ -334,7 +366,6 @@ function initModelsPagination() {
             
             const pageAttr = this.getAttribute('data-page');
             const text = this.textContent.trim();
-            
             let targetPage = currentPage;
             
             if (pageAttr && pageAttr !== 'prev' && pageAttr !== 'next') {
@@ -352,11 +383,8 @@ function initModelsPagination() {
     });
 
     window.updateModelsPagination = updatePagination;
-    window.showModelsPage = showPage;
-
     updatePagination();
 }
-
 
 document.addEventListener('DOMContentLoaded', function() {
     initModels();

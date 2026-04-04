@@ -8,43 +8,71 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-6 col-lg-4">
+    <a href="#main-content" class="skip-link">Перейти к основному содержимому</a>
+    
+    <header class="navbar navbar-expand-lg navbar-dark bg-dark" role="banner">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">ML Pipeline</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content" class="container py-5" role="main">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
                 <div class="card shadow">
-                    <header class="card-header bg-dark text-white text-center">
-                        <h1 class="h4">ML Pipeline</h1>
-                        <p class="mb-0">Платформа управления ML-экспериментами</p>
-                    </header>
-                    <div class="card-body">
-                        <h2 class="card-title text-center mb-4">Вход в систему</h2>
+                    <div class="card-body p-4">
+                        <h1 class="h4 text-center mb-4">Вход в систему</h1>
                         
-                        <form id="login-form">
+                        <div id="login-error" role="alert" aria-live="assertive" aria-atomic="true" class="visually-hidden" tabindex="-1"></div>                        
+                        <form id="login-form" novalidate>
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                                <label for="login-email" class="form-label">Email</label>
+                                <input type="email" 
+                                       id="login-email" 
+                                       name="email"
+                                       class="form-control" 
+                                       placeholder="name@example.com"
+                                       required 
+                                       aria-required="true"
+                                       aria-describedby="login-email-hint">
+                                <small id="login-email-hint" class="form-text text-muted">Введите ваш зарегистрированный email</small>
+                                <div id="login-email-error" class="invalid-feedback" role="alert" aria-live="polite"></div>
                             </div>
+                            
                             <div class="mb-3">
-                                <label for="password" class="form-label">Пароль</label>
-                                <input type="password" class="form-control" id="password" placeholder="Введите пароль" required>
+                                <label for="login-password" class="form-label">Пароль</label>
+                                <input type="password" 
+                                       id="login-password" 
+                                       name="password"
+                                       class="form-control" 
+                                       placeholder="••••••••"
+                                       required 
+                                       aria-required="true"
+                                       aria-describedby="login-password-hint">
+                                <small id="login-password-hint" class="form-text text-muted">Минимум 8 символов</small>
+                                <div id="login-password-error" class="invalid-feedback" role="alert" aria-live="polite"></div>
                             </div>
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Войти</button>
-                            </div>
+                            
+                            <button type="submit" class="btn btn-primary w-100">Войти</button>
                         </form>
                         
-                        <div class="text-center mt-3">
-                            <p class="mb-0">Нет аккаунта? <a href="register.html">Зарегистрироваться</a></p>
-                        </div>
+                        <p class="text-center mt-4 mb-0">Нет аккаунта? <a href="register.html" id="switch-to-register">Зарегистрироваться</a>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <footer class="text-center text-muted mt-5">
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light" role="contentinfo">
+        <div class="container text-center text-muted">
             <p>&copy; 2026 ML Pipeline. Все права защищены.</p>
-        </footer>
-    </div>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>

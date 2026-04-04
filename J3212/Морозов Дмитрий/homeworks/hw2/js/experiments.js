@@ -1,3 +1,17 @@
+function showExperimentsNotification(message, type = 'info') {
+    if (typeof showNotification === 'function') {
+        showNotification(message, type, 'experiments-error');
+    } else {
+        const container = document.getElementById('experiments-error');
+        if (container) {
+            container.textContent = message;
+            container.className = `alert alert-${type} mt-3`;
+            container.classList.remove('visually-hidden');
+            container.focus?.();
+        }
+    }
+}
+
 async function initExperiments() {
     const tableBody = document.querySelector('#experiments-table tbody');
     if (!tableBody) return;
@@ -22,7 +36,7 @@ async function initExperiments() {
             renderExperiments(allExperiments);
         } catch (error) {
             console.error('Ошибка загрузки экспериментов:', error);
-            alert('Не удалось загрузить эксперименты. Убедитесь, что JSON Server запущен.');
+            showExperimentsNotification('Не удалось загрузить эксперименты', 'danger');
         }
     }
     
@@ -47,7 +61,9 @@ async function initExperiments() {
                 <td>${tagsDisplay}</td>
                 <td>${exp.status}</td>
                 <td>
-                    <a href="experiment-detail.html?id=${exp.id}" class="btn btn-sm btn-primary">Просмотр</a>
+                    <a href="experiment-detail.html?id=${exp.id}" 
+                       class="btn btn-sm btn-primary" 
+                       aria-label="Просмотреть эксперимент: ${exp.name}">Просмотр</a>
                 </td>
             `;
             
@@ -114,6 +130,12 @@ async function initExperiments() {
         
         renderExperiments(filtered);
         console.log('Найдено экспериментов:', filtered.length);
+        
+        const statusSpan = document.getElementById('pagination-status');
+        if (statusSpan) {
+            statusSpan.textContent = `Найдено ${filtered.length} экспериментов`;
+        }
+        
         if (typeof window.updateExperimentsPagination === 'function') {
             window.updateExperimentsPagination();
         }
@@ -155,8 +177,6 @@ async function initExperiments() {
     window.filterTable = filterTable;
 }
 
-
-
 function initExperimentsPagination() {
     const experimentsTable = document.getElementById('experiments-table');
     if (!experimentsTable) return;
@@ -191,6 +211,11 @@ function initExperimentsPagination() {
         
         currentPage = page;
         updatePageLinks();
+        
+        const statusSpan = document.getElementById('pagination-status');
+        if (statusSpan) {
+            statusSpan.textContent = `Страница ${page} из ${totalPages}`;
+        }
     }
     
     function updatePageLinks() {
@@ -198,10 +223,12 @@ function initExperimentsPagination() {
         pageLinks.forEach(function(link) {
             const parent = link.parentElement;
             parent.classList.remove('active');
+            link.removeAttribute('aria-current');
             
             const linkPage = parseInt(link.getAttribute('data-page'));
             if (linkPage === currentPage) {
                 parent.classList.add('active');
+                link.setAttribute('aria-current', 'page');
             }
         });
         
@@ -247,8 +274,25 @@ function initExperimentsPagination() {
     updatePagination();
 }
 
+function initExperimentModals() {
+    const deleteModal = document.getElementById('deleteModal');
+    const cloneModal = document.getElementById('cloneModal');
+    
+    if (deleteModal) {
+        deleteModal.addEventListener('shown.bs.modal', function() {
+            document.getElementById('confirm-delete-btn')?.focus();
+        });
+    }
+    
+    if (cloneModal) {
+        cloneModal.addEventListener('shown.bs.modal', function() {
+            document.getElementById('clone-name')?.focus();
+        });
+    }
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     initExperiments();
     initExperimentsPagination();
+    initExperimentModals();
 });

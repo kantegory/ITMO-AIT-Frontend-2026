@@ -8,30 +8,36 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <header class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a href="#main-content" class="skip-link">Перейти к основному содержимому</a>
+    
+    <header class="navbar navbar-expand-lg navbar-dark bg-dark" role="banner">
         <div class="container">
             <a class="navbar-brand" href="index.html">ML Pipeline</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" 
+                    aria-expanded="false" aria-label="Переключить навигацию">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Платформа управления ML-экспериментами</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html" onclick="logout()">Выйти</a>
-                    </li>
-                </ul>
-            </div>
+            <nav role="navigation" aria-label="Дополнительная навигация">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Платформа управления ML-экспериментами</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html" onclick="logout()">Выйти</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
     </header>
 
     <div class="container-fluid">
         <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar" role="navigation" aria-label="Основная навигация">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
@@ -41,81 +47,84 @@
                             <a class="nav-link" href="experiments.html">Эксперименты</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="models.html">Модели</a>
+                            <a class="nav-link active" href="models.html" aria-current="page">Модели</a>
                         </li>
                     </ul>
                 </div>
             </nav>
 
-            <main class="col-md-10 ms-sm-auto px-md-4 py-4">
+            <main id="main-content" class="col-md-10 ms-sm-auto px-md-4 py-4" role="main">
                 <h1>Управление моделями</h1>
                 <p class="text-muted">Версионирование, развертывание и реестр моделей</p>
 
-                <section class="row mb-4">
+                <div id="models-error" role="alert" aria-live="assertive" 
+                     aria-atomic="true" class="visually-hidden" tabindex="-1"></div>
+
+                <section class="row mb-4" aria-label="Статистика моделей">
                     <div class="col-md-4">
-                        <div class="card bg-success text-white">
+                        <div class="card text-center text-white bg-success mb-3" role="status" aria-live="polite" aria-label="Модели в продакшене">
                             <div class="card-body">
-                                <h2 id="stat-production">0</h2>
-                                <p>Модели в продакшене</p>
+                                <h2 id="stat-production" class="display-4">0</h2>
+                                <p class="card-text mb-0">В продакшене</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="card bg-warning text-dark">
+                        <div class="card text-center text-black bg-warning mb-3" role="status" aria-live="polite" aria-label="Модели на тестировании">
                             <div class="card-body">
-                                <h2 id="stat-staging">0</h2>
-                                <p>На тестировании</p>
+                                <h2 id="stat-staging" class="display-4">0</h2>
+                                <p class="card-text mb-0">На тестировании</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="card bg-secondary text-white">
+                        <div class="card text-center text-white bg-secondary mb-3" role="status" aria-live="polite" aria-label="Модели в архиве">
                             <div class="card-body">
-                                <h2 id="stat-archived">0</h2>
-                                <p>В архиве</p>
+                                <h2 id="stat-archived" class="display-4">0</h2>
+                                <p class="card-text mb-0">В архиве</p>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <section>
+                <section aria-label="Реестр моделей">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h2 class="h5">Реестр моделей</h2>
-                        <button class="btn btn-primary" data-bs-target="#addModelModal" data-bs-toggle="modal">Добавить модель</button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModelModal">Добавить модель</button>
                     </div>
 
                     <div class="table-responsive">
                         <table class="table table-hover" id="models-table">
+                            <caption class="visually-hidden">Таблица моделей с информацией о названии, версии, статусе, метрике и действиях</caption>
                             <thead class="table-light">
                                 <tr>
-                                    <th>Название</th>
-                                    <th>Версия</th>
-                                    <th>Статус</th>
-                                    <th>Метрика</th>
-                                    <th>Эксперимент</th>
-                                    <th>Дата</th>
-                                    <th>Действия</th>
+                                    <th scope="col">Название</th>
+                                    <th scope="col">Версия</th>
+                                    <th scope="col">Статус</th>
+                                    <th scope="col">Метрика</th>
+                                    <th scope="col">Эксперимент</th>
+                                    <th scope="col">Дата</th>
+                                    <th scope="col">Действия</th>
                                 </tr>
                             </thead>
-                            <tbody id="models-tbody">
-                                
+                            <tbody id="models-tbody" aria-live="polite">
                             </tbody>
                         </table>
                     </div>
 
-                    <nav aria-label="Пагинация">
+                    <nav aria-label="Пагинация моделей">
                         <ul class="pagination justify-content-center" id="models-pagination">
-                            <li class="page-item" id="prev-page">
-                                <a class="page-link" href="#" aria-label="Предыдущая">
-                                    <span>Предыдущая</span>
-                                </a>
+                            <li class="page-item disabled" id="prev-page">
+                                <a class="page-link" href="#" data-page="prev" aria-label="Предыдущая страница">Предыдущая</a>
                             </li>
-                            <li class="page-item active"><a class="page-link" href="#" data-page="1">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#" data-page="2">2</a></li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#" data-page="1" aria-label="Страница 1" aria-current="page">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" data-page="2" aria-label="Страница 2">2</a>
+                            </li>
                             <li class="page-item" id="next-page">
-                                <a class="page-link" href="#" aria-label="Следующая">
-                                    <span>Следующая</span>
-                                </a>
+                                <a class="page-link" href="#" data-page="next" aria-label="Следующая страница">Следующая</a>
                             </li>
                         </ul>
                     </nav>
@@ -124,81 +133,71 @@
         </div>
     </div>
 
-    <footer class="footer mt-auto py-3 bg-light">
+    <footer class="footer mt-auto py-3 bg-light" role="contentinfo">
         <div class="container text-center text-muted">
             <p>&copy; 2026 ML Pipeline. Все права защищены.</p>
         </div>
     </footer>
 
-    <div class="modal fade" id="addModelModal" tabindex="-1">
+    <div class="modal fade" id="addModelModal" tabindex="-1" aria-labelledby="addModelModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Добавить модель</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="addModelModalLabel">Добавить модель</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть модальное окно"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Название модели *</label>
-                        <input type="text" id="model-name" class="form-control" placeholder="Например: fraud_detection" required>
+                        <label for="model-name" class="form-label">Название модели <span aria-hidden="true">*</span></label>
+                        <input type="text" class="form-control" id="model-name" required aria-required="true">
                     </div>
-                    
                     <div class="mb-3">
-                        <label class="form-label">Версия *</label>
-                        <input type="text" id="model-version" class="form-control" placeholder="Например: v1.0" required>
+                        <label for="model-version" class="form-label">Версия <span aria-hidden="true">*</span></label>
+                        <input type="text" class="form-control" id="model-version" required aria-required="true">
                     </div>
-                    
                     <div class="mb-3">
-                        <label class="form-label">Эксперимент</label>
-                        <select id="experiment-select" class="form-select">
+                        <label for="experiment-select" class="form-label">Эксперимент</label>
+                        <select class="form-select" id="experiment-select">
                             <option value="">Выберите эксперимент</option>
                         </select>
                     </div>
-                    
                     <div class="mb-3">
-                        <label class="form-label">Файл модели</label>
-                        <input type="file" id="model-file" class="form-control">
+                        <label for="model-file" class="form-label">Файл модели</label>
+                        <input type="file" class="form-control" id="model-file">
                     </div>
-                    
                     <div class="mb-3">
-                        <label class="form-label">Описание</label>
-                        <textarea id="model-description" class="form-control" rows="3" placeholder="Описание модели"></textarea>
+                        <label for="model-description" class="form-label">Описание</label>
+                        <textarea class="form-control" id="model-description" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <button type="button" id="confirm-add-model" class="btn btn-primary">Добавить</button>
+                    <button type="button" class="btn btn-primary" id="confirm-add-model">Добавить</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="deployModal" tabindex="-1">
+    <div class="modal fade" id="deployModal" tabindex="-1" aria-labelledby="deployModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Развернуть модель</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="deployModalLabel">Развернуть модель</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть модальное окно"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="deploy-form">
-                        <div class="mb-3">
-                            <label class="form-label">Модель</label>
-                            <input type="text" class="form-control" id="deploy-model-name" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Окружение</label>
-                            <select class="form-select" id="deploy-environment">
-                                <option value="Staging">Staging</option>
-                                <option value="Production">Production</option>
-                                <option value="Archived">Archived</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Количество инстансов</label>
-                            <input type="number" class="form-control" id="deploy-instances" value="1" min="1" max="10">
-                        </div>
-                    </form>
+                    <div class="mb-3">
+                        <label class="form-label">Модель</label>
+                        <input type="text" class="form-control" id="deploy-model-name" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="deploy-environment" class="form-label">Окружение</label>
+                        <select class="form-select" id="deploy-environment">
+                            <option value="Staging">Staging</option>
+                            <option value="Production">Production</option>
+                            <option value="Archived">Archived</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
@@ -208,59 +207,34 @@
         </div>
     </div>
 
-    <div class="modal fade" id="infoModal" tabindex="-1">
-        <div class="modal-dialog">
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Информация о модели</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="infoModalLabel">Информация о модели</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть модальное окно"></button>
                 </div>
                 <div class="modal-body">
-                    <h6>Основные данные</h6>
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <th>Название</th>
-                                <td id="info-model-name">—</td>
-                            </tr>
-                            <tr>
-                                <th>Версия</th>
-                                <td id="info-model-version">—</td>
-                            </tr>
-                            <tr>
-                                <th>Статус</th>
-                                <td id="info-model-status">—</td>
-                            </tr>
-                            <tr>
-                                <th>Эксперимент</th>
-                                <td>
-                                    <a id="info-experiment-link" href="#">—</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <h6>Метрики</h6>
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <th>Accuracy</th>
-                                <td id="info-metric-accuracy">—</td>
-                            </tr>
-                            <tr>
-                                <th>Precision</th>
-                                <td id="info-metric-precision">—</td>
-                            </tr>
-                            <tr>
-                                <th>Recall</th>
-                                <td id="info-metric-recall">—</td>
-                            </tr>
-                            <tr>
-                                <th>F1-Score</th>
-                                <td id="info-metric-f1">—</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="h6">Основные данные</h3>
+                            <table class="table table-sm">
+                                <tr><th scope="row">Название</th><td id="info-model-name">—</td></tr>
+                                <tr><th scope="row">Версия</th><td id="info-model-version">—</td></tr>
+                                <tr><th scope="row">Статус</th><td id="info-model-status">—</td></tr>
+                                <tr><th scope="row">Эксперимент</th><td><a href="#" id="info-experiment-link">—</a></td></tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="h6">Метрики</h3>
+                            <table class="table table-sm">
+                                <tr><th scope="row">Accuracy</th><td id="info-metric-accuracy">—</td></tr>
+                                <tr><th scope="row">Precision</th><td id="info-metric-precision">—</td></tr>
+                                <tr><th scope="row">Recall</th><td id="info-metric-recall">—</td></tr>
+                                <tr><th scope="row">F1-Score</th><td id="info-metric-f1">—</td></tr>
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -273,13 +247,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Удалить модель</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="deleteModalLabel">Удалить модель</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть модальное окно"></button>
                 </div>
                 <div class="modal-body">
                     <p>Вы уверены, что хотите удалить модель <strong id="delete-model-name"></strong>?</p>
-                    <p class="text-danger">Это действие нельзя отменить. Все версии модели будут удалены.</p>
-                    <input type="hidden" id="delete-model-id" value="">
+                    <p class="text-danger small">Это действие нельзя отменить. Все версии модели будут удалены.</p>
+                    <input type="hidden" id="delete-model-id">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
@@ -292,7 +266,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
     <script src="../js/api.js"></script>
-    <<script src="../js/auth.js"></script>
+    <script src="../js/auth.js"></script>
     <script src="../js/models.js"></script>
 </body>
 </html>
