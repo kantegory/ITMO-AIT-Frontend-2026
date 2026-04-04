@@ -548,6 +548,8 @@ function getOrCreateFormMessage(form) {
   if (!message) {
     message = document.createElement("div");
     message.className = "form-message";
+    message.setAttribute("role", "alert");
+    message.setAttribute("aria-live", "assertive");
     form.prepend(message);
   }
 
@@ -557,6 +559,8 @@ function getOrCreateFormMessage(form) {
 function setFormMessage(form, text, type = "danger") {
   const message = getOrCreateFormMessage(form);
   message.className = `form-message alert alert-${type}`;
+  message.setAttribute("role", type === "danger" ? "alert" : "status");
+  message.setAttribute("aria-live", type === "danger" ? "assertive" : "polite");
   message.textContent = text;
 }
 
@@ -576,23 +580,47 @@ function toggleSubmitState(form, disabled) {
   }
 }
 
+function resetFieldState(field) {
+  if (!field) {
+    return;
+  }
+
+  field.setAttribute("aria-invalid", "false");
+}
+
+function markInvalidFields(form) {
+  form.querySelectorAll("input, select, textarea").forEach((field) => {
+    field.setAttribute("aria-invalid", String(!field.checkValidity()));
+  });
+}
+
 function setupAuthForms() {
   const loginForm = document.getElementById("loginForm");
 
   if (loginForm && !loginForm.dataset.bound) {
     loginForm.dataset.bound = "1";
 
+    loginForm.querySelectorAll("input").forEach((field) => {
+      field.addEventListener("input", () => resetFieldState(field));
+    });
+
     loginForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       clearFormMessage(loginForm);
 
       if (!loginForm.checkValidity()) {
+        markInvalidFields(loginForm);
         loginForm.reportValidity();
         return;
       }
 
-      const email = document.getElementById("loginEmail").value.trim();
-      const password = document.getElementById("loginPassword").value;
+      const emailField = document.getElementById("loginEmail");
+      const passwordField = document.getElementById("loginPassword");
+      const email = emailField.value.trim();
+      const password = passwordField.value;
+
+      resetFieldState(emailField);
+      resetFieldState(passwordField);
 
       toggleSubmitState(loginForm, true);
 
@@ -600,6 +628,8 @@ function setupAuthForms() {
         const user = await loginUser(email, password);
 
         if (!user) {
+          emailField.setAttribute("aria-invalid", "true");
+          passwordField.setAttribute("aria-invalid", "true");
           setFormMessage(loginForm, "Не удалось войти. Проверь email и пароль.");
           return;
         }
@@ -621,6 +651,10 @@ function setupAuthForms() {
   if (registerForm && !registerForm.dataset.bound) {
     registerForm.dataset.bound = "1";
 
+    registerForm.querySelectorAll("input").forEach((field) => {
+      field.addEventListener("input", () => resetFieldState(field));
+    });
+
     registerForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       clearFormMessage(registerForm);
@@ -641,9 +675,12 @@ function setupAuthForms() {
       );
 
       if (!registerForm.checkValidity()) {
+        markInvalidFields(registerForm);
         registerForm.reportValidity();
         return;
       }
+
+      [firstName, lastName, email, password, repeatPassword].forEach(resetFieldState);
 
       toggleSubmitState(registerForm, true);
 

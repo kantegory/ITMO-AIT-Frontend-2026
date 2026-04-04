@@ -170,6 +170,8 @@ function createDashboardProjectCard(project) {
 
   const card = document.createElement("article");
   card.className = "project-card h-100";
+  card.setAttribute("role", "listitem");
+  card.setAttribute("aria-label", `Проект ${project.title}`);
 
   const badges = document.createElement("div");
   badges.className = "d-flex flex-wrap gap-2 mb-3";
@@ -206,6 +208,7 @@ function createDashboardProjectCard(project) {
 
   const link = document.createElement("a");
   link.className = "btn btn-primary";
+  link.setAttribute("aria-label", `Открыть проект ${project.title}`);
   link.href = `project.html?project=${project.id}`;
   link.textContent = "Открыть проект";
 
@@ -235,6 +238,7 @@ function renderDashboardProjects(projectsBox) {
 function createDashboardTaskRow(task) {
   const row = document.createElement("article");
   row.className = "task-row";
+  row.setAttribute("role", "listitem");
 
   const info = document.createElement("div");
 
@@ -257,6 +261,7 @@ function createDashboardTaskRow(task) {
 
   const link = document.createElement("a");
   link.className = "btn btn-light";
+  link.setAttribute("aria-label", `Открыть задачу ${task.title}`);
   link.href = `project.html?project=${task.projectId}`;
   link.textContent = "Открыть";
 
@@ -286,6 +291,7 @@ function renderDashboardTasks(tasksBox, countBadge, tasks) {
 function createDashboardNotification(item) {
   const card = document.createElement("article");
   card.className = "note-card";
+  card.setAttribute("role", "listitem");
 
   const project = document.createElement("div");
   project.className = "fw-bold mb-1";

@@ -55,6 +55,8 @@ function createSearchResultCard(task) {
 
   const card = document.createElement("article");
   card.className = "task-card h-100";
+  card.setAttribute("role", "listitem");
+  card.setAttribute("aria-label", `Задача ${task.title}`);
 
   const badges = document.createElement("div");
   badges.className = "d-flex flex-wrap gap-2 mb-3";
@@ -95,6 +97,7 @@ function createSearchResultCard(task) {
 
   const link = document.createElement("a");
   link.className = "btn btn-primary";
+  link.setAttribute("aria-label", `Открыть проект ${task.projectTitle}`);
   link.href = `project.html?project=${task.projectId}`;
   link.textContent = "Открыть проект";
 

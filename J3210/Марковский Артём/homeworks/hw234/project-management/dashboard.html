@@ -17,8 +17,9 @@
     <link href="css/style.css" rel="stylesheet" />
   </head>
   <body data-page="dashboard">
+    <a class="skip-link" href="#mainContent">Перейти к содержимому</a>
     <header class="site-header">
-      <nav class="navbar navbar-expand-lg app-navbar">
+      <nav class="navbar navbar-expand-lg app-navbar" aria-label="Навигация по приложению">
         <div class="container">
           <a class="navbar-brand app-brand" href="dashboard.html">TaskHub</a>
           <button
@@ -51,11 +52,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="faq.html">Справка</a>
               </li>
-              <li class="nav-item user-chip">
+              <li class="nav-item user-chip" aria-label="Текущий пользователь">
                 <span id="headerUserName">Марковский Артём</span>
               </li>
               <li class="nav-item">
-                <a class="btn btn-light btn-sm logout-link" href="index.html"
+                <a class="btn btn-light btn-sm logout-link" href="index.html" aria-label="Выйти из аккаунта"
                   >Выйти</a
                 >
               </li>
@@ -65,20 +66,20 @@
       </nav>
     </header>
 
-    <main class="page-section">
+    <main id="mainContent" class="page-section">
       <div class="container layout-stack">
-        <section class="panel-card panel-header">
+        <section class="panel-card panel-header" aria-labelledby="dashboardTitle">
           <div class="row g-4 align-items-stretch">
             <div class="col-lg-8">
               <div class="eyebrow">Личный кабинет</div>
-              <h1 class="page-title">Рабочее пространство</h1>
+              <h1 class="page-title" id="dashboardTitle">Рабочее пространство</h1>
               <p class="page-subtitle" id="appUserName">Марковский Артём</p>
               <p class="page-text">
                 Здесь собраны ваши проекты, задачи и последние изменения по ним.
               </p>
             </div>
             <div class="col-lg-4">
-              <div class="stats-card" id="workspaceSummaryCard"></div>
+              <div class="stats-card" id="workspaceSummaryCard" role="status" aria-live="polite" aria-label="Сводка по рабочему пространству"></div>
             </div>
           </div>
         </section>
@@ -99,7 +100,7 @@
               ><a class="btn btn-light" href="search.html">Открыть поиск</a>
             </div>
           </div>
-          <div class="row g-4" id="dashboardProjects"></div>
+          <div class="row g-4" id="dashboardProjects" role="list" aria-label="Список проектов"></div>
         </section>
 
         <section>
@@ -111,16 +112,16 @@
                     <div class="eyebrow">Задачи</div>
                     <h2 class="section-title">Текущие задачи</h2>
                   </div>
-                  <span class="soft-badge" id="taskCountBadge"></span>
+                  <span class="soft-badge" id="taskCountBadge" role="status" aria-live="polite"></span>
                 </div>
-                <div id="dashboardTasks"></div>
+                <div id="dashboardTasks" role="list" aria-label="Список текущих задач"></div>
               </article>
             </div>
             <div class="col-lg-5">
               <article class="panel-card h-100">
                 <div class="eyebrow">Уведомления</div>
                 <h2 class="section-title mb-3">Что изменилось</h2>
-                <div class="stack-list" id="dashboardNotifications"></div>
+                <div class="stack-list" id="dashboardNotifications" role="list" aria-label="Последние изменения"></div>
               </article>
             </div>
           </div>
@@ -138,7 +139,7 @@
       </div>
     </footer>
 
-    <div class="modal fade" id="detailsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalTitle" aria-modal="true" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content app-modal">
           <div class="modal-header">

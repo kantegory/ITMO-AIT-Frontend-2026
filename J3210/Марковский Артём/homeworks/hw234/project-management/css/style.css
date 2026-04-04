@@ -927,3 +927,52 @@ select:-webkit-autofill {
 .form-message {
   margin-bottom: 1rem;
 }
+
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -48px;
+  z-index: 1100;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--text);
+  color: #fff;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 12px;
+  color: #fff;
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible,
+.form-control:focus-visible,
+.form-select:focus-visible,
+.form-check-input:focus-visible,
+.board-task:focus-visible,
+.file-card:focus-visible,
+.action-button:focus-visible,
+.accordion-button:focus-visible,
+.navbar-toggler:focus-visible {
+  outline: 3px solid rgba(126, 92, 69, 0.34);
+  outline-offset: 2px;
+}
+
+.user-chip span:focus-visible {
+  outline: 3px solid rgba(126, 92, 69, 0.34);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

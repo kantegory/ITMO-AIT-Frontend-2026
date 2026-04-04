@@ -17,8 +17,9 @@
     <link href="css/style.css" rel="stylesheet" />
   </head>
   <body data-page="search">
+    <a class="skip-link" href="#mainContent">Перейти к содержимому</a>
     <header class="site-header">
-      <nav class="navbar navbar-expand-lg app-navbar">
+      <nav class="navbar navbar-expand-lg app-navbar" aria-label="Навигация по приложению">
         <div class="container">
           <a class="navbar-brand app-brand" href="dashboard.html">TaskHub</a>
           <button
@@ -51,11 +52,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="faq.html">Справка</a>
               </li>
-              <li class="nav-item user-chip">
+              <li class="nav-item user-chip" aria-label="Текущий пользователь">
                 <span id="headerUserName">Марковский Артём</span>
               </li>
               <li class="nav-item">
-                <a class="btn btn-light btn-sm logout-link" href="index.html"
+                <a class="btn btn-light btn-sm logout-link" href="index.html" aria-label="Выйти из аккаунта"
                   >Выйти</a
                 >
               </li>
@@ -65,11 +66,11 @@
       </nav>
     </header>
 
-    <main class="page-section">
+    <main id="mainContent" class="page-section">
       <div class="container layout-stack">
-        <section class="panel-card">
+        <section class="panel-card" aria-labelledby="searchPageTitle">
           <div class="eyebrow">Поиск</div>
-          <h1 class="section-title section-title-lg">Поиск по задачам</h1>
+          <h1 class="section-title section-title-lg" id="searchPageTitle">Поиск по задачам</h1>
           <div class="row g-3 align-items-end mt-1">
             <div class="col-lg-4">
               <label class="form-label" for="searchQuery"
@@ -112,6 +113,7 @@
                 class="btn btn-primary"
                 id="applySearchButton"
                 type="button"
+                aria-describedby="searchResultCount"
               >
                 Применить
               </button>
@@ -125,9 +127,9 @@
               <div class="eyebrow">Результаты</div>
               <h2 class="section-title">Найденные задачи</h2>
             </div>
-            <span class="soft-badge" id="searchResultCount">0 результатов</span>
+            <span class="soft-badge" id="searchResultCount" role="status" aria-live="polite">0 результатов</span>
           </div>
-          <div class="row g-4" id="searchResults"></div>
+          <div class="row g-4" id="searchResults" role="list" aria-live="polite"></div>
         </section>
       </div>
     </main>

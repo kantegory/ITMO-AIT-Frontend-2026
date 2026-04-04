@@ -74,7 +74,7 @@ function renderMemberTaskEditor(task, index, currentUser) {
 
 function renderDiscussionItem(item) {
   return [
-    '<article class="discussion-card">',
+    '<article class="discussion-card" role="listitem">',
     `  <div class="fw-bold text-wrap-anywhere" title="${item.author}">${item.author}</div>`,
     `  <div class="note-meta mb-2">${item.time}</div>`,
     `  <p class="mb-0 text-wrap-anywhere">${item.text}</p>`,
@@ -644,6 +644,7 @@ function renderProjectMembers(membersBox, members) {
   members.forEach((member) => {
     const item = document.createElement("div");
     item.className = "member-item";
+    item.setAttribute("role", "listitem");
 
     const name = document.createElement("div");
     name.className = "text-wrap-anywhere";
@@ -675,6 +676,8 @@ function renderProjectActions(actionButtons, project) {
     button.className = "action-button";
     button.type = "button";
     button.title = action.title;
+    button.setAttribute("role", "listitem");
+    button.setAttribute("aria-label", action.title);
     button.dataset.actionIndex = String(index);
     button.append(action.title);
 
@@ -696,6 +699,8 @@ function renderProjectBoard(board, project) {
 
     const columnBody = document.createElement("div");
     columnBody.className = "board-column";
+    columnBody.setAttribute("role", "listitem");
+    columnBody.setAttribute("aria-label", `Колонка ${status}`);
 
     const title = document.createElement("div");
     title.className = "board-column-title";
@@ -703,6 +708,7 @@ function renderProjectBoard(board, project) {
 
     const list = document.createElement("div");
     list.className = "board-list";
+    list.setAttribute("role", "list");
 
     const tasks = project.tasks
       .map((task, index) => ({ ...task, index }))
@@ -718,6 +724,7 @@ function renderProjectBoard(board, project) {
         const button = document.createElement("button");
         button.className = "board-task";
         button.type = "button";
+        button.setAttribute("aria-label", `Открыть задачу ${task.title}`);
         button.dataset.taskIndex = String(task.index);
 
         const taskTitle = document.createElement("div");

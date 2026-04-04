@@ -17,8 +17,9 @@
     <link href="css/style.css" rel="stylesheet" />
   </head>
   <body data-page="index">
+    <a class="skip-link" href="#mainContent">Перейти к содержимому</a>
     <header class="site-header">
-      <nav class="navbar navbar-expand-lg app-navbar">
+      <nav class="navbar navbar-expand-lg app-navbar" aria-label="Основная навигация">
         <div class="container">
           <a class="navbar-brand app-brand" href="index.html">TaskHub</a>
           <button
@@ -46,13 +47,13 @@
       </nav>
     </header>
 
-    <main class="auth-page">
+    <main id="mainContent" class="auth-page">
       <div class="container">
         <div class="row g-4 align-items-stretch auth-grid">
           <div class="col-lg-6">
-            <section class="hero-panel h-100">
+            <section class="hero-panel h-100" aria-labelledby="heroTitle">
               <div class="eyebrow">Для командной работы</div>
-              <h1 class="hero-title">
+              <h1 class="hero-title" id="heroTitle">
                 Проекты и задачи в одном месте
               </h1>
               <p class="hero-text">
@@ -81,13 +82,13 @@
             </section>
           </div>
           <div class="col-lg-6 col-xl-5 ms-xl-auto">
-            <section class="panel-card auth-card">
+            <section class="panel-card auth-card" aria-labelledby="loginTitle">
               <div class="eyebrow">Вход</div>
-              <h2 class="panel-title">Войти в аккаунт</h2>
-              <p class="panel-text">
+              <h2 class="panel-title" id="loginTitle">Войти в аккаунт</h2>
+              <p class="panel-text" id="loginHint">
                 Введите email и пароль, чтобы войти в систему.
               </p>
-              <form id="loginForm" novalidate>
+              <form id="loginForm" novalidate aria-describedby="loginHint">
                 <div class="mb-3">
                   <label class="form-label" for="loginEmail">Email</label>
                   <input
@@ -96,6 +97,7 @@
                     name="email"
                     type="email"
                     placeholder="artem@example.com"
+                    autocomplete="email"
                     required
                   />
                 </div>
@@ -107,6 +109,7 @@
                     name="password"
                     type="password"
                     placeholder="Введите пароль"
+                    autocomplete="current-password"
                     required
                   />
                 </div>

@@ -17,8 +17,9 @@
     <link href="css/style.css" rel="stylesheet" />
   </head>
   <body data-page="project">
+    <a class="skip-link" href="#mainContent">Перейти к содержимому</a>
     <header class="site-header">
-      <nav class="navbar navbar-expand-lg app-navbar">
+      <nav class="navbar navbar-expand-lg app-navbar" aria-label="Навигация по приложению">
         <div class="container">
           <a class="navbar-brand app-brand" href="dashboard.html">TaskHub</a>
           <button
@@ -51,11 +52,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="faq.html">Справка</a>
               </li>
-              <li class="nav-item user-chip">
+              <li class="nav-item user-chip" aria-label="Текущий пользователь">
                 <span id="headerUserName">Марковский Артём</span>
               </li>
               <li class="nav-item">
-                <a class="btn btn-light btn-sm logout-link" href="index.html"
+                <a class="btn btn-light btn-sm logout-link" href="index.html" aria-label="Выйти из аккаунта"
                   >Выйти</a
                 >
               </li>
@@ -65,9 +66,9 @@
       </nav>
     </header>
 
-    <main class="page-section">
+    <main id="mainContent" class="page-section">
       <div class="container layout-stack">
-        <section class="panel-card panel-header" id="projectOverviewSection">
+        <section class="panel-card panel-header" id="projectOverviewSection" aria-labelledby="projectTitle">
           <div class="row g-4 align-items-stretch">
             <div class="col-lg-8">
               <div class="badge-row">
@@ -88,7 +89,7 @@
                 </div>
                 <div class="stats-line align-items-start">
                   <span>Участники</span>
-                  <div class="member-list" id="projectMembers"></div>
+                  <div class="member-list" id="projectMembers" role="list" aria-label="Участники проекта"></div>
                 </div>
               </div>
             </div>
@@ -106,7 +107,7 @@
                   </div>
                   <span class="soft-badge" id="projectTaskSummary"></span>
                 </div>
-                <div class="row g-3" id="projectBoard"></div>
+                <div class="row g-3" id="projectBoard" role="list" aria-label="Доска задач"></div>
               </article>
             </div>
             <div class="col-lg-4">
@@ -118,14 +119,14 @@
                   <p class="role-text" id="projectCurrentRoleText"></p>
                 </div>
                 <div class="eyebrow mt-4">Что можно делать</div>
-                <div class="action-list" id="projectActionButtons"></div>
+                <div class="action-list" id="projectActionButtons" role="list" aria-label="Доступные действия"></div>
               </article>
             </div>
           </div>
         </section>
 
         <section id="projectWorkspaceSection">
-          <ul class="nav nav-pills app-tabs gap-2 mb-3" role="tablist">
+          <ul class="nav nav-pills app-tabs gap-2 mb-3" role="tablist" aria-label="Разделы проекта">
             <li class="nav-item" role="presentation">
               <button
                 class="nav-link active"
@@ -174,9 +175,9 @@
                 <table class="table app-table align-middle mb-0">
                   <thead>
                     <tr>
-                      <th>Этап</th>
-                      <th>Дата</th>
-                      <th>Ответственный</th>
+                      <th scope="col">Этап</th>
+                      <th scope="col">Дата</th>
+                      <th scope="col">Ответственный</th>
                     </tr>
                   </thead>
                   <tbody id="projectDeadlines"></tbody>
@@ -189,7 +190,7 @@
               role="tabpanel"
               tabindex="0"
             >
-              <div class="list-stack" id="projectFiles"></div>
+              <div class="list-stack" id="projectFiles" role="list" aria-label="Файлы проекта"></div>
             </div>
             <div
               class="tab-pane fade"
@@ -197,7 +198,7 @@
               role="tabpanel"
               tabindex="0"
             >
-              <div class="stack-list" id="projectDiscussion"></div>
+              <div class="stack-list" id="projectDiscussion" role="list" aria-label="Обсуждение проекта"></div>
             </div>
           </div>
         </section>
@@ -214,7 +215,7 @@
       </div>
     </footer>
 
-    <div class="modal fade" id="detailsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalTitle" aria-modal="true" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content app-modal">
           <div class="modal-header">
