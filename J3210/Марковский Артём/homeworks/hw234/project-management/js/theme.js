@@ -18,8 +18,17 @@ function applyTheme(theme) {
   document.querySelectorAll("#themeToggle").forEach((button) => {
     const isDark = theme === "dark";
     button.setAttribute("aria-pressed", String(isDark));
-    button.textContent = isDark ? "Светлая тема" : "Тёмная тема";
     button.title = isDark ? "Включить светлую тему" : "Включить тёмную тему";
+
+    const textNode = button.querySelector(".button-text");
+    if (textNode) {
+      textNode.textContent = isDark ? "Светлая тема" : "Тёмная тема";
+    }
+
+    const iconUse = button.querySelector("use");
+    if (iconUse) {
+      iconUse.setAttribute("href", isDark ? "assets/icons.svg#icon-sun" : "assets/icons.svg#icon-moon");
+    }
   });
 }
 
