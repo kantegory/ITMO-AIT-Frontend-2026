@@ -108,12 +108,12 @@
                     </div>
 
                     <div class="d-flex flex-wrap gap-2">
-                        <button class="btn btn-outline-secondary d-flex align-items-center gap-2 rounded-pill fw-normal" id="modelStarButton" type="button">
+                        <button class="btn btn-outline-dark d-flex align-items-center gap-2 rounded-pill fw-normal" id="modelStarButton" type="button">
                             <i class="bi bi-star"></i> Star
                             <span class="badge bg-secondary rounded-pill">1,024</span>
                         </button>
                         
-                        <button class="btn btn-outline-secondary d-flex align-items-center gap-2 rounded-pill fw-normal" id="modelForkButton" type="button">
+                        <button class="btn btn-outline-dark d-flex align-items-center gap-2 rounded-pill fw-normal" id="modelForkButton" type="button">
                             <i class="bi bi-diagram-2"></i> Fork
                             <span class="badge bg-secondary rounded-pill">128</span>
                         </button>
@@ -139,17 +139,17 @@
                 <section>
                     <ul class="nav nav-tabs" id="modelTabs">
                         <li class="nav-item">
-                            <button class="nav-link active" id="model-card-tab" data-bs-toggle="tab" data-bs-target="#card" type="button">
+                            <button class="nav-link active text-dark" id="model-card-tab" data-bs-toggle="tab" data-bs-target="#card" type="button">
                                 Карточка модели
                             </button>
                         </li>
                         <li class="nav-item">
-                            <button class="nav-link" id="model-discussions-tab" data-bs-toggle="tab" data-bs-target="#discussions" type="button">
+                            <button class="nav-link text-dark" id="model-discussions-tab" data-bs-toggle="tab" data-bs-target="#discussions" type="button">
                                 Обсуждения
                             </button>
                         </li>
                         <li class="nav-item">
-                            <button class="nav-link" id="model-artifacts-tab" data-bs-toggle="tab" data-bs-target="#artifacts" type="button">
+                            <button class="nav-link text-dark" id="model-artifacts-tab" data-bs-toggle="tab" data-bs-target="#artifacts" type="button">
                                 Файлы и артефакты
                             </button>
                         </li>
@@ -158,10 +158,10 @@
                     <div class="tab-content bg-white p-4" id="modelTabsContent">
                         
                         <div class="tab-pane fade show active" id="card">
-                            <h3 class="fw-bold mb-3">Описание модели</h3>
+                            <h2 class="h3 fw-bold mb-3">Описание модели</h2>
                             <p><strong>YOLOv8</strong> (You Only Look Once version 8) — это новейшая версия семейства моделей YOLO, созданная Ultralytics. Она устанавливает новый уровень state-of-the-art для задач детекции объектов, сегментации изображений и классификации. Модель оптимизирована для работы на CPU и GPU.</p>
                             
-                            <h4 class="fw-bold mt-4 mb-3">Пример использования</h4>
+                            <h3 class="h4 fw-bold mt-4 mb-3">Пример использования</h3>
                             <p>Вы можете легко запустить модель на Python, используя встроенный интерфейс библиотеки <code>ultralytics</code>.</p>
                             
                             <pre class="code-inline-block" id="modelUsageExampleCode"><code>from ultralytics import YOLO
@@ -172,7 +172,7 @@ model = YOLO("yolov8n.pt")
 # Запускаем предсказание на картинке
 results = model.predict("https://ultralytics.com/images/bus.jpg")</code></pre>
 
-                            <h4 class="fw-bold mt-4 mb-3">Метрики (COCO Dataset)</h4>
+                            <h3 class="h4 fw-bold mt-4 mb-3">Метрики (COCO Dataset)</h3>
                             <table class="table">
                                 <thead class="table-light">
                                     <tr>
@@ -201,21 +201,21 @@ results = model.predict("https://ultralytics.com/images/bus.jpg")</code></pre>
 
                         <div class="tab-pane fade" id="discussions" role="tabpanel">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="fw-bold">Обсуждения</h4>
+                                <h2 class="h4 fw-bold">Обсуждения</h2>
                                 <button class="btn bg-primary text-white" id="createModelDiscussionButton" type="button">Создать тему</button>
                             </div>
                             
                             <ul class="list-group list-group-flush" id="modelDiscussionsList">
                                 <li class="list-group-item py-3" >
                                     <div class="d-flex justify-content-between">
-                                        <h6 class="mb-1 fw-bold">Issue with ONNX export on Mac M1</h6>
+                                        <h3 class="h6 mb-1 fw-bold">Issue with ONNX export on Mac M1</h3>
                                         <small class="text-muted">3 дня назад</small>
                                     </div>
                                     <p class="mb-1">При попытке экспорта модели в формат ONNX получаю ошибку Tensor mismatch...</p>
                                 </li>
                                 <li class="list-group-item py-3">
                                     <div class="d-flex justify-content-between">
-                                        <h6 class="mb-1 fw-bold">How to fine-tune on custom dataset?</h6>
+                                        <h3 class="h6 mb-1 fw-bold">How to fine-tune on custom dataset?</h3>
                                         <small class="text-muted">Неделю назад</small>
                                     </div>
                                     <p class="mb-1 text-muted small">Подскажите, какой формат разметки датасета нужен для дообучения этой версии?</p>
@@ -224,7 +224,7 @@ results = model.predict("https://ultralytics.com/images/bus.jpg")</code></pre>
                         </div>
 
                         <div class="tab-pane fade" id="artifacts" role="tabpanel">
-                            <h4 class="fw-bold mb-3">Файлы модели</h4>
+                            <h2 class="h4 fw-bold mb-3">Файлы модели</h2>
                             
                             <table class="table">
                                 <thead class="table-light">

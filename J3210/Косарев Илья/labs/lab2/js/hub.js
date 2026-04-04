@@ -68,7 +68,7 @@ function getCardHtml(item, type) {
     const pageUrl = `${type}_page.html?id=${item.id}`;
 
     const taskBadge = item.task ? `<span class="badge bg-primary flex-shrink-0">${dictionaries.task[item.task] || item.task}</span>` : '';
-    const licenseBadge = item.license ? `<span class="badge border text-secondary bg-light flex-shrink-0">${dictionaries.license[item.license] || item.license}</span>` : '';
+    const licenseBadge = item.license ? `<span class="badge border border-secondary text-dark bg-white flex-shrink-0">${dictionaries.license[item.license] || item.license}</span>` : '';
 
     let extraBadges = '';
     if (isDataset) {

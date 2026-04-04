@@ -39,7 +39,7 @@ function renderProfileCards(items, type, gridId, emptyId) {
             if (item.framework) badges += `<span class="badge bg-secondary flex-shrink-0">${dictionaries.framework[item.framework]}</span>`;
         }
         
-        if (item.license) badges += `<span class="badge border text-secondary bg-light flex-shrink-0">${dictionaries.license[item.license]}</span>`;
+        if (item.license) badges += `<span class="badge border border-secondary text-dark bg-white flex-shrink-0">${dictionaries.license[item.license]}</span>`;
 
         return `
             <div class="col-12 col-md-6 col-xl-4">

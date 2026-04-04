@@ -35,10 +35,10 @@ function render() {
     subscriptionsList.innerHTML = filtered.map((u) => `
         <li class="list-group-item d-flex flex-column flex-lg-row justify-content-between align-items-lg-center">
             <div class="d-flex align-items-center gap-2 mb-3 mb-md-0">
-                <img src="https://placekittens.com/60/60" class="rounded-circle" width="60" height="60" alt="Аватар">
+                <img src="https://placekittens.com/60/60" class="rounded-circle" width="60" height="60" alt="Аватар пользователя ${getName(u)}">
                 <div>
                     <div class="d-flex align-items-center gap-3">
-                        <h5 class="mb-0 fw-bold">${getName(u)}</h5>
+                        <p class="mb-0 fw-bold">${getName(u)}</p>
                         <span class="badge bg-secondary">Пользователь</span>
                     </div>
                     <div class="text-muted small">${getTag(u)}</div>
@@ -50,7 +50,7 @@ function render() {
                     <div class="vr"></div>
                     <div><div class="fw-bold">${(u.datasetIds).length}</div><div class="text-muted">Датасетов</div></div>
                 </div>
-                <button class="btn btn-outline-danger btn-sm rounded-pill px-3 flex-shrink-0 unsubscribe-btn" data-id="${u.id}">
+                <button class="btn btn-outline-danger btn-sm rounded-pill px-3 flex-shrink-0 unsubscribe-btn" data-id="${u.id}" aria-label="Отписаться от ${getName(u)}">
                     <i class="bi bi-person-x-fill me-1"></i> Отписаться
                 </button>
             </div>

@@ -108,12 +108,12 @@
                     </div>
 
                     <div class="d-flex flex-wrap gap-2">
-                        <button class="btn btn-outline-secondary d-flex align-items-center gap-2 rounded-pill fw-normal" id="datasetStarButton" type="button">
+                        <button class="btn btn-outline-dark d-flex align-items-center gap-2 rounded-pill fw-normal" id="datasetStarButton" type="button">
                             <i class="bi bi-star"></i> Star
                             <span class="badge bg-secondary rounded-pill">3,105</span>
                         </button>
                         
-                        <button class="btn btn-outline-secondary d-flex align-items-center gap-2 rounded-pill fw-normal" id="datasetForkButton" type="button" >
+                        <button class="btn btn-outline-dark d-flex align-items-center gap-2 rounded-pill fw-normal" id="datasetForkButton" type="button" >
                             <i class="bi bi-diagram-2"></i> Fork
                             <span class="badge bg-secondary rounded-pill">395</span>
                         </button>
@@ -139,17 +139,17 @@
                 <section>
                     <ul class="nav nav-tabs" id="modelTabs">
                         <li class="nav-item">
-                            <button class="nav-link active" id="model-card-tab" data-bs-toggle="tab" data-bs-target="#card" type="button">
+                            <button class="nav-link active text-dark" id="model-card-tab" data-bs-toggle="tab" data-bs-target="#card" type="button">
                                 Карточка датасета
                             </button>
                         </li>
                         <li class="nav-item">
-                            <button class="nav-link" id="model-discussions-tab" data-bs-toggle="tab" data-bs-target="#discussions" type="button">
+                            <button class="nav-link text-dark" id="model-discussions-tab" data-bs-toggle="tab" data-bs-target="#discussions" type="button">
                                 Обсуждения
                             </button>
                         </li>
                         <li class="nav-item">
-                            <button class="nav-link" id="model-artifacts-tab" data-bs-toggle="tab" data-bs-target="#artifacts" type="button">
+                            <button class="nav-link text-dark" id="model-artifacts-tab" data-bs-toggle="tab" data-bs-target="#artifacts" type="button">
                                 Файлы датасета
                             </button>
                         </li>
@@ -158,10 +158,10 @@
                     <div class="tab-content bg-white p-4" id="modelTabsContent">
                         
                         <div class="tab-pane fade show active" id="card">
-                            <h3 class="fw-bold mb-3">Описание датасета</h3>
+                            <h2 class="h3 fw-bold mb-3">Описание датасета</h2>
                             <p><strong>COCO 2017</strong> (Common Objects in Context) — это масштабный датасет для задач обнаружения объектов, сегментации изображений и распознавания ключевых точек. Он содержит более 330 тысяч изображений, на которых детально размечено 1.5 миллиона объектов в 80 различных категориях (люди, транспорт, животные и др.).</p>
                             
-                            <h4 class="fw-bold mt-4 mb-3">Пример использования</h4>
+                            <h3 class="h4 fw-bold mt-4 mb-3">Пример использования</h3>
                             <p>Вы можете легко загрузить аннотации датасета с помощью библиотеки <code>pandas</code> для просмотра метаданных изображений.</p>
                             
                             <pre class="code-inline-block" id="datasetUsageExampleCode"><code>import pandas as pd
@@ -175,7 +175,7 @@ with open("annotations/instances_train2017.json", "r") as f:
 df = pd.DataFrame(coco_data["images"])
 print(df.head())</code></pre>
 
-                            <h4 class="fw-bold mt-4 mb-3">Структура данных</h4>
+                            <h3 class="h4 fw-bold mt-4 mb-3">Структура данных</h3>
                             <table class="table">
                                 <thead class="table-light">
                                     <tr>
@@ -210,21 +210,21 @@ print(df.head())</code></pre>
 
                         <div class="tab-pane fade" id="discussions" role="tabpanel">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="fw-bold">Обсуждения</h4>
+                                <h2 class="h4 fw-bold">Обсуждения</h2>
                                 <button class="btn bg-primary text-white" id="createDatasetDiscussionButton" type="button">Создать тему</button>
                             </div>
                             
                             <ul class="list-group list-group-flush" id="datasetDiscussionsList">
                                 <li class="list-group-item py-3">
                                     <div class="d-flex justify-content-between">
-                                        <h6 class="mb-1 fw-bold">Missing images in val2017 archive?</h6>
+                                        <h3 class="h6 mb-1 fw-bold">Missing images in val2017 archive?</h3>
                                         <small class="text-muted">3 дня назад</small>
                                     </div>
                                     <p class="mb-1">Скачал архив валидации, но не могу найти несколько изображений, которые числятся в файле аннотаций JSON...</p>
                                 </li>
                                 <li class="list-group-item py-3">
                                     <div class="d-flex justify-content-between">
-                                        <h6 class="mb-1 fw-bold">Commercial use under CC BY 4.0</h6>
+                                        <h3 class="h6 mb-1 fw-bold">Commercial use under CC BY 4.0</h3>
                                         <small class="text-muted">Неделю назад</small>
                                     </div>
                                     <p class="mb-1 text-muted small">Могу ли я использовать эти изображения для обучения коммерческой модели детекции лиц?</p>
@@ -233,7 +233,7 @@ print(df.head())</code></pre>
                         </div>
 
                         <div class="tab-pane fade" id="artifacts" role="tabpanel">
-                            <h4 class="fw-bold mb-3">Архивы датасета</h4>
+                            <h2 class="h4 fw-bold mb-3">Архивы датасета</h2>
                             
                             <table class="table">
                                 <thead class="table-light">
