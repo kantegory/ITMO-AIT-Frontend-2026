@@ -74,7 +74,7 @@ function renderMemberTaskEditor(task, index, currentUser) {
 
 function renderDiscussionItem(item) {
   return [
-    '<article class="discussion-card" role="listitem">',
+    '<article class="discussion-card">',
     `  <div class="fw-bold text-wrap-anywhere" title="${item.author}">${item.author}</div>`,
     `  <div class="note-meta mb-2">${item.time}</div>`,
     `  <p class="mb-0 text-wrap-anywhere">${item.text}</p>`,

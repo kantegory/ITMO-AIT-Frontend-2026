@@ -13,6 +13,10 @@ async function initializeApp() {
 
   setUserName();
   markNavigation(pageName);
+
+  if (typeof setupThemeToggle === "function") {
+    setupThemeToggle();
+  }
   setupAuthForms();
   setupLogout();
 
