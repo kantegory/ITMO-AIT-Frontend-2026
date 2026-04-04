@@ -7,8 +7,8 @@
 }
 
 .sidebar {
-    background: var(--white);
-    border: 1px solid var(--border);
+    background: var(--bg-sidebar);
+    border: 1px solid var(--card-border);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-soft);
     padding: var(--spacing-lg) var(--spacing-md);
@@ -37,7 +37,7 @@
     height: 44px;
     border-radius: 14px;
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: var(--white);
+    color: var(--text-inverse);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -50,7 +50,7 @@
     font-size: 1.7rem;
     font-weight: 800;
     letter-spacing: -0.04em;
-    color: var(--primary-dark);
+    color: var(--primary-darker);
 }
 
 .sidebar-nav {
@@ -65,7 +65,7 @@
     gap: var(--spacing-sm);
     padding: 14px var(--spacing-md);
     border-radius: var(--radius-md);
-    color: var(--muted);
+    color: var(--text-muted);
     font-weight: 600;
     transition: background-color var(--transition), color var(--transition);
     text-decoration: none;
@@ -73,12 +73,12 @@
 
 .sidebar .nav-item:hover {
     background: var(--primary-light);
-    color: var(--primary-dark);
+    color: var(--primary-darker);
 }
 
 .sidebar .nav-item.active {
     background: var(--primary-light);
-    color: var(--primary-dark);
+    color: var(--primary-darker);
 }
 
 .nav-icon {
@@ -90,6 +90,9 @@
 .sidebar-bottom {
     margin-top: auto;
     padding-top: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
 }
 
 .logout-btn {
@@ -107,7 +110,7 @@
 }
 
 .logout-btn:hover {
-    background: var(--border);
+    background: var(--border-light);
 }
 
 .main {
@@ -115,8 +118,8 @@
 }
 
 .topbar {
-    background: var(--white);
-    border: 1px solid var(--border);
+    background: var(--bg-card);
+    border: 1px solid var(--card-border);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-soft);
     padding: var(--spacing-md);
@@ -135,7 +138,7 @@
 .search-input {
     background: var(--bg-soft);
     border-radius: 18px;
-    border: 1px solid var(--border);
+    border: 1px solid var(--input-border);
     padding: 13px var(--spacing-md);
 }
 
@@ -153,11 +156,11 @@
 
 .user-name {
     font-weight: 700;
-    color: var(--dark);
+    color: var(--text-primary);
 }
 
 .user-role {
-    color: var(--muted);
+    color: var(--text-muted);
     font-size: 0.92rem;
 }
 
@@ -166,7 +169,7 @@
     height: 46px;
     border-radius: 14px;
     background: linear-gradient(135deg, var(--primary-light), #CAB8F4);
-    color: var(--primary-dark);
+    color: var(--primary-darker);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -197,6 +200,7 @@
     margin: 0;
     font-size: 1.55rem;
     font-weight: 800;
+    color: var(--text-primary);
 }
 
 @media (max-width: 1200px) {

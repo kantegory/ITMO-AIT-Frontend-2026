@@ -47,6 +47,11 @@ function renderNavbar() {
                     ${navLinks}
                     
                     <div class="d-flex align-items-center gap-2 ms-lg-3">
+                        <!-- Theme Toggle Button -->
+                        <button class="theme-toggle" type="button" aria-label="Переключить тему" title="Переключить тему">
+                            <span class="theme-toggle-icon">🌙</span>
+                        </button>
+                        
                         ${isAuth ? `<span class="small navbar-user-name">${user?.name || ""}</span>` : ""}
                         ${authButtons}
                     </div>

@@ -1,5 +1,5 @@
 .hero {
-    background: linear-gradient(135deg, var(--primary-light) 0%, #EEE7FB 100%);
+    background: var(--bg-hero);
     padding: 72px 0;
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     margin-bottom: 56px;
@@ -9,13 +9,13 @@
     font-size: 3rem;
     font-weight: 800;
     line-height: 1.1;
-    color: var(--dark);
+    color: var(--text-primary);
     margin-bottom: 20px;
 }
 
 .hero p {
     font-size: 1.1rem;
-    color: var(--muted);
+    color: var(--text-secondary);
     max-width: 640px;
     margin: 0 auto 28px;
 }
@@ -28,7 +28,7 @@
 }
 
 .section-subtitle {
-    color: var(--muted);
+    color: var(--text-muted);
     margin: 0;
 }
 
@@ -65,12 +65,13 @@
 .course-card .card-title {
     margin-bottom: var(--spacing-sm);
     line-height: 1.25;
+    color: var(--text-primary);
 }
 
 .course-description {
     margin-bottom: var(--spacing-lg);
     line-height: 1.6;
-    color: var(--muted);
+    color: var(--text-muted);
     font-size: 0.95rem;
 }
 
@@ -108,12 +109,12 @@
 
 .lesson-item.active {
     background-color: var(--primary);
-    color: var(--white);
+    color: var(--text-inverse);
     border-color: var(--primary);
 }
 
 .lesson-item.active small {
-    color: var(--white);
+    color: var(--text-inverse);
 }
 
 #materialsList .list-group-item,
@@ -142,7 +143,7 @@
     font-size: 2.4rem;
     font-weight: 800;
     margin-bottom: var(--spacing-xs);
-    color: var(--dark);
+    color: var(--text-primary);
 }
 
 .teacher-page .fs-3 {
@@ -151,11 +152,11 @@
 }
 
 .teacher-page .text-primary {
-    color: var(--primary-dark) !important;
+    color: var(--primary-darker);
 }
 
 .teacher-page .text-success {
-    color: var(--success) !important;
+    color: var(--success);
 }
 
 .teacher-page .table-responsive {
@@ -164,7 +165,7 @@
 
 .teacher-page .table th {
     font-weight: 700;
-    color: var(--muted);
+    color: var(--text-muted);
     padding-top: var(--spacing-md);
     padding-bottom: var(--spacing-md);
 }
@@ -176,7 +177,7 @@
 
 .teacher-page .badge.text-bg-success {
     background: var(--success);
-    color: var(--white);
+    color: var(--text-inverse);
     border-radius: var(--radius-full);
     font-weight: 700;
     padding: 0.55em 0.9em;
@@ -203,19 +204,20 @@
 }
 
 .teacher-page .modal-content {
-    border: 1px solid var(--border);
+    border: 1px solid var(--modal-border);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-soft);
+    background: var(--modal-bg);
 }
 
 .teacher-page .modal-header,
 .teacher-page .modal-footer {
-    border-color: var(--border);
+    border-color: var(--modal-border);
 }
 
 .teacher-page .modal-title {
     font-weight: 800;
-    color: var(--dark);
+    color: var(--text-primary);
 }
 
 .dashboard-page .welcome-card {
@@ -226,11 +228,11 @@
     font-size: 1.75rem;
     font-weight: 700;
     margin-bottom: var(--spacing-xs);
-    color: var(--dark);
+    color: var(--text-primary);
 }
 
 .dashboard-page .page-subtitle {
-    color: var(--muted);
+    color: var(--text-muted);
     margin: 0;
     font-size: 1rem;
 }
@@ -241,7 +243,7 @@
 }
 
 .dashboard-page .stat-label {
-    color: var(--muted);
+    color: var(--text-muted);
     margin-bottom: 10px;
     font-weight: 600;
     font-size: 0.95rem;
@@ -251,12 +253,12 @@
     font-size: 2rem;
     line-height: 1;
     font-weight: 700;
-    color: var(--dark);
+    color: var(--text-primary);
     margin-bottom: var(--spacing-xs);
 }
 
 .dashboard-page .stat-note {
-    color: var(--muted);
+    color: var(--text-muted);
     font-size: 0.92rem;
 }
 
@@ -265,7 +267,7 @@
 }
 
 .dashboard-page .dashboard-course-description {
-    color: var(--muted);
+    color: var(--text-muted);
     margin-bottom: var(--spacing-md);
     line-height: 1.6;
     font-size: 0.95rem;
@@ -286,6 +288,42 @@
 .dashboard-page .certificate-icon {
     font-size: 1.8rem;
     margin-bottom: 10px;
+}
+
+.modal-content {
+    background: var(--modal-bg);
+    border: 1px solid var(--modal-border);
+}
+
+.modal-header,
+.modal-footer {
+    border-color: var(--modal-border);
+}
+
+.modal-title {
+    color: var(--text-primary);
+}
+
+.btn-close {
+    filter: var(--btn-close-filter, none);
+}
+
+[data-theme="dark"] .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.alert {
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    color: var(--text-primary);
+}
+
+.bg-light {
+    background-color: var(--bg-soft);
+}
+
+.text-dark {
+    color: var(--text-primary);
 }
 
 @media (max-width: 992px) {
