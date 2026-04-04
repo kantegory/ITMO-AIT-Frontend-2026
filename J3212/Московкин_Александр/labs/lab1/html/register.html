@@ -13,51 +13,102 @@
 </head>
 <body class="bg-light">
 <!-- # Верхнее меню (header) с логотипом и навигацией # -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-4">
-  <div class="container">
-    <a class="navbar-brand fw-bold d-flex align-items-center" href="dashboard.html">
-      <span class="logo-n3n">
-        <span class="logo-n3n-black">n</span>
-        <span class="logo-n3n-red">3</span>
-        <span class="logo-n3n-black">n</span>
-      </span>
-    </a>
-  </div>
-</nav>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-4" aria-label="Основная навигация">
+    <div class="container">
+      <a class="navbar-brand fw-bold d-flex align-items-center" href="dashboard.html" aria-label="n3n — перейти на главную">
+        <span class="logo-n3n">
+          <span class="logo-n3n-black">n</span>
+          <span class="logo-n3n-red">3</span>
+          <span class="logo-n3n-black">n</span>
+        </span>
+      </a>
+    </div>
+  </nav>
+</header>
 
 <!-- # Основной блок с формой регистрации # -->
-<main class="container my-5">
+<main class="container my-5" id="main-content">
   <div class="row justify-content-center">
-    <div class="col-md-5">
-      <h1 class="h4 mb-3 text-center">
+    <div class="col-md-5" aria-labelledby="register-title">
+      <h1 id="register-title" class="h4 mb-3 text-center">
         Регистрация в
-        <span class="logo-n3n mb-3">
+        <span class="logo-n3n mb-3" aria-hidden="true">
           <span class="logo-n3n-black">n</span><span class="logo-n3n-red">3</span><span class="logo-n3n-black">n</span>
         </span>
       </h1>
+
       <!-- Форма регистрации с базовой проверкой совпадения паролей -->
-      <form id="register-form">
+      <form id="register-form" novalidate>
         <div class="mb-3">
-          <label class="form-label">Имя</label>
-          <input type="text" class="form-control" placeholder="Ваше имя" name="name">
+          <label class="form-label" for="register-name">Имя</label>
+          <input
+            id="register-name"
+            type="text"
+            class="form-control"
+            placeholder="Ваше имя"
+            name="name"
+            autocomplete="name"
+            required
+          >
         </div>
+
         <div class="mb-3">
-          <label class="form-label">Email</label>
-          <input type="email" class="form-control" placeholder="you@example.com" name="email">
+          <label class="form-label" for="register-email">Email</label>
+          <input
+            id="register-email"
+            type="email"
+            class="form-control"
+            placeholder="you@example.com"
+            name="email"
+            autocomplete="email"
+            required
+          >
         </div>
+
         <div class="mb-3">
-          <label class="form-label">Пароль</label>
-          <input type="password" class="form-control" id="password" placeholder="Пароль">
+          <label class="form-label" for="password">Пароль</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Пароль"
+            autocomplete="new-password"
+            required
+            aria-describedby="password-error"
+          >
         </div>
+
         <div class="mb-1">
-          <label class="form-label">Повторите пароль</label>
-          <input type="password" class="form-control" id="password-confirm" placeholder="Пароль">
+          <label class="form-label" for="password-confirm">Повторите пароль</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password-confirm"
+            name="password-confirm"
+            placeholder="Пароль"
+            autocomplete="new-password"
+            required
+            aria-describedby="password-error"
+          >
         </div>
+
         <div class="mb-3">
-          <small id="password-error" class="text-danger d-none">Пароли не совпадают</small>
+          <small
+            id="password-error"
+            class="text-danger d-none"
+            aria-live="polite"
+          >
+            Пароли не совпадают
+          </small>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
+
+        <button type="submit" class="btn btn-primary w-100">
+          Зарегистрироваться
+        </button>
       </form>
+
       <div class="text-center mt-3">
         <a href="login.html" class="small">У меня уже есть аккаунт</a>
       </div>

@@ -13,56 +13,82 @@
 </head>
 <body class="bg-light">
 <!-- # Верхнее меню (header) с логотипом и навигацией # -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-4">
-  <div class="container">
-    <a class="navbar-brand fw-bold d-flex align-items-center" href="dashboard.html">
-      <span class="logo-n3n">
-        <span class="logo-n3n-black">n</span>
-        <span class="logo-n3n-red">3</span>
-        <span class="logo-n3n-black">n</span>
-      </span>
-    </a>
-    <div class="collapse navbar-collapse show">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="workspaces.html">Рабочие пространства</a></li>
-        <li class="nav-item"><a class="nav-link" href="community.html">Сообщество</a></li>
-        <li class="nav-item"><a class="nav-link" href="search.html">Поиск</a></li>
-        <li class="nav-item"><a class="nav-link" href="profile.html">Профиль</a></li>
-      </ul>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-4" aria-label="Основная навигация">
+    <div class="container">
+      <a class="navbar-brand fw-bold d-flex align-items-center" href="dashboard.html" aria-label="n3n — перейти на главную">
+        <span class="logo-n3n">
+          <span class="logo-n3n-black">n</span>
+          <span class="logo-n3n-red">3</span>
+          <span class="logo-n3n-black">n</span>
+        </span>
+      </a>
+      <div class="collapse navbar-collapse show">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="workspaces.html" aria-current="page">Рабочие пространства</a></li>
+          <li class="nav-item"><a class="nav-link" href="community.html">Сообщество</a></li>
+          <li class="nav-item"><a class="nav-link" href="search.html">Поиск</a></li>
+          <li class="nav-item"><a class="nav-link" href="profile.html">Профиль</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>
 
 <!-- # Основное содержимое: создание и список рабочих пространств # -->
-<main class="container my-4">
+<main class="container my-4" id="main-content">
   <h1 class="h4 mb-3">Рабочие пространства</h1>
   <div class="row">
     <!-- Левая колонка: форма создания нового пространства -->
-    <div class="col-md-5">
-      <h2 class="h6 mb-3">Создать новое</h2>
-      <form id="workspace-form">
+    <section class="col-md-5" aria-labelledby="create-workspace-title">
+      <h2 class="h6 mb-3" id="create-workspace-title">Создать новое</h2>
+      <form id="workspace-form" novalidate>
         <div class="mb-3">
-          <label class="form-label">Название пространства</label>
-          <input type="text" class="form-control" id="workspace-name" placeholder="Например, Marketing automations">
+          <label class="form-label" for="workspace-name">Название пространства</label>
+          <input
+            type="text"
+            class="form-control"
+            id="workspace-name"
+            name="workspace-name"
+            placeholder="Например, Marketing automations"
+            required
+          >
         </div>
         <div class="mb-3">
-          <label class="form-label">Описание</label>
-          <textarea class="form-control" id="workspace-description" rows="3" placeholder="Краткое описание"></textarea>
+          <label class="form-label" for="workspace-description">Описание</label>
+          <textarea
+            class="form-control"
+            id="workspace-description"
+            name="workspace-description"
+            rows="3"
+            placeholder="Краткое описание"
+          ></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Создать (демо)</button>
       </form>
-    </div>
-    
+    </section>
+
     <!-- Правая колонка: список уже существующих пространств -->
-    <div class="col-md-7">
-      <h2 class="h6 mb-3">Список ваших пространств</h2>
-      <ul class="list-group" id="workspace-list">
+    <section class="col-md-7" aria-labelledby="workspace-list-title">
+      <h2 class="h6 mb-3" id="workspace-list-title">Список ваших пространств</h2>
+      <ul
+        class="list-group"
+        id="workspace-list"
+        aria-live="polite"
+        aria-label="Список рабочих пространств"
+      >
         <li class="list-group-item d-flex justify-content-between align-items-center">
           <span>Demo workspace</span>
-          <a href="workspace-page.html?id=1" class="btn btn-sm btn-outline-primary">Открыть</a>
+          <a
+            href="workspace-page.html?id=1"
+            class="btn btn-sm btn-outline-primary"
+            aria-label="Открыть рабочее пространство Demo workspace"
+          >
+            Открыть
+          </a>
         </li>
       </ul>
-    </div>
+    </section>
   </div>
 </main>
 
