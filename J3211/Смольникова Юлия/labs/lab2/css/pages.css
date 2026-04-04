@@ -290,6 +290,7 @@
     margin-bottom: 10px;
 }
 
+/* ===== Модальные окна ===== */
 .modal-content {
     background: var(--modal-bg);
     border: 1px solid var(--modal-border);
@@ -306,12 +307,23 @@
 
 .btn-close {
     filter: var(--btn-close-filter, none);
+    opacity: 0.5;
+}
+
+.btn-close:hover {
+    opacity: 1;
 }
 
 [data-theme="dark"] .btn-close {
-    filter: invert(1) grayscale(100%) brightness(200%);
+    filter: invert(1);
+    opacity: 0.8;
 }
 
+[data-theme="dark"] .btn-close:hover {
+    opacity: 1;
+}
+
+/* ===== Alert и уведомления ===== */
 .alert {
     background: var(--card-bg);
     border: 1px solid var(--border-light);

@@ -51,16 +51,20 @@
         const buttons = document.querySelectorAll('.theme-toggle');
 
         buttons.forEach(button => {
-            const icon = button.querySelector('.theme-toggle-icon');
+            const iconSpan = button.querySelector('.theme-toggle-icon');
             const textSpan = button.querySelector('.theme-toggle-text');
 
             if (theme === THEMES.DARK) {
-                if (icon) icon.textContent = '☀️';
+                if (iconSpan) {
+                    iconSpan.innerHTML = '<svg aria-hidden="true" width="20" height="20"><use href="#icon-sun"></use></svg>';
+                }
                 if (textSpan) textSpan.textContent = 'Светлая тема';
                 button.setAttribute('aria-label', 'Переключить на светлую тему');
                 button.setAttribute('title', 'Переключить на светлую тему');
             } else {
-                if (icon) icon.textContent = '🌙';
+                if (iconSpan) {
+                    iconSpan.innerHTML = '<svg aria-hidden="true" width="20" height="20"><use href="#icon-moon"></use></svg>';
+                }
                 if (textSpan) textSpan.textContent = 'Тёмная тема';
                 button.setAttribute('aria-label', 'Переключить на тёмную тему');
                 button.setAttribute('title', 'Переключить на тёмную тему');
