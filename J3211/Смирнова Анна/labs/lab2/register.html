@@ -8,29 +8,28 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="d-flex align-items-center justify-content-center vh-100">
-
-    <div class="card shadow-sm p-4" style="width: 400px;">
-        <h3 class="text-center text-primary mb-4">MyFinance</h3>
-        <h5 class="text-center mb-4">Создание аккаунта</h5>
+    <main class="card shadow-sm p-4" style="width: 400px;">
+        <h1 class="text-center text-primary mb-4 h3">MyFinance</h1>
+        <h2 class="text-center mb-4 h5">Создание аккаунта</h2>
         <form id="register-form">
             <div class="mb-3">
-                <label class="form-label">Ваше Имя</label>
-                <input type="text" class="form-control" id="reg-name" required>
+                <label for="reg-name" class="form-label">Ваше Имя</label>
+                <input type="text" class="form-control" id="reg-name" autocomplete="name" required aria-required="true">
             </div>
             <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control" id="reg-email" required>
+                <label for="reg-email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="reg-email" autocomplete="email" required aria-required="true">
             </div>
             <div class="mb-3">
-                <label class="form-label">Пароль</label>
-                <input type="password" class="form-control" id="reg-password" required>
+                <label for="reg-password" class="form-label">Пароль</label>
+                <input type="password" class="form-control" id="reg-password" autocomplete="new-password" required aria-required="true">
             </div>
             <button type="submit" class="btn btn-success w-100 mb-3">Зарегистрироваться</button>
             <div class="text-center">
                 Уже есть аккаунт? <a href="login.html">Войти</a>
             </div>
         </form>
-    </div>
+    </main>
 
     <script>
         async function register(e) {

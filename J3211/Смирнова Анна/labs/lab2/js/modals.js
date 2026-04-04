@@ -85,8 +85,12 @@ window.renderManageCategories = function(type) {
         li.innerHTML = `
             <span>${cat.name}</span>
             <div>
-                <button class="btn btn-sm btn-light text-primary py-0 px-2" onclick="editCategory('${cat.id}')"><i class="bi bi-pencil"></i></button>
-                <button class="btn btn-sm btn-light text-danger py-0 px-2" onclick="deleteCategory('${cat.id}')"><i class="bi bi-trash"></i></button>
+                <button class="btn btn-sm btn-light text-primary py-0 px-2" onclick="editCategory('${cat.id}')" aria-label="Редактировать категорию: ${cat.name}">
+                    <i class="bi bi-pencil" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-sm btn-light text-danger py-0 px-2" onclick="deleteCategory('${cat.id}')" aria-label="Удалить категорию: ${cat.name}">
+                    <i class="bi bi-trash" aria-hidden="true"></i>
+                </button>
             </div>
         `;
         list.appendChild(li);

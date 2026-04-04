@@ -11,62 +11,90 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 </head>
 <body>
-    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    <a href="#main-content" class="visually-hidden-focusable p-2 bg-primary text-white text-decoration-none" style="position: absolute; top: 0; left: 0; z-index: 10000;">Перейти к основному контенту</a>
+    <div id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></div>
 
-    <div class="sidebar p-3 d-flex flex-column" id="sidebar">
-        <a href="dashboard.html" class="d-flex align-items-center mb-3 text-decoration-none">
-            <i class="bi bi-wallet2 text-primary fs-3 me-2"></i>
+    <nav class="sidebar p-3 d-flex flex-column" id="sidebar" aria-label="Основное меню">
+        <a href="dashboard.html" class="d-flex align-items-center mb-3 text-decoration-none" aria-label="На главную MyFinance">
+            <i class="bi bi-wallet2 text-primary fs-3 me-2" aria-hidden="true"></i>
             <span class="fs-4 fw-bold text-primary">MyFinance</span>
         </a>
-        <hr>
+        <hr aria-hidden="true">
         <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item"><a href="dashboard.html" class="nav-link active"><i class="bi bi-grid-1x2 me-2"></i> Обзор</a></li>
-            <li><a href="transactions.html" class="nav-link"><i class="bi bi-cash-stack me-2"></i> Транзакции</a></li>
-            <li><a href="goals.html" class="nav-link"><i class="bi bi-bullseye me-2"></i> Цели</a></li>
-            <li><a href="reports.html" class="nav-link"><i class="bi bi-pie-chart me-2"></i> Отчеты и Бюджеты</a></li>
-            <li><a href="integrations.html" class="nav-link"><i class="bi bi-bank me-2"></i> Интеграции</a></li>
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link active" aria-current="page">
+                    <i class="bi bi-grid-1x2 me-2" aria-hidden="true"></i> Обзор
+                </a>
+            </li>
+            <li>
+                <a href="transactions.html" class="nav-link">
+                    <i class="bi bi-cash-stack me-2" aria-hidden="true"></i> Транзакции
+                </a>
+            </li>
+            <li>
+                <a href="goals.html" class="nav-link">
+                    <i class="bi bi-bullseye me-2" aria-hidden="true"></i> Цели
+                </a>
+            </li>
+            <li>
+                <a href="reports.html" class="nav-link">
+                    <i class="bi bi-pie-chart me-2" aria-hidden="true"></i> Отчеты и Бюджеты
+                </a>
+            </li>
+            <li>
+                <a href="integrations.html" class="nav-link">
+                    <i class="bi bi-bank me-2" aria-hidden="true"></i> Интеграции
+                </a>
+            </li>
         </ul>
-        <hr>
-        <a href="#" id="logout-btn" class="nav-link text-danger"><i class="bi bi-box-arrow-left me-2"></i> Выход</a>
-    </div>
+        <hr aria-hidden="true">
+        <a href="#" id="logout-btn" class="nav-link text-danger">
+            <i class="bi bi-box-arrow-left me-2" aria-hidden="true"></i> Выход
+        </a>
+    </nav>
 
-    <div class="main-content p-4">
+    <main class="main-content p-4" id="main-content">
         
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div class="d-flex align-items-center">
-                <button class="btn btn-light d-lg-none me-2" id="toggle-sidebar"><i class="bi bi-list"></i></button>
-                <h2 class="m-0" id="welcome-msg">Добро пожаловать!</h2>
+                <button class="btn btn-light d-lg-none me-2" id="toggle-sidebar" aria-expanded="false" aria-controls="sidebar" aria-label="Открыть меню">
+                    <i class="bi bi-list" aria-hidden="true"></i>
+                </button>
+                <h1 class="m-0 h2" id="welcome-msg">Добро пожаловать!</h1>
             </div>
-            <button class="btn btn-primary btn-sm px-3 py-2" onclick="openTransactionModal()"><i class="bi bi-plus-lg"></i> Добавить</button>
+            <button class="btn btn-primary btn-sm px-3 py-2" onclick="openTransactionModal()">
+                <i class="bi bi-plus-lg" aria-hidden="true"></i> Добавить
+            </button>
         </div>
 
-        <div class="row g-3 mb-4" id="dashboard-cards">
+        <section class="row g-3 mb-4" id="dashboard-cards" aria-label="Сводка баланса">
             <div class="col-12 col-md-4">
                 <div class="card bg-primary text-white border-0 shadow-sm p-3 py-4 h-100">
-                    <div class="card-title mb-1 text-white-50">Общий баланс</div>
-                    <h2 class="card-text fw-bold m-0" id="total-balance">0 ₽</h2>
+                    <h2 class="card-title mb-1 text-white-75 fs-6 fw-normal">Общий баланс</h2>
+                    <p class="card-text fw-bold m-0 fs-2" id="total-balance">0 ₽</p>
                 </div>
             </div>
             <div class="col-12 col-md-4">
                 <div class="card bg-success text-white border-0 shadow-sm p-3 py-4 h-100">
-                    <div class="card-title mb-1 text-white-50">Доходы (в этом мес.)</div>
-                    <h2 class="card-text fw-bold m-0" id="total-income">+ 0 ₽</h2>
+                    <h2 class="card-title mb-1 text-white-75 fs-6 fw-normal">Доходы (в этом мес.)</h2>
+                    <p class="card-text fw-bold m-0 fs-2" id="total-income">+ 0 ₽</p>
                 </div>
             </div>
             <div class="col-12 col-md-4">
                 <div class="card bg-danger text-white border-0 shadow-sm p-3 py-4 h-100">
-                    <div class="card-title mb-1 text-white-50">Расходы (в этом мес.)</div>
-                    <h2 class="card-text fw-bold m-0" id="total-expense">- 0 ₽</h2>
+                    <h2 class="card-title mb-1 text-white-75 fs-6 fw-normal">Расходы (в этом мес.)</h2>
+                    <p class="card-text fw-bold m-0 fs-2" id="total-expense">- 0 ₽</p>
                 </div>
             </div>
-        </div>
+        </section>
 
         <div class="row g-3">
             <div class="col-12 col-lg-8">
-                <div class="card border-0 shadow-sm p-3 h-100">
+                <section class="card border-0 shadow-sm p-3 h-100" aria-labelledby="balance-chart-title">
                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-                        <h5 class="m-0 mb-2 mb-sm-0">Динамика баланса</h5>
-                        <select class="form-select form-select-sm w-auto shadow-none" id="chart-timeframe" onchange="renderDashboardCharts()">
+                        <h2 class="m-0 mb-2 mb-sm-0 h5" id="balance-chart-title">Динамика баланса</h2>
+                        
+                        <select class="form-select form-select-sm w-auto shadow-none" id="chart-timeframe" onchange="renderDashboardCharts()" aria-label="Выберите период для графика">
                             <option value="week">За эту неделю (по дням)</option>
                             <option value="month" selected>За этот месяц (по дням)</option>
                             <option value="year">За этот год (по месяцам)</option>
@@ -74,20 +102,24 @@
                         </select>
                     </div>
                     <div style="position: relative; height: 300px; width: 100%;">
-                        <canvas id="balanceChart"></canvas>
+                        <canvas id="balanceChart" role="img" aria-label="Линейный график динамики баланса">
+                            <p>Ваш браузер не поддерживает отображение графиков. Динамика баланса недоступна.</p>
+                        </canvas>
                     </div>
-                </div>
+                </section>
             </div>
             <div class="col-12 col-lg-4">
-                <div class="card border-0 shadow-sm p-3 h-100">
-                    <h5 class="mb-3">Расходы по категориям</h5>
+                <section class="card border-0 shadow-sm p-3 h-100" aria-labelledby="category-chart-title">
+                    <h2 class="mb-3 h5" id="category-chart-title">Расходы по категориям</h2>
                     <div style="position: relative; height: 300px; width: 100%;">
-                        <canvas id="categoryChart"></canvas>
+                        <canvas id="categoryChart" role="img" aria-label="Круговая диаграмма расходов по категориям">
+                            <p>Ваш браузер не поддерживает отображение графиков. Распределение по категориям недоступно.</p>
+                        </canvas>
                     </div>
-                </div>
+                </section>
             </div>
         </div>
-    </div>
+    </main>
 
     <div id="modal-container"></div>
     <script>

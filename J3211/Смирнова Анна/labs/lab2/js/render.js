@@ -188,7 +188,10 @@ function renderTransactions() {
     if (startDate) filtered = filtered.filter(t => new Date(t.date) >= new Date(startDate));
     if (endDate) filtered = filtered.filter(t => new Date(t.date) <= new Date(endDate));
 
-    if(filtered.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-4">Транзакции не найдены</td></tr>`; return; }
+    if(filtered.length === 0) { 
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-4">Транзакции не найдены</td></tr>`; 
+        return; 
+    }
 
     filtered.forEach(t => {
         const isInc = t.type === 'income';
@@ -207,8 +210,12 @@ function renderTransactions() {
             <td><span class="badge bg-secondary">${t.category}</span></td>
             <td class="${colorClass} fw-bold">${sign} ${t.amount.toLocaleString()} ₽</td>
             <td>
-                <button class="btn btn-sm btn-outline-primary me-1" onclick="editTransaction('${t.id}')"><i class="bi bi-pencil"></i></button>
-                <button class="btn btn-sm btn-outline-danger" onclick="deleteTransaction('${t.id}')"><i class="bi bi-trash"></i></button>
+                <button class="btn btn-sm btn-outline-primary me-1" onclick="editTransaction('${t.id}')" aria-label="Редактировать транзакцию: ${t.desc}">
+                    <i class="bi bi-pencil" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger" onclick="deleteTransaction('${t.id}')" aria-label="Удалить транзакцию: ${t.desc}">
+                    <i class="bi bi-trash" aria-hidden="true"></i>
+                </button>
             </td>
         `;
         tbody.appendChild(tr);
@@ -297,13 +304,15 @@ function renderGoals() {
         card.innerHTML = `
             <div class="card border-0 shadow-sm h-100 p-4">
                 <div class="d-flex justify-content-between align-items-start mb-3">
-                    <h5 class="m-0 fw-bold"><i class="bi bi-bullseye text-primary me-2"></i>${g.name}</h5>
+                    <h2 class="m-0 fw-bold h5"><i class="bi bi-bullseye text-primary me-2" aria-hidden="true"></i>${g.name}</h2>
                     <div class="dropdown">
-                        <button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical"></i></button>
+                        <button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Действия с целью ${g.name}">
+                            <i class="bi bi-three-dots-vertical" aria-hidden="true"></i>
+                        </button>
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
-                            <li><a class="dropdown-item" href="#" onclick="editGoal('${g.id}')"><i class="bi bi-pencil me-2"></i>Редактировать</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="#" onclick="deleteGoal('${g.id}')"><i class="bi bi-trash me-2"></i>Удалить</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="editGoal('${g.id}')"><i class="bi bi-pencil me-2" aria-hidden="true"></i>Редактировать</a></li>
+                            <li><hr class="dropdown-divider" aria-hidden="true"></li>
+                            <li><a class="dropdown-item text-danger" href="#" onclick="deleteGoal('${g.id}')"><i class="bi bi-trash me-2" aria-hidden="true"></i>Удалить</a></li>
                         </ul>
                     </div>
                 </div>
@@ -313,15 +322,19 @@ function renderGoals() {
                         <span>Накоплено: <strong>${g.currentAmount.toLocaleString()} ₽</strong></span>
                         <span>Цель: ${g.targetAmount.toLocaleString()} ₽</span>
                     </div>
-                    <div class="progress" style="height: 10px;">
-                        <div class="progress-bar ${barColor}" role="progressbar" style="width: ${percent}%"></div>
+                    <div class="progress" style="height: 10px;" role="progressbar" aria-label="Прогресс цели: ${g.name}" aria-valuenow="${percent.toFixed(0)}" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar ${barColor}" style="width: ${percent}%"></div>
                     </div>
-                    <div class="text-end text-muted small mt-1">${percent.toFixed(1)}%</div>
+                    <div class="text-end text-muted small mt-1" aria-hidden="true">${percent.toFixed(1)}%</div>
                 </div>
 
                 <div class="d-flex gap-2 mt-auto">
-                    <button class="btn btn-outline-success w-100" onclick="openAddFundsModal('${g.id}')"><i class="bi bi-plus-circle me-1"></i> Пополнить</button>
-                    <button class="btn btn-outline-warning w-100" onclick="openWithdrawFundsModal('${g.id}')" ${g.currentAmount <= 0 ? 'disabled' : ''}><i class="bi bi-dash-circle me-1"></i> Снять</button>
+                    <button class="btn btn-outline-success w-100" onclick="openAddFundsModal('${g.id}')">
+                        <i class="bi bi-plus-circle me-1" aria-hidden="true"></i> Пополнить
+                    </button>
+                    <button class="btn btn-outline-warning w-100" onclick="openWithdrawFundsModal('${g.id}')" ${g.currentAmount <= 0 ? 'disabled' : ''}>
+                        <i class="bi bi-dash-circle me-1" aria-hidden="true"></i> Снять
+                    </button>
                 </div>
             </div>
         `;
@@ -365,7 +378,7 @@ window.renderBanks = function() {
         
         li.innerHTML = `
             <div class="d-flex align-items-center">
-                <i class="bi ${b.icon} fs-3 me-3"></i> 
+                <i class="bi ${b.icon} fs-3 me-3" aria-hidden="true"></i> 
                 <span class="fs-5">${b.name}</span>
             </div>
             ${isConnected 
@@ -390,9 +403,11 @@ window.renderRules = function() {
             li.className = 'list-group-item d-flex justify-content-between align-items-center border-0 px-0 py-2';
             li.innerHTML = `
                 <div>
-                    <strong>Если:</strong> "${rule.keyword}" <i class="bi bi-arrow-right text-muted mx-2"></i> <strong>Категория:</strong> <span class="badge bg-secondary">${rule.category}</span>
+                    <strong>Если:</strong> "${rule.keyword}" <i class="bi bi-arrow-right text-muted mx-2" aria-hidden="true"></i> <strong>Категория:</strong> <span class="badge bg-secondary">${rule.category}</span>
                 </div>
-                <button class="btn btn-sm btn-light text-danger" onclick="deleteRule('${rule.id}')"><i class="bi bi-trash"></i></button>
+                <button class="btn btn-sm btn-light text-danger" onclick="deleteRule('${rule.id}')" aria-label="Удалить правило для слова ${rule.keyword}">
+                    <i class="bi bi-trash" aria-hidden="true"></i>
+                </button>
             `;
             container.appendChild(li);
         });
