@@ -63,14 +63,57 @@
         <main class="col-md-9">
             <div class="input-group mb-4 shadow-sm">
                 <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-                <input type="text" id="searchInput" class="form-control border-start-0 ps-0" placeholder="Поиск...">
-                <button class="btn btn-primary">Найти</button>
+                <input type="text" id="searchInput" class="form-control border-start-0 ps-0" placeholder="Поиск по названию или описанию...">
+                <button class="btn btn-primary" id="searchBtn">Найти</button>
+                <button class="btn btn-success ms-2 rounded" id="openCreateModalBtn" type="button">Создать модель</button>
             </div>
 
             <div class="row row-cols-1 row-cols-md-2 g-4" id="dataContainer">
                 
             </div>
         </main>
+    </div>
+</div>
+
+<div class="modal fade" id="createModelModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title fw-bold">Создать новую модель</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="createModelForm" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label">Название модели</label>
+                        <input type="text" class="form-control" id="modelTitle" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Описание</label>
+                        <textarea class="form-control" id="modelDesc" rows="3" required></textarea>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Задача</label>
+                            <select class="form-select" id="modelTask" required>
+                                <option value="nlp">NLP (Текст)</option>
+                                <option value="cv">Computer Vision</option>
+                                <option value="audio">Audio / Speech</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Фреймворк</label>
+                            <select class="form-select" id="modelFramework" required>
+                                <option value="pytorch">PyTorch</option>
+                                <option value="tensorflow">TensorFlow</option>
+                                <option value="jax">JAX</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Опубликовать модель</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
