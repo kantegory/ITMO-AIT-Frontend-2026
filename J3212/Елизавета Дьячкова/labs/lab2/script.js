@@ -130,6 +130,14 @@
     });
   };
 
+  var escapeAttr = function (s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  };
+
   var cityLabel = function (city) {
     if (city === 'spb') return 'Санкт‑Петербург';
     if (city === 'msk') return 'Москва';
@@ -277,6 +285,8 @@
             var q = 'event.html?id=' + encodeURIComponent(eid);
             return q.replace(/"/g, '&quot;');
           })() +
+          '" aria-label="' +
+          escapeAttr('Подробнее о мероприятии: ' + (event.title || '')) +
           '">Подробнее</a>' +
           '</div></div></article></div>'
         );
@@ -575,6 +585,10 @@
               .join('');
           }
           if (buyTicketButton) {
+            buyTicketButton.setAttribute(
+              'aria-label',
+              'Купить билет на мероприятие: ' + (event.title || '')
+            );
             buyTicketButton.onclick = function () {
               var user = readStorage(STORAGE_CURRENT_USER);
               var token = getAuthToken();
