@@ -3,6 +3,39 @@ const API_URL = 'http://localhost:3000';
 document.addEventListener('DOMContentLoaded', function () {
     console.log('n3n frontend loaded');
 
+    // === Переключение темы ===
+    const themeToggle = document.getElementById('theme-toggle');
+
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+
+        if (themeToggle) {
+            themeToggle.textContent = theme === 'dark' ? 'Светлая тема' : 'Тёмная тема';
+        }
+    }
+
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+        applyTheme(savedTheme);
+    }
+
+    if (themeToggle) {
+        if (!savedTheme) {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            themeToggle.textContent = prefersDark ? 'Светлая тема' : 'Тёмная тема';
+        }
+
+        themeToggle.addEventListener('click', function () {
+            const currentTheme =
+                document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+
     // Пытаемся прочитать текущего пользователя из localStorage
     const currentUserRaw = localStorage.getItem('currentUser');
     const currentUser = currentUserRaw ? JSON.parse(currentUserRaw) : null;
