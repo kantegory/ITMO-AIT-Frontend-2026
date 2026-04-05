@@ -33,6 +33,10 @@ window.renderDashboardCharts = function() {
     const ctxCat = document.getElementById('categoryChart');
     if (!ctxBal || !ctxCat) return;
 
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const chartTextColor = isDark ? '#adb5bd' : '#6c757d';
+    const chartGridColor = isDark ? '#333333' : '#e9ecef';
+
     const timeframe = document.getElementById('chart-timeframe') ? document.getElementById('chart-timeframe').value : 'month';
     const now = new Date();
     const currentYear = now.getFullYear();
@@ -126,7 +130,14 @@ window.renderDashboardCharts = function() {
     balChart = new Chart(ctxBal.getContext('2d'), {
         type: 'line',
         data: { labels: labels, datasets: [{ label: 'Баланс (₽)', data: cumulativeData, borderColor: '#0d6efd', backgroundColor: 'rgba(13, 110, 253, 0.1)', borderWidth: 3, fill: true, tension: 0.4, pointRadius: 3 }] },
-        options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: false } }, plugins: { datalabels: { display: false } } }
+        options: { 
+            responsive: true, maintainAspectRatio: false, 
+            scales: { 
+                x: { ticks: { color: chartTextColor }, grid: { color: chartGridColor } },
+                y: { beginAtZero: false, ticks: { color: chartTextColor }, grid: { color: chartGridColor } } 
+            }, 
+            plugins: { datalabels: { display: false } } 
+        }
     });
 
     if (catChart) catChart.destroy();
@@ -135,7 +146,13 @@ window.renderDashboardCharts = function() {
     catChart = new Chart(ctxCat.getContext('2d'), {
         type: 'doughnut',
         data: { labels: catLabels.length ? catLabels : ['Нет данных'], datasets: [{ data: catData.length ? catData : [1], backgroundColor: catData.length ? ['#0d6efd', '#198754', '#ffc107', '#dc3545', '#6c757d', '#0dcaf0', '#8a2be2', '#ff7f50'] : ['#e9ecef'] }] },
-        options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { datalabels: { display: false } } }
+        options: { 
+            responsive: true, maintainAspectRatio: false, cutout: '60%', 
+            plugins: { 
+                datalabels: { display: false },
+                legend: { labels: { color: chartTextColor } }
+            } 
+        }
     });
 }
 
@@ -226,6 +243,10 @@ window.renderReportsCharts = function() {
     const ctx = document.getElementById('reportsChart');
     if (!ctx) return;
     
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const chartTextColor = isDark ? '#adb5bd' : '#6c757d';
+    const chartGridColor = isDark ? '#333333' : '#e9ecef';
+
     const timeframe = document.getElementById('reports-timeframe') ? document.getElementById('reports-timeframe').value : 'month';
     const now = new Date();
     const currentYear = now.getFullYear();
@@ -280,7 +301,23 @@ window.renderReportsCharts = function() {
                 { label: 'Расходы (₽)', data: expData, borderColor: '#dc3545', backgroundColor: 'rgba(220, 53, 69, 0.2)', borderWidth: 3, fill: true, tension: 0.4, pointRadius: 4 }
             ]
         },
-        options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, scales: { y: { beginAtZero: true } }, plugins: { legend: { position: 'top', labels: { usePointStyle: true, padding: 20 } }, datalabels: { backgroundColor: function(c) { return c.dataset.borderColor; }, borderRadius: 4, color: 'white', font: { weight: 'bold', size: 11 }, formatter: formatChartLabel, padding: { top: 3, bottom: 3, left: 6, right: 6 }, align: 'top', offset: 4 } } }
+        options: { 
+            responsive: true, maintainAspectRatio: false, 
+            interaction: { mode: 'index', intersect: false }, 
+            scales: { 
+                x: { ticks: { color: chartTextColor }, grid: { color: chartGridColor } },
+                y: { beginAtZero: true, ticks: { color: chartTextColor }, grid: { color: chartGridColor } } 
+            }, 
+            plugins: { 
+                legend: { position: 'top', labels: { color: chartTextColor, usePointStyle: true, padding: 20 } }, 
+                datalabels: { 
+                    backgroundColor: function(c) { return c.dataset.borderColor; }, 
+                    borderRadius: 4, color: 'white', font: { weight: 'bold', size: 11 }, 
+                    formatter: formatChartLabel, padding: { top: 3, bottom: 3, left: 6, right: 6 }, 
+                    align: 'top', offset: 4 
+                } 
+            } 
+        }
     });
 }
 
@@ -405,7 +442,7 @@ window.renderRules = function() {
                 <div>
                     <strong>Если:</strong> "${rule.keyword}" <i class="bi bi-arrow-right text-muted mx-2" aria-hidden="true"></i> <strong>Категория:</strong> <span class="badge bg-secondary">${rule.category}</span>
                 </div>
-                <button class="btn btn-sm btn-light text-danger" onclick="deleteRule('${rule.id}')" aria-label="Удалить правило для слова ${rule.keyword}">
+                <button class="btn btn-sm btn-outline-danger" onclick="deleteRule('${rule.id}')" aria-label="Удалить правило для слова ${rule.keyword}">
                     <i class="bi bi-trash" aria-hidden="true"></i>
                 </button>
             `;

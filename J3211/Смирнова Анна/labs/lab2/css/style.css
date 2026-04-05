@@ -1,14 +1,35 @@
 :root {
     --primary-blue: #0d6efd;
     --success-green: #198754;
-    --danger-red: #dc3545;
+    --danger-red: #b02a37;
+    --warning-yellow: #997404;
+    
+    --bg-main: #f4f6f9;
+    --bg-sidebar: #f8f9fa;
+    --bg-card: #ffffff;
+    --text-main: #212529;
+    --border-color: #dee2e6;
+    --sidebar-hover: #e9ecef;
+}
+
+[data-theme="dark"] {
+    --bg-main: #121212;
+    --bg-sidebar: #1e1e1e;
+    --bg-card: #242424;
+    --text-main: #f8f9fa;
+    --border-color: #333333;
+    --sidebar-hover: #2d2d2d;
+    
+    --success-green: #28a745;
+    --danger-red: #ea868f;
     --warning-yellow: #ffc107;
-    --bg-light: #f4f6f9;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--bg-light) !important;
+    background-color: var(--bg-main) !important;
+    color: var(--text-main);
+    transition: background-color 0.3s ease, color 0.3s ease;
     overflow-x: hidden;
 }
 
@@ -21,34 +42,13 @@ body {
     top: 0;
     left: 0;
     padding-top: 1.5rem !important;
-    background-color: #f8f9fa;
-    border-right: 1px solid #e9ecef;
-    transition: transform 0.3s ease;
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, transform 0.3s ease;
     width: 250px;
     height: 100vh;
     z-index: 1040;
     overflow-y: auto;
-}
-
-.nav-pills .nav-link.active {
-    background-color: var(--primary-blue);
-    color: white !important;
-    border-radius: 8px;
-}
-
-.nav-pills .nav-link {
-    border-radius: 8px;
-    margin-bottom: 5px;
-    color: #333;
-    transition: all 0.2s;
-}
-
-.nav-pills .nav-link:hover:not(.active) {
-    background-color: #e9ecef;
-}
-
-.card {
-    border-radius: 12px !important;
 }
 
 .main-content {
@@ -58,14 +58,79 @@ body {
     overflow-x: hidden;
 }
 
+.nav-pills .nav-link {
+    border-radius: 8px;
+    margin-bottom: 5px;
+    color: var(--text-main);
+    transition: all 0.2s;
+}
+
+.nav-pills .nav-link.active {
+    background-color: var(--primary-blue);
+    color: white !important;
+}
+
+.nav-pills .nav-link:hover:not(.active) {
+    background-color: var(--sidebar-hover);
+}
+
+.card {
+    border-radius: 12px !important;
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    transition: background-color 0.3s ease;
+}
+
 .table-hover tbody tr:hover {
-    background-color: #f1f4f8;
+    background-color: var(--sidebar-hover);
 }
 
 .custom-divider {
     margin-top: 4px;
-    border-top: 1px solid #dee2e6;
+    border-top: 1px solid var(--border-color);
     opacity: 1;
+}
+
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary-blue);
+    color: white;
+    padding: 8px;
+    z-index: 10000;
+    transition: top 0.2s;
+    text-decoration: none;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+*:focus-visible {
+    outline: 3px solid var(--warning-yellow) !important;
+    outline-offset: 2px;
+}
+
+[data-theme="dark"] .btn-light,
+[data-theme="dark"] .modal-header.bg-light {
+    background-color: #2b2f32 !important;
+    border-color: #33373b !important;
+    color: #e9ecef !important;
+}
+
+[data-theme="dark"] .btn-light:hover {
+    background-color: #3c4246 !important;
+    border-color: #454b50 !important;
+}
+
+[data-theme="dark"] .btn-light.text-danger { color: var(--danger-red) !important; }
+[data-theme="dark"] .btn-light.text-primary { color: var(--primary-blue) !important; }
+
+[data-theme="dark"] .list-group-item {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
 }
 
 @media (max-width: 991.98px) {
@@ -99,25 +164,4 @@ body {
     h2 {
         font-size: 1.5rem;
     }
-}
-
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: var(--primary-blue);
-    color: white;
-    padding: 8px;
-    z-index: 10000;
-    transition: top 0.2s;
-    text-decoration: none;
-}
-
-.skip-link:focus {
-    top: 0;
-}
-
-*:focus-visible {
-    outline: 3px solid var(--warning-yellow) !important;
-    outline-offset: 2px;
 }
