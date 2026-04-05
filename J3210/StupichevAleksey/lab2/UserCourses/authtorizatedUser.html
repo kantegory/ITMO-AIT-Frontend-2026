@@ -18,14 +18,18 @@
         <div class="container">
             <div class="d-flex align-items-center">
                 <button class="btn btn-outline-light d-lg-none me-2" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#mobileSidebar"><i class="bi bi-list"></i></button>
+                    data-bs-target="#mobileSidebar" aria-label="Открыть боковое меню">
+                    <i class="bi bi-list"></i>
+                </button>
                 <a href="../index.html" class="d-flex text-white text-decoration-none me-auto">
                     <img src="../images/logo.png" alt="Логотип" width="40" height="40">
                 </a>
-                <button class="btn btn-outline-light theme-toggle me-2" onclick="toggleTheme()" title="Сменить тему">
-                    <span class="icon-sun"><i class="bi bi-sun-fill"></i></span>
-                    <span class="icon-moon"><i class="bi bi-moon-fill"></i></span>
+
+                <button class="btn btn-outline-light theme-toggle me-2" onclick="toggleTheme()" aria-label="Сменить тему оформления">
+                    <span class="icon-sun"><i class="bi bi-sun-fill" aria-hidden="true"></i></span>
+                    <span class="icon-moon"><i class="bi bi-moon-fill" aria-hidden="true"></i></span>
                 </button>
+
                 <a href="../index.html" class="btn btn-outline-light me-2">
                     <i class="bi bi-house-door me-1"></i>На главную
                 </a>
@@ -37,7 +41,8 @@
     <div class="offcanvas offcanvas-start text-bg-dark d-lg-none" id="mobileSidebar" style="width: 280px;">
         <div class="offcanvas-header border-bottom border-secondary pb-3">
             <div class="d-flex align-items-center gap-2">
-                <img src="../images/jinx.png" alt="Аватар" class="rounded-circle" style="width:40px; height:40px; object-fit:cover;">
+                <img src="../images/jinx.png" alt="Аватар" class="rounded-circle"
+                    style="width:40px; height:40px; object-fit:cover;">
                 <div>
                     <div class="fw-semibold" style="font-size:.9rem" id="mobUserName">Пользователь</div>
                     <div style="font-size:.75rem; opacity:.6" id="mobUserEmail">email</div>
@@ -47,12 +52,22 @@
         </div>
         <div class="offcanvas-body p-0">
             <ul class="list-unstyled mb-0">
-                <li><a href="View.html" class="d-flex align-items-center gap-2 px-3 py-2 text-white-50 text-decoration-none" style="font-size:.9rem;"><i class="bi bi-grid-1x2"></i> Обзор</a></li>
-                <li><a class="d-flex align-items-center gap-2 px-3 py-2 text-white text-decoration-none" style="font-size:.9rem; background:rgba(13,110,253,.25);"><i class="bi bi-book"></i> Мои курсы</a></li>
-                <li><a href="Favorite.html" class="d-flex align-items-center gap-2 px-3 py-2 text-white-50 text-decoration-none" style="font-size:.9rem;"><i class="bi bi-heart"></i> Избранное</a></li>
-                <li><a href="Sertificate.html" class="d-flex align-items-center gap-2 px-3 py-2 text-white-50 text-decoration-none" style="font-size:.9rem;"><i class="bi bi-award"></i> Сертификаты</a></li>
+                <li><a href="View.html"
+                        class="d-flex align-items-center gap-2 px-3 py-2 text-white-50 text-decoration-none"
+                        style="font-size:.9rem;"><i class="bi bi-grid-1x2"></i> Обзор</a></li>
+                <li><a class="d-flex align-items-center gap-2 px-3 py-2 text-white text-decoration-none"
+                        style="font-size:.9rem; background:rgba(13,110,253,.25);"><i class="bi bi-book"></i> Мои
+                        курсы</a></li>
+                <li><a href="Favorite.html"
+                        class="d-flex align-items-center gap-2 px-3 py-2 text-white-50 text-decoration-none"
+                        style="font-size:.9rem;"><i class="bi bi-heart"></i> Избранное</a></li>
+                <li><a href="Sertificate.html"
+                        class="d-flex align-items-center gap-2 px-3 py-2 text-white-50 text-decoration-none"
+                        style="font-size:.9rem;"><i class="bi bi-award"></i> Сертификаты</a></li>
                 <li class="border-top border-secondary my-2"></li>
-                <li><a href="#" onclick="logout()" class="d-flex align-items-center gap-2 px-3 py-2 text-white-50 text-decoration-none" style="font-size:.9rem;"><i class="bi bi-box-arrow-left"></i> Выйти</a></li>
+                <li><a href="#" onclick="logout()"
+                        class="d-flex align-items-center gap-2 px-3 py-2 text-white-50 text-decoration-none"
+                        style="font-size:.9rem;"><i class="bi bi-box-arrow-left"></i> Выйти</a></li>
             </ul>
         </div>
     </div>
@@ -69,15 +84,19 @@
             <ul class="nav flex-column mb-auto">
                 <li class="nav-item"><a href="View.html" class="nav-link"><i class="bi bi-grid-1x2"></i> Обзор</a></li>
                 <li class="nav-item"><a class="nav-link active"><i class="bi bi-book"></i> Мои курсы</a></li>
-                <li class="nav-item"><a href="Favorite.html" class="nav-link"><i class="bi bi-heart"></i> Избранное</a></li>
-                <li class="nav-item"><a href="Sertificate.html" class="nav-link"><i class="bi bi-award"></i> Сертификаты</a></li>
+                <li class="nav-item"><a href="Favorite.html" class="nav-link"><i class="bi bi-heart"></i> Избранное</a>
+                </li>
+                <li class="nav-item"><a href="Sertificate.html" class="nav-link"><i class="bi bi-award"></i>
+                        Сертификаты</a></li>
             </ul>
         </aside>
 
         <main class="cabinet-main">
             <h4 class="mb-4 fw-bold">Мои курсы</h4>
             <div class="row g-4" id="myCourses">
-                <div class="text-center py-4"><div class="spinner-border text-primary" role="status"></div></div>
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status"></div>
+                </div>
             </div>
         </main>
     </div>
@@ -128,7 +147,7 @@
                         <div class="course-card-lk">
                             <img src="${course.image}" alt="">
                             <div class="card-body">
-                                <h6 class="fw-semibold mb-1">${course.title}</h6>
+                                <h3 class="fw-semibold mb-1">${course.title}</h3>
                                 <p class="small text-muted mb-2">${course.shortDescription}</p>
                                 <a href="../Course/CourseView.html?id=${course.id}" class="btn btn-primary btn-sm">Перейти к курсу</a>
                             </div>

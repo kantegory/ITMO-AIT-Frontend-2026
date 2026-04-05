@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-bs-theme="dark">
+<html lang="ru" data-bs-theme="dark">
 
 <head>
   <meta charset="utf-8">
@@ -11,24 +11,27 @@
 </head>
 
 <body>
-  <div class="auth-card" style="position:relative; padding-top:3rem;">
+  <main class="auth-card" style="position:relative; padding-top:3rem;">
+    <h1 class="visually-hidden">Вход в систему</h1>
+
     <a href="index.html" class="btn-close btn-close-white" style="position:absolute; top:0.75rem; right:0.75rem;"
-      aria-label="Закрыть"></a>
+      aria-label="Закрыть и вернуться на главную"></a>
+      
     <div class="tab-buttons">
       <button class="active">Вход</button>
-      <a href="registration.html"><button>Регистрация</button></a>
+      <a href="registration.html"><button type="button">Регистрация</button></a>
     </div>
 
-    <div id="errorAlert" class="alert alert-danger d-none" role="alert"></div>
+    <div id="errorAlert" class="alert alert-danger d-none" role="alert" aria-live="assertive"></div>
 
     <form id="loginForm" novalidate>
       <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="loginEmail" name="email" placeholder="name@example.com" required>
+        <input type="email" class="form-control" id="loginEmail" name="email" placeholder="name@example.com" required autocomplete="email">
         <label for="loginEmail">E-mail</label>
         <div class="invalid-feedback">Введите корректный email</div>
       </div>
       <div class="form-floating mb-3">
-        <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Пароль" required>
+        <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Пароль" required autocomplete="current-password">
         <label for="loginPassword">Пароль</label>
         <div class="invalid-feedback">Пароль не может быть пустым</div>
       </div>
@@ -38,14 +41,13 @@
       </div>
       <button class="btn btn-primary w-100 py-2 mb-3" type="submit" id="submitBtn">Войти</button>
     </form>
-  </div>
+  </main>
 
   <script src="theme-toggle.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
   <script>
     const API_URL = 'http://localhost:3000';
 
-    // Если уже авторизован — перенаправляем
     function checkAuth() {
       if (localStorage.getItem('accessToken')) {
         window.location.href = 'index.html';
@@ -77,14 +79,11 @@
 
         localStorage.setItem('accessToken', accessToken);
 
-        // json-server-auth может не вернуть кастомные поля (role, name),
-        // поэтому подгружаем полные данные пользователя
         const fullUser = await axios.get(`${API_URL}/users/${user.id}`, {
           headers: { Authorization: `Bearer ${accessToken}` }
         });
         localStorage.setItem('user', JSON.stringify(fullUser.data));
 
-        // Перенаправление в зависимости от роли
         if (fullUser.data.role === 'teacher') {
           window.location.href = 'TeacherCourses/TeacherCourses.html';
         } else {
