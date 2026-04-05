@@ -137,16 +137,13 @@
         async function renderCourses() {
             const courses = await loadCourses();
 
-            // Топ курсы — по рейтингу
             const topCourses = [...courses].sort((a, b) => b.rating - a.rating).slice(0, 4);
             document.getElementById('topCourses').innerHTML = topCourses.map(getCourseCardHtml).join('');
 
-            // Для новичков
             const beginnerCourses = courses.filter(c => c.level === 'Начинающий').slice(0, 4);
             document.getElementById('beginnerCourses').innerHTML = beginnerCourses.map(getCourseCardHtml).join('');
         }
 
-        // Фильтрация
         document.getElementById('filterForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
@@ -168,7 +165,6 @@
             document.getElementById('beginnerCourses').innerHTML = '';
         });
 
-        // Поиск в header
         document.getElementById('searchForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const q = document.getElementById('searchInput').value.trim();
@@ -182,7 +178,6 @@
             window.location.href = 'index.html';
         }
 
-        // Если пользователь уже авторизован — показать иконку вместо кнопок
         function updateHeader() {
             if (localStorage.getItem('accessToken')) {
                 const user = JSON.parse(localStorage.getItem('user'));

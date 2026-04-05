@@ -1,4 +1,3 @@
-// Определяем тему: сначала из localStorage, потом из системных настроек
 (function () {
     const saved = localStorage.getItem('theme');
     if (saved) {

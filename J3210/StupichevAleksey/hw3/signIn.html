@@ -45,7 +45,6 @@
   <script>
     const API_URL = 'http://localhost:3000';
 
-    // Если уже авторизован — перенаправляем
     function checkAuth() {
       if (localStorage.getItem('accessToken')) {
         window.location.href = 'index.html';
@@ -77,14 +76,11 @@
 
         localStorage.setItem('accessToken', accessToken);
 
-        // json-server-auth может не вернуть кастомные поля (role, name),
-        // поэтому подгружаем полные данные пользователя
         const fullUser = await axios.get(`${API_URL}/users/${user.id}`, {
           headers: { Authorization: `Bearer ${accessToken}` }
         });
         localStorage.setItem('user', JSON.stringify(fullUser.data));
 
-        // Перенаправление в зависимости от роли
         if (fullUser.data.role === 'teacher') {
           window.location.href = 'TeacherCourses/TeacherCourses.html';
         } else {
