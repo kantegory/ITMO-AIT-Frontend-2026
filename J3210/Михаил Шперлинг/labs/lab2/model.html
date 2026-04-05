@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Llama-3-8B-Instruct | AI Hub</title>
+    <title>Детали | AI Hub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css">
@@ -18,7 +18,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link active" href="index.html">Модели</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html">Модели</a></li>
                 <li class="nav-item"><a class="nav-link" href="datasets.html">Датасеты</a></li>
             </ul>
             <div class="d-flex align-items-center">
@@ -30,21 +30,22 @@
     </div>
 </nav>
 
-<div class="container mt-5">
+<div class="container mt-5" id="pageContent">
     <div class="d-flex justify-content-between align-items-start mb-4">
         <div>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#" class="text-decoration-none">Meta</a></li>
-                    <li class="breadcrumb-item active">Llama-3-8B</li>
+                    <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none">Главная</a></li>
+                    <li class="breadcrumb-item active" id="breadcrumbName">Загрузка...</li>
                 </ol>
             </nav>
-            <h2>Llama-3-8B-Instruct</h2>
+            <h2 id="modelDetailTitle">Загрузка...</h2>
+            <p class="text-muted" id="modelDetailAuthor"></p>
         </div>
         <div class="btn-group shadow-sm">
-            <button class="btn btn-light border"><i class="bi bi-star"></i> Star <span class="badge bg-secondary">12.5k</span></button>
-            <button class="btn btn-light border"><i class="bi bi-diagram-2"></i> Fork <span class="badge bg-secondary">840</span></button>
-            <button class="btn btn-primary"><i class="bi bi-cloud-arrow-down"></i> Download</button>
+            <button class="btn btn-light border" id="starBtn"><i class="bi bi-star"></i> Star <span class="badge bg-secondary" id="starCount">0</span></button>
+            <button class="btn btn-light border"><i class="bi bi-diagram-2"></i> Fork <span class="badge bg-secondary">0</span></button>
+            <button class="btn btn-primary" id="downloadBtn"><i class="bi bi-cloud-arrow-down"></i> Скачать <span class="badge bg-light text-dark ms-1" id="downloadCount">0</span></button>
         </div>
     </div>
 
@@ -56,18 +57,15 @@
             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#metrics">Метрики</button>
         </li>
         <li class="nav-item">
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#discuss">Обсуждения (34)</button>
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#discuss">Обсуждения</button>
         </li>
     </ul>
 
     <div class="tab-content bg-white p-4 border rounded shadow-sm">
         <div class="tab-pane fade show active" id="desc">
             <h4>О модели</h4>
-            <p>Это подробное описание модели Llama-3. Используйте её для генерации текста и чат-ботов.</p>
-            <pre class="bg-dark text-light p-3 rounded"><code>pip install transformers
-from transformers import AutoModelForCausalLM
-
-model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-3-8B-Instruct")</code></pre>
+            <p id="modelDetailDesc">Загрузка данных...</p>
+            <pre class="bg-dark text-light p-3 rounded"><code id="installCode"></code></pre>
         </div>
         <div class="tab-pane fade" id="metrics">
             <table class="table table-hover">
@@ -79,11 +77,20 @@ model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-3-8B-Instruct")</
             </table>
         </div>
         <div class="tab-pane fade" id="discuss">
-            <p class="text-muted">Здесь пока нет комментариев. Будьте первым!</p>
+            <div id="commentsList" class="mb-4"></div>
+            <hr>
+            <form id="commentForm">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Оставить комментарий</label>
+                    <textarea class="form-control" id="commentText" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
         </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
