@@ -18,6 +18,26 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Перейти к основному содержимому</a>
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;" aria-hidden="true">
+    <defs>
+        <symbol id="icon-dashboard" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
+            <path fill="currentColor" d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        </symbol>
+        <symbol id="icon-experiments" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"/>
+            <path fill="currentColor" d="M6.453 15h11.094"/>
+            <path fill="currentColor" d="M8.5 2h7"/>
+        </symbol>
+        <symbol id="icon-models" viewBox="0 0 512 512">
+            <path fill="currentColor" d="m208 512l-52.38-139.62L16 320l139.62-52.38L208 128l52.38 139.62L400 320l-139.62 52.38ZM88 176l-23.57-64.43L0 88l64.43-23.57L88 0l23.57 64.43L176 88l-64.43 23.57Zm312 80l-31.11-80.89L288 144l80.89-31.11L400 32l31.11 80.89L512 144l-80.89 31.11Z"/>
+        </symbol>
+        <symbol id="icon-logout" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M3 5c0-1.1.9-2 2-2h8v2H5v14h8v2H5c-1.1 0-2-.9-2-2V5Zm14.176 6L14.64 8.464l1.414-1.414l4.95 4.95l-4.95 4.95l-1.414-1.414L17.176 13H10.59v-2h6.586Z"/>
+        </symbol>
+    </defs>
+    </svg>
     
     <header class="navbar navbar-expand-lg navbar-dark bg-dark" role="banner">
         <div class="container">
@@ -42,7 +62,9 @@
                         </button>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html" onclick="logout()">Выйти</a>
+                        <a class="nav-link logout-link" href="index.html" onclick="logout()">Выйти
+                        <svg class="nav-icon"><use href="#icon-logout"></use></svg>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -55,14 +77,31 @@
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="dashboard.html">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="experiments.html" aria-current="page">Эксперименты</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="models.html">Модели</a>
-                        </li>
+                        <a class="nav-link" href="dashboard.html">
+                        <svg class="nav-icon" aria-hidden="true">
+                            <use href="#icon-dashboard"></use>
+                        </svg>
+                        Dashboard
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="experiments.html">
+                        <svg class="nav-icon" aria-hidden="true">
+                            <use href="#icon-experiments"></use>
+                        </svg>
+                        Эксперименты
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="models.html">
+                        <svg class="nav-icon" aria-hidden="true">
+                            <use href="#icon-models"></use>
+                        </svg>
+                        Модели
+                        </a>
+                    </li>
                     </ul>
                 </div>
             </nav>
