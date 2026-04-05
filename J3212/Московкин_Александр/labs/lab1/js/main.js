@@ -5,12 +5,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // === Переключение темы ===
     const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleText = document.getElementById('theme-toggle-text');
 
     function applyTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
 
-        if (themeToggle) {
-            themeToggle.textContent = theme === 'dark' ? 'Светлая тема' : 'Тёмная тема';
+        if (themeToggleText) {
+            themeToggleText.textContent = theme === 'dark' ? 'Светлая тема' : 'Тёмная тема';
         }
     }
 
@@ -21,9 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (themeToggle) {
-        if (!savedTheme) {
+        if (!savedTheme && themeToggleText) {
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            themeToggle.textContent = prefersDark ? 'Светлая тема' : 'Тёмная тема';
+            themeToggleText.textContent = prefersDark ? 'Светлая тема' : 'Тёмная тема';
         }
 
         themeToggle.addEventListener('click', function () {
