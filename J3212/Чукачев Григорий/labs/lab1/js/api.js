@@ -241,8 +241,17 @@ document.addEventListener("DOMContentLoaded", () => {
                             const allTransactions = await allTxResponse.json();
 
                             let categoryTotal = 0;
+                            const now = new Date();
+                            const currentMonth = now.getMonth();
+                            const currentYear = now.getFullYear();
+
                             allTransactions.forEach(t => {
-                                if (t.type === "expense" && t.category === category) {
+                                const txDate = new Date(t.date);
+                                if (t.type === "expense" &&
+                                    t.category === category &&
+                                    txDate.getMonth() === currentMonth &&
+                                    txDate.getFullYear() === currentYear) {
+
                                     categoryTotal += t.amount;
                                 }
                             });

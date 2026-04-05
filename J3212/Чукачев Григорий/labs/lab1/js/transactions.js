@@ -65,13 +65,19 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let i = 1; i <= totalPages; i++) {
             const li = document.createElement("li");
             li.className = `page-item ${i === currentPage ? "active" : ""}`;
-            li.innerHTML = `<a class="page-link" href="#" style="cursor: pointer;">${i}</a>`;
 
-            li.addEventListener("click", (e) => {
+            const a = document.createElement("a");
+            a.className = "page-link";
+            a.href = "#";
+            a.textContent = i;
+
+            a.addEventListener("click", (e) => {
                 e.preventDefault();
                 currentPage = i;
                 renderPage();
             });
+
+            li.appendChild(a);
             paginationContainer.appendChild(li);
         }
     }
