@@ -96,7 +96,7 @@ async function loadDashboardData() {
         <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
             <div class="d-flex align-items-center gap-3">
                 <div>
-                    <h6 class="mb-0 fw-bold">${t.description || t.type}</h6>
+                    <h2 class="h6 mb-0 fw-bold">${t.description || t.type}</h2>
                     <small class="text-muted">${t.date || 'Сегодня'} • ${t.category}</small>
                 </div>
             </div>

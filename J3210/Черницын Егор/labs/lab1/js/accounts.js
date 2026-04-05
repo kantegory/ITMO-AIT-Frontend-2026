@@ -22,7 +22,7 @@ async function loadAccounts() {
 
             container.innerHTML += `
         <div class="col-md-6 col-lg-4">
-            <div class="card shadow-sm border-0 rounded-4 h-100 p-2 ${bgClass}">
+            <article class="card shadow-sm border-0 rounded-4 h-100 p-2 ${bgClass}">
                 <div class="card-body d-flex flex-column text-white">
                     <div class="d-flex justify-content-between align-items-start mb-4">
                         <span class="small fw-bold text-uppercase opacity-75">${acc.name}</span>
@@ -34,15 +34,15 @@ async function loadAccounts() {
                     </h2>
 
                     <div class="d-flex justify-content-between mt-auto">
-                        <button onclick="openTransactionModal('${acc.id}')" class="btn btn-sm btn-outline-light rounded-circle fw-bold p-0 d-flex align-items-center justify-content-center shadow-sm btn-add-acc">
+                        <button onclick="openTransactionModal('${acc.id}')" aria-label="Добавить транзакцию для этого счета" title="Добавить транзакцию" class="btn btn-sm btn-outline-light rounded-circle fw-bold p-0 d-flex align-items-center justify-content-center shadow-sm btn-add-acc">
                             +
                         </button>
-                        <a href="transact.html?accountId=${acc.id}" class="btn btn-sm btn-outline-light rounded-pill fw-bold px-3 d-flex align-items-center">
+                        <a href="transact.html?accountId=${acc.id}" aria-label="Просмотреть историю по этому счету" title="Просмотр истории" class="btn btn-sm btn-outline-light rounded-pill fw-bold px-3 d-flex align-items-center">
                             История
                         </a>
                     </div>
                 </div>
-            </div>
+            </article>
         </div>
         `;
         });
