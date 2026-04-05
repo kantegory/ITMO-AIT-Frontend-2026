@@ -140,7 +140,7 @@ function drawChart(canvasId, dataObject, colors) {
             data.push(othersSum);
         }
     }
-
+    const clr = getComputedStyle(document.documentElement).getPropertyValue('--text-main').trim() === "#212529" ? "#212529" : "#f8f9fa"
     const commonChartOptions = {
         maintainAspectRatio: false,
         cutout: '65%',
@@ -150,7 +150,7 @@ function drawChart(canvasId, dataObject, colors) {
                 labels: {
                     usePointStyle: true,
                     padding: 20,
-                    color: '#4a4a4a',
+                    color: clr,
                     font: { size: 13, weight: 'bold' }
                 }
             }

@@ -2,12 +2,118 @@
     --my-red: #740707;
     --my-dark-red: #5b0606;
     --text-dark: #333333;
+
+    --page-bg: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-main: #212529;
+    --text-inverted: #f8f9fa;
+    --text-muted: #6c757d;
+    --border-color: #dee2e6;
+    --nav-bg: #ffffff;
+}
+
+[data-theme="dark"] .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+[data-theme="dark"] .btn-close:hover,
+[data-theme="dark"] .btn-close:focus {
+    filter: invert(1) grayscale(100%) brightness(200%);
+    opacity: 1;
+}
+
+[data-theme="dark"] {
+    --my-red: #8b0a0a;
+    --my-dark-red: #740707;
+    --page-bg: #121212;
+    --card-bg: #1e1e1e;
+    --text-main: #f8f9fa;
+    --text-inverted: #212529;
+    --text-muted: #818a92;
+    --border-color: #333333;
+    --nav-bg: #1e1e1e;
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+    background-color: #2b2b2b;
+    color: #888;
+    border-color: #444;
+}
+
+[data-theme="dark"] .form-control::placeholder {
+    color: #888;
+}
+
+[data-theme="dark"] .badge.currency-badge {
+    background-color: #2b2b2b !important;
+}
+
+[data-theme="dark"] .table {
+    --bs-table-bg: var(--card-bg);
+    --bs-table-color: var(--text-main);
+    --bs-table-border-color: var(--border-color);
+
+    --bs-table-hover-bg: #2b2b2b;
+    --bs-table-hover-color: var(--text-main);
+
+    --bs-table-striped-bg: #252525;
+    --bs-table-striped-color: var(--text-main);
+}
+
+[data-theme="dark"] .table thead th {
+    background-color: var(--card-bg);
+    color: var(--text-muted);
+    border-bottom-color: var(--border-color);
+}
+
+#filterForm .form-control,
+#filterForm .form-select {
+    color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] #filterForm, .modal input[type="date"] {
+    color-scheme: dark;
+}
+
+[data-theme="dark"] .form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23f8f9fa' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+}
+
+body {
+    background-color: var(--page-bg) !important;
+    color: var(--text-main) !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card, .modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-main);
+    border-color: var(--border-color) !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.text-inverted {
+    color: var(--text-inverted);
+}
+
+#themeToggle {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 10px;
 }
 
 .navbar {
-    background: #f3f3f3;
+    background-color: var(--nav-bg) !important;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
 }
-
 .nav-logo {
     transform: translateY(-2px);
 }
