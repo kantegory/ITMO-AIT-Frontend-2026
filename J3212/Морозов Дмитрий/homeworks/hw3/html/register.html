@@ -4,15 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ML Pipeline — Регистрация</title>
+    <script src="../js/theme.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
+    <script>
+        (function() {
+            const saved = localStorage.getItem('ml-pipeline-theme');
+            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Перейти к форме регистрации</a>
     
-    <header class="card-header bg-dark text-white text-center" role="banner">
-        <h1 class="h4 mb-0">ML Pipeline</h1>
-        <p class="mb-0">Платформа управления ML-экспериментами</p>
+    <header class="navbar navbar-expand-lg navbar-dark bg-dark" role="banner">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">ML Pipeline</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Платформа управления ML-экспериментами</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item me-2">
+                        <button 
+                            id="theme-toggle" 
+                            class="btn btn-outline-light btn-sm" 
+                            aria-label="Переключить тему"
+                            title="Переключить светлую/тёмную тему">
+                            🌓 Тема
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </header>
 
     <main id="main-content" class="container py-5" role="main">
@@ -114,9 +145,11 @@
             </div>
         </div>
         
-        <footer class="text-center text-muted mt-5" role="contentinfo">
+        <footer class="footer mt-auto py-3 bg-light" role="contentinfo">
+        <div class="container text-center text-muted">
             <p>&copy; 2026 ML Pipeline. Все права защищены.</p>
-        </footer>
+        </div>
+    </footer>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

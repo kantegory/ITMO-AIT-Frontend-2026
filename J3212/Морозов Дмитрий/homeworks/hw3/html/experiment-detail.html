@@ -4,8 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ML Pipeline — Детали эксперимента</title>
+    <script src="../js/theme.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
+    <script>
+        (function() {
+            const saved = localStorage.getItem('ml-pipeline-theme');
+            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
     <style>
         .tab-content-section {
             display: none;
@@ -23,26 +32,31 @@
     
     <header class="navbar navbar-expand-lg navbar-dark bg-dark" role="banner">
         <div class="container">
-            <a class="navbar-brand" href="../html/index.html">ML Pipeline</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-                    data-bs-target="#navbarNav" aria-controls="navbarNav" 
-                    aria-expanded="false" aria-label="Переключить навигацию">
+            <a class="navbar-brand" href="index.html">ML Pipeline</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <nav role="navigation" aria-label="Дополнительная навигация">
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../html/index.html">Платформа управления ML-экспериментами</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../html/index.html" onclick="logout()">Выйти</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Платформа управления ML-экспериментами</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item me-2">
+                        <button 
+                            id="theme-toggle" 
+                            class="btn btn-outline-light btn-sm" 
+                            aria-label="Переключить тему"
+                            title="Переключить светлую/тёмную тему">
+                            🌓 Тема
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html" onclick="logout()">Выйти</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </header>
 

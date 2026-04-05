@@ -197,7 +197,7 @@ function initRegister() {
         }
         
         if (!terms) {
-            showNotification('Необходимо принять условия использования', 'warning', 'register-error');
+            showNotification('Необходимо принять условия использования', 'danger', 'register-error');
             termsCheckbox?.focus();
             hasErrors = true;
         }
