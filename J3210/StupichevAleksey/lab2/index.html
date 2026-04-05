@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="theme.css" />
     <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -24,6 +25,10 @@
                         aria-label="Search" id="searchInput">
                 </form>
 
+                <button class="btn btn-outline-light theme-toggle me-2" onclick="toggleTheme()" title="Сменить тему">
+                    <span class="icon-sun"><i class="bi bi-sun-fill"></i></span>
+                    <span class="icon-moon"><i class="bi bi-moon-fill"></i></span>
+                </button>
                 <div class="text-end" id="authButtons">
                     <a href="signIn.html" class="btn btn-outline-light me-2">Login</a>
                     <a href="registration.html" class="btn btn-warning">Sign-up</a>
@@ -69,12 +74,16 @@
         <div class="container">
             <h2 class="section-title">Топ-10 курсов</h2>
             <div class="row g-4" id="topCourses">
-                <div class="text-center py-4"><div class="spinner-border text-primary" role="status"></div></div>
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status"></div>
+                </div>
             </div>
 
             <h2 class="section-title">Для новичков</h2>
             <div class="row g-4" id="beginnerCourses">
-                <div class="text-center py-4"><div class="spinner-border text-primary" role="status"></div></div>
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status"></div>
+                </div>
             </div>
         </div>
     </main>
@@ -92,6 +101,7 @@
         </footer>
     </div>
 
+    <script src="theme-toggle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
     <script>
         const API_URL = 'http://localhost:3000';
@@ -127,13 +137,16 @@
         async function renderCourses() {
             const courses = await loadCourses();
 
+            // Топ курсы — по рейтингу
             const topCourses = [...courses].sort((a, b) => b.rating - a.rating).slice(0, 4);
             document.getElementById('topCourses').innerHTML = topCourses.map(getCourseCardHtml).join('');
 
+            // Для новичков
             const beginnerCourses = courses.filter(c => c.level === 'Начинающий').slice(0, 4);
             document.getElementById('beginnerCourses').innerHTML = beginnerCourses.map(getCourseCardHtml).join('');
         }
 
+        // Фильтрация
         document.getElementById('filterForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
@@ -155,6 +168,7 @@
             document.getElementById('beginnerCourses').innerHTML = '';
         });
 
+        // Поиск в header
         document.getElementById('searchForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const q = document.getElementById('searchInput').value.trim();
@@ -168,6 +182,7 @@
             window.location.href = 'index.html';
         }
 
+        // Если пользователь уже авторизован — показать иконку вместо кнопок
         function updateHeader() {
             if (localStorage.getItem('accessToken')) {
                 const user = JSON.parse(localStorage.getItem('user'));

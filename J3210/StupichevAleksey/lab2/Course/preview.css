@@ -1,5 +1,5 @@
 .course-hero {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    background: var(--hero-gradient);
     color: #fff;
     padding: 3rem 0;
 }
@@ -22,6 +22,19 @@
 }
 .module-accordion .accordion-button {
     font-weight: 600;
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+}
+.module-accordion .accordion-button:not(.collapsed) {
+    background-color: var(--bg-card-hover);
+    color: var(--text-primary);
+}
+.module-accordion .accordion-item {
+    border-color: var(--border-color);
+    background-color: var(--bg-card);
+}
+.module-accordion .accordion-body {
+    background-color: var(--bg-card);
 }
 .lesson-item {
     display: flex;
@@ -29,7 +42,7 @@
     gap: .6rem;
     padding: .55rem 1.25rem;
     font-size: .9rem;
-    color: #495057;
+    color: var(--lesson-item-color);
 }
 .lesson-item i { flex-shrink: 0; }
 .instructor-card {
@@ -43,29 +56,36 @@
     object-fit: cover;
 }
 .review-card {
-    background: #fff;
+    background: var(--bg-card);
     border-radius: .75rem;
     padding: 1.25rem;
-    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    box-shadow: var(--shadow-card);
+    transition: background .3s;
 }
+.review-card p { color: var(--text-primary); }
 .review-card .review-avatar {
     width: 40px; height: 40px;
     border-radius: 50%;
-    background: #dee2e6;
+    background: var(--review-avatar-bg);
     display: flex; align-items: center; justify-content: center;
-    font-weight: 700; color: #495057; flex-shrink: 0;
+    font-weight: 700; color: var(--review-avatar-color); flex-shrink: 0;
 }
 .sticky-buy {
     position: sticky;
     top: 80px;
 }
 .buy-card {
-    background: #fff;
+    background: var(--buy-card-bg);
     border-radius: .75rem;
     padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,.1);
+    box-shadow: var(--buy-card-shadow);
+    transition: background .3s;
 }
 .buy-card .price {
     font-size: 2rem;
     font-weight: 700;
+    color: var(--text-primary);
+}
+.buy-card .text-muted {
+    color: var(--text-secondary) !important;
 }

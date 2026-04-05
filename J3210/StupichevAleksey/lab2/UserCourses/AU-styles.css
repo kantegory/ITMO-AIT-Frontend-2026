@@ -7,12 +7,9 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #f5f6f8;
-}
-
-.site-header {
-    height: var(--header-height);
-    z-index: 100;
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    transition: background-color .3s, color .3s;
 }
 
 .cabinet-wrapper {
@@ -23,7 +20,7 @@ body {
 .cabinet-sidebar {
     width: var(--sidebar-width);
     min-height: calc(100vh - var(--header-height));
-    background: #212529;
+    background: var(--sidebar-bg);
     color: #fff;
     flex-shrink: 0;
     display: flex;
@@ -31,7 +28,7 @@ body {
     padding: 1.5rem 1rem;
     position: sticky;
     align-self: flex-start;
-    transition: transform .3s ease;
+    transition: background .3s;
 }
 
 .cabinet-sidebar .nav-link {
@@ -53,7 +50,7 @@ body {
 
 .cabinet-sidebar .nav-link.active {
     color: #fff;
-    background: #0d6efd;
+    background: var(--sidebar-active);
 }
 
 .cabinet-sidebar .sidebar-user {
@@ -62,7 +59,7 @@ body {
     gap: .75rem;
     padding: .75rem 1rem;
     border-radius: .375rem;
-    background: rgba(255, 255, 255, .05);
+    background: rgba(255, 255, 255, .1);
     margin-bottom: 1.25rem;
 }
 
@@ -89,31 +86,17 @@ body {
     min-width: 0;
 }
 
-.panel {
-    display: none;
-}
-
-.panel.active {
-    display: block;
-    animation: fadeUp .35s ease;
-}
-
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
 .stat-card {
-    background: #fff;
+    background: var(--bg-card);
     border-radius: .75rem;
     padding: 1.5rem;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
-    transition: transform .2s, box-shadow .2s;
+    box-shadow: var(--shadow-card);
+    transition: transform .2s, box-shadow .2s, background .3s;
 }
 
 .stat-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+    box-shadow: var(--shadow-card-hover);
 }
 
 .stat-card .stat-icon {
@@ -132,24 +115,25 @@ body {
     font-size: 1.6rem;
     font-weight: 700;
     line-height: 1.1;
+    color: var(--text-primary);
 }
 
 .stat-card .stat-label {
     font-size: .82rem;
-    color: #6c757d;
+    color: var(--text-secondary);
 }
 
 .course-card-lk {
-    background: #fff;
+    background: var(--bg-card);
     border-radius: .75rem;
     overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
-    transition: transform .2s, box-shadow .2s;
+    box-shadow: var(--shadow-card);
+    transition: transform .2s, box-shadow .2s, background .3s;
 }
 
 .course-card-lk:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+    box-shadow: var(--shadow-card-hover);
 }
 
 .course-card-lk img {
@@ -162,35 +146,58 @@ body {
     padding: 1rem 1.25rem;
 }
 
-.progress {
-    height: 6px;
-    border-radius: 3px;
+.course-card-lk .card-body h6 {
+    color: var(--text-primary);
+}
+
+.course-card-lk .card-body .text-muted {
+    color: var(--text-secondary) !important;
 }
 
 .settings-section {
-    background: #fff;
+    background: var(--bg-card);
     border-radius: .75rem;
     padding: 2rem;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+    box-shadow: var(--shadow-card);
+    transition: background .3s;
 }
 
-.settings-section + .settings-section {
+.settings-section+.settings-section {
     margin-top: 1.5rem;
 }
 
+.settings-section .form-label {
+    color: var(--text-primary);
+}
+
+.settings-section .form-control,
+.settings-section .form-select {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
 .cert-card {
-    background: #fff;
+    background: var(--bg-card);
     border-radius: .75rem;
     padding: 1.5rem;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+    box-shadow: var(--shadow-card);
     display: flex;
     align-items: center;
     gap: 1.25rem;
-    transition: transform .2s;
+    transition: transform .2s, background .3s;
 }
 
 .cert-card:hover {
     transform: translateY(-2px);
+}
+
+.cert-card h6 {
+    color: var(--text-primary);
+}
+
+.cert-card .text-muted {
+    color: var(--text-secondary) !important;
 }
 
 .cert-icon {
@@ -206,40 +213,82 @@ body {
     flex-shrink: 0;
 }
 
-@media (max-width: 991.98px) {
-    .cabinet-sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        min-height: 100vh;
-        z-index: 1050;
-        transform: translateX(-100%);
-        padding-top: 1rem;
-    }
+.progress {
+    height: 6px;
+    border-radius: 3px;
+}
 
-    .cabinet-sidebar.show {
-        transform: translateX(0);
-    }
+/* Таблицы */
+.table {
+    color: var(--text-primary);
+    --bs-table-bg: var(--bg-card);
+    --bs-table-color: var(--text-primary);
+}
 
-    .sidebar-backdrop {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, .45);
-        z-index: 1040;
-    }
+.table-light,
+.table-light th,
+.table-light td {
+    background-color: var(--bg-card-hover) !important;
+    color: var(--text-primary) !important;
+}
 
-    .sidebar-backdrop.show {
-        display: block;
-    }
+.table> :not(caption)>*>* {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
 
-    .cabinet-main {
-        padding: 1.25rem 1rem;
-    }
+.table-hover>tbody>tr:hover>* {
+    background-color: var(--bg-card-hover) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Инпуты и placeholder глобально */
+.form-control,
+.form-select {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+}
+
+.form-control::placeholder {
+    color: var(--text-secondary);
+    opacity: .7;
+}
+
+/* Header & footer */
+.p-3.text-bg-dark {
+    background-color: var(--header-bg) !important;
+}
+
+.text-body-secondary {
+    color: var(--text-secondary) !important;
+}
+
+.text-muted {
+    color: var(--text-secondary) !important;
+}
+
+footer .border-bottom {
+    border-color: var(--border-color) !important;
+}
+
+.offcanvas.text-bg-dark {
+    background-color: var(--sidebar-bg) !important;
 }
 
 @media (max-width: 991.98px) {
     .cabinet-sidebar {
         display: none;
+    }
+
+    .cabinet-main {
+        padding: 1.25rem 1rem;
     }
 }

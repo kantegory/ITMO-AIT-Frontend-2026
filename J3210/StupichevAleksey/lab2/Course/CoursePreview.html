@@ -9,7 +9,9 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../UserCourses/AU-styles.css" />
+    <link rel="stylesheet" href="../theme.css" />
     <link rel="stylesheet" href="preview.css" />
+    <script src="../theme-toggle.js"></script>
 </head>
 
 <body>
@@ -17,6 +19,9 @@
     <header class="p-3 text-bg-dark">
         <div class="container">
             <div class="d-flex align-items-center">
+                <a href="../index.html" class="btn btn-outline-light me-3">
+                    <i class="bi bi-arrow-left me-1"></i>Назад
+                </a>
                 <a href="../index.html" class="d-flex text-white text-decoration-none me-auto">
                     <img src="../images/logo.png" alt="Логотип" width="40" height="40" class="me-2">
                 </a>
@@ -32,6 +37,7 @@
         </div>
     </header>
 
+    <!-- Hero section -->
     <section class="course-hero">
         <div class="container">
             <div class="row g-4 align-items-center">
@@ -61,17 +67,20 @@
         <div class="row g-5">
             <div class="col-lg-8">
 
+                <!-- Чему вы научитесь -->
                 <div class="mb-5" id="learnSection" style="display:none">
                     <h3 class="fw-bold mb-3">Чему вы научитесь</h3>
                     <div class="row g-2" id="learnItems"></div>
                 </div>
 
+                <!-- Содержание курса -->
                 <div class="mb-5">
                     <h3 class="fw-bold mb-3">Содержание курса</h3>
                     <p class="text-muted small mb-3" id="modulesInfo"></p>
                     <div class="accordion module-accordion" id="courseModules"></div>
                 </div>
 
+                <!-- Отзывы -->
                 <div class="mb-5">
                     <h3 class="fw-bold mb-3">Отзывы студентов</h3>
                     <div class="row g-3" id="reviewsList">
@@ -80,7 +89,8 @@
                 </div>
             </div>
 
-            <div class="col-lg-4">
+            <!-- Боковая карточка записи -->
+            <div class="col-lg-4" id="buyCardCol">
                 <div class="sticky-buy">
                     <div class="buy-card">
                         <div class="price mb-1" id="coursePrice">Загрузка...</div>
@@ -117,6 +127,7 @@
         const courseId = parseInt(params.get('id'));
         let currentCourse = null;
 
+        // Обновить header если авторизован
         function updateHeader() {
             if (isLoggedIn()) {
                 const user = getUser();
@@ -134,12 +145,14 @@
             }
         }
 
+        // Иконка типа урока
         function getLessonIcon(type) {
             if (type === 'video') return '<i class="bi bi-play-circle text-primary"></i>';
             if (type === 'quiz') return '<i class="bi bi-pencil-square text-info"></i>';
             return '<i class="bi bi-file-text text-success"></i>';
         }
 
+        // Звёзды рейтинга
         function getStars(rating) {
             let html = '';
             for (let i = 1; i <= 5; i++) {
@@ -150,6 +163,7 @@
             return html;
         }
 
+        // Загрузка курса
         async function loadCourse() {
             if (!courseId) {
                 document.getElementById('courseTitle').textContent = 'Курс не найден';
@@ -161,13 +175,21 @@
                 currentCourse = response.data;
                 renderCourse(currentCourse);
                 loadReviews();
-                checkEnrollment();
+
+                // Для преподавателей скрываем блок записи
+                const user = getUser();
+                if (user && user.role === 'teacher') {
+                    document.getElementById('buyCardCol').style.display = 'none';
+                } else {
+                    checkEnrollment();
+                }
             } catch (err) {
                 console.error('Error:', err);
                 document.getElementById('courseTitle').textContent = 'Курс не найден';
             }
         }
 
+        // Отрисовка курса
         function renderCourse(c) {
             document.title = c.title + ' — Обзор курса';
             document.getElementById('heroTitle').textContent = c.title;
@@ -175,6 +197,7 @@
             document.getElementById('courseTitle').textContent = c.title;
             document.getElementById('courseDesc').textContent = c.fullDescription || c.shortDescription;
 
+            // Картинка
             const img = document.getElementById('courseImage');
             img.src = c.image;
             img.alt = c.title;
@@ -185,6 +208,7 @@
             img.style.objectFit = 'cover';
             img.style.boxShadow = '0 8px 32px rgba(0,0,0,.35)';
 
+            // Инфо-бейджи
             document.getElementById('courseInfo').innerHTML = `
                 <span class="info-badge"><i class="bi bi-star-fill text-warning"></i> ${c.rating} (${c.reviewsCount} отзывов)</span>
                 <span class="info-badge"><i class="bi bi-people"></i> ${c.studentsCount} студентов</span>
@@ -192,6 +216,7 @@
                 <span class="info-badge"><i class="bi bi-translate"></i> ${c.language}</span>
             `;
 
+            // Преподаватель
             document.getElementById('instructorCard').innerHTML = `
                 <img src="../images/jinx.png" alt="Преподаватель">
                 <div>
@@ -200,8 +225,10 @@
                 </div>
             `;
 
+            // Цена
             document.getElementById('coursePrice').textContent = c.price === 0 ? 'Бесплатно' : c.price + ' ₽';
 
+            // Фичи
             const totalLessons = c.modules ? c.modules.reduce((sum, m) => sum + m.lessons.length, 0) : c.lessonsTotal;
             document.getElementById('courseFeatures').innerHTML = `
                 <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>${totalLessons} уроков</li>
@@ -211,6 +238,7 @@
                 <li><i class="bi bi-check2 text-success me-2"></i>Поддержка преподавателя</li>
             `;
 
+            // Модули
             if (c.modules && c.modules.length > 0) {
                 const totalModules = c.modules.length;
                 const totalModuleLessons = c.modules.reduce((sum, m) => sum + m.lessons.length, 0);
@@ -246,6 +274,7 @@
             document.getElementById('enrollBtn').disabled = false;
         }
 
+        // Загрузка отзывов
         async function loadReviews() {
             try {
                 const response = await axios.get(`${API_URL}/reviews`, { params: { courseId } });
@@ -275,6 +304,7 @@
             }
         }
 
+        // Проверка: уже записан или нет
         async function checkEnrollment() {
             if (!isLoggedIn()) return;
 
@@ -303,6 +333,7 @@
             }
         }
 
+        // Записаться на курс
         async function enrollCourse() {
             if (!isLoggedIn()) {
                 window.location.href = '../signIn.html';
@@ -316,10 +347,12 @@
             btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Записываем...';
 
             try {
+                // Получаем актуальные данные пользователя
                 const userResp = await axios.get(`${API_URL}/users/${user.id}`);
                 const userData = userResp.data;
                 const enrolled = userData.enrolledCourses || [];
 
+                // Проверка: уже записан?
                 if (enrolled.includes(courseId)) {
                     btn.textContent = 'Вы уже записаны';
                     btn.classList.remove('btn-primary');
@@ -327,11 +360,13 @@
                     return;
                 }
 
+                // Добавляем курс в список
                 enrolled.push(courseId);
                 await axios.patch(`${API_URL}/users/${user.id}`, {
                     enrolledCourses: enrolled
                 });
 
+                // Обновляем счётчик студентов у курса
                 if (currentCourse) {
                     await axios.patch(`${API_URL}/courses/${courseId}`, {
                         studentsCount: (currentCourse.studentsCount || 0) + 1
