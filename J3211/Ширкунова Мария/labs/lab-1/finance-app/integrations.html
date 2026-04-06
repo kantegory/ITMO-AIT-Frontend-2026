@@ -1,16 +1,37 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Подключение банковских интеграций">
     <title>Интеграции | Финансы</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/light.css">
+    <link rel="stylesheet" href="css/dark.css">
     <link rel="stylesheet" href="css/style.css">
+    <script>
+        (function() {
+            const saved = localStorage.getItem('theme');
+            const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', saved || preferred);
+        })();
+    </script>
 </head>
 <body>
 
     <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+    <div class="d-flex justify-content-end p-3">
+        <button
+            class="theme-toggle"
+            id="themeToggle"
+            onclick="toggleTheme()"
+            aria-label="Переключить тему оформления"
+            title="Сменить тему"
+        >
+            <span id="themeIcon">🌙</span>
+        </button>
+    </div>
 
     <main id="main-content" class="container py-5">
         <h1 class="h2 mb-4">Подключение банков</h1>
@@ -20,26 +41,19 @@
                 <article class="card p-3 text-center border-primary shadow-sm" aria-labelledby="sberLabel">
                     <h2 id="sberLabel" class="h4">СберБанк</h2>
                     <p>Автоматический импорт транзакций</p>
-                    <button class="btn btn-primary connect-btn" aria-label="Подключить интеграцию с СберБанком">
-                        Подключить
-                    </button>
+                    <button class="btn btn-primary connect-btn" aria-label="Подключить интеграцию с СберБанком">Подключить</button>
                 </article>
             </div>
-
             <div class="col-md-6 mb-3">
                 <article class="card p-3 text-center shadow-sm" aria-labelledby="tinkoffLabel">
                     <h2 id="tinkoffLabel" class="h4">Tinkoff</h2>
                     <p>Автоматический импорт транзакций</p>
-                    <button class="btn btn-outline-dark connect-btn" aria-label="Tinkoff — интеграция отключена" disabled aria-disabled="true">
-                        Отключено
-                    </button>
+                    <button class="btn btn-outline-dark connect-btn" aria-label="Tinkoff — интеграция отключена" disabled aria-disabled="true">Отключено</button>
                 </article>
             </div>
         </div>
 
-        <a href="index.html" class="btn btn-secondary mt-3" aria-label="Вернуться на главную">
-            ← Назад
-        </a>
+        <a href="index.html" class="btn btn-secondary mt-3" aria-label="Вернуться на главную">← Назад</a>
     </main>
 
     <script src="js/main.js"></script>

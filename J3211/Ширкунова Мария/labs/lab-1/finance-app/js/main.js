@@ -1,5 +1,49 @@
 const API_URL = 'http://localhost:3000';
 
+function getCurrentTheme() {
+    return document.documentElement.getAttribute('data-theme') || 'light';
+}
+
+function toggleTheme() {
+    const current = getCurrentTheme();
+    const next = current === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    localStorage.setItem('theme', next);
+}
+
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    updateThemeIcon(theme);
+}
+
+function updateThemeIcon(theme) {
+    const icon = document.getElementById('themeIcon');
+    if (icon) {
+        icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+    const btn = document.getElementById('themeToggle');
+    if (btn) {
+        btn.setAttribute('aria-label',
+            theme === 'dark'
+                ? 'Текущая тема: тёмная. Переключить на светлую'
+                : 'Текущая тема: светлая. Переключить на тёмную'
+        );
+    }
+}
+
+function initTheme() {
+    const saved = localStorage.getItem('theme');
+    const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const theme = saved || preferred;
+    applyTheme(theme);
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            applyTheme(e.matches ? 'dark' : 'light');
+        }
+    });
+}
+
 function getToken() {
     return localStorage.getItem('accessToken');
 }
@@ -9,7 +53,9 @@ function getUser() {
 }
 
 function logout() {
+    const theme = localStorage.getItem('theme');
     localStorage.clear();
+    if (theme) localStorage.setItem('theme', theme);
     window.location.href = 'login.html';
 }
 
@@ -186,7 +232,7 @@ function renderTransactions(transactions) {
     if (transactions.length === 0) {
         tableBody.innerHTML = `
             <tr>
-                <td colspan="5" class="text-center text-muted py-4">Транзакций не найдено</td>
+                <td colspan="5" class="text-center py-4" style="color: var(--text-muted)">Транзакций не найдено</td>
             </tr>`;
         return;
     }
@@ -213,7 +259,7 @@ function renderTransactions(transactions) {
 }
 
 function filterTransactions() {
-    const searchText    = document.getElementById('searchInput').value.toLowerCase();
+    const searchText     = document.getElementById('searchInput').value.toLowerCase();
     const filterCategory = document.getElementById('categoryFilter').value;
     const filterAccount  = document.getElementById('accountFilter').value;
 
@@ -227,7 +273,6 @@ function filterTransactions() {
     });
 
     renderTransactions(filtered);
-
     announceToSR(`Найдено транзакций: ${filtered.length}`);
 }
 
@@ -282,6 +327,7 @@ function announceToSR(message) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
     checkAuth();
 
     const registerForm    = document.getElementById('registerForm');
@@ -295,4 +341,3 @@ document.addEventListener('DOMContentLoaded', () => {
     loadAccounts();
     loadTransactions();
 });
-
