@@ -1,5 +1,6 @@
 (() => {
     const SESSION_KEY = "tripplannerCurrentUser";
+    const THEME_KEY = "tripplannerTheme";
 
     const TravelApp = {
         labelMaps: {
@@ -103,7 +104,37 @@
             return Boolean(this.getCurrentUser());
         },
 
+        getEffectiveTheme() {
+            const saved = localStorage.getItem(THEME_KEY);
+            if (saved === "dark" || saved === "light") return saved;
+            return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        },
+
+        applyTheme(theme) {
+            document.documentElement.setAttribute("data-theme", theme);
+            localStorage.setItem(THEME_KEY, theme);
+        },
+
+        initTheme() {
+            this.applyTheme(this.getEffectiveTheme());
+
+            const btn = document.getElementById("themeToggle");
+            if (btn) {
+                btn.addEventListener("click", () => {
+                    const current = document.documentElement.getAttribute("data-theme");
+                    this.applyTheme(current === "dark" ? "light" : "dark");
+                });
+            }
+
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+                if (!localStorage.getItem(THEME_KEY)) {
+                    this.applyTheme(e.matches ? "dark" : "light");
+                }
+            });
+        },
+
         initCommonPage() {
+            this.initTheme();
             this.highlightActiveNav();
             this.syncAuthNavigation();
             this.ensureToastContainer();

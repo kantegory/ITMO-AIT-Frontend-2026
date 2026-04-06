@@ -1,3 +1,4 @@
+/* ===== Светлая тема (по умолчанию) ===== */
 :root {
     --tp-bg: #f5f8fc;
     --tp-surface: #ffffff;
@@ -16,6 +17,129 @@
     --tp-radius-md: 16px;
     --tp-radius-sm: 12px;
     --tp-transition: 0.25s ease;
+
+    /* Компонентные токены */
+    --tp-navbar-bg: rgba(255, 255, 255, 0.9);
+    --tp-navbar-border: rgba(255, 255, 255, 0.6);
+    --tp-navbar-shadow: 0 6px 18px rgba(22, 46, 76, 0.04);
+    --tp-card-bg: rgba(255, 255, 255, 0.9);
+    --tp-card-hover-border: rgba(31, 111, 235, 0.18);
+    --tp-input-border: rgba(32, 58, 93, 0.18);
+    --tp-input-bg: #ffffff;
+    --tp-focus-ring: rgba(31, 111, 235, 0.14);
+    --tp-footer-bg: #10243e;
+    --tp-footer-text: rgba(255, 255, 255, 0.82);
+    --tp-modal-bg: #ffffff;
+    --tp-modal-border: rgba(32, 58, 93, 0.1);
+    --tp-review-bg: rgba(255, 255, 255, 0.94);
+    --tp-profile-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(240, 247, 255, 0.96));
+    --tp-collapse-bg: rgba(255, 255, 255, 0.96);
+    --tp-body-grad-1: rgba(31, 111, 235, 0.12);
+    --tp-body-grad-2: rgba(15, 157, 138, 0.12);
+    --tp-body-grad-start: #f7fbff;
+    --tp-badge-budget-bg: rgba(255, 184, 77, 0.16);
+    --tp-badge-budget-color: #9a5f00;
+    --tp-badge-nature-bg: rgba(15, 157, 138, 0.14);
+    --tp-badge-nature-color: #0f6f63;
+    --tp-primary-a04: rgba(31, 111, 235, 0.04);
+    --tp-primary-a06: rgba(31, 111, 235, 0.06);
+    --tp-primary-a08: rgba(31, 111, 235, 0.08);
+    --tp-primary-a10: rgba(31, 111, 235, 0.10);
+    --tp-primary-a12: rgba(31, 111, 235, 0.12);
+}
+
+/* ===== Тёмная тема (через атрибут) ===== */
+[data-theme="dark"] {
+    --tp-bg: #0f1923;
+    --tp-surface: #182636;
+    --tp-surface-muted: #1c2e42;
+    --tp-primary: #4a9bff;
+    --tp-primary-dark: #6db3ff;
+    --tp-secondary: #2dd4bf;
+    --tp-accent: #ffc46b;
+    --tp-text: #e2e8f0;
+    --tp-text-soft: #94a3b8;
+    --tp-border: rgba(148, 163, 184, 0.15);
+    --tp-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    --tp-shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.2);
+
+    --tp-navbar-bg: rgba(15, 25, 35, 0.92);
+    --tp-navbar-border: rgba(148, 163, 184, 0.1);
+    --tp-navbar-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    --tp-card-bg: rgba(24, 38, 54, 0.9);
+    --tp-card-hover-border: rgba(74, 155, 255, 0.3);
+    --tp-input-border: rgba(148, 163, 184, 0.25);
+    --tp-input-bg: #1c2e42;
+    --tp-focus-ring: rgba(74, 155, 255, 0.25);
+    --tp-footer-bg: #0a1220;
+    --tp-footer-text: rgba(226, 232, 240, 0.82);
+    --tp-modal-bg: #1c2e42;
+    --tp-modal-border: rgba(148, 163, 184, 0.15);
+    --tp-review-bg: rgba(24, 38, 54, 0.94);
+    --tp-profile-bg: linear-gradient(135deg, rgba(24, 38, 54, 0.98), rgba(28, 46, 66, 0.96));
+    --tp-collapse-bg: rgba(15, 25, 35, 0.96);
+    --tp-body-grad-1: rgba(74, 155, 255, 0.08);
+    --tp-body-grad-2: rgba(45, 212, 191, 0.08);
+    --tp-body-grad-start: #0f1923;
+    --tp-badge-budget-bg: rgba(255, 196, 107, 0.18);
+    --tp-badge-budget-color: #ffc46b;
+    --tp-badge-nature-bg: rgba(45, 212, 191, 0.16);
+    --tp-badge-nature-color: #2dd4bf;
+    --tp-primary-a04: rgba(74, 155, 255, 0.06);
+    --tp-primary-a06: rgba(74, 155, 255, 0.08);
+    --tp-primary-a08: rgba(74, 155, 255, 0.12);
+    --tp-primary-a10: rgba(74, 155, 255, 0.14);
+    --tp-primary-a12: rgba(74, 155, 255, 0.16);
+
+    color-scheme: dark;
+}
+
+/* ===== Авто-определение системной темы (если нет явного выбора) ===== */
+@media (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]):not([data-theme="dark"]) {
+        --tp-bg: #0f1923;
+        --tp-surface: #182636;
+        --tp-surface-muted: #1c2e42;
+        --tp-primary: #4a9bff;
+        --tp-primary-dark: #6db3ff;
+        --tp-secondary: #2dd4bf;
+        --tp-accent: #ffc46b;
+        --tp-text: #e2e8f0;
+        --tp-text-soft: #94a3b8;
+        --tp-border: rgba(148, 163, 184, 0.15);
+        --tp-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+        --tp-shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.2);
+
+        --tp-navbar-bg: rgba(15, 25, 35, 0.92);
+        --tp-navbar-border: rgba(148, 163, 184, 0.1);
+        --tp-navbar-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        --tp-card-bg: rgba(24, 38, 54, 0.9);
+        --tp-card-hover-border: rgba(74, 155, 255, 0.3);
+        --tp-input-border: rgba(148, 163, 184, 0.25);
+        --tp-input-bg: #1c2e42;
+        --tp-focus-ring: rgba(74, 155, 255, 0.25);
+        --tp-footer-bg: #0a1220;
+        --tp-footer-text: rgba(226, 232, 240, 0.82);
+        --tp-modal-bg: #1c2e42;
+        --tp-modal-border: rgba(148, 163, 184, 0.15);
+        --tp-review-bg: rgba(24, 38, 54, 0.94);
+        --tp-profile-bg: linear-gradient(135deg, rgba(24, 38, 54, 0.98), rgba(28, 46, 66, 0.96));
+        --tp-collapse-bg: rgba(15, 25, 35, 0.96);
+        --tp-body-grad-1: rgba(74, 155, 255, 0.08);
+        --tp-body-grad-2: rgba(45, 212, 191, 0.08);
+        --tp-body-grad-start: #0f1923;
+        --tp-badge-budget-bg: rgba(255, 196, 107, 0.18);
+        --tp-badge-budget-color: #ffc46b;
+        --tp-badge-nature-bg: rgba(45, 212, 191, 0.16);
+        --tp-badge-nature-color: #2dd4bf;
+        --tp-primary-a04: rgba(74, 155, 255, 0.06);
+        --tp-primary-a06: rgba(74, 155, 255, 0.08);
+        --tp-primary-a08: rgba(74, 155, 255, 0.12);
+        --tp-primary-a10: rgba(74, 155, 255, 0.14);
+        --tp-primary-a12: rgba(74, 155, 255, 0.16);
+
+        color-scheme: dark;
+    }
 }
 
 * {
@@ -35,9 +159,10 @@ body {
     font-family: "Manrope", "Segoe UI", sans-serif;
     color: var(--tp-text);
     background:
-        radial-gradient(circle at top left, rgba(31, 111, 235, 0.12), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(15, 157, 138, 0.12), transparent 30%),
-        linear-gradient(180deg, #f7fbff 0%, var(--tp-bg) 100%);
+        radial-gradient(circle at top left, var(--tp-body-grad-1), transparent 28%),
+        radial-gradient(circle at bottom right, var(--tp-body-grad-2), transparent 30%),
+        linear-gradient(180deg, var(--tp-body-grad-start) 0%, var(--tp-bg) 100%);
+    transition: background 0.35s ease, color 0.35s ease;
 }
 
 main {
@@ -60,10 +185,11 @@ img {
 
 .site-navbar {
     padding: 1rem 0;
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--tp-navbar-bg);
     backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 0 6px 18px rgba(22, 46, 76, 0.04);
+    border-bottom: 1px solid var(--tp-navbar-border);
+    box-shadow: var(--tp-navbar-shadow);
+    transition: background 0.35s ease, border-color 0.35s ease;
 }
 
 .navbar-brand {
@@ -100,23 +226,23 @@ img {
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link:focus {
     color: var(--tp-primary);
-    background: rgba(31, 111, 235, 0.08);
+    background: var(--tp-primary-a08);
 }
 
 .navbar-nav .nav-link.active {
     color: var(--tp-primary);
-    background: rgba(31, 111, 235, 0.12);
+    background: var(--tp-primary-a12);
 }
 
 .navbar-toggler {
     border: none;
     padding: 0.35rem 0.55rem;
     border-radius: 12px;
-    background: rgba(31, 111, 235, 0.08);
+    background: var(--tp-primary-a08);
 }
 
 .navbar-toggler:focus {
-    box-shadow: 0 0 0 0.2rem rgba(31, 111, 235, 0.18);
+    box-shadow: 0 0 0 0.2rem var(--tp-focus-ring);
 }
 
 .btn {
@@ -149,9 +275,9 @@ img {
 }
 
 .btn-light {
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--tp-card-bg);
     color: var(--tp-text);
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--tp-border);
 }
 
 .btn-light:hover,
@@ -169,7 +295,7 @@ img {
     gap: 0.5rem;
     padding: 0.55rem 1rem;
     border-radius: 999px;
-    background: rgba(31, 111, 235, 0.1);
+    background: var(--tp-primary-a10);
     color: var(--tp-primary);
     font-weight: 700;
     margin-bottom: 1rem;
@@ -232,10 +358,11 @@ img {
 .collab-card,
 .empty-state,
 .cta-card {
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--tp-card-bg);
     border: 1px solid var(--tp-border);
     border-radius: var(--tp-radius-lg);
     box-shadow: var(--tp-shadow-soft);
+    transition: background 0.35s ease, border-color 0.35s ease;
 }
 
 .metric-card {
@@ -295,7 +422,7 @@ img {
     align-items: center;
     justify-content: center;
     font-size: 1.15rem;
-    background: rgba(31, 111, 235, 0.12);
+    background: var(--tp-primary-a12);
     color: var(--tp-primary);
 }
 
@@ -322,7 +449,7 @@ img {
 .cta-card:hover {
     transform: translateY(-6px);
     box-shadow: var(--tp-shadow);
-    border-color: rgba(31, 111, 235, 0.18);
+    border-color: var(--tp-card-hover-border);
 }
 
 .feature-card {
@@ -334,7 +461,7 @@ img {
     width: 48px;
     height: 48px;
     border-radius: 16px;
-    background: linear-gradient(135deg, rgba(31, 111, 235, 0.12), rgba(15, 157, 138, 0.18));
+    background: linear-gradient(135deg, var(--tp-primary-a12), var(--tp-badge-nature-bg));
     color: var(--tp-primary);
     display: inline-flex;
     align-items: center;
@@ -360,25 +487,25 @@ img {
 }
 
 .badge-soft {
-    background: rgba(31, 111, 235, 0.1);
+    background: var(--tp-primary-a10);
     color: var(--tp-primary);
     font-weight: 700;
 }
 
 .badge-budget {
-    background: rgba(255, 184, 77, 0.16);
-    color: #9a5f00;
+    background: var(--tp-badge-budget-bg);
+    color: var(--tp-badge-budget-color);
     font-weight: 700;
 }
 
 .badge-nature {
-    background: rgba(15, 157, 138, 0.14);
-    color: #0f6f63;
+    background: var(--tp-badge-nature-bg);
+    color: var(--tp-badge-nature-color);
     font-weight: 700;
 }
 
 .badge-city {
-    background: rgba(31, 111, 235, 0.12);
+    background: var(--tp-primary-a12);
     color: var(--tp-primary);
     font-weight: 700;
 }
@@ -434,7 +561,7 @@ img {
     width: 36px;
     height: 36px;
     border-radius: 12px;
-    background: rgba(31, 111, 235, 0.1);
+    background: var(--tp-primary-a10);
     color: var(--tp-primary);
     display: inline-flex;
     align-items: center;
@@ -450,7 +577,14 @@ img {
 .form-select,
 .form-check-input {
     border-radius: 14px;
-    border-color: rgba(32, 58, 93, 0.18);
+    border-color: var(--tp-input-border);
+    background-color: var(--tp-input-bg);
+    color: var(--tp-text);
+    transition: background-color 0.35s ease, border-color 0.35s ease, color 0.35s ease;
+}
+
+.form-control::placeholder {
+    color: var(--tp-text-soft);
 }
 
 .form-control,
@@ -467,8 +601,10 @@ textarea.form-control {
 .form-control:focus,
 .form-select:focus,
 .form-check-input:focus {
-    border-color: rgba(31, 111, 235, 0.5);
-    box-shadow: 0 0 0 0.2rem rgba(31, 111, 235, 0.14);
+    border-color: var(--tp-primary);
+    box-shadow: 0 0 0 0.2rem var(--tp-focus-ring);
+    background-color: var(--tp-input-bg);
+    color: var(--tp-text);
 }
 
 .form-check-label {
@@ -477,7 +613,7 @@ textarea.form-control {
 
 .dashboard-profile-card {
     padding: 2rem;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(240, 247, 255, 0.96));
+    background: var(--tp-profile-bg);
     border-radius: var(--tp-radius-xl);
     border: 1px solid var(--tp-border);
     box-shadow: var(--tp-shadow-soft);
@@ -519,7 +655,7 @@ textarea.form-control {
     border-radius: 999px;
     color: var(--tp-text-soft);
     font-weight: 700;
-    background: rgba(31, 111, 235, 0.06);
+    background: var(--tp-primary-a06);
 }
 
 .nav-pills .nav-link.active,
@@ -603,7 +739,7 @@ textarea.form-control {
     margin: 0 0.18rem;
     border-radius: 12px;
     color: var(--tp-text);
-    background: rgba(31, 111, 235, 0.08);
+    background: var(--tp-primary-a08);
 }
 
 .pagination .page-item.active .page-link {
@@ -665,12 +801,13 @@ textarea.form-control {
 
 .accordion-button {
     font-weight: 700;
-    background: rgba(31, 111, 235, 0.04);
+    background: var(--tp-primary-a04);
+    color: var(--tp-text);
 }
 
 .accordion-button:not(.collapsed) {
     color: var(--tp-primary);
-    background: rgba(31, 111, 235, 0.1);
+    background: var(--tp-primary-a10);
     box-shadow: none;
 }
 
@@ -678,7 +815,7 @@ textarea.form-control {
     padding: 1.3rem;
     border-radius: 20px;
     border: 1px solid var(--tp-border);
-    background: rgba(255, 255, 255, 0.94);
+    background: var(--tp-review-bg);
     box-shadow: var(--tp-shadow-soft);
 }
 
@@ -725,8 +862,9 @@ textarea.form-control {
 .site-footer {
     padding: 2.2rem 0;
     margin-top: 4rem;
-    background: #10243e;
-    color: rgba(255, 255, 255, 0.82);
+    background: var(--tp-footer-bg);
+    color: var(--tp-footer-text);
+    transition: background 0.35s ease;
 }
 
 .site-footer .footer-brand {
@@ -735,7 +873,7 @@ textarea.form-control {
 }
 
 .site-footer a {
-    color: rgba(255, 255, 255, 0.82);
+    color: var(--tp-footer-text);
 }
 
 .site-footer a:hover {
@@ -749,12 +887,14 @@ textarea.form-control {
 .modal-content {
     border: none;
     border-radius: 24px;
+    background: var(--tp-modal-bg);
+    color: var(--tp-text);
     box-shadow: 0 24px 54px rgba(20, 35, 56, 0.18);
 }
 
 .modal-header,
 .modal-footer {
-    border-color: rgba(32, 58, 93, 0.1);
+    border-color: var(--tp-modal-border);
 }
 
 .dropdown-menu {
@@ -762,18 +902,20 @@ textarea.form-control {
     border-radius: 18px;
     box-shadow: var(--tp-shadow-soft);
     padding: 0.6rem;
+    background: var(--tp-modal-bg);
 }
 
 .dropdown-item {
     border-radius: 12px;
     font-weight: 600;
     padding: 0.65rem 0.9rem;
+    color: var(--tp-text);
 }
 
 .dropdown-item:hover,
 .dropdown-item:focus,
 .dropdown-item.active {
-    background: rgba(31, 111, 235, 0.1);
+    background: var(--tp-primary-a10);
     color: var(--tp-primary);
 }
 
@@ -786,12 +928,66 @@ textarea.form-control {
     box-shadow: var(--tp-shadow-soft);
 }
 
+/* ===== Переключатель темы ===== */
+.theme-toggle {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    border: 1.5px solid var(--tp-border);
+    background: var(--tp-primary-a08);
+    color: var(--tp-text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background: var(--tp-primary-a12);
+    transform: translateY(-2px);
+}
+
+/* Иконка: луна для светлой, солнце для тёмной */
+.theme-toggle .bi-sun-fill { display: none; }
+.theme-toggle .bi-moon-fill { display: inline; }
+
+[data-theme="dark"] .theme-toggle .bi-sun-fill { display: inline; }
+[data-theme="dark"] .theme-toggle .bi-moon-fill { display: none; }
+
+/* Инвертируем SVG-элементы Bootstrap в тёмной теме */
+[data-theme="dark"] .btn-close,
+[data-theme="dark"] .accordion-button::after {
+    filter: invert(1) brightness(2);
+}
+
+[data-theme="dark"] .navbar-toggler-icon {
+    filter: invert(1) brightness(1.5);
+}
+
+/* Bootstrap .text-secondary через переменную */
+[data-theme="dark"] .text-secondary {
+    color: var(--tp-text-soft) !important;
+}
+
+/* Повтор для авто-определения системной темы */
+@media (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]):not([data-theme="dark"]) .theme-toggle .bi-sun-fill { display: inline; }
+    html:not([data-theme="light"]):not([data-theme="dark"]) .theme-toggle .bi-moon-fill { display: none; }
+    html:not([data-theme="light"]):not([data-theme="dark"]) .btn-close,
+    html:not([data-theme="light"]):not([data-theme="dark"]) .accordion-button::after { filter: invert(1) brightness(2); }
+    html:not([data-theme="light"]):not([data-theme="dark"]) .navbar-toggler-icon { filter: invert(1) brightness(1.5); }
+    html:not([data-theme="light"]):not([data-theme="dark"]) .text-secondary { color: var(--tp-text-soft) !important; }
+}
+
 @media (max-width: 991.98px) {
     .site-navbar .navbar-collapse {
         margin-top: 1rem;
         padding: 1rem;
         border-radius: 20px;
-        background: rgba(255, 255, 255, 0.96);
+        background: var(--tp-collapse-bg);
         box-shadow: var(--tp-shadow-soft);
     }
 
