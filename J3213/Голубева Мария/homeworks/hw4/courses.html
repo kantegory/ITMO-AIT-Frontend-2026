@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Курсы - SpeakEasy</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2">
+</head>
+
+<body>
+
+  <a class="visually-hidden-focusable position-absolute top-0 start-0 m-3 p-2 bg-white text-dark rounded" href="#main-content">
+    Перейти к основному содержимому
+  </a>
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+          SpeakEasy
+        </a>
+
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2" href="index.html">
+              <svg width="18" height="18">
+                <use href="img/sprite.svg#home"></use>
+              </svg>
+              <span>Главная</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active d-flex align-items-center gap-2" href="courses.html">
+              <svg width="18" height="18">
+                <use href="img/sprite.svg#book"></use>
+              </svg>
+              <span>Курсы</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="dashboard.html">Личный кабинет</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2" href="login.html">
+              <svg width="18" height="18">
+                <use href="img/sprite.svg#user"></use>
+              </svg>
+              <span>Вход</span>
+            </a>
+          </li>
+
+          <li class="nav-item ms-3">
+            <button id="theme-toggle" class="btn btn-outline-light">
+              <svg width="18" height="18">
+                <use href="img/sprite.svg#moon"></use>
+              </svg>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="container mt-5">
+
+      <h1 class="mb-4">Поиск курсов</h1>
+
+      <form class="row mb-4" onsubmit="return false;">
+
+        <div class="col-md-4">
+          <label for="languageFilter" class="form-label">Язык</label>
+          <select id="languageFilter" class="form-select">
+            <option value="">Все языки</option>
+            <option value="English">English</option>
+            <option value="French">French</option>
+            <option value="Spanish">Spanish</option>
+            <option value="German">German</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label for="levelFilter" class="form-label d-flex align-items-center gap-2">
+            <svg width="16" height="16">
+              <use href="img/sprite.svg#book"></use>
+            </svg>
+            Уровень
+          </label>
+          <select id="levelFilter" class="form-select">
+            <option value="">Любой уровень</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label for="priceFilter" class="form-label">Максимальная цена</label>
+          <input
+            type="number"
+            id="priceFilter"
+            class="form-control"
+            placeholder="Например 2000"
+            min="0"
+          >
+        </div>
+
+      </form>
+
+      <div id="coursesContainer" class="row g-4"></div>
+
+    </section>
+  </main>
+
+  <footer class="text-center mt-5">
+    <p class="mb-0">© 2026 SpeakEasy</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/courses.js"></script>
+  <script src="js/theme.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpeakEasy</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<a class="visually-hidden-focusable position-absolute top-0 start-0 m-3 p-2 bg-white text-dark rounded" href="#main-content">
+  Перейти к основному содержимому
+</a>
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light" aria-label="Основная навигация">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        SpeakEasy
+      </a>
+
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link active d-flex align-items-center gap-2" href="index.html">
+            <svg width="18" height="18">
+              <use href="img/sprite.svg#home"></use>
+            </svg>
+            <span>Главная</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-2" href="courses.html">
+            <svg width="18" height="18">
+              <use href="img/sprite.svg#book"></use>
+            </svg>
+            <span>Курсы</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-2" href="login.html">
+            <svg width="18" height="18">
+              <use href="img/sprite.svg#user"></use>
+            </svg>
+            <span>Вход</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link btn btn-primary text-white ms-2" href="register.html">
+            Регистрация
+          </a>
+        </li>
+
+        <li class="nav-item ms-3">
+          <button id="theme-toggle" class="btn btn-outline-light">
+            <svg width="18" height="18">
+              <use href="img/sprite.svg#moon"></use>
+            </svg>
+          </button>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+  <section class="container" aria-labelledby="hero-title">
+    <div class="hero-box">
+      <h1 id="hero-title">Учиться легко вместе со SpeakEasy</h1>
+
+      <p>
+        Найди подходящий курс, выбери свой уровень и начни обучение уже сегодня.
+        Удобный каталог, фильтрация и доступ к материалам в одном месте.
+      </p>
+    </div>
+  </section>
+
+  <section class="container mt-4" aria-labelledby="popular-courses-title">
+    <h2 id="popular-courses-title">Популярные курсы</h2>
+
+    <form class="row mb-4" onsubmit="return false;">
+      <div class="col-md-4 mb-2">
+        <label for="searchInput" class="form-label d-flex align-items-center gap-2">
+          <svg width="16" height="16">
+            <use href="img/sprite.svg#search"></use>
+          </svg>
+          Поиск курса
+        </label>
+        <input type="text" id="searchInput" class="form-control" placeholder="Поиск курса">
+      </div>
+
+      <div class="col-md-4 mb-2">
+        <label for="levelFilter" class="form-label">Уровень</label>
+        <select id="levelFilter" class="form-select">
+          <option value="">Все уровни</option>
+          <option value="Beginner">Начальный</option>
+          <option value="Intermediate">Средний</option>
+        </select>
+      </div>
+
+      <div class="col-md-4 mb-2">
+        <label for="priceFilter" class="form-label">Максимальная цена</label>
+        <input type="number" id="priceFilter" class="form-control" placeholder="Максимальная цена" min="0">
+      </div>
+    </form>
+
+    <div id="homeCourses" class="row g-4"></div>
+  </section>
+</main>
+
+<footer class="text-center mt-5">
+  <p>© 2026 SpeakEasy</p>
+</footer>
+
+<script src="js/api.js"></script>
+<script src="js/theme.js"></script>
+
+<script>
+let allCourses = [];
+
+function formatPrice(price) {
+  if (Number(price) === 0) return "Бесплатно";
+  return new Intl.NumberFormat("ru-RU").format(price) + " ₽";
+}
+
+function renderHomeCourses(courses) {
+  const container = document.querySelector("#homeCourses");
+
+  if (!container) return;
+
+  if (courses.length === 0) {
+    container.innerHTML = '<p>Курсы не найдены.</p>';
+    return;
+  }
+
+  container.innerHTML = courses.map(course => `
+    <div class="col-md-4">
+      <article class="card h-100 shadow-sm">
+        <img src="${course.image}" class="card-img-top" style="height:200px; object-fit:cover;">
+
+        <div class="card-body d-flex flex-column">
+          <h3 class="h5">${course.title}</h3>
+          <p>${course.description}</p>
+
+          <p><strong>Уровень:</strong> ${course.level}</p>
+          <p><strong>Цена:</strong> ${formatPrice(course.price)}</p>
+
+          <div class="mt-auto">
+            <a href="course.html?id=${course.id}" class="btn btn-primary">
+              Подробнее
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  `).join("");
+}
+
+function filterCourses() {
+  const search = document.querySelector("#searchInput").value.toLowerCase();
+  const level = document.querySelector("#levelFilter").value;
+  const price = document.querySelector("#priceFilter").value;
+
+  const filtered = allCourses.filter(course => {
+    return (
+      course.title.toLowerCase().includes(search) &&
+      (level ? course.level === level : true) &&
+      (price ? course.price <= price : true)
+    );
+  });
+
+  renderHomeCourses(filtered);
+}
+
+async function loadCourses() {
+  const container = document.querySelector("#homeCourses");
+
+  try {
+    container.innerHTML = "<p>Загрузка курсов...</p>";
+
+    const res = await fetch("http://localhost:3000/courses");
+    allCourses = await res.json();
+
+    renderHomeCourses(allCourses);
+
+    document.querySelector("#searchInput").addEventListener("input", filterCourses);
+    document.querySelector("#levelFilter").addEventListener("change", filterCourses);
+    document.querySelector("#priceFilter").addEventListener("input", filterCourses);
+
+  } catch (e) {
+    container.innerHTML = "<p>Ошибка загрузки курсов.</p>";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadCourses);
+</script>
+
+<script>
+function updateNavbar() {
+  const user = localStorage.getItem("currentUser");
+  const nav = document.querySelector(".navbar-nav");
+
+  if (!nav) return;
+
+  if (user) {
+    nav.innerHTML = `
+      <li class="nav-item">
+        <a class="nav-link active d-flex align-items-center gap-2" href="index.html">
+          <svg width="18" height="18">
+            <use href="img/sprite.svg#home"></use>
+          </svg>
+          <span>Главная</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2" href="courses.html">
+          <svg width="18" height="18">
+            <use href="img/sprite.svg#book"></use>
+          </svg>
+          <span>Курсы</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="dashboard.html">Кабинет</a>
+      </li>
+
+      <li class="nav-item">
+        <button id="logoutBtn" type="button" class="btn btn-outline-light ms-2">
+          Выйти
+        </button>
+      </li>
+
+      <li class="nav-item ms-3">
+        <button id="theme-toggle" class="btn btn-outline-light">
+          <svg width="18" height="18">
+            <use href="img/sprite.svg#moon"></use>
+          </svg>
+        </button>
+      </li>
+    `;
+
+    document.querySelector("#logoutBtn").addEventListener("click", function () {
+      localStorage.removeItem("currentUser");
+      window.location.reload();
+    });
+
+  } else {
+    nav.innerHTML = `
+      <li class="nav-item">
+        <a class="nav-link active d-flex align-items-center gap-2" href="index.html">
+          <svg width="18" height="18">
+            <use href="img/sprite.svg#home"></use>
+          </svg>
+          <span>Главная</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2" href="courses.html">
+          <svg width="18" height="18">
+            <use href="img/sprite.svg#book"></use>
+          </svg>
+          <span>Курсы</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2" href="login.html">
+          <svg width="18" height="18">
+            <use href="img/sprite.svg#user"></use>
+          </svg>
+          <span>Вход</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="btn btn-primary ms-2" href="register.html">Регистрация</a>
+      </li>
+
+      <li class="nav-item ms-3">
+        <button id="theme-toggle" class="btn btn-outline-light">
+          <svg width="18" height="18">
+            <use href="img/sprite.svg#moon"></use>
+          </svg>
+        </button>
+      </li>
+    `;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", updateNavbar);
+</script>
+
+</body>
+</html>
