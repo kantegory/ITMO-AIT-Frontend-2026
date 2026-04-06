@@ -40,6 +40,7 @@
           const next = Math.floor(Math.random() * 71) + 20;
           bar.style.width = `${next}%`;
           bar.textContent = `${next}%`;
+          bar.setAttribute('aria-valuenow', String(next));
         });
       }, 3500);
     }

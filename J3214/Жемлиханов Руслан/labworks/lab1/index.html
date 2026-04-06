@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="auth-page">
-  <main class="auth-layout" aria-labelledby="loginTitle">
+  <a class="skip-link btn btn-light border" href="#mainContent">Перейти к основному контенту</a>
+  <main id="mainContent" class="auth-layout" aria-labelledby="loginTitle" tabindex="-1">
     <section class="auth-panel card border-0 shadow-lg">
       <div class="card-body p-4 p-md-5">
         
@@ -22,16 +23,16 @@
         <form id="loginForm" class="needs-validation" novalidate aria-label="Форма входа">
           <div class="mb-3">
             <label for="loginField" class="form-label">Email</label>
-            <input type="email" id="loginField" class="form-control" placeholder="data.engineer@company.com" autocomplete="username" required>
-            <div class="invalid-feedback">Заполните поле логина.</div>
+            <input type="email" id="loginField" class="form-control" placeholder="data.engineer@company.com" autocomplete="username" required aria-describedby="loginFieldError">
+            <div class="invalid-feedback" id="loginFieldError">Заполните поле логина.</div>
           </div>
 
           <div class="mb-3">
             <label for="passwordField" class="form-label">Пароль</label>
             <div class="input-group">
-              <input type="password" id="passwordField" class="form-control" placeholder="Введите пароль" autocomplete="current-password" required>
-              <button class="btn btn-outline-primary" type="button" data-password-toggle data-target="passwordField" aria-label="Показать или скрыть пароль">Показать</button>
-              <div class="invalid-feedback">Введите пароль.</div>
+              <input type="password" id="passwordField" class="form-control" placeholder="Введите пароль" autocomplete="current-password" required aria-describedby="passwordFieldError">
+              <button class="btn btn-outline-primary" type="button" data-password-toggle data-target="passwordField" aria-label="Показать пароль" aria-controls="passwordField" aria-pressed="false">Показать</button>
+              <div class="invalid-feedback" id="passwordFieldError">Введите пароль.</div>
             </div>
           </div>
 
@@ -66,9 +67,12 @@
   <script src="js/pipeline-details.js"></script>
   <script src="js/monitoring.js"></script>
   <script src="js/logout.js"></script>
+  <script src="js/theme.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
+
+
 
 
 

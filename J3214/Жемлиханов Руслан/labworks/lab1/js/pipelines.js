@@ -15,6 +15,7 @@
 
     if (!items.length) {
       body.innerHTML = '<tr><td colspan="7" class="text-center py-4">Ничего не найдено по выбранным фильтрам.</td></tr>';
+      body.setAttribute('aria-busy', 'false');
       return;
     }
 
@@ -27,15 +28,20 @@
           <td><span class="badge text-bg-${badgeMap[p.status] || 'secondary'}">${p.status}</span></td>
           <td>${p.lastRun}</td>
           <td>${p.nextRun}</td>
-          <td><a href="pipeline-details.html?id=${p.id}" class="btn btn-sm btn-outline-primary">Open</a></td>
+          <td><a href="pipeline-details.html?id=${p.id}" class="btn btn-sm btn-outline-primary" aria-label="Открыть пайплайн ${p.name}">Open</a></td>
         </tr>
       `)
       .join('');
+
+    body.setAttribute('aria-busy', 'false');
   };
 
   const initPipelinesPage = async () => {
     const form = document.getElementById('pipelineFilters');
     if (!form) return;
+
+    const body = document.getElementById('pipelinesTableBody');
+    if (body) body.setAttribute('aria-busy', 'true');
 
     let pipelines = [];
     try {

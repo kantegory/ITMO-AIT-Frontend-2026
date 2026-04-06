@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <a class="skip-link btn btn-light border" href="#mainContent">Перейти к основному контенту</a>
   <div class="app-layout d-flex">
     
     <aside class="app-sidebar d-none d-lg-flex flex-column p-3 border-end bg-white" aria-label="Основная навигация">
@@ -15,7 +16,7 @@
         <span class="brand-mark me-2" aria-hidden="true">FO</span>
         <span class="fw-bold text-dark">FlowOrchestrator</span>
       </a>
-      <nav class="app-sidebar__nav nav nav-pills flex-column gap-1">
+      <nav class="app-sidebar__nav nav nav-pills flex-column gap-1" aria-label="Разделы приложения">
         <a class="nav-link" href="dashboard.html">Dashboard</a>
         <a class="nav-link active" href="pipelines.html" aria-current="page">Pipelines</a>
         <a class="nav-link" href="monitoring.html">Monitoring</a>
@@ -29,13 +30,13 @@
     <div class="app-main flex-grow-1">
       
       <header class="app-topbar navbar navbar-expand-lg bg-white border-bottom px-3">
-        <button class="btn btn-outline-primary d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-label="Открыть меню">☰</button>
+        <button class="btn btn-outline-primary d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-label="Открыть меню" aria-controls="mobileMenu">☰</button>
         <h1 class="navbar-brand fw-semibold mb-0">Pipelines</h1>
         <div class="ms-auto"></div>
       </header>
 
       
-      <main class="app-page p-3 p-md-4">
+      <main id="mainContent" class="app-page p-3 p-md-4" tabindex="-1">
         <div class="row g-3">
           
           <aside class="col-12 col-xl-3" aria-label="Фильтры пайплайнов">
@@ -92,10 +93,11 @@
             <article class="card pipeline-table">
               <header class="card-header bg-white d-flex justify-content-between align-items-center">
                 <h2 id="pipelineListHeading" class="h6 mb-0">Список пайплайнов</h2>
-                <button class="btn btn-sm btn-outline-primary" id="sortLastRun" type="button">Сортировать по Last run</button>
+                <button class="btn btn-sm btn-outline-primary" id="sortLastRun" type="button" aria-controls="pipelinesTable">Сортировать по Last run</button>
               </header>
               <div class="table-responsive">
                 <table class="table align-middle mb-0" id="pipelinesTable">
+                  <caption class="visually-hidden">Таблица пайплайнов с owner, статусом и временем запусков</caption>
                   <thead class="table-light">
                     <tr>
                       <th scope="col">Название DAG</th>
@@ -107,7 +109,7 @@
                       <th scope="col">Open</th>
                     </tr>
                   </thead>
-                  <tbody id="pipelinesTableBody"></tbody>
+                  <tbody id="pipelinesTableBody" aria-live="polite" aria-relevant="all"></tbody>
                 </table>
               </div>
             </article>
@@ -124,7 +126,7 @@
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть меню"></button>
     </header>
     <div class="offcanvas-body">
-      <nav class="nav nav-pills flex-column gap-1">
+      <nav class="nav nav-pills flex-column gap-1" aria-label="Разделы приложения, мобильная навигация">
         <a class="nav-link" href="dashboard.html">Dashboard</a>
         <a class="nav-link active" href="pipelines.html" aria-current="page">Pipelines</a>
         <a class="nav-link" href="monitoring.html">Monitoring</a>
@@ -143,9 +145,12 @@
   <script src="js/pipeline-details.js"></script>
   <script src="js/monitoring.js"></script>
   <script src="js/logout.js"></script>
+  <script src="js/theme.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
+
+
 
 
 

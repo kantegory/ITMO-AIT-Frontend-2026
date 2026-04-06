@@ -79,9 +79,18 @@
       btn.addEventListener('click', () => {
         const target = document.getElementById(btn.dataset.target);
         if (!target) return;
+
         const isPassword = target.type === 'password';
         target.type = isPassword ? 'text' : 'password';
         btn.textContent = isPassword ? 'Скрыть' : 'Показать';
+        btn.setAttribute('aria-pressed', String(isPassword));
+
+        const isConfirmField = target.id.toLowerCase().includes('confirm');
+        if (isConfirmField) {
+          btn.setAttribute('aria-label', isPassword ? 'Скрыть подтверждение пароля' : 'Показать подтверждение пароля');
+        } else {
+          btn.setAttribute('aria-label', isPassword ? 'Скрыть пароль' : 'Показать пароль');
+        }
       });
     });
   };
@@ -100,6 +109,8 @@
 
       regPasswordError.textContent = '';
       confirmPasswordError.textContent = '';
+      regPassword.setAttribute('aria-invalid', 'false');
+      confirmPassword.setAttribute('aria-invalid', 'false');
 
       if (!form.checkValidity()) {
         form.classList.add('was-validated');
@@ -109,6 +120,7 @@
       let valid = true;
       if (regPassword.value.length < 6) {
         regPassword.classList.add('is-invalid');
+        regPassword.setAttribute('aria-invalid', 'true');
         regPasswordError.textContent = 'Пароль должен быть не менее 6 символов.';
         valid = false;
       } else {
@@ -117,6 +129,7 @@
 
       if (regPassword.value !== confirmPassword.value) {
         confirmPassword.classList.add('is-invalid');
+        confirmPassword.setAttribute('aria-invalid', 'true');
         confirmPasswordError.textContent = 'Пароли не совпадают.';
         valid = false;
       } else {

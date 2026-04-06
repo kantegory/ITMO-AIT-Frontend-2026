@@ -17,10 +17,20 @@
     paused: 'warning'
   };
 
+  const setTaskActive = (graph, card) => {
+    graph.querySelectorAll('[data-task-card]').forEach((item) => {
+      item.classList.remove('active');
+      item.setAttribute('aria-pressed', 'false');
+    });
+    card.classList.add('active');
+    card.setAttribute('aria-pressed', 'true');
+  };
+
   const renderGraph = (graphRows = []) => {
     const graphEl = document.getElementById('pipelineGraphContent');
     if (!graphEl) return;
 
+    graphEl.setAttribute('aria-busy', 'true');
     graphEl.innerHTML = graphRows
       .map((row, rowIndex) => {
         const rowHtml = row
@@ -28,7 +38,7 @@
             const arrow = taskIndex < row.length - 1 ? '<span class="flow-arrow" aria-hidden="true">→</span>' : '';
             const badgeClass = taskBadgeMap[task.status?.toLowerCase()] || 'secondary';
             return `
-              <article class="task-card pipeline-graph__task" data-task-card>
+              <article class="task-card pipeline-graph__task" data-task-card role="button" tabindex="0" aria-pressed="false" aria-label="Задача ${task.name}, статус ${task.status}">
                 <h3>${task.name}</h3>
                 <span class="badge text-bg-${badgeClass}">${task.status}</span>
               </article>
@@ -39,24 +49,28 @@
         return `<div class="dag-flow${rowIndex ? ' mt-3' : ''}">${rowHtml}</div>`;
       })
       .join('');
+    graphEl.setAttribute('aria-busy', 'false');
   };
 
   const renderLogs = (logs = []) => {
     const logsEl = document.getElementById('pipelineLogsContent');
     if (!logsEl) return;
 
+    logsEl.setAttribute('aria-busy', 'true');
     logsEl.innerHTML = logs
       .map((line) => {
         const isError = line.includes('ERROR');
         return `<p class="${isError ? 'text-body' : ''}">${line}</p>`;
       })
       .join('');
+    logsEl.setAttribute('aria-busy', 'false');
   };
 
   const renderHistory = (runs = []) => {
     const body = document.getElementById('pipelineHistoryBody');
     if (!body) return;
 
+    body.setAttribute('aria-busy', 'true');
     body.innerHTML = runs
       .map((run) => `
         <tr>
@@ -69,6 +83,7 @@
         </tr>
       `)
       .join('');
+    body.setAttribute('aria-busy', 'false');
   };
 
   const bindTaskSelection = () => {
@@ -78,8 +93,15 @@
     graph.addEventListener('click', (event) => {
       const card = event.target.closest('[data-task-card]');
       if (!card) return;
-      graph.querySelectorAll('[data-task-card]').forEach((item) => item.classList.remove('active'));
-      card.classList.add('active');
+      setTaskActive(graph, card);
+    });
+
+    graph.addEventListener('keydown', (event) => {
+      const card = event.target.closest('[data-task-card]');
+      if (!card) return;
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      setTaskActive(graph, card);
     });
   };
 

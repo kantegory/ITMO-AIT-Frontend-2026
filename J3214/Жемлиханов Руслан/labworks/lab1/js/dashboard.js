@@ -9,7 +9,7 @@
       .map((item) => `
         <li class="list-group-item d-flex justify-content-between align-items-center">
           ${item.name}
-          <button class="btn btn-sm btn-outline-danger" data-delete-item data-entity="connection" data-id="${item.id}">Удалить</button>
+          <button class="btn btn-sm btn-outline-danger" data-delete-item data-entity="connection" data-id="${item.id}" aria-label="Удалить соединение ${item.name}">Удалить</button>
         </li>
       `)
       .join('');
@@ -23,7 +23,7 @@
       .map((item) => `
         <li class="list-group-item d-flex justify-content-between align-items-center">
           <span><strong>${item.key}</strong>: ${item.value}</span>
-          <button class="btn btn-sm btn-outline-danger" data-delete-item data-entity="variable" data-id="${item.id}">Удалить</button>
+          <button class="btn btn-sm btn-outline-danger" data-delete-item data-entity="variable" data-id="${item.id}" aria-label="Удалить переменную ${item.key}">Удалить</button>
         </li>
       `)
       .join('');
@@ -112,12 +112,8 @@
       const entity = btn.dataset.entity;
 
       try {
-        if (entity === 'connection') {
-          await App.api.deleteConnection(id);
-        }
-        if (entity === 'variable') {
-          await App.api.deleteVariable(id);
-        }
+        if (entity === 'connection') await App.api.deleteConnection(id);
+        if (entity === 'variable') await App.api.deleteVariable(id);
         await loadDashboardData();
         App.ui.showToast('Элемент удален.');
       } catch (error) {

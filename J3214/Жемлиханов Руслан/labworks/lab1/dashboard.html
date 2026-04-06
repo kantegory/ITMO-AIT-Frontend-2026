@@ -8,13 +8,14 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <a class="skip-link btn btn-light border" href="#mainContent">Перейти к основному контенту</a>
   <div class="app-layout d-flex">
     <aside class="app-sidebar d-none d-lg-flex flex-column p-3 border-end bg-white" aria-label="Основная навигация">
       <a href="dashboard.html" class="app-sidebar__brand d-flex align-items-center mb-4 text-decoration-none">
         <span class="brand-mark me-2" aria-hidden="true">FO</span>
         <span class="fw-bold text-dark">FlowOrchestrator</span>
       </a>
-      <nav class="app-sidebar__nav nav nav-pills flex-column gap-1">
+      <nav class="app-sidebar__nav nav nav-pills flex-column gap-1" aria-label="Разделы приложения">
         <a class="nav-link active" href="dashboard.html" aria-current="page">Dashboard</a>
         <a class="nav-link" href="pipelines.html">Pipelines</a>
         <a class="nav-link" href="monitoring.html">Monitoring</a>
@@ -27,7 +28,7 @@
 
     <div class="app-main flex-grow-1">
       <header class="app-topbar navbar navbar-expand-lg bg-white border-bottom px-3">
-        <button class="btn btn-outline-secondary d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-label="Открыть меню">☰</button>
+        <button class="btn btn-outline-secondary d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-label="Открыть меню" aria-controls="mobileMenu">☰</button>
         <a class="navbar-brand fw-semibold" href="dashboard.html">Dashboard</a>
         <form class="app-topbar__search d-none d-md-flex ms-auto me-3" role="search" aria-label="Поиск по системе">
           <label class="visually-hidden" for="dashboardSearch">Поиск</label>
@@ -35,13 +36,13 @@
         </form>
         <div class="d-flex align-items-center gap-3">
           <div class="dropdown">
-            <button class="btn btn-primary position-relative dropdown-toggle" type="button" id="dashboardNotificationsButton" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Уведомления">
+            <button class="btn btn-primary position-relative dropdown-toggle" type="button" id="dashboardNotificationsButton" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Уведомления" aria-controls="dashboardNotificationsList">
               Уведомления
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">4</span>
             </button>
             <div class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dashboardNotificationsButton" style="width: 340px;">
               <div class="px-3 py-2 border-bottom fw-semibold">Последние уведомления</div>
-              <ul class="list-group list-group-flush" id="dashboardNotificationsList"></ul>
+              <ul class="list-group list-group-flush" id="dashboardNotificationsList" aria-live="polite" aria-relevant="additions text"></ul>
               <div class="px-3 py-2 border-top text-end">
                 <a href="monitoring.html" class="small text-decoration-none">Открыть Monitoring</a>
               </div>
@@ -49,7 +50,7 @@
           </div>
           <p class="mb-0 fw-medium" data-current-user-name>Ruslan Zhemlihanov</p></div>
       </header>
-      <main class="app-page p-3 p-md-4">
+      <main id="mainContent" class="app-page p-3 p-md-4" tabindex="-1">
         <section class="page-header d-flex justify-content-between flex-wrap gap-2 align-items-center mb-4" aria-labelledby="dashboardTitle">
           <header>
             <h1 id="dashboardTitle" class="h4 mb-1">Здравствуйте, <span data-current-user-greeting>Ruslan</span></h1>
@@ -72,6 +73,7 @@
           </header>
           <div class="table-responsive">
             <table class="table align-middle mb-0">
+              <caption class="visually-hidden">Таблица моих DAG'ов с последними и следующими запусками</caption>
               <thead class="table-light">
                 <tr>
                   <th scope="col">Name</th>
@@ -97,7 +99,7 @@
                 <h2 id="connectionsHeading" class="h6 mb-0">Connections</h2>
                 <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addConnectionModal">Добавить</button>
               </header>
-              <ul class="list-group list-group-flush" id="connectionsList">
+              <ul class="list-group list-group-flush" id="connectionsList" aria-live="polite" aria-relevant="additions removals">
                 <li class="list-group-item d-flex justify-content-between align-items-center">PostgreSQL Prod <button class="btn btn-sm btn-outline-danger" data-delete-item>Удалить</button></li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">S3 Raw Storage <button class="btn btn-sm btn-outline-danger" data-delete-item>Удалить</button></li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">Kafka Events <button class="btn btn-sm btn-outline-danger" data-delete-item>Удалить</button></li>
@@ -112,7 +114,7 @@
                 <h2 id="variablesHeading" class="h6 mb-0">Variables</h2>
                 <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addVariableModal">Добавить</button>
               </header>
-              <ul class="list-group list-group-flush" id="variablesList">
+              <ul class="list-group list-group-flush" id="variablesList" aria-live="polite" aria-relevant="additions removals">
                 <li class="list-group-item d-flex justify-content-between align-items-center"><span><strong>ENV</strong>: prod</span><button class="btn btn-sm btn-outline-danger" data-delete-item>Удалить</button></li>
                 <li class="list-group-item d-flex justify-content-between align-items-center"><span><strong>RETRY_COUNT</strong>: 3</span><button class="btn btn-sm btn-outline-danger" data-delete-item>Удалить</button></li>
                 <li class="list-group-item d-flex justify-content-between align-items-center"><span><strong>ALERT_EMAIL</strong>: alerts@flow.io</span><button class="btn btn-sm btn-outline-danger" data-delete-item>Удалить</button></li>
@@ -143,7 +145,7 @@
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть меню"></button>
     </header>
     <div class="offcanvas-body">
-      <nav class="nav nav-pills flex-column gap-1">
+      <nav class="nav nav-pills flex-column gap-1" aria-label="Разделы приложения, мобильная навигация">
         <a class="nav-link active" href="dashboard.html" aria-current="page">Dashboard</a>
         <a class="nav-link" href="pipelines.html">Pipelines</a>
         <a class="nav-link" href="monitoring.html">Monitoring</a>
@@ -219,9 +221,12 @@
   <script src="js/pipeline-details.js"></script>
   <script src="js/monitoring.js"></script>
   <script src="js/logout.js"></script>
+  <script src="js/theme.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
+
+
 
 
 

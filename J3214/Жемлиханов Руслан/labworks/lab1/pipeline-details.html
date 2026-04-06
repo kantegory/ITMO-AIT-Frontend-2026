@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <a class="skip-link btn btn-light border" href="#mainContent">Перейти к основному контенту</a>
   <div class="app-layout d-flex">
     
     <aside class="app-sidebar d-none d-lg-flex flex-column p-3 border-end bg-white" aria-label="Основная навигация">
@@ -15,7 +16,7 @@
         <span class="brand-mark me-2" aria-hidden="true">FO</span>
         <span class="fw-bold text-dark">FlowOrchestrator</span>
       </a>
-      <nav class="app-sidebar__nav nav nav-pills flex-column gap-1">
+      <nav class="app-sidebar__nav nav nav-pills flex-column gap-1" aria-label="Разделы приложения">
         <a class="nav-link" href="dashboard.html">Dashboard</a>
         <a class="nav-link active" href="pipelines.html" aria-current="page">Pipelines</a>
         <a class="nav-link" href="monitoring.html">Monitoring</a>
@@ -26,13 +27,13 @@
     <div class="app-main flex-grow-1">
       
       <header class="app-topbar navbar navbar-expand-lg bg-white border-bottom px-3">
-        <button class="btn btn-outline-primary d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-label="Открыть меню">☰</button>
+        <button class="btn btn-outline-primary d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-label="Открыть меню" aria-controls="mobileMenu"><span aria-hidden="true">Menu</span></button>
         <h1 class="navbar-brand fw-semibold mb-0" id="pipelinePageHeading">Pipeline details</h1>
         <div class="ms-auto"></div>
       </header>
 
       
-      <main class="app-page p-3 p-md-4">
+      <main id="mainContent" class="app-page p-3 p-md-4" tabindex="-1">
         
         <section class="page-section card mb-4" aria-labelledby="pipelineTitle">
           <div class="card-body">
@@ -48,9 +49,9 @@
                 </p>
               </header>
               <div class="d-flex gap-2 flex-wrap" aria-label="Действия с пайплайном">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#runNowModal">Run now</button>
-                <button class="btn btn-outline-primary">Pause DAG</button>
-                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#retryModal">Retry failed tasks</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#runNowModal">Run now</button>
+                <button type="button" class="btn btn-outline-primary">Pause DAG</button>
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#retryModal">Retry failed tasks</button>
               </div>
             </div>
           </div>
@@ -59,28 +60,29 @@
         
         <section class="pipeline-details" aria-label="Детали пайплайна">
           <ul class="nav nav-tabs" id="pipelineTabs" role="tablist">
-            <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#graphPane" type="button" role="tab">Graph</button></li>
-            <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#logsPane" type="button" role="tab">Logs</button></li>
-            <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#historyPane" type="button" role="tab">Run history</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link active" id="graphTab" data-bs-toggle="tab" data-bs-target="#graphPane" type="button" role="tab" aria-controls="graphPane" aria-selected="true">Graph</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" id="logsTab" data-bs-toggle="tab" data-bs-target="#logsPane" type="button" role="tab" aria-controls="logsPane" aria-selected="false">Logs</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" id="historyTab" data-bs-toggle="tab" data-bs-target="#historyPane" type="button" role="tab" aria-controls="historyPane" aria-selected="false">Run history</button></li>
           </ul>
 
           <div class="tab-content border border-top-0 rounded-bottom p-3 bg-white">
             
-            <section class="tab-pane fade show active" id="graphPane" role="tabpanel">
+            <section class="tab-pane fade show active" id="graphPane" role="tabpanel" aria-labelledby="graphTab">
               <div class="pipeline-graph" aria-label="Граф задач DAG">
-                <div id="pipelineGraphContent"></div>
+                <div id="pipelineGraphContent" aria-live="polite" aria-relevant="all"></div>
               </div>
             </section>
 
             
-            <section class="tab-pane fade" id="logsPane" role="tabpanel">
-              <article class="pipeline-logs" aria-label="Логи запуска" id="pipelineLogsContent"></article>
+            <section class="tab-pane fade" id="logsPane" role="tabpanel" aria-labelledby="logsTab">
+              <article class="pipeline-logs" aria-label="Логи запуска" id="pipelineLogsContent" aria-live="polite"></article>
             </section>
 
             
-            <section class="tab-pane fade" id="historyPane" role="tabpanel">
+            <section class="tab-pane fade" id="historyPane" role="tabpanel" aria-labelledby="historyTab">
               <article class="pipeline-history table-responsive">
                 <table class="table align-middle mb-0">
+                  <caption class="visually-hidden">История запусков пайплайна</caption>
                   <thead class="table-light">
                     <tr>
                       <th scope="col">Run ID</th>
@@ -91,7 +93,7 @@
                       <th scope="col">Triggered by</th>
                     </tr>
                   </thead>
-                  <tbody id="pipelineHistoryBody"></tbody>
+                  <tbody id="pipelineHistoryBody" aria-live="polite" aria-relevant="all"></tbody>
                 </table>
               </article>
             </section>
@@ -108,7 +110,7 @@
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть меню"></button>
     </header>
     <div class="offcanvas-body">
-      <nav class="nav nav-pills flex-column gap-1">
+      <nav class="nav nav-pills flex-column gap-1" aria-label="Разделы приложения, мобильная навигация">
         <a class="nav-link" href="dashboard.html">Dashboard</a>
         <a class="nav-link active" href="pipelines.html" aria-current="page">Pipelines</a>
         <a class="nav-link" href="monitoring.html">Monitoring</a>
@@ -171,9 +173,12 @@
   <script src="js/pipeline-details.js"></script>
   <script src="js/monitoring.js"></script>
   <script src="js/logout.js"></script>
+  <script src="js/theme.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
+
+
 
 
 

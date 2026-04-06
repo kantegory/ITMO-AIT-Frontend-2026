@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="auth-page">
-  <main class="auth-layout" aria-labelledby="registerTitle">
+  <a class="skip-link btn btn-light border" href="#mainContent">Перейти к основному контенту</a>
+  <main id="mainContent" class="auth-layout" aria-labelledby="registerTitle" tabindex="-1">
     <section class="auth-panel card border-0 shadow-lg">
       <div class="card-body p-4 p-md-5">
         
@@ -23,38 +24,38 @@
           <div class="row g-3">
             <div class="col-12">
               <label for="name" class="form-label">Имя</label>
-              <input type="text" id="name" class="form-control" autocomplete="name" required>
-              <div class="invalid-feedback">Укажите имя.</div>
+              <input type="text" id="name" class="form-control" autocomplete="name" required aria-describedby="nameError">
+              <div class="invalid-feedback" id="nameError">Укажите имя.</div>
             </div>
 
             <div class="col-12">
               <label for="email" class="form-label">Email</label>
-              <input type="email" id="email" class="form-control" placeholder="you@company.com" autocomplete="email" required>
-              <div class="invalid-feedback">Укажите корректный email.</div>
+              <input type="email" id="email" class="form-control" placeholder="you@company.com" autocomplete="email" required aria-describedby="emailError">
+              <div class="invalid-feedback" id="emailError">Укажите корректный email.</div>
             </div>
 
             <div class="col-12">
               <label for="regPassword" class="form-label">Пароль</label>
               <div class="input-group">
-                <input type="password" id="regPassword" class="form-control" autocomplete="new-password" required>
-                <button class="btn btn-outline-primary" type="button" data-password-toggle data-target="regPassword" aria-label="Показать или скрыть пароль">Показать</button>
+                <input type="password" id="regPassword" class="form-control" autocomplete="new-password" required aria-describedby="regPasswordError">
+                <button class="btn btn-outline-primary" type="button" data-password-toggle data-target="regPassword" aria-label="Показать пароль" aria-controls="regPassword" aria-pressed="false">Показать</button>
               </div>
-              <div class="invalid-feedback d-block" id="regPasswordError"></div>
+              <div class="invalid-feedback d-block" id="regPasswordError" aria-live="polite"></div>
             </div>
 
             <div class="col-12">
               <label for="confirmPassword" class="form-label">Подтверждение пароля</label>
               <div class="input-group">
-                <input type="password" id="confirmPassword" class="form-control" autocomplete="new-password" required>
-                <button class="btn btn-outline-primary" type="button" data-password-toggle data-target="confirmPassword" aria-label="Показать или скрыть подтверждение пароля">Показать</button>
+                <input type="password" id="confirmPassword" class="form-control" autocomplete="new-password" required aria-describedby="confirmPasswordError">
+                <button class="btn btn-outline-primary" type="button" data-password-toggle data-target="confirmPassword" aria-label="Показать подтверждение пароля" aria-controls="confirmPassword" aria-pressed="false">Показать</button>
               </div>
-              <div class="invalid-feedback d-block" id="confirmPasswordError"></div>
+              <div class="invalid-feedback d-block" id="confirmPasswordError" aria-live="polite"></div>
             </div>
 
             <div class="col-12">
               <label for="team" class="form-label">Команда / Организация</label>
-              <input type="text" id="team" class="form-control" placeholder="Data Platform Team" required>
-              <div class="invalid-feedback">Укажите команду или организацию.</div>
+              <input type="text" id="team" class="form-control" placeholder="Data Platform Team" autocomplete="organization" required aria-describedby="teamError">
+              <div class="invalid-feedback" id="teamError">Укажите команду или организацию.</div>
             </div>
 
             <div class="col-12">
@@ -99,9 +100,12 @@
   <script src="js/pipeline-details.js"></script>
   <script src="js/monitoring.js"></script>
   <script src="js/logout.js"></script>
+  <script src="js/theme.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
+
+
 
 
 
