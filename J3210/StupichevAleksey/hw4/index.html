@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="ru"> <head>
+<html lang="ru">
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Платформа курсов — Обучение онлайн</title>
@@ -16,7 +18,8 @@
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <h1 class="visually-hidden">Образовательная платформа курсов</h1>
 
-                <a href="index.html" class="d-flex align-items-center col-lg-auto mb-2 me-lg-auto text-white text-decoration-none">
+                <a href="index.html"
+                    class="d-flex align-items-center col-lg-auto mb-2 me-lg-auto text-white text-decoration-none">
                     <img src="images/logo.png" alt="На главную" width="40" height="40" class="me-2">
                 </a>
 
@@ -26,9 +29,18 @@
                         aria-label="Поиск" id="searchInput">
                 </form>
 
-                <button class="btn btn-outline-light theme-toggle me-2" onclick="toggleTheme()" aria-label="Сменить тему оформления">
-                    <span class="icon-sun"><i class="bi bi-sun-fill" aria-hidden="true"></i></span>
-                    <span class="icon-moon"><i class="bi bi-moon-fill" aria-hidden="true"></i></span>
+                <button class="btn btn-outline-light theme-toggle me-2" onclick="toggleTheme()"
+                    aria-label="Сменить тему оформления">
+                    <span class="icon-sun">
+                        <svg class="icon">
+                            <use href="icons.svg#icon-sun-fill"></use>
+                        </svg>
+                    </span>
+                    <span class="icon-moon">
+                        <svg class="icon">
+                            <use href="icons.svg#icon-moon-fill"></use>
+                        </svg>
+                    </span>
                 </button>
 
                 <div class="text-end" id="authButtons">
@@ -45,7 +57,8 @@
                 <form class="row g-2 align-items-center" id="filterForm">
                     <div class="col-lg-4">
                         <label for="filterSearch" class="visually-hidden">Поиск по названию или автору</label>
-                        <input type="search" class="form-control" placeholder="Название курса, автор или предмет" id="filterSearch">
+                        <input type="search" class="form-control" placeholder="Название курса, автор или предмет"
+                            id="filterSearch">
                     </div>
                     <div class="col-lg-2">
                         <label for="filterLang" class="visually-hidden">Выберите язык курса</label>
@@ -77,12 +90,18 @@
         <div class="container">
             <h2 class="section-title mt-4">Топ-10 курсов</h2>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="topCourses">
-                <div class="text-center py-4"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Загрузка...</span></div></div>
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status"><span
+                            class="visually-hidden">Загрузка...</span></div>
+                </div>
             </div>
 
             <h2 class="section-title mt-4">Для новичков</h2>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="beginnerCourses">
-                <div class="text-center py-4"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Загрузка...</span></div></div>
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status"><span
+                            class="visually-hidden">Загрузка...</span></div>
+                </div>
             </div>
         </div>
     </main>
@@ -114,7 +133,7 @@
                             <p class="card-text">${course.shortDescription}</p>
                             <div class="mt-auto d-flex align-items-center justify-content-between">
                                 <a href="Course/CoursePreview.html?id=${course.id}" class="btn btn-primary">Подробнее</a>
-                                <span class="text-muted small"><i class="bi bi-star-fill text-warning"></i> ${course.rating}</span>
+                                <span class="text-muted small"><svg class="icon text-warning"><use href="icons.svg#icon-star-fill"/></svg> ${course.rating}</span>
                             </div>
                         </div>
                     </div>
@@ -185,7 +204,7 @@
                 document.getElementById('authButtons').innerHTML = `
                     <div class="d-flex align-items-center gap-2">
                         <a href="${cabinetUrl}" class="btn btn-outline-light d-flex align-items-center gap-2" title="Личный кабинет">
-                            <i class="bi bi-person-circle" style="font-size:1.3rem;"></i>
+                            <svg class="icon" style="font-size:1.3rem;"><use href="icons.svg#icon-person-circle"/></svg>
                             <span class="d-none d-md-inline">Личный кабинет</span>
                         </a>
                         <button class="btn btn-warning" onclick="logout()">Sign out</button>

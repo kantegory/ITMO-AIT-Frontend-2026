@@ -7,8 +7,6 @@
     <title>Мои курсы — Преподаватель</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
-
     <link rel="stylesheet" href="../theme.css" />
     <link rel="stylesheet" href="../UserCourses/AU-styles.css" />
     <script src="../theme-toggle.js"></script>
@@ -21,28 +19,39 @@
             <div class="d-flex align-items-center">
 
                 <button class="btn btn-outline-light d-lg-none me-2" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#mobileSidebar" aria-label="Открыть меню">
-                    <i class="bi bi-list"></i>
+                    data-bs-target="#mobileSidebar">
+
+                    <svg width="20" height="20">
+                        <use href="../icons.svg#menu"></use>
+                    </svg>
                 </button>
 
                 <a href="../index.html" class="d-flex text-white text-decoration-none me-auto">
-                    <img src="../images/logo.png" alt="Логотип" width="40" height="40" class="me-2">
+                    <img src="../images/logo.png" width="40" height="40">
                 </a>
 
                 <button class="btn btn-outline-light theme-toggle me-2" onclick="toggleTheme()"
-                    aria-label="Сменить тему">
-                    <span class="icon-sun"><i class="bi bi-sun-fill"></i></span>
-                    <span class="icon-moon"><i class="bi bi-moon-fill"></i></span>
+                    aria-label="Сменить тему оформления">
+                    <span class="icon-sun">
+                        <svg class="icon">
+                            <use href="../icons.svg#icon-sun-fill"></use>
+                        </svg>
+                    </span>
+                    <span class="icon-moon">
+                        <svg class="icon">
+                            <use href="../icons.svg#icon-moon-fill"></use>
+                        </svg>
+                    </span>
                 </button>
 
                 <a href="../index.html" class="btn btn-outline-light me-2">
-                    <i class="bi bi-house-door me-1"></i>
+                    <svg width="16" height="16" class="icon">
+                        <use href="../icons.svg#icon-house"></use>
+                    </svg>
                     <span>На главную</span>
                 </a>
 
-                <button class="btn btn-warning" onclick="logout()" aria-label="Выйти из аккаунта">
-                    Sign out
-                </button>
+                <button class="btn btn-warning" onclick="logout()">Sign out</button>
 
             </div>
         </div>
@@ -68,25 +77,28 @@
                 <li>
                     <a class="d-flex align-items-center gap-2 px-3 py-2 text-white text-decoration-none"
                         style="background:rgba(13,110,253,.25);">
-                        <i class="bi bi-book"></i>
+                        <svg class="icon">
+                            <use href="../icons.svg#icon-book"></use>
+                        </svg>
                         <span>Мои курсы</span>
                     </a>
                 </li>
-
                 <li>
                     <a href="AddNewCourse.html"
                         class="d-flex align-items-center gap-2 px-3 py-2 text-white-50 text-decoration-none">
-                        <i class="bi bi-plus-lg"></i>
+                        <svg class="icon">
+                            <use href="../icons.svg#icon-plus-lg"></use>
+                        </svg>
                         <span>Создать новый курс</span>
                     </a>
                 </li>
-
                 <li class="border-top border-secondary my-2"></li>
-
                 <li>
                     <a href="#" onclick="logout()"
                         class="d-flex align-items-center gap-2 px-3 py-2 text-white-50 text-decoration-none">
-                        <i class="bi bi-box-arrow-left"></i>
+                        <svg class="icon">
+                            <use href="../icons.svg#icon-box-arrow-left"></use>
+                        </svg>
                         <span>Выйти</span>
                     </a>
                 </li>
@@ -108,25 +120,27 @@
             <ul class="nav flex-column mb-auto">
                 <li class="nav-item">
                     <a class="nav-link active">
-                        <i class="bi bi-book"></i> <span>Мои курсы</span>
+                        <svg class="icon">
+                            <use href="../icons.svg#icon-book"></use>
+                        </svg> <span>Мои курсы</span>
                     </a>
                 </li>
-
                 <li class="nav-item">
                     <a href="AddNewCourse.html" class="nav-link">
-                        <i class="bi bi-plus-lg"></i> <span>Создать новый курс</span>
+                        <svg class="icon">
+                            <use href="../icons.svg#icon-plus-lg"></use>
+                        </svg> <span>Создать новый курс</span>
                     </a>
                 </li>
             </ul>
         </aside>
-
         <main class="cabinet-main">
-
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h4 class="fw-bold mb-0">Мои курсы</h4>
-
                 <a href="AddNewCourse.html" class="btn btn-primary">
-                    <i class="bi bi-plus-lg me-1"></i>
+                    <svg class="icon me-1">
+                        <use href="../icons.svg#icon-plus-lg"></use>
+                    </svg>
                     <span>Новый курс</span>
                 </a>
             </div>
@@ -221,26 +235,25 @@
 
                 <td>${course.studentsCount || '—'}</td>
 
-                <td>${course.rating
-                            ? '<i class="bi bi-star-fill text-warning"></i> ' + course.rating
-                            : '—'}</td>
+                <td>${course.rating ? `
+                    <svg class="bi text-warning" width="16" height="16">
+                        <use href="../icons.svg#icon-star-fill"></use>
+                    </svg> ${course.rating}` : '—'}</td>
 
-                <td>
-                    <a href="EditCourse.html?id=${course.id}"
-                       class="btn btn-sm btn-outline-primary me-1"
-                       aria-label="Редактировать курс ${course.title}">
-                        <i class="bi bi-pencil"></i>
-                        <span class="visually-hidden">Редактировать</span>
+                    <td>
+                    <a href="EditCourse.html?id=${course.id}" class="btn btn-sm btn-outline-primary me-1">
+                    <svg width="16" height="16">
+                        <use href="../icons.svg#icon-pencil-square"></use>
+                    </svg>
                     </a>
 
-                    <button class="btn btn-sm btn-outline-danger"
-                            onclick="deleteCourse(${course.id}, '${course.title}')"
-                            aria-label="Удалить курс ${course.title}">
-                        <i class="bi bi-trash"></i>
-                        <span class="visually-hidden">Удалить</span>
+                    <button class="btn btn-sm btn-outline-danger">
+                    <svg width="16" height="16">
+                        <use href="../icons.svg#icon-trash"></use>
+                    </svg>
                     </button>
-                </td>
-            </tr>
+                    </td>
+                    </tr>
             `;
                 }).join('');
 

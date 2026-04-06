@@ -7,7 +7,6 @@
     <title>Обзор курса</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../UserCourses/AU-styles.css" />
     <link rel="stylesheet" href="../theme.css" />
     <link rel="stylesheet" href="preview.css" />
@@ -20,7 +19,7 @@
         <div class="container">
             <div class="d-flex align-items-center">
                 <a href="../index.html" class="btn btn-outline-light me-3">
-                    <i class="bi bi-arrow-left me-1"></i>Назад
+                    <svg class="icon me-1"><use href="../icons.svg#icon-arrow-left"></use></svg>Назад
                 </a>
                 <a href="../index.html" class="d-flex text-white text-decoration-none me-auto">
                     <img src="../images/logo.png" alt="Логотип" width="40" height="40" class="me-2">
@@ -92,7 +91,7 @@
                             <div class="price mb-1 h4 fw-bold" id="coursePrice">Загрузка...</div>
                             <p class="small text-muted mb-3">Полный доступ ко всем материалам</p>
                             <button class="btn btn-primary w-100 py-2 mb-3" id="enrollBtn" onclick="enrollCourse()" disabled>
-                                <i class="bi bi-cart-plus me-1"></i>Записаться на курс
+                                <svg class="icon me-1"><use href="../icons.svg#icon-cart-plus"></use></svg>Записаться на курс
                             </button>
                             <div id="enrollAlert" class="d-none"></div>
                             <ul class="list-unstyled small mb-0" id="courseFeatures"></ul>
@@ -131,7 +130,7 @@
                 document.getElementById('authButtons').innerHTML = `
                     <div class="d-flex align-items-center gap-2">
                         <a href="${cabinetUrl}" class="btn btn-outline-light">
-                            <i class="bi bi-person-circle me-1"></i>Кабинет
+                            <svg class="icon me-1"><use href="../icons.svg#icon-person-circle"></use></svg>Кабинет
                         </a>
                         <button class="btn btn-warning" onclick="logout()">Sign out</button>
                     </div>
@@ -140,17 +139,17 @@
         }
 
         function getLessonIcon(type) {
-            if (type === 'video') return '<i class="bi bi-play-circle text-primary"></i>';
-            if (type === 'quiz') return '<i class="bi bi-pencil-square text-info"></i>';
-            return '<i class="bi bi-file-text text-success"></i>';
+            if (type === 'video') return '<svg class="icon text-primary"><use href="../icons.svg#icon-play-circle"></use></svg>';
+            if (type === 'quiz') return '<svg class="icon text-info"><use href="../icons.svg#icon-pencil-square"></use></svg>';
+            return '<svg class="icon text-success"><use href="../icons.svg#icon-file-text"></use></svg>';
         }
 
         function getStars(rating) {
             let html = '';
             for (let i = 1; i <= 5; i++) {
                 html += i <= rating
-                    ? '<i class="bi bi-star-fill"></i>'
-                    : '<i class="bi bi-star"></i>';
+                    ? '<svg class="icon"><use href="../icons.svg#icon-star-fill"></use></svg>'
+                    : '<svg class="icon"><use href="../icons.svg#icon-star"></use></svg>';
             }
             return html;
         }
@@ -197,10 +196,10 @@
             img.style.boxShadow = '0 8px 32px rgba(0,0,0,.35)';
 
             document.getElementById('courseInfo').innerHTML = `
-                <span class="info-badge"><i class="bi bi-star-fill text-warning"></i> ${c.rating} (${c.reviewsCount} отзывов)</span>
-                <span class="info-badge"><i class="bi bi-people"></i> ${c.studentsCount} студентов</span>
-                <span class="info-badge"><i class="bi bi-clock"></i> ${c.duration}</span>
-                <span class="info-badge"><i class="bi bi-translate"></i> ${c.language}</span>
+                <span class="info-badge"><svg class="icon text-warning"><use href="../icons.svg#icon-star-fill"></use></svg> ${c.rating} (${c.reviewsCount} отзывов)</span>
+                <span class="info-badge"><svg class="icon"><use href="../icons.svg#icon-people"></use></svg> ${c.studentsCount} студентов</span>
+                <span class="info-badge"><svg class="icon"><use href="../icons.svg#icon-clock"></use></svg> ${c.duration}</span>
+                <span class="info-badge"><svg class="icon"><use href="../icons.svg#icon-translate"></use></svg> ${c.language}</span>
             `;
 
             document.getElementById('instructorCard').innerHTML = `
@@ -215,11 +214,11 @@
 
             const totalLessons = c.modules ? c.modules.reduce((sum, m) => sum + m.lessons.length, 0) : c.lessonsTotal;
             document.getElementById('courseFeatures').innerHTML = `
-                <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>${totalLessons} уроков</li>
-                <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>${c.duration} видео</li>
-                ${c.hasCertificate ? '<li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>Сертификат по окончании</li>' : ''}
-                <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>Пожизненный доступ</li>
-                <li><i class="bi bi-check2 text-success me-2"></i>Поддержка преподавателя</li>
+                <li class="mb-2"><svg class="icon text-success me-2"><use href="../icons.svg#icon-check2"></use></svg>${totalLessons} уроков</li>
+                <li class="mb-2"><svg class="icon text-success me-2"><use href="../icons.svg#icon-check2"></use></svg>${c.duration} видео</li>
+                ${c.hasCertificate ? '<li class="mb-2"><svg class="icon text-success me-2"><use href="../icons.svg#icon-check2"></use></svg>Сертификат по окончании</li>' : ''}
+                <li class="mb-2"><svg class="icon text-success me-2"><use href="../icons.svg#icon-check2"></use></svg>Пожизненный доступ</li>
+                <li><svg class="icon text-success me-2"><use href="../icons.svg#icon-check2"></use></svg>Поддержка преподавателя</li>
             `;
 
             if (c.modules && c.modules.length > 0) {
@@ -297,7 +296,7 @@
 
                 if (enrolled.includes(courseId)) {
                     const btn = document.getElementById('enrollBtn');
-                    btn.innerHTML = '<i class="bi bi-play-fill me-1"></i>Перейти к обучению';
+                    btn.innerHTML = '<svg class="icon me-1"><use href="../icons.svg#icon-play-fill"></use></svg>Перейти к обучению';
                     btn.classList.remove('btn-primary');
                     btn.classList.add('btn-success');
                     btn.disabled = false;
@@ -307,7 +306,7 @@
 
                     const alertDiv = document.getElementById('enrollAlert');
                     alertDiv.className = 'small text-success mt-2';
-                    alertDiv.innerHTML = '<i class="bi bi-check-circle me-1"></i>Вы записаны на этот курс';
+                    alertDiv.innerHTML = '<svg class="icon me-1"><use href="../icons.svg#icon-check-circle"></use></svg>Вы записаны на этот курс';
                 }
             } catch (err) {
                 console.error('Check enrollment error:', err);
@@ -349,7 +348,7 @@
                     });
                 }
 
-                btn.innerHTML = '<i class="bi bi-check-lg me-1"></i>Вы записаны!';
+                btn.innerHTML = '<svg class="icon me-1"><use href="../icons.svg#icon-check-lg"></use></svg>Вы записаны!';
                 btn.classList.remove('btn-primary');
                 btn.classList.add('btn-success');
 
@@ -359,7 +358,7 @@
             } catch (err) {
                 console.error('Enroll error:', err);
                 btn.disabled = false;
-                btn.innerHTML = '<i class="bi bi-cart-plus me-1"></i>Записаться на курс';
+                btn.innerHTML = '<svg class="icon me-1"><use href="../icons.svg#icon-cart-plus"></use></svg>Записаться на курс';
 
                 alertDiv.className = 'alert alert-danger mt-2';
                 alertDiv.textContent = 'Ошибка записи. Попробуйте ещё раз.';
