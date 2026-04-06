@@ -6,6 +6,7 @@
     <title>Главная - MFF</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/dark.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/theme_quickcheck.js"></script>
 </head>
@@ -30,9 +31,17 @@
                 </ul>
 
                 <div class="d-flex align-items-center gap-3">
-                    <button id="themeToggle" aria-label="Переключить тему" title="Переключить тему">
-                        🌙
+                    <button id="themeToggle" class="theme-switch" aria-label="Переключить тему" title="Переключить тему">
+                        <span class="theme-switch__thumb"></span>
+                        <span class="theme-switch__icon theme-switch__icon--sun">
+                            <svg><use href="sprites/sprite.svg#icon-sun"></use></svg>
+                        </span>
+
+                        <span class="theme-switch__icon theme-switch__icon--moon">
+                            <svg><use href="sprites/sprite.svg#icon-moon"></use></svg>
+                        </span>
                     </button>
+
                     <a href="login.html" class="btn btn-outline-custom btn-sm">Выйти</a>
                 </div>
             </div>
@@ -46,14 +55,25 @@
             <h1 class="h3 mb-0">Обзор финансов</h1>
 
             <div class="d-flex gap-3">
-            <span class="badge shadow-sm px-3 py-2 rounded-pill d-flex align-items-center gap-2 currency-badge" style="color: var(--text-main);">
-                <img src="https://flagcdn.com/us.svg" width="22" class="rounded-1 shadow-sm" alt="US">
-                <span>$ <span id="usdRateDisplay" class="fw-bold">...</span> ₽ <span id="usdTrend"></span></span>
-            </span>
                 <span class="badge shadow-sm px-3 py-2 rounded-pill d-flex align-items-center gap-2 currency-badge" style="color: var(--text-main);">
-                <img src="https://flagcdn.com/eu.svg" width="22" class="rounded-1 shadow-sm" alt="EU">
-                <span>€ <span id="eurRateDisplay" class="fw-bold">...</span> ₽ <span id="eurTrend"></span></span>
-            </span>
+                    <img src="https://flagcdn.com/us.svg" width="22" class="rounded-1 shadow-sm" alt="US">
+
+                    <span class="d-flex align-items-center gap-1">
+                        <span id="usdRateDisplay" class="fw-bold">...</span>
+                        ₽
+                        <span id="usdTrend"></span>
+                    </span>
+                </span>
+
+                <span class="badge shadow-sm px-3 py-2 rounded-pill d-flex align-items-center gap-2 currency-badge" style="color: var(--text-main);">
+                    <img src="https://flagcdn.com/eu.svg" width="22" class="rounded-1 shadow-sm" alt="EU">
+
+                    <span class="d-flex align-items-center gap-1">
+                        <span id="eurRateDisplay" class="fw-bold">...</span>
+                        ₽
+                        <span id="eurTrend"></span>
+                    </span>
+                </span>
             </div>
         </section>
 

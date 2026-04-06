@@ -7,18 +7,12 @@ if (currentTheme === 'dark') {
 document.addEventListener('DOMContentLoaded', () => {
     const themeBtn = document.getElementById('themeToggle');
 
-    if (themeBtn) {
-        themeBtn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
-    }
-
     themeBtn?.addEventListener('click', () => {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         const newTheme = isDark ? 'light' : 'dark';
 
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('mff_theme', newTheme);
-
-        themeBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
 
         const newTextColor = getComputedStyle(document.documentElement).getPropertyValue('--text-main').trim() || (newTheme === 'dark' ? '#f8f9fa' : '#212529');
 

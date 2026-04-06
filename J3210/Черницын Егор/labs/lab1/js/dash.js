@@ -27,9 +27,9 @@ async function loadDashboardData() {
                 if (!el) return;
 
                 if (current > prev) {
-                    el.innerHTML = '<span class="text-success ms-1 trend-icon">▲</span>';
+                    el.innerHTML = '<svg width="16" height="16" class="text-success"><use href="sprites/sprite.svg#icon-arrow-up"></use></svg>';
                 } else if (current < prev) {
-                    el.innerHTML = '<span class="text-danger ms-1 trend-icon">▼</span>';
+                    el.innerHTML = '<svg width="16" height="16" class="text-danger"><use href="sprites/sprite.svg#icon-arrow-down"></use></svg>';
                 }
             };
 
