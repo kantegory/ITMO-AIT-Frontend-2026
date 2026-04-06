@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <title>PipelineLab - Эксперименты</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="description" content="Список и фильтрация ML-экспериментов в PipelineLab: статусы, этапы, метрики и создание новых запусков." />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230d6efd'/%3E%3C/svg%3E" type="image/svg+xml" />
+
+        <!-- Bootstrap CSS v5.3.2 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+
+        <link rel="stylesheet" href="style.css">
+        <script src="js/theme.js"></script>
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-themed">
+
+                <div class="container">
+
+                    <a class="navbar-brand" href="index.html">PipelineLab</a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Открыть меню навигации">
+                        <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarMenu">
+
+                        <div class="navbar-nav ms-auto align-items-lg-center flex-lg-row gap-lg-1">
+                            <a class="nav-link" href="index.html">Главная</a>
+                            <a class="nav-link" href="dashboard.html">Личный кабинет</a>
+                            <a class="nav-link active" href="experiments.html">Эксперименты</a>
+                            <a class="nav-link" href="models.html">Модели</a>
+                            <a class="nav-link" href="login.html" id="navAuthLink">Вход</a>
+                            <button type="button" class="btn btn-theme-toggle ms-lg-2" id="themeToggle" aria-pressed="false" aria-label="Включить тёмную тему Pipeline" title="Сейчас тема Lab — переключить на Pipeline">
+                                <span class="btn-theme-toggle__icon" data-show-when="lab" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8l4 4-4 4M14 16h4"/></svg>
+                                </span>
+                                <span class="btn-theme-toggle__icon d-none" data-show-when="pipeline" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                                </span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </nav>
+        </header>
+
+        <main>
+            <div class="container mt-5">
+
+                <h1 class="mb-4">Эксперименты</h1>
+
+                <div class="row">
+
+                    <div class="col-md-3 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2 class="card-title h5 mb-3">Фильтры</h2>
+
+                                <div class="mb-3">
+                                    <label for="dateFilter" class="form-label">Дата</label>
+                                    <select class="form-select" id="dateFilter">
+                                        <option selected>За всё время</option>
+                                        <option>За сегодня</option>
+                                        <option>За неделю</option>
+                                        <option>За месяц</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="metricFilter" class="form-label">Метрика</label>
+                                    <select class="form-select" id="metricFilter">
+                                        <option selected>Любая</option>
+                                        <option>Accuracy</option>
+                                        <option>ROC-AUC</option>
+                                        <option>F1-score</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="statusFilter" class="form-label">Статус</label>
+                                    <select class="form-select" id="statusFilter">
+                                        <option selected>Любой</option>
+                                        <option>Draft</option>
+                                        <option>Running</option>
+                                        <option>Completed</option>
+                                        <option>Failed</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="tagFilter" class="form-label">Тег</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="tagFilter"
+                                        placeholder="Например: baseline"
+                                    />
+                                </div>
+
+                                <button type="button" class="btn btn-primary w-100 mb-2" id="applyFilters">
+                                    Применить
+                                </button>
+
+                                <button type="button" class="btn btn-outline-secondary w-100" id="resetFilters">
+                                    Сбросить
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-9 mb-4">
+
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h2 class="card-title h5 mb-0">Список экспериментов</h2>
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createExpModal">
+                                        + Новый эксперимент
+                                    </button>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped mb-0" id="experimentsTable">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Название</th>
+                                                <th scope="col">Этап</th>
+                                                <th scope="col">Модель</th>
+                                                <th scope="col">Статус</th>
+                                                <th scope="col">Метрика</th>
+                                                <th scope="col">Дата</th>
+                                                <th scope="col">Действия</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="experimentsTbody">
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Modal: создание эксперимента -->
+        <div class="modal fade" id="createExpModal" tabindex="-1" aria-labelledby="createExpModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createExpModalLabel">Новый эксперимент</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <form id="createExpForm">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="expNameInput" class="form-label">Название</label>
+                                <input type="text" class="form-control" id="expNameInput" placeholder="Например: ResNet baseline" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="expMetricName" class="form-label">Метрика</label>
+                                <select class="form-select" id="expMetricName">
+                                    <option value="">— не указана —</option>
+                                    <option value="Accuracy">Accuracy</option>
+                                    <option value="ROC-AUC">ROC-AUC</option>
+                                    <option value="F1-score">F1-score</option>
+                                    <option value="Loss">Loss</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="expStageSelect" class="form-label">Этап</label>
+                                <select class="form-select" id="expStageSelect">
+                                    <option value="DataPrep">DataPrep</option>
+                                    <option value="Train" selected>Train</option>
+                                    <option value="Eval">Eval</option>
+                                    <option value="DeployCheck">DeployCheck</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="expModelSelect" class="form-label">Модель</label>
+                                <select class="form-select" id="expModelSelect" aria-describedby="expModelHelp">
+                                    <option value="">— без модели —</option>
+                                </select>
+                                <small class="text-muted" id="expModelHelp">
+                                    Если моделей нет, создайте их на странице "Модели".
+                                </small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="expMetricValue" class="form-label">Значение метрики</label>
+                                <input type="number" class="form-control" id="expMetricValue" placeholder="Например: 0.94" step="0.0001" min="0" max="1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="expTagsInput" class="form-label">Теги <small class="text-muted">(через запятую)</small></label>
+                                <input type="text" class="form-control" id="expTagsInput" placeholder="Например: baseline, cv, resnet">
+                            </div>
+                            <div class="mb-3">
+                                <label for="expDescriptionInput" class="form-label">Описание</label>
+                                <textarea class="form-control" id="expDescriptionInput" rows="3" placeholder="Кратко: цель эксперимента, гипотеза, данные"></textarea>
+                            </div>
+                            <div id="createExpError" class="alert alert-danger d-none"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+                            <button type="submit" class="btn btn-primary">Создать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer class="app-footer border-top mt-5 py-4">
+            <div class="container text-center small">
+                <p class="mb-0">PipelineLab — учебный проект по фронтенд-разработке</p>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+        <script src="js/api.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/experiments.js"></script>
+
+        <!-- Bootstrap JavaScript Libraries -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>
+
