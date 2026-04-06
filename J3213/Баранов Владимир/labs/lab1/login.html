@@ -20,11 +20,12 @@
         />
 
         <link rel="stylesheet" href="style.css">
+        <script src="js/theme.js"></script>
     </head>
 
     <body>
         <header>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav class="navbar navbar-expand-lg navbar-themed">
 
                 <div class="container">
 
@@ -36,12 +37,20 @@
 
                     <div class="collapse navbar-collapse" id="navbarMenu">
 
-                        <div class="navbar-nav ms-auto">
+                        <div class="navbar-nav ms-auto align-items-lg-center flex-lg-row gap-lg-1">
                             <a class="nav-link" href="index.html">Главная</a>
                             <a class="nav-link" href="dashboard.html">Личный кабинет</a>
                             <a class="nav-link" href="experiments.html">Эксперименты</a>
                             <a class="nav-link" href="models.html">Модели</a>
                             <a class="nav-link" href="login.html" id="navAuthLink">Вход</a>
+                            <button type="button" class="btn btn-theme-toggle ms-lg-2" id="themeToggle" aria-pressed="false" aria-label="Включить тёмную тему Pipeline" title="Сейчас тема Lab — переключить на Pipeline">
+                                <span class="btn-theme-toggle__icon" data-show-when="lab" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8l4 4-4 4M14 16h4"/></svg>
+                                </span>
+                                <span class="btn-theme-toggle__icon d-none" data-show-when="pipeline" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                                </span>
+                            </button>
                         </div>
 
                     </div>
@@ -95,8 +104,8 @@
                 </div>
             </div>
         </main>
-        <footer class="border-top mt-5 py-4 bg-white">
-            <div class="container text-center small text-muted">
+        <footer class="app-footer border-top mt-5 py-4">
+            <div class="container text-center small">
                 <p class="mb-0">PipelineLab — учебный проект по фронтенд-разработке</p>
             </div>
         </footer>
