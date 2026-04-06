@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TripPlanner | Направления</title>
+    <meta name="description" content="Каталог туристических направлений с фильтрацией по типу, бюджету и длительности.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,10 +13,11 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-page="destinations">
-<nav class="navbar navbar-expand-lg site-navbar sticky-top">
+<a class="visually-hidden-focusable" href="#destinationsPage">Перейти к основному содержимому</a>
+<nav class="navbar navbar-expand-lg site-navbar sticky-top" aria-label="Основная навигация">
     <div class="container">
         <a class="navbar-brand" href="index.html">
-            <span class="brand-mark"><i class="bi bi-globe2"></i></span>
+            <span class="brand-mark"><i class="bi bi-globe2" aria-hidden="true"></i></span>
             <span>TripPlanner</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Открыть меню">
@@ -48,7 +50,7 @@
         <div class="container">
             <div class="row g-4 align-items-start">
                 <div class="col-lg-4">
-                    <aside class="filter-card">
+                    <aside class="filter-card" aria-label="Фильтры направлений">
                         <h2 class="h3 mb-3">Фильтры</h2>
                         <div class="mb-3">
                             <label class="form-label" for="searchDestination">Поиск по названию</label>
@@ -86,7 +88,7 @@
 
                 <div class="col-lg-8">
                     <div class="results-toolbar mb-4">
-                        <p class="result-count" id="resultsCount">Найдено направлений: 0</p>
+                        <p class="result-count" id="resultsCount" aria-live="polite" role="status">Найдено направлений: 0</p>
                         <div class="dropdown">
                             <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="sortDropdownLabel">
                                 Сортировка
@@ -105,12 +107,12 @@
                     <div class="catalog-grid" id="destinationsGrid"></div>
 
                     <div class="empty-state d-none mt-4" id="destinationsEmpty">
-                        <i class="bi bi-search"></i>
+                        <i class="bi bi-search" aria-hidden="true"></i>
                         <h3 class="h4">Ничего не найдено</h3>
                         <p class="text-secondary mb-0">Измените фильтры или выполните сброс, чтобы снова увидеть варианты направлений.</p>
                     </div>
 
-                    <nav class="mt-4" aria-label="Pagination">
+                    <nav class="mt-4" aria-label="Навигация по страницам">
                         <ul class="pagination justify-content-center mb-0" id="pagination"></ul>
                     </nav>
                 </div>
@@ -124,20 +126,22 @@
         <div class="row gy-4 align-items-center">
             <div class="col-lg-4">
                 <a class="footer-brand d-inline-flex align-items-center gap-2" href="index.html">
-                    <span class="brand-mark"><i class="bi bi-globe2"></i></span>
+                    <span class="brand-mark"><i class="bi bi-globe2" aria-hidden="true"></i></span>
                     <span>TripPlanner</span>
                 </a>
                 <p class="mt-3 mb-0">Учебное многостраничное travel-приложение на HTML, CSS, Bootstrap и Vanilla JavaScript.</p>
             </div>
             <div class="col-lg-5">
-                <div class="d-flex flex-wrap gap-3">
-                    <a href="index.html">Главная</a>
-                    <a href="destinations.html">Направления</a>
-                    <a data-auth-only href="dashboard.html">Кабинет</a>
-                    <a data-auth-only href="collaboration.html">Совместное планирование</a>
-                    <a data-guest-only href="login.html">Вход</a>
-                    <a data-guest-only href="register.html">Регистрация</a>
-                </div>
+                <nav aria-label="Навигация в подвале">
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="index.html">Главная</a>
+                        <a href="destinations.html">Направления</a>
+                        <a data-auth-only href="dashboard.html">Кабинет</a>
+                        <a data-auth-only href="collaboration.html">Совместное планирование</a>
+                        <a data-guest-only href="login.html">Вход</a>
+                        <a data-guest-only href="register.html">Регистрация</a>
+                    </div>
+                </nav>
             </div>
             <div class="col-lg-3 text-lg-end">
                 <p class="mb-0">© 2026 TripPlanner</p>
