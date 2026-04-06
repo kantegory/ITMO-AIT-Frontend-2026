@@ -54,6 +54,15 @@ document.addEventListener("DOMContentLoaded", () => {
         label.style.alignItems = "center";
         label.style.gap = "0.5rem";
 
+        const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        icon.setAttribute("class", "icon icon--sm");
+        icon.setAttribute("aria-hidden", "true");
+        icon.setAttribute("focusable", "false");
+
+        const iconUse = document.createElementNS("http://www.w3.org/2000/svg", "use");
+        iconUse.setAttribute("href", "icons/sprite.svg#icon-theme");
+        icon.append(iconUse);
+
         const select = document.createElement("select");
         select.setAttribute("data-theme-switcher", "");
         select.className = "form-select form-select-sm";
@@ -74,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setThemePreference(event.target.value);
         });
 
-        label.append(select);
+        label.append(icon, select);
         footerRow.insertBefore(label, footerRow.firstElementChild?.nextElementSibling || null);
         syncThemeSwitcher(getStoredThemePreference());
     };
