@@ -2,9 +2,10 @@
     const key = "theme";
     const darkMedia = "(prefers-color-scheme: dark)";
     const darkLink = document.querySelector('link[href$="css/dark.css"]');
-    const lightLink = document.querySelector('link[href$="css/light.css"]');
     const systemDark = window.matchMedia(darkMedia);
     const isValidTheme = (value) => value === "light" || value === "dark" || value === "auto";
+
+    if (!darkLink) return;
 
     let theme = localStorage.getItem(key);
     if (!isValidTheme(theme)) theme = "auto";
@@ -12,20 +13,17 @@
     const applyTheme = (value) => {
         if (value === "dark") {
             darkLink.media = "all";
-            lightLink.media = "not all";
             document.documentElement.style.colorScheme = "dark";
             return;
         }
 
         if (value === "light") {
             darkLink.media = "not all";
-            lightLink.media = "all";
             document.documentElement.style.colorScheme = "light";
             return;
         }
 
         darkLink.media = darkMedia;
-        lightLink.media = "(prefers-color-scheme: light)";
         document.documentElement.style.colorScheme = "";
     };
 
