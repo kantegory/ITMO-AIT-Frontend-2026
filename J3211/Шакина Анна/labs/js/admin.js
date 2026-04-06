@@ -382,6 +382,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .sort((a, b) => new Date(a.date) - new Date(b.date))
             .map((event) => {
                 const teacherName = getTeacherNameById(event.responsibleTeacherId);
+                const fallbackImage = auth.getImageFallbackSrc(event.image);
                 const teacherOptions = teachers
                     .map((teacher) => `
                         <li>
@@ -397,7 +398,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         <article class="event-card-custom">
                             <a class="event-card-link" href="event.html?id=${encodeURIComponent(event.id)}">
                                 <div class="event-card-image-wrap">
-                                    <img src="${escapeHtml(event.image)}" alt="${escapeHtml(event.title)}" class="event-card-image">
+                                    <picture>
+                                        <source srcset="${escapeHtml(event.image)}" type="image/webp">
+                                        <img src="${escapeHtml(fallbackImage)}" alt="${escapeHtml(event.title)}" class="event-card-image">
+                                    </picture>
                                     <span class="badge text-bg-light border rounded-pill goal-badge position-absolute top-0 start-0 m-3">${escapeHtml(auth.getGoalLabel(event.goal))}</span>
                                 </div>
                             </a>
