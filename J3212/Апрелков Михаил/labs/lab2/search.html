@@ -7,16 +7,27 @@
   <title>Tripatropa - Поиск направлений</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
   <link rel="stylesheet" href="css/styles.css" />
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem("tripatropa-theme") === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 
 <body>
   <div class="page-wrapper">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom" aria-label="Основная навигация">
       <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="search.html">
-          <i class="bi bi-compass text-primary me-2"></i>
+          <svg class="icon-svg text-primary me-2" aria-hidden="true" width="20" height="20">
+            <use href="images/sprite.svg#icon-compass"></use>
+          </svg>
           Tripatropa
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
@@ -37,7 +48,16 @@
               <a class="nav-link" href="collaboration.html">Совместное планирование</a>
             </li>
           </ul>
-          <div class="d-flex">
+          <div class="d-flex align-items-center gap-2">
+            <button type="button" class="btn btn-outline-secondary btn-sm theme-toggle" id="themeToggle"
+              aria-label="Переключить на тёмную или светлую тему" title="Тема оформления">
+              <svg class="icon-svg theme-icon-when-light" aria-hidden="true">
+                <use href="images/sprite.svg#icon-moon-stars-fill"></use>
+              </svg>
+              <svg class="icon-svg theme-icon-when-dark" aria-hidden="true">
+                <use href="images/sprite.svg#icon-brightness-high-fill"></use>
+              </svg>
+            </button>
             <a href="login.html" class="btn btn-outline-primary btn-sm">
               Войти
             </a>
@@ -45,6 +65,7 @@
         </div>
       </div>
     </nav>
+    </header>
 
     <main>
       <section class="hero-section bg-light border-bottom">
@@ -61,10 +82,12 @@
             </div>
             <div class="col-lg-5 mt-3 mt-lg-0 text-lg-end text-muted-sm">
               <span class="badge rounded-pill bg-primary-subtle text-primary me-2 hero-badge">
-                <i class="bi bi-globe2 me-1"></i> 120+ направлений
+                <svg class="icon-svg me-1" aria-hidden="true"><use href="images/sprite.svg#icon-globe"></use></svg>
+                120+ направлений
               </span>
               <span class="badge rounded-pill bg-success-subtle text-success hero-badge">
-                <i class="bi bi-people me-1"></i> Совместное планирование
+                <svg class="icon-svg me-1" aria-hidden="true"><use href="images/sprite.svg#icon-people"></use></svg>
+                Совместное планирование
               </span>
             </div>
           </div>
@@ -74,11 +97,11 @@
         <div class="container">
           <div class="card tripatropa-card mb-4 mt-2">
             <div class="card-body">
-              <form class="row gy-3 gx-3 align-items-end" data-search-form>
+              <form class="row gy-3 gx-3 align-items-end" data-search-form aria-describedby="searchFormHelp">
                 <div class="col-md-4">
                   <label for="destinationInput" class="form-label">Направление</label>
                   <input type="text" class="form-control" id="destinationInput"
-                    placeholder="Стамбул, Иран, Дзержинск" />
+                    placeholder="Стамбул, Иран, Дзержинск" autocomplete="off" />
                 </div>
                 <div class="col-md-2">
                   <label for="typeSelect" class="form-label">Тип</label>
@@ -94,7 +117,7 @@
                     <span class="text-muted-sm" id="budgetValue"></span>
                   </label>
                   <input type="range" class="form-range" min="10000" max="200000" step="10000" value="200000"
-                    id="budgetRange" />
+                    id="budgetRange" aria-describedby="budgetValue" />
                 </div>
                 <div class="col-md-2">
                   <label for="durationSelect" class="form-label">Длительность</label>
@@ -107,10 +130,11 @@
                   </select>
                 </div>
                 <div class="col-md-1 d-grid">
-                  <button type="submit" class="btn btn-primary w-100">
-                    <i class="bi bi-search"></i>
+                  <button type="submit" class="btn btn-primary w-100" aria-label="Найти маршруты">
+                    <svg class="icon-svg" aria-hidden="true"><use href="images/sprite.svg#icon-search"></use></svg>
                   </button>
                 </div>
+                <div id="searchFormHelp" class="visually-hidden">Форма фильтрации маршрутов по направлению, типу, бюджету и длительности.</div>
                 <div class="col-12 d-flex justify-content-between align-items-center mt-2">
                   <div class="text-muted-sm">
                     Найдено <span id="routesCount">6 маршрутов</span>.
@@ -143,7 +167,7 @@
                   </p>
                   <div class="mb-3 d-flex flex-wrap gap-2">
                     <span class="badge bg-primary-subtle text-primary">
-                      <i class="bi bi-buildings me-1"></i> Город
+                      <svg class="icon-svg me-1" aria-hidden="true"><use href="images/sprite.svg#icon-buildings"></use></svg> Город
                     </span>
                     <span class="badge bg-success-subtle text-success">
                       3 дня
@@ -177,7 +201,7 @@
                   </p>
                   <div class="mb-3 d-flex flex-wrap gap-2">
                     <span class="badge bg-primary-subtle text-primary">
-                      <i class="bi bi-buildings me-1"></i> Город
+                      <svg class="icon-svg me-1" aria-hidden="true"><use href="images/sprite.svg#icon-buildings"></use></svg> Город
                     </span>
                     <span class="badge bg-success-subtle text-success">
                       5 дней
@@ -213,7 +237,7 @@
                   </p>
                   <div class="mb-3 d-flex flex-wrap gap-2">
                     <span class="badge bg-primary-subtle text-primary">
-                      <i class="bi bi-buildings me-1"></i> Город
+                      <svg class="icon-svg me-1" aria-hidden="true"><use href="images/sprite.svg#icon-buildings"></use></svg> Город
                     </span>
                     <span class="badge bg-success-subtle text-success">
                       4 дня
@@ -248,7 +272,7 @@
                   </p>
                   <div class="mb-3 d-flex flex-wrap gap-2">
                     <span class="badge bg-primary-subtle text-primary">
-                      <i class="bi bi-buildings me-1"></i> Город
+                      <svg class="icon-svg me-1" aria-hidden="true"><use href="images/sprite.svg#icon-buildings"></use></svg> Город
                     </span>
                     <span class="badge bg-success-subtle text-success">
                       3 дня
@@ -284,7 +308,7 @@
                   </p>
                   <div class="mb-3 d-flex flex-wrap gap-2">
                     <span class="badge bg-primary-subtle text-primary">
-                      <i class="bi bi-buildings me-1"></i> Город
+                      <svg class="icon-svg me-1" aria-hidden="true"><use href="images/sprite.svg#icon-buildings"></use></svg> Город
                     </span>
                     <span class="badge bg-success-subtle text-success">
                       4 дня
@@ -319,7 +343,7 @@
                   </p>
                   <div class="mb-3 d-flex flex-wrap gap-2">
                     <span class="badge bg-primary-subtle text-primary">
-                      <i class="bi bi-buildings me-1"></i> Город
+                      <svg class="icon-svg me-1" aria-hidden="true"><use href="images/sprite.svg#icon-buildings"></use></svg> Город
                     </span>
                     <span class="badge bg-success-subtle text-success">
                       5 дней
@@ -367,6 +391,12 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+  <script src="js/core.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/destination.js"></script>
+  <script src="js/profile.js"></script>
+  <script src="js/collaboration.js"></script>
   <script src="js/app.js"></script>
 </body>
 
