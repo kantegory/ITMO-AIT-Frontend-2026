@@ -43,8 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const footerRow = document.querySelector(".footer-row");
-        if (!footerRow) {
+        const switcherSlot = document.querySelector("[data-theme-switcher-slot]");
+        if (!switcherSlot) {
             return;
         }
 
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         label.append(icon, select);
-        footerRow.insertBefore(label, footerRow.firstElementChild?.nextElementSibling || null);
+        switcherSlot.replaceChildren(label);
         syncThemeSwitcher(getStoredThemePreference());
     };
 

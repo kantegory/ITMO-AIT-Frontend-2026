@@ -108,7 +108,7 @@
             id: String(event.id || ""),
             title: String(event.title || "").trim() || "Без названия",
             description: String(event.description || "").trim() || "Описание мероприятия пока не добавлено.",
-            image: String(event.image || "").trim() || "img/carousel1.png",
+            image: String(event.image || "").trim() || "img/carousel1.webp",
             date: normalizeDate(event.date),
             goal: normalizeGoal(event.goal || event.category || event.purpose),
             place: normalizePlace(event.place),
@@ -116,6 +116,11 @@
             audience: String(event.audience || event.forWhom || "5–11 классы").trim(),
             responsibleTeacherId: String(event.responsibleTeacherId || "")
         };
+    }
+
+    function getImageFallbackSrc(imagePath) {
+        const src = String(imagePath || "").trim();
+        return src.endsWith(".webp") ? src.replace(/\.webp$/i, ".png") : src;
     }
 
     function getCurrentUser() {
@@ -202,6 +207,7 @@
         PROPOSAL_FORM_URL,
         formatDate,
         getCurrentUser,
+        getImageFallbackSrc,
         getGoalLabel,
         getHomePageForUser,
         getPlaceLabel,
