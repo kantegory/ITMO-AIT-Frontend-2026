@@ -3,18 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    try {
+      const storedTheme = localStorage.getItem("lab1Theme");
+      const systemTheme = typeof window.matchMedia === "function" && window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+      const initialTheme = storedTheme || systemTheme;
+      document.documentElement.dataset.theme = initialTheme;
+      document.documentElement.setAttribute("data-bs-theme", initialTheme);
+    } catch (error) {
+      document.documentElement.dataset.theme = "light";
+      document.documentElement.setAttribute("data-bs-theme", "light");
+    }
+  </script>
   <title>Красная нить | Вход</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body data-view="login">
+  <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
   <div class="page-shell">
     <header class="topbar">
       <div class="container py-3">
-        <nav class="navbar navbar-expand-lg p-0">
+        <nav class="navbar navbar-expand-lg p-0" aria-label="Основная навигация">
           <a class="navbar-brand" href="index.html">
             <span class="brand-lockup">
-              <img class="brand-mark" src="assets/img/logo_header.svg" alt="Логотип Красной нити">
+              <img class="brand-mark" src="assets/img/logo_header.svg" alt="" aria-hidden="true">
               <span class="brand-text">
                 <span class="brand-title">Красная нить</span>
                 <span class="brand-caption">бизнес-центр</span>
@@ -26,16 +42,16 @@
           </button>
           <div class="collapse navbar-collapse mt-3 mt-lg-0" id="siteNav">
             <ul class="navbar-nav ms-auto gap-lg-2">
-              <li class="nav-item"><a class="nav-link active" href="index.html">Вход</a></li>
-              <li class="nav-item"><a class="nav-link" href="register.html">Регистрация</a></li>
-              <li class="nav-item"><a class="nav-link" href="search.html">Помещения</a></li>
+              <li class="nav-item"><a class="nav-link active" href="index.html" aria-current="page"><svg class="ui-icon" aria-hidden="true"><use href="assets/img/icons-sprite.svg#icon-user"></use></svg><span>Вход</span></a></li>
+              <li class="nav-item"><a class="nav-link" href="register.html"><svg class="ui-icon" aria-hidden="true"><use href="assets/img/icons-sprite.svg#icon-user"></use></svg><span>Регистрация</span></a></li>
+              <li class="nav-item"><a class="nav-link" href="search.html"><svg class="ui-icon" aria-hidden="true"><use href="assets/img/icons-sprite.svg#icon-search"></use></svg><span>Помещения</span></a></li>
             </ul>
           </div>
         </nav>
       </div>
     </header>
 
-    <main class="container py-4 py-lg-5">
+    <main class="container py-4 py-lg-5" id="main-content" tabindex="-1">
       <div class="row g-4 align-items-stretch">
         <div class="col-lg-7">
           <section class="hero-card h-100">
@@ -69,25 +85,26 @@
         </div>
 
         <div class="col-lg-5">
-          <section class="page-card h-100">
+          <section class="page-card h-100" aria-labelledby="loginTitle">
             <span class="eyebrow text-dark">Авторизация</span>
-            <h2 class="section-title">Войти</h2>
-            <p class="section-text">Выберите роль и перейдите в нужный кабинет.</p>
-            <form class="row g-3 mt-1" id="loginForm">
+            <h2 class="section-title" id="loginTitle">Войти</h2>
+            <p class="section-text" id="loginFormText">Выберите роль и перейдите в нужный кабинет.</p>
+            <p class="visually-hidden" id="loginPasswordHint">Кнопка рядом с полем пароля переключает отображение введённых символов.</p>
+            <form class="row g-3 mt-1" id="loginForm" aria-describedby="loginFormText">
               <div class="col-12">
                 <label class="form-label" for="loginEmail">Почта</label>
-                <input class="form-control" id="loginEmail" type="email" placeholder="tenant@company.ru" required>
+                <input class="form-control" id="loginEmail" type="email" placeholder="tenant@company.ru" autocomplete="username email" required aria-required="true">
               </div>
               <div class="col-12">
                 <label class="form-label" for="loginPassword">Пароль</label>
                 <div class="input-group">
-                  <input class="form-control" id="loginPassword" type="password" placeholder="Введите пароль" required>
-                  <button class="btn btn-outline-brand" type="button" data-password-toggle="#loginPassword">Показать</button>
+                  <input class="form-control" id="loginPassword" type="password" placeholder="Введите пароль" autocomplete="current-password" required aria-required="true" aria-describedby="loginPasswordHint">
+                  <button class="btn btn-outline-brand" type="button" data-password-toggle="#loginPassword" aria-controls="loginPassword" aria-pressed="false" aria-label="Показать пароль">Показать</button>
                 </div>
               </div>
               <div class="col-12">
                 <label class="form-label" for="loginRole">Роль</label>
-                <select class="form-select" id="loginRole" required>
+                <select class="form-select" id="loginRole" required aria-required="true">
                   <option value="tenant">Арендатор</option>
                   <option value="admin">Администрация</option>
                 </select>
@@ -107,12 +124,14 @@
       </div>
     </main>
 
+    <div class="visually-hidden" id="pageAnnouncements" aria-live="polite" aria-atomic="true"></div>
+
     <footer class="footer">
       <div class="container py-4">
         <div class="footer-grid">
           <div>
             <div class="brand-lockup">
-              <img class="brand-mark" src="assets/img/logo_header.svg" alt="Логотип Красной нити">
+              <img class="brand-mark" src="assets/img/logo_header.svg" alt="" aria-hidden="true">
               <span class="brand-text">
                 <span class="brand-title">Красная нить</span>
                 <span class="brand-caption text-white-50">портал арендаторов</span>
@@ -128,13 +147,13 @@
           <div>
             <div class="footer-title">Разделы</div>
             <ul class="footer-links">
-              <li><a href="index.html">Вход</a></li>
-              <li><a href="register.html">Регистрация</a></li>
-              <li><a href="search.html">Помещения</a></li>
+              <li><a href="index.html"><svg class="ui-icon" aria-hidden="true"><use href="assets/img/icons-sprite.svg#icon-user"></use></svg><span>Вход</span></a></li>
+              <li><a href="register.html"><svg class="ui-icon" aria-hidden="true"><use href="assets/img/icons-sprite.svg#icon-user"></use></svg><span>Регистрация</span></a></li>
+              <li><a href="search.html"><svg class="ui-icon" aria-hidden="true"><use href="assets/img/icons-sprite.svg#icon-search"></use></svg><span>Помещения</span></a></li>
             </ul>
           </div>
         </div>
-        <div class="footer-note">© <span data-current-year></span> Красная нить</div>
+        <div class="footer-note"><span class="footer-note-text">© <span data-current-year></span> Красная нить</span></div>
       </div>
     </footer>
   </div>
@@ -149,7 +168,7 @@
         <div class="modal-body">
           <div class="mb-3">
             <label class="form-label" for="recoveryEmail">Почта</label>
-            <input class="form-control" id="recoveryEmail" type="email" placeholder="office@company.ru">
+            <input class="form-control" id="recoveryEmail" type="email" placeholder="office@company.ru" autocomplete="email">
           </div>
           <div>
             <label class="form-label" for="recoveryRole">Роль</label>
@@ -167,7 +186,17 @@
     </div>
   </div>
 
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="actionToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-body">
+        <span id="actionToastMessage"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Закрыть"></button>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/js/app.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/login.js"></script>
 </body>
 </html>

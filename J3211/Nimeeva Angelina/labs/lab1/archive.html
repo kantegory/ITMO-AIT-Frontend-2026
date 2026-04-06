@@ -3,18 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    try {
+      const storedTheme = localStorage.getItem("lab1Theme");
+      const systemTheme = typeof window.matchMedia === "function" && window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+      const initialTheme = storedTheme || systemTheme;
+      document.documentElement.dataset.theme = initialTheme;
+      document.documentElement.setAttribute("data-bs-theme", initialTheme);
+    } catch (error) {
+      document.documentElement.dataset.theme = "light";
+      document.documentElement.setAttribute("data-bs-theme", "light");
+    }
+  </script>
   <title>Красная нить | Архив документов</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-view="archive">
+  <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
   <div class="page-shell">
     <header class="topbar">
       <div class="container py-3">
-        <nav class="navbar navbar-expand-lg p-0">
+        <nav class="navbar navbar-expand-lg p-0" aria-label="Основная навигация">
           <a class="navbar-brand" href="index.html">
             <span class="brand-lockup">
-              <img class="brand-mark" src="assets/img/logo_header.svg" alt="Логотип Красной нити">
+              <img class="brand-mark" src="assets/img/logo_header.svg" alt="" aria-hidden="true">
               <span class="brand-text">
                 <span class="brand-title">Красная нить</span>
                 <span class="brand-caption">бизнес-центр</span>
@@ -26,16 +42,16 @@
           </button>
           <div class="collapse navbar-collapse mt-3 mt-lg-0" id="siteNav">
             <ul class="navbar-nav ms-auto gap-lg-2 align-items-lg-center" id="authNav">
-              <li class="nav-item"><a class="nav-link" href="index.html">Вход</a></li>
-              <li class="nav-item"><a class="nav-link" href="register.html">Регистрация</a></li>
-              <li class="nav-item"><a class="nav-link" href="search.html">Помещения</a></li>
+              <li class="nav-item"><a class="nav-link" href="index.html"><svg class="ui-icon" aria-hidden="true"><use href="assets/img/icons-sprite.svg#icon-user"></use></svg><span>Вход</span></a></li>
+              <li class="nav-item"><a class="nav-link" href="register.html"><svg class="ui-icon" aria-hidden="true"><use href="assets/img/icons-sprite.svg#icon-user"></use></svg><span>Регистрация</span></a></li>
+              <li class="nav-item"><a class="nav-link" href="search.html"><svg class="ui-icon" aria-hidden="true"><use href="assets/img/icons-sprite.svg#icon-search"></use></svg><span>Помещения</span></a></li>
             </ul>
           </div>
         </nav>
       </div>
     </header>
 
-    <main class="container py-4 py-lg-5">
+    <main class="container py-4 py-lg-5" id="main-content" tabindex="-1">
       <section class="hero-card mb-4">
         <div class="row g-4 align-items-end">
           <div class="col-lg-8">
@@ -58,9 +74,9 @@
         </div>
       </section>
 
-      <section class="page-card" id="archiveGuest">
+      <section class="page-card" id="archiveGuest" aria-labelledby="archiveGuestTitle">
         <span class="eyebrow text-dark">Доступ ограничен</span>
-        <h2 class="section-title">Сначала нужно войти</h2>
+        <h2 class="section-title" id="archiveGuestTitle">Сначала нужно войти</h2>
         <p class="section-text">Архив документов относится к личному кабинету арендатора и администрации.</p>
         <div class="d-flex flex-wrap gap-3 mt-4">
           <a class="btn btn-brand" href="index.html">Перейти ко входу</a>
@@ -68,15 +84,18 @@
         </div>
       </section>
 
-      <section class="page-card d-none" id="archiveContent">
+      <section class="page-card d-none" id="archiveContent" aria-labelledby="archiveFiltersTitle">
+        <h2 class="visually-hidden" id="archiveFiltersTitle">Фильтры и список документов архива</h2>
+        <p class="visually-hidden" id="archiveFiltersHint">Фильтры ниже обновляют таблицу документов архива без перезагрузки страницы.</p>
+        <p class="visually-hidden" id="archiveResultsStatus" role="status" aria-live="polite" aria-atomic="true">Архив подготовлен к просмотру.</p>
         <div class="row g-3">
           <div class="col-md-5">
             <label class="form-label" for="archiveQuery">Название</label>
-            <input class="form-control" id="archiveQuery" type="search" placeholder="Например, счет или договор">
+            <input class="form-control" id="archiveQuery" type="search" placeholder="Например, счет или договор" autocomplete="off" aria-describedby="archiveFiltersHint archiveResultsStatus">
           </div>
           <div class="col-md-4">
             <label class="form-label" for="archiveType">Тип</label>
-            <select class="form-select" id="archiveType">
+            <select class="form-select" id="archiveType" aria-describedby="archiveFiltersHint archiveResultsStatus">
               <option value="all">Все</option>
               <option value="contract">Договор</option>
               <option value="agreement">Допсоглашение</option>
@@ -86,7 +105,7 @@
           </div>
           <div class="col-md-3">
             <label class="form-label" for="archiveStatus">Статус</label>
-            <select class="form-select" id="archiveStatus">
+            <select class="form-select" id="archiveStatus" aria-describedby="archiveFiltersHint archiveResultsStatus">
               <option value="all">Все</option>
               <option value="signed">Подписан</option>
               <option value="pending">Ожидает</option>
@@ -97,13 +116,14 @@
 
         <div class="table-responsive mt-4">
           <table class="table data-table align-middle">
+            <caption class="visually-hidden">Таблица документов архива с названием, типом, датой, статусом и комментарием.</caption>
             <thead>
               <tr>
-                <th>Документ</th>
-                <th>Тип</th>
-                <th>Дата</th>
-                <th>Статус</th>
-                <th>Комментарий</th>
+                <th scope="col">Документ</th>
+                <th scope="col">Тип</th>
+                <th scope="col">Дата</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Комментарий</th>
               </tr>
             </thead>
             <tbody>
@@ -141,12 +161,14 @@
       </section>
     </main>
 
+    <div class="visually-hidden" id="pageAnnouncements" aria-live="polite" aria-atomic="true"></div>
+
     <footer class="footer">
       <div class="container py-4">
         <div class="footer-grid">
           <div>
             <div class="brand-lockup">
-              <img class="brand-mark" src="assets/img/logo_header.svg" alt="Логотип Красной нити">
+              <img class="brand-mark" src="assets/img/logo_header.svg" alt="" aria-hidden="true">
               <span class="brand-text">
                 <span class="brand-title">Красная нить</span>
                 <span class="brand-caption text-white-50">портал арендаторов</span>
@@ -162,13 +184,13 @@
           <div>
             <div class="footer-title">Разделы</div>
             <ul class="footer-links" id="authFooterLinks">
-              <li><a href="index.html">Вход</a></li>
-              <li><a href="register.html">Регистрация</a></li>
-              <li><a href="search.html">Помещения</a></li>
+              <li><a href="index.html"><svg class="ui-icon" aria-hidden="true"><use href="assets/img/icons-sprite.svg#icon-user"></use></svg><span>Вход</span></a></li>
+              <li><a href="register.html"><svg class="ui-icon" aria-hidden="true"><use href="assets/img/icons-sprite.svg#icon-user"></use></svg><span>Регистрация</span></a></li>
+              <li><a href="search.html"><svg class="ui-icon" aria-hidden="true"><use href="assets/img/icons-sprite.svg#icon-search"></use></svg><span>Помещения</span></a></li>
             </ul>
           </div>
         </div>
-        <div class="footer-note">© <span data-current-year></span> Красная нить</div>
+        <div class="footer-note"><span class="footer-note-text">© <span data-current-year></span> Красная нить</span></div>
       </div>
     </footer>
   </div>
@@ -179,11 +201,21 @@
       <button class="btn-close" type="button" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
     </div>
     <div class="offcanvas-body">
-      <div class="list-group status-feed" id="authAlertsList"></div>
+      <div class="list-group status-feed" id="authAlertsList" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="actionToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-body">
+        <span id="actionToastMessage"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Закрыть"></button>
+      </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/js/app.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/archive.js"></script>
 </body>
 </html>
