@@ -76,6 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
         profileEventsGrid.innerHTML = "";
 
         items.forEach((event) => {
+            const fallbackImage = auth.getImageFallbackSrc(event.image);
             profileEventsGrid.insertAdjacentHTML(
                 "beforeend",
                 `
@@ -83,7 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         <a class="event-card-link" href="event.html?id=${encodeURIComponent(event.id)}">
                             <article class="event-card-custom">
                                 <div class="event-card-image-wrap">
-                                    <img src="${escapeHtml(event.image)}" alt="${escapeHtml(event.title)}" class="event-card-image">
+                                    <picture>
+                                        <source srcset="${escapeHtml(event.image)}" type="image/webp">
+                                        <img src="${escapeHtml(fallbackImage)}" alt="${escapeHtml(event.title)}" class="event-card-image">
+                                    </picture>
                                     <span class="badge text-bg-light border rounded-pill goal-badge position-absolute top-0 start-0 m-3">${escapeHtml(auth.getGoalLabel(event.goal))}</span>
                                 </div>
                                 <div class="event-card-body">

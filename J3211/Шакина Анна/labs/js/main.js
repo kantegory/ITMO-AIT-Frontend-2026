@@ -127,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         eventsToRender.forEach((event, index) => {
             const isActive = index === 0 ? "active" : "";
+            const fallbackImage = auth.getImageFallbackSrc(event.image);
 
             carouselIndicators.insertAdjacentHTML(
                 "beforeend",
@@ -145,7 +146,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 `
                     <div class="carousel-item ${isActive}">
                         <a class="carousel-slide-link" href="event.html?id=${encodeURIComponent(event.id)}" aria-label="Открыть мероприятие ${escapeHtml(event.title)}">
-                            <img src="${escapeHtml(event.image)}" class="d-block w-100" alt="${escapeHtml(event.title)}">
+                            <picture>
+                                <source srcset="${escapeHtml(event.image)}" type="image/webp">
+                                <img src="${escapeHtml(fallbackImage)}" class="d-block w-100" alt="${escapeHtml(event.title)}">
+                            </picture>
                             <div class="carousel-caption">
                                 <div class="carousel-caption-card">
                                     <h2>${escapeHtml(event.title)}</h2>
@@ -171,6 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
         eventsCounter.textContent = `Показано мероприятий: ${eventsToRender.length}`;
 
         eventsToRender.forEach((event) => {
+            const fallbackImage = auth.getImageFallbackSrc(event.image);
             eventsGrid.insertAdjacentHTML(
                 "beforeend",
                 `
@@ -178,7 +183,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         <a class="event-card-link" href="event.html?id=${encodeURIComponent(event.id)}">
                             <article class="event-card-custom">
                                 <div class="event-card-image-wrap">
-                                    <img src="${escapeHtml(event.image)}" alt="${escapeHtml(event.title)}" class="event-card-image">
+                                    <picture>
+                                        <source srcset="${escapeHtml(event.image)}" type="image/webp">
+                                        <img src="${escapeHtml(fallbackImage)}" alt="${escapeHtml(event.title)}" class="event-card-image">
+                                    </picture>
                                     <span class="badge text-bg-light border rounded-pill goal-badge position-absolute top-0 start-0 m-3">${escapeHtml(auth.getGoalLabel(event.goal))}</span>
                                 </div>
                                 <div class="event-card-body">
