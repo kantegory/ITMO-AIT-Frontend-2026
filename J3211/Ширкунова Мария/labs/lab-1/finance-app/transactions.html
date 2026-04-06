@@ -22,41 +22,31 @@
     <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
 
     <noscript>
-        <div class="alert alert-danger text-center m-3" role="alert">
-            Для работы приложения необходимо включить JavaScript.
-        </div>
+        <div class="alert alert-danger text-center m-3" role="alert">Для работы приложения необходимо включить JavaScript.</div>
     </noscript>
 
     <header class="app-header">
         <nav class="container navbar navbar-expand-lg navbar-dark" aria-label="Главная навигация">
             <a class="navbar-brand" href="index.html">Мои Финансы</a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarTransNav"
-                aria-controls="navbarTransNav"
-                aria-expanded="false"
-                aria-label="Открыть меню навигации"
-            >
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTransNav" aria-controls="navbarTransNav" aria-expanded="false" aria-label="Открыть меню навигации">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarTransNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">На главную</a>
+                        <a class="nav-link d-flex align-items-center gap-1" href="index.html">
+                            <svg class="icon" aria-hidden="true"><use xlink:href="icons/sprite.svg#icon-wallet"></use></svg>
+                            На главную
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-danger" href="#" onclick="logout()" role="button">Выход</a>
+                        <a class="nav-link text-danger d-flex align-items-center gap-1" href="#" onclick="logout()" role="button">
+                            <svg class="icon" aria-hidden="true"><use xlink:href="icons/sprite.svg#icon-logout"></use></svg>
+                            Выход
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <button
-                            class="theme-toggle"
-                            id="themeToggle"
-                            onclick="toggleTheme()"
-                            aria-label="Переключить тему оформления"
-                            title="Сменить тему"
-                        >
+                        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Переключить тему оформления" title="Сменить тему">
                             <span id="themeIcon">🌙</span>
                         </button>
                     </li>
