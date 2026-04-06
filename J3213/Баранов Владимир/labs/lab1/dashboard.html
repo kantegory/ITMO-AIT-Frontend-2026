@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <title>PipelineLab - Личный кабинет</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="description" content="Личный кабинет PipelineLab: сводка по экспериментам, моделям, артефактам и последним запускам." />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230d6efd'/%3E%3C/svg%3E" type="image/svg+xml" />
+
+        <!-- Bootstrap CSS v5.3.2 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+                <div class="container">
+
+                    <a class="navbar-brand" href="index.html">PipelineLab</a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Открыть меню навигации">
+                        <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarMenu">
+
+                        <div class="navbar-nav ms-auto">
+                            <a class="nav-link" href="index.html">Главная</a>
+                            <a class="nav-link active" href="dashboard.html">Личный кабинет</a>
+                            <a class="nav-link" href="experiments.html">Эксперименты</a>
+                            <a class="nav-link" href="models.html">Модели</a>
+                            <a class="nav-link" href="login.html" id="navAuthLink">Вход</a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </nav>
+        </header>
+
+        <main>
+            <div class="container mt-5">
+
+                <h1 class="mb-3">Личный кабинет</h1>
+
+                <p class="mb-4">
+                    Здесь вы можете увидеть общую статистику по экспериментам, моделям и артефактам.
+                </p>
+
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2 class="card-title h5">Эксперименты</h2>
+                                <p class="card-text">
+                                    Всего экспериментов: <strong id="expCount">-</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2 class="card-title h5">Модели</h2>
+                                <p class="card-text">
+                                    Всего моделей: <strong id="modelCount">-</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2 class="card-title h5">Артефакты</h2>
+                                <p class="card-text">
+                                    Всего артефактов: <strong id="artifactCount">-</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-primary">
+                            <div class="card-body">
+                                <h2 class="card-title h6">Running</h2>
+                                <p class="card-text mb-0">
+                                    Активных экспериментов: <strong id="runningCount">-</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-success">
+                            <div class="card-body">
+                                <h2 class="card-title h6">Completed</h2>
+                                <p class="card-text mb-0">
+                                    Успешно завершено: <strong id="completedCount">-</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-danger">
+                            <div class="card-body">
+                                <h2 class="card-title h6">Failed</h2>
+                                <p class="card-text mb-0">
+                                    С ошибкой: <strong id="failedCount">-</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="container mt-4 mb-5">
+
+                <div class="card">
+                    <div class="card-body">
+
+                        <h2 class="card-title h5 mb-3">Последние эксперименты</h2>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Название</th>
+                                        <th scope="col">Этап</th>
+                                        <th scope="col">Модель</th>
+                                        <th scope="col">Статус</th>
+                                        <th scope="col">Метрика</th>
+                                        <th scope="col">Дата</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dashboardExperimentsTbody">
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <footer class="border-top mt-5 py-4 bg-white">
+            <div class="container text-center small text-muted">
+                <p class="mb-0">PipelineLab — учебный проект по фронтенд-разработке</p>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+        <script src="js/api.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/dashboard.js"></script>
+
+        <!-- Bootstrap JavaScript Libraries -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>
+
