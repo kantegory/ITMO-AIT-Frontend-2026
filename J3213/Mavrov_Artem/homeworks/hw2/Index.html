@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MLPipe — ML Pipeline Platform</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="screen-auth" class="auth-screen">
+  <div class="auth-center">
+
+    <div class="auth-brand">
+      <div class="brand-icon"><i class="bi bi-diagram-3-fill"></i></div>
+      <span class="brand-name">MLPipe</span>
+    </div>
+
+    <div id="form-login" class="auth-card">
+      <h2 class="auth-title">Войти в систему</h2>
+      <p class="auth-sub">Управление ML-экспериментами и моделями</p>
+      <div class="mb-3"><label class="flabel">Email</label><input id="li-email" type="text" class="finput" placeholder="admin@ml.pipe"></div>
+      <div class="mb-3"><label class="flabel">Пароль</label><input id="li-pass" type="password" class="finput" placeholder="••••••••"></div>
+      <div id="li-err" class="err-msg d-none"></div>
+      <button class="btn-accent w-100 mb-3" onclick="doLogin()">Войти</button>
+      <p class="auth-switch">Нет аккаунта? <a href="#" onclick="switchForm('register')">Регистрация</a></p>
+    </div>
+
+    <div id="form-register" class="auth-card d-none">
+      <h2 class="auth-title">Регистрация</h2>
+      <p class="auth-sub">Создайте аккаунт ML-инженера</p>
+      <div class="mb-3"><label class="flabel">Имя пользователя</label><input id="re-name" class="finput" placeholder="ml_engineer"></div>
+      <div class="mb-3"><label class="flabel">Email</label><input id="re-email" type="email" class="finput" placeholder="you@company.ai"></div>
+      <div class="mb-3"><label class="flabel">Пароль</label><input id="re-pass" type="password" class="finput" placeholder="Минимум 6 символов"></div>
+      <div class="mb-4"><label class="flabel">Роль</label>
+        <select id="re-role" class="finput"><option value="engineer">ML Engineer</option><option value="admin">Admin</option></select></div>
+      <div id="re-err" class="err-msg d-none"></div>
+      <button class="btn-accent w-100 mb-3" onclick="doRegister()">Создать аккаунт</button>
+      <p class="auth-switch">Уже есть аккаунт? <a href="#" onclick="switchForm('login')">Войти</a></p>
+    </div>
+
+  </div>
+</div>
+
+<div id="screen-app" class="app-shell d-none">
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon sm"><i class="bi bi-diagram-3-fill"></i></div>
+      <span class="brand-name">MLPipe</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="nav-item active" href="#" onclick="nav('dashboard',this)"><i class="bi bi-grid-1x2-fill"></i><span>Дашборд</span></a>
+      <a class="nav-item" href="#" onclick="nav('experiments',this)"><i class="bi bi-activity"></i><span>Эксперименты</span></a>
+      <a class="nav-item" href="#" onclick="nav('models',this)"><i class="bi bi-box-seam-fill"></i><span>Модели</span></a>
+      <a class="nav-item" href="#" onclick="nav('artifacts',this)"><i class="bi bi-archive-fill"></i><span>Артефакт-стор</span></a>
+      <a class="nav-item" href="#" onclick="nav('profile',this)"><i class="bi bi-person-fill"></i><span>Мой кабинет</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="s-user">
+        <div class="s-avatar"><i class="bi bi-person-fill"></i></div>
+        <div><div id="sb-name" class="s-name">—</div><div id="sb-role" class="s-role">—</div></div>
+      </div>
+      <a href="#" class="s-logout" onclick="doLogout()" title="Выйти"><i class="bi bi-box-arrow-right"></i></a>
+    </div>
+  </aside>
+
+  <div class="main-wrap">
+    <header class="topbar">
+      <div id="tb-title" class="tb-title">Дашборд</div>
+      <div id="tb-actions"></div>
+    </header>
+    <div class="content-area">
+
+      <div id="view-dashboard" class="view">
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-lg-3"><div class="kpi"><div class="kpi-v" id="kpi-exp">0</div><div class="kpi-l">Экспериментов</div></div></div>
+          <div class="col-6 col-lg-3"><div class="kpi"><div class="kpi-v" id="kpi-runs">0</div><div class="kpi-l">Запусков</div></div></div>
+          <div class="col-6 col-lg-3"><div class="kpi"><div class="kpi-v" id="kpi-models">0</div><div class="kpi-l">Моделей</div></div></div>
+          <div class="col-6 col-lg-3"><div class="kpi"><div class="kpi-v text-ok" id="kpi-prod">0</div><div class="kpi-l">В продакшне</div></div></div>
+        </div>
+        <div class="row g-3">
+          <div class="col-lg-6">
+            <div class="panel">
+              <div class="phead">Последние эксперименты</div>
+              <table class="t"><thead><tr><th>Имя</th><th>Запусков</th><th>Статус</th></tr></thead>
+              <tbody id="dash-exp-list"></tbody></table>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="panel">
+              <div class="phead">Последние модели</div>
+              <table class="t"><thead><tr><th>Модель</th><th>Версия</th><th>Stage</th></tr></thead>
+              <tbody id="dash-model-list"></tbody></table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="view-experiments" class="view d-none">
+        <div class="panel">
+          <div class="phead d-flex justify-content-between align-items-center">
+            <span>Эксперименты</span>
+            <button class="btn-sm" data-bs-toggle="modal" data-bs-target="#m-new-exp"><i class="bi bi-plus-lg me-1"></i>Новый</button>
+          </div>
+          <div class="filter-bar mb-3">
+            <input id="f-name"     class="finput sm" placeholder="Поиск по имени...">
+            <input id="f-date-from" class="finput sm" type="date" title="Дата от">
+            <input id="f-date-to"   class="finput sm" type="date" title="Дата до">
+            <input id="f-metric"   class="finput sm" placeholder="Метрика (напр. acc>0.9)">
+            <input id="f-tags"     class="finput sm" placeholder="Тег...">
+            <button class="btn-sm" onclick="filterExps()"><i class="bi bi-funnel me-1"></i>Найти</button>
+            <button class="btn-ghost-sm" onclick="clearFilters()">Сброс</button>
+          </div>
+          <table class="t">
+            <thead><tr><th>Имя</th><th>Дата</th><th>Теги</th><th>Запусков</th><th>Лучшая метрика</th><th>Статус</th><th></th></tr></thead>
+            <tbody id="exp-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="view-exp-detail" class="view d-none">
+        <button class="btn-back mb-3" onclick="nav('experiments', document.querySelector('[onclick*=experiments]'))">
+          <i class="bi bi-arrow-left me-1"></i>К экспериментам
+        </button>
+        <div id="exp-detail-header" class="panel mb-3"></div>
+        <div class="row g-3">
+          <div class="col-12">
+            <ul class="ml-tabs" id="exp-tabs">
+              <li class="tab-item active" onclick="expTab(this,'logs')">Логи</li>
+              <li class="tab-item" onclick="expTab(this,'metrics')">Метрики</li>
+              <li class="tab-item" onclick="expTab(this,'artifacts')">Артефакты</li>
+              <li class="tab-item" onclick="expTab(this,'viz')">Визуализации</li>
+            </ul>
+          </div>
+          <div class="col-12">
+            <div id="tab-logs" class="tab-panel">
+              <div class="log-box" id="log-content"></div>
+            </div>
+            <div id="tab-metrics" class="tab-panel d-none">
+              <div id="metrics-content"></div>
+            </div>
+            <div id="tab-artifacts" class="tab-panel d-none">
+              <div id="exp-artifacts-content"></div>
+            </div>
+            <div id="tab-viz" class="tab-panel d-none">
+              <div id="viz-content"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="view-models" class="view d-none">
+        <div class="panel">
+          <div class="phead d-flex justify-content-between align-items-center">
+            <span>Model Registry</span>
+            <button class="btn-sm" data-bs-toggle="modal" data-bs-target="#m-reg-model"><i class="bi bi-plus-lg me-1"></i>Зарегистрировать</button>
+          </div>
+          <table class="t" id="models-table">
+            <thead><tr><th>Модель</th><th>Версия</th><th>Framework</th><th>Метрики</th><th>Stage</th><th>Развёртывание</th><th>Действия</th></tr></thead>
+            <tbody id="models-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="view-artifacts" class="view d-none">
+        <div class="panel">
+          <div class="phead d-flex justify-content-between align-items-center">
+            <span>Артефакт-стор</span>
+            <button class="btn-sm" data-bs-toggle="modal" data-bs-target="#m-upload-artifact"><i class="bi bi-cloud-upload me-1"></i>Загрузить</button>
+          </div>
+          <div class="filter-bar mb-3">
+            <input id="art-search" class="finput sm" placeholder="Поиск артефакта...">
+            <select id="art-type" class="finput sm">
+              <option value="">Все типы</option>
+              <option value="model">model</option>
+              <option value="dataset">dataset</option>
+              <option value="plot">plot</option>
+              <option value="config">config</option>
+              <option value="other">other</option>
+            </select>
+            <button class="btn-sm" onclick="filterArtifacts()"><i class="bi bi-funnel me-1"></i>Найти</button>
+          </div>
+          <table class="t">
+            <thead><tr><th>Имя файла</th><th>Тип</th><th>Размер</th><th>Эксперимент</th><th>Дата</th><th>Действия</th></tr></thead>
+            <tbody id="art-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="view-profile" class="view d-none">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="panel text-center">
+              <div class="prof-avatar mx-auto mb-3"><i class="bi bi-person-fill"></i></div>
+              <div class="fw-bold fs-5 mb-1" id="prof-uname">—</div>
+              <div class="text-muted small mb-2" id="prof-email">—</div>
+              <div class="role-chip mb-4" id="prof-role">—</div>
+              <button class="btn-sm w-100" data-bs-toggle="modal" data-bs-target="#m-edit-profile" onclick="prefillEdit()">Редактировать</button>
+            </div>
+          </div>
+          <div class="col-lg-8 d-flex flex-column gap-3">
+            <div class="panel">
+              <div class="phead">Мои эксперименты</div>
+              <table class="t"><thead><tr><th>Имя</th><th>Запусков</th><th>Лучшая метрика</th><th>Статус</th><th></th></tr></thead>
+              <tbody id="prof-exp-list"></tbody></table>
+            </div>
+            <div class="panel">
+              <div class="phead">Мои модели</div>
+              <table class="t"><thead><tr><th>Модель</th><th>Версия</th><th>Stage</th></tr></thead>
+              <tbody id="prof-model-list"></tbody></table>
+            </div>
+            <div class="panel">
+              <div class="phead">Мои артефакты</div>
+              <table class="t"><thead><tr><th>Файл</th><th>Тип</th><th>Дата</th></tr></thead>
+              <tbody id="prof-art-list"></tbody></table>
+            </div>
+            <div class="panel">
+              <div class="phead">API Token</div>
+              <div class="token-row">
+                <code id="api-tok">mlp_••••••••••••••••••••••••••••</code>
+                <button class="btn-xs ms-2" onclick="toggleToken()">Показать</button>
+                <button class="btn-xs ms-1" onclick="copyToken()">Копировать</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="m-new-exp" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered"><div class="modal-content mc">
+    <div class="modal-header bdr0"><h5 class="modal-title fw-bold">Новый эксперимент</h5><button class="btn-close bcw" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <div class="mb-3"><label class="flabel">Имя</label><input id="ne-name" class="finput" placeholder="fraud-detection-v2"></div>
+      <div class="mb-3"><label class="flabel">Описание</label><textarea id="ne-desc" class="finput" rows="2" placeholder="Описание задачи..."></textarea></div>
+      <div class="mb-3"><label class="flabel">Теги (через запятую)</label><input id="ne-tags" class="finput" placeholder="xgboost, classification, prod"></div>
+    </div>
+    <div class="modal-footer bdr0">
+      <button class="btn-ghost-sm" data-bs-dismiss="modal">Отмена</button>
+      <button class="btn-accent" data-bs-dismiss="modal" onclick="addExp()">Создать</button>
+    </div>
+  </div></div>
+</div>
+
+<div class="modal fade" id="m-reg-model" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered"><div class="modal-content mc">
+    <div class="modal-header bdr0"><h5 class="modal-title fw-bold">Зарегистрировать модель</h5><button class="btn-close bcw" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <div class="mb-3"><label class="flabel">Имя модели</label><input id="rm-name" class="finput" placeholder="fraud-detector"></div>
+      <div class="mb-3"><label class="flabel">Версия</label><input id="rm-ver" class="finput" placeholder="v1.0"></div>
+      <div class="mb-3"><label class="flabel">Framework</label>
+        <select id="rm-fw" class="finput"><option>XGBoost</option><option>PyTorch</option><option>TensorFlow</option><option>HuggingFace</option><option>Sklearn</option><option>ONNX</option></select></div>
+      <div class="mb-3"><label class="flabel">Эксперимент</label><select id="rm-exp" class="finput"></select></div>
+      <div class="mb-3"><label class="flabel">Метрики (JSON)</label><input id="rm-metrics" class="finput mono" placeholder='{"acc":0.95,"f1":0.93}'></div>
+      <div class="mb-3"><label class="flabel">Stage</label>
+        <select id="rm-stage" class="finput"><option value="dev">Development</option><option value="staging">Staging</option></select></div>
+    </div>
+    <div class="modal-footer bdr0">
+      <button class="btn-ghost-sm" data-bs-dismiss="modal">Отмена</button>
+      <button class="btn-accent" data-bs-dismiss="modal" onclick="registerModel()">Зарегистрировать</button>
+    </div>
+  </div></div>
+</div>
+
+<div class="modal fade" id="m-deploy" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered"><div class="modal-content mc">
+    <div class="modal-header bdr0"><h5 class="modal-title fw-bold">Развернуть модель</h5><button class="btn-close bcw" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <div class="mb-3"><label class="flabel">Модель</label><input id="dep-model" class="finput" readonly></div>
+      <div class="mb-3"><label class="flabel">Среда</label>
+        <select class="finput"><option>Docker · localhost:8080</option><option>Kubernetes · prod-cluster</option><option>REST API · FastAPI</option></select></div>
+      <div class="mb-3"><label class="flabel">Тег образа</label><input class="finput mono" placeholder="registry.io/fraud-detector:v3.1"></div>
+      <div class="mb-3"><label class="flabel">Replicas</label><input class="finput" type="number" value="2" min="1" max="16"></div>
+    </div>
+    <div class="modal-footer bdr0">
+      <button class="btn-ghost-sm" data-bs-dismiss="modal">Отмена</button>
+      <button class="btn-accent" data-bs-dismiss="modal" onclick="deployDone()">Развернуть</button>
+    </div>
+  </div></div>
+</div>
+
+<div class="modal fade" id="m-upload-artifact" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered"><div class="modal-content mc">
+    <div class="modal-header bdr0"><h5 class="modal-title fw-bold">Загрузить артефакт</h5><button class="btn-close bcw" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <div class="mb-3"><label class="flabel">Эксперимент</label><select id="ua-exp" class="finput"></select></div>
+      <div class="mb-3"><label class="flabel">Тип</label>
+        <select id="ua-type" class="finput"><option value="model">model</option><option value="dataset">dataset</option><option value="plot">plot</option><option value="config">config</option><option value="other">other</option></select></div>
+      <div class="mb-3"><label class="flabel">Файл</label>
+        <div class="upload-zone" onclick="this.querySelector('input').click()">
+          <i class="bi bi-cloud-upload fs-3 d-block mb-1"></i>
+          <span>Перетащите файл или кликните для выбора</span>
+          <input type="file" class="d-none" id="ua-file" onchange="previewFile(this)">
+        </div>
+        <div id="ua-preview" class="mt-2 text-muted small"></div>
+      </div>
+    </div>
+    <div class="modal-footer bdr0">
+      <button class="btn-ghost-sm" data-bs-dismiss="modal">Отмена</button>
+      <button class="btn-accent" data-bs-dismiss="modal" onclick="uploadArtifact()">Загрузить</button>
+    </div>
+  </div></div>
+</div>
+
+<div class="modal fade" id="m-edit-profile" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered"><div class="modal-content mc">
+    <div class="modal-header bdr0"><h5 class="modal-title fw-bold">Редактировать профиль</h5><button class="btn-close bcw" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <div class="mb-3"><label class="flabel">Имя</label><input id="ep-name" class="finput"></div>
+      <div class="mb-3"><label class="flabel">Email</label><input id="ep-email" class="finput"></div>
+      <div class="mb-3"><label class="flabel">Новый пароль</label><input type="password" class="finput" placeholder="Оставьте пустым, чтобы не менять"></div>
+    </div>
+    <div class="modal-footer bdr0">
+      <button class="btn-ghost-sm" data-bs-dismiss="modal">Отмена</button>
+      <button class="btn-accent" data-bs-dismiss="modal" onclick="saveProfile()">Сохранить</button>
+    </div>
+  </div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
+<div id="api-loader" style="display:none;position:fixed;inset:0;background:rgba(8,11,16,.6);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:var(--bg2);border:1px solid var(--brd);border-radius:10px;padding:1.5rem 2rem;text-align:center">
+    <div class="spinner-border text-info mb-2" role="status"></div>
+    <div style="color:var(--txt);font-size:.88rem">Загрузка...</div>
+  </div>
+</div>
+<div id="api-error" style="display:none;position:fixed;bottom:1.5rem;right:1.5rem;background:#ff4f6a;color:#fff;padding:.75rem 1.25rem;border-radius:8px;font-size:.85rem;z-index:9999;max-width:340px;box-shadow:0 4px 16px rgba(0,0,0,.4)"></div>
+</body>
+</html>
