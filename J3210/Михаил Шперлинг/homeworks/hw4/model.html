@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали | AI Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" aria-label="Главная навигация">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html text-primary">AI Hub</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключатель навигации">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Модели</a></li>
+                <li class="nav-item"><a class="nav-link" href="datasets.html">Датасеты</a></li>
+            </ul>
+                <button id="themeToggle" class="btn btn-link text-light me-3 p-0 border-0" aria-label="Переключить тему">
+                    <svg class="svg-icon fs-5" id="themeIcon" aria-hidden="true"><use href="sprite.svg#icon-moon"></use></svg>
+                </button>
+            <div class="d-flex align-items-center">
+                <a href="login.html" class="btn btn-outline-light me-2">Вход</a>
+                <a href="register.html" class="btn btn-primary">Регистрация</a>
+                <a href="profile.html" class="btn btn-secondary ms-2" aria-label="Профиль пользователя"><svg class="svg-icon" aria-hidden="true"><use href="sprite.svg#icon-person"></use></svg></a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="container mt-5" id="pageContent">
+    <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+            <nav aria-label="Хлебные крошки">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none">Главная</a></li>
+                    <li class="breadcrumb-item active" id="breadcrumbName" aria-current="page">Загрузка...</li>
+                </ol>
+            </nav>
+            <h2 id="modelDetailTitle">Загрузка...</h2>
+            <p class="text-muted" id="modelDetailAuthor"></p>
+        </div>
+        <div class="btn-group shadow-sm" role="group" aria-label="Действия с моделью">
+            <button class="btn btn-light border" id="starBtn"><svg class="svg-icon" aria-hidden="true"><use href="sprite.svg#icon-star"></use></svg> Star <span class="badge bg-secondary" id="starCount" aria-label="Количество звезд">0</span></button>
+            <button class="btn btn-light border"><svg class="svg-icon" aria-hidden="true"><use href="sprite.svg#icon-fork"></use></svg> Fork <span class="badge bg-secondary" aria-label="Количество форков">0</span></button>
+            <button class="btn btn-primary" id="downloadBtn"><svg class="svg-icon" aria-hidden="true"><use href="sprite.svg#icon-download"></use></svg> Скачать <span class="badge bg-light text-dark ms-1" id="downloadCount" aria-label="Количество скачиваний">0</span></button>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs mb-4" id="modelTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="desc-tab" data-bs-toggle="tab" data-bs-target="#desc" type="button" role="tab" aria-controls="desc" aria-selected="true">Описание</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="metrics-tab" data-bs-toggle="tab" data-bs-target="#metrics" type="button" role="tab" aria-controls="metrics" aria-selected="false">Метрики</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="discuss-tab" data-bs-toggle="tab" data-bs-target="#discuss" type="button" role="tab" aria-controls="discuss" aria-selected="false">Обсуждения</button>
+        </li>
+    </ul>
+
+    <div class="tab-content bg-white p-4 border rounded shadow-sm">
+        <div class="tab-pane fade show active" id="desc" role="tabpanel" aria-labelledby="desc-tab" tabindex="0">
+            <h4>О модели</h4>
+            <p id="modelDetailDesc">Загрузка данных...</p>
+            <pre class="bg-dark text-light p-3 rounded" aria-label="Код для установки"><code id="installCode"></code></pre>
+        </div>
+        <div class="tab-pane fade" id="metrics" role="tabpanel" aria-labelledby="metrics-tab" tabindex="0">
+            <table class="table table-hover" aria-label="Таблица метрик">
+                <thead class="table-light"><tr><th scope="col">Метрика</th><th scope="col">Значение</th></tr></thead>
+                <tbody>
+                    <tr><td>MMLU</td><td>79.5</td></tr>
+                    <tr><td>HumanEval</td><td>62.1</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="discuss" role="tabpanel" aria-labelledby="discuss-tab" tabindex="0">
+            <div id="commentsList" class="mb-4" aria-live="polite"></div>
+            <hr>
+            <form id="commentForm">
+                <div class="mb-3">
+                    <label for="commentText" class="form-label fw-bold">Оставить комментарий</label>
+                    <textarea class="form-control" id="commentText" rows="3" required aria-required="true"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
