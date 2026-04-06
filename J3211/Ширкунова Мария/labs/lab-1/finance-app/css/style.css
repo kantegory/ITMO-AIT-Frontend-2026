@@ -1,3 +1,30 @@
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    background: #0d6efd;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    z-index: 9999;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 0 0 8px 0;
+    transition: top 0.2s ease;
+}
+.skip-link:focus {
+    top: 0;
+}
+
+*:focus-visible {
+    outline: 3px solid #0d6efd;
+    outline-offset: 2px;
+}
+
+/* убираем outline только для мыши, оставляем для клавиатуры */
+*:focus:not(:focus-visible) {
+    outline: none;
+}
+
 .account-card {
     border: none;
     border-radius: 16px;
@@ -5,7 +32,8 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.account-card:hover {
+.account-card:hover,
+.account-card:focus-within {
     transform: translateY(-5px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
 }
@@ -24,7 +52,7 @@
 
 .account-card__label {
     font-size: 0.9rem;
-    opacity: 0.8;
+    opacity: 0.85;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 0.5rem;
@@ -34,13 +62,54 @@
     background-color: #ffffff;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .table-wrapper table {
-    margin-bottom: 0; 
+    margin-bottom: 0;
 }
+
 .table-wrapper tbody tr:last-child td {
     border-bottom: none;
 }
 
+/* контраст для текста на карточках*/
+.account-card h3,
+.account-card p {
+    color: #ffffff;
+}
+
+/* видимый фокус для кнопок */
+.btn:focus-visible {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.5);
+}
+
+/* ссылки отличаются от кнопок подчёркиванием */
+a.nav-link:hover,
+a.nav-link:focus-visible {
+    text-decoration: underline;
+}
+
+/* стилизация для aria-invalid */
+input[aria-invalid="true"],
+select[aria-invalid="true"] {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+/* контраст прогресс-баров */
+.progress-bar {
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+/* контраст для текста-подсказок */
+.form-text,
+.text-muted {
+    color: #495057 !important;
+}
+
+/* минимальный размер интерактивных элементов (44×44 px) */
+.btn, .form-control, .form-select {
+    min-height: 44px;
+}
