@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                         <div class="d-flex justify-content-between align-items-start gap-3">
                             <h3 class="h4 mb-2">${TravelApp.escapeHtml(destination.name)}</h3>
-                            <span class="text-warning fw-bold">${destination.rating.toFixed(1)} <i class="bi bi-star-fill"></i></span>
+                            <span class="text-warning fw-bold">${destination.rating.toFixed(1)} <svg class="icon" aria-hidden="true"><use href="images/icons.svg#icon-star-fill"></use></svg></span>
                         </div>
                         <p class="text-secondary flex-grow-1">${TravelApp.escapeHtml(destination.shortDescription)}</p>
                         <div class="d-flex flex-wrap gap-2 mt-3">

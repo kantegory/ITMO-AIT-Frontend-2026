@@ -178,11 +178,11 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("destinationMap").src = `https://maps.google.com/maps?q=${encodeURIComponent(destination.mapQuery)}&t=&z=10&ie=UTF8&iwloc=&output=embed`;
 
         document.getElementById("highlightsList").innerHTML = destination.highlights.map((item) => `
-            <li><i class="bi bi-check-circle-fill"></i><span>${TravelApp.escapeHtml(item)}</span></li>
+            <li><svg class="icon" aria-hidden="true"><use href="images/icons.svg#icon-check-circle-fill"></use></svg><span>${TravelApp.escapeHtml(item)}</span></li>
         `).join("");
 
         document.getElementById("tipsList").innerHTML = destination.tips.map((item) => `
-            <li><i class="bi bi-compass-fill"></i><span>${TravelApp.escapeHtml(item)}</span></li>
+            <li><svg class="icon" aria-hidden="true"><use href="images/icons.svg#icon-compass-fill"></use></svg><span>${TravelApp.escapeHtml(item)}</span></li>
         `).join("");
 
         document.getElementById("itineraryAccordion").innerHTML = destination.itinerary.map((step, index) => `

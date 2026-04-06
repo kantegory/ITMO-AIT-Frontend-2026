@@ -142,6 +142,15 @@
     }
 }
 
+/* ===== SVG-иконки из спрайта ===== */
+.icon {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    vertical-align: -0.125em;
+    flex-shrink: 0;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -951,11 +960,11 @@ textarea.form-control {
 }
 
 /* Иконка: луна для светлой, солнце для тёмной */
-.theme-toggle .bi-sun-fill { display: none; }
-.theme-toggle .bi-moon-fill { display: inline; }
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: inline; }
 
-[data-theme="dark"] .theme-toggle .bi-sun-fill { display: inline; }
-[data-theme="dark"] .theme-toggle .bi-moon-fill { display: none; }
+[data-theme="dark"] .theme-toggle .icon-sun { display: inline; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
 /* Инвертируем SVG-элементы Bootstrap в тёмной теме */
 [data-theme="dark"] .btn-close,
@@ -974,8 +983,8 @@ textarea.form-control {
 
 /* Повтор для авто-определения системной темы */
 @media (prefers-color-scheme: dark) {
-    html:not([data-theme="light"]):not([data-theme="dark"]) .theme-toggle .bi-sun-fill { display: inline; }
-    html:not([data-theme="light"]):not([data-theme="dark"]) .theme-toggle .bi-moon-fill { display: none; }
+    html:not([data-theme="light"]):not([data-theme="dark"]) .theme-toggle .icon-sun { display: inline; }
+    html:not([data-theme="light"]):not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
     html:not([data-theme="light"]):not([data-theme="dark"]) .btn-close,
     html:not([data-theme="light"]):not([data-theme="dark"]) .accordion-button::after { filter: invert(1) brightness(2); }
     html:not([data-theme="light"]):not([data-theme="dark"]) .navbar-toggler-icon { filter: invert(1) brightness(1.5); }
