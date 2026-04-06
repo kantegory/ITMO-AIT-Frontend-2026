@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learnify — Моё обучение</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+
+<body class="dashboard-page">
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo-wrap">
+                <a href="index.html" class="logo text-decoration-none">
+                    <span class="logo-mark">L</span>
+                    <span class="logo-text">Learnify</span>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item active">
+                    <span class="nav-icon">▣</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="dashboard.html#myCoursesSection" class="nav-item">
+                    <span class="nav-icon">📘</span>
+                    <span>Моё обучение</span>
+                </a>
+
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">🗂</span>
+                    <span>Все курсы</span>
+                </a>
+
+                <a href="dashboard.html#certificatesSection" class="nav-item">
+                    <span class="nav-icon">🏆</span>
+                    <span>Сертификаты</span>
+                </a>
+            </nav>
+        </aside>
+
+        <div class="main">
+            <header class="topbar">
+                <div class="topbar-search">
+                    <input type="text" class="form-control search-input"
+                        placeholder="Поиск курсов, уроков и материалов...">
+                </div>
+
+                <div class="topbar-user">
+                    <div class="user-meta">
+                        <div class="user-name" id="topbarUserName">Пользователь</div>
+                        <div class="user-role" id="topbarUserRole">Студент</div>
+                    </div>
+
+                    <div class="user-avatar" id="topbarUserAvatar">P</div>
+                </div>
+            </header>
+
+            <main class="content">
+                <section>
+                    <div class="card welcome-card">
+                        <h1 class="page-title">
+                            Привет, <span id="profileUserName">Пользователь</span> 👋
+                        </h1>
+                        <p class="page-subtitle">
+                            Отслеживайте курсы и просматривайте доступные материалы.
+                        </p>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="card stat-card">
+                                <div class="stat-label">Мои курсы</div>
+                                <div class="stat-value" id="profileCoursesCount">0</div>
+                                <div class="stat-note">Доступные курсы</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card stat-card">
+                                <div class="stat-label">Завершено</div>
+                                <div class="stat-value" id="profileFinishedCount">0</div>
+                                <div class="stat-note">Пройденные курсы</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card stat-card">
+                                <div class="stat-label">Сертификаты</div>
+                                <div class="stat-value" id="profileCertificatesCount">0</div>
+                                <div class="stat-note">Будут доступны позже</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="myCoursesSection">
+                    <div class="section-header">
+                        <h2 class="section-title">Моё обучение</h2>
+                    </div>
+
+                    <div id="myCoursesList" class="row g-4"></div>
+                </section>
+
+                <section class="section" id="certificatesSection">
+                    <div class="section-header">
+                        <h2 class="section-title">Сертификаты</h2>
+                    </div>
+
+                    <div class="row g-4" id="certificatesList"></div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+
+</html>

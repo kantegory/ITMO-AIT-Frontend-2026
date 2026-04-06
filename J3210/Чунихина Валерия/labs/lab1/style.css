@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap');
+
+:root {
+    --bloom-green: #5E8D5A;
+    --bloom-blue: #A2C2E1;
+    --bloom-orange: #F4A261;
+    --bloom-bg: #FAF9F6;
+    --text-dark: #2F3640;
+}
+
+body {
+    font-family: 'Jost', sans-serif;
+    background-color: var(--bloom-bg);
+    color: var(--text-dark);
+}
+
+/* Навигация */
+.navbar {
+    background-color: white !important;
+    border-bottom: 2px solid rgba(94, 141, 90, 0.1);
+}
+.navbar-brand { color: var(--text-dark) !important; }
+
+/* Анимация цветка в логотипе */
+.brand-flower {
+    display: inline-block;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.navbar-brand:hover .brand-flower {
+    transform: rotate(45deg) scale(1.2);
+    color: var(--bloom-orange);
+}
+
+/* Кнопки */
+.btn-primary {
+    background-color: var(--bloom-green) !important;
+    border-color: var(--bloom-green) !important;
+    border-radius: 12px !important;
+}
+.btn-accent {
+    background-color: var(--bloom-orange) !important;
+    color: white !important;
+    border-radius: 12px !important;
+}
+.btn-outline-primary {
+    color: var(--bloom-green) !important;
+    border-color: var(--bloom-green) !important;
+    border-radius: 12px !important;
+}
+.btn-outline-primary:hover {
+    background-color: var(--bloom-green) !important;
+    color: white !important;
+}
+
+/* Карточки */
+.card {
+    border-radius: 20px !important;
+    border: none !important;
+}
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important;
+}
+
+/* Баджи */
+.badge-model { background-color: var(--bloom-blue) !important; color: white; border-radius: 8px !important; }
+.badge-dataset { background-color: var(--bloom-green) !important; color: white; border-radius: 8px !important; }
+
+/* Кастомные фоны для иконок в профиле */
+.bg-soft-blue { background-color: #E3F2FD; font-size: 1.5rem; }
+.bg-soft-green { background-color: #E8F5E9; font-size: 1.5rem; }
+
+/* Поля ввода */
+.form-control, .form-select {
+    border-radius: 12px !important;
+    padding: 0.75rem 1rem !important;
+}
+
+/* Подсветка активной ссылки */
+.nav-link.active {
+    color: var(--bloom-green) !important;
+    font-weight: 700;
+}
+
+/* Подсветка иконки профиля */
+.nav-link:hover {
+    color: var(--bloom-orange) !important;
+    transition: color 0.3s ease;
+}
+
+/* стиль вкладок в профиле */
+.nav-pills .nav-link {
+    color: var(--bloom-green) !important; /* Текст неактивных вкладок теперь зеленый */
+    font-weight: 600;
+    padding: 10px 25px;
+    border-radius: 12px !important;
+    transition: all 0.3s ease;
+    background: transparent;
+}
+
+/* Стиль активной вкладки*/
+.nav-pills .nav-link.active {
+    background-color: var(--bloom-green) !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(94, 141, 90, 0.25) !important;
+}
+
+/* Эффект при наведении на неактивную вкладку */
+.nav-pills .nav-link:hover:not(.active) {
+    background-color: rgba(94, 141, 90, 0.1) !important; /* Очень бледный зеленый фон */
+    color: var(--bloom-green) !important;
+}
+
+/* Контейнер для вкладок */
+#profileTabs {
+    background-color: white;
+    border: 1px solid rgba(94, 141, 90, 0.1);
+    display: inline-flex;
+}
+
+/* Анимация появления комментария */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Стили для кнопок в шапке модели */
+#starBtn, #forkBtn {
+    border-radius: 12px !important;
+    font-weight: 600;
+    min-width: 120px;
+}
+
+/* Список воспроизводимости */
+.list-group-item {
+    background-color: transparent !important;
+}

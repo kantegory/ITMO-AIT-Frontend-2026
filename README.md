@@ -274,7 +274,8 @@ https://www.youtube.com/watch?v=8LFbS78a4Rw
 
 ### Фреймворк Vue.JS: основы, работа с менеджером зависимостей npm
 
-Презентация: https://disk.yandex.ru/i/CtrJOV1w5biiMw
+Презентация: https://disk.yandex.ru/i/CtrJOV1w5biiMw  
+Пример, который делали на лекции: https://github.com/kantegory/mentoring/tree/master/33_vue_notes_example
 
 ### Домашняя работа 5: изучение основ работы с менеджером зависимостей npm
 
