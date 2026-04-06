@@ -4,11 +4,6 @@ import NotesPage from '../views/NotesPage.vue'
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: HomePage
-  },
-  {
-    path: '/notes',
     name: 'Notes',
     component: NotesPage
   }
