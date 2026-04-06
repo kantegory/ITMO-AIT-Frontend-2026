@@ -33,30 +33,30 @@ function renderProfileCards(items, type, gridId, emptyId) {
 
         if (isDataset) {
             if (item.modality) badges += `<span class="badge bg-success flex-shrink-0">${dictionaries.modality[item.modality]}</span>`;
-            if (item.format) badges += `<span class="badge bg-info text-dark flex-shrink-0">${item.format}</span>`;
+            if (item.format) badges += `<span class="badge bg-info text-contrast flex-shrink-0">${item.format}</span>`;
         } 
         else {
             if (item.framework) badges += `<span class="badge bg-secondary flex-shrink-0">${dictionaries.framework[item.framework]}</span>`;
         }
         
-        if (item.license) badges += `<span class="badge border border-secondary text-dark bg-white flex-shrink-0">${dictionaries.license[item.license]}</span>`;
+        if (item.license) badges += `<span class="badge border border-secondary text-contrast flex-shrink-0">${dictionaries.license[item.license]}</span>`;
 
         return `
             <div class="col-12 col-md-6 col-xl-4">
                 <article class="card h-100 border-2">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-2">
-                            <a href="${type}_page.html?id=${item.id}" class="text-decoration-none text-dark h5 mb-0 stretched-link">${item.name}</a>
-                            <i class="bi ${icon} text-muted"></i>
+                            <a href="${type}_page.html?id=${item.id}" class="text-decoration-none text-contrast h5 mb-0 stretched-link">${item.name}</a>
+                            <i class="bi ${icon} text-blunted"></i>
                         </div>
                         <div class="mb-2 d-flex flex-wrap gap-2">${badges}</div>
-                        <p class="card-text text-muted small">${item.description}</p>
+                        <p class="card-text text-blunted small">${item.description}</p>
                     </div>
-                    <div class="card-footer bg-white d-flex justify-content-end align-items-center">
-                        <small class="text-muted me-2"><i class="bi bi-eye-fill"></i> ${item.views}</small>
-                        <small class="text-muted me-2"><i class="bi bi-chat-left-text-fill"></i> ${item.comments}</small>
-                        <small class="text-muted me-2"><i class="bi bi-diagram-3-fill"></i> ${item.forks}</small>
-                        <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> ${item.stars}</small>
+                    <div class="card-footer d-flex justify-content-end align-items-center">
+                        <small class="text-blunted me-2"><i class="bi bi-eye-fill"></i> ${item.views}</small>
+                        <small class="text-blunted me-2"><i class="bi bi-chat-left-text-fill"></i> ${item.comments}</small>
+                        <small class="text-blunted me-2"><i class="bi bi-diagram-3-fill"></i> ${item.forks}</small>
+                        <small class="text-blunted"><i class="bi bi-star-fill text-warning"></i> ${item.stars}</small>
                     </div>
                 </article>
             </div>

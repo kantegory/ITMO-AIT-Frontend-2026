@@ -68,13 +68,13 @@ function getCardHtml(item, type) {
     const pageUrl = `${type}_page.html?id=${item.id}`;
 
     const taskBadge = item.task ? `<span class="badge bg-primary flex-shrink-0">${dictionaries.task[item.task] || item.task}</span>` : '';
-    const licenseBadge = item.license ? `<span class="badge border border-secondary text-dark bg-white flex-shrink-0">${dictionaries.license[item.license] || item.license}</span>` : '';
+    const licenseBadge = item.license ? `<span class="badge border border-secondary text-contrast flex-shrink-0">${dictionaries.license[item.license] || item.license}</span>` : '';
 
     let extraBadges = '';
     if (isDataset) {
         if (item.modality) extraBadges += `<span class="badge bg-success flex-shrink-0">${dictionaries.modality[item.modality] || item.modality}</span>`;
-        if (item.format) extraBadges += `<span class="badge bg-info text-dark flex-shrink-0">${item.format.toUpperCase()}</span>`;
-        if (item.size_gb != null) extraBadges += `<span class="badge border text-dark bg-white flex-shrink-0">${item.size_gb} GB</span>`;
+        if (item.format) extraBadges += `<span class="badge bg-info text-contrast flex-shrink-0">${item.format.toUpperCase()}</span>`;
+        if (item.size_gb != null) extraBadges += `<span class="badge border text-contrast flex-shrink-0">${item.size_gb} GB</span>`;
     } else {
         if (item.framework) extraBadges += `<span class="badge bg-secondary flex-shrink-0">${dictionaries.framework[item.framework] || item.framework}</span>`;
     }
@@ -84,17 +84,17 @@ function getCardHtml(item, type) {
             <article class="card h-100 border-2">
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
-                        <a href="${pageUrl}" class="text-decoration-none text-dark h5 mb-0 stretched-link">${item.name}</a>
-                        <i class="bi ${iconClass} text-muted"></i>
+                        <a href="${pageUrl}" class="text-decoration-none text-contrast h5 mb-0 stretched-link">${item.name}</a>
+                        <i class="bi ${iconClass} text-blunted"></i>
                     </div>
                     <div class="mb-2 d-flex flex-wrap gap-2">${taskBadge} ${extraBadges} ${licenseBadge}</div>
-                    <p class="card-text text-muted small">${item.description || 'Описание отсутствует'}</p>
+                    <p class="card-text text-blunted small">${item.description || 'Описание отсутствует'}</p>
                 </div>
-                <div class="card-footer bg-white d-flex justify-content-end align-items-center">
-                    <small class="text-muted me-2"><i class="bi bi-eye-fill"></i> ${item.views || 0}</small>
-                    <small class="text-muted me-2"><i class="bi bi-chat-left-text-fill"></i> ${item.comments || 0}</small>
-                    <small class="text-muted me-2"><i class="bi bi-diagram-3-fill"></i> ${item.forks || 0}</small>
-                    <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> ${item.stars || 0}</small>
+                <div class="card-footer d-flex justify-content-end align-items-center">
+                    <small class="text-blunted me-2"><i class="bi bi-eye-fill"></i> ${item.views || 0}</small>
+                    <small class="text-blunted me-2"><i class="bi bi-chat-left-text-fill"></i> ${item.comments || 0}</small>
+                    <small class="text-blunted me-2"><i class="bi bi-diagram-3-fill"></i> ${item.forks || 0}</small>
+                    <small class="text-blunted"><i class="bi bi-star-fill text-warning"></i> ${item.stars || 0}</small>
                 </div>
             </article>
         </div>
@@ -114,7 +114,7 @@ async function loadHubData() {
         searchResultsCount.textContent = `Найдено: ${data.length} ${typeLabel}`;
 
         if (!data.length) {
-            resultsGrid.innerHTML = '<div class="col-12"><p class="text-muted fs-5">По вашему запросу ничего не найдено.</p></div>';
+            resultsGrid.innerHTML = '<div class="col-12"><p class="text-blunted fs-5">По вашему запросу ничего не найдено.</p></div>';
             return;
         }
 
@@ -126,7 +126,7 @@ async function loadHubData() {
 
 function renderChips(chips) {
     if (chips.length === 0) {
-        activeFilterChips.innerHTML = '<span class="text-muted">Нет активных фильтров</span>';
+        activeFilterChips.innerHTML = '<span class="text-blunted">Нет активных фильтров</span>';
         return;
     }
 
