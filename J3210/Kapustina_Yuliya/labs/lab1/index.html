@@ -8,16 +8,18 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
-    <script src="js/api.js"></script>
+    <link rel="stylesheet" href="dark.css">
+
 </head>
 
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.html">FanFicLib</a>
-            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
-                <span class="navbar-toggler-icon"></span>
+            <button id="darkModeBtn" class="btn btn-outline-light ms-3">Тёмная тема</button>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav" aria-label="Меню навигации">
+                <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Меню</span>
             </button>
             <div class="collapse navbar-collapse" id="nav">
                 <ul class="navbar-nav me-auto">
@@ -26,74 +28,79 @@
                     <li class="nav-item"><a class="nav-link" href="write.html">Написать фанфик</a></li>
                 </ul>
                 <ul class="navbar-nav ms-auto" id="navRight">
+                    <li class="nav-item">
+                        <button id="darkModeBtn" class="btn btn-outline-light">Тёмная тема</button>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="profile.html">Профиль</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="container">
-            <h1>Мир фанфиков</h1>
-            <p class="lead">Читай истории, делись своими и находи единомышленников</p>
-            <div class="d-flex justify-content-center mt-4 gap-2 search">
-                <input id="search-input" class="form-control form-control-lg" style="max-width:500px;"
-                    placeholder="Поиск фанфика...">
-                <button id="search-btn" class="btn btn-dark btn-lg">Поиск</button>
-            </div>
-        </div>
-    </section>
-
-    <div class="container mt-5">
-
-        <h2 class="section-title">Популярные фанфики</h2>
-        <div id="popular-fics" class="row">
-            <div class="col-md-4 mb-4">
-                <div class="text-center p-5">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Загрузка...</span>
-                    </div>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Мир фанфиков</h1>
+                <p class="lead">Читай истории, делись своими и находи единомышленников</p>
+                <div class="d-flex justify-content-center mt-4 gap-2 search">
+                    <input id="search-input" class="form-control form-control-lg" style="max-width:500px;"
+                        placeholder="Поиск фанфика...">
+                    <button id="search-btn" class="btn btn-dark btn-lg">Поиск</button>
                 </div>
-            </div>
-        </div>
-
-        <h2 class="section-title mt-5">Новые фанфики</h2>
-        <div id="new-fics" class="row">
-            <div class="col-md-4 mb-4">
-                <div class="text-center p-5">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Загрузка...</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <section class="hero-rounded mt-5">
-            <div class="container text-center">
-                <h2>Создай свой фанфик</h2>
-                <p>Поделись своей историей со всем миром</p>
-                <button type="button" class="btn btn-dark btn-lg" id="createFicBtn">
-                    Начать писать
-                </button>
             </div>
         </section>
-    </div>
 
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Войти или зарегистрироваться</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        <div class="container mt-5">
+
+            <h2 class="section-title">Популярные фанфики</h2>
+            <div id="popular-fics" class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="text-center p-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Загрузка...</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-body text-center">
-                    <p>Чтобы создавать фанфики, нужно войти в аккаунт или зарегистрироваться.</p>
-                    <a href="login.html" class="btn btn-secondary">Войти</a>
-                    <a href="register.html" class="btn btn-main">Регистрация</a>
+            </div>
+
+            <h2 class="section-title mt-5">Новые фанфики</h2>
+            <div id="new-fics" class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="text-center p-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Загрузка...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="hero-rounded mt-5">
+                <div class="container text-center">
+                    <h2>Создай свой фанфик</h2>
+                    <p>Поделись своей историей со всем миром</p>
+                    <button type="button" class="btn btn-dark btn-lg" id="createFicBtn">
+                        Начать писать
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loginModalLabel">Войти или зарегистрироваться</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p>Чтобы создавать фанфики, нужно войти в аккаунт или зарегистрироваться.</p>
+                        <a href="login.html" class="btn btn-secondary">Войти</a>
+                        <a href="register.html" class="btn btn-main">Регистрация</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <footer class="footer text-center">
         <p>© 2026 FanFicLib</p>
@@ -103,14 +110,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const API_URL = 'http://localhost:3000/api';
-        
+
         // Обновление навигации
         function updateNav() {
             const token = localStorage.getItem('token') || sessionStorage.getItem('token');
             const user = localStorage.getItem('user') || sessionStorage.getItem('user');
-            
+
             const navRight = document.getElementById('navRight');
-            
+
             if (token && user) {
                 navRight.innerHTML = `
                     <li class="nav-item">
@@ -120,7 +127,7 @@
                         <a class="nav-link" href="#" id="logoutBtn">Выйти</a>
                     </li>
                 `;
-                
+
                 document.getElementById('logoutBtn')?.addEventListener('click', (e) => {
                     e.preventDefault();
                     localStorage.removeItem('token');
@@ -140,12 +147,12 @@
                 `;
             }
         }
-        
+
         // Проверка авторизации
         function checkAuthAndRedirect(event) {
             const token = localStorage.getItem('token') || sessionStorage.getItem('token');
             const user = localStorage.getItem('user') || sessionStorage.getItem('user');
-            
+
             if (!token || !user) {
                 event.preventDefault();
                 const modal = new bootstrap.Modal(document.getElementById('loginModal'));
@@ -154,47 +161,47 @@
             }
             return true;
         }
-        
+
         // Загрузка фанфиков
         async function loadFics() {
             try {
                 const response = await fetch(`${API_URL}/fics`);
                 const fics = await response.json();
-                
+
                 if (!fics || fics.length === 0) {
                     displayEmptyState('popular-fics');
                     displayEmptyState('new-fics');
                     return;
                 }
-                
+
                 // Сортируем по лайкам для популярных (самые популярные)
                 const popularFics = [...fics]
                     .sort((a, b) => b.likes - a.likes)
                     .slice(0, 3);
-                
+
                 // Сортируем по дате для новых (самые новые)
                 const newFics = [...fics]
                     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                     .slice(0, 3);
-                
+
                 displayFics(popularFics, 'popular-fics');
                 displayFics(newFics, 'new-fics');
-                
+
             } catch (error) {
                 console.error('Ошибка загрузки фанфиков:', error);
                 displayErrorState('popular-fics');
                 displayErrorState('new-fics');
             }
         }
-        
+
         function displayFics(fics, containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    
-    container.innerHTML = '';
-    
-    fics.forEach(fic => {
-        const ficCard = `
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            fics.forEach(fic => {
+                const ficCard = `
             <div class="col-md-4 mb-4">
                 <a href="fic.html?id=${fic.id}" class="text-decoration-none text-dark">
                     <div class="card h-100">
@@ -216,44 +223,44 @@
                 </a>
             </div>
         `;
-        container.innerHTML += ficCard;
-    });
-}
-        
+                container.innerHTML += ficCard;
+            });
+        }
+
         function displayErrorState(containerId) {
             const container = document.getElementById(containerId);
             if (container) {
                 container.innerHTML = '<div class="col-12 text-center text-danger py-5">Ошибка загрузки фанфиков</div>';
             }
         }
-        
+
         function escapeHtml(str) {
             if (!str) return '';
             const div = document.createElement('div');
             div.textContent = str;
             return div.innerHTML;
         }
-        
+
         // Поиск - перенаправляем с параметром поиска
         function handleSearch() {
             const searchInput = document.getElementById('search-input');
             const query = searchInput.value.trim();
-            
+
             if (query) {
                 window.location.href = `search.html?q=${encodeURIComponent(query)}`;
             } else {
                 window.location.href = 'search.html';
             }
         }
-        
+
         // Обработчики для кнопки поиска
         const searchBtn = document.getElementById('search-btn');
         const searchInput = document.getElementById('search-input');
-        
+
         if (searchBtn) {
             searchBtn.addEventListener('click', handleSearch);
         }
-        
+
         if (searchInput) {
             searchInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
@@ -261,7 +268,7 @@
                 }
             });
         }
-        
+
         // Обработчики для кнопок "Написать фанфик"
         const navWriteLink = document.querySelector('.navbar-nav.me-auto a[href="write.html"]');
         if (navWriteLink) {
@@ -271,13 +278,13 @@
                 }
             });
         }
-        
+
         const createFicBtn = document.getElementById('createFicBtn');
         if (createFicBtn) {
             createFicBtn.addEventListener('click', (e) => {
                 const token = localStorage.getItem('token') || sessionStorage.getItem('token');
                 const user = localStorage.getItem('user') || sessionStorage.getItem('user');
-                
+
                 if (!token || !user) {
                     e.preventDefault();
                     const modal = new bootstrap.Modal(document.getElementById('loginModal'));
@@ -287,7 +294,30 @@
                 }
             });
         }
+        // Переключение тёмной темы
+        const darkModeBtn = document.getElementById('darkModeBtn');
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            darkModeBtn.textContent = 'Светлая тема';
+        }
+
+        darkModeBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                darkModeBtn.textContent = 'Тёмная тема';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                darkModeBtn.textContent = 'Светлая тема';
+            }
+        });
+
         
+
         // Загружаем фанфики и обновляем навигацию
         updateNav();
         loadFics();

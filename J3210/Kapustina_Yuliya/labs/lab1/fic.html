@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dark.css">
     <script src="js/api.js"></script>
 </head>
 
@@ -16,8 +17,10 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.html">FanFicLib</a>
-            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
-                <span class="navbar-toggler-icon"></span>
+            <button id="darkModeBtn" class="btn btn-outline-light ms-3">Тёмная тема</button>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav" aria-label="Меню навигации">
+                <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Меню</span>
             </button>
             <div class="collapse navbar-collapse" id="nav">
                 <ul class="navbar-nav me-auto">
@@ -37,17 +40,16 @@
         <article>
             <div class="fic-card">
                 <div class="d-flex align-items-center gap-2 flex-wrap">
-                    <h1 class="fw-bold mb-0" style="color: #2d3748;" id="ficTitle">Загрузка...</h1>
+                    <h1 class="fw-bold mb-0" id="ficTitle">Загрузка...</h1>
                     <span class="rating-tag" id="ficRating">-</span>
                 </div>
 
                 <div class="mt-2 d-flex gap-3 text-secondary">
                     <span class="d-flex align-items-center gap-1">
-                        <i class="bi bi-person"></i> 
-                        <a href="#" id="ficAuthorLink" class="text-decoration-none" style="color: #ff7043;">Загрузка...</a>
+                        <a href="#" id="ficAuthorLink" class="text-decoration-none author-info">Загрузка...</a>
                     </span>
                     <span class="d-flex align-items-center gap-1">
-                        <i class="bi bi-calendar"></i> <span id="ficDate">-</span>
+                        <span class="date-info"></span> <span id="ficDate">-</span>
                     </span>
                 </div>
 
@@ -55,43 +57,41 @@
                     <span class="fandom-tag" id="ficFandom">-</span>
                 </div>
 
-                <p class="mt-3 mb-3 text-secondary" id="ficDescription">Загрузка...</p>
+                <p class="mt-3 mb-3 fic-description" id="ficDescription">Загрузка...</p>
 
                 <div class="d-flex flex-wrap gap-2 mb-3" id="ficTags"></div>
 
                 <div class="d-flex gap-4 text-secondary">
                     <span class="d-flex align-items-center gap-1">
-                        <i class="bi bi-eye"></i> <span id="views-count">0</span> просмотров
+                        <span class="meta-eye" id="views-count">0</span> просмотров
                     </span>
                     <span class="d-flex align-items-center gap-1">
-                        <i class="bi bi-heart" style="color: #ff7043;"></i> 
-                        <span id="likes-count">0</span> лайков
+                        <span class="meta-heart" id="likes-count">0</span> лайков
                     </span>
                     <span class="d-flex align-items-center gap-1">
-                        <i class="bi bi-chat"></i> <span id="comments-count">0</span> комментариев
+                        <span class="meta-chat" id="comments-count">0</span> комментариев
                     </span>
                 </div>
 
                 <div class="mt-4">
                     <button id="like-btn" class="btn btn-like">
-                        <i class="bi bi-heart"></i> Нравится
+                        <span class="meta-heart">Нравится</span>
                     </button>
                 </div>
             </div>
 
-            <div class="bg-white p-3 rounded-3 mb-3 d-flex justify-content-between align-items-center">
+            <div class="chapter-nav p-3 rounded-3 mb-3 d-flex justify-content-between align-items-center">
                 <button id="prevChapterBtn" class="btn btn-outline-secondary" disabled>
-                    <i class="bi bi-chevron-left"></i> Предыдущая
+                    <span class="icon-chevron-left"></span>Предыдущая
                 </button>
                 <span id="chapterInfo" class="text-muted">Глава 1 / 1</span>
                 <button id="nextChapterBtn" class="btn btn-outline-secondary" disabled>
-                    Следующая <i class="bi bi-chevron-right"></i>
+                    Следующая <span class="icon-chevron-right"></span>
                 </button>
             </div>
 
-            <div class="bg-white p-4 rounded-3">
-                <div class="fanfic-text" style="line-height: 1.8; color: #2d3748;" id="ficContent">Загрузка...</div>
-            </div>
+            <div class="fic-content-wrapper p-4 rounded-3">
+                <div class="fanfic-text" style="line-height: 1.8;" id="ficContent">Загрузка...</div>
 
             <section class="mt-4" id="comments-section">
                 <h3>Комментарии</h3>
@@ -100,12 +100,14 @@
                 </div>
                 <div class="mt-3" id="commentForm">
                     <div class="comment-input-group">
-                        <input type="text" id="comment-input" class="form-control" placeholder="Написать комментарий...">
+                        <input type="text" id="comment-input" class="form-control"
+                            placeholder="Написать комментарий...">
                         <button id="comment-btn" class="btn btn-main">Отправить</button>
                     </div>
                 </div>
                 <div id="commentAuthMessage" class="alert alert-warning mt-2" style="display: none;">
-                    Чтобы оставить комментарий, <a href="login.html">войдите</a> или <a href="register.html">зарегистрируйтесь</a>
+                    Чтобы оставить комментарий, <a href="login.html">войдите</a> или <a
+                        href="register.html">зарегистрируйтесь</a>
                 </div>
             </section>
         </article>
@@ -248,10 +250,10 @@
             const likeBtn = document.getElementById('like-btn');
             if (userLiked) {
                 likeBtn.classList.add('liked');
-                likeBtn.innerHTML = '<i class="bi bi-heart-fill"></i> Нравится';
+                likeBtn.innerHTML = '<span class="meta-heart">Нравится</span>';
             } else {
                 likeBtn.classList.remove('liked');
-                likeBtn.innerHTML = '<i class="bi bi-heart"></i> Нравится';
+                likeBtn.innerHTML = '<span class="icon-heart-empty">Нравится</span>';
             }
         }
 
@@ -271,11 +273,11 @@
 
                     document.getElementById('ficTitle').textContent = ficData.title;
                     document.getElementById('ficRating').textContent = ficData.rating;
-                    
+
                     const authorLink = document.getElementById('ficAuthorLink');
                     authorLink.textContent = ficData.authorName;
                     authorLink.href = `profile.html?username=${encodeURIComponent(ficData.authorName)}`;
-                    
+
                     document.getElementById('ficDate').textContent = formatDate(ficData.createdAt);
                     document.getElementById('ficFandom').textContent = ficData.fandom;
                     document.getElementById('ficDescription').textContent = ficData.description;
@@ -296,9 +298,9 @@
                     } else {
                         document.getElementById('ficContent').innerHTML = '<p>Текст фанфика отсутствует</p>';
                     }
-                    
+
                     await checkUserLiked();
-                    
+
                     if (token && ficData.status !== 'draft') {
                         try {
                             await fetch(`${API_URL}/history`, {
@@ -325,38 +327,38 @@
         }
 
         async function loadComments() {
-    const container = document.getElementById('comments-container');
-    if (!commentsData || commentsData.length === 0) {
-        container.innerHTML = '<p class="text-muted text-center">Пока нет комментариев. Будьте первым!</p>';
-        return;
-    }
-
-    container.innerHTML = '';
-    
-    // Загружаем аватары для каждого комментатора
-    for (const comment of commentsData) {
-        let avatarUrl = 'pics/ava.jpg';
-        
-        try {
-            const response = await fetch(`${API_URL}/profile/${comment.username}`);
-            if (response.ok) {
-                const userData = await response.json();
-                if (userData.user.avatar && userData.user.avatar !== 'default-avatar.png') {
-                    avatarUrl = `pics/${userData.user.avatar}`;
-                }
+            const container = document.getElementById('comments-container');
+            if (!commentsData || commentsData.length === 0) {
+                container.innerHTML = '<p class="text-muted text-center">Пока нет комментариев. Будьте первым!</p>';
+                return;
             }
-        } catch (error) {
-            console.error('Ошибка загрузки аватара для', comment.username, error);
-        }
-        
-        const commentHtml = `
+
+            container.innerHTML = '';
+
+            for (const comment of commentsData) {
+                let avatarUrl = 'pics/ava.jpg';
+
+                try {
+                    const response = await fetch(`${API_URL}/profile/${comment.username}`);
+                    if (response.ok) {
+                        const userData = await response.json();
+                        if (userData.user.avatar && userData.user.avatar !== 'default-avatar.png') {
+                            avatarUrl = `pics/${userData.user.avatar}`;
+                        }
+                    }
+                } catch (error) {
+                    console.error('Ошибка загрузки аватара для', comment.username, error);
+                }
+
+                const commentHtml = `
             <div class="comment mb-2">
                 <div class="card-body py-2">
                     <div class="d-flex align-items-center gap-2 mb-1">
-                        <img src="${avatarUrl}" 
-                             class="rounded-circle" 
-                             style="width: 32px; height: 32px; object-fit: cover;"
-                             onerror="this.src='pics/ava.jpg'">
+                       <img src="${avatarUrl}" 
+                            class="rounded-circle" 
+                            style="width: 32px; height: 32px; object-fit: cover;"
+                            alt="Аватар пользователя ${escapeHtml(comment.username)}"
+                            onerror="this.src='pics/ava.jpg'">
                         <a href="profile.html?username=${encodeURIComponent(comment.username)}" class="fw-bold text-decoration-none" style="color: #ff7043;">${escapeHtml(comment.username)}</a>
                         <small class="text-secondary ms-auto">${formatDateTime(comment.createdAt)}</small>
                     </div>
@@ -364,11 +366,11 @@
                 </div>
             </div>
         `;
-        container.innerHTML += commentHtml;
-    }
-    
-    document.getElementById('comments-count').textContent = commentsData.length;
-}
+                container.innerHTML += commentHtml;
+            }
+
+            document.getElementById('comments-count').textContent = commentsData.length;
+        }
 
         function formatDate(dateString) {
             const date = new Date(dateString);
@@ -394,21 +396,21 @@
                 alert('Войдите в аккаунт, чтобы ставить лайки');
                 return;
             }
-            
+
             if (isLiking) return;
             isLiking = true;
-            
+
             const likeBtn = document.getElementById('like-btn');
-            
+
             try {
                 const response = await fetch(`${API_URL}/fics/${ficId}/like`, {
                     method: 'POST',
-                    headers: { 
+                    headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}` 
+                        'Authorization': `Bearer ${token}`
                     }
                 });
-                
+
                 if (response.ok) {
                     const data = await response.json();
                     document.getElementById('likes-count').textContent = data.likes;
@@ -429,21 +431,21 @@
         document.getElementById('comment-btn')?.addEventListener('click', async () => {
             const text = document.getElementById('comment-input').value.trim();
             if (!text) return;
-            
+
             if (!token) {
                 alert('Войдите в аккаунт, чтобы оставить комментарий');
                 return;
             }
-            
+
             const commentBtn = document.getElementById('comment-btn');
             const originalText = commentBtn.textContent;
             commentBtn.textContent = 'Отправка...';
             commentBtn.disabled = true;
-            
+
             try {
                 console.log('Отправка комментария к фанфику:', ficId);
                 console.log('Текст:', text);
-                
+
                 const response = await fetch(`${API_URL}/fics/${ficId}/comments`, {
                     method: 'POST',
                     headers: {
@@ -452,11 +454,11 @@
                     },
                     body: JSON.stringify({ content: text })
                 });
-                
+
                 console.log('Статус ответа:', response.status);
                 const data = await response.json();
                 console.log('Ответ:', data);
-                
+
                 if (response.ok) {
                     commentsData.push(data);
                     loadComments();
@@ -495,6 +497,29 @@
             document.getElementById('commentForm').style.display = 'none';
             document.getElementById('commentAuthMessage').style.display = 'block';
         }
+
+         // Переключение тёмной темы
+        const darkModeBtn = document.getElementById('darkModeBtn');
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            darkModeBtn.textContent = 'Светлая тема';
+        }
+
+        darkModeBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                darkModeBtn.textContent = 'Тёмная тема';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                darkModeBtn.textContent = 'Светлая тема';
+            }
+        });
+
 
         // Запуск
         updateNav();

@@ -11,6 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dark.css">
     <script src="js/api.js"></script>
 </head>
 
@@ -19,8 +20,10 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.html">FanFicLib</a>
-            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
-                <span class="navbar-toggler-icon"></span>
+            <button id="darkModeBtn" class="btn btn-outline-light ms-3">Тёмная тема</button>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav" aria-label="Меню навигации">
+                <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Меню</span>
             </button>
             <div class="collapse navbar-collapse" id="nav">
                 <ul class="navbar-nav me-auto">
@@ -35,12 +38,12 @@
         </div>
     </nav>
 
-
+<main>
     <div class="container mt-4">
         <div class="profile-header">
             <div class="row align-items-center">
                 <div class="col-md-2 text-center">
-                    <img src="pics/ava.jpg" class="avatar" id="avatarImg">
+                    <img src="pics/ava.jpg" class="avatar" id="avatarImg" alt="Аватар пользователя">
                 </div>
 
                 <div class="col-md-7">
@@ -63,27 +66,27 @@
 
         <div class="row g-3 mb-5 text-center">
             <div class="col-6 col-md-3">
-                <div class="stats-box-clean p-3 h-100 shadow-sm rounded-3 bg-white">
-                    <h2 class="display-6 fw-bold text-dark mb-0" id="ficsCount">0</h2>
-                    <p class="text-secondary-emphasis mb-0">Фанфиков</p>
+                <div class="stats-box-clean p-3 h-100 shadow-sm rounded-3">
+                    <h2 class="display-6 fw-bold mb-0" id="ficsCount">0</h2>
+                    <p class="mb-0">Фанфиков</p>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div class="stats-box-clean p-3 h-100 shadow-sm rounded-3 bg-white">
-                    <h2 class="display-6 fw-bold text-dark mb-0" id="viewsCount">0</h2>
-                    <p class="text-secondary-emphasis mb-0">Просмотров</p>
+                <div class="stats-box-clean p-3 h-100 shadow-sm rounded-3">
+                    <h2 class="display-6 fw-bold mb-0" id="viewsCount">0</h2>
+                    <p class="mb-0">Просмотров</p>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div class="stats-box-clean p-3 h-100 shadow-sm rounded-3 bg-white">
-                    <h2 class="display-6 fw-bold text-dark mb-0" id="likesCount">0</h2>
-                    <p class="text-secondary-emphasis mb-0">Лайков</p>
+                <div class="stats-box-clean p-3 h-100 shadow-sm rounded-3">
+                    <h2 class="display-6 fw-bold mb-0" id="likesCount">0</h2>
+                    <p class="mb-0">Лайков</p>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div class="stats-box-clean p-3 h-100 shadow-sm rounded-3 bg-white">
-                    <h2 class="display-6 fw-bold text-dark mb-0" id="subscribersCount">0</h2>
-                    <p class="text-secondary-emphasis mb-0">Подписчиков</p>
+                <div class="stats-box-clean p-3 h-100 shadow-sm rounded-3">
+                    <h2 class="display-6 fw-bold mb-0" id="subscribersCount">0</h2>
+                    <p class="mb-0">Подписчиков</p>
                 </div>
             </div>
         </div>
@@ -156,6 +159,7 @@
         </div>
 
     </div>
+</main>
 
     <footer class="text-center mt-5 p-4">
         <p>© 2026 FanFicLib</p>
@@ -187,7 +191,7 @@
     <label class="form-label">Аватар</label>
     <input type="file" class="form-control" id="editAvatar" accept="image/jpeg,image/png,image/gif,image/webp">
     <div id="avatarPreview" class="mt-2" style="display: none;">
-        <img id="previewImage" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+        <img id="previewImage" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;" alt="Предпросмотр нового аватара">
     </div>
     <small class="text-muted">Допустимые форматы: JPEG, PNG, GIF, WEBP. Максимальный размер: 5 МБ</small>
 </div>
@@ -653,7 +657,8 @@
                                     <div class="me-3">
                                         <img src="${user.avatar && user.avatar !== 'default-avatar.png' ? `pics/${user.avatar}` : 'pics/ava.jpg'}" 
                                              class="rounded-circle" 
-                                             style="width: 50px; height: 50px; object-fit: cover;">
+                                             style="width: 50px; height: 50px; object-fit: cover;"
+                                            alt="Аватар пользователя ${escapeHtml(username)}">
                                     </div>
                                     <div>
                                         <h5 class="mb-0" style="color: #ff7043;">${escapeHtml(username)}</h5>
@@ -674,7 +679,8 @@
                                     <div class="me-3">
                                         <img src="pics/ava.jpg" 
                                              class="rounded-circle" 
-                                             style="width: 50px; height: 50px; object-fit: cover;">
+                                             style="width: 50px; height: 50px; object-fit: cover;"
+                                             alt="Аватар пользователя ${escapeHtml(username)}">>
                                     </div>
                                     <div>
                                         <h5 class="mb-0" style="color: #ff7043;">${escapeHtml(username)}</h5>
@@ -707,6 +713,28 @@
         function formatDateTime(dateString) {
             return new Date(dateString).toLocaleString('ru-RU');
         }
+
+         // Переключение тёмной темы
+        const darkModeBtn = document.getElementById('darkModeBtn');
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            darkModeBtn.textContent = 'Светлая тема';
+        }
+
+        darkModeBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                darkModeBtn.textContent = 'Тёмная тема';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                darkModeBtn.textContent = 'Светлая тема';
+            }
+        });
 
         document.getElementById('saveProfileBtn')?.addEventListener('click', saveProfile);
 
