@@ -8,7 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("theme", theme);
 
         if (toggleBtn) {
-            toggleBtn.innerHTML = theme === "zombie" ? "🍍 Вернуть норму" : "🧟 Зомби-мод";
+            if (theme === "zombie") {
+                toggleBtn.innerHTML = '<svg width="26" height="26" class="me-2"><use href="img/sprite.svg#icon-pineapple"></use></svg> Вернуть норму';
+            } else {
+                toggleBtn.innerHTML = '<svg width="26" height="26" class="me-2"><use href="img/sprite.svg#icon-zombie"></use></svg> Зомби-мод';
+            }
         }
 
         const logos = document.querySelectorAll('img[alt="Логотип Финанас"]');
