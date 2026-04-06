@@ -4,10 +4,12 @@
         <title>PipelineLab - Эксперимент</title>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
+        <meta name="description" content="Карточка эксперимента PipelineLab: описание, метрики, артефакты, логи и смена статуса." />
         <meta
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
+        <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230d6efd'/%3E%3C/svg%3E" type="image/svg+xml" />
 
         <!-- Bootstrap CSS v5.3.2 -->
         <link
@@ -28,8 +30,8 @@
 
                     <a class="navbar-brand" href="index.html">PipelineLab</a>
 
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
-                        <span class="navbar-toggler-icon"></span>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Открыть меню навигации">
+                        <span class="navbar-toggler-icon" aria-hidden="true"></span>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarMenu">
@@ -59,7 +61,7 @@
                     <div class="col-md-6 mb-4">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title mb-3">Информация об эксперименте</h5>
+                                <h2 class="card-title h5 mb-3">Информация об эксперименте</h2>
 
                                 <p class="mb-1"><strong>Название:</strong> <span id="expName">-</span></p>
                                 <p class="mb-1"><strong>Статус:</strong> <span id="expStatus">-</span></p>
@@ -76,18 +78,20 @@
                     <div class="col-md-6 mb-4">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title mb-3">Метрики</h5>
+                                <h2 class="card-title h5 mb-3">Метрики</h2>
 
                                 <form id="addMetricForm" class="mb-3">
                                     <div class="row g-2">
                                         <div class="col-6">
+                                            <label for="metricNameInput" class="visually-hidden">Название метрики</label>
                                             <input type="text" class="form-control" id="metricNameInput" placeholder="Metric name" required>
                                         </div>
                                         <div class="col-4">
+                                            <label for="metricValueInput" class="visually-hidden">Значение метрики</label>
                                             <input type="number" class="form-control" id="metricValueInput" placeholder="Value" step="0.0001" required>
                                         </div>
                                         <div class="col-2 d-grid">
-                                            <button type="submit" class="btn btn-sm btn-primary">+</button>
+                                            <button type="submit" class="btn btn-sm btn-primary" aria-label="Добавить метрику">+</button>
                                         </div>
                                     </div>
                                 </form>
@@ -105,14 +109,16 @@
                     <div class="col-md-6 mb-4">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title mb-3">Артефакты</h5>
+                                <h2 class="card-title h5 mb-3">Артефакты</h2>
 
                                 <form id="addArtifactForm" class="mb-3">
                                     <div class="row g-2">
                                         <div class="col-6">
+                                            <label for="artifactNameInput" class="visually-hidden">Название артефакта</label>
                                             <input type="text" class="form-control" id="artifactNameInput" placeholder="Artifact name" required>
                                         </div>
                                         <div class="col-4">
+                                            <label for="artifactTypeInput" class="visually-hidden">Тип артефакта</label>
                                             <select class="form-select" id="artifactTypeInput">
                                                 <option value="model">model</option>
                                                 <option value="image">image</option>
@@ -122,7 +128,7 @@
                                             </select>
                                         </div>
                                         <div class="col-2 d-grid">
-                                            <button type="submit" class="btn btn-sm btn-primary">+</button>
+                                            <button type="submit" class="btn btn-sm btn-primary" aria-label="Добавить артефакт">+</button>
                                         </div>
                                     </div>
                                 </form>
@@ -136,16 +142,17 @@
                     <div class="col-md-6 mb-4">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title mb-3">Логи</h5>
+                                <h2 class="card-title h5 mb-3">Логи</h2>
 
                                 <div class="mb-3">
-                                    <div class="btn-group mb-2" role="group">
-                                        <button type="button" class="btn btn-sm btn-outline-primary" id="setRunningBtn">Start</button>
-                                        <button type="button" class="btn btn-sm btn-outline-success" id="setCompletedBtn">Finish</button>
-                                        <button type="button" class="btn btn-sm btn-outline-danger" id="setFailedBtn">Fail</button>
+                                    <div class="btn-group mb-2" role="group" aria-label="Смена статуса эксперимента">
+                                        <button type="button" class="btn btn-sm btn-outline-primary" id="setRunningBtn" aria-label="Статус Running">Start</button>
+                                        <button type="button" class="btn btn-sm btn-outline-success" id="setCompletedBtn" aria-label="Статус Completed">Finish</button>
+                                        <button type="button" class="btn btn-sm btn-outline-danger" id="setFailedBtn" aria-label="Статус Failed">Fail</button>
                                     </div>
                                     <form id="addLogForm">
                                         <div class="input-group">
+                                            <label for="logTextInput" class="visually-hidden">Текст лога или комментария</label>
                                             <input type="text" class="form-control" id="logTextInput" placeholder="Комментарий / лог">
                                             <button type="submit" class="btn btn-outline-secondary">Добавить лог</button>
                                         </div>
@@ -163,7 +170,10 @@
             </div>
         </main>
 
-        <footer>
+        <footer class="border-top mt-5 py-4 bg-white">
+            <div class="container text-center small text-muted">
+                <p class="mb-0">PipelineLab — учебный проект по фронтенд-разработке</p>
+            </div>
         </footer>
 
         <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>

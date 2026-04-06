@@ -4,10 +4,12 @@
         <title>PipelineLab - Эксперименты</title>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
+        <meta name="description" content="Список и фильтрация ML-экспериментов в PipelineLab: статусы, этапы, метрики и создание новых запусков." />
         <meta
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
+        <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230d6efd'/%3E%3C/svg%3E" type="image/svg+xml" />
 
         <!-- Bootstrap CSS v5.3.2 -->
         <link
@@ -28,8 +30,8 @@
 
                     <a class="navbar-brand" href="index.html">PipelineLab</a>
 
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
-                        <span class="navbar-toggler-icon"></span>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Открыть меню навигации">
+                        <span class="navbar-toggler-icon" aria-hidden="true"></span>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarMenu">
@@ -60,7 +62,7 @@
                     <div class="col-md-3 mb-4">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title mb-3">Фильтры</h5>
+                                <h2 class="card-title h5 mb-3">Фильтры</h2>
 
                                 <div class="mb-3">
                                     <label for="dateFilter" class="form-label">Дата</label>
@@ -120,7 +122,7 @@
                             <div class="card-body">
 
                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h5 class="card-title mb-0">Список экспериментов</h5>
+                                    <h2 class="card-title h5 mb-0">Список экспериментов</h2>
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createExpModal">
                                         + Новый эксперимент
                                     </button>
@@ -190,7 +192,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="expModelSelect" class="form-label">Модель</label>
-                                <select class="form-select" id="expModelSelect">
+                                <select class="form-select" id="expModelSelect" aria-describedby="expModelHelp">
                                     <option value="">— без модели —</option>
                                 </select>
                                 <small class="text-muted" id="expModelHelp">
@@ -220,7 +222,10 @@
             </div>
         </div>
 
-        <footer>
+        <footer class="border-top mt-5 py-4 bg-white">
+            <div class="container text-center small text-muted">
+                <p class="mb-0">PipelineLab — учебный проект по фронтенд-разработке</p>
+            </div>
         </footer>
 
         <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
