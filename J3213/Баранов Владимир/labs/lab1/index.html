@@ -23,12 +23,51 @@
     </head>
 
     <body>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" display="none">
+            <!-- Feather Icons v4.29 (MIT) https://github.com/feathericons/feather -->
+
+            <symbol id="cpuChip" viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>
+                    <rect x="9" y="9" width="6" height="6"/>
+                    <line x1="9" y1="1" x2="9" y2="4"/>
+                    <line x1="15" y1="1" x2="15" y2="4"/>
+                    <line x1="9" y1="20" x2="9" y2="23"/>
+                    <line x1="15" y1="20" x2="15" y2="23"/>
+                    <line x1="20" y1="9" x2="23" y2="9"/>
+                    <line x1="20" y1="14" x2="23" y2="14"/>
+                    <line x1="1" y1="9" x2="4" y2="9"/>
+                    <line x1="1" y1="14" x2="4" y2="14"/>
+                </g>
+            </symbol>
+
+            <symbol id="runFast" viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </g>
+            </symbol>
+
+            <symbol id="artifactCube" viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                    <line x1="12" y1="22.08" x2="12" y2="12"/>
+                </g>
+            </symbol>
+
+            <symbol id="metricsDonut" viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
+                    <path d="M22 12A10 10 0 0 0 12 2v10z"/>
+                </g>
+            </symbol>
+        </svg>
         <header>
             <nav class="navbar navbar-expand-lg navbar-themed">
 
                 <div class="container">
 
-                    <a class="navbar-brand" href="index.html">PipelineLab</a>
+                    <a class="navbar-brand d-inline-flex align-items-center gap-2" href="index.html"><svg class="icon icon--brand" aria-hidden="true" focusable="false"><use xlink:href="#artifactCube"></use></svg>PipelineLab</a>
 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Открыть меню навигации">
                         <span class="navbar-toggler-icon" aria-hidden="true"></span>
@@ -82,7 +121,10 @@
                         <div class="card">
                             <div class="card-body">
 
-                                <h2 class="card-title h5">Эксперименты</h2>
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <svg class="icon icon--card" aria-hidden="true" focusable="false"><use xlink:href="#runFast"></use></svg>
+                                    <h2 class="card-title h5 mb-0">Эксперименты</h2>
+                                </div>
 
                                 <p class="card-text">
                                     Отслеживайте запуски моделей и сохраняйте результаты обучения.
@@ -99,7 +141,10 @@
 
                             <div class="card">
                                 <div class="card-body">
-                                    <h2 class="card-title h5">Метрики</h2>
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <svg class="icon icon--card" aria-hidden="true" focusable="false"><use xlink:href="#metricsDonut"></use></svg>
+                                        <h2 class="card-title h5 mb-0">Метрики</h2>
+                                    </div>
                                     <p class="card-text">
                                         Просматривайте accuracy, loss и другие метрики моделей.
                                     </p>
@@ -115,7 +160,10 @@
 
                         <div class="card">
                             <div class="card-body">
-                                <h2 class="card-title h5">Модели</h2>
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <svg class="icon icon--card" aria-hidden="true" focusable="false"><use xlink:href="#cpuChip"></use></svg>
+                                    <h2 class="card-title h5 mb-0">Модели</h2>
+                                </div>
                                 <p class="card-text">
                                     Управляйте версиями моделей и их статусами развертывания.
                                 </p>
