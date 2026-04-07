@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Каталог онлайн-курсов с поиском и фильтрацией">
+    <title>Курсы</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+    <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+    <header>
+        <div class="container">
+            <a class="logo" href="index.html">Online Courses</a>
+            <nav aria-label="Основная навигация">
+                <a href="index.html">Главная</a>
+                <a href="courses.html" aria-current="page">Курсы</a>
+                <a href="login.html">Вход</a>
+                <a href="register.html">Регистрация</a>
+                <a href="profile.html">Кабинет</a>
+            </nav>
+            <button
+                type="button"
+                class="theme-toggle"
+                id="theme-toggle"
+                aria-pressed="false"
+                aria-label="Переключить цветовую тему"
+            >
+                <svg class="button-icon" aria-hidden="true">
+                    <use href="assets/icons/sprite.svg#icon-theme"></use>
+                </svg>
+                <span>Сменить тему</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="section">
+            <div class="container">
+                <h1 class="section-title">Каталог курсов</h1>
+
+                <form class="filters" aria-label="Фильтры курсов">
+                    <fieldset class="filters-group">
+                        <legend>Подбор курса</legend>
+
+                        <div class="form-group">
+                            <label for="search">Поиск</label>
+                            <input type="text" id="search" name="search" placeholder="Введите название курса">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Предмет</label>
+                            <select id="subject" name="subject">
+                                <option>Все</option>
+                                <option>Веб-разработка</option>
+                                <option>Дизайн</option>
+                                <option>Программирование</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="level">Уровень</label>
+                            <select id="level" name="level">
+                                <option>Все</option>
+                                <option>Начальный</option>
+                                <option>Средний</option>
+                                <option>Продвинутый</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <div class="course-list">
+                    <article class="card">
+                        <h2>HTML и CSS с нуля</h2>
+                        <p>Уровень: Начальный</p>
+                        <p>Цена: Бесплатно</p>
+                        <a href="course.html?id=1" class="btn">Подробнее</a>
+                    </article>
+
+                    <article class="card">
+                        <h2>Основы веб-дизайна</h2>
+                        <p>Уровень: Начальный</p>
+                        <p>Цена: 1200 ₽</p>
+                        <a href="course.html?id=2" class="btn">Подробнее</a>
+                    </article>
+
+                    <article class="card">
+                        <h2>Адаптивная вёрстка</h2>
+                        <p>Уровень: Средний</p>
+                        <p>Цена: 1800 ₽</p>
+                        <a href="course.html?id=3" class="btn">Подробнее</a>
+                    </article>
+
+                    <article class="card">
+                        <h2>UI/UX для начинающих</h2>
+                        <p>Уровень: Начальный</p>
+                        <p>Цена: 1500 ₽</p>
+                        <a href="course.html?id=4" class="btn">Подробнее</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 Online Courses</p>
+        </div>
+    </footer>
+    <script type="module" src="assets/js/app.js"></script>
+
+</body>
+</html>

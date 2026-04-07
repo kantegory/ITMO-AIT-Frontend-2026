@@ -33,19 +33,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeButton = document.getElementById('theme-toggle');
     const savedTheme = localStorage.getItem('theme');
 
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-theme');
-    }
+    const applyThemeState = (isDarkTheme) => {
+        document.body.classList.toggle('dark-theme', isDarkTheme);
+
+        if (themeButton) {
+            themeButton.setAttribute('aria-pressed', String(isDarkTheme));
+            themeButton.setAttribute(
+                'aria-label',
+                isDarkTheme ? 'Включить светлую тему' : 'Включить тёмную тему'
+            );
+        }
+    };
+
+    applyThemeState(savedTheme === 'dark');
 
     if (themeButton) {
         themeButton.addEventListener('click', () => {
-            document.body.classList.toggle('dark-theme');
+            const isDarkTheme = !document.body.classList.contains('dark-theme');
 
-            if (document.body.classList.contains('dark-theme')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
+            applyThemeState(isDarkTheme);
+            localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
         });
     }
 });

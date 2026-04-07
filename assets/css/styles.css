@@ -73,6 +73,14 @@ body {
     margin: 0 auto;
 }
 
+header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
 .skip-link {
     position: absolute;
     left: -9999px;
@@ -97,21 +105,34 @@ header {
 }
 
 .logo {
+    display: inline-block;
     font-size: 28px;
     font-weight: bold;
     color: var(--nav-link-color);
-    margin-bottom: 10px;
+    text-decoration: none;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px 12px;
+    flex-wrap: wrap;
 }
 
 nav a {
     text-decoration: none;
     color: var(--nav-link-color);
-    margin: 0 12px;
     font-weight: bold;
 }
 
 nav a:hover {
     text-decoration: underline;
+}
+
+nav a[aria-current="page"] {
+    text-decoration: underline;
+    text-underline-offset: 4px;
 }
 
 .hero {
@@ -145,14 +166,44 @@ nav a:hover {
     cursor: pointer;
 }
 
+.btn-full {
+    width: 100%;
+    text-align: center;
+}
+
 .btn:hover {
     background-color: var(--button-hover-color);
     transform: translateY(-2px);
 }
 
 .theme-toggle {
-    margin-left: 12px;
-    margin-top: 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: var(--button-color);
+    color: var(--button-text-color);
+    padding: 12px 18px;
+    border: none;
+    border-radius: var(--border-radius-pill);
+    box-shadow: 0 4px 10px var(--shadow-button);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.theme-toggle:hover {
+    background-color: var(--button-hover-color);
+    transform: translateY(-2px);
+}
+
+.theme-toggle[aria-pressed="true"] {
+    background-color: var(--heading-color);
+}
+
+.button-icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
 }
 
 .section {
@@ -277,6 +328,10 @@ nav a:hover {
     line-height: 20px;
 }
 
+.progress-label {
+    margin-top: 15px;
+}
+
 .filters {
     background-color: var(--card-bg);
     padding: 20px;
@@ -285,10 +340,28 @@ nav a:hover {
     margin-bottom: 30px;
 }
 
+.filters-group {
+    border: none;
+}
+
+.filters-group legend {
+    font-weight: bold;
+    color: var(--heading-color);
+    margin-bottom: 15px;
+}
+
 .course-list {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+}
+
+.course-program {
+    padding-left: 20px;
+}
+
+.course-program li + li {
+    margin-top: 8px;
 }
 
 footer {
@@ -318,4 +391,14 @@ footer {
     height: 32px;
     fill: var(--button-color);
     margin-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+    }
+
+    .theme-toggle {
+        width: 100%;
+    }
 }
