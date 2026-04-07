@@ -1,0 +1,321 @@
+:root {
+    --font-main: Arial, sans-serif;
+
+    --bg-color: #fffdff;
+    --text-color: #333;
+    --heading-color: #444;
+
+    --primary-color: #ff9cda;
+    --secondary-color: #ffd3ec;
+
+    --button-color: #5f73b3;
+    --button-hover-color: #4d619f;
+    --button-text-color: #ffffff;
+
+    --card-bg: #ffffff;
+    --input-border-color: #ddd;
+    --shadow-light: rgba(0, 0, 0, 0.08);
+    --shadow-medium: rgba(0, 0, 0, 0.1);
+    --shadow-button: rgba(95, 115, 179, 0.3);
+
+    --focus-color: #5f73b3;
+    --nav-link-color: #ffffff;
+    --footer-text-color: #ffffff;
+
+    --border-radius-small: 10px;
+    --border-radius-medium: 12px;
+    --border-radius-large: 18px;
+    --border-radius-pill: 30px;
+
+    --container-width: 1200px;
+    --transition-fast: 0.3s;
+}
+
+body.dark-theme {
+    --bg-color: #1f1f2b;
+    --text-color: #f2f2f2;
+    --heading-color: #ffffff;
+
+    --primary-color: #5a4670;
+    --secondary-color: #3d304d;
+
+    --button-color: #a184d6;
+    --button-hover-color: #8f73c4;
+    --button-text-color: #ffffff;
+
+    --card-bg: #2b2b3a;
+    --input-border-color: #666;
+    --shadow-light: rgba(0, 0, 0, 0.25);
+    --shadow-medium: rgba(0, 0, 0, 0.35);
+    --shadow-button: rgba(0, 0, 0, 0.3);
+
+    --focus-color: #ffd3ec;
+    --nav-link-color: #ffffff;
+    --footer-text-color: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 10px;
+    background-color: var(--button-color);
+    color: var(--button-text-color);
+    padding: 10px 16px;
+    border-radius: var(--border-radius-small);
+    text-decoration: none;
+    z-index: 1000;
+}
+
+.skip-link:focus {
+    left: 10px;
+}
+
+header {
+    background-color: var(--primary-color);
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--nav-link-color);
+    margin-bottom: 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--nav-link-color);
+    margin: 0 12px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.hero {
+    background-color: var(--secondary-color);
+    text-align: center;
+    padding: 70px 20px;
+}
+
+.hero h1 {
+    font-size: 40px;
+    margin-bottom: 15px;
+    color: var(--heading-color);
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.btn {
+    display: inline-block;
+    background-color: var(--button-color);
+    color: var(--button-text-color);
+    padding: 12px 24px;
+    border-radius: var(--border-radius-pill);
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 10px var(--shadow-button);
+    transition: var(--transition-fast);
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: var(--button-hover-color);
+    transform: translateY(-2px);
+}
+
+.theme-toggle {
+    margin-left: 12px;
+    margin-top: 15px;
+}
+
+.section {
+    padding: 50px 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 30px;
+    color: var(--heading-color);
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    background-color: var(--card-bg);
+    width: 300px;
+    border-radius: var(--border-radius-large);
+    padding: 20px;
+    box-shadow: 0 6px 18px var(--shadow-medium);
+}
+
+.card h3,
+.card h2 {
+    margin-bottom: 10px;
+    color: var(--button-color);
+}
+
+.card p {
+    margin-bottom: 15px;
+}
+
+.form-page {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.form-box {
+    background-color: var(--card-bg);
+    width: 100%;
+    max-width: 420px;
+    padding: 30px;
+    border-radius: var(--border-radius-large);
+    box-shadow: 0 6px 18px var(--shadow-medium);
+}
+
+.form-box h1,
+.form-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--heading-color);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--border-radius-medium);
+    outline: none;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--primary-color);
+}
+
+.form-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.form-link a {
+    color: var(--button-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.profile-box {
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: var(--border-radius-large);
+    box-shadow: 0 6px 18px var(--shadow-medium);
+    margin-bottom: 25px;
+}
+
+.progress-bar {
+    background-color: var(--secondary-color);
+    border-radius: 20px;
+    overflow: hidden;
+    height: 20px;
+    margin-top: 8px;
+}
+
+.progress {
+    background-color: var(--button-color);
+    height: 100%;
+    color: var(--button-text-color);
+    text-align: center;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.filters {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: var(--border-radius-large);
+    box-shadow: 0 6px 18px var(--shadow-medium);
+    margin-bottom: 30px;
+}
+
+.course-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+footer {
+    background-color: var(--primary-color);
+    text-align: center;
+    color: var(--footer-text-color);
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+:focus-visible {
+    outline: 3px solid var(--focus-color);
+    outline-offset: 3px;
+}
+
+.hero-image {
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto 30px;
+    border-radius: var(--border-radius-large);
+    box-shadow: 0 6px 18px var(--shadow-medium);
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+    fill: var(--button-color);
+    margin-bottom: 12px;
+}
