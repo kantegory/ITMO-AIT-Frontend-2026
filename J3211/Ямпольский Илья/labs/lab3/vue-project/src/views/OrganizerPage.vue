@@ -31,7 +31,7 @@
             <h2 class="h5 mb-3">Мои мероприятия</h2>
           </header>
           <div class="table-responsive">
-            <table class="table organizer-table">
+            <table class="table">
               <thead>
               <tr>
                 <th style="min-width: 200px;">Событие</th>
@@ -83,7 +83,8 @@
     </section>
 
     <CreateEventModal
-      v-model="showCreateModal"
+      :model-value="showCreateModal"
+      @update:model-value="showCreateModal = $event"
       @event-created="loadData"
     />
   </BaseLayout>
@@ -159,14 +160,16 @@ export default {
     }
 
     const loadData = async () => {
-      const eventsResponse = await eventsStore.loadEvents()
-      events.value = eventsResponse.data
-
       try {
+        const eventsResponse = await eventsStore.loadEvents()
+        events.value = eventsResponse.data || []
+
         const ticketsResponse = await fetch('http://localhost:3000/tickets')
         tickets.value = await ticketsResponse.json()
       } catch (error) {
-        console.error('Ошибка загрузки билетов:', error)
+        console.error('Ошибка загрузки:', error)
+        events.value = []
+        tickets.value = []
       }
     }
 
@@ -190,14 +193,14 @@ export default {
 </script>
 
 <style scoped>
-.organizer-table {
+.organizer-content table {
   width: 100% !important;
   min-width: 1200px !important;
   table-layout: fixed !important;
 }
 
-.organizer-table th,
-.organizer-table td {
+.organizer-content table th,
+.organizer-content table td {
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
@@ -205,13 +208,7 @@ export default {
   vertical-align: middle !important;
 }
 
-.organizer-table th {
-  font-weight: 600 !important;
-  text-align: left !important;
-}
-
 .table-responsive {
   overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch !important;
 }
 </style>

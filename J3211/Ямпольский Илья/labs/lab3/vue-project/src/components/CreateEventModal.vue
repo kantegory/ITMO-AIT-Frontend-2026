@@ -1,9 +1,9 @@
 <template>
-  <div v-if="modelValue" class="modal-backdrop" @click="closeModal">
+  <div v-if="modelValue" class="modal-backdrop" @click="handleBackdropClick">
     <div class="modal-content-wrapper" @click.stop>
       <div class="modal-header">
         <h2 class="modal-title">Создать событие</h2>
-        <button type="button" class="btn-close" @click="closeModal" aria-label="Закрыть"></button>
+        <button type="button" class="btn-close" @click="handleClose" aria-label="Закрыть"></button>
       </div>
       <div class="modal-body">
         <form @submit.prevent="submitForm">
@@ -53,7 +53,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" @click="closeModal">Отмена</button>
+        <button type="button" class="btn btn-secondary" @click="handleClose">Отмена</button>
         <button type="button" class="btn btn-primary" @click="submitForm">Создать</button>
       </div>
     </div>
@@ -68,10 +68,13 @@ import { useEventsStore } from '@/stores/events'
 export default {
   name: 'CreateEventModal',
   props: {
-    modelValue: Boolean
+    modelValue: {
+      type: Boolean,
+      required: true
+    }
   },
   emits: ['update:modelValue', 'event-created'],
-  setup(props, { emit }) {
+  setup(props, context) {
     const auth = useAuthStore()
     const eventsStore = useEventsStore()
 
@@ -87,9 +90,15 @@ export default {
       capacity: '50'
     })
 
-    const closeModal = () => {
-      emit('update:modelValue', false)
+    const handleClose = () => {
+      context.emit('update:modelValue', false)
       resetForm()
+    }
+
+    const handleBackdropClick = (event) => {
+      if (event.target === event.currentTarget) {
+        handleClose()
+      }
     }
 
     const resetForm = () => {
@@ -140,17 +149,18 @@ export default {
 
       try {
         await eventsStore.createEvent(eventData)
-        alert('Событие создано! Теперь оно доступно на главной странице и в поиске.')
-        emit('event-created')
-        closeModal()
+        alert('Событие создано!')
+        context.emit('event-created')
+        handleClose()
       } catch (error) {
-        alert('Ошибка создания события: ' + error.message)
+        alert('Ошибка: ' + error.message)
       }
     }
 
     return {
       form,
-      closeModal,
+      handleClose,
+      handleBackdropClick,
       submitForm
     }
   }

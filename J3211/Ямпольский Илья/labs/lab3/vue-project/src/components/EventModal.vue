@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { ref, computed, watch, nextTick, onMounted } from 'vue'
+import { ref, computed, watch, nextTick } from 'vue'
 import { useFormat } from '@/composables/useFormat'
 import { useAuthStore } from '@/stores/auth'
 
@@ -67,7 +67,7 @@ export default {
     const selectedSeats = ref([])
     const soldSeats = ref([])
     const reviews = ref([])
-    ref(false);
+
     const totalPrice = computed(() => selectedSeats.value.length * (props.event?.price || 0))
 
     const loadReviews = async () => {
@@ -76,13 +76,10 @@ export default {
         return
       }
       try {
-        console.log('📥 Загрузка отзывов для eventId:', props.event.id)
         const response = await fetch(`http://localhost:3000/reviews?eventId=${props.event.id}`)
         const data = await response.json()
         reviews.value = data || []
-        console.log('✅ Отзывы загружены:', reviews.value.length)
       } catch (error) {
-        console.error('❌ Ошибка загрузки отзывов:', error)
         reviews.value = []
       }
     }
@@ -99,26 +96,18 @@ export default {
           }
         })
         soldSeats.value = sold
-        console.log('✅ Проданные места:', soldSeats.value)
       } catch (error) {
-        console.error('❌ Ошибка загрузки мест:', error)
         soldSeats.value = []
       }
     }
 
     const generateSeatMap = async () => {
-      if (!seatMapRef.value || !props.event?.id) {
-        console.log('❌ generateSeatMap: нет seatMapRef или event.id')
-        return
-      }
-
-      console.log('🎫 generateSeatMap: начинаем для event', props.event.id, 'capacity:', props.event.capacity)
+      if (!seatMapRef.value || !props.event?.id) return
 
       await nextTick()
 
       const capacity = props.event.capacity || 50
       selectedSeats.value = []
-
       await loadSoldSeats()
 
       seatMapRef.value.innerHTML = ''
@@ -150,8 +139,6 @@ export default {
 
         seatMapRef.value.appendChild(button)
       }
-
-      console.log('✅ generateSeatMap: завершено, создано мест:', capacity)
     }
 
     const toggleSeat = (seatNumber) => {
@@ -204,7 +191,6 @@ export default {
         emit('buy-tickets', ticketData)
         closeModal()
       } catch (error) {
-        console.error('Ошибка покупки:', error)
         alert('Ошибка покупки билетов')
       }
     }
@@ -214,18 +200,8 @@ export default {
       selectedSeats.value = []
     }
 
-    onMounted(async () => {
-      console.log('🔧 onMounted: modelValue =', props.modelValue, 'event.id =', props.event?.id)
-      if (props.modelValue && props.event?.id) {
-        await nextTick()
-        await loadReviews()
-        await generateSeatMap()
-      }
-    })
-
-    watch(() => props.modelValue, async (newVal, oldVal) => {
-      console.log('👁 watch modelValue:', oldVal, '→', newVal)
-      if (newVal && !oldVal && props.event?.id) {
+    watch(() => props.modelValue, async (newVal) => {
+      if (newVal && props.event?.id) {
         await nextTick()
         await loadReviews()
         await generateSeatMap()
@@ -233,7 +209,6 @@ export default {
     })
 
     watch(() => props.event?.id, async (newId, oldId) => {
-      console.log('👁 watch event.id:', oldId, '→', newId)
       if (newId && newId !== oldId && props.modelValue) {
         await nextTick()
         await loadReviews()
@@ -309,7 +284,7 @@ export default {
   flex-wrap: wrap;
   gap: 8px;
   padding: 20px;
-  background: var(--border-light);
+  background: transparent !important;
   border-radius: 10px;
   justify-content: flex-start;
   width: 100%;
