@@ -6,40 +6,53 @@
         <button type="button" class="btn-close" @click="closeModal" aria-label="Закрыть"></button>
       </div>
       <div class="modal-body">
-        <img :src="event?.imageUrl || 'https://placebear.com/800/400'" class="img-fluid rounded mb-3 w-100" :alt="event?.title" style="max-height: 400px; object-fit: cover;">
+        <div class="image-section mb-3">
+          <img
+            :src="event?.imageUrl || 'https://placebear.com/800/400'"
+            class="img-fluid rounded"
+            :alt="event?.title"
+            style="max-height: 500px; object-fit: contain; width: auto; max-width: 100%; height: auto;"
+          >
+        </div>
         <div class="row">
           <div class="col-lg-8">
-            <p class="text-muted">{{ event?.type || 'Мероприятие' }}</p>
-            <p class="text-muted">Место: {{ event?.city }}{{ event?.venue ? ', ' + event?.venue : '' }}</p>
-            <p class="text-muted">{{ event?.description || '' }}</p>
-            <h3 class="mt-4">Схема зала</h3>
-            <div class="seat-map" ref="seatMapRef"></div>
-            <div class="mt-2 d-flex gap-3 small flex-wrap">
-              <span><span class="legend-seat available"></span>Свободно</span>
-              <span><span class="legend-seat selected"></span>Выбрано</span>
-              <span><span class="legend-seat sold"></span>Продано</span>
+            <div class="info-section mb-3">
+              <p class="text-muted mb-2">{{ event?.type || 'Мероприятие' }}</p>
+              <p class="text-muted mb-2">
+                <strong>Место:</strong> {{ event?.city }}{{ event?.venue ? ', ' + event?.venue : '' }}
+              </p>
+              <p class="text-muted mb-0">
+                <strong>Описание:</strong> {{ event?.description || 'Нет описания' }}
+              </p>
             </div>
-            <h3 class="mt-4">Отзывы</h3>
-            <div id="reviewsContainer">
-              <p v-if="reviews.length === 0" class="text-muted small">Пока нет отзывов</p>
-              <div v-for="review in reviews" :key="review.id" class="card bg-light border-0 mb-2">
-                <div class="card-body p-2">
+            <div class="seat-section mb-3">
+              <h3 class="mt-4 mb-2">Схема зала</h3>
+              <div class="seat-map" ref="seatMapRef"></div>
+              <div class="mt-2 d-flex gap-3 small flex-wrap">
+                <span><span class="legend-seat available"></span>Свободно</span>
+                <span><span class="legend-seat selected"></span>Выбрано</span>
+                <span><span class="legend-seat sold"></span>Продано</span>
+              </div>
+            </div>
+            <div class="reviews-section">
+              <h3 class="mt-4 mb-2">Отзывы</h3>
+              <div id="reviewsContainer">
+                <p v-if="reviews.length === 0" class="text-muted small">Пока нет отзывов</p>
+                <div v-for="review in reviews" :key="review.id" class="review-item mb-2">
                   <small><strong>{{ review.anonymous ? 'Аноним' : review.userName }}</strong> [{{ review.rating }}/5]</small>
                   <p class="mb-0 small">{{ review.text }}</p>
                 </div>
               </div>
+              <button type="button" class="btn btn-outline-primary btn-sm mt-2" @click="$emit('open-review', event?.id)">Оставить отзыв</button>
             </div>
-            <button type="button" class="btn btn-outline-primary btn-sm mt-2" @click="$emit('open-review', event?.id)">Оставить отзыв</button>
           </div>
           <div class="col-lg-4">
-            <div class="card bg-light text-center">
-              <div class="card-body">
-                <h3 class="text-muted">Цена</h3>
-                <p class="text-primary">{{ formatPrice(event?.price || 0) }} ₽</p>
-                <div class="mb-2"><small>Выбрано мест: </small><strong>{{ selectedSeats.length }}</strong></div>
-                <div class="mb-3"><small>Итого: </small><strong class="text-success">{{ formatPrice(totalPrice) }} ₽</strong></div>
-                <button type="button" class="btn btn-success w-100" @click="buyTickets">Купить билеты</button>
-              </div>
+            <div class="price-section">
+              <h3 class="text-muted">Цена</h3>
+              <p class="text-primary">{{ formatPrice(event?.price || 0) }} ₽</p>
+              <div class="mb-2"><small>Выбрано мест: </small><strong>{{ selectedSeats.length }}</strong></div>
+              <div class="mb-3"><small>Итого: </small><strong class="text-success">{{ formatPrice(totalPrice) }} ₽</strong></div>
+              <button type="button" class="btn btn-success w-100" @click="buyTickets">Купить билеты</button>
             </div>
           </div>
         </div>
@@ -277,6 +290,42 @@ export default {
   padding: 1rem;
 }
 
+.image-section {
+  text-align: center !important;
+  margin-bottom: 1rem !important;
+}
+
+.image-section img {
+  display: inline-block !important;
+  max-height: 500px !important;
+  object-fit: contain !important;
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+  border: 3px solid var(--border-color) !important;
+  border-radius: 10px !important;
+}
+
+.info-section {
+  border: 3px solid var(--border-color) !important;
+  border-radius: 10px !important;
+  padding: 1rem !important;
+  background: var(--bg-secondary) !important;
+  margin-bottom: 1rem !important;
+}
+
+.info-section p {
+  margin-bottom: 0.5rem !important;
+}
+
+.seat-section {
+  border: 3px solid var(--border-color) !important;
+  border-radius: 10px !important;
+  padding: 1rem !important;
+  background: var(--bg-secondary) !important;
+  margin-bottom: 1rem !important;
+}
+
 .seat-map {
   display: flex;
   flex-wrap: wrap;
@@ -288,6 +337,45 @@ export default {
   width: 100%;
   min-height: 200px;
   border: 2px solid var(--border-color) !important;
+}
+
+.seat {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 4px !important;
+  flex-shrink: 0 !important;
+  border: 2px solid var(--legend-border) !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #ffffff !important;
+}
+
+.seat.available {
+  background: var(--seat-available) !important;
+  border-color: var(--seat-available-hover) !important;
+}
+
+.seat.available:hover {
+  background: var(--seat-available-hover) !important;
+  transform: scale(1.1) !important;
+}
+
+.seat.selected {
+  background: var(--seat-selected) !important;
+  border-color: var(--seat-selected-hover) !important;
+  color: #000000 !important;
+}
+
+.seat.sold {
+  background: var(--seat-sold) !important;
+  border-color: var(--seat-sold-border) !important;
+  cursor: not-allowed !important;
+  opacity: 0.6 !important;
 }
 
 .legend-seat {
@@ -310,5 +398,33 @@ export default {
 
 .legend-seat.sold {
   background: var(--seat-sold) !important;
+}
+
+.reviews-section {
+  border: 3px solid var(--border-color) !important;
+  border-radius: 10px !important;
+  padding: 1rem !important;
+  background: var(--bg-secondary) !important;
+}
+
+.review-item {
+  border: 2px solid var(--border-light) !important;
+  border-radius: 8px !important;
+  padding: 0.75rem !important;
+  background: var(--bg-secondary) !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.price-section {
+  border: 3px solid var(--border-color) !important;
+  border-radius: 10px !important;
+  padding: 1.5rem !important;
+  background: var(--bg-secondary) !important;
+  text-align: center !important;
+}
+
+.price-section .card {
+  border: none !important;
+  box-shadow: none !important;
 }
 </style>
