@@ -7,7 +7,9 @@
   <title>DataFlow — etl_users_daily</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/dark.css" rel="stylesheet" media="(prefers-color-scheme: dark)">
+  <link href="css/red.css" rel="stylesheet">
 </head>
 <body>
 
@@ -31,13 +33,18 @@
   <!-- Topbar -->
   <div class="topbar">
     <div>
-      <a href="index.html" class="text-decoration-none" style="color: #1a237e;">Pipelines</a>
+      <a href="index.html" class="text-decoration-none text-brand">Pipelines</a>
       <span class="text-muted"> / </span>
       <strong>etl_users_daily</strong>
     </div>
-    <a href="profile.html" class="text-decoration-none text-dark">
-      <i class="bi bi-person-circle"></i> Profile
-    </a>
+    <div class="d-flex align-items-center gap-2">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i id="themeIcon" class="bi bi-moon-fill"></i>
+      </button>
+      <a href="profile.html" class="text-decoration-none text-dark">
+        <i class="bi bi-person-circle"></i> Profile
+      </a>
+    </div>
   </div>
 
   <main class="main-content">
@@ -45,7 +52,7 @@
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div>
-        <h5 style="color: #1a237e;"><i class="bi bi-diagram-3"></i> etl_users_daily</h5>
+        <h5 class="text-brand"><i class="bi bi-diagram-3"></i> etl_users_daily</h5>
         <p class="text-muted mb-0">Schedule: <code>0 2 * * *</code> &middot; Last Run: 2026-03-10 02:00 &middot; <span class="badge bg-success">Success</span></p>
       </div>
       <div>
@@ -77,7 +84,7 @@
 
       <!-- Graph View -->
       <div class="tab-pane fade show active" id="graph">
-        <div class="bg-white rounded shadow-sm p-4">
+        <div class="bg-card rounded shadow-sm p-4">
           <div class="d-flex flex-column align-items-center">
 
             <div class="dag-box success" onclick="openTask('task_001', 'extract_users', '2026-03-10 02:00:01', '14s', 'Success')">
@@ -136,7 +143,7 @@
 
       <!-- History -->
       <div class="tab-pane fade" id="history">
-        <div class="table-responsive bg-white rounded shadow-sm">
+        <div class="table-responsive bg-card rounded shadow-sm">
           <table class="table table-hover mb-0">
             <thead class="table-light">
               <tr>
@@ -202,5 +209,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/pipeline-detail.js"></script>
+  <script src="js/theme.js"></script>
 </body>
 </html>

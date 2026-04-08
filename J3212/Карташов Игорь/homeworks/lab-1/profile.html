@@ -7,7 +7,9 @@
   <title>DataFlow — Profile</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/dark.css" rel="stylesheet" media="(prefers-color-scheme: dark)">
+  <link href="css/red.css" rel="stylesheet">
 </head>
 <body>
 
@@ -30,10 +32,15 @@
 
   <!-- Topbar -->
   <div class="topbar">
-    <strong style="color: #1a237e;">Profile</strong>
-    <a href="login.html" class="text-decoration-none text-danger">
-      <i class="bi bi-box-arrow-right"></i> Sign Out
-    </a>
+    <strong class="text-brand">Profile</strong>
+    <div class="d-flex align-items-center gap-2">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i id="themeIcon" class="bi bi-moon-fill"></i>
+      </button>
+      <a href="login.html" class="text-decoration-none text-danger">
+        <i class="bi bi-box-arrow-right"></i> Sign Out
+      </a>
+    </div>
   </div>
 
   <main class="main-content">
@@ -41,8 +48,8 @@
 
       <!-- Profile info -->
       <div class="col-md-4 mb-4">
-        <div class="bg-white rounded shadow-sm p-4 text-center">
-          <div class="mx-auto mb-3" style="width: 70px; height: 70px; border-radius: 50%; background: #1a237e; display: flex; align-items: center; justify-content: center;">
+        <div class="bg-card rounded shadow-sm p-4 text-center">
+          <div class="avatar-circle mx-auto mb-3">
             <span class="text-white fs-4 fw-bold">IK</span>
           </div>
           <h5>Igor Kartashov</h5>
@@ -62,11 +69,11 @@
       <div class="col-md-8">
 
         <!-- Statistics -->
-        <div class="bg-white rounded shadow-sm p-4 mb-4">
+        <div class="bg-card rounded shadow-sm p-4 mb-4">
           <h6><i class="bi bi-bar-chart"></i> Statistics</h6>
           <div class="row text-center mt-3">
             <div class="col-3">
-              <div class="fs-4 fw-bold" style="color: #1a237e;">12</div>
+              <div class="fs-4 fw-bold text-brand">12</div>
               <small class="text-muted">DAGs</small>
             </div>
             <div class="col-3">
@@ -85,7 +92,7 @@
         </div>
 
         <!-- Connections -->
-        <div class="bg-white rounded shadow-sm p-4">
+        <div class="bg-card rounded shadow-sm p-4">
           <h6><i class="bi bi-plug"></i> Connections</h6>
 
           <div class="connection-item mb-3 mt-3">
@@ -121,5 +128,6 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/theme.js"></script>
 </body>
 </html>

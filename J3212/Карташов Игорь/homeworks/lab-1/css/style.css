@@ -1,0 +1,405 @@
+/* ===== CSS Variables (Light theme — default) ===== */
+:root {
+  --bg-body: #f5f5f5;
+  --bg-card: #ffffff;
+  --bg-sidebar: #1a237e;
+  --bg-topbar: #ffffff;
+  --bg-auth: #1a237e;
+  --bg-filter: #ffffff;
+  --bg-input: #ffffff;
+  --bg-table-head: #f8f9fa;
+  --bg-log: #111111;
+
+  --text-color: #212529;
+  --text-muted-color: #495057;
+  --text-brand: #1a237e;
+  --text-log: #cccccc;
+
+  --border-color: #dddddd;
+  --border-input: #ced4da;
+
+  --sidebar-text: rgba(255, 255, 255, 0.7);
+  --sidebar-hover-bg: rgba(255, 255, 255, 0.1);
+  --sidebar-active-bg: rgba(255, 255, 255, 0.15);
+  --sidebar-active-border: #64b5f6;
+  --sidebar-section-color: rgba(255, 255, 255, 0.35);
+  --sidebar-divider: rgba(255, 255, 255, 0.15);
+
+  --dag-bg: #ffffff;
+  --dag-border: #1a237e;
+  --dag-arrow-color: #6c757d;
+
+  --connection-border: #dddddd;
+  --auth-btn-bg: #1a237e;
+  --auth-btn-border: #1a237e;
+
+  --avatar-bg: #1a237e;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+}
+
+/* ===== Dark theme (JS toggle override) ===== */
+body[data-theme="dark"] {
+  --bg-body: #121218;
+  --bg-card: #1e1e2e;
+  --bg-topbar: #1e1e2e;
+  --bg-auth: #0d0d1a;
+  --bg-filter: #1e1e2e;
+  --bg-input: #2a2a3e;
+  --bg-table-head: #252538;
+  --bg-log: #0a0a14;
+
+  --text-color: #e0e0e0;
+  --text-muted-color: #a0a0b0;
+  --text-brand: #7986cb;
+
+  --border-color: #333350;
+  --border-input: #444466;
+
+  --bg-sidebar: #0d0d1a;
+  --dag-bg: #1e1e2e;
+  --dag-border: #7986cb;
+  --dag-arrow-color: #8888a0;
+
+  --connection-border: #333350;
+  --auth-btn-bg: #3949ab;
+  --auth-btn-border: #3949ab;
+
+  --avatar-bg: #3949ab;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Re-assert light when user explicitly picks light */
+body[data-theme="light"] {
+  --bg-body: #f5f5f5;
+  --bg-card: #ffffff;
+  --bg-topbar: #ffffff;
+  --bg-auth: #1a237e;
+  --bg-filter: #ffffff;
+  --bg-input: #ffffff;
+  --bg-table-head: #f8f9fa;
+  --bg-log: #111111;
+
+  --text-color: #212529;
+  --text-muted-color: #495057;
+  --text-brand: #1a237e;
+
+  --border-color: #dddddd;
+  --border-input: #ced4da;
+
+  --bg-sidebar: #1a237e;
+  --dag-bg: #ffffff;
+  --dag-border: #1a237e;
+  --dag-arrow-color: #6c757d;
+
+  --connection-border: #dddddd;
+  --auth-btn-bg: #1a237e;
+  --auth-btn-border: #1a237e;
+
+  --avatar-bg: #1a237e;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+}
+
+/* ===== Base ===== */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-color);
+}
+
+.text-brand { color: var(--text-brand); }
+
+.text-muted,
+small.text-muted {
+  color: var(--text-muted-color) !important;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 240px;
+  height: 100vh;
+  background-color: var(--bg-sidebar);
+  color: white;
+  padding-top: 20px;
+  z-index: 1000;
+}
+
+.sidebar h4 {
+  padding: 0 20px 15px;
+  border-bottom: 1px solid var(--sidebar-divider);
+  font-size: 1.1rem;
+}
+
+.sidebar a {
+  display: block;
+  color: var(--sidebar-text);
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.sidebar a:hover {
+  color: white;
+  background-color: var(--sidebar-hover-bg);
+}
+
+.sidebar a.active {
+  color: white;
+  background-color: var(--sidebar-active-bg);
+  border-left: 3px solid var(--sidebar-active-border);
+}
+
+.sidebar .section-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--sidebar-section-color);
+  padding: 15px 20px 5px;
+  letter-spacing: 1px;
+}
+
+/* ===== Topbar ===== */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 240px;
+  right: 0;
+  height: 55px;
+  background: var(--bg-topbar);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 999;
+}
+
+/* ===== Main content ===== */
+.main-content {
+  margin-left: 240px;
+  margin-top: 55px;
+  padding: 20px;
+}
+
+/* ===== Cards / panels ===== */
+.bg-card {
+  background-color: var(--bg-card);
+}
+
+/* ===== Pipeline table ===== */
+.pipeline-name {
+  font-weight: 600;
+  color: var(--text-brand);
+  text-decoration: none;
+}
+
+.pipeline-name:hover {
+  text-decoration: underline;
+}
+
+/* ===== Logs ===== */
+.log-terminal {
+  background: var(--bg-log);
+  color: var(--text-log);
+  font-family: Consolas, monospace;
+  font-size: 0.8rem;
+  line-height: 1.8;
+  padding: 15px;
+  border-radius: 6px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.log-terminal .log-time { color: #666; }
+.log-terminal .log-info { color: #58a6ff; }
+.log-terminal .log-ok   { color: #3fb950; }
+.log-terminal .log-warn { color: #d29922; }
+.log-terminal .log-err  { color: #f85149; }
+
+/* ===== Auth pages ===== */
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-auth);
+}
+
+.auth-card {
+  background: var(--bg-card);
+  color: var(--text-color);
+  border-radius: 10px;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.btn-brand {
+  background-color: var(--auth-btn-bg);
+  border-color: var(--auth-btn-border);
+  color: #fff;
+}
+
+.btn-brand:hover {
+  background-color: var(--text-brand);
+  border-color: var(--text-brand);
+  color: #fff;
+}
+
+/* ===== DAG graph ===== */
+.dag-box {
+  display: inline-block;
+  border: 2px solid var(--dag-border);
+  border-radius: 8px;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--dag-bg);
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.dag-box.success { border-color: #198754; color: #198754; }
+.dag-box.failed  { border-color: #dc3545; color: #dc3545; }
+.dag-box.running { border-color: #0d6efd; color: #0d6efd; }
+
+.dag-arrow {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--dag-arrow-color);
+  line-height: 1;
+  padding: 4px 0;
+}
+
+/* ===== Filter bar ===== */
+.filter-bar {
+  background: var(--bg-filter);
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+}
+
+/* ===== Connection card ===== */
+.connection-item {
+  border: 1px solid var(--connection-border);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ===== Avatar ===== */
+.avatar-circle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: var(--avatar-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Theme toggle button ===== */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+  color: var(--text-color);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.theme-toggle:hover {
+  background-color: var(--sidebar-hover-bg);
+}
+
+/* ===== Bootstrap overrides for dark theme ===== */
+body[data-theme="dark"] .table {
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+body[data-theme="dark"] .table-light,
+body[data-theme="dark"] .table-light th {
+  background-color: var(--bg-table-head) !important;
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+body[data-theme="dark"] .table-hover tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+  color: var(--text-color);
+}
+
+body[data-theme="dark"] .form-control {
+  background-color: var(--bg-input);
+  border-color: var(--border-input);
+  color: var(--text-color);
+}
+
+body[data-theme="dark"] .form-control::placeholder {
+  color: #777;
+}
+
+body[data-theme="dark"] .form-check-label {
+  color: var(--text-color);
+}
+
+body[data-theme="dark"] .modal-content {
+  background-color: var(--bg-card);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+body[data-theme="dark"] .modal-header,
+body[data-theme="dark"] .modal-footer {
+  border-color: var(--border-color);
+}
+
+body[data-theme="dark"] .shadow-sm {
+  box-shadow: 0 .125rem .25rem var(--shadow-color) !important;
+}
+
+body[data-theme="dark"] .nav-tabs {
+  border-color: var(--border-color);
+}
+
+body[data-theme="dark"] .nav-tabs .nav-link {
+  color: var(--text-muted-color);
+}
+
+body[data-theme="dark"] .nav-tabs .nav-link.active {
+  background-color: var(--bg-card);
+  color: var(--text-brand);
+  border-color: var(--border-color) var(--border-color) var(--bg-card);
+}
+
+body[data-theme="dark"] .text-dark {
+  color: var(--text-color) !important;
+}
+
+body[data-theme="dark"] code {
+  color: #c49ae5;
+}
+
+body[data-theme="dark"] hr {
+  border-color: var(--border-color);
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+  .topbar {
+    left: 0;
+  }
+  .main-content {
+    margin-left: 0;
+  }
+}
