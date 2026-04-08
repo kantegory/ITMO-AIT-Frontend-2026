@@ -1,11 +1,6 @@
 (function () {
   var STORAGE_KEY = 'dataflow-theme';
   var THEMES = ['light', 'dark', 'red'];
-  var ICONS = {
-    light: 'bi bi-moon-fill',
-    dark:  'bi bi-palette-fill',
-    red:   'bi bi-sun-fill'
-  };
 
   function getPreferred() {
     var saved = localStorage.getItem(STORAGE_KEY);
@@ -19,9 +14,6 @@
   function applyTheme(theme) {
     document.body.setAttribute('data-theme', theme);
     localStorage.setItem(STORAGE_KEY, theme);
-
-    var icon = document.getElementById('themeIcon');
-    if (icon) icon.className = ICONS[theme] || ICONS.light;
   }
 
   function toggle() {
