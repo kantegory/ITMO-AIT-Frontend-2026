@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DataFlow — etl_users_daily</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h4><i class="bi bi-diagram-3-fill"></i> DataFlow</h4>
+
+    <div class="section-title">Main</div>
+    <a href="index.html" class="active"><i class="bi bi-grid-1x2-fill"></i> Pipelines</a>
+    <a href="#"><i class="bi bi-clock-history"></i> Runs</a>
+
+    <div class="section-title">Monitor</div>
+    <a href="#"><i class="bi bi-activity"></i> Metrics</a>
+    <a href="#"><i class="bi bi-exclamation-triangle"></i> Alerts</a>
+
+    <div class="section-title">Settings</div>
+    <a href="profile.html"><i class="bi bi-plug"></i> Connections</a>
+    <a href="profile.html"><i class="bi bi-person-circle"></i> Profile</a>
+  </div>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div>
+      <a href="index.html" class="text-decoration-none" style="color: #1a237e;">Pipelines</a>
+      <span class="text-muted"> / </span>
+      <strong>etl_users_daily</strong>
+    </div>
+    <a href="profile.html" class="text-decoration-none text-dark">
+      <i class="bi bi-person-circle"></i> Profile
+    </a>
+  </div>
+
+  <!-- Content -->
+  <div class="main-content">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h5 style="color: #1a237e;"><i class="bi bi-diagram-3"></i> etl_users_daily</h5>
+        <p class="text-muted mb-0">Schedule: <code>0 2 * * *</code> &middot; Last Run: 2026-03-10 02:00 &middot; <span class="badge bg-success">Success</span></p>
+      </div>
+      <div>
+        <button class="btn btn-sm btn-outline-success"><i class="bi bi-play-fill"></i> Run</button>
+        <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pause-fill"></i> Pause</button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <ul class="nav nav-tabs mb-3" id="pipelineTabs">
+      <li class="nav-item">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#graph">
+          <i class="bi bi-diagram-3"></i> Graph View
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#logs">
+          <i class="bi bi-terminal"></i> Logs
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#history">
+          <i class="bi bi-clock-history"></i> History
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+
+      <!-- Graph View -->
+      <div class="tab-pane fade show active" id="graph">
+        <div class="bg-white rounded shadow-sm p-4">
+          <div class="d-flex flex-column align-items-center">
+
+            <div class="dag-box success" onclick="openTask('task_001', 'extract_users', '2026-03-10 02:00:01', '14s', 'Success')">
+              <i class="bi bi-database"></i> extract_users
+            </div>
+            <div class="dag-arrow">&darr;</div>
+
+            <div class="dag-box success" onclick="openTask('task_002', 'validate_schema', '2026-03-10 02:00:16', '3s', 'Success')">
+              <i class="bi bi-shield-check"></i> validate_schema
+            </div>
+            <div class="dag-arrow">&darr;</div>
+
+            <!-- Parallel tasks -->
+            <div class="d-flex gap-4">
+              <div class="text-center">
+                <div class="dag-box success" onclick="openTask('task_003', 'transform_pii', '2026-03-10 02:00:19', '15s', 'Success')">
+                  <i class="bi bi-incognito"></i> transform_pii
+                </div>
+              </div>
+              <div class="text-center">
+                <div class="dag-box success" onclick="openTask('task_004', 'transform_geo', '2026-03-10 02:00:19', '19s', 'Success')">
+                  <i class="bi bi-geo-alt"></i> transform_geo
+                </div>
+              </div>
+            </div>
+            <div class="dag-arrow">&darr;</div>
+
+            <div class="dag-box success" onclick="openTask('task_005', 'load_warehouse', '2026-03-10 02:00:53', '2m 48s', 'Success')">
+              <i class="bi bi-cloud-upload"></i> load_warehouse
+            </div>
+            <div class="dag-arrow">&darr;</div>
+
+            <div class="dag-box success" onclick="openTask('task_006', 'notify_team', '2026-03-10 02:03:42', '1s', 'Success')">
+              <i class="bi bi-send"></i> notify_team
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Logs -->
+      <div class="tab-pane fade" id="logs">
+        <div class="log-terminal">
+<span class="log-time">[2026-03-10 02:00:01]</span> <span class="log-info">INFO</span>  Starting DAG run: etl_users_daily
+<span class="log-time">[2026-03-10 02:00:01]</span> <span class="log-info">INFO</span>  Executing task: extract_users
+<span class="log-time">[2026-03-10 02:00:15]</span> <span class="log-ok">INFO</span>  Extracted 142,387 rows from users table
+<span class="log-time">[2026-03-10 02:00:16]</span> <span class="log-info">INFO</span>  Executing task: validate_schema
+<span class="log-time">[2026-03-10 02:00:18]</span> <span class="log-warn">WARN</span>  Column 'phone' has 2,341 null values
+<span class="log-time">[2026-03-10 02:00:19]</span> <span class="log-info">INFO</span>  Running parallel: transform_pii, transform_geo
+<span class="log-time">[2026-03-10 02:00:38]</span> <span class="log-ok">INFO</span>  Transforms completed
+<span class="log-time">[2026-03-10 02:00:53]</span> <span class="log-info">INFO</span>  Executing task: load_warehouse
+<span class="log-time">[2026-03-10 02:03:41]</span> <span class="log-ok">INFO</span>  Loaded 142,387 rows into warehouse
+<span class="log-time">[2026-03-10 02:03:43]</span> <span class="log-ok">INFO</span>  DAG completed. Duration: 4m 12s
+        </div>
+      </div>
+
+      <!-- History -->
+      <div class="tab-pane fade" id="history">
+        <div class="table-responsive bg-white rounded shadow-sm">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Run ID</th>
+                <th>Start Time</th>
+                <th>Duration</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>scheduled__2026-03-10</code></td>
+                <td>2026-03-10 02:00</td>
+                <td>4m 12s</td>
+                <td><span class="badge bg-success">Success</span></td>
+              </tr>
+              <tr>
+                <td><code>scheduled__2026-03-09</code></td>
+                <td>2026-03-09 02:00</td>
+                <td>4m 05s</td>
+                <td><span class="badge bg-success">Success</span></td>
+              </tr>
+              <tr>
+                <td><code>manual__2026-03-07</code></td>
+                <td>2026-03-07 15:22</td>
+                <td>5m 01s</td>
+                <td><span class="badge bg-danger">Failed</span></td>
+              </tr>
+              <tr>
+                <td><code>scheduled__2026-03-07</code></td>
+                <td>2026-03-07 02:00</td>
+                <td>4m 11s</td>
+                <td><span class="badge bg-success">Success</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="taskModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Task ID:</strong> <span id="modalId"></span></p>
+          <p><strong>Start Time:</strong> <span id="modalStart"></span></p>
+          <p><strong>Duration:</strong> <span id="modalDuration"></span></p>
+          <p><strong>Status:</strong> <span id="modalStatus"></span></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/pipeline-detail.js"></script>
+</body>
+</html>
