@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Зарегистрируйтесь на платформе TopCourses">
+
+    <title>Регистрация</title>
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="d-flex align-items-center">
+
+<button onclick="toggleTheme()" class="theme-toggle-fixed" title="Сменить тему"></button>
+<main class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-10 col-md-6 col-lg-4">
+            <div class="card p-5 reg-card">
+                <h3 class="text-center mb-4 fw-bold">Регистрация</h3>
+
+                <form>
+                    <div class="mb-3">
+                        <label for="surname" class="form-label small">Фамилия</label>
+                        <input type="text" class="form-control" id="surname" placeholder="Семенов" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label small">Имя</label>
+                        <input type="text" class="form-control" id="name" placeholder="Семен" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label small">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="semen@test.ru" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="pass_1" class="form-label small">Пароль</label>
+                        <input type="password" class="form-control" id="pass_1" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="pass_2" class="form-label small">Повторите пароль</label>
+                        <input type="password" class="form-control" id="pass_2" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="role" class="form-label small">Кто вы?</label>
+                        <select class="form-select" id="role" required>
+                            <option value="student">Я ученик</option>
+                            <option value="teacher">Я преподаватель</option>
+                        </select>
+                    </div>
+
+                    <button type="button" onclick="validateReg()" class="btn btn-primary w-100">Создать аккаунт</button>
+                </form>
+
+                <div class="text-center mt-4">
+                    <p class="small mb-1">Уже есть аккаунт? <a href="login.html" class="text-decoration-none">Войти</a></p>
+                    <a href="index.html" class="text-muted text-decoration-none mt-2 d-inline-block small">Вернуться в каталог</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" defer></script>
+<script src="js/api.js" defer></script>
+
+<script>
+    async function validateReg() {
+        const surname = document.getElementById('surname').value;
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const pass_1 = document.getElementById('pass_1').value;
+        const pass_2 = document.getElementById('pass_2').value;
+
+        const role = document.getElementById('role').value;
+
+        if (!surname || !name || !email || !pass_1) {
+            alert("Пожалуйста, заполните все поля формы");
+            return;
+        }
+
+        if (pass_1 !== pass_2) {
+            alert("Пароли не совпадают");
+            return;
+        }
+
+        const response = await fetch('http://localhost:3000/signup', {
+            method: "POST",
+            body: JSON.stringify({
+                email,
+                password: pass_1,
+                name: `${surname} ${name}`,
+                role: role,
+                courses: [],
+                progress: {},
+                certificates: []
+            }),
+            headers: {'Content-Type': 'application/json'}
+        });
+
+        if (response.ok) {
+            alert("Регистрация успешна! Теперь вы можете войти");
+            window.location.href = "login.html";
+        } else {
+            const error = await response.json();
+            if (error === "Email already exists") {
+                alert("Пользователь с такой почтой уже зарегистрирован");
+            } else {
+                alert("Ошибка регистрации: " + error);
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
