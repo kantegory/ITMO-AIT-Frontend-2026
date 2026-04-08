@@ -1,24 +1,19 @@
 :root {
-  --bg-top: #f4f0ff;
-  --bg-bottom: #e8f4fc;
+  --bg: #f8fafc;
   --surface: #ffffff;
-  --text: #1c1917;
-  --muted: #78716c;
-  --accent: #7c3aed;
-  --accent-hover: #6d28d9;
-  --accent-soft: rgba(124, 58, 237, 0.12);
-  --border: #e7e5e4;
-  --danger-bg: #ffe4e6;
-  --danger-text: #9f1239;
-  --danger-hover: #fecdd3;
-  --input-bg: #fafaf9;
-  --shadow: rgba(28, 25, 23, 0.08);
-
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --text: #0f172a;
+  --muted: #64748b;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --border: #e2e8f0;
+  --danger-bg: #fee2e2;
+  --danger-text: #991b1b;
+  --danger-hover: #fecaca;
+  --input-bg: #ffffff;
+  --shadow: rgba(15, 23, 42, 0.08);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   line-height: 1.5;
   color: var(--text);
-  background: linear-gradient(165deg, var(--bg-top) 0%, var(--bg-bottom) 55%, #dbeafe 100%);
-  min-height: 100%;
 }
 
 *,
@@ -30,6 +25,8 @@
 body {
   margin: 0;
   min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
 }
 
 #app {
@@ -46,35 +43,28 @@ body {
 
 .top h1 {
   margin: 0 0 0.35rem;
-  font-size: 1.85rem;
-  letter-spacing: -0.02em;
-  background: linear-gradient(120deg, #5b21b6, #0d9488);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  font-size: 1.75rem;
+  color: var(--text);
 }
 
 .credit {
   margin: 0;
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: lowercase;
+  font-size: 0.85rem;
   color: var(--muted);
 }
 
 .h3 {
   margin: 0 0 0.75rem;
   font-size: 1.1rem;
-  color: #44403c;
+  color: var(--text);
 }
 
 .panel {
   background: var(--surface);
-  border-radius: 14px;
+  border-radius: 12px;
   padding: 1.25rem 1.35rem;
   border: 1px solid var(--border);
-  box-shadow: 0 12px 32px var(--shadow);
+  box-shadow: 0 8px 24px var(--shadow);
 }
 
 .form {
@@ -92,7 +82,7 @@ body {
 
 .field span {
   font-weight: 600;
-  color: #57534e;
+  color: var(--text);
 }
 
 .field input,
@@ -100,7 +90,7 @@ body {
   font: inherit;
   padding: 0.55rem 0.65rem;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 8px;
   background: var(--input-bg);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
@@ -139,7 +129,7 @@ body {
   font: inherit;
   cursor: pointer;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 0.55rem 1rem;
   font-weight: 600;
   transition: background 0.15s ease, transform 0.1s ease;
@@ -190,9 +180,9 @@ body {
 
 .note-card {
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 10px;
   padding: 0.9rem 1rem;
-  background: linear-gradient(145deg, #fffefb 0%, #f5f3ff 100%);
+  background: #fff;
 }
 
 .note-head {
@@ -207,7 +197,7 @@ body {
 .note-title {
   margin: 0;
   font-size: 1.05rem;
-  color: #292524;
+  color: var(--text);
 }
 
 .note-time {
@@ -219,7 +209,7 @@ body {
   margin: 0 0 0.65rem;
   white-space: pre-wrap;
   word-break: break-word;
-  color: #44403c;
+  color: var(--text);
 }
 
 .note-actions {
