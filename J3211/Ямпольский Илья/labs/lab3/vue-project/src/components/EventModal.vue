@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, computed, watch, nextTick, onMounted } from 'vue'
 import { useFormat } from '@/composables/useFormat'
 import { useAuthStore } from '@/stores/auth'
 
@@ -102,12 +102,13 @@ export default {
     }
 
     const generateSeatMap = async () => {
-      if (!seatMapRef.value || !props.event?.id) return
-
       await nextTick()
+
+      if (!seatMapRef.value || !props.event?.id) return
 
       const capacity = props.event.capacity || 50
       selectedSeats.value = []
+
       await loadSoldSeats()
 
       seatMapRef.value.innerHTML = ''
@@ -118,22 +119,14 @@ export default {
         button.className = `seat ${soldSeats.value.includes(i) ? 'sold' : 'available'}`
         button.dataset.seat = i
         button.textContent = i
-        button.style.cssText = `
-          width: 32px;
-          height: 32px;
-          border-radius: 4px;
-          border: 2px solid var(--legend-border);
-          cursor: ${soldSeats.value.includes(i) ? 'not-allowed' : 'pointer'};
-          background: ${soldSeats.value.includes(i) ? 'var(--seat-sold)' : 'var(--seat-available)'};
-          color: #ffffff;
-          font-size: 12px;
-          font-weight: bold;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        `
 
-        if (!soldSeats.value.includes(i)) {
+        if (soldSeats.value.includes(i)) {
+          button.style.background = 'var(--seat-sold)'
+          button.style.cursor = 'not-allowed'
+          button.style.opacity = '0.6'
+        } else {
+          button.style.background = 'var(--seat-available)'
+          button.style.cursor = 'pointer'
           button.onclick = () => toggleSeat(i)
         }
 
@@ -200,19 +193,24 @@ export default {
       selectedSeats.value = []
     }
 
-    watch(() => props.modelValue, async (newVal) => {
-      if (newVal && props.event?.id) {
-        await nextTick()
-        await loadReviews()
-        await generateSeatMap()
+    onMounted(() => {
+      if (props.modelValue && props.event?.id) {
+        loadReviews()
+        generateSeatMap()
       }
     })
 
-    watch(() => props.event?.id, async (newId, oldId) => {
-      if (newId && newId !== oldId && props.modelValue) {
-        await nextTick()
-        await loadReviews()
-        await generateSeatMap()
+    watch(() => props.modelValue, (newVal) => {
+      if (newVal && props.event?.id) {
+        loadReviews()
+        generateSeatMap()
+      }
+    })
+
+    watch(() => props.event?.id, (newId) => {
+      if (newId && props.modelValue) {
+        loadReviews()
+        generateSeatMap()
       }
     })
 
@@ -289,6 +287,7 @@ export default {
   justify-content: flex-start;
   width: 100%;
   min-height: 200px;
+  border: 2px solid var(--border-color) !important;
 }
 
 .legend-seat {
