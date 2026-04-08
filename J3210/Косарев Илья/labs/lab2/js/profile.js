@@ -26,7 +26,7 @@ function renderProfileCards(items, type, gridId, emptyId) {
     }
 
     const isDataset = type === 'dataset';
-    const icon = isDataset ? 'bi-database' : 'bi-cpu';
+    const iconId = isDataset ? 'database' : 'cpu';
 
     grid.innerHTML = items.map((item) => {
         let badges = item.task ? `<span class="badge bg-primary flex-shrink-0">${dictionaries.task[item.task] || item.task}</span>` : '';
@@ -47,16 +47,16 @@ function renderProfileCards(items, type, gridId, emptyId) {
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-2">
                             <a href="${type}_page.html?id=${item.id}" class="text-decoration-none text-contrast h5 mb-0 stretched-link">${item.name}</a>
-                            <i class="bi ${icon} text-blunted"></i>
+                            <svg class="svg-icon text-blunted" aria-hidden="true"><use href="icons.svg#${iconId}"></use></svg>
                         </div>
                         <div class="mb-2 d-flex flex-wrap gap-2">${badges}</div>
                         <p class="card-text text-blunted small">${item.description}</p>
                     </div>
                     <div class="card-footer d-flex justify-content-end align-items-center">
-                        <small class="text-blunted me-2"><i class="bi bi-eye-fill"></i> ${item.views}</small>
-                        <small class="text-blunted me-2"><i class="bi bi-chat-left-text-fill"></i> ${item.comments}</small>
-                        <small class="text-blunted me-2"><i class="bi bi-diagram-3-fill"></i> ${item.forks}</small>
-                        <small class="text-blunted"><i class="bi bi-star-fill text-warning"></i> ${item.stars}</small>
+                        <small class="text-blunted me-2"><svg class="svg-icon" aria-hidden="true"><use href="icons.svg#eye-fill"></use></svg> ${item.views}</small>
+                        <small class="text-blunted me-2"><svg class="svg-icon" aria-hidden="true"><use href="icons.svg#chat-left-text-fill"></use></svg> ${item.comments}</small>
+                        <small class="text-blunted me-2"><svg class="svg-icon" aria-hidden="true"><use href="icons.svg#diagram-3-fill"></use></svg> ${item.forks}</small>
+                        <small class="text-blunted"><svg class="svg-icon text-warning" aria-hidden="true"><use href="icons.svg#star-fill"></use></svg> ${item.stars}</small>
                     </div>
                 </article>
             </div>

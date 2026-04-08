@@ -51,7 +51,7 @@ function render() {
                     <div><div class="fw-bold">${(u.datasetIds).length}</div><div class="text-blunted">Датасетов</div></div>
                 </div>
                 <button class="btn btn-outline-danger btn-sm rounded-pill px-3 flex-shrink-0 unsubscribe-btn" data-id="${u.id}" aria-label="Отписаться от ${getName(u)}">
-                    <i class="bi bi-person-x-fill me-1"></i> Отписаться
+                    <svg class="svg-icon me-1" aria-hidden="true"><use href="icons.svg#person-x-fill"></use></svg> Отписаться
                 </button>
             </div>
         </li>

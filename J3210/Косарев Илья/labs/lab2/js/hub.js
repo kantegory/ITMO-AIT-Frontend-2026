@@ -64,7 +64,7 @@ function buildQueryAndChips(ctx) {
 
 function getCardHtml(item, type) {
     const isDataset = type === 'dataset';
-    const iconClass = isDataset ? 'bi-database' : 'bi-cpu';
+    const iconId = isDataset ? 'database' : 'cpu';
     const pageUrl = `${type}_page.html?id=${item.id}`;
 
     const taskBadge = item.task ? `<span class="badge bg-primary flex-shrink-0">${dictionaries.task[item.task] || item.task}</span>` : '';
@@ -85,16 +85,16 @@ function getCardHtml(item, type) {
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
                         <a href="${pageUrl}" class="text-decoration-none text-contrast h5 mb-0 stretched-link">${item.name}</a>
-                        <i class="bi ${iconClass} text-blunted"></i>
+                        <svg class="svg-icon text-blunted" aria-hidden="true"><use href="icons.svg#${iconId}"></use></svg>
                     </div>
                     <div class="mb-2 d-flex flex-wrap gap-2">${taskBadge} ${extraBadges} ${licenseBadge}</div>
                     <p class="card-text text-blunted small">${item.description || 'Описание отсутствует'}</p>
                 </div>
                 <div class="card-footer d-flex justify-content-end align-items-center">
-                    <small class="text-blunted me-2"><i class="bi bi-eye-fill"></i> ${item.views || 0}</small>
-                    <small class="text-blunted me-2"><i class="bi bi-chat-left-text-fill"></i> ${item.comments || 0}</small>
-                    <small class="text-blunted me-2"><i class="bi bi-diagram-3-fill"></i> ${item.forks || 0}</small>
-                    <small class="text-blunted"><i class="bi bi-star-fill text-warning"></i> ${item.stars || 0}</small>
+                    <small class="text-blunted me-2"><svg class="svg-icon" aria-hidden="true"><use href="icons.svg#eye-fill"></use></svg> ${item.views || 0}</small>
+                    <small class="text-blunted me-2"><svg class="svg-icon" aria-hidden="true"><use href="icons.svg#chat-left-text-fill"></use></svg> ${item.comments || 0}</small>
+                    <small class="text-blunted me-2"><svg class="svg-icon" aria-hidden="true"><use href="icons.svg#diagram-3-fill"></use></svg> ${item.forks || 0}</small>
+                    <small class="text-blunted"><svg class="svg-icon text-warning" aria-hidden="true"><use href="icons.svg#star-fill"></use></svg> ${item.stars || 0}</small>
                 </div>
             </article>
         </div>
@@ -135,7 +135,7 @@ function renderChips(chips) {
             ${chip.label}
             <button type="button" class="btn btn-link p-0 border-0 text-white filter-chip-remove" 
                     data-name="${chip.name}" data-value="${chip.value}" aria-label="Удалить фильтр">
-                <i class="bi bi-x-lg ms-2"></i>
+                <svg class="svg-icon ms-2" aria-hidden="true"><use href="icons.svg#x-lg"></use></svg>
             </button>
         </span>
     `).join('');
