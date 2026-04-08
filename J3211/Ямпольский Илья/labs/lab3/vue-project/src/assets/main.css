@@ -417,12 +417,16 @@ table tbody td {
   border: 2px solid var(--input-border);
   background: var(--input-bg);
   color: var(--text-color);
+  transition: background-color 0.2s, color 0.2s;
 }
 
 .form-control:focus,
 .form-select:focus {
   border-color: var(--input-focus-border);
+  background: var(--input-bg) !important;
+  color: var(--text-color) !important;
   outline: 3px solid rgba(102, 16, 242, 0.25);
+  box-shadow: none !important;
 }
 
 .form-control::placeholder {
@@ -432,6 +436,82 @@ table tbody td {
 .form-label,
 legend {
   color: var(--text-color) !important;
+}
+
+textarea.form-control {
+  background: var(--input-bg);
+  color: var(--text-color);
+  resize: vertical;
+}
+
+textarea.form-control:focus {
+  background: var(--input-bg) !important;
+  color: var(--text-color) !important;
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+  background: #0f3460 !important;
+  color: #ffffff !important;
+  border-color: #888888 !important;
+}
+
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus {
+  background: #0f3460 !important;
+  color: #ffffff !important;
+  border-color: #c77dff !important;
+}
+
+[data-theme="dark"] textarea.form-control {
+  background: #0f3460 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] textarea.form-control:focus {
+  background: #0f3460 !important;
+  color: #ffffff !important;
+}
+
+.modal-body .form-control,
+.modal-body .form-select {
+  background: var(--input-bg);
+  color: var(--text-color);
+}
+
+.modal-body .form-control:focus,
+.modal-body .form-select:focus {
+  background: var(--input-bg) !important;
+  color: var(--text-color) !important;
+}
+
+[data-theme="dark"] .modal-body .form-control,
+[data-theme="dark"] .modal-body .form-select {
+  background: #0f3460 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .modal-body .form-control:focus,
+[data-theme="dark"] .modal-body .form-select:focus {
+  background: #0f3460 !important;
+  color: #ffffff !important;
+}
+
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus,
+.form-control:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--input-bg) inset !important;
+  -webkit-text-fill-color: var(--text-color) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+[data-theme="dark"] .form-control:-webkit-autofill,
+[data-theme="dark"] .form-control:-webkit-autofill:hover,
+[data-theme="dark"] .form-control:-webkit-autofill:focus,
+[data-theme="dark"] .form-control:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #0f3460 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 .btn-primary {
