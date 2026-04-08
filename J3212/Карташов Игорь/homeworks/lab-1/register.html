@@ -21,34 +21,36 @@
         <p class="text-muted">Create a new account</p>
       </div>
 
-      <form>
+      <div id="authError" class="alert alert-danger d-none"></div>
+
+      <form onsubmit="handleRegister(event)">
         <div class="row mb-3">
           <div class="col-6">
             <label for="firstName" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="firstName" placeholder="Igor">
+            <input type="text" class="form-control" id="firstName" placeholder="Igor" required>
           </div>
           <div class="col-6">
             <label for="lastName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="lastName" placeholder="Kartashov">
+            <input type="text" class="form-control" id="lastName" placeholder="Kartashov" required>
           </div>
         </div>
 
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" placeholder="you@company.com">
+          <input type="email" class="form-control" id="email" placeholder="you@company.com" required>
         </div>
 
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password" placeholder="Min 8 characters">
+          <input type="password" class="form-control" id="password" placeholder="Min 8 characters" required minlength="8">
         </div>
 
         <div class="mb-3">
           <label for="confirmPassword" class="form-label">Confirm Password</label>
-          <input type="password" class="form-control" id="confirmPassword" placeholder="Repeat password">
+          <input type="password" class="form-control" id="confirmPassword" placeholder="Repeat password" required>
         </div>
 
-        <a href="index.html" class="btn btn-brand w-100">Create Account</a>
+        <button type="submit" class="btn btn-brand w-100">Create Account</button>
 
         <p class="text-center mt-3">
           Already have an account? <a href="login.html">Sign In</a>
@@ -57,6 +59,8 @@
     </main>
   </div>
 
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
   <script src="js/theme.js"></script>
 </body>
 </html>

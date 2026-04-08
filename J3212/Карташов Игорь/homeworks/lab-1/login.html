@@ -21,15 +21,17 @@
         <p class="text-muted">Sign in to your account</p>
       </div>
 
-      <form>
+      <div id="authError" class="alert alert-danger d-none"></div>
+
+      <form onsubmit="handleLogin(event)">
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" placeholder="you@company.com">
+          <input type="email" class="form-control" id="email" placeholder="you@company.com" required>
         </div>
 
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password" placeholder="Enter your password">
+          <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
         </div>
 
         <div class="form-check mb-3">
@@ -37,7 +39,7 @@
           <label class="form-check-label" for="remember">Remember me</label>
         </div>
 
-        <a href="index.html" class="btn btn-brand w-100">Sign In</a>
+        <button type="submit" class="btn btn-brand w-100">Sign In</button>
 
         <p class="text-center mt-3">
           Don't have an account? <a href="register.html">Sign Up</a>
@@ -46,6 +48,8 @@
     </main>
   </div>
 
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
   <script src="js/theme.js"></script>
 </body>
 </html>
