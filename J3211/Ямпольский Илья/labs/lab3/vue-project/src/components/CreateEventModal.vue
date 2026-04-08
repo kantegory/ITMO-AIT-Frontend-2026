@@ -68,10 +68,10 @@ import { useEventsStore } from '@/stores/events'
 export default {
   name: 'CreateEventModal',
   props: {
-    modelValue: { type: Boolean, default: false }
+    modelValue: Boolean
   },
   emits: ['update:modelValue', 'event-created'],
-  setup({ emit }) {
+  setup(props, { emit }) {
     const auth = useAuthStore()
     const eventsStore = useEventsStore()
 
@@ -144,7 +144,7 @@ export default {
         emit('event-created')
         closeModal()
       } catch (error) {
-        alert('Ошибка создания события: ' + (error.response?.data || error.message))
+        alert('Ошибка создания события: ' + error.message)
       }
     }
 
@@ -187,7 +187,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-light);
 }
 
 .modal-title {
@@ -209,7 +209,7 @@ export default {
 
 .modal-footer {
   padding: 1rem;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-light);
   display: flex;
   justify-content: flex-end;
   gap: 0.5rem;
