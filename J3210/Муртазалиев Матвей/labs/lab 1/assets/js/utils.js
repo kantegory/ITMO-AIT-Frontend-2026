@@ -64,6 +64,11 @@ export function escapeAttribute(value) {
   return escapeHtml(value);
 }
 
+export function renderSpriteIcon(name, className = "", attrs = 'aria-hidden="true" focusable="false"') {
+  const classes = ["icon", className].filter(Boolean).join(" ");
+  return `<svg class="${escapeAttribute(classes)}" ${attrs}><use href="./assets/icons/sprite.svg#${escapeAttribute(name)}"></use></svg>`;
+}
+
 export function sortTransactions(transactions) {
   return [...transactions].sort((left, right) => right.date.localeCompare(left.date));
 }
@@ -112,28 +117,28 @@ export function getCategoryBreakdown(transactions) {
 
 export function getAccountIcon(type) {
   const map = {
-    current: "bi-credit-card-2-front",
-    savings: "bi-piggy-bank",
-    cash: "bi-cash-stack",
+    current: "card",
+    savings: "piggy-bank",
+    cash: "cash",
   };
 
-  return map[type] || "bi-wallet2";
+  return map[type] || "wallet";
 }
 
 export function getCategoryMeta(category, type) {
   if (type === "income") {
-    return { icon: "bi-arrow-down-left-circle", backgroundClass: "bg-soft-green" };
+    return { icon: "income", backgroundClass: "bg-soft-green" };
   }
 
   const normalized = category.toLowerCase();
   const map = {
-    еда: { icon: "bi-basket2", backgroundClass: "bg-soft-orange" },
-    транспорт: { icon: "bi-train-front", backgroundClass: "bg-soft-blue" },
-    дом: { icon: "bi-house-door", backgroundClass: "bg-soft-teal" },
-    подписки: { icon: "bi-play-btn", backgroundClass: "bg-soft-purple" },
+    еда: { icon: "basket", backgroundClass: "bg-soft-orange" },
+    транспорт: { icon: "train", backgroundClass: "bg-soft-blue" },
+    дом: { icon: "house", backgroundClass: "bg-soft-teal" },
+    подписки: { icon: "play", backgroundClass: "bg-soft-purple" },
   };
 
-  return map[normalized] || { icon: "bi-receipt", backgroundClass: "bg-soft-purple" };
+  return map[normalized] || { icon: "receipt", backgroundClass: "bg-soft-purple" };
 }
 
 export function formatLastSync(lastSyncAt, status) {

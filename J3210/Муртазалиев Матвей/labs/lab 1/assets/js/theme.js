@@ -1,3 +1,5 @@
+import { renderSpriteIcon } from "./utils.js";
+
 const THEME_STORAGE_KEY = "finflow-theme";
 const DEFAULT_THEME = "lagoon";
 
@@ -72,7 +74,7 @@ export function renderThemeToggleMarkup() {
       aria-label="Переключить тему. Сейчас выбрана тема ${label}"
       title="Переключить тему"
     >
-      <i class="bi bi-palette2" aria-hidden="true"></i>
+      ${renderSpriteIcon("palette", "icon--inline")}
       <span data-theme-toggle-label>${label}</span>
     </button>
   `;

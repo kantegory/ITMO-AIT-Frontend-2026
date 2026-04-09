@@ -11,6 +11,7 @@ import {
   getCategoryMeta,
   getSpentByCategory,
   getTopExpenseCategory,
+  renderSpriteIcon,
   setText,
   sortTransactions,
 } from "../utils.js";
@@ -129,7 +130,7 @@ function renderAccounts(accounts) {
               <small>${escapeHtml(account.name)}</small>
               <h3>${formatCurrency(account.balance)}</h3>
             </div>
-            <i class="bi ${getAccountIcon(account.type)}" aria-hidden="true"></i>
+            ${renderSpriteIcon(getAccountIcon(account.type), "icon--sm")}
           </div>
           <p class="mb-0 text-secondary small">${escapeHtml(account.description || account.provider || "Подключено через API")}</p>
         </div>
@@ -211,7 +212,7 @@ function renderTransactions(state) {
       return `
         <article class="transaction-item" role="listitem" aria-label="${escapeAttribute(`${transaction.title}, ${transaction.category}, ${formatLongDate(transaction.date)}, ${transaction.type === "income" ? "доход" : "расход"} ${formatCurrency(transaction.amount)}`)}">
           <div class="transaction-item__icon ${categoryMeta.backgroundClass}">
-            <i class="bi ${categoryMeta.icon}" aria-hidden="true"></i>
+            ${renderSpriteIcon(categoryMeta.icon, "icon--sm")}
           </div>
           <div class="transaction-item__body">
             <div class="d-flex justify-content-between gap-3 flex-wrap">

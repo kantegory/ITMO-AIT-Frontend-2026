@@ -1,4 +1,4 @@
-import { $ } from "./utils.js";
+import { $, renderSpriteIcon } from "./utils.js";
 
 export function initPasswordToggle() {
   document.querySelectorAll("[data-password-toggle]").forEach((button) => {
@@ -10,8 +10,8 @@ export function initPasswordToggle() {
       button.setAttribute("aria-label", isPassword ? "Показать пароль" : "Скрыть пароль");
       button.setAttribute("aria-pressed", String(!isPassword));
       button.innerHTML = isPassword
-        ? '<i class="bi bi-eye" aria-hidden="true"></i>'
-        : '<i class="bi bi-eye-slash" aria-hidden="true"></i>';
+        ? renderSpriteIcon("eye", "icon--inline")
+        : renderSpriteIcon("eye-off", "icon--inline");
     };
 
     syncState();
