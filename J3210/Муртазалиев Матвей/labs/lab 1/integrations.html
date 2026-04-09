@@ -17,8 +17,9 @@
     <link rel="stylesheet" href="./assets/styles.css" />
   </head>
   <body data-page="integrations">
+    <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
     <header class="site-header">
-      <nav class="navbar navbar-expand-lg">
+      <nav class="navbar navbar-expand-lg" aria-label="Основная навигация">
         <div class="container">
           <a class="navbar-brand brand-mark" href="./index.html">FinFlow</a>
           <button
@@ -37,7 +38,7 @@
               <li class="nav-item"><a class="nav-link" href="./index.html">Главная</a></li>
               <li class="nav-item"><a class="nav-link" href="./dashboard.html">Кабинет</a></li>
               <li class="nav-item"><a class="nav-link" href="./reports.html">Отчёты</a></li>
-              <li class="nav-item"><a class="nav-link active" href="./integrations.html">Интеграции</a></li>
+              <li class="nav-item"><a class="nav-link active" href="./integrations.html" aria-current="page">Интеграции</a></li>
             </ul>
             <div class="d-flex gap-2 flex-wrap align-items-start">
               <a class="btn btn-accent btn-sm px-3" href="./dashboard.html">К операциям</a>
@@ -51,7 +52,7 @@
       </nav>
     </header>
 
-    <main class="page-section">
+    <main class="page-section" id="main-content" tabindex="-1">
       <div class="container">
         <section class="page-banner">
           <div>
@@ -70,7 +71,7 @@
               data-bs-target="#importModal"
               data-provider="Тинькофф"
             >
-              <i class="bi bi-cloud-arrow-down me-2"></i>Импортировать
+              <i class="bi bi-cloud-arrow-down me-2" aria-hidden="true"></i>Импортировать
             </button>
           </div>
         </section>
@@ -84,9 +85,9 @@
                   <h2 class="h3 mt-2 mb-0">Банки и кошельки</h2>
                 </div>
               </div>
-              <div class="row g-3 mt-1" data-integrations-list>
+              <div class="row g-3 mt-1" data-integrations-list role="list" aria-label="Список интеграций">
                 <div class="col-md-6">
-                  <article class="integration-card">
+                  <article class="integration-card" role="listitem">
                     <div class="d-flex justify-content-between align-items-start">
                       <div>
                         <h3>Тинькофф</h3>
@@ -109,7 +110,7 @@
                   </article>
                 </div>
                 <div class="col-md-6">
-                  <article class="integration-card">
+                  <article class="integration-card" role="listitem">
                     <div class="d-flex justify-content-between align-items-start">
                       <div>
                         <h3>Сбер</h3>
@@ -132,7 +133,7 @@
                   </article>
                 </div>
                 <div class="col-md-6">
-                  <article class="integration-card">
+                  <article class="integration-card" role="listitem">
                     <div class="d-flex justify-content-between align-items-start">
                       <div>
                         <h3>ЮMoney</h3>
@@ -146,7 +147,7 @@
                   </article>
                 </div>
                 <div class="col-md-6">
-                  <article class="integration-card integration-card--accent">
+                  <article class="integration-card integration-card--accent" role="listitem">
                     <h3>Добавить новый источник</h3>
                     <p class="mb-4">
                       Банковский аккаунт, электронный кошелёк или импорт через файл.
@@ -194,13 +195,13 @@
                   <button class="btn btn-accent w-100" type="submit">Сохранить правило</button>
                 </div>
                 <div class="col-12">
-                  <div class="alert d-none mb-0" data-rule-message></div>
+                  <div class="alert d-none mb-0" data-rule-message role="alert" aria-live="assertive"></div>
                 </div>
               </form>
 
               <div class="tip-box mt-4">
                 <h3>Уже настроено</h3>
-                <ul class="list-unstyled mb-0 text-secondary" data-rules-list>
+                <ul class="list-unstyled mb-0 text-secondary" data-rules-list aria-live="polite">
                   <li class="py-1">Spotify → Подписки</li>
                   <li class="py-1">Yandex Taxi → Транспорт</li>
                   <li class="py-1">Perekrestok → Еда</li>
@@ -212,7 +213,7 @@
       </div>
     </main>
 
-    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importLabel" aria-hidden="true">
+    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importLabel" aria-describedby="importDescription" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content custom-modal">
           <div class="modal-header border-0">
@@ -223,7 +224,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
           </div>
           <div class="modal-body pt-0">
-            <p class="text-secondary">
+            <p class="text-secondary" id="importDescription">
               Источник: <strong data-import-provider>Тинькофф</strong>
             </p>
             <div class="row g-3">
@@ -237,9 +238,11 @@
               </div>
               <div class="col-12">
                 <label class="form-label" for="importFile">или загрузить CSV</label>
-                <input class="form-control" id="importFile" type="file" />
+                <input class="form-control" id="importFile" type="file" accept=".csv,text/csv" aria-describedby="import-file-hint" />
+                <small class="text-secondary d-block mt-2" id="import-file-hint">Поддерживается CSV-файл с банковскими операциями.</small>
               </div>
             </div>
+            <div class="alert d-none mt-3 mb-0" data-import-message role="alert" aria-live="assertive"></div>
           </div>
           <div class="modal-footer border-0">
             <button type="button" class="btn btn-accent w-100" data-import-submit>Начать импорт</button>

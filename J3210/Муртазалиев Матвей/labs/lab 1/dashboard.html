@@ -17,8 +17,9 @@
     <link rel="stylesheet" href="./assets/styles.css" />
   </head>
   <body data-page="dashboard">
+    <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
     <header class="site-header">
-      <nav class="navbar navbar-expand-lg">
+      <nav class="navbar navbar-expand-lg" aria-label="Основная навигация">
         <div class="container">
           <a class="navbar-brand brand-mark" href="./index.html">FinFlow</a>
           <button
@@ -35,7 +36,7 @@
           <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav mx-auto gap-lg-2">
               <li class="nav-item"><a class="nav-link" href="./index.html">Главная</a></li>
-              <li class="nav-item"><a class="nav-link active" href="./dashboard.html">Кабинет</a></li>
+              <li class="nav-item"><a class="nav-link active" href="./dashboard.html" aria-current="page">Кабинет</a></li>
               <li class="nav-item"><a class="nav-link" href="./reports.html">Отчёты</a></li>
               <li class="nav-item"><a class="nav-link" href="./integrations.html">Интеграции</a></li>
             </ul>
@@ -51,7 +52,7 @@
       </nav>
     </header>
 
-    <main class="page-section">
+    <main class="page-section" id="main-content" tabindex="-1">
       <div class="container">
         <section class="page-banner">
           <div>
@@ -71,7 +72,7 @@
               data-action-title="Новая транзакция"
               data-action-text="Добавьте ручную операцию, если она ещё не импортировалась из банка."
             >
-              <i class="bi bi-plus-lg me-2"></i>Добавить транзакцию
+              <i class="bi bi-plus-lg me-2" aria-hidden="true"></i>Добавить транзакцию
             </button>
             <button
               class="btn btn-outline-dark"
@@ -81,7 +82,7 @@
               data-action-title="Создать бюджет"
               data-action-text="Настройте новый лимит по категории или отдельному счёту."
             >
-              <i class="bi bi-sliders me-2"></i>Новый бюджет
+              <i class="bi bi-sliders me-2" aria-hidden="true"></i>Новый бюджет
             </button>
           </div>
         </section>
@@ -128,46 +129,47 @@
                 <a class="btn btn-outline-dark btn-sm align-self-start" href="./integrations.html">Настроить импорт</a>
               </div>
 
-              <div class="row g-3 mt-1" data-accounts-list>
+              <div class="row g-3 mt-1" data-accounts-list role="list" aria-label="Список счетов">
                 <div class="col-md-4">
-                  <div class="account-card">
+                  <div class="account-card" role="listitem" aria-label="Текущий счёт, баланс 126 400 рублей">
                     <div class="d-flex justify-content-between align-items-start">
                       <div>
                         <small>Текущий счёт</small>
                         <h3>₽ 126 400</h3>
                       </div>
-                      <i class="bi bi-credit-card-2-front"></i>
+                      <i class="bi bi-credit-card-2-front" aria-hidden="true"></i>
                     </div>
                     <p class="mb-0 text-secondary small">Тинькофф Black •••• 4582</p>
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="account-card">
+                  <div class="account-card" role="listitem" aria-label="Накопительный счёт, баланс 94 200 рублей">
                     <div class="d-flex justify-content-between align-items-start">
                       <div>
                         <small>Накопительный</small>
                         <h3>₽ 94 200</h3>
                       </div>
-                      <i class="bi bi-piggy-bank"></i>
+                      <i class="bi bi-piggy-bank" aria-hidden="true"></i>
                     </div>
                     <p class="mb-0 text-secondary small">Сбер Вклад • 12% годовых</p>
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="account-card">
+                  <div class="account-card" role="listitem" aria-label="Наличные, баланс 28 300 рублей">
                     <div class="d-flex justify-content-between align-items-start">
                       <div>
                         <small>Наличные</small>
                         <h3>₽ 28 300</h3>
                       </div>
-                      <i class="bi bi-cash-stack"></i>
+                      <i class="bi bi-cash-stack" aria-hidden="true"></i>
                     </div>
                     <p class="mb-0 text-secondary small">Ручной ввод и мелкие траты</p>
                   </div>
                 </div>
               </div>
 
-              <div class="filter-panel mt-4">
+              <form class="filter-panel mt-4" aria-labelledby="transaction-filters-title" novalidate>
+                <h3 class="visually-hidden" id="transaction-filters-title">Фильтры транзакций</h3>
                 <div class="row g-3 align-items-end">
                   <div class="col-md-4">
                     <label class="form-label" for="searchFilter">Поиск</label>
@@ -204,18 +206,18 @@
                   </div>
                 </div>
                 <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3">
-                  <p class="mb-0 text-secondary">
+                  <p class="mb-0 text-secondary" role="status" aria-live="polite">
                     Найдено транзакций: <strong data-transaction-count>6</strong>
                   </p>
                   <button class="btn btn-link text-decoration-none p-0" type="button" data-filter-reset>
                     Сбросить фильтры
                   </button>
                 </div>
-              </div>
+              </form>
 
-              <div class="transaction-list mt-4" data-transaction-list>
-                <article class="transaction-item" data-category="еда" data-amount="1490" data-date="2026-03-08">
-                  <div class="transaction-item__icon bg-soft-orange"><i class="bi bi-basket2"></i></div>
+              <div class="transaction-list mt-4" data-transaction-list role="list" aria-label="Список транзакций">
+                <article class="transaction-item" role="listitem" data-category="еда" data-amount="1490" data-date="2026-03-08">
+                  <div class="transaction-item__icon bg-soft-orange"><i class="bi bi-basket2" aria-hidden="true"></i></div>
                   <div class="transaction-item__body">
                     <div class="d-flex justify-content-between gap-3 flex-wrap">
                       <div>
@@ -226,8 +228,8 @@
                     </div>
                   </div>
                 </article>
-                <article class="transaction-item" data-category="транспорт" data-amount="320" data-date="2026-03-07">
-                  <div class="transaction-item__icon bg-soft-blue"><i class="bi bi-train-front"></i></div>
+                <article class="transaction-item" role="listitem" data-category="транспорт" data-amount="320" data-date="2026-03-07">
+                  <div class="transaction-item__icon bg-soft-blue"><i class="bi bi-train-front" aria-hidden="true"></i></div>
                   <div class="transaction-item__body">
                     <div class="d-flex justify-content-between gap-3 flex-wrap">
                       <div>
@@ -238,8 +240,8 @@
                     </div>
                   </div>
                 </article>
-                <article class="transaction-item" data-category="доход" data-amount="120000" data-date="2026-03-05">
-                  <div class="transaction-item__icon bg-soft-green"><i class="bi bi-arrow-down-left-circle"></i></div>
+                <article class="transaction-item" role="listitem" data-category="доход" data-amount="120000" data-date="2026-03-05">
+                  <div class="transaction-item__icon bg-soft-green"><i class="bi bi-arrow-down-left-circle" aria-hidden="true"></i></div>
                   <div class="transaction-item__body">
                     <div class="d-flex justify-content-between gap-3 flex-wrap">
                       <div>
@@ -250,8 +252,8 @@
                     </div>
                   </div>
                 </article>
-                <article class="transaction-item" data-category="дом" data-amount="8400" data-date="2026-03-04">
-                  <div class="transaction-item__icon bg-soft-teal"><i class="bi bi-house-door"></i></div>
+                <article class="transaction-item" role="listitem" data-category="дом" data-amount="8400" data-date="2026-03-04">
+                  <div class="transaction-item__icon bg-soft-teal"><i class="bi bi-house-door" aria-hidden="true"></i></div>
                   <div class="transaction-item__body">
                     <div class="d-flex justify-content-between gap-3 flex-wrap">
                       <div>
@@ -262,8 +264,8 @@
                     </div>
                   </div>
                 </article>
-                <article class="transaction-item" data-category="подписки" data-amount="990" data-date="2026-03-02">
-                  <div class="transaction-item__icon bg-soft-purple"><i class="bi bi-play-btn"></i></div>
+                <article class="transaction-item" role="listitem" data-category="подписки" data-amount="990" data-date="2026-03-02">
+                  <div class="transaction-item__icon bg-soft-purple"><i class="bi bi-play-btn" aria-hidden="true"></i></div>
                   <div class="transaction-item__body">
                     <div class="d-flex justify-content-between gap-3 flex-wrap">
                       <div>
@@ -274,8 +276,8 @@
                     </div>
                   </div>
                 </article>
-                <article class="transaction-item" data-category="еда" data-amount="2750" data-date="2026-03-01">
-                  <div class="transaction-item__icon bg-soft-orange"><i class="bi bi-cup-hot"></i></div>
+                <article class="transaction-item" role="listitem" data-category="еда" data-amount="2750" data-date="2026-03-01">
+                  <div class="transaction-item__icon bg-soft-orange"><i class="bi bi-cup-hot" aria-hidden="true"></i></div>
                   <div class="transaction-item__body">
                     <div class="d-flex justify-content-between gap-3 flex-wrap">
                       <div>
@@ -288,8 +290,8 @@
                 </article>
               </div>
 
-              <div class="empty-state d-none mt-4" data-empty-state>
-                <i class="bi bi-search"></i>
+              <div class="empty-state d-none mt-4" data-empty-state role="status" aria-live="polite">
+                <i class="bi bi-search" aria-hidden="true"></i>
                 <h3>Ничего не найдено</h3>
                 <p class="mb-0 text-secondary">Измените диапазон дат или снимите часть фильтров.</p>
               </div>
@@ -304,29 +306,29 @@
                   <h2 class="h3 mt-2 mb-0">Лимиты категорий</h2>
                 </div>
               </div>
-              <div data-budgets-list>
-                <div class="budget-item">
+              <div data-budgets-list role="list" aria-label="Список бюджетов">
+                <div class="budget-item" role="listitem">
                   <div class="d-flex justify-content-between">
                     <strong>Еда</strong>
                     <span>₽ 18 400 / ₽ 25 000</span>
                   </div>
                   <div class="progress soft-progress mt-2"><div class="progress-bar" style="width: 74%"></div></div>
                 </div>
-                <div class="budget-item">
+                <div class="budget-item" role="listitem">
                   <div class="d-flex justify-content-between">
                     <strong>Дом</strong>
                     <span>₽ 22 300 / ₽ 24 000</span>
                   </div>
                   <div class="progress soft-progress mt-2"><div class="progress-bar warning-bar" style="width: 93%"></div></div>
                 </div>
-                <div class="budget-item">
+                <div class="budget-item" role="listitem">
                   <div class="d-flex justify-content-between">
                     <strong>Подписки</strong>
                     <span>₽ 2 790 / ₽ 3 500</span>
                   </div>
                   <div class="progress soft-progress mt-2"><div class="progress-bar" style="width: 80%"></div></div>
                 </div>
-                <div class="budget-item mb-0">
+                <div class="budget-item mb-0" role="listitem">
                   <div class="d-flex justify-content-between">
                     <strong>Транспорт</strong>
                     <span>₽ 6 200 / ₽ 9 000</span>
@@ -340,7 +342,7 @@
       </div>
     </main>
 
-    <div class="modal fade" id="actionModal" tabindex="-1" aria-labelledby="actionLabel" aria-hidden="true">
+    <div class="modal fade" id="actionModal" tabindex="-1" aria-labelledby="actionLabel" aria-describedby="actionDescription" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content custom-modal">
           <div class="modal-header border-0">
@@ -351,7 +353,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
           </div>
           <div class="modal-body pt-0">
-            <p class="text-secondary" data-modal-text>
+            <p class="text-secondary" id="actionDescription" data-modal-text>
               Добавьте ручную операцию, если она ещё не импортировалась из банка.
             </p>
             <div class="row g-3">

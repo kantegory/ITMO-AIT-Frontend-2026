@@ -17,8 +17,9 @@
     <link rel="stylesheet" href="./assets/styles.css" />
   </head>
   <body data-page="reports">
+    <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
     <header class="site-header">
-      <nav class="navbar navbar-expand-lg">
+      <nav class="navbar navbar-expand-lg" aria-label="Основная навигация">
         <div class="container">
           <a class="navbar-brand brand-mark" href="./index.html">FinFlow</a>
           <button
@@ -36,7 +37,7 @@
             <ul class="navbar-nav mx-auto gap-lg-2">
               <li class="nav-item"><a class="nav-link" href="./index.html">Главная</a></li>
               <li class="nav-item"><a class="nav-link" href="./dashboard.html">Кабинет</a></li>
-              <li class="nav-item"><a class="nav-link active" href="./reports.html">Отчёты</a></li>
+              <li class="nav-item"><a class="nav-link active" href="./reports.html" aria-current="page">Отчёты</a></li>
               <li class="nav-item"><a class="nav-link" href="./integrations.html">Интеграции</a></li>
             </ul>
             <div class="d-flex gap-2 flex-wrap align-items-start">
@@ -51,21 +52,21 @@
       </nav>
     </header>
 
-    <main class="page-section">
+    <main class="page-section" id="main-content" tabindex="-1">
       <div class="container">
         <section class="page-banner">
           <div>
             <span class="section-label">Финансовая аналитика</span>
             <h1 class="section-title mt-3">Отчёт по расходам и прогнозам</h1>
-            <p class="page-banner__copy" data-report-summary>
+            <p class="page-banner__copy" data-report-summary aria-live="polite">
               Переключайте период, чтобы увидеть динамику расходов, крупнейшие категории
               и ожидаемый остаток к концу месяца.
             </p>
           </div>
-          <div class="page-banner__actions" data-report-switcher>
-            <button class="btn btn-outline-dark active" type="button" data-period="week">Неделя</button>
-            <button class="btn btn-outline-dark" type="button" data-period="month">Месяц</button>
-            <button class="btn btn-outline-dark" type="button" data-period="quarter">Квартал</button>
+          <div class="page-banner__actions" data-report-switcher role="group" aria-label="Выбор периода отчета">
+            <button class="btn btn-outline-dark active" type="button" data-period="week" aria-pressed="true">Неделя</button>
+            <button class="btn btn-outline-dark" type="button" data-period="month" aria-pressed="false">Месяц</button>
+            <button class="btn btn-outline-dark" type="button" data-period="quarter" aria-pressed="false">Квартал</button>
           </div>
         </section>
 
@@ -118,7 +119,10 @@
                 </button>
               </div>
               <div class="chart-frame">
-                <canvas id="spendChart"></canvas>
+                <canvas id="spendChart" role="img" aria-label="График расходов по дням" aria-describedby="spendChartDescription"></canvas>
+                <p class="visually-hidden" id="spendChartDescription" data-spend-chart-description>
+                  Линейный график расходов за выбранный период.
+                </p>
               </div>
             </div>
           </div>
@@ -131,7 +135,10 @@
                 </div>
               </div>
               <div class="chart-frame chart-frame--small">
-                <canvas id="categoryChart"></canvas>
+                <canvas id="categoryChart" role="img" aria-label="Диаграмма структуры расходов по категориям" aria-describedby="categoryChartDescription"></canvas>
+                <p class="visually-hidden" id="categoryChartDescription" data-category-chart-description>
+                  Кольцевая диаграмма распределения расходов по категориям.
+                </p>
               </div>
             </div>
           </div>
@@ -142,20 +149,20 @@
             <div class="content-card">
               <span class="section-label">Ключевые категории</span>
               <h2 class="h3 mt-2">На что уходят деньги</h2>
-              <div class="insight-list mt-4" data-category-breakdown>
-                <div class="insight-row">
+              <div class="insight-list mt-4" data-category-breakdown role="list" aria-label="Разбивка расходов по категориям">
+                <div class="insight-row" role="listitem">
                   <span>Дом</span>
                   <strong>₽ 6 500</strong>
                 </div>
-                <div class="insight-row">
+                <div class="insight-row" role="listitem">
                   <span>Еда</span>
                   <strong>₽ 4 900</strong>
                 </div>
-                <div class="insight-row">
+                <div class="insight-row" role="listitem">
                   <span>Транспорт</span>
                   <strong>₽ 2 800</strong>
                 </div>
-                <div class="insight-row">
+                <div class="insight-row" role="listitem">
                   <span>Подписки</span>
                   <strong>₽ 1 600</strong>
                 </div>
@@ -185,7 +192,7 @@
       </div>
     </main>
 
-    <div class="modal fade" id="forecastModal" tabindex="-1" aria-labelledby="forecastLabel" aria-hidden="true">
+    <div class="modal fade" id="forecastModal" tabindex="-1" aria-labelledby="forecastLabel" aria-describedby="forecastDescription" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content custom-modal">
           <div class="modal-header border-0">
@@ -193,7 +200,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
           </div>
           <div class="modal-body">
-            <p class="text-secondary mb-0">
+            <p class="text-secondary mb-0" id="forecastDescription">
               Прогноз строится на основе средней дневной траты, уже зафиксированных
               регулярных платежей и текущего остатка по счёту. Здесь используется
               демонстрационный набор данных.
