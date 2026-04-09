@@ -31,6 +31,7 @@ function initReportCharts(presets) {
   const switcher = $("[data-report-switcher]");
 
   if (!spendCanvas || !categoryCanvas || !switcher || typeof Chart === "undefined") return;
+  const palette = getThemeChartPalette();
 
   const spendChart = new Chart(spendCanvas, {
     type: "line",
@@ -41,10 +42,10 @@ function initReportCharts(presets) {
         data: [],
         fill: true,
         borderWidth: 3,
-        borderColor: "#0f766e",
-        backgroundColor: "rgba(15, 118, 110, 0.14)",
+        borderColor: palette.line,
+        backgroundColor: palette.fill,
         tension: 0.35,
-        pointBackgroundColor: "#ef7e56",
+        pointBackgroundColor: palette.point,
         pointRadius: 4,
       }],
     },
@@ -52,8 +53,15 @@ function initReportCharts(presets) {
       maintainAspectRatio: false,
       plugins: { legend: { display: false } },
       scales: {
-        y: { beginAtZero: true, grid: { color: "rgba(24, 33, 38, 0.08)" } },
-        x: { grid: { display: false } },
+        y: {
+          beginAtZero: true,
+          grid: { color: palette.grid },
+          ticks: { color: palette.text },
+        },
+        x: {
+          grid: { display: false },
+          ticks: { color: palette.text },
+        },
       },
     },
   });
@@ -65,7 +73,7 @@ function initReportCharts(presets) {
       datasets: [{
         data: [],
         borderWidth: 0,
-        backgroundColor: ["#0f766e", "#ef7e56", "#4c84ff", "#9a6fdb", "#6c757d"],
+        backgroundColor: palette.donut,
       }],
     },
     options: {
@@ -73,12 +81,29 @@ function initReportCharts(presets) {
       plugins: {
         legend: {
           position: "bottom",
-          labels: { boxWidth: 12, usePointStyle: true },
+          labels: { boxWidth: 12, usePointStyle: true, color: palette.text },
         },
       },
       cutout: "68%",
     },
   });
+
+  const updateChartTheme = () => {
+    const nextPalette = getThemeChartPalette();
+
+    spendChart.data.datasets[0].borderColor = nextPalette.line;
+    spendChart.data.datasets[0].backgroundColor = nextPalette.fill;
+    spendChart.data.datasets[0].pointBackgroundColor = nextPalette.point;
+    spendChart.options.scales.y.grid.color = nextPalette.grid;
+    spendChart.options.scales.y.ticks.color = nextPalette.text;
+    spendChart.options.scales.x.ticks.color = nextPalette.text;
+
+    categoryChart.data.datasets[0].backgroundColor = nextPalette.donut;
+    categoryChart.options.plugins.legend.labels.color = nextPalette.text;
+
+    spendChart.update();
+    categoryChart.update();
+  };
 
   const applyPreset = (period) => {
     const preset = presets[period];
@@ -134,6 +159,7 @@ function initReportCharts(presets) {
     });
   });
 
+  document.addEventListener("finflow:themechange", updateChartTheme);
   applyPreset("week");
 }
 
@@ -208,4 +234,24 @@ function buildReportPresets(transactions, accounts) {
       ];
     }),
   );
+}
+
+function getThemeChartPalette() {
+  const styles = getComputedStyle(document.documentElement);
+  const read = (name, fallback) => styles.getPropertyValue(name).trim() || fallback;
+
+  return {
+    line: read("--chart-line", "#2476ff"),
+    fill: read("--chart-fill", "rgba(36, 118, 255, 0.16)"),
+    point: read("--chart-point", "#19a991"),
+    grid: read("--chart-grid", "rgba(95, 108, 123, 0.18)"),
+    text: read("--chart-text", "#425160"),
+    donut: [
+      read("--chart-donut-1", "#2476ff"),
+      read("--chart-donut-2", "#19a991"),
+      read("--chart-donut-3", "#ff9b54"),
+      read("--chart-donut-4", "#855dff"),
+      read("--chart-donut-5", "#8694a8"),
+    ],
+  };
 }
