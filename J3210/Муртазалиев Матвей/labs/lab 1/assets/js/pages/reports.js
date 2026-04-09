@@ -2,6 +2,7 @@ import { ensureSession, getCollection } from "../auth.js";
 import {
   $,
   $$,
+  escapeHtml,
   filterRange,
   formatDate,
   formatCurrency,
@@ -102,19 +103,33 @@ function initReportCharts(presets) {
     setText("[data-forecast-text]", preset.forecastText);
     setText("[data-forecast-description]", preset.forecastDescription);
     setText("[data-report-tip]", preset.tip);
+    setText(
+      "[data-spend-chart-description]",
+      `Линейный график расходов за период «${preset.periodLabel}». Траты: ${preset.spend}. Основная категория: ${preset.category}.`,
+    );
+    setText(
+      "[data-category-chart-description]",
+      preset.categoryLabels.length
+        ? `Категории расходов: ${preset.categoryLabels.map((label, index) => `${label} — ${formatCurrency(preset.categoryData[index])}`).join(", ")}.`
+        : "Данные по категориям пока отсутствуют.",
+    );
 
     const breakdown = $("[data-category-breakdown]");
     if (breakdown) {
       breakdown.innerHTML = preset.categoryLabels
-        .map((label, index) => `<div class="insight-row"><span>${label}</span><strong>${formatCurrency(preset.categoryData[index])}</strong></div>`)
+        .map((label, index) => `<div class="insight-row" role="listitem"><span>${escapeHtml(label)}</span><strong>${formatCurrency(preset.categoryData[index])}</strong></div>`)
         .join("");
     }
   };
 
   $$("[data-period]", switcher).forEach((button) => {
     button.addEventListener("click", () => {
-      $$(".btn", switcher).forEach((item) => item.classList.remove("active"));
+      $$(".btn", switcher).forEach((item) => {
+        item.classList.remove("active");
+        item.setAttribute("aria-pressed", "false");
+      });
       button.classList.add("active");
+      button.setAttribute("aria-pressed", "true");
       applyPreset(button.dataset.period);
     });
   });
@@ -166,6 +181,7 @@ function buildReportPresets(transactions, accounts) {
       return [
         period,
         {
+          periodLabel: period === "week" ? "Неделя" : period === "month" ? "Месяц" : "Квартал",
           summary: leader
             ? `Сервис считает значения по данным API. Сейчас лидирует категория «${leader.name}», а расходы за период составили ${formatCurrency(spend)}.`
             : "Пока данных мало, но графики уже строятся по API.",
