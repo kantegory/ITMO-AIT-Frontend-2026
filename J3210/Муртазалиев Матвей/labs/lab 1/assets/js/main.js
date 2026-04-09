@@ -53,12 +53,21 @@ async function initApp() {
 
 function initNavbarAuth() {
   const session = loadSession();
+  const isAuthorized = Boolean(session?.accessToken);
   const currentPage = document.body.dataset.page;
   const getAriaCurrent = (page) => currentPage === page ? ' aria-current="page"' : "";
   const themeToggle = renderThemeToggleMarkup();
 
+  document.querySelectorAll("[data-primary-nav], [data-footer-nav]").forEach((container) => {
+    container.hidden = !isAuthorized;
+
+    if (container.hasAttribute("data-footer-nav") && !isAuthorized) {
+      container.innerHTML = "";
+    }
+  });
+
   document.querySelectorAll("[data-navbar-auth]").forEach((container) => {
-    if (session?.accessToken) {
+    if (isAuthorized) {
       container.innerHTML = `
         ${themeToggle}
         <a class="btn btn-outline-dark btn-sm px-3" href="./dashboard.html"${getAriaCurrent("dashboard")}>Кабинет</a>
