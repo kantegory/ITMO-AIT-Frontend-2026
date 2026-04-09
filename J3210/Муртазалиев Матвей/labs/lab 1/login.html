@@ -17,8 +17,9 @@
     <link rel="stylesheet" href="./assets/styles.css" />
   </head>
   <body data-page="login">
+    <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
     <header class="site-header">
-      <nav class="navbar navbar-expand-lg">
+      <nav class="navbar navbar-expand-lg" aria-label="Основная навигация">
         <div class="container">
           <a class="navbar-brand brand-mark" href="./index.html">FinFlow</a>
           <button
@@ -48,7 +49,7 @@
       </nav>
     </header>
 
-    <main class="auth-page">
+    <main class="auth-page" id="main-content" tabindex="-1">
       <div class="container">
         <div class="auth-shell auth-shell--single">
           <div class="auth-panel">
@@ -59,10 +60,11 @@
               </div>
               <a class="text-decoration-none small fw-semibold" href="./register.html">Создать аккаунт</a>
             </div>
-            <form class="row g-3 auth-form" data-auth-form>
+            <form class="row g-3 auth-form" data-auth-form aria-describedby="login-form-hint">
+              <p class="visually-hidden" id="login-form-hint">Введите email и пароль для входа в личный кабинет.</p>
               <div class="col-12">
                 <label class="form-label" for="loginEmail">Email</label>
-                <input class="form-control form-control-lg" id="loginEmail" type="email" placeholder="demo@finflow.ru" required />
+                <input class="form-control form-control-lg" id="loginEmail" type="email" placeholder="demo@finflow.ru" autocomplete="email" inputmode="email" required />
               </div>
               <div class="col-12">
                 <label class="form-label" for="loginPassword">Пароль</label>
@@ -72,11 +74,12 @@
                     id="loginPassword"
                     type="password"
                     placeholder="Введите пароль"
+                    autocomplete="current-password"
                     data-password-input
                     required
                   />
-                  <button class="btn btn-outline-secondary" type="button" data-password-toggle>
-                    <i class="bi bi-eye"></i>
+                  <button class="btn btn-outline-secondary" type="button" data-password-toggle aria-label="Показать пароль" aria-pressed="false" aria-controls="loginPassword">
+                    <i class="bi bi-eye" aria-hidden="true"></i>
                   </button>
                 </div>
               </div>
@@ -98,19 +101,19 @@
                 <button class="btn btn-accent btn-lg w-100" type="submit">Войти в кабинет</button>
               </div>
               <div class="col-12">
-                <div class="alert d-none mb-0" data-form-message></div>
+                <div class="alert d-none mb-0" data-form-message role="alert" aria-live="assertive"></div>
               </div>
               <div class="col-12">
                 <div class="divider-text"><span>или продолжить через</span></div>
               </div>
               <div class="col-sm-6">
                 <button class="btn btn-outline-dark w-100" type="button">
-                  <i class="bi bi-google me-2"></i>Google
+                  <i class="bi bi-google me-2" aria-hidden="true"></i>Google
                 </button>
               </div>
               <div class="col-sm-6">
                 <button class="btn btn-outline-dark w-100" type="button">
-                  <i class="bi bi-apple me-2"></i>Apple ID
+                  <i class="bi bi-apple me-2" aria-hidden="true"></i>Apple ID
                 </button>
               </div>
             </form>
@@ -119,7 +122,7 @@
       </div>
     </main>
 
-    <div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetLabel" aria-hidden="true">
+    <div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetLabel" aria-describedby="resetDescription" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content custom-modal">
           <div class="modal-header border-0">
@@ -127,11 +130,11 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
           </div>
           <div class="modal-body">
-            <p class="text-secondary">
+            <p class="text-secondary" id="resetDescription">
               Ссылка для сброса пароля будет отправлена на email, привязанный к аккаунту.
             </p>
             <label class="form-label" for="resetEmail">Email</label>
-            <input class="form-control" id="resetEmail" type="email" placeholder="name@example.com" />
+            <input class="form-control" id="resetEmail" type="email" placeholder="name@example.com" autocomplete="email" inputmode="email" />
           </div>
           <div class="modal-footer border-0">
             <button type="button" class="btn btn-accent w-100" data-bs-dismiss="modal">Отправить ссылку</button>

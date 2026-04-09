@@ -51,11 +51,13 @@ async function initApp() {
 
 function initNavbarAuth() {
   const session = loadSession();
+  const currentPage = document.body.dataset.page;
+  const getAriaCurrent = (page) => currentPage === page ? ' aria-current="page"' : "";
 
   document.querySelectorAll("[data-navbar-auth]").forEach((container) => {
     if (session?.accessToken) {
       container.innerHTML = `
-        <a class="btn btn-outline-dark btn-sm px-3" href="./dashboard.html">Кабинет</a>
+        <a class="btn btn-outline-dark btn-sm px-3" href="./dashboard.html"${getAriaCurrent("dashboard")}>Кабинет</a>
         <button class="btn btn-accent btn-sm px-3" type="button" data-logout-button>Выйти</button>
       `;
 
@@ -68,8 +70,8 @@ function initNavbarAuth() {
     }
 
     container.innerHTML = `
-      <a class="btn btn-outline-dark btn-sm px-3" href="./login.html">Войти</a>
-      <a class="btn btn-accent btn-sm px-3" href="./register.html">Регистрация</a>
+      <a class="btn btn-outline-dark btn-sm px-3" href="./login.html"${getAriaCurrent("login")}>Войти</a>
+      <a class="btn btn-accent btn-sm px-3" href="./register.html"${getAriaCurrent("register")}>Регистрация</a>
     `;
   });
 }

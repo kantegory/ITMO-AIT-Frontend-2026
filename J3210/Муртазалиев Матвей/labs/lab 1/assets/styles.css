@@ -14,6 +14,36 @@ body {
   background: var(--bg);
 }
 
+.skip-link {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 1050;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  background: var(--text);
+  border-radius: 0.5rem;
+}
+
+.skip-link:not(:focus):not(:focus-visible) {
+  clip: rect(0, 0, 0, 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  position: absolute;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(13, 110, 253, 0.35);
+  outline-offset: 2px;
+}
+
 .site-header {
   background: #fff;
   border-bottom: 1px solid var(--border);

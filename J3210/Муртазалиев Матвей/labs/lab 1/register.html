@@ -17,8 +17,9 @@
     <link rel="stylesheet" href="./assets/styles.css" />
   </head>
   <body data-page="register">
+    <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
     <header class="site-header">
-      <nav class="navbar navbar-expand-lg">
+      <nav class="navbar navbar-expand-lg" aria-label="Основная навигация">
         <div class="container">
           <a class="navbar-brand brand-mark" href="./index.html">FinFlow</a>
           <button
@@ -48,7 +49,7 @@
       </nav>
     </header>
 
-    <main class="auth-page">
+    <main class="auth-page" id="main-content" tabindex="-1">
       <div class="container">
         <div class="auth-shell auth-shell--single">
           <div class="auth-panel">
@@ -57,15 +58,15 @@
             <form class="row g-3 mt-1" data-register-form>
               <div class="col-md-6">
                 <label class="form-label" for="firstName">Имя</label>
-                <input class="form-control form-control-lg" id="firstName" type="text" placeholder="Матвей" required />
+                <input class="form-control form-control-lg" id="firstName" type="text" placeholder="Матвей" autocomplete="given-name" required />
               </div>
               <div class="col-md-6">
                 <label class="form-label" for="lastName">Фамилия</label>
-                <input class="form-control form-control-lg" id="lastName" type="text" placeholder="Муртазалиев" required />
+                <input class="form-control form-control-lg" id="lastName" type="text" placeholder="Муртазалиев" autocomplete="family-name" required />
               </div>
               <div class="col-12">
                 <label class="form-label" for="registerEmail">Email</label>
-                <input class="form-control form-control-lg" id="registerEmail" type="email" placeholder="you@example.com" required />
+                <input class="form-control form-control-lg" id="registerEmail" type="email" placeholder="you@example.com" autocomplete="email" inputmode="email" required />
               </div>
               <div class="col-12">
                 <label class="form-label" for="registerPassword">Пароль</label>
@@ -74,17 +75,21 @@
                   id="registerPassword"
                   type="password"
                   placeholder="Не менее 8 символов"
+                  autocomplete="new-password"
+                  aria-describedby="register-password-hint password-strength-text"
                   data-strength-input
                   required
                 />
+                <small class="text-secondary d-block mt-2" id="register-password-hint">Для демо достаточно пароля длиной от 8 символов.</small>
                 <div class="password-strength mt-3">
-                  <div class="password-strength__bar"><span data-strength-bar></span></div>
-                  <small class="text-secondary" data-strength-text>Укажите пароль</small>
+                  <div class="password-strength__bar"><span data-strength-bar role="progressbar" aria-label="Надежность пароля" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></span></div>
+                  <small class="text-secondary" id="password-strength-text" data-strength-text aria-live="polite">Укажите пароль</small>
                 </div>
               </div>
               <div class="col-12">
-                <label class="form-label">Тариф</label>
-                <div class="row g-3">
+                <fieldset class="border-0 p-0 m-0">
+                  <legend class="form-label mb-2">Тариф</legend>
+                  <div class="row g-3">
                   <div class="col-md-6">
                     <label class="plan-card">
                       <input type="radio" name="plan" value="Starter" checked />
@@ -101,7 +106,8 @@
                       <span class="plan-card__copy">Прогнозы, отчёты и автоправила</span>
                     </label>
                   </div>
-                </div>
+                  </div>
+                </fieldset>
               </div>
               <div class="col-12">
                 <div class="form-check">
@@ -115,12 +121,12 @@
                 <button class="btn btn-accent btn-lg w-100" type="submit">Зарегистрироваться</button>
               </div>
               <div class="col-12">
-                <div class="alert d-none mb-0" data-form-message></div>
+                <div class="alert d-none mb-0" data-form-message role="alert" aria-live="assertive"></div>
               </div>
               <div class="col-12">
                 <div class="alert alert-light border mb-0">
                   Уже зарегистрированы?
-                  <a class="fw-semibold text-decoration-none" href="./login.html">Перейти ко входу</a>
+                  <a class="fw-semibold link-dark text-decoration-none" href="./login.html">Перейти ко входу</a>
                 </div>
               </div>
             </form>

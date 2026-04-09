@@ -17,8 +17,9 @@
     <link rel="stylesheet" href="./assets/styles.css" />
   </head>
   <body data-page="home">
+    <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
     <header class="site-header">
-      <nav class="navbar navbar-expand-lg">
+      <nav class="navbar navbar-expand-lg" aria-label="Основная навигация">
         <div class="container">
           <a class="navbar-brand brand-mark" href="./index.html">FinFlow</a>
           <button
@@ -34,7 +35,7 @@
           </button>
           <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav mx-auto gap-lg-2">
-              <li class="nav-item"><a class="nav-link active" href="./index.html">Главная</a></li>
+              <li class="nav-item"><a class="nav-link active" href="./index.html" aria-current="page">Главная</a></li>
               <li class="nav-item"><a class="nav-link" href="./dashboard.html">Кабинет</a></li>
               <li class="nav-item"><a class="nav-link" href="./reports.html">Отчёты</a></li>
               <li class="nav-item"><a class="nav-link" href="./integrations.html">Интеграции</a></li>
@@ -48,13 +49,13 @@
       </nav>
     </header>
 
-    <main>
-      <section class="hero-section">
+    <main id="main-content" tabindex="-1">
+      <section class="hero-section" aria-labelledby="hero-title">
         <div class="container">
           <div class="row align-items-center g-4">
             <div class="col-lg-7">
               <span class="section-label">Управление финансами</span>
-              <h1 class="display-4 hero-title mt-3">
+              <h1 class="display-4 hero-title mt-3" id="hero-title">
                 Контролируйте счета, бюджеты и траты в одном интерфейсе.
               </h1>
               <p class="hero-copy">
@@ -92,39 +93,39 @@
         </div>
       </section>
 
-      <section class="py-5">
+      <section class="py-5" aria-labelledby="pages-title">
         <div class="container">
           <div class="section-head">
             <div>
               <span class="section-label">Разделы сервиса</span>
-              <h2 class="section-title">Основные страницы</h2>
+              <h2 class="section-title" id="pages-title">Основные страницы</h2>
             </div>
           </div>
           <div class="row g-4 mt-1">
             <div class="col-md-6 col-xl-3">
               <article class="feature-card">
-                <i class="bi bi-shield-lock feature-card__icon"></i>
+                <i class="bi bi-shield-lock feature-card__icon" aria-hidden="true"></i>
                 <h3>Вход и регистрация</h3>
                 <p>Отдельные формы с быстрыми сценариями входа и создания аккаунта.</p>
               </article>
             </div>
             <div class="col-md-6 col-xl-3">
               <article class="feature-card">
-                <i class="bi bi-wallet2 feature-card__icon"></i>
+                <i class="bi bi-wallet2 feature-card__icon" aria-hidden="true"></i>
                 <h3>Личный кабинет</h3>
                 <p>Счета, бюджеты, быстрые действия и список транзакций на одной странице.</p>
               </article>
             </div>
             <div class="col-md-6 col-xl-3">
               <article class="feature-card">
-                <i class="bi bi-funnel feature-card__icon"></i>
+                <i class="bi bi-funnel feature-card__icon" aria-hidden="true"></i>
                 <h3>Фильтры</h3>
                 <p>Поиск транзакций по категории, сумме и дате с мгновенным откликом.</p>
               </article>
             </div>
             <div class="col-md-6 col-xl-3">
               <article class="feature-card">
-                <i class="bi bi-bar-chart feature-card__icon"></i>
+                <i class="bi bi-bar-chart feature-card__icon" aria-hidden="true"></i>
                 <h3>Отчёты</h3>
                 <p>Графики расходов, разбивка по категориям и краткий финансовый прогноз.</p>
               </article>
@@ -137,11 +138,11 @@
     <footer class="site-footer">
       <div class="container d-flex flex-column flex-md-row justify-content-between gap-3">
         <p class="mb-0">FinFlow</p>
-        <div class="d-flex gap-3">
+        <nav class="d-flex gap-3" aria-label="Навигация в подвале">
           <a href="./dashboard.html">Кабинет</a>
           <a href="./reports.html">Отчёты</a>
           <a href="./integrations.html">Интеграции</a>
-        </div>
+        </nav>
       </div>
     </footer>
 
