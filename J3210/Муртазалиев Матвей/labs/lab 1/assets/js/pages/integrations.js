@@ -73,9 +73,11 @@ function initRuleForm(state) {
 function initImportActions(state) {
   const modal = document.getElementById("importModal");
   const submitButton = $("[data-import-submit]", modal);
+  const message = $("[data-import-message]", modal);
   if (!modal || !submitButton) return;
 
   submitButton.addEventListener("click", async () => {
+    clearMessage(message);
     const integrationId = Number(modal.dataset.integrationId || 0);
     const provider = $("[data-import-provider]", modal)?.textContent?.trim() || "Банк";
     const period = $("#importRange")?.value || "Последние 30 дней";
@@ -101,7 +103,7 @@ function initImportActions(state) {
         window.bootstrap.Modal.getOrCreateInstance(modal).hide();
       }
     } catch (error) {
-      alert(error.message || "Импорт не удался.");
+      showMessage(message, error.message || "Импорт не удался.");
     } finally {
       toggleBusy(submitButton, false, "Начать импорт");
     }
@@ -123,7 +125,7 @@ function renderIntegrations(integrations) {
 
       return `
         <div class="col-md-6">
-          <article class="integration-card">
+          <article class="integration-card" role="listitem" aria-label="${escapeAttribute(`Интеграция ${integration.provider}, статус ${status.label}`)}">
             <div class="d-flex justify-content-between align-items-start">
               <div>
                 <h3>${escapeHtml(integration.provider)}</h3>

@@ -118,16 +118,18 @@ function renderAccounts(accounts) {
   const container = $("[data-accounts-list]");
   if (!container) return;
 
+  container.setAttribute("role", "list");
+  container.setAttribute("aria-label", "Список счетов");
   container.innerHTML = accounts
     .map((account) => `
       <div class="col-md-4">
-        <div class="account-card">
+        <div class="account-card" role="listitem" aria-label="${escapeAttribute(`${account.name}, баланс ${formatCurrency(account.balance)}`)}">
           <div class="d-flex justify-content-between align-items-start">
             <div>
               <small>${escapeHtml(account.name)}</small>
               <h3>${formatCurrency(account.balance)}</h3>
             </div>
-            <i class="bi ${getAccountIcon(account.type)}"></i>
+            <i class="bi ${getAccountIcon(account.type)}" aria-hidden="true"></i>
           </div>
           <p class="mb-0 text-secondary small">${escapeHtml(account.description || account.provider || "Подключено через API")}</p>
         </div>
@@ -140,6 +142,8 @@ function renderBudgets(budgets, transactions) {
   const container = $("[data-budgets-list]");
   if (!container) return;
 
+  container.setAttribute("role", "list");
+  container.setAttribute("aria-label", "Список бюджетов");
   container.innerHTML = budgets
     .map((budget, index) => {
       const spent = getSpentByCategory(budget.category, transactions);
@@ -148,12 +152,22 @@ function renderBudgets(budgets, transactions) {
       const extraClass = index === budgets.length - 1 ? " mb-0" : "";
 
       return `
-        <div class="budget-item${extraClass}">
+        <div class="budget-item${extraClass}" role="listitem">
           <div class="d-flex justify-content-between">
             <strong>${escapeHtml(budget.category)}</strong>
             <span>${formatCurrency(spent)} / ${formatCurrency(budget.limit)}</span>
           </div>
-          <div class="progress soft-progress mt-2"><div class="${progressClass}" style="width: ${percent}%"></div></div>
+          <div class="progress soft-progress mt-2">
+            <div
+              class="${progressClass}"
+              style="width: ${percent}%"
+              role="progressbar"
+              aria-label="${escapeAttribute(`Использование бюджета ${budget.category}`)}"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="${percent}"
+            ></div>
+          </div>
         </div>
       `;
     })
@@ -176,6 +190,8 @@ function renderTransactions(state) {
   const emptyState = $("[data-empty-state]");
   if (!list) return;
 
+  list.setAttribute("role", "list");
+  list.setAttribute("aria-label", "Список транзакций");
   const filtered = state.transactions.filter((item) => {
     const title = `${item.title} ${item.category} ${item.accountName || ""}`.toLowerCase();
     const normalizedCategory = item.category.toLowerCase();
@@ -193,9 +209,9 @@ function renderTransactions(state) {
     .map((transaction) => {
       const categoryMeta = getCategoryMeta(transaction.category, transaction.type);
       return `
-        <article class="transaction-item">
+        <article class="transaction-item" role="listitem" aria-label="${escapeAttribute(`${transaction.title}, ${transaction.category}, ${formatLongDate(transaction.date)}, ${transaction.type === "income" ? "доход" : "расход"} ${formatCurrency(transaction.amount)}`)}">
           <div class="transaction-item__icon ${categoryMeta.backgroundClass}">
-            <i class="bi ${categoryMeta.icon}"></i>
+            <i class="bi ${categoryMeta.icon}" aria-hidden="true"></i>
           </div>
           <div class="transaction-item__body">
             <div class="d-flex justify-content-between gap-3 flex-wrap">

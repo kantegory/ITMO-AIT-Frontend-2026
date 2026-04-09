@@ -2,13 +2,23 @@ import { $ } from "./utils.js";
 
 export function initPasswordToggle() {
   document.querySelectorAll("[data-password-toggle]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const input = button.parentElement?.querySelector("[data-password-input]");
-      if (!input) return;
+    const input = button.parentElement?.querySelector("[data-password-input]");
+    if (!input) return;
 
+    const syncState = () => {
+      const isPassword = input.type === "password";
+      button.setAttribute("aria-label", isPassword ? "Показать пароль" : "Скрыть пароль");
+      button.setAttribute("aria-pressed", String(!isPassword));
+      button.innerHTML = isPassword
+        ? '<i class="bi bi-eye" aria-hidden="true"></i>'
+        : '<i class="bi bi-eye-slash" aria-hidden="true"></i>';
+    };
+
+    syncState();
+    button.addEventListener("click", () => {
       const isPassword = input.type === "password";
       input.type = isPassword ? "text" : "password";
-      button.innerHTML = isPassword ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
+      syncState();
     });
   });
 }
@@ -36,6 +46,7 @@ export function initPasswordStrength() {
     }
 
     bar.style.width = `${percent}%`;
+    bar.setAttribute("aria-valuenow", String(percent));
     text.textContent = label;
   };
 
@@ -61,6 +72,7 @@ export function showMessage(node, message, type = "danger") {
   if (!node) return;
   node.className = `alert alert-${type} mb-0`;
   node.textContent = message;
+  node.setAttribute("aria-hidden", "false");
   node.classList.remove("d-none");
 }
 
@@ -68,6 +80,7 @@ export function clearMessage(node) {
   if (!node) return;
   node.classList.add("d-none");
   node.textContent = "";
+  node.setAttribute("aria-hidden", "true");
 }
 
 export function toggleBusy(button, isBusy, busyText) {
@@ -77,6 +90,7 @@ export function toggleBusy(button, isBusy, busyText) {
   }
 
   button.disabled = isBusy;
+  button.setAttribute("aria-busy", String(isBusy));
   button.textContent = isBusy ? busyText : button.dataset.defaultText;
 }
 
