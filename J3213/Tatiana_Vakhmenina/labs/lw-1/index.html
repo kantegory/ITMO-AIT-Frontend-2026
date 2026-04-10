@@ -67,11 +67,20 @@
         .nav-link {
             color: var(--sidebar-text);
             opacity: 0.8;
+            display: flex;
+            align-items: center;
         }
 
         .nav-link:hover, .nav-link.active {
             opacity: 1;
             background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            margin-right: 10px;
         }
 
         a:focus, button:focus {
@@ -90,12 +99,31 @@
             border: 0;
         }
 
+        .promo-img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
         #profile-section {
             display: none;
         }
     </style>
 </head>
 <body>
+
+<svg style="display: none;">
+    <symbol id="icon-dashboard" viewBox="0 0 24 24">
+        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+    </symbol>
+    <symbol id="icon-wallet" viewBox="0 0 24 24">
+        <path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+    </symbol>
+    <symbol id="icon-refresh" viewBox="0 0 24 24">
+        <path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+    </symbol>
+</svg>
 
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" role="navigation" aria-label="Главная навигация">
@@ -121,9 +149,18 @@
             </div>
             <nav aria-label="Меню разделов">
                 <ul class="nav flex-column">
-                    <li class="nav-item"><a href="#" class="nav-link active mb-2" aria-current="page">Дашборд</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link mb-2">Счета</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link mb-2">Отчеты</a></li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active mb-2" aria-current="page">
+                            <svg class="icon"><use xlink:href="#icon-dashboard"></use></svg>
+                            Дашборд
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link mb-2">
+                            <svg class="icon"><use xlink:href="#icon-wallet"></use></svg>
+                            Счета
+                        </a>
+                    </li>
                     <hr class="text-secondary" aria-hidden="true">
                     <li class="nav-item"><a href="#" class="nav-link text-danger" onclick="location.reload()">Выход</a></li>
                 </ul>
@@ -132,14 +169,22 @@
 
         <main class="col-md-10 ms-sm-auto px-md-4 py-4" role="main">
             <div id="welcome-msg" class="text-center py-5">
+                <picture>
+                    <source srcset="https://placehold.co/1000x400/0d6efd/ffffff?text=Finance+Desktop" media="(min-width: 992px)">
+                    <source srcset="https://placehold.co/700x300/0d6efd/ffffff?text=Finance+Tablet" media="(min-width: 576px)">
+                    <img src="https://placehold.co/400x250/0d6efd/ffffff?text=Finance+Mobile" alt="Финансовая аналитика" class="promo-img">
+                </picture>
                 <h1>FinanceControl</h1>
-                <p class="text-muted">Авторизуйтесь для начала работы</p>
+                <p class="text-muted">Инструмент для мониторинга ваших средств</p>
             </div>
 
             <section id="profile-section" aria-labelledby="cabinet-title">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 id="cabinet-title">Личный кабинет</h2>
-                    <button class="btn btn-success btn-sm" onclick="loadDashboardData()" aria-label="Обновить список транзакций">Обновить данные</button>
+                    <button class="btn btn-success btn-sm d-flex align-items-center" onclick="loadDashboardData()" aria-label="Обновить данные">
+                        <svg class="icon m-0 me-1" style="width:16px; height:16px;"><use xlink:href="#icon-refresh"></use></svg>
+                        Обновить
+                    </button>
                 </div>
 
                 <div class="row mb-4">
