@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>DataPort – Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="d-flex dashboard">
+
+    <div class="sidebar">
+        <div class="brand mb-4">DataPort</div>
+
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="#">Dashboard</a>
+            <a class="nav-link" href="#">My Models</a>
+            <a class="nav-link" href="#">My Datasets</a>
+            <a class="nav-link" href="#">Subscriptions</a>
+            <a class="nav-link" href="#">Settings</a>
+        </nav>
+    </div>
+
+    <div class="flex-grow-1">
+
+        <div class="topbar px-4 py-3 d-flex justify-content-between align-items-center">
+            <div class="page-title">Личный кабинет</div>
+            <button class="btn btn-primary upload-btn" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                Загрузить
+            </button>
+        </div>
+
+        <div class="content-area">
+
+            <ul class="nav nav-pills mb-4">
+                <li class="nav-item">
+                    <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#models">Модели</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#datasets">Датасеты</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#subs">Подписки</button>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+
+                <div class="tab-pane fade show active" id="models">
+                    <div class="row g-4">
+
+                        <div class="col-md-4">
+                            <div class="card card-item p-3">
+                                <h6 class="fw-semibold">Image Classifier</h6>
+                                <div class="text-muted small mb-2">PyTorch • 120MB</div>
+                                <span class="tag">Computer Vision</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card card-item p-3">
+                                <h6 class="fw-semibold">Text Generator GPT</h6>
+                                <div class="text-muted small mb-2">Transformers • 400MB</div>
+                                <span class="tag">NLP</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="datasets">
+                    <div class="card card-item p-3">
+                        <h6 class="fw-semibold">Cats vs Dogs Dataset</h6>
+                        <div class="text-muted small">2GB • Open License</div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="subs">
+                    <div class="card card-item p-3">
+                        <h6 class="fw-semibold">NLP Community</h6>
+                        <div class="text-muted small">5 новых моделей за неделю</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal fade" id="uploadModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-4">
+            <h5 class="mb-3">Загрузка</h5>
+
+            <input class="form-control mb-2" placeholder="Название">
+            <select class="form-select mb-3">
+                <option>Модель</option>
+                <option>Датасет</option>
+            </select>
+
+            <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button class="btn btn-primary">Загрузить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
