@@ -1,20 +1,69 @@
+const myModels = [
+    { id: 1, name: "Image Classifier Pro", framework: "PyTorch", size: "120MB", tag: "CV", date: "12.05.2024" },
+    { id: 2, name: "NLP Sentiment Analysis", framework: "Transformers", size: "450MB", tag: "NLP", date: "10.05.2024" },
+    { id: 3, name: "Stock Predictor", framework: "Scikit-learn", size: "15MB", tag: "Finance", date: "08.05.2024" },
+    { id: 4, name: "Voice Recognizer", framework: "TensorFlow", size: "800MB", tag: "Audio", date: "01.05.2024" }
+];
+
 document.addEventListener("DOMContentLoaded", () => {
-
     console.log("DataPort app loaded");
-
+    handleLogout();
     setupUploadModal();
     fakeAuthCheck();
+    renderModels();
 
 });
 
+function renderModels() {
+    const dashboardContainer = document.querySelector("#dashboard-models-row");
+    const tableBody = document.querySelector("#models-table-body");
+
+    if (dashboardContainer) {
+        dashboardContainer.innerHTML = myModels.map(model => `
+            <div class="col-md-4">
+                <div class="card card-item p-3">
+                    <h6 class="fw-semibold">${model.name}</h6>
+                    <div class="text-muted small mb-2">${model.framework} • ${model.size}</div>
+                    <span class="tag w-fit">${model.tag}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    if (tableBody) {
+        tableBody.innerHTML = myModels.map(model => `
+            <tr>
+                <td class="ps-4">
+                    <div class="fw-bold">${model.name}</div>
+                    <div class="text-muted small">${model.framework}</div>
+                </td>
+                <td><span class="tag">${model.tag}</span></td>
+                <td class="text-muted">${model.size}</td>
+                <td class="text-muted">${model.date}</td>
+                <td class="text-end pe-4">
+                    <button class="btn btn-light btn-sm rounded-3">Редактировать</button>
+                    <button class="btn btn-light btn-sm rounded-3 text-danger" onclick="deleteModel(${model.id})">Удалить</button>
+                </td>
+            </tr>
+        `).join('');
+    }
+}
+
+function deleteModel(id) {
+    const index = myModels.findIndex(m => m.id === id);
+    if (index !== -1 && confirm("Удалить модель?")) {
+        myModels.splice(index, 1);
+        renderModels();
+    }
+}
+
 function setupUploadModal() {
-    const uploadBtn = document.querySelector(".btn-primary");
-
-    if (!uploadBtn) return;
-
-    uploadBtn.addEventListener("click", () => {
-        alert("Тут будет загрузка модели или датасета 🙂");
-    });
+    const uploadBtn = document.querySelector("#uploadModal .btn-primary");
+    if (uploadBtn) {
+        uploadBtn.addEventListener("click", () => {
+            alert("Модель добавлена в список");
+        });
+    }
 }
 
 function fakeAuthCheck() {
@@ -31,5 +80,16 @@ if (loginForm && window.location.pathname.includes("login.html")) {
         e.preventDefault();
         localStorage.setItem("user", "active");
         window.location.href = "dashboard.html";
+    });
+}
+
+function handleLogout() {
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (!logoutBtn) return;
+
+    logoutBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        localStorage.removeItem("user");
+        window.location.href = "login.html";
     });
 }
