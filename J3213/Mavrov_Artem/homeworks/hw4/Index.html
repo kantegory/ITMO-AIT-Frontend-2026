@@ -6,7 +6,6 @@
   <title>MLPipe — ML Pipeline Platform</title>
   <meta name="description" content="MLPipe — платформа управления ML-экспериментами, моделями и артефактами">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
@@ -24,31 +23,53 @@
     }
     .skip-link:focus { top: 0; }
   </style>
-  <script>
-    (function() {
-      var saved = localStorage.getItem('mlpipe_theme');
-      if (saved === 'light' || saved === 'dark') {
-        document.documentElement.setAttribute('data-theme', saved);
-      }
-    })();
-  </script>
 </head>
 <body>
 
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="icon-diagram-3-fill" viewBox="0 0 16 16" fill="currentColor">
+    <path fill-rule="evenodd" d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5zm-6 8A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5zm6 0A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5zm6 0a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5z"/>
+  </symbol>
+  <symbol id="icon-grid-1x2-fill" viewBox="0 0 16 16" fill="currentColor">
+    <path d="M0 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm9 0a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1zm0 9a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1z"/>
+  </symbol>
+  <symbol id="icon-activity" viewBox="0 0 16 16" fill="currentColor">
+    <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2"/>
+  </symbol>
+  <symbol id="icon-box-seam-fill" viewBox="0 0 16 16" fill="currentColor">
+    <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2zm3.564 1.426L5.596 5 8 5.961 14.154 3.5zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464z"/>
+  </symbol>
+  <symbol id="icon-archive-fill" viewBox="0 0 16 16" fill="currentColor">
+    <path d="M12.5 0H.5a.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h12a.5.5 0 0 0 .5-.5V.5a.5.5 0 0 0-.5-.5M1.5 3.5A.5.5 0 0 0 1 4v7.5A1.5 1.5 0 0 0 2.5 13h8a1.5 1.5 0 0 0 1.5-1.5V4a.5.5 0 0 0-.5-.5zm2 3h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1 0-1"/>
+  </symbol>
+  <symbol id="icon-person-fill" viewBox="0 0 16 16" fill="currentColor">
+    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+  </symbol>
+  <symbol id="icon-box-arrow-right" viewBox="0 0 16 16" fill="currentColor">
+    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/><path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+  </symbol>
+  <symbol id="icon-plus-lg" viewBox="0 0 16 16" fill="currentColor">
+    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+  </symbol>
+  <symbol id="icon-funnel" viewBox="0 0 16 16" fill="currentColor">
+    <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z"/>
+  </symbol>
+  <symbol id="icon-cloud-upload" viewBox="0 0 16 16" fill="currentColor">
+    <path fill-rule="evenodd" d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383"/><path fill-rule="evenodd" d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 6.707V14.5a.5.5 0 0 1-1 0V6.707L5.354 7.854a.5.5 0 1 1-.708-.708z"/>
+  </symbol>
+  <symbol id="icon-arrow-left" viewBox="0 0 16 16" fill="currentColor">
+    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+  </symbol>
+</svg>
+
+
   <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
 
-    <div class="auth-theme-toggle">
-    <button class="theme-toggle" id="auth-theme-btn" onclick="toggleTheme()"
-            aria-label="Переключить тему" title="Переключить тему">
-      <span id="auth-theme-icon">🌙</span>
-    </button>
-  </div>
-
-<div id="screen-auth" class="auth-screen" role="main">
+  <div id="screen-auth" class="auth-screen" role="main">
     <div class="auth-center">
 
       <div class="auth-brand" role="banner">
-        <div class="brand-icon" aria-hidden="true"><i class="bi bi-diagram-3-fill"></i></div>
+        <div class="brand-icon" aria-hidden="true"><svg class="svg-icon" aria-hidden="true"><use href="#icon-diagram-3-fill"></use></svg></div>
         <span class="brand-name">MLPipe</span>
       </div>
 
@@ -136,41 +157,41 @@
 
     <aside class="sidebar" aria-label="Основная навигация">
       <div class="sidebar-brand">
-        <div class="brand-icon sm" aria-hidden="true"><i class="bi bi-diagram-3-fill"></i></div>
+        <div class="brand-icon sm" aria-hidden="true"><svg class="svg-icon" aria-hidden="true"><use href="#icon-diagram-3-fill"></use></svg></div>
         <span class="brand-name">MLPipe</span>
       </div>
 
       <nav class="sidebar-nav" aria-label="Разделы приложения">
         <a class="nav-item active" href="#" onclick="nav('dashboard',this)"
            aria-current="page" aria-label="Дашборд">
-          <i class="bi bi-grid-1x2-fill" aria-hidden="true"></i>
+          <svg class="svg-icon"><use href="#icon-grid-1x2-fill"></use></svg>
           <span>Дашборд</span>
         </a>
         <a class="nav-item" href="#" onclick="nav('experiments',this)"
            aria-label="Эксперименты">
-          <i class="bi bi-activity" aria-hidden="true"></i>
+          <svg class="svg-icon"><use href="#icon-activity"></use></svg>
           <span>Эксперименты</span>
         </a>
         <a class="nav-item" href="#" onclick="nav('models',this)"
            aria-label="Модели">
-          <i class="bi bi-box-seam-fill" aria-hidden="true"></i>
+          <svg class="svg-icon"><use href="#icon-box-seam-fill"></use></svg>
           <span>Модели</span>
         </a>
         <a class="nav-item" href="#" onclick="nav('artifacts',this)"
            aria-label="Артефакт-стор">
-          <i class="bi bi-archive-fill" aria-hidden="true"></i>
+          <svg class="svg-icon"><use href="#icon-archive-fill"></use></svg>
           <span>Артефакт-стор</span>
         </a>
         <a class="nav-item" href="#" onclick="nav('profile',this)"
            aria-label="Мой кабинет">
-          <i class="bi bi-person-fill" aria-hidden="true"></i>
+          <svg class="svg-icon"><use href="#icon-person-fill"></use></svg>
           <span>Мой кабинет</span>
         </a>
       </nav>
 
       <div class="sidebar-footer">
         <div class="s-user" aria-label="Текущий пользователь">
-          <div class="s-avatar" aria-hidden="true"><i class="bi bi-person-fill"></i></div>
+          <div class="s-avatar" aria-hidden="true"><svg class="svg-icon" aria-hidden="true"><use href="#icon-person-fill"></use></svg></div>
           <div>
             <div id="sb-name" class="s-name">—</div>
             <div id="sb-role" class="s-role">—</div>
@@ -179,7 +200,7 @@
         <a href="#" class="s-logout" onclick="doLogout()"
            title="Выйти из системы"
            aria-label="Выйти из системы">
-          <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
+          <svg class="svg-icon"><use href="#icon-box-arrow-right"></use></svg>
         </a>
       </div>
     </aside>
@@ -187,11 +208,7 @@
     <div class="main-wrap">
       <header class="topbar" role="banner">
         <h2 id="tb-title" class="tb-title">Дашборд</h2>
-        <div id="tb-actions" role="toolbar" aria-label="Действия на странице" style="display:flex;align-items:center;gap:.5rem;"></div>
-        <button class="theme-toggle ms-2" id="app-theme-btn" onclick="toggleTheme()"
-                aria-label="Переключить тему" title="Переключить тему">
-          <span id="app-theme-icon">🌙</span>
-        </button>
+        <div id="tb-actions" role="toolbar" aria-label="Действия на странице"></div>
       </header>
 
       <main id="main-content" class="content-area">
@@ -267,7 +284,7 @@
               <button class="btn-sm" type="button"
                       data-bs-toggle="modal" data-bs-target="#m-new-exp"
                       aria-label="Создать новый эксперимент">
-                <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>Новый
+                <svg class="svg-icon me-1"><use href="#icon-plus-lg"></use></svg>Новый
               </button>
             </div>
 
@@ -292,7 +309,7 @@
 
               <button class="btn-sm" type="button" onclick="filterExps()"
                       aria-label="Применить фильтры">
-                <i class="bi bi-funnel me-1" aria-hidden="true"></i>Найти
+                <svg class="svg-icon me-1"><use href="#icon-funnel"></use></svg>Найти
               </button>
               <button class="btn-ghost-sm" type="button" onclick="clearFilters()"
                       aria-label="Сбросить все фильтры">
@@ -321,7 +338,7 @@
           <button class="btn-back mb-3" type="button"
                   onclick="nav('experiments', document.querySelector('[onclick*=experiments]'))"
                   aria-label="Вернуться к списку экспериментов">
-            <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>К экспериментам
+            <svg class="svg-icon me-1"><use href="#icon-arrow-left"></use></svg>К экспериментам
           </button>
 
           <div id="exp-detail-header" class="panel mb-3"></div>
@@ -385,7 +402,7 @@
               <button class="btn-sm" type="button"
                       data-bs-toggle="modal" data-bs-target="#m-reg-model"
                       aria-label="Зарегистрировать новую модель">
-                <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>Зарегистрировать
+                <svg class="svg-icon me-1"><use href="#icon-plus-lg"></use></svg>Зарегистрировать
               </button>
             </div>
             <table class="t" id="models-table" aria-labelledby="models-section-heading">
@@ -412,7 +429,7 @@
               <button class="btn-sm" type="button"
                       data-bs-toggle="modal" data-bs-target="#m-upload-artifact"
                       aria-label="Загрузить новый артефакт">
-                <i class="bi bi-cloud-upload me-1" aria-hidden="true"></i>Загрузить
+                <svg class="svg-icon me-1"><use href="#icon-cloud-upload"></use></svg>Загрузить
               </button>
             </div>
 
@@ -434,7 +451,7 @@
 
               <button class="btn-sm" type="button" onclick="filterArtifacts()"
                       aria-label="Применить фильтры артефактов">
-                <i class="bi bi-funnel me-1" aria-hidden="true"></i>Найти
+                <svg class="svg-icon me-1"><use href="#icon-funnel"></use></svg>Найти
               </button>
             </fieldset>
 
@@ -460,7 +477,7 @@
             <div class="col-lg-4">
               <div class="panel text-center">
                 <div class="prof-avatar mx-auto mb-3" aria-hidden="true">
-                  <i class="bi bi-person-fill"></i>
+                  <svg class="svg-icon" aria-hidden="true"><use href="#icon-person-fill"></use></svg>
                 </div>
                 <div class="fw-bold fs-5 mb-1" id="prof-uname">—</div>
                 <div class="text-muted small mb-2" id="prof-email">—</div>
@@ -716,7 +733,7 @@
                  aria-label="Выбрать файл для загрузки"
                  onclick="this.querySelector('input').click()"
                  onkeydown="if(event.key==='Enter'||event.key===' ')this.querySelector('input').click()">
-              <i class="bi bi-cloud-upload fs-3 d-block mb-1" aria-hidden="true"></i>
+              <svg class="svg-icon fs-3 d-block mb-1"><use href="#icon-cloud-upload"></use></svg>
               <span>Перетащите файл или нажмите для выбора</span>
               <input type="file" class="d-none" id="ua-file"
                      onchange="previewFile(this)"
@@ -790,38 +807,5 @@
        style="display:none;position:fixed;bottom:1.5rem;right:1.5rem;background:#ff4f6a;color:#fff;padding:.75rem 1.25rem;border-radius:8px;font-size:.85rem;z-index:9999;max-width:340px;box-shadow:0 4px 16px rgba(0,0,0,.4)"
        role="alert" aria-live="assertive" aria-atomic="true"></div>
 
-  <script>
-    function getEffectiveTheme() {
-      var saved = localStorage.getItem('mlpipe_theme');
-      if (saved) return saved;
-      return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-    }
-
-    function applyThemeIcons(theme) {
-      var icon = theme === 'light' ? '☀️' : '🌙';
-      var authIcon = document.getElementById('auth-theme-icon');
-      var appIcon  = document.getElementById('app-theme-icon');
-      if (authIcon) authIcon.textContent = icon;
-      if (appIcon)  appIcon.textContent  = icon;
-    }
-
-    function toggleTheme() {
-      var current = getEffectiveTheme();
-      var next = current === 'dark' ? 'light' : 'dark';
-      localStorage.setItem('mlpipe_theme', next);
-      document.documentElement.setAttribute('data-theme', next);
-      applyThemeIcons(next);
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      applyThemeIcons(getEffectiveTheme());
-    });
-
-    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function(e) {
-      if (!localStorage.getItem('mlpipe_theme')) {
-        applyThemeIcons(e.matches ? 'light' : 'dark');
-      }
-    });
-  </script>
 </body>
 </html>
