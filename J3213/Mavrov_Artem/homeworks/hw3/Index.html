@@ -24,12 +24,27 @@
     }
     .skip-link:focus { top: 0; }
   </style>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('mlpipe_theme');
+      if (saved === 'light' || saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+    })();
+  </script>
 </head>
 <body>
 
   <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
 
-  <div id="screen-auth" class="auth-screen" role="main">
+    <div class="auth-theme-toggle">
+    <button class="theme-toggle" id="auth-theme-btn" onclick="toggleTheme()"
+            aria-label="Переключить тему" title="Переключить тему">
+      <span id="auth-theme-icon">🌙</span>
+    </button>
+  </div>
+
+<div id="screen-auth" class="auth-screen" role="main">
     <div class="auth-center">
 
       <div class="auth-brand" role="banner">
@@ -172,7 +187,11 @@
     <div class="main-wrap">
       <header class="topbar" role="banner">
         <h2 id="tb-title" class="tb-title">Дашборд</h2>
-        <div id="tb-actions" role="toolbar" aria-label="Действия на странице"></div>
+        <div id="tb-actions" role="toolbar" aria-label="Действия на странице" style="display:flex;align-items:center;gap:.5rem;"></div>
+        <button class="theme-toggle ms-2" id="app-theme-btn" onclick="toggleTheme()"
+                aria-label="Переключить тему" title="Переключить тему">
+          <span id="app-theme-icon">🌙</span>
+        </button>
       </header>
 
       <main id="main-content" class="content-area">
@@ -771,5 +790,38 @@
        style="display:none;position:fixed;bottom:1.5rem;right:1.5rem;background:#ff4f6a;color:#fff;padding:.75rem 1.25rem;border-radius:8px;font-size:.85rem;z-index:9999;max-width:340px;box-shadow:0 4px 16px rgba(0,0,0,.4)"
        role="alert" aria-live="assertive" aria-atomic="true"></div>
 
+  <script>
+    function getEffectiveTheme() {
+      var saved = localStorage.getItem('mlpipe_theme');
+      if (saved) return saved;
+      return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+
+    function applyThemeIcons(theme) {
+      var icon = theme === 'light' ? '☀️' : '🌙';
+      var authIcon = document.getElementById('auth-theme-icon');
+      var appIcon  = document.getElementById('app-theme-icon');
+      if (authIcon) authIcon.textContent = icon;
+      if (appIcon)  appIcon.textContent  = icon;
+    }
+
+    function toggleTheme() {
+      var current = getEffectiveTheme();
+      var next = current === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('mlpipe_theme', next);
+      document.documentElement.setAttribute('data-theme', next);
+      applyThemeIcons(next);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      applyThemeIcons(getEffectiveTheme());
+    });
+
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function(e) {
+      if (!localStorage.getItem('mlpipe_theme')) {
+        applyThemeIcons(e.matches ? 'light' : 'dark');
+      }
+    });
+  </script>
 </body>
 </html>
