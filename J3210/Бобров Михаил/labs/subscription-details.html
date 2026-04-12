@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>DataPort – Детали подписки</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="d-flex dashboard">
+    <div class="sidebar">
+        <div class="brand mb-4">DataPort</div>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="dashboard.html">Dashboard</a>
+            <a class="nav-link" href="my-models.html">My Models</a>
+            <a class="nav-link" href="my-datasets.html">My Datasets</a>
+            <a class="nav-link active" href="my-subscriptions.html">Subscriptions</a>
+            <a class="nav-link" href="settings.html">Settings</a>
+            <hr>
+            <a class="nav-link text-danger" href="#" id="logoutBtn">Выход</a>
+        </nav>
+    </div>
+
+    <div class="flex-grow-1">
+        <div class="topbar px-4 py-3 d-flex align-items-center">
+            <a href="my-subscriptions.html" class="btn btn-light btn-sm me-3">← Назад</a>
+            <div class="page-title" id="subTitle">Загрузка...</div>
+        </div>
+
+        <div class="content-area">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                        <h5 class="fw-bold mb-3">О сообществе</h5>
+                        <p class="text-muted mb-4" id="subDescription">-</p>
+
+                        <h6 class="fw-bold mb-3">Последние обновления</h6>
+                        <div id="subUpdatesList">
+                            <div class="p-2 border-bottom small text-muted">Загружена новая версия модели ResNet-50</div>
+                            <div class="p-2 border-bottom small text-muted">Обновлен датасет Russian Wiki</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 text-center">
+                        <div class="mb-3">
+                            <img src="https://via.placeholder.com/80" class="rounded-circle border" id="subAvatar">
+                        </div>
+                        <h5 class="fw-bold mb-1" id="subNameDisplay">-</h5>
+                        <p class="text-muted small" id="subTypeDisplay">-</p>
+                        <hr>
+                        <div class="row text-start small">
+                            <div class="col-6 text-muted">Участников:</div>
+                            <div class="col-6 fw-bold text-end" id="subMembers">-</div>
+                            <div class="col-6 text-muted">Релизов:</div>
+                            <div class="col-6 fw-bold text-end" id="subReleases">-</div>
+                        </div>
+                        <button class="btn btn-outline-danger w-100 mt-4 btn-sm" onclick="deleteSubscriptionFromDetails()">Отписаться</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
