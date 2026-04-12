@@ -11,6 +11,12 @@ const myDatasets = [
     { id: 3, name: "Customer Churn CSV", format: "CSV", size: "12MB", tag: "Tabular", date: "05.05.2024" },
 ];
 
+const mySubscriptions = [
+    { id: 1, name: "NLP Research Group", type: "Community", updates: "5 новых моделей", date: "12.04.2026" },
+    { id: 2, name: "Visionary AI", type: "Author", updates: "1 датасет", date: "10.04.2026" },
+    { id: 3, name: "Open Source LLMs", type: "Community", updates: "Без обновлений", date: "01.04.2026" }
+];
+
 document.addEventListener("DOMContentLoaded", () => {
     console.log("DataPort app loaded");
     handleLogout();
@@ -18,7 +24,43 @@ document.addEventListener("DOMContentLoaded", () => {
     fakeAuthCheck();
     renderModels();
     renderDatasets();
+    renderSubscriptions();
 });
+
+function renderSubscriptions() {
+    const dashboardContainer = document.querySelector("#dashboard-subscriptions-row");
+    const tableBody = document.querySelector("#subscriptions-table-body");
+
+    if (dashboardContainer) {
+        dashboardContainer.innerHTML = mySubscriptions.map(sub => `
+            <div class="col-md-4">
+                <div class="card card-item p-3">
+                    <h6 class="fw-semibold">${sub.name}</h6>
+                    <div class="text-muted small mb-2">${sub.type}</div>
+                    <span class="tag w-fit">${sub.updates}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    if (tableBody) {
+        tableBody.innerHTML = mySubscriptions.map(sub => `
+            <tr>
+                <td class="ps-4">
+                    <div class="fw-bold">${sub.name}</div>
+                    <div class="text-muted small">${sub.type}</div>
+                </td>
+                <td><span class="tag">${sub.updates}</span></td>
+                <td class="text-muted">Активна</td>
+                <td class="text-muted">${sub.date}</td>
+                <td class="text-end pe-4">
+                    <button class="btn btn-light btn-sm rounded-3">Настройки</button>
+                    <button class="btn btn-light btn-sm rounded-3 text-danger" onclick="deleteSubscription(${sub.id})">Отписаться</button>
+                </td>
+            </tr>
+        `).join('');
+    }
+}
 
 function renderModels() {
     const dashboardContainer = document.querySelector("#dashboard-models-row");
@@ -84,6 +126,16 @@ function renderDatasets() {
                 </td>
             </tr>
         `).join('');
+    }
+}
+
+function deleteSubscription(id) {
+    if (confirm("Отписаться от этого источника?")) {
+        const index = mySubscriptions.findIndex(s => s.id === id);
+        if (index !== -1) {
+            mySubscriptions.splice(index, 1);
+            renderSubscriptions();
+        }
     }
 }
 
