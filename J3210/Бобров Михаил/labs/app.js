@@ -7,7 +7,7 @@ const myModels = [
         tag: "CV",
         date: "12.05.2024",
         author: "Vision Team",
-        description: "Высокоточная сверточная нейронная сеть для классификации объектов. Обучена на наборе данных ImageNet-1K. Поддерживает 1000 категорий объектов и оптимизирована для мобильных устройств.",
+        description: "Высокоточная сверточная нейронная сеть для классификации объектов. Обучена на наборе данных ImageNet-1K.",
         version: "2.4.0-stable"
     },
     {
@@ -18,7 +18,7 @@ const myModels = [
         tag: "NLP",
         date: "10.05.2024",
         author: "TextAI Group",
-        description: "Модель на базе архитектуры BERT для анализа тональности текста на русском и английском языках. Идеально подходит для мониторинга соцсетей и отзывов.",
+        description: "Модель на базе архитектуры BERT для анализа тональности текста на русском и английском языках.",
         version: "1.0.2"
     },
     {
@@ -29,15 +29,42 @@ const myModels = [
         tag: "Finance",
         date: "08.05.2024",
         author: "Quant Solutions",
-        description: "Регрессионная модель для краткосрочного прогнозирования цен акций. Использует исторические данные и технические индикаторы.",
+        description: "Регрессионная модель для краткосрочного прогнозирования цен акций.",
         version: "0.9.5-beta"
     }
 ];
 
 const myDatasets = [
-    { id: 1, name: "Cats vs Dogs HD", format: "Images (JPG)", size: "2.1GB", tag: "Vision", date: "11.05.2024" },
-    { id: 2, name: "Russian Wiki Text", format: "JSONL", size: "850MB", tag: "NLP", date: "09.05.2024" },
-    { id: 3, name: "Customer Churn CSV", format: "CSV", size: "12MB", tag: "Tabular", date: "05.05.2024" }
+    {
+        id: 1,
+        name: "Cats vs Dogs HD",
+        format: "Images (JPG)",
+        size: "2.1GB",
+        tag: "Vision",
+        date: "11.05.2024",
+        rows: "25,000 изображений",
+        description: "Набор высококачественных фотографий кошек и собак для задач бинарной классификации. Все изображения приведены к единому формату."
+    },
+    {
+        id: 2,
+        name: "Russian Wiki Text",
+        format: "JSONL",
+        size: "850MB",
+        tag: "NLP",
+        date: "09.05.2024",
+        rows: "1.2 млн параграфов",
+        description: "Чистый текстовый корпус, извлеченный из русской Википедии. Очищен от разметки и готов для обучения языковых моделей."
+    },
+    {
+        id: 3,
+        name: "Customer Churn CSV",
+        format: "CSV",
+        size: "12MB",
+        tag: "Tabular",
+        date: "05.05.2024",
+        rows: "100,000 строк",
+        description: "Табличные данные о поведении клиентов телекоммуникационной компании для прогнозирования оттока."
+    }
 ];
 
 const mySubscriptions = [
@@ -56,6 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupAvatarUpload();
     setupUploadModal();
     loadModelDetails();
+    loadDatasetDetails();
 });
 
 function renderModels() {
@@ -93,43 +121,29 @@ function renderModels() {
     }
 }
 
-function loadModelDetails() {
-    const params = new URLSearchParams(window.location.search);
-    const modelId = parseInt(params.get('id'));
-    if (!modelId || !window.location.pathname.includes('model-details.html')) return;
-
-    const model = myModels.find(m => m.id === modelId);
-    if (model) {
-        document.getElementById('modelTitle').innerText = model.name;
-        document.getElementById('modelFramework').innerText = model.framework;
-        document.getElementById('modelSize').innerText = model.size;
-        document.getElementById('modelTag').innerText = model.tag;
-        document.getElementById('modelAuthor').innerText = model.author;
-        document.getElementById('modelVersion').innerText = model.version;
-        document.getElementById('modelDate').innerText = model.date;
-        document.getElementById('modelDescription').innerText = model.description;
-        document.getElementById('modelSlug').innerText = model.name.toLowerCase().replace(/\s+/g, '-');
-    }
-}
-
 function renderDatasets() {
     const dashboardContainer = document.querySelector("#dashboard-datasets-row");
     const tableBody = document.querySelector("#datasets-table-body");
+
     if (dashboardContainer) {
         dashboardContainer.innerHTML = myDatasets.map(ds => `
             <div class="col-md-4">
                 <div class="card card-item p-3">
-                    <h6 class="fw-semibold">${ds.name}</h6>
+                    <h6 class="fw-semibold"><a href="dataset-details.html?id=${ds.id}" class="text-decoration-none text-dark">${ds.name}</a></h6>
                     <div class="text-muted small mb-2">${ds.format} • ${ds.size}</div>
                     <span class="tag w-fit">${ds.tag}</span>
                 </div>
             </div>
         `).join('');
     }
+
     if (tableBody) {
         tableBody.innerHTML = myDatasets.map(ds => `
             <tr>
-                <td class="ps-4"><div class="fw-bold">${ds.name}</div><div class="text-muted small">${ds.format}</div></td>
+                <td class="ps-4">
+                    <div class="fw-bold"><a href="dataset-details.html?id=${ds.id}" class="text-decoration-none text-dark">${ds.name}</a></div>
+                    <div class="text-muted small">${ds.format}</div>
+                </td>
                 <td><span class="tag">${ds.tag}</span></td>
                 <td class="text-muted">${ds.size}</td>
                 <td class="text-muted">${ds.date}</td>
@@ -142,9 +156,43 @@ function renderDatasets() {
     }
 }
 
+function loadModelDetails() {
+    const params = new URLSearchParams(window.location.search);
+    const id = parseInt(params.get('id'));
+    if (!id || !window.location.pathname.includes('model-details.html')) return;
+    const item = myModels.find(m => m.id === id);
+    if (item) {
+        document.getElementById('modelTitle').innerText = item.name;
+        document.getElementById('modelFramework').innerText = item.framework;
+        document.getElementById('modelSize').innerText = item.size;
+        document.getElementById('modelTag').innerText = item.tag;
+        document.getElementById('modelAuthor').innerText = item.author;
+        document.getElementById('modelVersion').innerText = item.version;
+        document.getElementById('modelDate').innerText = item.date;
+        document.getElementById('modelDescription').innerText = item.description;
+        document.getElementById('modelSlug').innerText = item.name.toLowerCase().replace(/\s+/g, '-');
+    }
+}
+
+function loadDatasetDetails() {
+    const params = new URLSearchParams(window.location.search);
+    const id = parseInt(params.get('id'));
+    if (!id || !window.location.pathname.includes('dataset-details.html')) return;
+    const item = myDatasets.find(d => d.id === id);
+    if (item) {
+        document.getElementById('dsTitle').innerText = item.name;
+        document.getElementById('dsFormat').innerText = item.format;
+        document.getElementById('dsSize').innerText = item.size;
+        document.getElementById('dsRows').innerText = item.rows;
+        document.getElementById('dsTag').innerText = item.tag;
+        document.getElementById('dsDate').innerText = item.date;
+        document.getElementById('dsDescription').innerText = item.description;
+    }
+}
+
 function renderSubscriptions() {
-    const dashboardContainer = document.querySelector("#dashboard-subs-row");
-    const tableBody = document.querySelector("#subs-table-body");
+    const dashboardContainer = document.querySelector("#dashboard-subscriptions-row");
+    const tableBody = document.querySelector("#subscriptions-table-body");
     if (dashboardContainer) {
         dashboardContainer.innerHTML = mySubscriptions.map(sub => `
             <div class="col-md-4">
@@ -173,15 +221,15 @@ function renderSubscriptions() {
 
 function deleteModel(id) {
     if (confirm("Удалить модель?")) {
-        const index = myModels.findIndex(m => m.id === id);
-        if (index !== -1) { myModels.splice(index, 1); renderModels(); }
+        const idx = myModels.findIndex(m => m.id === id);
+        if (idx !== -1) { myModels.splice(idx, 1); renderModels(); }
     }
 }
 
 function deleteDataset(id) {
     if (confirm("Удалить датасет?")) {
-        const index = myDatasets.findIndex(d => d.id === id);
-        if (index !== -1) { myDatasets.splice(index, 1); renderDatasets(); }
+        const idx = myDatasets.findIndex(d => d.id === id);
+        if (idx !== -1) { myDatasets.splice(idx, 1); renderDatasets(); }
     }
 }
 
@@ -238,4 +286,11 @@ function fakeAuthCheck() {
 function setupUploadModal() {
     const btn = document.querySelector("#uploadModal .btn-primary");
     if (btn) btn.addEventListener("click", () => alert("Добавлено"));
+}
+
+function deleteAccount() {
+    if (confirm("Вы уверены, что хотите удалить аккаунт? Все ваши настройки и аватар будут стерты навсегда.")) {
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
 }
