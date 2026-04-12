@@ -11,7 +11,7 @@ form.addEventListener("submit", async (e) => {
 
     // Checks
     if (!name || !email || !password || !repeatPassword) {
-        alert("Please fill all fields");
+        showModal("Warning", "Please fill all fields","warning");
         return;
     }
 
@@ -19,25 +19,25 @@ form.addEventListener("submit", async (e) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailPattern.test(email)) {
-        alert("Enter a valid email");
+        showModal("Warning", "Enter a valid email","warning");
         return;
     }
 
     // Password length validation
     if (password.length < 8) {
-      alert("Password cannot be shorted than 8 characters");
+      showModal("Error", "Password cannot be shorted than 8 characters","error");
       return;
     }
 
     // Passwords matching
     if (password !== repeatPassword) {
-        alert("Passwords do not match");
+        showModal("Error", "Passwords do not match","error");
         return;
     }
 
     // Terms
     if (!terms) {
-        alert("You must accept the terms");
+        showModal("Error", "You must accept the terms","error");
         return;
     }
 
@@ -47,7 +47,7 @@ form.addEventListener("submit", async (e) => {
         const existingUsers = await checkResponse.json();
 
         if (existingUsers.length > 0) {
-            alert("User with this email already exists");
+            showModal("Error", "User with this email already exists","error");
             return;
         }
         // create user
@@ -64,13 +64,35 @@ form.addEventListener("submit", async (e) => {
             },
             body: JSON.stringify(newUser)
         });
-    alert("Registration successful!");
+    showModal("Success", "Registration successful!","success");
 
     // Switch to login page
     window.location.href = "login.html";
 
     } catch (error) {
         console.error("Registration error:", error);
-        alert("Registration failed");
+        showModal("Error", "Registration failed","error");
     }
 });
+
+// function for modal
+function showModal(title, message, type = "primary") {
+    const modalEl = document.getElementById("appModal");
+
+    document.getElementById("appModalTitle").textContent = title;
+    document.getElementById("appModalBody").textContent = message;
+
+    const header = modalEl.querySelector(".modal-header");
+
+    // reset classes
+    header.className = "modal-header";
+
+    // add color
+    if (type === "error") header.classList.add("bg-danger", "text-white");
+    if (type === "success") header.classList.add("bg-success", "text-white");
+    if (type === "warning") header.classList.add("bg-warning");
+    if (type === "info") header.classList.add("bg-info", "text-white");
+
+    const modal = new bootstrap.Modal(modalEl);
+    modal.show();
+}
