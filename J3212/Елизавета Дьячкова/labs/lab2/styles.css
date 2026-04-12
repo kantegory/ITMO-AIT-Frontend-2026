@@ -7,21 +7,8 @@
   --btn-focus-gray: #6c757d;
 }
 
-body {
-  background-color: #fdf2f8;
-}
-
-.app-layout .text-secondary {
-  color: #464e56 !important;
-}
-
-.app-layout .form-control::placeholder {
-  color: #5a6268;
-  opacity: 1;
-}
-
 .app-layout a.text-secondary:focus-visible {
-  outline: 2px solid #464e56;
+  outline: 2px solid var(--th-text-muted);
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -29,9 +16,9 @@ body {
 .btn:focus-visible,
 a.btn:focus-visible,
 button.btn:focus-visible {
-  outline: 3px solid #1a1a1a !important;
+  outline: 3px solid var(--th-focus-ring) !important;
   outline-offset: 2px !important;
-  box-shadow: 0 0 0 0.25rem var(--btn-focus-gray) !important;
+  box-shadow: 0 0 0 0.25rem var(--th-focus-glow) !important;
 }
 
 .btn:focus:not(:focus-visible),
@@ -41,9 +28,9 @@ button.btn:focus:not(:focus-visible) {
 }
 
 .navbar-toggler:focus-visible {
-  outline: 3px solid #1a1a1a !important;
+  outline: 3px solid var(--th-focus-ring) !important;
   outline-offset: 2px !important;
-  box-shadow: 0 0 0 0.25rem var(--btn-focus-gray) !important;
+  box-shadow: 0 0 0 0.25rem var(--th-focus-glow) !important;
 }
 
 .navbar-toggler:focus:not(:focus-visible) {
@@ -51,7 +38,7 @@ button.btn:focus:not(:focus-visible) {
 }
 
 .nav-link:focus-visible {
-  outline: 3px solid #1a1a1a !important;
+  outline: 3px solid var(--th-focus-ring) !important;
   outline-offset: 2px !important;
   border-radius: 4px;
 }
@@ -62,8 +49,9 @@ button.btn:focus:not(:focus-visible) {
 
 .app-layout .form-control:focus-visible,
 .app-layout .form-select:focus-visible {
-  outline: 3px solid #1a1a1a !important;
+  outline: 3px solid var(--th-focus-ring) !important;
   outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem var(--th-focus-glow);
 }
 .btn:active,
 a.btn:active {
@@ -196,7 +184,7 @@ a.btn-outline-secondary.active,
 .btn-close:focus-visible {
   outline: 3px solid #fbbf24 !important;
   outline-offset: 2px !important;
-  box-shadow: 0 0 0 2px #1a1a1a !important;
+  box-shadow: 0 0 0 2px var(--th-focus-backdrop) !important;
 }
 
 .navbar-brand {
