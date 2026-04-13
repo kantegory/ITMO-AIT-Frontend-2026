@@ -1,7 +1,27 @@
 const API_URL = 'http://localhost:3000';
 
+const currentTheme = localStorage.getItem('theme') || 'light';
+const applyTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    const themeIconUse = document.querySelector('#themeIcon use');
+    if (themeIconUse) {
+        themeIconUse.setAttribute('href', theme === 'dark' ? '../img/sprite.svg#icon-sun' : '../img/sprite.svg#icon-moon');
+    }
+};
+
+applyTheme(currentTheme);
+
 document.addEventListener('DOMContentLoaded', function () {
     console.log('LabelFlow Frontend App Init');
+
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+    }
 
     // Текущий авторизованный пользователь
     let loggedInUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -261,7 +281,16 @@ document.addEventListener('DOMContentLoaded', function () {
                       </div>
                       <p class="text-muted small mb-3">${project.images || 0} изображений</p>
                       <div class="progress mb-3" style="height: 6px;">
-                        <div class="progress-bar ${badgeStyle}" role="progressbar" style="width: ${project.progress || 0}%"></div>
+                        <div class="progress mb-3" style="height: 6px;">
+                        <div class="progress-bar ${badgeStyle}" 
+                             role="progressbar" 
+                             aria-label="Прогресс разметки проекта" 
+                             aria-valuenow="${project.progress || 0}" 
+                             aria-valuemin="0" 
+                             aria-valuemax="100" 
+                             style="width: ${project.progress || 0}%">
+                        </div>
+                      </div>
                       </div>
                       <a href="annotation.html" class="btn btn-outline-primary btn-sm w-100">Перейти к разметке</a>
                     </div>
@@ -333,12 +362,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const loadSearchProjects = async (query = '', type = '') => {
             try {
-                let url = `${API_URL}/projects?userId=${loggedInUser.id}`;
-                if (query) url += `&name_like=${encodeURIComponent(query)}`;
-                if (type && type.toLowerCase() !== 'все типы') url += `&type=${encodeURIComponent(type.toLowerCase())}`;
+                const res = await fetch(`${API_URL}/projects?userId=${loggedInUser.id}`);
+                let projects = await res.json();
 
-                const res = await fetch(url);
-                const projects = await res.json();
+                if (query) {
+                    projects = projects.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
+                }
+
+                if (type && type.toLowerCase() !== 'все типы') {
+                    projects = projects.filter(p => p.type.toLowerCase() === type.toLowerCase());
+                }
+
                 renderProjects(projects);
             } catch (error) {
                 console.error('Ошибка поиска:', error);

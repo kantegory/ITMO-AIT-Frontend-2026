@@ -10,15 +10,19 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light py-3">
-    <div class="container">
-        <a class="brand-logo" href="index.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="brand-icon">
-                <path d="M3 3h18v18H3z"></path>
-                <path d="M8 8h8v8H8z"></path>
+<nav class="navbar navbar-expand-lg py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a class="brand-logo" href="index.html" aria-label="Главная страница LabelFlow">
+            <svg aria-hidden="true" width="28" height="28" class="brand-icon">
+                <use href="../img/sprite.svg#icon-logo"></use>
             </svg>
             LabelFlow
         </a>
+        <button id="themeToggleBtn" class="btn btn-link text-muted p-2 text-decoration-none border-0" aria-label="Переключить тему">
+            <svg id="themeIcon" width="20" height="20" aria-hidden="true" style="stroke: currentColor;">
+                <use href="../img/sprite.svg#icon-moon"></use>
+            </svg>
+        </button>
     </div>
 </nav>
 
@@ -27,7 +31,7 @@
         <div class="col-md-6 col-lg-4">
 
             <div class="text-center mb-4">
-                <h1 class="h3 fw-bold mb-2">С возвращением!</h1>
+                <h1 class="h3 fw-bold mb-2">С возвращением</h1>
                 <p class="text-muted">Войдите в свой аккаунт для продолжения работы над ML-проектами</p>
             </div>
 
@@ -36,18 +40,18 @@
                     <form id="loginForm">
                         <div class="mb-3">
                             <label for="emailInput" class="form-label">Email рабочая почта</label>
-                            <input type="email" class="form-control" id="emailInput" placeholder="name@company.com" required>
+                            <input type="email" class="form-control" id="emailInput" placeholder="name@company.com" required autocomplete="email">
                         </div>
 
                         <div class="mb-4">
                             <div class="d-flex justify-content-between">
                                 <label for="passwordInput" class="form-label">Пароль</label>
-                                <a href="#" class="text-decoration-none small" style="color: var(--lf-primary);">Забыли пароль?</a>
+                                <a href="#" class="text-decoration-none small" style="color: var(--lf-primary);" aria-label="Восстановить пароль">Забыли пароль?</a>
                             </div>
-                            <input type="password" class="form-control" id="passwordInput" placeholder="........" required>
+                            <input type="password" class="form-control" id="passwordInput" placeholder="........" required autocomplete="current-password">
                         </div>
 
-                        <small id="loginError" class="text-danger d-none fw-medium mb-3 d-block">
+                        <small id="loginError" class="text-danger d-none fw-medium mb-3 d-block" role="alert" aria-live="assertive">
                             Неверный email или пароль.
                         </small>
 
@@ -73,10 +77,10 @@
         <div class="modal-content border-0 shadow-lg" style="border-radius: var(--lf-radius-lg);">
             <div class="modal-header border-bottom-0 pb-0">
                 <h5 class="modal-title fw-bold" id="authModalLabel">Авторизация успешна</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body text-muted">
-                Добро пожаловать в LabelFlow! Сейчас вы будете перенаправлены в панель управления проектами (Dashboard).
+                Добро пожаловать в LabelFlow. Сейчас вы будете перенаправлены в панель управления проектами.
             </div>
             <div class="modal-footer border-top-0 pt-0">
                 <a href="dashboard.html" class="btn btn-primary w-100">Перейти в Dashboard</a>

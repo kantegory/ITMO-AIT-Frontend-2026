@@ -10,16 +10,22 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light py-3">
+<nav class="navbar navbar-expand-lg py-3">
     <div class="container">
-        <a class="brand-logo" href="index.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="brand-icon">
-                <path d="M3 3h18v18H3z"></path>
-                <path d="M8 8h8v8H8z"></path>
+        <a class="brand-logo" href="index.html" aria-label="Главная страница LabelFlow">
+            <svg aria-hidden="true" width="28" height="28" class="brand-icon">
+                <use href="../img/sprite.svg#icon-logo"></use>
             </svg>
             LabelFlow
         </a>
-        <a href="login.html" class="nav-link fw-medium small text-muted">Вход</a>
+        <div class="d-flex align-items-center gap-3">
+            <button id="themeToggleBtn" class="btn btn-link text-muted p-2 text-decoration-none border-0" aria-label="Переключить тему">
+                <svg id="themeIcon" width="20" height="20" aria-hidden="true" style="stroke: currentColor;">
+                    <use href="../img/sprite.svg#icon-moon"></use>
+                </svg>
+            </button>
+            <a href="login.html" class="nav-link fw-medium small text-muted p-0">Вход</a>
+        </div>
     </div>
 </nav>
 
@@ -41,7 +47,7 @@
                 <div class="col-md-4">
                     <div class="card h-100 p-3 border-0 shadow-sm">
                         <div class="mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lf-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lf-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                                 <path d="M9 9h6v6H9z"></path>
                             </svg>
@@ -54,7 +60,7 @@
                 <div class="col-md-4">
                     <div class="card h-100 p-3 border-0 shadow-sm">
                         <div class="mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lf-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lf-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                             </svg>
                         </div>
@@ -66,7 +72,7 @@
                 <div class="col-md-4">
                     <div class="card h-100 p-3 border-0 shadow-sm">
                         <div class="mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lf-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lf-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
                             </svg>
@@ -82,5 +88,6 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/app.js"></script>
 </body>
 </html>

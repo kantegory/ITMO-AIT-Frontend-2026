@@ -10,15 +10,19 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light py-3">
-    <div class="container">
-        <a class="brand-logo" href="index.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="brand-icon">
-                <path d="M3 3h18v18H3z"></path>
-                <path d="M8 8h8v8H8z"></path>
+<nav class="navbar navbar-expand-lg py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a class="brand-logo" href="index.html" aria-label="Главная страница LabelFlow">
+            <svg aria-hidden="true" width="28" height="28" class="brand-icon">
+                <use href="../img/sprite.svg#icon-logo"></use>
             </svg>
             LabelFlow
         </a>
+        <button id="themeToggleBtn" class="btn btn-link text-muted p-2 text-decoration-none border-0" aria-label="Переключить тему">
+            <svg id="themeIcon" width="20" height="20" aria-hidden="true" style="stroke: currentColor;">
+                <use href="../img/sprite.svg#icon-moon"></use>
+            </svg>
+        </button>
     </div>
 </nav>
 
@@ -37,30 +41,30 @@
 
                         <div class="mb-3">
                             <label for="regName" class="form-label">Полное имя</label>
-                            <input type="text" class="form-control" id="regName" placeholder="Иван Иванов" required>
+                            <input type="text" class="form-control" id="regName" placeholder="Иван Иванов" required autocomplete="name">
                         </div>
 
                         <div class="mb-3">
                             <label for="regEmail" class="form-label">Рабочая почта</label>
-                            <input type="email" class="form-control" id="regEmail" placeholder="name@company.com" required>
+                            <input type="email" class="form-control" id="regEmail" placeholder="name@company.com" required autocomplete="email">
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="regPassword" class="form-label">Пароль</label>
-                                <input type="password" class="form-control" id="regPassword" placeholder="........" required>
+                                <input type="password" class="form-control" id="regPassword" placeholder="........" required autocomplete="new-password">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="regConfirmPassword" class="form-label">Повторите пароль</label>
-                                <input type="password" class="form-control" id="regConfirmPassword" placeholder="........" required>
+                                <input type="password" class="form-control" id="regConfirmPassword" placeholder="........" required autocomplete="new-password">
                             </div>
                         </div>
 
                         <div class="mb-2">
-                            <small id="regPasswordError" class="text-danger d-none fw-medium d-block mb-1">
+                            <small id="regPasswordError" class="text-danger d-none fw-medium d-block mb-1" role="alert" aria-live="assertive">
                                 Введенные пароли не совпадают. Попробуйте еще раз.
                             </small>
-                            <small id="regEmailError" class="text-danger d-none fw-medium d-block mb-1">
+                            <small id="regEmailError" class="text-danger d-none fw-medium d-block mb-1" role="alert" aria-live="assertive">
                                 Пользователь с таким email уже существует.
                             </small>
                         </div>
@@ -85,12 +89,12 @@
     </div>
 </main>
 
-<div class="modal fade" id="regModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="regModal" tabindex="-1" aria-hidden="true" aria-labelledby="regModalLabel">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg" style="border-radius: var(--lf-radius-lg);">
             <div class="modal-header border-bottom-0 pb-0">
-                <h5 class="modal-title fw-bold">Аккаунт успешно создан!</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title fw-bold" id="regModalLabel">Аккаунт успешно создан</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body text-muted">
                 Ваше рабочее пространство готово. Теперь вы можете войти в систему.

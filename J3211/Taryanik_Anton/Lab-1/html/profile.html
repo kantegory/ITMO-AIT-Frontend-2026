@@ -10,37 +10,41 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-4">
+<nav class="navbar navbar-expand-lg border-bottom mb-4">
     <div class="container">
-
-        <a class="brand-logo d-flex align-items-center gap-2 text-decoration-none text-dark fs-5 fw-bold" href="dashboard.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lf-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 3h18v18H3z"></path>
-                <path d="M8 8h8v8H8z"></path>
+        <a class="brand-logo fs-5" href="dashboard.html" aria-label="Главная страница LabelFlow">
+            <svg aria-hidden="true" width="24" height="24" class="brand-icon">
+                <use href="../img/sprite.svg#icon-logo"></use>
             </svg>
             LabelFlow
         </a>
 
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключатель навигации">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto align-items-center fw-medium">
-
                 <li class="nav-item"><a class="nav-link px-3" href="dashboard.html">Проекты</a></li>
                 <li class="nav-item"><a class="nav-link px-3" href="search.html">Поиск</a></li>
                 <li class="nav-item"><a class="nav-link px-3" href="workers.html">Команда</a></li>
 
+                <li class="nav-item ms-lg-2">
+                    <button id="themeToggleBtn" class="btn btn-link text-muted p-2 text-decoration-none border-0" aria-label="Переключить тему">
+                        <svg id="themeIcon" width="20" height="20" aria-hidden="true" style="stroke: currentColor;">
+                            <use href="../img/sprite.svg#icon-moon"></use>
+                        </svg>
+                    </button>
+                </li>
+
                 <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
-                    <a href="profile.html" class="d-flex align-items-center text-decoration-none">
+                    <a href="profile.html" aria-current="page" class="d-flex align-items-center text-decoration-none active" aria-label="Настройки профиля">
                         <div class="rounded-circle text-white d-flex align-items-center justify-content-center shadow-sm"
                              style="width: 38px; height: 38px; background-color: var(--lf-primary); font-size: 0.95rem;">
                             ИИ
                         </div>
                     </a>
                 </li>
-
             </ul>
         </div>
     </div>
@@ -51,7 +55,7 @@
         <div class="col-md-4">
             <div class="card border-0 shadow-sm text-center">
                 <div class="card-body py-5">
-                    <div class="rounded-circle text-white d-flex align-items-center justify-content-center mx-auto mb-3" id="profileAvatar" style="width: 96px; height: 96px; background-color: var(--lf-primary); font-size: 2rem; font-weight: 700;">
+                    <div class="rounded-circle text-white d-flex align-items-center justify-content-center mx-auto mb-3" id="profileAvatar" aria-hidden="true" style="width: 96px; height: 96px; background-color: var(--lf-primary); font-size: 2rem; font-weight: 700;">
                         ИИ
                     </div>
                     <h4 class="fw-bold mb-1" id="profileDisplayName">Иван Иванов</h4>
@@ -69,14 +73,14 @@
                     <form id="profileForm">
                         <div class="mb-3">
                             <label for="profileName" class="form-label">Полное имя</label>
-                            <input type="text" class="form-control" id="profileName" required>
+                            <input type="text" class="form-control" id="profileName" required autocomplete="name">
                         </div>
                         <div class="mb-4">
                             <label for="profileEmail" class="form-label">Email <span class="text-muted fw-normal small">(изменение недоступно)</span></label>
-                            <input type="email" class="form-control bg-light text-muted" id="profileEmail" readonly>
+                            <input type="email" class="form-control bg-light text-muted" id="profileEmail" readonly aria-readonly="true">
                         </div>
-                        <small id="profileUpdateSuccess" class="text-success d-none fw-medium d-block mb-3">
-                            Данные успешно обновлены!
+                        <small id="profileUpdateSuccess" class="text-success d-none fw-medium d-block mb-3" role="status" aria-live="polite">
+                            Данные успешно обновлены
                         </small>
                         <button type="submit" class="btn btn-primary">Сохранить изменения</button>
                     </form>
@@ -89,19 +93,19 @@
                     <form id="profilePasswordForm">
                         <div class="mb-3">
                             <label for="currentPassword" class="form-label">Текущий пароль</label>
-                            <input type="password" class="form-control" id="currentPassword">
+                            <input type="password" class="form-control" id="currentPassword" autocomplete="current-password">
                         </div>
                         <div class="mb-3">
                             <label for="newPassword" class="form-label">Новый пароль</label>
-                            <input type="password" class="form-control" id="newPassword">
+                            <input type="password" class="form-control" id="newPassword" autocomplete="new-password">
                         </div>
                         <div class="mb-2">
                             <label for="confirmNewPassword" class="form-label">Повторите новый пароль</label>
-                            <input type="password" class="form-control" id="confirmNewPassword">
+                            <input type="password" class="form-control" id="confirmNewPassword" autocomplete="new-password">
                         </div>
                         <div class="mb-3">
-                            <small id="profilePasswordError" class="text-danger d-none fw-medium">Новые пароли не совпадают.</small>
-                            <small id="profilePasswordSuccess" class="text-success d-none fw-medium">Пароль успешно изменен!</small>
+                            <small id="profilePasswordError" class="text-danger d-none fw-medium" role="alert" aria-live="assertive">Новые пароли не совпадают.</small>
+                            <small id="profilePasswordSuccess" class="text-success d-none fw-medium" role="status" aria-live="polite">Пароль успешно изменен</small>
                         </div>
                         <button type="submit" class="btn btn-outline-primary">Обновить пароль</button>
                     </form>

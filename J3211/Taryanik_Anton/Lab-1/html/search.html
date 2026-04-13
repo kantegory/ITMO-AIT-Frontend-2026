@@ -10,37 +10,41 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-4">
+<nav class="navbar navbar-expand-lg border-bottom mb-4">
     <div class="container">
-
-        <a class="brand-logo d-flex align-items-center gap-2 text-decoration-none text-dark fs-5 fw-bold" href="dashboard.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lf-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 3h18v18H3z"></path>
-                <path d="M8 8h8v8H8z"></path>
+        <a class="brand-logo fs-5" href="dashboard.html" aria-label="Главная страница LabelFlow">
+            <svg aria-hidden="true" width="24" height="24" class="brand-icon">
+                <use href="../img/sprite.svg#icon-logo"></use>
             </svg>
             LabelFlow
         </a>
 
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключатель навигации">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto align-items-center fw-medium">
-
                 <li class="nav-item"><a class="nav-link px-3" href="dashboard.html">Проекты</a></li>
-                <li class="nav-item"><a class="nav-link px-3 active" href="search.html">Поиск</a></li>
+                <li class="nav-item"><a class="nav-link px-3 active" href="search.html" aria-current="page">Поиск</a></li>
                 <li class="nav-item"><a class="nav-link px-3" href="workers.html">Команда</a></li>
 
+                <li class="nav-item ms-lg-2">
+                    <button id="themeToggleBtn" class="btn btn-link text-muted p-2 text-decoration-none border-0" aria-label="Переключить тему">
+                        <svg id="themeIcon" width="20" height="20" aria-hidden="true" style="stroke: currentColor;">
+                            <use href="../img/sprite.svg#icon-moon"></use>
+                        </svg>
+                    </button>
+                </li>
+
                 <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
-                    <a href="profile.html" class="d-flex align-items-center text-decoration-none">
+                    <a href="profile.html" class="d-flex align-items-center text-decoration-none" aria-label="Настройки профиля">
                         <div class="rounded-circle text-white d-flex align-items-center justify-content-center shadow-sm"
                              style="width: 38px; height: 38px; background-color: var(--lf-primary); font-size: 0.95rem;">
                             ИИ
                         </div>
                     </a>
                 </li>
-
             </ul>
         </div>
     </div>
@@ -49,13 +53,13 @@
 <main class="container my-4">
     <h1 class="h3 fw-bold mb-4">Поиск проектов</h1>
 
-    <form id="searchForm" class="row g-3 mb-5 p-4 bg-white rounded shadow-sm border">
+    <form id="searchForm" class="row g-3 mb-5 p-4 bg-white rounded shadow-sm border" role="search">
         <div class="col-md-5">
-            <label class="form-label text-muted small fw-bold text-uppercase">Название</label>
+            <label for="searchInput" class="form-label text-muted small fw-bold text-uppercase">Название</label>
             <input type="text" class="form-control" id="searchInput" placeholder="Введите название проекта...">
         </div>
         <div class="col-md-4">
-            <label class="form-label text-muted small fw-bold text-uppercase">Тип разметки</label>
+            <label for="filterType" class="form-label text-muted small fw-bold text-uppercase">Тип разметки</label>
             <select class="form-select" id="filterType">
                 <option value="">Все типы</option>
                 <option value="BBox">Bounding Box</option>
@@ -69,7 +73,7 @@
         </div>
     </form>
 
-    <div class="row g-4" id="searchResults">
+    <div class="row g-4" id="searchResults" aria-live="polite">
     </div>
 </main>
 
