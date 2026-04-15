@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataPort – Explore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="d-flex dashboard">
+
+    <div class="sidebar">
+        <div class="brand mb-4">DataPort</div>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="dashboard.html">Dashboard</a>
+            <a class="nav-link active" href="explore.html">Explore</a>
+            <a class="nav-link" href="my-models.html">My Models</a>
+            <a class="nav-link" href="my-datasets.html">My Datasets</a>
+            <a class="nav-link" href="my-subscriptions.html">Subscriptions</a>
+            <a class="nav-link" href="settings.html">Settings</a>
+            <hr>
+            <a class="nav-link text-danger" href="#" id="logoutBtn">Выход</a>
+        </nav>
+    </div>
+
+    <div class="flex-grow-1">
+
+        <div class="topbar px-4 py-3 d-flex justify-content-between align-items-center">
+            <div class="page-title">Исследовать ресурсы</div>
+            <div class="search-box" style="width: 300px;">
+                <input type="text" class="form-control" id="globalSearch" placeholder="Поиск по названию...">
+            </div>
+        </div>
+
+        <div class="content-area">
+
+            <ul class="nav nav-pills mb-4" id="exploreTabs">
+                <li class="nav-item">
+                    <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#exploreModels">Каталог моделей</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#exploreDatasets">Каталог датасетов</button>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="exploreModels">
+                    <div class="row g-4" id="explore-models-row"></div>
+                </div>
+                <div class="tab-pane fade" id="exploreDatasets">
+                    <div class="row g-4" id="explore-datasets-row"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
