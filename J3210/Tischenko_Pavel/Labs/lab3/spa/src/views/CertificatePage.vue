@@ -5,7 +5,7 @@
         <h1 class="h3 mb-3">{{ certificate.title }}</h1>
         <p class="mb-1">Выдан: {{ fullName }}</p>
         <p class="text-secondary mb-3">Дата: {{ String(certificate.issuedAt).slice(0, 10) }}</p>
-        <button class="btn btn-outline-primary" @click="print">Печать (mock PDF)</button>
+        <button class="btn btn-outline-primary" @click="print">Печать сертификата</button>
       </div>
     </section>
   </base-layout>

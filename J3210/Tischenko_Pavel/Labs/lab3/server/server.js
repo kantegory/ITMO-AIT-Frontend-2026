@@ -185,5 +185,5 @@ app.use('/api/assignments', allowReadElseRole('trainer'))
 app.use('/api', router)
 
 app.listen(3001, () => {
-  console.log('Lab3 mock API started on http://localhost:3001')
+  console.log('Lab3 API started on http://localhost:3001')
 })

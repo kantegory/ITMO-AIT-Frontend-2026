@@ -1,10 +1,14 @@
 <template>
   <base-layout>
     <h1 class="h4 mb-3">Кабинет студента</h1>
+    <div v-if="statusMessage" class="alert py-2 mb-3" :class="statusType">{{ statusMessage }}</div>
     <section class="card shadow-sm mb-3">
       <div class="card-body">
         <div class="mb-2">{{ fullName }}</div>
         <div class="small text-secondary">Активных курсов: {{ enrollments.length }}</div>
+        <div class="small text-secondary">Средний прогресс: {{ avgProgress }}%</div>
+        <div class="small text-secondary">Последняя активность: {{ lastActivity }}</div>
+        <div class="small text-secondary">Следующий шаг: {{ nextStep }}</div>
       </div>
     </section>
     <section class="card shadow-sm mb-3">
@@ -52,22 +56,49 @@ const authStore = useAuthStore()
 const enrollments = ref([])
 const certificates = ref([])
 const courses = ref([])
+const statusMessage = ref('')
+const statusType = ref('alert-secondary')
 const fullName = computed(() =>
   [authStore.user?.firstName, authStore.user?.lastName].filter(Boolean).join(' ') || authStore.user?.email
 )
+const avgProgress = computed(() => {
+  if (!enrollments.value.length) return 0
+  const sum = enrollments.value.reduce((acc, e) => acc + (Number(e.progress) || 0), 0)
+  return Math.round((sum / enrollments.value.length) * 100)
+})
+const lastActivity = computed(() => {
+  if (!enrollments.value.length) return '—'
+  const last = [...enrollments.value].sort((a, b) =>
+    String(b.updatedAt || b.createdAt || '').localeCompare(String(a.updatedAt || a.createdAt || ''))
+  )[0]
+  return courseTitle(last.courseId)
+})
+const nextStep = computed(() => {
+  if (!enrollments.value.length) return 'Купить первый курс в каталоге'
+  const next = [...enrollments.value].sort((a, b) => (Number(a.progress) || 0) - (Number(b.progress) || 0))[0]
+  return `Продолжить курс «${courseTitle(next.courseId)}»`
+})
 
 function courseTitle(courseId) {
   return courses.value.find((c) => c.id === courseId)?.title || courseId
 }
 
 onMounted(async () => {
-  const [enrRes, certRes, coursesRes] = await Promise.all([
-    enrollmentsApi.listByUserId(authStore.user.id),
-    certificatesApi.listByUserId(authStore.user.id),
-    coursesApi.getAll()
-  ])
-  enrollments.value = Array.isArray(enrRes.data) ? enrRes.data : []
-  certificates.value = Array.isArray(certRes.data) ? certRes.data : []
-  courses.value = Array.isArray(coursesRes.data) ? coursesRes.data : []
+  statusMessage.value = ''
+  try {
+    const [enrRes, certRes, coursesRes] = await Promise.all([
+      enrollmentsApi.listByUserId(authStore.user.id),
+      certificatesApi.listByUserId(authStore.user.id),
+      coursesApi.getAll()
+    ])
+    enrollments.value = Array.isArray(enrRes.data) ? enrRes.data : []
+    certificates.value = Array.isArray(certRes.data) ? certRes.data : []
+    courses.value = Array.isArray(coursesRes.data) ? coursesRes.data : []
+    statusType.value = 'alert-secondary'
+    statusMessage.value = 'Данные кабинета загружены.'
+  } catch (error) {
+    statusType.value = 'alert-danger'
+    statusMessage.value = error?.response?.data?.message || 'Не удалось загрузить данные кабинета.'
+  }
 })
 </script>

@@ -1,19 +1,18 @@
-import { ref, onMounted, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 const THEME_KEY = 'lab3_theme'
 
-export function useTheme() {
-  const theme = ref('light')
+function resolveInitialTheme() {
+  const saved = localStorage.getItem(THEME_KEY)
+  if (saved === 'light' || saved === 'dark') {
+    return saved
+  }
+  const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)')?.matches
+  return prefersDark ? 'dark' : 'light'
+}
 
-  onMounted(() => {
-    const saved = localStorage.getItem(THEME_KEY)
-    if (saved === 'light' || saved === 'dark') {
-      theme.value = saved
-    } else {
-      const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)')?.matches
-      theme.value = prefersDark ? 'dark' : 'light'
-    }
-  })
+export function useTheme() {
+  const theme = ref(resolveInitialTheme())
 
   watch(
     theme,

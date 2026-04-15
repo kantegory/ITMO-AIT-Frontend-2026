@@ -67,16 +67,23 @@ function isDone(id) {
 }
 
 onMounted(async () => {
-  const [courseRes, lessonsRes, seminarsRes, enrRes] = await Promise.all([
-    coursesApi.getOne(courseId),
-    lessonsApi.getByCourseId(courseId),
-    assignmentsApi.getByCourseId(courseId),
-    enrollmentsApi.getByUserAndCourse(authStore.user.id, courseId)
-  ])
-  course.value = courseRes.data
-  lessons.value = Array.isArray(lessonsRes.data) ? lessonsRes.data : []
-  seminars.value = Array.isArray(seminarsRes.data) ? seminarsRes.data : []
-  enrollment.value = Array.isArray(enrRes.data) ? enrRes.data[0] : null
+  try {
+    const [courseRes, lessonsRes, seminarsRes, enrRes] = await Promise.all([
+      coursesApi.getOne(courseId),
+      lessonsApi.getByCourseId(courseId),
+      assignmentsApi.getByCourseId(courseId),
+      enrollmentsApi.getByUserAndCourse(authStore.user.id, courseId)
+    ])
+    course.value = courseRes.data
+    lessons.value = Array.isArray(lessonsRes.data) ? lessonsRes.data : []
+    seminars.value = Array.isArray(seminarsRes.data) ? seminarsRes.data : []
+    enrollment.value = Array.isArray(enrRes.data) ? enrRes.data[0] : null
+    if (!enrollment.value?.id) {
+      router.push({ name: 'checkout', params: { courseId } })
+    }
+  } catch {
+    router.push({ name: 'catalog' })
+  }
 })
 
 async function complete(id) {

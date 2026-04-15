@@ -100,7 +100,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   assignmentsApi,
@@ -154,6 +154,13 @@ async function handleEnroll() {
 onMounted(async () => {
   const courseId = route.params.id
   await store.loadCourseById(courseId)
+  const styleKey = String(store.selectedCourse?.direction || store.selectedCourse?.category || '').toLowerCase()
+  const allowed = new Set(['powerlifting', 'fitness', 'crossfit'])
+  if (allowed.has(styleKey)) {
+    document.body.setAttribute('data-course-style', styleKey)
+  } else {
+    document.body.removeAttribute('data-course-style')
+  }
   loadingLessons.value = true
   lessonsError.value = ''
   try {
@@ -177,5 +184,9 @@ onMounted(async () => {
   } finally {
     loadingLessons.value = false
   }
+})
+
+onUnmounted(() => {
+  document.body.removeAttribute('data-course-style')
 })
 </script>

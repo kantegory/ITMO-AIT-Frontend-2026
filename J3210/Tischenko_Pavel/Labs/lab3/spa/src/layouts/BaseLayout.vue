@@ -4,7 +4,7 @@
       <nav class="container py-3 d-flex align-items-center justify-content-between gap-3 flex-wrap">
         <div class="d-flex align-items-center gap-3">
           <router-link class="fw-semibold text-decoration-none text-body" to="/">
-            Подвал обучения · Vue
+            Подвал обучения
           </router-link>
           <router-link class="small text-decoration-none" :to="{ name: 'catalog' }">
             Каталог

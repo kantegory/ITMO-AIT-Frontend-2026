@@ -1,9 +1,9 @@
 <template>
   <base-layout>
     <section class="mb-4">
-      <h1 class="h4 mb-2">Каталог курсов (Vue SPA)</h1>
+      <h1 class="h4 mb-2">Каталог курсов</h1>
       <p class="text-secondary mb-0">
-        MVP ЛР3: каталог, авторизация по роли, страница курса и лекции из mock API.
+        Поиск курсов с фильтрацией по направлению и цене.
       </p>
     </section>
 
@@ -68,16 +68,17 @@ const filters = reactive({
 
 const filteredCourses = computed(() => {
   return store.courses.filter((course) => {
-    const byQuery = !filters.query || course.title.toLowerCase().includes(filters.query.toLowerCase())
-    const byCategory = !filters.category || course.category === filters.category
+    const courseTitle = String(course.title || '').toLowerCase()
+    const courseCategory = String(course.category || course.direction || '').trim().toLowerCase()
+    const selectedCategory = String(filters.category || '').trim().toLowerCase()
+    const byQuery = !filters.query || courseTitle.includes(filters.query.toLowerCase())
+    const byCategory = !selectedCategory || courseCategory === selectedCategory
     const byPrice = !filters.maxPrice || Number(course.price || 0) <= Number(filters.maxPrice)
     return byQuery && byCategory && byPrice
   })
 })
 
 onMounted(async () => {
-  if (!store.courses.length) {
-    await store.loadCourses()
-  }
+  await store.loadCourses()
 })
 </script>
