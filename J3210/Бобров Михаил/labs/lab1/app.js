@@ -1,29 +1,26 @@
 const myModels = [
-    { id: 1, name: "Image Classifier Pro", framework: "PyTorch", size: "120MB", tag: "CV", date: "12.05.2024", author: "Vision Team", description: "Высокоточная сверточная нейронная сеть для классификации объектов.", version: "2.4.0-stable", likes: 128, forks: 14, comments: [] },
-    { id: 2, name: "NLP Sentiment Analysis", framework: "Transformers", size: "450MB", tag: "NLP", date: "10.05.2024", author: "TextAI Group", description: "Модель на базе архитектуры BERT для анализа тональности текста.", version: "1.0.2", likes: 85, forks: 5, comments: [] },
-    { id: 3, name: "Stock Predictor", framework: "Scikit-learn", size: "15MB", tag: "Finance", date: "08.05.2024", author: "Quant Solutions", description: "Регрессионная модель для прогнозирования цен акций.", version: "0.9.5-beta", likes: 34, forks: 2, comments: [] }
+    { id: 1, name: "Image Classifier Pro", framework: "PyTorch", size: "120MB", tag: "CV", date: "12.05.2024", author: "Vision Team", description: "Высокоточная сверточная нейронная сеть для классификации объектов.", version: "2.4.0-stable", likes: 128, forks: 14, license: "MIT" },
+    { id: 2, name: "NLP Sentiment Analysis", framework: "Transformers", size: "450MB", tag: "NLP", date: "10.05.2024", author: "TextAI Group", description: "Модель на базе архитектуры BERT для анализа тональности текста.", version: "1.0.2", likes: 85, forks: 5, license: "Apache 2.0" }
 ];
 
 const myDatasets = [
-    { id: 1, name: "Cats vs Dogs HD", format: "Images (JPG)", size: "2.1GB", tag: "Vision", date: "11.05.2024", rows: "25,000", description: "Набор фото кошек и собак для бинарной классификации.", likes: 210 },
-    { id: 2, name: "Russian Wiki Text", format: "JSONL", size: "850MB", tag: "NLP", date: "09.05.2024", rows: "1.2 млн", description: "Чистый текстовый корпус из русской Википедии.", likes: 145 },
-    { id: 3, name: "Customer Churn CSV", format: "CSV", size: "12MB", tag: "Tabular", date: "05.05.2024", rows: "100,000", description: "Данные о поведении клиентов для прогнозирования оттока.", likes: 56 }
+    { id: 1, name: "Cats vs Dogs HD", format: "Images (JPG)", size: "2.1GB", tag: "CV", date: "11.05.2024", rows: "25,000", description: "Набор фото кошек и собак для бинарной классификации.", likes: 210, license: "CC-BY-4.0" }
 ];
 
 const mySubscriptions = [
-    { id: 1, name: "NLP Research Group", type: "Community", updates: "5 новых моделей", date: "12.04.2026", members: "12,405", releases: "142", description: "Ведущее сообщество по разработке и оптимизации языковых моделей для русского языка." },
-    { id: 2, name: "Visionary AI", type: "Author", updates: "1 датасет", date: "10.04.2026", members: "3,120", releases: "28", description: "Независимый исследователь в области компьютерного зрения и генеративных сетей." }
+    { id: 1, name: "NLP Research Group", type: "Community", updates: "5 новых моделей", date: "12.04.2026", members: "12,405", releases: "142", description: "Ведущее сообщество по разработке и оптимизации языковых моделей." },
+    { id: 2, name: "Visionary AI", type: "Author", updates: "1 датасет", date: "10.04.2026", members: "3,120", releases: "28", description: "Исследователь в области компьютерного зрения." }
 ];
 
 const globalModels = [
-    { id: 101, name: "Llama 3 8B Russian", framework: "GGUF", size: "5.5GB", tag: "LLM", author: "Meta / Community", description: "Оптимизированная Llama 3 для русского языка.", likes: 1205, forks: 340, comments: [] },
-    { id: 102, name: "Stable Diffusion XL", framework: "Diffusers", size: "6.4GB", tag: "GenAI", author: "Stability AI", description: "Генерация изображений высокого разрешения.", likes: 890, forks: 120, comments: [] },
-    { id: 103, name: "Whisper Large v3", framework: "OpenAI", size: "1.5GB", tag: "Audio", author: "OpenAI", description: "Распознавание речи мирового уровня.", likes: 450, forks: 89, comments: [] }
+    { id: 101, name: "Llama 3 8B Russian", framework: "GGUF", size: "5.5GB", tag: "LLM", author: "Meta", description: "Оптимизированная Llama 3 для русского языка.", likes: 1205, forks: 340, license: "Llama 3" },
+    { id: 102, name: "Stable Diffusion XL", framework: "Diffusers", size: "6.4GB", tag: "GenAI", author: "Stability AI", description: "Генерация изображений высокого разрешения.", likes: 890, forks: 120, license: "OpenRail" },
+    { id: 103, name: "Whisper Large v3", framework: "OpenAI", size: "1.5GB", tag: "Audio", author: "OpenAI", description: "Распознавание речи мирового уровня.", likes: 450, forks: 89, license: "MIT" }
 ];
 
 const globalDatasets = [
-    { id: 201, name: "Common Crawl RU", format: "WARC", size: "45TB", tag: "Web", date: "01.04.2026", rows: "Миллиарды", description: "Гигантский архив очищенных веб-страниц рунета.", likes: 560 },
-    { id: 202, name: "CelebA-HQ Russian", format: "JPG", size: "15GB", tag: "Faces", date: "22.03.2026", rows: "30,000", description: "Портреты высокого разрешения для обучения GAN моделей.", likes: 320 }
+    { id: 201, name: "Common Crawl RU", format: "WARC", size: "45TB", tag: "Web", date: "01.04.2026", rows: "Миллиарды", description: "Гигантский архив веб-страниц рунета.", likes: 560, license: "Apache 2.0" },
+    { id: 202, name: "CelebA-HQ Russian", format: "JPG", size: "15GB", tag: "CV", date: "22.03.2026", rows: "30,000", description: "Портреты высокого разрешения для обучения GAN.", likes: 320, license: "MIT" }
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -35,12 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
     loadSettings();
     handleSettingsSave();
     setupAvatarUpload();
-    setupUploadModal();
     loadModelDetails();
     loadDatasetDetails();
     loadSubscriptionDetails();
     renderExplore();
     setupGlobalSearch();
+    setupUploadModal();
 });
 
 function fakeAuthCheck() {
@@ -51,183 +48,21 @@ function fakeAuthCheck() {
 
 function handleLogout() {
     const btn = document.getElementById('logoutBtn');
-    if (btn) {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem("user");
-            window.location.href = "login.html";
-        });
-    }
-}
-
-function renderModels(filter = "") {
-    const dash = document.querySelector("#dashboard-models-row");
-    const table = document.querySelector("#models-table-body");
-    const filtered = myModels.filter(m => m.name.toLowerCase().includes(filter.toLowerCase()));
-
-    if (dash) {
-        dash.innerHTML = filtered.map(m => `
-            <div class="col-md-4"><div class="card card-item p-3 h-100 shadow-sm border-0">
-                <h6 class="fw-semibold"><a href="model-details.html?id=${m.id}" class="text-decoration-none text-dark">${m.name}</a></h6>
-                <div class="text-muted small mb-2">${m.framework} • ${m.size}</div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="tag w-fit">${m.tag}</span>
-                    <small class="text-muted">♥ ${m.likes || 0}</small>
-                </div>
-            </div></div>`).join('');
-    }
-    if (table) {
-        table.innerHTML = filtered.map(m => `
-            <tr>
-                <td class="ps-4">
-                    <div class="fw-bold"><a href="model-details.html?id=${m.id}" class="text-decoration-none text-dark">${m.name}</a></div>
-                    <div class="text-muted small">${m.framework}</div>
-                </td>
-                <td><span class="tag">${m.tag}</span></td>
-                <td class="text-muted">${m.size}</td>
-                <td class="text-muted">${m.date}</td>
-                <td class="text-end pe-4">
-                    <button class="btn btn-light btn-sm rounded-3 text-danger" onclick="deleteModel(${m.id})">Удалить</button>
-                </td>
-            </tr>`).join('');
-    }
-}
-
-function renderDatasets(filter = "") {
-    const dash = document.querySelector("#dashboard-datasets-row");
-    const table = document.querySelector("#datasets-table-body");
-    const filtered = myDatasets.filter(d => d.name.toLowerCase().includes(filter.toLowerCase()));
-
-    if (dash) {
-        dash.innerHTML = filtered.map(d => `
-            <div class="col-md-4"><div class="card card-item p-3 h-100 shadow-sm border-0">
-                <h6 class="fw-semibold"><a href="dataset-details.html?id=${d.id}" class="text-decoration-none text-dark">${d.name}</a></h6>
-                <div class="text-muted small mb-2">${d.format} • ${d.size}</div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="tag w-fit">${d.tag}</span>
-                    <small class="text-muted">♥ ${d.likes || 0}</small>
-                </div>
-            </div></div>`).join('');
-    }
-    if (table) {
-        table.innerHTML = filtered.map(d => `
-            <tr>
-                <td class="ps-4">
-                    <div class="fw-bold"><a href="dataset-details.html?id=${d.id}" class="text-decoration-none text-dark">${d.name}</a></div>
-                    <div class="text-muted small">${d.format}</div>
-                </td>
-                <td><span class="tag">${d.tag}</span></td>
-                <td class="text-muted">${d.size}</td>
-                <td class="text-muted">${d.date}</td>
-                <td class="text-end pe-4">
-                    <button class="btn btn-light btn-sm rounded-3 text-danger" onclick="deleteDataset(${d.id})">Удалить</button>
-                </td>
-            </tr>`).join('');
-    }
-}
-
-function renderSubscriptions() {
-    const dash = document.querySelector("#dashboard-subs-row");
-    const table = document.querySelector("#subs-table-body");
-    if (dash) {
-        dash.innerHTML = mySubscriptions.map(s => `
-            <div class="col-md-4"><div class="card card-item p-3 h-100 shadow-sm border-0">
-                <h6 class="fw-semibold"><a href="subscription-details.html?id=${s.id}" class="text-decoration-none text-dark">${s.name}</a></h6>
-                <div class="text-muted small mb-2">${s.type}</div>
-                <span class="tag w-fit">${s.updates}</span>
-            </div></div>`).join('');
-    }
-    if (table) {
-        table.innerHTML = mySubscriptions.map(s => `
-            <tr>
-                <td class="ps-4">
-                    <div class="fw-bold"><a href="subscription-details.html?id=${s.id}" class="text-decoration-none text-dark">${s.name}</a></div>
-                    <div class="text-muted small">${s.type}</div>
-                </td>
-                <td><span class="tag">${s.updates}</span></td>
-                <td class="text-muted">Активна</td>
-                <td class="text-muted">${s.date}</td>
-                <td class="text-end pe-4">
-                    <button class="btn btn-light btn-sm rounded-3 text-danger" onclick="deleteSubscription(${s.id})">Отписаться</button>
-                </td>
-            </tr>`).join('');
-    }
-}
-
-function loadModelDetails() {
-    const p = new URLSearchParams(window.location.search);
-    const id = parseInt(p.get('id'));
-    if (!id || !window.location.pathname.includes('model-details.html')) return;
-    const m = myModels.find(x => x.id === id) || globalModels.find(x => x.id === id);
-    if (m) {
-        document.getElementById('modelTitle').innerText = m.name;
-        document.getElementById('modelDescription').innerText = m.description;
-        document.getElementById('modelAuthor').innerText = m.author;
-        document.getElementById('modelFramework').innerText = m.framework || "N/A";
-        document.getElementById('modelSize').innerText = m.size;
-        document.getElementById('modelTag').innerText = m.tag;
-        document.getElementById('modelLikes').innerText = m.likes || 0;
-        document.getElementById('modelForks').innerText = m.forks || 0;
-        document.getElementById('modelSlug').innerText = m.name.toLowerCase().replace(/\s+/g, '-');
-    }
-}
-
-function loadDatasetDetails() {
-    const p = new URLSearchParams(window.location.search);
-    const id = parseInt(p.get('id'));
-    if (!id || !window.location.pathname.includes('dataset-details.html')) return;
-    const d = myDatasets.find(x => x.id === id) || globalDatasets.find(x => x.id === id);
-    if (d) {
-        document.getElementById('dsTitle').innerText = d.name;
-        document.getElementById('dsFormat').innerText = d.format;
-        document.getElementById('dsSize').innerText = d.size;
-        document.getElementById('dsRows').innerText = d.rows;
-        document.getElementById('dsTag').innerText = d.tag;
-        document.getElementById('dsDate').innerText = d.date;
-        document.getElementById('dsDescription').innerText = d.description;
-    }
-}
-
-function loadSubscriptionDetails() {
-    const p = new URLSearchParams(window.location.search);
-    const id = parseInt(p.get('id'));
-    if (!id || !window.location.pathname.includes('subscription-details.html')) return;
-    const s = mySubscriptions.find(x => x.id === id);
-    if (s) {
-        document.getElementById('subTitle').innerText = s.name;
-        document.getElementById('subNameDisplay').innerText = s.name;
-        document.getElementById('subTypeDisplay').innerText = s.type;
-        document.getElementById('subMembers').innerText = s.members;
-        document.getElementById('subReleases').innerText = s.releases;
-        document.getElementById('subDescription').innerText = s.description;
-    }
-}
-
-function deleteSubscriptionFromDetails() {
-    const p = new URLSearchParams(window.location.search);
-    const id = parseInt(p.get('id'));
-    if (confirm("Вы уверены, что хотите отписаться от этого сообщества?")) {
-        const index = mySubscriptions.findIndex(x => x.id === id);
-        if (index !== -1) {
-            mySubscriptions.splice(index, 1);
-            window.location.href = "my-subscriptions.html";
-        }
-    }
+    if (btn) btn.onclick = () => { localStorage.removeItem("user"); window.location.href = "login.html"; };
 }
 
 function socialAction(type, category = 'model') {
     const prefix = category === 'model' ? 'model' : 'ds';
     const idName = type === 'like' ? prefix + 'Likes' : prefix + 'Forks';
-
     const countEl = document.getElementById(idName);
-    if (!countEl) return;
 
-    let count = parseInt(countEl.innerText);
-    countEl.innerText = count + 1;
-
-    const btn = event.currentTarget;
-    btn.classList.remove('btn-outline-primary', 'btn-outline-secondary');
-    btn.classList.add(type === 'like' ? 'btn-primary' : 'btn-secondary');
+    if (countEl) {
+        let count = parseInt(countEl.innerText);
+        countEl.innerText = count + 1;
+        const btn = event.currentTarget;
+        btn.classList.remove('btn-outline-primary', 'btn-outline-secondary');
+        btn.classList.add(type === 'like' ? 'btn-primary' : 'btn-secondary');
+    }
 }
 
 function addComment() {
@@ -246,134 +81,223 @@ function addComment() {
     input.value = "";
 }
 
-function renderExplore(filter = "") {
+function renderExplore() {
     const mRow = document.querySelector("#explore-models-row");
     const dRow = document.querySelector("#explore-datasets-row");
-    const fVal = filter.toLowerCase();
+    if (!mRow && !dRow) return;
+
+    const searchVal = document.getElementById("globalSearch")?.value.toLowerCase() || "";
+    const tagVal = document.getElementById("filterTag")?.value || "";
+    const frameVal = document.getElementById("filterFramework")?.value || "";
+    const licVal = document.getElementById("filterLicense")?.value || "";
+
+    const fModels = globalModels.filter(m => {
+        return (m.name.toLowerCase().includes(searchVal)) &&
+            (tagVal === "" || m.tag === tagVal) &&
+            (frameVal === "" || m.framework === frameVal) &&
+            (licVal === "" || m.license === licVal);
+    });
+
+    const fDatasets = globalDatasets.filter(d => {
+        return (d.name.toLowerCase().includes(searchVal)) &&
+            (tagVal === "" || d.tag === tagVal) &&
+            (licVal === "" || (d.license && d.license.includes(licVal)));
+    });
 
     if (mRow) {
-        const fModels = globalModels.filter(m => m.name.toLowerCase().includes(fVal));
         mRow.innerHTML = fModels.map(m => `
-            <div class="col-md-4">
+            <div class="col-md-6 col-lg-4">
                 <div class="card card-item p-3 h-100 border-0 shadow-sm">
-                    <h6 class="fw-bold"><a href="model-details.html?id=${m.id}" class="text-decoration-none text-dark">${m.name}</a></h6>
-                    <p class="text-muted small mb-4">${m.description}</p>
+                    <h6 class="fw-bold"><a href="model-details.html?id=${m.id}" class="text-dark text-decoration-none">${m.name}</a></h6>
+                    <div class="text-muted small mb-2">${m.framework} • ${m.license}</div>
+                    <p class="text-muted small mb-3">${m.description}</p>
                     <div class="d-flex justify-content-between align-items-center mt-auto">
                         <span class="tag">${m.tag}</span>
-                        <button class="btn btn-primary btn-sm px-3" onclick="addToMy('models', ${m.id})">Добавить</button>
+                        <button class="btn btn-primary btn-sm" onclick="addToMy('models', ${m.id})">Добавить</button>
                     </div>
                 </div>
-            </div>`).join('');
+            </div>`).join('') || '<p class="text-muted p-3">Модели не найдены</p>';
     }
 
     if (dRow) {
-        const fDatasets = globalDatasets.filter(d => d.name.toLowerCase().includes(fVal));
         dRow.innerHTML = fDatasets.map(d => `
-            <div class="col-md-4">
+            <div class="col-md-6 col-lg-4">
                 <div class="card card-item p-3 h-100 border-0 shadow-sm">
-                    <h6 class="fw-bold"><a href="dataset-details.html?id=${d.id}" class="text-decoration-none text-dark">${d.name}</a></h6>
-                    <p class="text-muted small mb-4">${d.description}</p>
+                    <h6 class="fw-bold"><a href="dataset-details.html?id=${d.id}" class="text-dark text-decoration-none">${d.name}</a></h6>
+                    <div class="text-muted small mb-2">${d.size} • ${d.license}</div>
+                    <p class="text-muted small mb-3">${d.description}</p>
                     <div class="d-flex justify-content-between align-items-center mt-auto">
                         <span class="tag">${d.tag}</span>
-                        <button class="btn btn-primary btn-sm px-3" onclick="addToMy('datasets', ${d.id})">Добавить</button>
+                        <button class="btn btn-primary btn-sm" onclick="addToMy('datasets', ${d.id})">Добавить</button>
                     </div>
                 </div>
-            </div>`).join('');
+            </div>`).join('') || '<p class="text-muted p-3">Датасеты не найдены</p>';
     }
 }
 
 function setupGlobalSearch() {
-    const inp = document.getElementById("globalSearch");
-    if (inp) {
-        inp.addEventListener("input", (e) => {
-            const val = e.target.value;
-            renderModels(val);
-            renderDatasets(val);
-            renderExplore(val);
-        });
+    const inputs = document.querySelectorAll(".filter-input, #globalSearch");
+    inputs.forEach(input => input.addEventListener("input", renderExplore));
+
+    const resetBtn = document.getElementById("resetFilters");
+    if (resetBtn) {
+        resetBtn.onclick = () => {
+            document.querySelectorAll(".filter-input").forEach(i => i.value = "");
+            if (document.getElementById("globalSearch")) document.getElementById("globalSearch").value = "";
+            renderExplore();
+        };
     }
+}
+
+function loadModelDetails() {
+    const p = new URLSearchParams(window.location.search);
+    const id = parseInt(p.get('id'));
+    if (!id || !window.location.pathname.includes('model-details.html')) return;
+    const m = [...myModels, ...globalModels].find(x => x.id === id);
+    if (m) {
+        document.getElementById('modelTitle').innerText = m.name;
+        document.getElementById('modelDescription').innerText = m.description;
+        document.getElementById('modelAuthor').innerText = m.author;
+        document.getElementById('modelFramework').innerText = m.framework || "N/A";
+        document.getElementById('modelSize').innerText = m.size;
+        document.getElementById('modelTag').innerText = m.tag;
+        document.getElementById('modelLikes').innerText = m.likes || 0;
+        document.getElementById('modelForks').innerText = m.forks || 0;
+        document.getElementById('modelSlug').innerText = m.name.toLowerCase().replace(/\s+/g, '-');
+    }
+}
+
+function loadDatasetDetails() {
+    const p = new URLSearchParams(window.location.search);
+    const id = parseInt(p.get('id'));
+    if (!id || !window.location.pathname.includes('dataset-details.html')) return;
+    const d = [...myDatasets, ...globalDatasets].find(x => x.id === id);
+    if (d) {
+        document.getElementById('dsTitle').innerText = d.name;
+        document.getElementById('dsDescription').innerText = d.description;
+        document.getElementById('dsRows').innerText = d.rows || "N/A";
+        document.getElementById('dsFormat').innerText = d.format;
+        document.getElementById('dsSize').innerText = d.size;
+        document.getElementById('dsTag').innerText = d.tag;
+        if(document.getElementById('dsLikes')) document.getElementById('dsLikes').innerText = d.likes || 0;
+        if(document.getElementById('dsDate')) document.getElementById('dsDate').innerText = d.date;
+    }
+}
+
+function loadSubscriptionDetails() {
+    const p = new URLSearchParams(window.location.search);
+    const id = parseInt(p.get('id'));
+    if (!id || !window.location.pathname.includes('subscription-details.html')) return;
+    const s = mySubscriptions.find(x => x.id === id);
+    if (s) {
+        document.getElementById('subTitle').innerText = s.name;
+        document.getElementById('subNameDisplay').innerText = s.name;
+        document.getElementById('subTypeDisplay').innerText = s.type;
+        document.getElementById('subMembers').innerText = s.members;
+        document.getElementById('subReleases').innerText = s.releases;
+        document.getElementById('subDescription').innerText = s.description;
+        document.getElementById('subInitials').innerText = s.name.substring(0, 2).toUpperCase();
+    }
+}
+
+function renderModels() {
+    const dash = document.querySelector("#dashboard-models-row");
+    const table = document.querySelector("#models-table-body");
+    if (!dash && !table) return;
+    const html = myModels.map(m => dash ? `
+        <div class="col-md-4"><div class="card card-item p-3 h-100 shadow-sm border-0">
+            <h6 class="fw-semibold"><a href="model-details.html?id=${m.id}" class="text-decoration-none text-dark">${m.name}</a></h6>
+            <div class="text-muted small mb-2">${m.framework}</div>
+            <span class="tag w-fit">${m.tag}</span>
+        </div></div>` : `
+        <tr>
+            <td class="ps-4"><a href="model-details.html?id=${m.id}" class="text-dark fw-bold text-decoration-none">${m.name}</a></td>
+            <td><span class="tag">${m.tag}</span></td><td>${m.size}</td><td>${m.date}</td>
+            <td class="text-end pe-4"><button class="btn btn-light btn-sm text-danger" onclick="deleteItem('models', ${m.id})">Удалить</button></td>
+        </tr>`).join('');
+    if (dash) dash.innerHTML = html;
+    if (table) table.innerHTML = html;
+}
+
+function renderDatasets() {
+    const dash = document.querySelector("#dashboard-datasets-row");
+    const table = document.querySelector("#datasets-table-body");
+    if (!dash && !table) return;
+    const html = myDatasets.map(d => dash ? `
+        <div class="col-md-4"><div class="card card-item p-3 h-100 shadow-sm border-0">
+            <h6 class="fw-semibold"><a href="dataset-details.html?id=${d.id}" class="text-decoration-none text-dark">${d.name}</a></h6>
+            <div class="text-muted small mb-2">${d.format}</div>
+            <span class="tag w-fit">${d.tag}</span>
+        </div></div>` : `
+        <tr>
+            <td class="ps-4"><a href="dataset-details.html?id=${d.id}" class="text-dark fw-bold text-decoration-none">${d.name}</a></td>
+            <td><span class="tag">${d.tag}</span></td><td>${d.size}</td><td>${d.date}</td>
+            <td class="text-end pe-4"><button class="btn btn-light btn-sm text-danger" onclick="deleteItem('datasets', ${d.id})">Удалить</button></td>
+        </tr>`).join('');
+    if (dash) dash.innerHTML = html;
+    if (table) table.innerHTML = html;
+}
+
+function renderSubscriptions() {
+    const table = document.querySelector("#subs-table-body");
+    if (table) {
+        table.innerHTML = mySubscriptions.map(s => `
+            <tr>
+                <td class="ps-4"><a href="subscription-details.html?id=${s.id}" class="text-dark fw-bold text-decoration-none">${s.name}</a></td>
+                <td><span class="tag">${s.updates}</span></td><td>Активна</td>
+                <td class="text-end pe-4"><button class="btn btn-light btn-sm text-danger" onclick="deleteItem('subs', ${s.id})">Отписаться</button></td>
+            </tr>`).join('');
+    }
+}
+
+function deleteItem(type, id) {
+    if (!confirm("Вы уверены?")) return;
+    if (type === 'models') myModels.splice(myModels.findIndex(x => x.id === id), 1);
+    if (type === 'datasets') myDatasets.splice(myDatasets.findIndex(x => x.id === id), 1);
+    if (type === 'subs') mySubscriptions.splice(mySubscriptions.findIndex(x => x.id === id), 1);
+    renderModels(); renderDatasets(); renderSubscriptions();
 }
 
 function addToMy(type, id) {
-    if (type === 'models') {
-        const item = globalModels.find(x => x.id === id);
-        if (item && !myModels.find(x => x.id === id)) {
-            myModels.push({...item, date: new Date().toLocaleDateString()});
-            alert("Модель добавлена в вашу коллекцию!");
-            renderModels();
-        } else alert("Уже в коллекции");
-    } else {
-        const item = globalDatasets.find(x => x.id === id);
-        if (item && !myDatasets.find(x => x.id === id)) {
-            myDatasets.push({...item, date: new Date().toLocaleDateString()});
-            alert("Датасет добавлен в вашу коллекцию!");
-            renderDatasets();
-        } else alert("Уже в коллекции");
-    }
-}
-
-function deleteModel(id) { if (confirm("Удалить модель?")) { const i = myModels.findIndex(x => x.id === id); if (i !== -1) { myModels.splice(i, 1); renderModels(); } } }
-function deleteDataset(id) { if (confirm("Удалить датасет?")) { const i = myDatasets.findIndex(x => x.id === id); if (i !== -1) { myDatasets.splice(i, 1); renderDatasets(); } } }
-function deleteSubscription(id) { if (confirm("Отписаться?")) { const i = mySubscriptions.findIndex(x => x.id === id); if (i !== -1) { mySubscriptions.splice(i, 1); renderSubscriptions(); } } }
-
-function deleteAccount() {
-    if (confirm("Удалить аккаунт навсегда? Все данные будут стерты.")) {
-        localStorage.clear();
-        window.location.href = "login.html";
-    }
+    const source = type === 'models' ? globalModels : globalDatasets;
+    const target = type === 'models' ? myModels : myDatasets;
+    const item = source.find(x => x.id === id);
+    if (item && !target.find(x => x.id === id)) {
+        target.push({...item, date: new Date().toLocaleDateString()});
+        alert("Добавлено в вашу коллекцию!");
+    } else alert("Уже добавлено");
 }
 
 function loadSettings() {
-    const nameInp = document.getElementById("userNameInput");
-    if (!nameInp) return;
-    nameInp.value = localStorage.getItem("userName") || "";
+    if (!document.getElementById("userNameInput")) return;
+    document.getElementById("userNameInput").value = localStorage.getItem("userName") || "";
     document.getElementById("userEmailInput").value = localStorage.getItem("userEmail") || "";
-    document.getElementById("userBioInput").value = localStorage.getItem("userBio") || "";
-    document.getElementById('notifyEmail').checked = localStorage.getItem("notifyEmail") === "true";
-
-    const img = localStorage.getItem("userAvatarBase64");
-    if (img && document.getElementById('userAvatar')) {
-        document.getElementById('userAvatar').src = img;
-    }
+    const avatar = localStorage.getItem("userAvatarBase64");
+    if (avatar && document.getElementById('userAvatar')) document.getElementById('userAvatar').src = avatar;
 }
 
 function handleSettingsSave() {
     const btn = document.getElementById('saveSettingsBtn');
-    if (btn) {
-        btn.addEventListener('click', () => {
-            localStorage.setItem("userName", document.getElementById("userNameInput").value);
-            localStorage.setItem("userEmail", document.getElementById("userEmailInput").value);
-            localStorage.setItem("userBio", document.getElementById("userBioInput").value);
-            localStorage.setItem("notifyEmail", document.getElementById('notifyEmail').checked);
-            btn.innerText = "Сохранено!";
-            setTimeout(() => btn.innerText = "Сохранить", 1500);
-        });
-    }
+    if (btn) btn.onclick = () => {
+        localStorage.setItem("userName", document.getElementById("userNameInput").value);
+        localStorage.setItem("userEmail", document.getElementById("userEmailInput").value);
+        btn.innerText = "Сохранено!"; setTimeout(() => btn.innerText = "Сохранить", 1500);
+    };
 }
 
 function setupAvatarUpload() {
     const inp = document.getElementById('avatarInput');
-    const img = document.getElementById('userAvatar');
-    if (!inp || !img) return;
-    inp.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (!file || !file.type.startsWith('image/')) return;
+    if (inp) inp.onchange = (e) => {
         const reader = new FileReader();
-        reader.readAsDataURL(file);
         reader.onload = () => {
             localStorage.setItem("userAvatarBase64", reader.result);
-            img.src = reader.result;
+            if (document.getElementById('userAvatar')) document.getElementById('userAvatar').src = reader.result;
         };
-    });
+        reader.readAsDataURL(e.target.files[0]);
+    };
 }
 
 function setupUploadModal() {
     const btn = document.getElementById("submitUpload");
-    if (btn) {
-        btn.addEventListener("click", () => {
-            alert("Объект успешно отправлен на модерацию!");
-            const modal = bootstrap.Modal.getInstance(document.getElementById('uploadModal'));
-            if (modal) modal.hide();
-        });
-    }
+    if (btn) btn.onclick = () => { alert("Успешно отправлено на модерацию!"); };
 }
