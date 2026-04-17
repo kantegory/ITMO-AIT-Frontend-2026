@@ -59,22 +59,22 @@
       </header>
 
       <ul class="nav nav-tabs mb-4" role="tablist">
-        <li class="nav-item">
-          <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-description" type="button">Описание</button>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="tab-description-btn" data-bs-toggle="tab" data-bs-target="#tab-description" type="button" role="tab" aria-selected="true" aria-controls="tab-description">Описание</button>
         </li>
-        <li class="nav-item">
-          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-usage" type="button">Примеры</button>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab-usage-btn" data-bs-toggle="tab" data-bs-target="#tab-usage" type="button" role="tab" aria-selected="false" aria-controls="tab-usage">Примеры</button>
         </li>
-        <li class="nav-item">
-          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-files" type="button">Файлы</button>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab-files-btn" data-bs-toggle="tab" data-bs-target="#tab-files" type="button" role="tab" aria-selected="false" aria-controls="tab-files">Файлы</button>
         </li>
-        <li class="nav-item">
-          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-discussions" type="button">Обсуждения</button>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab-discussions-btn" data-bs-toggle="tab" data-bs-target="#tab-discussions" type="button" role="tab" aria-selected="false" aria-controls="tab-discussions">Обсуждения</button>
         </li>
       </ul>
 
       <div class="tab-content">
-        <div class="tab-pane fade show active" id="tab-description" role="tabpanel">
+        <div class="tab-pane fade show active" id="tab-description" role="tabpanel" aria-labelledby="tab-description-btn">
           <div class="card">
             <div class="card-body">
               <h2 class="h5">SQuAD v2.0</h2>
@@ -89,7 +89,7 @@
           </div>
         </div>
 
-        <div class="tab-pane fade" id="tab-usage" role="tabpanel">
+        <div class="tab-pane fade" id="tab-usage" role="tabpanel" aria-labelledby="tab-usage-btn">
           <div class="card">
             <div class="card-body">
               <h2 class="h5 mb-3">Пример загрузки</h2>
@@ -103,7 +103,7 @@ print(dataset["train"][0])</pre>
           </div>
         </div>
 
-        <div class="tab-pane fade" id="tab-files" role="tabpanel">
+        <div class="tab-pane fade" id="tab-files" role="tabpanel" aria-labelledby="tab-files-btn">
           <div class="card">
             <div class="card-body p-0">
               <div class="file-item">
@@ -134,7 +134,7 @@ print(dataset["train"][0])</pre>
           </div>
         </div>
 
-        <div class="tab-pane fade" id="tab-discussions" role="tabpanel">
+        <div class="tab-pane fade" id="tab-discussions" role="tabpanel" aria-labelledby="tab-discussions-btn">
           <div class="card">
             <div class="card-body">
               <h2 class="h5 mb-3">Обсуждения</h2>
