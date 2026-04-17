@@ -19,8 +19,8 @@ function buildCard(item) {
     '<p class="card-text small mb-2">' + item.description + '</p>' +
     '<div class="d-flex flex-wrap gap-1 mb-2"><span class="badge badge-task">' + item.task + '</span>' + badge2 + '</div>' +
     '<div class="d-flex gap-3 text-muted small">' +
-    '<span><i class="bi bi-star-fill text-warning"></i> ' + formatCount(item.stars) + '</span>' +
-    '<span><i class="bi bi-download"></i> ' + formatCount(item.downloads) + '</span>' +
+    '<span><i class="bi bi-star-fill text-warning" aria-hidden="true"></i> ' + formatCount(item.stars) + '</span>' +
+    '<span><i class="bi bi-download" aria-hidden="true"></i> ' + formatCount(item.downloads) + '</span>' +
     '</div></div></div></div>';
 }
 

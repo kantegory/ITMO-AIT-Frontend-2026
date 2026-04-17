@@ -21,8 +21,8 @@ function buildPopularCard(item, isModel) {
             ${badge2}
           </div>
           <div class="d-flex gap-3 text-muted small">
-            <span><i class="bi bi-star-fill text-warning"></i> ${formatCount(item.stars)}</span>
-            <span><i class="bi bi-download"></i> ${formatCount(item.downloads)}</span>
+            <span><i class="bi bi-star-fill text-warning" aria-hidden="true"></i> ${formatCount(item.stars)}</span>
+            <span><i class="bi bi-download" aria-hidden="true"></i> ${formatCount(item.downloads)}</span>
           </div>
         </div>
       </div>

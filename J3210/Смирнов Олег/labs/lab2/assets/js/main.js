@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', function () {
       filterSidebar.classList.toggle('show');
       const isShown = filterSidebar.classList.contains('show');
       filterToggle.innerHTML = isShown
-        ? '<i class="bi bi-funnel-fill"></i> Скрыть фильтры'
-        : '<i class="bi bi-funnel"></i> Показать фильтры';
+        ? '<i class="bi bi-funnel-fill" aria-hidden="true"></i> Скрыть фильтры'
+        : '<i class="bi bi-funnel" aria-hidden="true"></i> Показать фильтры';
     });
   }
 
