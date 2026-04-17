@@ -30,9 +30,10 @@ document.addEventListener('DOMContentLoaded', function () {
     filterToggle.addEventListener('click', function () {
       filterSidebar.classList.toggle('show');
       const isShown = filterSidebar.classList.contains('show');
+      var sp = window.SPRITE_PATH || '../../assets/icons/sprite.svg';
       filterToggle.innerHTML = isShown
-        ? '<i class="bi bi-funnel-fill" aria-hidden="true"></i> Скрыть фильтры'
-        : '<i class="bi bi-funnel" aria-hidden="true"></i> Показать фильтры';
+        ? '<svg class="icon" aria-hidden="true"><use href="' + sp + '#funnel-fill"></use></svg> Скрыть фильтры'
+        : '<svg class="icon" aria-hidden="true"><use href="' + sp + '#funnel"></use></svg> Показать фильтры';
     });
   }
 

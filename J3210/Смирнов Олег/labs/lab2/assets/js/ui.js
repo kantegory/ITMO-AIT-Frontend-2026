@@ -15,7 +15,10 @@
 
   function getThemeIcon() {
     var isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
-    return isDark ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon-stars"></i>';
+    var sp = window.SPRITE_PATH || 'assets/icons/sprite.svg';
+    return isDark
+      ? '<svg class="icon" aria-hidden="true"><use href="' + sp + '#sun"></use></svg>'
+      : '<svg class="icon" aria-hidden="true"><use href="' + sp + '#moon-stars"></use></svg>';
   }
 
   function toggleTheme() {
