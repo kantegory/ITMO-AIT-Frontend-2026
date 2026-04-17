@@ -1,3 +1,56 @@
+const API_URL = 'http://localhost:3000';
+
+let currentUser = null;
+
+if (document.getElementById('profileName')) {
+    const savedUser = localStorage.getItem('currentUser');
+    if (!savedUser) {
+        document.body.innerHTML = `
+            <div class="container mt-5 text-center">
+                <h2>Вы не вошли в аккаунт</h2>
+                <p>Пожалуйста, <a href="login.html">войдите в аккаунт</a>, чтобы посмотреть личный кабинет.</p>
+            </div>
+        `;
+    }
+}
+
+if (document.getElementById('loginForm')) {
+    const savedUser = localStorage.getItem('currentUser');
+    if (savedUser) {
+        window.location.href = 'profile.html';
+    }
+}
+
+if (document.getElementById('registerForm')) {
+    const savedUser = localStorage.getItem('currentUser');
+    if (savedUser) {
+        window.location.href = 'profile.html';
+    }
+}
+
+async function fetchWithAuth(url, options = {}) {
+    const token = localStorage.getItem('token');
+    const headers = {
+        'Content-Type': 'application/json',
+        ...options.headers
+    };
+    
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+    
+    const response = await fetch(url, {
+        ...options,
+        headers
+    });
+    
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    return response.json();
+}
+
 const destinations = [
 { 
     name: "Рим", 
@@ -6,7 +59,7 @@ const destinations = [
     duration: "medium", 
     description: "Колизей, Ватикан, фонтан Треви", 
     price: 280000,
-    image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=400&h=250&fit=crop",
+    image: "images/Rim.jpg",
     mapLink: "https://www.google.com/maps/place/Рим"
 },
 { 
@@ -26,7 +79,7 @@ const destinations = [
     duration: "long", 
     description: "Небоскребы, храмы, суши", 
     price: 350000,
-    image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=400&h=250&fit=crop",
+    image: "images/Tokio.jpg",
     mapLink: "https://www.google.com/maps/place/Токио"
 },
 { 
@@ -46,7 +99,7 @@ const destinations = [
     duration: "short", 
     description: "Саграда Фамилия, пляжи, Гауди", 
     price: 160000,
-    image: "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=400&h=250&fit=crop",
+    image: "images/Barselona.jpg",
     mapLink: "https://www.google.com/maps/place/Барселона"
 },
 { 
@@ -56,7 +109,7 @@ const destinations = [
     duration: "long", 
     description: "Горы, реки, чистый воздух", 
     price: 150000,
-    image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=400&h=250&fit=crop",
+    image: "images/Altay.jpeg",
     mapLink: "https://www.google.com/maps/place/Республика+Алтай"
 },
 { 
@@ -308,12 +361,24 @@ let userProfile = {
     registered: new Date().toLocaleDateString()
 };
 
-function loadProfile() {
-    const savedProfile = localStorage.getItem('userProfile');
-    if (savedProfile) {
-        userProfile = JSON.parse(savedProfile);
+async function loadProfile() {
+    const savedUser = localStorage.getItem('currentUser');
+    if (savedUser) {
+        const user = JSON.parse(savedUser);
+        userProfile = {
+            name: user.name,
+            email: user.email,
+            registered: new Date().toLocaleDateString()
+        };
+        currentUser = user;
+        updateProfileDisplay();
+    } else {
+        const savedProfile = localStorage.getItem('userProfile');
+        if (savedProfile) {
+            userProfile = JSON.parse(savedProfile);
+        }
+        updateProfileDisplay();
     }
-    updateProfileDisplay();
 }
 
 function updateProfileDisplay() {
@@ -342,9 +407,9 @@ if (document.getElementById('profileName')) {
     loadProfile();
 }
 
-// Регистрация
+// Регистрация через API
 if (document.getElementById('registerForm')) {
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
@@ -366,16 +431,81 @@ if (document.getElementById('registerForm')) {
             return;
         }
         
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
-        if (users.find(u => u.email === email)) {
-            alert('Пользователь с таким email уже существует');
+        try {
+            const response = await fetch(`${API_URL}/users`);
+            const users = await response.json();
+            
+            if (users.find(u => u.email === email)) {
+                alert('Пользователь с таким email уже существует');
+                return;
+            }
+            
+            const newUser = { id: Date.now(), name, email, password };
+            const createResponse = await fetch(`${API_URL}/users`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newUser)
+            });
+            
+            if (createResponse.ok) {
+                alert('Регистрация успешна! Теперь войдите в аккаунт.');
+                window.location.href = 'login.html';
+            } else {
+                alert('Ошибка при регистрации');
+            }
+        } catch (error) {
+            console.error('Ошибка регистрации:', error);
+            alert('Ошибка сервера. Убедитесь, что JSON Server запущен: json-server --watch db.json --port 3000');
+        }
+    });
+}
+
+// Вход через API
+if (document.getElementById('loginForm')) {
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        if (!email || !password) {
+            alert('Заполните все поля');
             return;
         }
         
-        users.push({ name, email, password });
-        localStorage.setItem('users', JSON.stringify(users));
-        
-        alert('Регистрация успешна! Теперь войдите в аккаунт.');
-        window.location.href = 'login.html';
+        try {
+            const response = await fetch(`${API_URL}/users`);
+            const users = await response.json();
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.setItem('token', `fake-token-${user.id}`);
+                currentUser = user;
+                alert(`Добро пожаловать, ${user.name}!`);
+                window.location.href = 'profile.html';
+            } else {
+                alert('Неверный email или пароль');
+            }
+        } catch (error) {
+            console.error('Ошибка входа:', error);
+            alert('Ошибка сервера. Убедитесь, что JSON Server запущен');
+        }
     });
+}
+
+// Выход из аккаунта
+function logout() {
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
+    localStorage.removeItem('userProfile');
+    currentUser = null;
+    userProfile = {
+        name: "Гость",
+        email: "не указан",
+        registered: new Date().toLocaleDateString()
+    };
+    
+    alert('Вы вышли из аккаунта');
+    
+    window.location.href = 'index.html';
 }
