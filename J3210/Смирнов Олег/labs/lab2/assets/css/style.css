@@ -54,11 +54,18 @@ main {
 
 a {
   color: var(--accent);
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 a:hover {
   color: var(--accent-hover);
+}
+
+.navbar-brand,
+.nav-link,
+.btn,
+.card-title a {
+  text-decoration: none;
 }
 
 /* Navbar */
@@ -336,11 +343,21 @@ a:hover {
   background-color: var(--bg-secondary);
 }
 
+/* Override Bootstrap text-danger for dark theme contrast */
+.text-danger {
+  color: #f97583 !important;
+}
+
 /* Footer */
 footer {
   background-color: var(--bg-card);
   border-top: 1px solid var(--border);
   color: var(--text-muted);
+}
+
+footer a {
+  display: inline-block;
+  padding: 4px 0;
 }
 
 /* Modal */
@@ -360,13 +377,13 @@ footer {
 /* Btn accent */
 .btn-accent {
   background-color: var(--accent);
-  color: #fff;
+  color: #000;
   border: none;
 }
 
 .btn-accent:hover {
   background-color: var(--accent-hover);
-  color: #fff;
+  color: #000;
 }
 
 /* Tag filter buttons */
