@@ -1,59 +1,77 @@
 <script setup>
-import Header from './components/Header.vue'
-import DestinationList from './components/DestinationList.vue'
-import Footer from './components/Footer.vue'
+import { ref } from 'vue'
+import NoteItem from './components/NoteItem.vue'
+import { useNotes } from './composables/useNotes.js'
 
-const destinations = [
-  {
-    id: 1,
-    title: 'Прага',
-    country: 'Чехия',
-    description: 'Старый город, Карлов мост и уютные улочки - хороший вариант для первой поездки в Европу.',
-  },
-  {
-    id: 2,
-    title: 'Барселона',
-    country: 'Испания',
-    description: 'Море, архитектура Гауди и гастрономия: можно совместить экскурсии и отдых.',
-  },
-  {
-    id: 3,
-    title: 'Стамбул',
-    country: 'Турция',
-    description: 'Босфор, базары и исторические кварталы - яркий город на стыке культур.',
-  },
-  {
-    id: 4,
-    title: 'Лиссабон',
-    country: 'Португалия',
-    description: 'Трамваи, смотровые площадки и атмосфера побережья Атлантики.',
-  },
-]
+const { notes, addNote } = useNotes()
+const title = ref('')
+const text = ref('')
+
+function handleAdd() {
+  addNote(title.value, text.value)
+  title.value = ''
+  text.value = ''
+}
 </script>
 
 <template>
   <div class="app">
-    <Header
-      title="Идеи для путешествий"
-      subtitle="Список направлений"
-    />
-    <main class="app__main">
-      <DestinationList :items="destinations" />
-    </main>
-    <Footer />
+    <h1>Заметки</h1>
+    <form class="form" @submit.prevent="handleAdd">
+      <div class="field">
+        <label for="note-title">Заголовок</label>
+        <input id="note-title" v-model="title" type="text" />
+      </div>
+      <div class="field">
+        <label for="note-text">Текст</label>
+        <textarea id="note-text" v-model="text" rows="4"></textarea>
+      </div>
+      <button type="submit">Добавить</button>
+    </form>
+    <ul class="list">
+      <NoteItem
+        v-for="n in notes"
+        :key="n.id"
+        :title="n.title"
+        :text="n.text"
+      />
+    </ul>
   </div>
 </template>
 
 <style scoped>
 .app {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  max-width: 960px;
-  margin: 0 auto;
+  max-width: 520px;
 }
 
-.app__main {
-  flex: 1;
+h1 {
+  margin: 0 0 1rem;
+  font-size: 1.35rem;
+}
+
+.form {
+  margin-bottom: 1rem;
+}
+
+.field {
+  margin-bottom: 0.5rem;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 0.9rem;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  font: inherit;
+  padding: 0.25rem 0.35rem;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
 }
 </style>
