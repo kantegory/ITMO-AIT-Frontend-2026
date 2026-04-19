@@ -102,7 +102,7 @@
                     <div class="card course-card h-300">
                         <img src="${course.image}" class="card-img-top" alt="${course.title}">
                         <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">${course.title}</h5>
+                            <h3 class="card-title">${course.title}</h3>
                             <p class="card-text">${course.shortDescription}</p>
                             <div class="mt-auto d-flex align-items-center justify-content-between">
                                 <a href="Course/CoursePreview.html?id=${course.id}" class="btn btn-primary">Подробнее</a>
@@ -116,7 +116,7 @@
 
         async function loadCourses(params = {}) {
             try {
-                const response = await axios.get(`${API_URL}/courses`, { params: { ...params, isPublished: true } });
+                const response = await axios.get(`${API_URL}/courses`, { params });
                 return response.data;
             } catch (err) {
                 console.error('Error loading courses:', err);
@@ -125,12 +125,13 @@
         }
 
         async function renderCourses() {
-            const courses = await loadCourses();
+            const [topCourses, beginnerCourses] = await Promise.all([
+                loadCourses({ isPublished: true, _sort: 'rating', _order: 'desc', _limit: 4 }),
+                loadCourses({ isPublished: true, level: 'Начинающий', _limit: 4 }),
+            ]);
 
-            const topCourses = [...courses].sort((a, b) => b.rating - a.rating).slice(0, 4);
             document.getElementById('topCourses').innerHTML = topCourses.map(getCourseCardHtml).join('');
 
-            const beginnerCourses = courses.filter(c => c.level === 'Начинающий').slice(0, 4);
             document.getElementById('beginnerCourses').innerHTML = beginnerCourses.map(getCourseCardHtml).join('');
         }
 
