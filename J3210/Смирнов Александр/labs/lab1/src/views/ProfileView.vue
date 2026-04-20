@@ -18,14 +18,14 @@
             </div>
 
             <div class="col-md-8">
-                <ul class="nav nav-tabs mb-4">
+                <ul class="nav nav-tabs profile-tabs mb-4">
                     <li class="nav-item">
-                        <button type="button" class="nav-link text-dark" :class="{ active: activeTab === 'uploads' }" @click="activeTab = 'uploads'">
+                        <button type="button" class="nav-link profile-tab-link" :class="{ active: activeTab === 'uploads' }" @click="activeTab = 'uploads'">
                             My Uploads
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button type="button" class="nav-link text-dark" :class="{ active: activeTab === 'subscriptions' }" @click="activeTab = 'subscriptions'">
+                        <button type="button" class="nav-link profile-tab-link" :class="{ active: activeTab === 'subscriptions' }" @click="activeTab = 'subscriptions'">
                             Subscriptions
                         </button>
                     </li>
@@ -109,7 +109,7 @@
                             <div class="item-card">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <h5>{{ item.name }}</h5>
-                                    <span class="badge" :class="item.type === 'model' ? 'bg-primary' : 'bg-success'">{{ item.type.toUpperCase() }}</span>
+                                    <span class="badge type-badge" :class="item.type === 'model' ? 'bg-primary' : 'bg-success'">{{ item.type.toUpperCase() }}</span>
                                 </div>
                                 <p class="text-muted small mb-2">Task: {{ item.task.toUpperCase() }} | License: {{ item.license.toUpperCase() }} | Size: {{ item.size }}</p>
                                 <p class="mb-0">{{ item.desc }}</p>
@@ -130,7 +130,7 @@
                             <div class="item-card">
                                 <div class="d-flex justify-content-between">
                                     <h5>{{ item.name }}</h5>
-                                    <span class="badge" :class="item.type === 'model' ? 'bg-primary' : 'bg-success'">{{ item.type.toUpperCase() }}</span>
+                                    <span class="badge type-badge" :class="item.type === 'model' ? 'bg-primary' : 'bg-success'">{{ item.type.toUpperCase() }}</span>
                                 </div>
                                 <p class="text-muted small mb-0">You will receive notifications about new versions and discussions.</p>
                             </div>

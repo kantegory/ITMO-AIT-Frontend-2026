@@ -20,12 +20,26 @@
                             <button
                                 id="notifDropdown"
                                 type="button"
-                                class="btn btn-outline-light dropdown-toggle"
+                                class="btn btn-outline-light position-relative d-inline-flex align-items-center justify-content-center"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
+                                aria-label="Notifications"
+                                title="Notifications"
+                                style="width: 42px; height: 38px;"
                             >
-                                Notifications
-                                <span v-if="notifications.length" class="badge rounded-pill bg-danger ms-1">{{ notifications.length }}</span>
+                                <svg class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                                    <path
+                                        fill="currentColor"
+                                        d="M12 2a6 6 0 0 0-6 6v3.764c0 .52-.208 1.02-.578 1.388L4 14.586V16h16v-1.414l-1.422-1.434A1.96 1.96 0 0 1 18 11.764V8a6 6 0 0 0-6-6m0 20a3 3 0 0 0 2.816-2H9.184A3 3 0 0 0 12 22"
+                                    />
+                                </svg>
+                                <span
+                                    v-if="notifications.length"
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                    style="font-size: 0.65rem;"
+                                >
+                                    {{ notifications.length }}
+                                </span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" style="max-height: 320px; overflow: auto; width: 320px;">
                                 <li v-if="loadingNotifications" class="dropdown-item text-muted">Loading...</li>
@@ -47,7 +61,20 @@
                             </ul>
                         </div>
 
-                        <RouterLink to="/profile" class="btn btn-outline-light">Profile</RouterLink>
+                        <RouterLink
+                            to="/profile"
+                            class="btn btn-outline-light d-inline-flex align-items-center justify-content-center"
+                            aria-label="Profile"
+                            title="Profile"
+                            style="width: 42px; height: 38px;"
+                        >
+                            <svg class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                                <path
+                                    fill="currentColor"
+                                    d="M12 12a5 5 0 1 0-5-5a5 5 0 0 0 5 5m0 2c-5.33 0-8 2.24-8 4v2h16v-2c0-1.76-2.67-4-8-4"
+                                />
+                            </svg>
+                        </RouterLink>
                         <button type="button" class="btn btn-danger btn-sm" @click="handleLogout">Log out</button>
                     </template>
 
