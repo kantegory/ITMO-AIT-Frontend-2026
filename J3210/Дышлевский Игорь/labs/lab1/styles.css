@@ -1,13 +1,3 @@
-:root {
-    --accent: #6c5ce7;
-    --accent-hover: #5a4bd1;
-    --bg: #fafafa;
-    --card: #fff;
-    --text: #1a1a2e;
-    --muted: #6b7280;
-    --border: #e5e7eb;
-}
-
 body {
     font-family: sans-serif;
     background: var(--bg);
@@ -15,6 +5,10 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+}
+
+.text-muted {
+    color: var(--muted) !important;
 }
 
 main {
@@ -31,7 +25,7 @@ a:hover {
 }
 
 .navbar {
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--navbar-bg);
     border-bottom: 1px solid var(--border);
 }
 
@@ -40,20 +34,20 @@ a:hover {
     color: var(--text);
 }
 
-.nav-link {
+.navbar .nav-link {
     color: var(--muted);
     font-weight: 500;
     font-size: 0.9rem;
 }
 
-.nav-link:hover,
-.nav-link.active {
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
     color: var(--text);
 }
 
 .btn-accent {
     background: var(--accent);
-    color: #fff;
+    color: var(--accent-text);
     border: none;
     border-radius: 8px;
     font-weight: 600;
@@ -61,7 +55,7 @@ a:hover {
 
 .btn-accent:hover {
     background: var(--accent-hover);
-    color: #fff;
+    color: var(--accent-text);
 }
 
 .btn-alt {
@@ -74,25 +68,35 @@ a:hover {
 
 .btn-alt:hover {
     background: var(--accent);
-    color: #fff;
+    color: var(--accent-text);
 }
 
 .card {
     border: 1px solid var(--border);
     border-radius: 12px;
     background: var(--card);
+    color: var(--text);
 }
 
 .form-control,
 .form-select {
     border: 1px solid var(--border);
     border-radius: 8px;
+    background: var(--card);
+    color: var(--text);
 }
 
 .form-control:focus,
 .form-select:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+    box-shadow: 0 0 0 3px var(--accent-focus);
+    background: var(--card);
+    color: var(--text);
+}
+
+.form-control::placeholder {
+    color: var(--muted);
+    opacity: 0.7;
 }
 
 .badge {
@@ -106,13 +110,16 @@ a:hover {
 }
 
 pre {
-    background: #f1f0fb;
+    background: var(--pre-bg);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 1rem;
     font-size: 0.9rem;
+    color: var(--text);
 }
 
 .modal-content {
     border-radius: 12px;
+    background: var(--card);
+    color: var(--text);
 }
