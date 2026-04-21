@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Страница объекта — ModelHub</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="custom-navbar">
+  <div class="nav-wrapper">
+    <div class="nav-left">
+      <a href="index.html" class="logo">ModelHub</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="profile.html">Профиль</a></li>
+      </ul>
+      <form class="search-box" action="search.html" method="GET">
+        <i class="bi bi-search"></i>
+        <input type="text" name="query" placeholder=" Поиск моделей и датасетов">
+      </form>
+    </div>
+    <button class="btn-register" onclick="logout()">Выйти</button>
+  </div>
+</nav>
+
+<section class="page-container">
+  <div id="pageError"></div>
+  <div id="pageContent" style="display:none;">
+    <div class="soft-card hero-card">
+      <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-start gap-4">
+        <div>
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <span class="tag-badge" id="itemTypeBadge">Model</span>
+            <span class="tag-badge gray" id="itemTask"></span>
+            <span class="tag-badge green" id="itemLicense"></span>
+          </div>
+          <h1 class="model-title" id="itemTitle">Загрузка...</h1>
+          <div class="model-meta">Автор: <strong id="itemAuthor"></strong> · Версия: <span id="itemVersion"></span></div>
+          <p class="mb-0" id="itemDescription"></p>
+        </div>
+        <div class="text-lg-end mt-5">
+          <button class="action-btn primary mb-2 w-100" type="button" onclick="incrementField('downloads')">Скачать</button>
+          <button class="action-btn mb-2 w-100" type="button" onclick="incrementField('stars')">Поставить звезду</button>
+          <button class="action-btn w-100" type="button" onclick="incrementField('forks')">Сделать форк</button>
+        </div>
+      </div>
+
+      <div class="stats-box mt-4">
+        <div class="stats-item">Загрузок <strong id="itemDownloads">0</strong></div>
+        <div class="stats-item">Звезд <strong id="itemStars">0</strong></div>
+        <div class="stats-item">Форков <strong id="itemForks">0</strong></div>
+      </div>
+    </div>
+
+    <div class="row g-4 align-items-start">
+      <div class="col-lg-8">
+        <div class="soft-card content-card">
+          <div class="tab-nav nav nav-pills" role="tablist">
+            <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#overview" type="button">Описание</button>
+            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#metrics" type="button">Метрики</button>
+            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#usage" type="button">Пример использования</button>
+            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#discussions" type="button">Обсуждения</button>
+            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#repro" type="button">Воспроизводимость</button>
+          </div>
+
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="overview">
+              <h4 class="section-title">Описание</h4>
+              <p id="overviewText"></p>
+            </div>
+            <div class="tab-pane fade" id="metrics">
+              <h4 class="section-title">Метрики / характеристики</h4>
+              <div class="custom-table">
+                <div class="table-responsive">
+                  <table class="table align-middle mb-0">
+                    <thead class="table-light"><tr><th>Параметр</th><th>Значение</th></tr></thead>
+                    <tbody id="metricsBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="usage">
+              <h4 class="section-title">Пример использования</h4>
+              <pre class="bg-dark text-white p-4 rounded"><code id="usageCode"></code></pre>
+            </div>
+            <div class="tab-pane fade" id="discussions">
+              <h4 class="section-title">Обсуждения</h4>
+              <div id="discussionsList"></div>
+              <form class="mt-4" onsubmit="addDiscussion(event)">
+                <label class="form-label fw-semibold">Добавить комментарий</label>
+                <textarea class="form-control mb-3" rows="3" id="discussionText" placeholder="Напишите комментарий..."></textarea>
+                <button type="submit" class="action-btn primary">Отправить</button>
+              </form>
+            </div>
+            <div class="tab-pane fade" id="repro">
+              <h4 class="section-title">Процессы воспроизводимости</h4>
+              <ul class="list-group repro-list" id="reproList"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="soft-card sidebar-card mb-4">
+          <h5 class="section-title">Информация</h5>
+          <div class="info-line">Тип: <strong id="sidebarType"></strong></div>
+          <div class="info-line">Задача: <strong id="sidebarTask"></strong></div>
+          <div class="info-line">Лицензия: <strong id="sidebarLicense"></strong></div>
+          <div class="info-line">Фреймворк: <strong id="sidebarFramework"></strong></div>
+          <div class="info-line">Версия: <strong id="sidebarVersion"></strong></div>
+          <div class="info-line">Размер: <strong id="sidebarSize"></strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+<script>
+  const API_URL = 'http://localhost:3000';
+  let currentItem = null;
+  let currentCollection = 'models';
+
+  function params() {
+    const query = new URLSearchParams(window.location.search);
+    return {
+      id: query.get('id'),
+      type: query.get('type') || 'model'
+    };
+  }
+
+  function setError(text) {
+    document.getElementById('pageError').innerHTML = '<div class="alert alert-danger">' + text + '</div>';
+    document.getElementById('pageContent').style.display = 'none';
+  }
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value || '—';
+  }
+
+  function renderItem(item, discussions) {
+    currentItem = item;
+    currentCollection = item.type === 'dataset' ? 'datasets' : 'models';
+    document.title = item.title + ' — ModelHub';
+    document.getElementById('pageContent').style.display = 'block';
+
+    setText('itemTypeBadge', item.type === 'model' ? 'Model' : 'Dataset');
+    setText('itemTask', item.task);
+    setText('itemLicense', item.license);
+    setText('itemTitle', item.title);
+    setText('itemAuthor', item.author);
+    setText('itemVersion', item.version);
+    setText('itemDescription', item.description);
+    setText('overviewText', item.description);
+    setText('itemDownloads', item.downloads);
+    setText('itemStars', item.stars);
+    setText('itemForks', item.forks);
+    setText('itemSize', item.size);
+
+    setText('sidebarType', item.type === 'model' ? 'Model' : 'Dataset');
+    setText('sidebarTask', item.task);
+    setText('sidebarLicense', item.license);
+    setText('sidebarFramework', item.framework);
+    setText('sidebarVersion', item.version);
+    setText('sidebarSize', item.size);
+
+    document.getElementById('usageCode').textContent = item.usageExample || 'Нет примера использования';
+
+    const metricsBody = document.getElementById('metricsBody');
+    metricsBody.innerHTML = Object.entries(item.metrics || {}).map(([key, value]) => `<tr><td>${key}</td><td>${value}</td></tr>`).join('');
+
+    const repro = item.reproducibility || {};
+    document.getElementById('reproList').innerHTML = Object.entries(repro).map(([key, value]) => `<li class="list-group-item"><strong>${key}:</strong> ${value}</li>`).join('');
+
+    renderDiscussions(discussions);
+  }
+
+  function renderDiscussions(discussions) {
+    const list = document.getElementById('discussionsList');
+    if (!discussions.length) {
+      list.innerHTML = '<div class="text-muted">Комментариев пока нет</div>';
+      return;
+    }
+    list.innerHTML = discussions.map(item => `
+      <div class="comment-box mb-3">
+        <strong>${item.author}</strong>
+        <p class="mb-0 mt-2">${item.text}</p>
+      </div>
+    `).join('');
+  }
+
+  async function loadItem() {
+    const { id, type } = params();
+    if (!id) {
+      setError('Не передан id объекта');
+      return;
+    }
+
+    const collection = type === 'dataset' ? 'datasets' : 'models';
+
+    try {
+      const [itemRes, discussionsRes] = await Promise.all([
+        axios.get(API_URL + '/' + collection + '/' + id),
+        axios.get(API_URL + '/discussions?' + new URLSearchParams({ itemType: type, itemId: id }).toString())
+      ]);
+
+      const item = itemRes.data;
+      const discussions = Array.isArray(discussionsRes.data) ? discussionsRes.data : [];
+      renderItem(item, discussions);
+    } catch (error) {
+      console.error(error);
+      setError('Не удалось загрузить страницу');
+    }
+  }
+
+  async function incrementField(field) {
+    if (!currentItem) return;
+    const newValue = (Number(currentItem[field]) || 0) + 1;
+
+    try {
+      await axios.patch(API_URL + '/' + currentCollection + '/' + currentItem.id, { [field]: newValue });
+      currentItem[field] = newValue;
+      setText(field === 'downloads' ? 'itemDownloads' : field === 'stars' ? 'itemStars' : 'itemForks', newValue);
+    } catch (error) {
+      console.error(error);
+      alert('Ошибка обновления');
+    }
+  }
+
+  async function addDiscussion(event) {
+    event.preventDefault();
+    const textarea = document.getElementById('discussionText');
+    const text = textarea.value.trim();
+    if (!text || !currentItem) return;
+
+    const userName = localStorage.getItem('userName') || 'guest_user';
+
+    try {
+      await axios.post(API_URL + '/discussions', {
+        itemType: currentItem.type,
+        itemId: currentItem.id,
+        author: userName,
+        text
+      });
+
+      textarea.value = '';
+      loadItem();
+    } catch (error) {
+      console.error(error);
+      alert('Ошибка отправки комментария');
+    }
+  }
+
+  loadItem();
+</script>
+</body>
+</html>

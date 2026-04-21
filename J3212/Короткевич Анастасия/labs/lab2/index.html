@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModelHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="home-page">
+<nav class="custom-navbar fixed-top">
+    <div class="nav-wrapper">
+        <div class="nav-left">
+            <a href="index.html" class="logo">ModelHub</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Главная</a></li>
+                <li><a href="profile.html">Профиль</a></li>
+            </ul>
+        </div>
+        <form class="search-box" action="search.html" method="GET">
+            <i class="bi bi-search"></i>
+            <input type="text" name="query" placeholder=" Поиск моделей и датасетов">
+        </form>
+        <div class="nav-actions" id="navActions">
+            <a href="login.html" class="btn-login">Войти</a>
+            <a href="register.html" class="btn-register">Регистрация</a>
+        </div>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">AI Model & Dataset Hub</div>
+        <h1 class="hero-title">ModelHub</h1>
+        <p class="hero-text">
+            ModelHub — социальная платформа для обмена AI-моделями и датасетами.
+            Здесь можно искать материалы по задаче, лицензии, размеру и фреймворку,
+            сохранять полезные проекты, смотреть метрики и изучать воспроизводимость.
+        </p>
+        <div class="hero-buttons">
+            <a href="search.html" class="register-btn">Перейти к поиску</a>
+        </div>
+    </div>
+</section>
+
+<section class="features-section">
+    <div class="container py-5">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <h3>Авторизация</h3>
+                    <p>Регистрация и вход через моковое API на JSON-server-auth.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <h3>Поиск</h3>
+                    <p>Фильтрация по типу, задаче, лицензии, размеру и фреймворку.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <h3>Профиль</h3>
+                    <p>Личный кабинет с моделями, датасетами, подписками и редактированием профиля.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <h3>Страница объекта</h3>
+                    <p>Описание, метрики, пример использования, обсуждения и воспроизводимость.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function updateNav() {
+        const token = localStorage.getItem('accessToken');
+        const nav = document.getElementById('navActions');
+        if (!nav || !token) return;
+        nav.innerHTML = `
+            <a href="profile.html" class="btn-login">Личный кабинет</a>
+            <button class="btn-register" type="button" onclick="logout()">Выйти</button>
+        `;
+    }
+
+    function logout() {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userRole');
+        window.location.href = 'login.html';
+    }
+
+    updateNav();
+</script>
+</body>
+</html>
