@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Wanderlust — Кабинет</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="css/styles.css" rel="stylesheet"/>
+  <script>var t=localStorage.getItem("wl_theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
+</head>
+<body data-page="dashboard">
+<a href="#main-content" class="skip-link">Перейти к содержимому</a>
+<nav class="app-nav" aria-label="Основная навигация">
+  <a href="dashboard.html" class="nav-brand" aria-label="Wanderlust — перейти на главную">Wanderlust</a>
+  <div class="nav-links ms-auto me-3">
+    <a href="dashboard.html" class="nav-link active" aria-current="page">Кабинет</a>
+    <a href="search.html"    class="nav-link">Поиск</a>
+    <a href="collab.html"    class="nav-link">Совместно</a>
+  </div>
+  <a href="search.html" class="btn-outline-custom d-none d-md-inline-flex me-3" style="padding:.4rem 1rem;font-size:.82rem;"><i class="bi bi-compass me-1" aria-hidden="true"></i>Исследовать</a>
+  <button class="theme-toggle me-2" id="themeToggle" aria-label="Переключить тему" title="Переключить тему">🌙</button>
+  <button class="nav-avatar" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Меню пользователя" id="navInitial">АИ</button>
+  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-light" role="menu">
+    <li role="none"><a class="dropdown-item" href="dashboard.html" role="menuitem"><i class="bi bi-person me-2" aria-hidden="true"></i>Профиль</a></li>
+    <li role="none"><a class="dropdown-item" href="#" role="menuitem"><i class="bi bi-gear me-2" aria-hidden="true"></i>Настройки</a></li>
+    <li role="none"><hr class="dropdown-divider"/></li>
+    <li role="none"><a class="dropdown-item" href="#" role="menuitem" data-action="logout" style="color:#dc2626;"><i class="bi bi-box-arrow-right me-2" aria-hidden="true"></i>Выйти</a></li>
+  </ul>
+</nav>
+<header class="profile-hero" aria-label="Профиль пользователя">
+  <div class="d-flex align-items-center gap-4 flex-wrap">
+    <div class="profile-avatar" id="userInitial" aria-hidden="true">А</div>
+    <div>
+      <h1 class="serif mb-1" style="font-size:1.5rem;" id="userName">Алексей Иванов</h1>
+      <div class="d-flex gap-2 flex-wrap">
+        <span class="tag"><i class="bi bi-geo-alt" style="font-size:.7rem;" aria-hidden="true"></i> Москва</span>
+        <span class="tag tag-green"><i class="bi bi-calendar3" style="font-size:.7rem;" aria-hidden="true"></i> С нами с 2023</span>
+        <span class="tag tag-warm" aria-label="Уровень: Pro">🏆 Pro</span>
+      </div>
+    </div>
+    <div class="ms-auto d-flex gap-2 flex-wrap">
+      <button class="btn-ghost-custom" aria-label="Редактировать профиль"><i class="bi bi-pencil me-1" aria-hidden="true"></i>Редактировать</button>
+      <a href="collab.html" class="btn-primary-custom"><i class="bi bi-people me-1" aria-hidden="true"></i>Пригласить</a>
+    </div>
+  </div>
+  <div class="row g-3 mt-3" role="list" aria-label="Статистика поездок">
+    <div class="col-6 col-sm-3" role="listitem"><div class="stat-card"><div class="stat-card-num">14</div><div class="stat-card-label">Поездок</div></div></div>
+    <div class="col-6 col-sm-3" role="listitem"><div class="stat-card"><div class="stat-card-num">32</div><div class="stat-card-label">Маршрута</div></div></div>
+    <div class="col-6 col-sm-3" role="listitem"><div class="stat-card"><div class="stat-card-num">8</div><div class="stat-card-label">Стран</div></div></div>
+    <div class="col-6 col-sm-3" role="listitem"><div class="stat-card"><div class="stat-card-num">47</div><div class="stat-card-label">Заметок</div></div></div>
+  </div>
+</header>
+<main class="container-fluid py-4 px-3 px-md-4" id="main-content" style="max-width:1200px;position:relative;z-index:1;">
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <section class="mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="serif mb-0" style="font-size:1.1rem;">Сохранённые маршруты</h2>
+          <a href="search.html" style="font-size:.85rem;color:var(--accent);">Добавить +</a>
+        </div>
+        <div class="row g-3">
+          <div class="col-sm-6 col-md-4">
+            <a href="destination.html?id=paris" class="dest-card" style="display:flex;flex-direction:column;text-decoration:none;">
+              <div class="dest-card-img">
+                <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=400&h=280&fit=crop&auto=format&q=80" alt="Париж" loading="lazy" onerror="this.style.display='none'"/>
+                <div class="dest-card-overlay"></div>
+                <div style="position:absolute;bottom:10px;left:12px;z-index:1;"><span style="font-size:.78rem;color:#fff;font-weight:600;">Париж</span></div>
+              </div>
+              <div class="dest-card-body">
+                <div style="font-size:.78rem;color:var(--text-muted);">Июнь 2024 · 12 мест</div>
+                <div class="d-flex gap-1 flex-wrap"><span class="tag tag-green" style="font-size:.7rem;">Город</span><span class="tag" style="font-size:.7rem;">7 дней</span></div>
+              </div>
+            </a>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <a href="destination.html?id=tokyo" class="dest-card" style="display:flex;flex-direction:column;text-decoration:none;">
+              <div class="dest-card-img">
+                <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=400&h=280&fit=crop&auto=format&q=80" alt="Токио" loading="lazy" onerror="this.style.display='none'"/>
+                <div class="dest-card-overlay"></div>
+                <div style="position:absolute;bottom:10px;left:12px;z-index:1;"><span style="font-size:.78rem;color:#fff;font-weight:600;">Токио</span></div>
+              </div>
+              <div class="dest-card-body">
+                <div style="font-size:.78rem;color:var(--text-muted);">Сентябрь 2024 · 18 мест</div>
+                <div class="d-flex gap-1 flex-wrap"><span class="tag tag-warm" style="font-size:.7rem;">Природа</span><span class="tag" style="font-size:.7rem;">10 дней</span></div>
+              </div>
+            </a>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <a href="destination.html?id=patagonia" class="dest-card" style="display:flex;flex-direction:column;text-decoration:none;">
+              <div class="dest-card-img">
+                <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400&h=280&fit=crop&auto=format&q=80" alt="Патагония" loading="lazy" onerror="this.style.display='none'"/>
+                <div class="dest-card-overlay"></div>
+                <div style="position:absolute;bottom:10px;left:12px;z-index:1;"><span style="font-size:.78rem;color:#fff;font-weight:600;">Патагония</span></div>
+              </div>
+              <div class="dest-card-body">
+                <div style="font-size:.78rem;color:var(--text-muted);">Январь 2025 · 8 мест</div>
+                <div class="d-flex gap-1 flex-wrap"><span class="tag tag-green" style="font-size:.7rem;">Природа</span><span class="tag" style="font-size:.7rem;">14 дней</span></div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2 class="serif mb-3" style="font-size:1.1rem;">Предстоящая поездка</h2>
+        <div class="card p-3">
+          <div class="d-flex align-items-center gap-3 flex-wrap">
+            <div style="width:52px;height:52px;border-radius:12px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">🌊</div>
+            <div>
+              <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
+                <strong>Мальдивы 2025</strong>
+                <span class="tag tag-warm" style="font-size:.72rem;">Через 23 дня</span>
+              </div>
+              <div style="font-size:.82rem;color:var(--text-muted);">15–25 мая 2025 · 5 участников</div>
+            </div>
+            <a href="collab.html" class="btn-outline-custom ms-auto" style="font-size:.82rem;padding:.4rem 1rem;">
+              <i class="bi bi-people me-1"></i>Открыть
+            </a>
+          </div>
+          <div class="mt-3">
+            <div class="d-flex justify-content-between mb-1" style="font-size:.8rem;color:var(--text-muted);">
+              <span id="tripProgressLabel">Готовность поездки</span><span style="color:var(--accent);font-weight:500;">68%</span>
+            </div>
+            <div class="progress-bar-wrap" style="height:6px;" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100" aria-labelledby="tripProgressLabel">
+              <div class="progress-bar-fill" style="width:68%;height:6px;"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="col-lg-4">
+      <section class="mb-4" aria-label="Путевые заметки">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="serif mb-0" style="font-size:1.1rem;">Путевые заметки</h2>
+          <button class="btn-primary-custom" style="font-size:.78rem;padding:.35rem .75rem;" data-bs-toggle="modal" data-bs-target="#noteModal" aria-label="Создать новую заметку">
+            <i class="bi bi-plus me-1" aria-hidden="true"></i>Новая
+          </button>
+        </div>
+        <div id="notesList" aria-live="polite" aria-label="Список заметок"></div>
+      </section>
+      <section>
+        <h2 class="serif mb-3" style="font-size:1.1rem;">Достижения</h2>
+        <div class="card p-3">
+          <div class="row g-2 text-center">
+            <div class="col-4"><div style="font-size:1.6rem;">🌍</div><div style="font-size:.72rem;color:var(--accent);margin-top:.2rem;">1-й континент</div></div>
+            <div class="col-4"><div style="font-size:1.6rem;">✈️</div><div style="font-size:.72rem;color:var(--accent);margin-top:.2rem;">10 перелётов</div></div>
+            <div class="col-4"><div style="font-size:1.6rem;">🤝</div><div style="font-size:.72rem;color:var(--accent);margin-top:.2rem;">Командный</div></div>
+            <div class="col-4"><div style="font-size:1.6rem;filter:grayscale(1);opacity:.4;">📷</div><div style="font-size:.72rem;color:var(--text-light);margin-top:.2rem;">Фотограф</div></div>
+            <div class="col-4"><div style="font-size:1.6rem;filter:grayscale(1);opacity:.4;">🏅</div><div style="font-size:.72rem;color:var(--text-light);margin-top:.2rem;">Первопроходец</div></div>
+            <div class="col-4"><div style="font-size:1.6rem;filter:grayscale(1);opacity:.4;">🔥</div><div style="font-size:.72rem;color:var(--text-light);margin-top:.2rem;">Марафонец</div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+<div class="modal fade" id="noteModal" tabindex="-1" aria-labelledby="noteModalTitle" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-light">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="noteModalTitle">Новая заметка</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть окно"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label" for="noteTitle">Заголовок</label>
+          <input type="text" id="noteTitle" class="form-input" placeholder="Название заметки..."/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="noteDestination">Направление</label>
+          <select id="noteDestination" class="form-select-custom">
+            <option value="">Выберите направление...</option>
+            <option>🗼 Париж</option><option>🗾 Токио</option><option>🌊 Мальдивы</option>
+            <option>🏔 Патагония</option><option>🏖 Бали</option><option>🎈 Каппадокия</option>
+          </select>
+        </div>
+        <div class="mb-2">
+          <label class="form-label" for="noteText">Текст</label>
+          <textarea id="noteText" class="form-input" rows="4" placeholder="Ваши впечатления, советы..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-ghost-custom" data-bs-dismiss="modal">Отмена</button>
+        <button type="button" id="saveNoteBtn" class="btn-primary-custom"><i class="bi bi-check2 me-1" aria-hidden="true"></i>Сохранить</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
