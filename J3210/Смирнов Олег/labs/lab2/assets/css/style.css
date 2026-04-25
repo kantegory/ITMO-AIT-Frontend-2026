@@ -128,7 +128,7 @@ a:hover {
 
 /* Hero */
 .hero {
-  background: linear-gradient(135deg, #161b22 0%, #1a2332 100%);
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
   border-bottom: 1px solid var(--border);
   padding: 3vw 0;
 }
@@ -136,6 +136,7 @@ a:hover {
 .hero h1 {
   font-weight: 700;
   font-size: clamp(1.3rem, 2.5vw, 2rem);
+  color: var(--text);
 }
 
 .hero .lead {
@@ -405,13 +406,32 @@ footer a {
 /* Btn accent */
 .btn-accent {
   background-color: var(--accent);
-  color: #000;
+  color: #fff;
   border: none;
 }
 
 .btn-accent:hover {
   background-color: var(--accent-hover);
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .btn-accent,
+[data-bs-theme="dark"] .btn-accent:hover {
   color: #000;
+}
+
+/* Theme-aware outline button (replaces btn-outline-light which is invisible in light theme) */
+.btn-outline-themed {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-outline-themed:hover,
+.btn-outline-themed:focus {
+  background-color: var(--bg-secondary);
+  color: var(--text);
+  border-color: var(--text-muted);
 }
 
 /* Tag filter buttons */

@@ -34,7 +34,7 @@
     const actionsEl = document.getElementById('navbarActions');
     if (!actionsEl) return;
 
-    var themeBtn = '<button class="btn btn-outline-light btn-sm" id="themeToggleBtn" title="Переключить тему">' + getThemeIcon() + '</button>';
+    var themeBtn = '<button class="btn btn-outline-themed btn-sm" id="themeToggleBtn" title="Переключить тему">' + getThemeIcon() + '</button>';
 
     if (user) {
       const initial = user.name.charAt(0).toUpperCase();
@@ -43,16 +43,16 @@
           ${themeBtn}
           <a href="${paths.dashboard}" class="d-flex align-items-center gap-2 text-decoration-none">
             <div class="avatar" style="width:2em;height:2em;font-size:.85rem;">${initial}</div>
-            <span class="text-light small d-none d-md-inline">${user.name}</span>
+            <span class="small d-none d-md-inline" style="color: var(--text);">${user.name}</span>
           </a>
-          <button class="btn btn-outline-light btn-sm" id="logoutBtn">Выйти</button>
+          <button class="btn btn-outline-themed btn-sm" id="logoutBtn">Выйти</button>
         </div>`;
       document.getElementById('logoutBtn').addEventListener('click', logout);
     } else {
       actionsEl.innerHTML = `
         <div class="d-flex gap-2">
           ${themeBtn}
-          <a href="${paths.login}" class="btn btn-outline-light btn-sm">Войти</a>
+          <a href="${paths.login}" class="btn btn-outline-themed btn-sm">Войти</a>
           <a href="${paths.register}" class="btn btn-accent btn-sm">Регистрация</a>
         </div>`;
     }
