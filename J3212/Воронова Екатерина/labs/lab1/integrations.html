@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Интеграции — FinFlow</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-page="integrations">
+
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">FinFlow</div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link"><i class="bi bi-grid"></i> Кабинет</a>
+        <a href="transactions.html" class="sidebar-link"><i class="bi bi-arrow-left-right"></i> Транзакции</a>
+        <a href="reports.html" class="sidebar-link"><i class="bi bi-bar-chart-line"></i> Отчёты</a>
+        <a href="integrations.html" class="sidebar-link active"><i class="bi bi-link-45deg"></i> Интеграции</a>
+        <a href="#" class="sidebar-link"><i class="bi bi-wallet2"></i> Счета</a>
+        <a href="#" class="sidebar-link"><i class="bi bi-pie-chart"></i> Бюджеты</a>
+        <a href="index.html" class="sidebar-link"><i class="bi bi-box-arrow-left"></i> Выход</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <div class="topbar-search">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="Поиск интеграций..." />
+        </div>
+        <div class="topbar-user">
+          <button class="icon-btn"><i class="bi bi-bell"></i></button>
+          <div class="user-chip">
+            <div class="avatar-circle">A</div>
+            <span>Anna</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="content-section">
+        <div class="page-header">
+          <div>
+            <h1>Интеграции</h1>
+            <p>Подключайте платёжные аккаунты и автоматизируйте импорт транзакций</p>
+          </div>
+          <button class="btn btn-main" data-bs-toggle="modal" data-bs-target="#ruleModal">Добавить правило</button>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-xl-4">
+            <div class="dashboard-card integration-card h-100">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">T-Bank</h5>
+                <span class="status-badge success">Подключено</span>
+              </div>
+              <p class="text-muted">Импортируйте транзакции и обновляйте историю операций автоматически.</p>
+              <button class="btn btn-outline-main w-100">Отключить</button>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-xl-4">
+            <div class="dashboard-card integration-card h-100">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Sber</h5>
+                <span class="status-badge warning">Не подключено</span>
+              </div>
+              <p class="text-muted">Подключите банковский аккаунт для загрузки операций и аналитики.</p>
+              <button class="btn btn-main w-100">Подключить</button>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-xl-4">
+            <div class="dashboard-card integration-card h-100">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">PayPal</h5>
+                <span class="status-badge warning">Не подключено</span>
+              </div>
+              <p class="text-muted">Интеграция с платёжной системой для учёта внешних операций.</p>
+              <button class="btn btn-main w-100">Подключить</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 mt-1">
+          <div class="col-lg-5">
+            <div class="dashboard-card h-100">
+              <div class="card-header-custom">
+                <h5>Импорт транзакций</h5>
+              </div>
+
+              <div class="forecast-item">
+                <span>Последняя синхронизация</span>
+                <strong>12.03.2026, 09:15</strong>
+              </div>
+              <div class="forecast-item">
+                <span>Загружено операций</span>
+                <strong>124</strong>
+              </div>
+              <div class="forecast-item">
+                <span>Статус</span>
+                <strong>Активен</strong>
+              </div>
+
+              <button class="btn btn-main w-100 mt-3">Импортировать транзакции</button>
+            </div>
+          </div>
+
+          <div class="col-lg-7">
+            <div class="dashboard-card h-100">
+              <div class="card-header-custom">
+                <h5>Настройка правил</h5>
+              </div>
+
+              <div class="rule-item">
+                <div>
+                  <strong>Супермаркеты → Продукты</strong>
+                  <p>Все покупки в супермаркетах автоматически относятся к категории “Продукты”.</p>
+                </div>
+                <button class="btn btn-sm btn-outline-main">Изменить</button>
+              </div>
+
+              <div class="rule-item">
+                <div>
+                  <strong>Такси → Транспорт</strong>
+                  <p>Платежи за такси автоматически попадают в категорию “Транспорт”.</p>
+                </div>
+                <button class="btn btn-sm btn-outline-main">Изменить</button>
+              </div>
+
+              <div class="rule-item">
+                <div>
+                  <strong>Подписки → Онлайн-сервисы</strong>
+                  <p>Регулярные ежемесячные платежи относятся к категории подписок.</p>
+                </div>
+                <button class="btn btn-sm btn-outline-main">Изменить</button>
+              </div>
+
+              <div class="rule-item">
+                <div>
+                  <strong>Зарплата → Доход</strong>
+                  <p>Все входящие выплаты автоматически отмечаются как доход.</p>
+                </div>
+                <button class="btn btn-sm btn-outline-main">Изменить</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 mt-1">
+          <div class="col-12">
+            <div class="dashboard-card">
+              <div class="card-header-custom">
+                <h5>Безопасность</h5>
+              </div>
+              <p class="mb-2">Все подключения защищены. Пользователь может отключить интеграцию в любой момент.</p>
+              <p class="mb-0">Импорт транзакций можно выполнять вручную или использовать автоматическое обновление данных.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal fade" id="ruleModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content custom-modal">
+        <div class="modal-header border-0">
+          <h5 class="modal-title">Добавить правило</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Условие</label>
+              <input type="text" class="form-control custom-input" placeholder="Например, супермаркет" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Категория</label>
+              <select class="form-select custom-input">
+                <option>Продукты</option>
+                <option>Транспорт</option>
+                <option>Подписки</option>
+                <option>Доход</option>
+              </select>
+            </div>
+            <button type="button" class="btn btn-main w-100" data-bs-dismiss="modal">Сохранить правило</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
