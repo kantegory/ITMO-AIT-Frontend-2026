@@ -1,7 +1,7 @@
 .hero {
-    background: linear-gradient(135deg, #F7F3FF 0%, #EEE7FB 100%);
+    background: linear-gradient(135deg, var(--primary-light) 0%, #EEE7FB 100%);
     padding: 72px 0;
-    border-radius: 0 0 32px 32px;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     margin-bottom: 56px;
 }
 
@@ -23,7 +23,7 @@
 .hero-actions {
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: var(--spacing-sm);
     flex-wrap: wrap;
 }
 
@@ -42,7 +42,7 @@
 .course-card {
     overflow: hidden;
     transition: transform var(--transition), box-shadow var(--transition);
-    border-radius: 28px;
+    border-radius: var(--radius-lg);
 }
 
 .course-card:hover {
@@ -51,7 +51,7 @@
 }
 
 .course-card .card-body {
-    padding: 24px 20px 18px;
+    padding: var(--spacing-lg) 20px 18px;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -59,16 +59,16 @@
 
 .card-category-bar {
     height: 7px;
-    background: linear-gradient(90deg, var(--primary), #8E6BDC);
+    background: linear-gradient(90deg, var(--primary), var(--primary-dark));
 }
 
 .course-card .card-title {
-    margin-bottom: 12px;
+    margin-bottom: var(--spacing-sm);
     line-height: 1.25;
 }
 
 .course-description {
-    margin-bottom: 18px;
+    margin-bottom: var(--spacing-lg);
     line-height: 1.6;
     color: var(--muted);
     font-size: 0.95rem;
@@ -90,7 +90,7 @@
 }
 
 #courseTabs {
-    margin-top: 8px;
+    margin-top: var(--spacing-xs);
 }
 
 #videoPlayer iframe,
@@ -118,7 +118,7 @@
 
 #materialsList .list-group-item,
 #lessonList .list-group-item {
-    padding: 16px 18px;
+    padding: 16px var(--spacing-md);
 }
 
 #tasksList .card {
@@ -130,18 +130,18 @@
 }
 
 .teacher-page main.container {
-    padding-top: 12px;
+    padding-top: var(--spacing-sm);
     padding-bottom: 32px;
 }
 
 .teacher-page .card-body {
-    padding: 24px;
+    padding: var(--spacing-lg);
 }
 
 .teacher-page h1.h2 {
     font-size: 2.4rem;
     font-weight: 800;
-    margin-bottom: 8px;
+    margin-bottom: var(--spacing-xs);
     color: var(--dark);
 }
 
@@ -151,11 +151,11 @@
 }
 
 .teacher-page .text-primary {
-    color: var(--primary-dark);
+    color: var(--primary-dark) !important;
 }
 
 .teacher-page .text-success {
-    color: var(--success);
+    color: var(--success) !important;
 }
 
 .teacher-page .table-responsive {
@@ -165,19 +165,19 @@
 .teacher-page .table th {
     font-weight: 700;
     color: var(--muted);
-    padding-top: 16px;
-    padding-bottom: 16px;
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
 }
 
 .teacher-page .table td {
-    padding-top: 16px;
-    padding-bottom: 16px;
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
 }
 
 .teacher-page .badge.text-bg-success {
-    background: #23945B;
+    background: var(--success);
     color: var(--white);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     font-weight: 700;
     padding: 0.55em 0.9em;
 }
@@ -190,16 +190,16 @@
 
 .teacher-page .btn-outline-custom {
     min-height: 40px;
-    border-radius: 999px;
-    padding: 8px 18px;
+    border-radius: var(--radius-full);
+    padding: 8px var(--spacing-md);
 }
 
 .teacher-page .form-control,
 .teacher-page .form-select {
     min-height: 56px;
     border-radius: 20px;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
 }
 
 .teacher-page .modal-content {
@@ -225,8 +225,8 @@
 .dashboard-page .page-title {
     font-size: 1.75rem;
     font-weight: 700;
-    margin-bottom: 8px;
-    color: #242035;
+    margin-bottom: var(--spacing-xs);
+    color: var(--dark);
 }
 
 .dashboard-page .page-subtitle {
@@ -241,7 +241,7 @@
 }
 
 .dashboard-page .stat-label {
-    color: #756F86;
+    color: var(--muted);
     margin-bottom: 10px;
     font-weight: 600;
     font-size: 0.95rem;
@@ -251,12 +251,12 @@
     font-size: 2rem;
     line-height: 1;
     font-weight: 700;
-    color: #242035;
-    margin-bottom: 8px;
+    color: var(--dark);
+    margin-bottom: var(--spacing-xs);
 }
 
 .dashboard-page .stat-note {
-    color: #968FA6;
+    color: var(--muted);
     font-size: 0.92rem;
 }
 
@@ -266,7 +266,7 @@
 
 .dashboard-page .dashboard-course-description {
     color: var(--muted);
-    margin-bottom: 16px;
+    margin-bottom: var(--spacing-md);
     line-height: 1.6;
     font-size: 0.95rem;
 }
@@ -314,7 +314,7 @@
     }
 
     .course-card .card-body {
-        padding: 22px 18px 18px;
+        padding: 22px var(--spacing-md) var(--spacing-md);
     }
 
     .course-actions,

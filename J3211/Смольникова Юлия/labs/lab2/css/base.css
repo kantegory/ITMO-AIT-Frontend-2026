@@ -8,6 +8,61 @@ html {
     scroll-behavior: smooth;
 }
 
+/* ===== Доступность: skip-ссылка ===== */
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    font-weight: 600;
+    z-index: 10000;
+    text-decoration: none;
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+    top: 0;
+    outline: 3px solid var(--dark);
+    outline-offset: 2px;
+}
+
+/* ===== Доступность: видимый фокус ===== */
+*:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Снимаем стандартный outline, если поддерживается focus-visible */
+*:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Скрываем визуально, но доступно для скринридеров */
+.visually-hidden:not(:focus):not(:active) {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
 body {
     margin: 0;
     min-width: 320px;
@@ -135,13 +190,13 @@ small {
 .form-control::placeholder,
 .form-select::placeholder,
 textarea::placeholder {
-    color: #A29BAF;
+    color: var(--muted);
 }
 
 .form-control:focus,
 .form-select:focus,
 textarea:focus {
-    border-color: #C9B6F3;
+    border-color: var(--primary);
     box-shadow: 0 0 0 0.2rem rgba(165, 134, 227, 0.16);
 }
 
@@ -153,13 +208,13 @@ textarea:focus {
 
 .progress {
     height: 10px;
-    background: #EEE8F8;
-    border-radius: 999px;
+    background: var(--primary-light);
+    border-radius: var(--radius-full);
     overflow: hidden;
 }
 
 .progress-bar {
-    border-radius: 999px;
+    border-radius: var(--radius-full);
 }
 
 .table {
@@ -188,11 +243,53 @@ textarea:focus {
 }
 
 .bg-dark {
-    background-color: #1C1826;
+    background-color: var(--dark);
 }
 
 .text-light {
     color: rgba(255, 255, 255, 0.82);
+}
+
+/* ===== Skeleton loading placeholders ===== */
+.skeleton-line {
+    height: 14px;
+    background: linear-gradient(90deg, #e9ecef 25%, #f0f0f0 50%, #e9ecef 75%);
+    background-size: 200% 100%;
+    border-radius: 6px;
+    animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+.skeleton-btn {
+    height: 38px;
+    background: linear-gradient(90deg, #e9ecef 25%, #f0f0f0 50%, #e9ecef 75%);
+    background-size: 200% 100%;
+    border-radius: 8px;
+    animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+.w-80 { width: 80%; }
+
+@keyframes skeleton-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-soft);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
 }
 
 @media (max-width: 768px) {
