@@ -18,7 +18,13 @@
                 </div>
                 <div class="d-flex gap-2">
                     <button type="button" class="btn" :class="isStarred ? 'btn-warning' : 'btn-outline-warning'" @click="toggleStar">
-                        ⭐ {{ item.stars }}
+                        <svg class="icon me-1" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+                            <path
+                                fill="currentColor"
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        {{ item.stars }}
                     </button>
                     <button type="button" class="btn" :class="isSubscribed ? 'btn-outline-danger' : 'btn-outline-primary'" @click="toggleSubscription">
                         {{ isSubscribed ? "Unsubscribe" : "Subscribe" }}
@@ -82,6 +88,7 @@ import { useAuth } from "../composables/useAuth";
 import { useUserCollections } from "../composables/useUserCollections";
 import BaseLayout from "../layouts/BaseLayout.vue";
 import { formatDownloads, parseDownloads } from "../utils/formatters";
+import { generateId } from "../utils/id";
 
 const route = useRoute();
 const router = useRouter();
@@ -152,7 +159,7 @@ const sendNotifications = async (parentId) => {
     await Promise.all(
         [...recipients.entries()].map(([userId, type]) => {
             return createNotification({
-                id: `${Date.now()}-${Math.random()}`,
+                id: generateId(),
                 userId,
                 actorName: user.value.username,
                 type,
@@ -169,7 +176,7 @@ const submitComment = async (rawText, parentId) => {
     if (!ensureAuth()) return;
 
     await createComment({
-        id: String(Date.now()),
+        id: generateId(),
         itemId: item.value.id,
         userId: user.value.id,
         userName: user.value.username,

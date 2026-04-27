@@ -150,6 +150,7 @@ import { useAuth } from "../composables/useAuth";
 import { useUserCollections } from "../composables/useUserCollections";
 import BaseLayout from "../layouts/BaseLayout.vue";
 import { getInitials } from "../utils/formatters";
+import { generateId } from "../utils/id";
 
 const { user, updateProfile } = useAuth();
 const { subscriptions } = useUserCollections();
@@ -214,7 +215,7 @@ const upload = async () => {
     uploading.value = true;
     try {
         const payload = {
-            id: String(Date.now()),
+            id: generateId(),
             authorId: user.value?.id,
             type: form.type,
             name: form.name.trim(),

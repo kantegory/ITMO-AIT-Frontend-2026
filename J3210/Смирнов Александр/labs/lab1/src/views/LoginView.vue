@@ -50,7 +50,8 @@ const submit = async () => {
     errorMessage.value = "";
 
     try {
-        const user = await findUserByCredentials(form.email, form.password);
+        const normalizedEmail = form.email.trim().toLowerCase();
+        const user = await findUserByCredentials(normalizedEmail, form.password);
         if (!user) {
             errorMessage.value = "Invalid email or password.";
             return;

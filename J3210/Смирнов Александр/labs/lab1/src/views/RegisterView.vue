@@ -33,6 +33,8 @@ import { useRouter } from "vue-router";
 import { createUser, findUserByEmail } from "../api/users";
 import { useAuth } from "../composables/useAuth";
 import BaseLayout from "../layouts/BaseLayout.vue";
+import { generateId } from "../utils/id";
+import { hashPassword, isStrongPassword } from "../utils/security";
 
 const router = useRouter();
 const { login } = useAuth();
@@ -50,17 +52,31 @@ const submit = async () => {
     errorMessage.value = "";
 
     try {
-        const existing = await findUserByEmail(form.email);
+        const normalizedUsername = form.username.trim();
+        const normalizedEmail = form.email.trim().toLowerCase();
+
+        if (normalizedUsername.length < 3) {
+            errorMessage.value = "Username must contain at least 3 characters.";
+            return;
+        }
+
+        if (!isStrongPassword(form.password)) {
+            errorMessage.value = "Password must be at least 8 chars and include upper/lowercase letters and a digit.";
+            return;
+        }
+
+        const existing = await findUserByEmail(normalizedEmail);
         if (existing) {
             errorMessage.value = "Email already in use.";
             return;
         }
 
+        const passwordHash = await hashPassword(form.password);
         const payload = {
-            id: String(Date.now()),
-            username: form.username.trim(),
-            email: form.email.trim(),
-            password: form.password
+            id: generateId(),
+            username: normalizedUsername,
+            email: normalizedEmail,
+            passwordHash
         };
 
         const user = await createUser(payload);

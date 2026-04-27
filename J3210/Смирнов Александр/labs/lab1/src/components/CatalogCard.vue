@@ -24,7 +24,13 @@
                 :aria-label="`Toggle star for ${item.name}`"
                 @click="emit('toggle-star', item)"
             >
-                ⭐ {{ item.stars }}
+                <svg class="icon me-1" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+                    <path
+                        fill="currentColor"
+                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21z"
+                    />
+                </svg>
+                {{ item.stars }}
             </button>
             <button
                 type="button"

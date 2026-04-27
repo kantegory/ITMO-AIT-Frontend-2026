@@ -7,12 +7,24 @@
                 <div class="d-flex align-items-center gap-2 ms-auto">
                     <button
                         type="button"
-                        class="btn btn-outline-light"
+                        class="btn btn-outline-light d-inline-flex align-items-center justify-content-center"
                         :aria-label="themeButtonLabel"
                         :title="themeButtonLabel"
+                        style="width: 42px; height: 38px;"
                         @click="toggleTheme"
                     >
-                        {{ theme === "dark" ? "☀" : "🌙" }}
+                        <svg v-if="theme === 'dark'" class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                            <path
+                                fill="currentColor"
+                                d="M6.76 4.84l-1.8-1.79l-1.41 1.41l1.79 1.8zM1 13h3v-2H1zm10-9h2v3h-2zm7.66 1.46l1.41-1.41l-1.79-1.8l-1.41 1.42zM17.24 19.16l1.8 1.79l1.41-1.41l-1.79-1.8zM20 11v2h3v-2zm-8 9h2v3h-2zM4.22 19.36l1.41 1.41l1.79-1.79l-1.41-1.41zM12 6a6 6 0 1 0 6 6a6 6 0 0 0-6-6"
+                            />
+                        </svg>
+                        <svg v-else class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                            <path
+                                fill="currentColor"
+                                d="M9.37 5.51A7 7 0 0 0 18.49 14.63A8 8 0 1 1 9.37 5.51"
+                            />
+                        </svg>
                     </button>
 
                     <template v-if="isLoggedIn">
@@ -51,11 +63,16 @@
                                     </RouterLink>
                                     <button
                                         type="button"
-                                        class="btn btn-sm btn-link text-danger p-0"
+                                        class="btn btn-sm btn-link text-danger p-0 d-inline-flex align-items-center justify-content-center"
                                         aria-label="Delete notification"
                                         @click="removeNotification(notification.id)"
                                     >
-                                        ✕
+                                        <svg class="icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false">
+                                            <path
+                                                fill="currentColor"
+                                                d="M18.3 5.71L12 12l6.3 6.29l-1.41 1.42L10.59 13.41L4.29 19.7L2.88 18.29L9.17 12L2.88 5.71L4.29 4.29l6.3 6.3l6.29-6.3z"
+                                            />
+                                        </svg>
                                     </button>
                                 </li>
                             </ul>
