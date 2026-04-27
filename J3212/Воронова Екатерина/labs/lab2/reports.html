@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Отчёты — FinFlow</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-page="reports">
+
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">FinFlow</div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link"><i class="bi bi-grid"></i> Кабинет</a>
+        <a href="transactions.html" class="sidebar-link"><i class="bi bi-arrow-left-right"></i> Транзакции</a>
+        <a href="reports.html" class="sidebar-link active"><i class="bi bi-bar-chart-line"></i> Отчёты</a>
+        <a href="integrations.html" class="sidebar-link"><i class="bi bi-link-45deg"></i> Интеграции</a>
+        <a href="#" class="sidebar-link"><i class="bi bi-wallet2"></i> Счета</a>
+        <a href="#" class="sidebar-link"><i class="bi bi-pie-chart"></i> Бюджеты</a>
+        <a href="#" class="sidebar-link logout-link"><i class="bi bi-box-arrow-left"></i> Выход</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <div class="topbar-search">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="Поиск отчётов..." />
+        </div>
+        <div class="topbar-user">
+          <button class="icon-btn"><i class="bi bi-bell"></i></button>
+          <div class="user-chip">
+            <div class="avatar-circle">A</div>
+            <span>Anna</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="content-section">
+        <div class="page-header">
+          <div>
+            <h1>Отчёты и аналитика</h1>
+            <p>Анализируйте доходы, расходы, категории и прогнозы бюджета</p>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-xl-3">
+            <div class="dashboard-card stat-card">
+              <p>Расходы за месяц</p>
+              <h3 id="reportExpense">0 ₽</h3>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-xl-3">
+            <div class="dashboard-card stat-card yellow-card">
+              <p>Доходы за месяц</p>
+              <h3 id="reportIncome">0 ₽</h3>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-xl-3">
+            <div class="dashboard-card stat-card">
+              <p>Средний расход в неделю</p>
+              <h3 id="reportAverage">0 ₽</h3>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-xl-3">
+            <div class="dashboard-card stat-card yellow-card">
+              <p>Остаток бюджета</p>
+              <h3 id="reportBalance">0 ₽</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 mt-1">
+          <div class="col-lg-8">
+            <div class="dashboard-card h-100">
+              <div class="card-header-custom">
+                <h5>Динамика расходов за 6 месяцев</h5>
+              </div>
+
+              <div class="chart-placeholder huge">
+                <div class="bar h35"></div>
+                <div class="bar h50"></div>
+                <div class="bar h45"></div>
+                <div class="bar h70"></div>
+                <div class="bar h85"></div>
+                <div class="bar h60"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="dashboard-card h-100">
+              <div class="card-header-custom">
+                <h5>Расходы по категориям</h5>
+              </div>
+
+              <div class="category-report">
+                <div class="category-line">
+                  <div class="d-flex justify-content-between">
+                    <span>Продукты</span>
+                    <span>32%</span>
+                  </div>
+                  <div class="progress custom-progress"><div class="progress-bar w-32"></div></div>
+                </div>
+
+                <div class="category-line">
+                  <div class="d-flex justify-content-between">
+                    <span>Транспорт</span>
+                    <span>14%</span>
+                  </div>
+                  <div class="progress custom-progress"><div class="progress-bar w-14"></div></div>
+                </div>
+
+                <div class="category-line">
+                  <div class="d-flex justify-content-between">
+                    <span>Развлечения</span>
+                    <span>18%</span>
+                  </div>
+                  <div class="progress custom-progress"><div class="progress-bar w-18"></div></div>
+                </div>
+
+                <div class="category-line">
+                  <div class="d-flex justify-content-between">
+                    <span>Подписки</span>
+                    <span>10%</span>
+                  </div>
+                  <div class="progress custom-progress"><div class="progress-bar w-10"></div></div>
+                </div>
+
+                <div class="category-line">
+                  <div class="d-flex justify-content-between">
+                    <span>Коммунальные услуги</span>
+                    <span>26%</span>
+                  </div>
+                  <div class="progress custom-progress"><div class="progress-bar w-26"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 mt-1">
+          <div class="col-lg-6">
+            <div class="dashboard-card h-100">
+              <div class="card-header-custom">
+                <h5>Прогноз на следующий месяц</h5>
+              </div>
+
+              <div class="forecast-item">
+                <span>Ожидаемые расходы</span>
+                <strong>76 000 ₽</strong>
+              </div>
+              <div class="forecast-item">
+                <span>Вероятность перерасхода</span>
+                <strong>Средняя</strong>
+              </div>
+              <div class="forecast-item">
+                <span>Рекомендуемая экономия</span>
+                <strong>8 000 ₽</strong>
+              </div>
+              <div class="forecast-item">
+                <span>Обязательные платежи</span>
+                <strong>22 300 ₽</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="dashboard-card h-100">
+              <div class="card-header-custom">
+                <h5>Рекомендации</h5>
+              </div>
+
+              <div class="recommendation-box">
+                <i class="bi bi-lightbulb"></i>
+                <p>Сократите траты на доставку и подписки, чтобы уменьшить расходы в следующем месяце.</p>
+              </div>
+
+              <div class="recommendation-box">
+                <i class="bi bi-lightbulb"></i>
+                <p>Увеличьте бюджет категории “Транспорт”, так как текущие расходы стабильно растут.</p>
+              </div>
+
+              <div class="recommendation-box">
+                <i class="bi bi-lightbulb"></i>
+                <p>Перенесите часть свободных средств на накопительный счёт для роста сбережений.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+  <script src="api.js"></script>
+  <script src="auth.js"></script>
+  <script src="reports.js"></script>
+</body>
+</html>

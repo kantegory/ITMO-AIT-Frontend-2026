@@ -1,0 +1,141 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Anna",
+      "email": "anna@mail.com",
+      "password": "123456"
+    }
+  ],
+  "accounts": [
+    {
+      "id": 1,
+      "userId": 1,
+      "title": "Основная карта",
+      "type": "Дебетовая карта",
+      "balance": 96300
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "title": "Накопительный счёт",
+      "type": "Сбережения",
+      "balance": 41500
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "title": "Наличные",
+      "type": "Свободные средства",
+      "balance": 12000
+    }
+  ],
+  "budgets": [
+    {
+      "id": 1,
+      "userId": 1,
+      "category": "Продукты",
+      "spent": 24000,
+      "limit": 30000
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "category": "Транспорт",
+      "spent": 5200,
+      "limit": 8000
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "category": "Развлечения",
+      "spent": 9500,
+      "limit": 15000
+    }
+  ],
+  "transactions": [
+    {
+      "id": 1,
+      "userId": 1,
+      "date": "2026-03-12",
+      "category": "Продукты",
+      "description": "Супермаркет",
+      "account": "Основная карта",
+      "type": "Расход",
+      "amount": 4200,
+      "status": "Проведено"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "date": "2026-03-11",
+      "category": "Подписки",
+      "description": "Music Premium",
+      "account": "Основная карта",
+      "type": "Расход",
+      "amount": 799,
+      "status": "Проведено"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "date": "2026-03-10",
+      "category": "Доход",
+      "description": "Зарплата",
+      "account": "Основная карта",
+      "type": "Доход",
+      "amount": 85000,
+      "status": "Проведено"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "date": "2026-03-09",
+      "category": "Транспорт",
+      "description": "Такси",
+      "account": "Основная карта",
+      "type": "Расход",
+      "amount": 650,
+      "status": "Проведено"
+    }
+  ],
+  "integrations": [
+    {
+      "id": 1,
+      "userId": 1,
+      "name": "T-Bank",
+      "connected": true,
+      "description": "Импортируйте транзакции и обновляйте историю операций автоматически."
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "name": "Sber",
+      "connected": false,
+      "description": "Подключите банковский аккаунт для загрузки операций и аналитики."
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "name": "PayPal",
+      "connected": false,
+      "description": "Интеграция с платёжной системой для учёта внешних операций."
+    }
+  ],
+  "rules": [
+    {
+      "id": 1,
+      "userId": 1,
+      "condition": "Супермаркеты",
+      "category": "Продукты",
+      "description": "Все покупки в супермаркетах автоматически относятся к категории «Продукты»."
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "condition": "Такси",
+      "category": "Транспорт",
+      "description": "Платежи за такси автоматически попадают в категорию «Транспорт»."
+    }
+  ]
+}
