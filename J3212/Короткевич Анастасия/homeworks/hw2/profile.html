@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль — ModelHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="profile-page">
+<nav class="custom-navbar" aria-label="Главное меню">
+    <div class="nav-wrapper">
+        <div class="nav-left">
+            <a href="index.html" class="logo">ModelHub</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="profile.html" class="active" aria-current="page">Профиль</a></li>
+            </ul>
+            <form class="search-box" action="search.html" method="GET" role="search" aria-label="Поиск по сайту">
+                <label for="profile-search" class="visually-hidden">Поиск моделей и датасетов</label>
+                <i class="bi bi-search" aria-hidden="true"></i>
+                <input id="profile-search" type="text" name="query" placeholder="Поиск моделей и датасетов">
+            </form>
+        </div>
+        <button class="btn-register" type="button" onclick="logout()">Выйти</button>
+    </div>
+</nav>
+
+<main id="main-content">
+    <section class="profile-section" aria-labelledby="profilePageTitle">
+        <div class="profile-container">
+            <h1 class="visually-hidden" id="profilePageTitle">Профиль пользователя</h1>
+
+            <div class="row g-4 align-items-start">
+                <div class="col-lg-4">
+                    <div class="card profile-sidebar-card mb-4">
+                        <div class="card-body text-center">
+                            <img
+                                    src="https://i.pravatar.cc/150"
+                                    class="rounded-circle profile-avatar mb-3"
+                                    alt="Аватар пользователя"
+                                    id="profileAvatar">
+
+                            <div class="d-grid gap-2 mt-4">
+                                <h2 class="profile-name mb-1" id="profileName">Нет имени</h2>
+                                <div class="mb-2 text-muted small">
+                                    <div>Email: <strong id="profileEmail">—</strong></div>
+                                    <div>ID: <strong id="profileId">—</strong></div>
+                                </div>
+                                <p class="profile-role mb-2" id="profileRole">Роль не выбрана</p>
+                                <p class="profile-description" id="profileDescription">Описания нет</p>
+                                <button
+                                        class="btn btn-dark profile-action-btn"
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editProfileModal">
+                                    Редактировать профиль
+                                </button>
+                            </div>
+
+                            <div class="row text-center mt-4">
+                                <div class="col-4"><h3 class="mb-0" id="modelsCount">0</h3><small class="text-muted">Модели</small></div>
+                                <div class="col-4"><h3 class="mb-0" id="datasetsCount">0</h3><small class="text-muted">Датасеты</small></div>
+                                <div class="col-4"><h3 class="mb-0" id="subscriptionsCount">0</h3><small class="text-muted">Подписки</small></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card profile-main-card">
+                        <div class="card-body">
+                            <h2 class="mb-3">Статистика</h2>
+                            <div class="stats-strip">
+                                <div class="stats-strip-item"><span>Загрузок </span><strong id="totalDownloads">0</strong></div>
+                                <div class="stats-strip-item"><span>Звезд </span><strong id="totalStars">0</strong></div>
+                                <div class="stats-strip-item"><span>Форков </span><strong id="totalForks">0</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="card profile-main-card">
+                        <div class="card-body">
+                            <ul class="nav nav-tabs profile-tabs mb-4" role="tablist" aria-label="Разделы профиля">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#modelsTab" type="button" role="tab" aria-controls="modelsTab" aria-selected="true">
+                                        Мои модели
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#datasetsTab" type="button" role="tab" aria-controls="datasetsTab" aria-selected="false">
+                                        Мои датасеты
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#subscriptionsTab" type="button" role="tab" aria-controls="subscriptionsTab" aria-selected="false">
+                                        Подписки
+                                    </button>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="modelsTab" role="tabpanel"><div id="modelsList"></div></div>
+                                <div class="tab-pane fade" id="datasetsTab" role="tabpanel"><div id="datasetsList"></div></div>
+                                <div class="tab-pane fade" id="subscriptionsTab" role="tabpanel"><ul class="list-group" id="subscriptionsList"></ul></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="editProfileModalTitle">Редактировать профиль</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label" for="editName">Имя</label>
+                    <input type="text" class="form-control" id="editName">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="editAvatar">Ссылка на аватар</label>
+                    <input type="text" class="form-control" id="editAvatar" placeholder="https://...">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="editDescription">Описание</label>
+                    <textarea class="form-control" rows="3" id="editDescription"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="editRole">Роль</label>
+                    <input type="text" class="form-control" id="editRole">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-dark" onclick="saveProfile()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+<script>
+    const API_URL = 'http://localhost:3000';
+    let usersMap = {};
+
+    function logout() {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('user');
+        window.location.href = 'login.html';
+    }
+
+    function requireAuth() {
+        if (!localStorage.getItem('userId')) {
+            window.location.href = 'login.html';
+        }
+    }
+
+    function setText(id, value, fallback = '—') {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value ?? fallback;
+    }
+
+    function renderCards(items, containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        if (!items.length) {
+            container.innerHTML = '<div class="text-muted">Пока ничего нет</div>';
+            return;
+        }
+
+        container.innerHTML = items.map(item => `
+            <div class="border rounded-4 p-3 mb-3 bg-white">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                    <div>
+                        <h3 class="h5 mb-2">${item.title}</h3>
+                        <div class="small text-muted d-flex gap-3 flex-wrap">
+                            <span>Загрузок <strong>${item.downloads || 0}</strong></span>
+                            <span>Звезд <strong>${item.stars || 0}</strong></span>
+                            <span>Форков <strong>${item.forks || 0}</strong></span>
+                        </div>
+                    </div>
+                    <a href="model.html?type=${item.type}&id=${item.id}" class="btn btn-dark btn-sm rounded-pill">Открыть</a>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function renderSubscriptions(subscriptions) {
+        const container = document.getElementById('subscriptionsList');
+        if (!subscriptions.length) {
+            container.innerHTML = '<li class="list-group-item text-muted">Подписок пока нет</li>';
+            return;
+        }
+        container.innerHTML = subscriptions.map(sub => {
+            const user = usersMap[sub.followingId] || {};
+            return `<li class="list-group-item"><strong>${user.name || sub.followingId}</strong> <span class="text-muted">— ${user.role || 'пользователь'}</span></li>`;
+        }).join('');
+    }
+
+    function fillUser(user) {
+        setText('profileName', user.name, 'Без имени');
+        setText('profileRole', user.role, 'Без роли');
+        setText('profileDescription', user.description, 'Без описания');
+        setText('profileEmail', user.email);
+        setText('profileId', user.id);
+
+        const avatar = document.getElementById('profileAvatar');
+        avatar.src = user.avatar || 'https://i.pravatar.cc/150';
+        avatar.alt = user.name ? `Аватар пользователя ${user.name}` : 'Аватар пользователя';
+
+        document.getElementById('editName').value = user.name || '';
+        document.getElementById('editAvatar').value = user.avatar || '';
+        document.getElementById('editDescription').value = user.description || '';
+        document.getElementById('editRole').value = user.role || '';
+    }
+
+    async function loadProfile() {
+        requireAuth();
+        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('accessToken');
+        const headers = token ? { Authorization: 'Bearer ' + token } : {};
+
+        try {
+            const [usersRes, modelsRes, datasetsRes, subscriptionsRes] = await Promise.all([
+                axios.get(API_URL + '/users', { headers }),
+                axios.get(API_URL + '/models'),
+                axios.get(API_URL + '/datasets'),
+                axios.get(API_URL + '/subscriptions')
+            ]);
+
+            const users = usersRes.data;
+            const models = modelsRes.data;
+            const datasets = datasetsRes.data;
+            const subscriptions = subscriptionsRes.data;
+
+            usersMap = {};
+            users.forEach(user => usersMap[user.id] = user);
+            const currentUser = usersMap[userId];
+
+            if (!currentUser) {
+                alert('Пользователь не найден');
+                logout();
+                return;
+            }
+
+            fillUser(currentUser);
+
+            const userModels = models.filter(item => String(item.authorId) === String(userId));
+            const userDatasets = datasets.filter(item => String(item.authorId) === String(userId));
+            const userSubscriptions = subscriptions.filter(item => String(item.followerId) === String(userId));
+
+            document.getElementById('modelsCount').textContent = userModels.length;
+            document.getElementById('datasetsCount').textContent = userDatasets.length;
+            document.getElementById('subscriptionsCount').textContent = userSubscriptions.length;
+
+            const combined = [...userModels, ...userDatasets];
+            document.getElementById('totalDownloads').textContent = combined.reduce((sum, item) => sum + (Number(item.downloads) || 0), 0);
+            document.getElementById('totalStars').textContent = combined.reduce((sum, item) => sum + (Number(item.stars) || 0), 0);
+            document.getElementById('totalForks').textContent = combined.reduce((sum, item) => sum + (Number(item.forks) || 0), 0);
+
+            renderCards(userModels, 'modelsList');
+            renderCards(userDatasets, 'datasetsList');
+            renderSubscriptions(userSubscriptions);
+        } catch (error) {
+            console.error(error);
+            document.getElementById('modelsList').innerHTML = '<div class="alert alert-danger">Не удалось загрузить профиль :(</div>';
+            document.getElementById('datasetsList').innerHTML = '';
+            document.getElementById('subscriptionsList').innerHTML = '';
+        }
+    }
+
+    async function saveProfile() {
+        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('accessToken');
+        const body = {
+            name: document.getElementById('editName').value.trim(),
+            avatar: document.getElementById('editAvatar').value.trim(),
+            description: document.getElementById('editDescription').value.trim(),
+            role: document.getElementById('editRole').value.trim()
+        };
+
+        try {
+            await axios.patch(API_URL + '/users/' + userId, body, {
+                headers: token ? { Authorization: 'Bearer ' + token } : {}
+            });
+
+            const modalEl = document.getElementById('editProfileModal');
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
+            await loadProfile();
+        } catch (error) {
+            console.error(error);
+            alert('Ошибка сохранения профиля');
+        }
+    }
+
+    loadProfile();
+</script>
+</body>
+</html>
