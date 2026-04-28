@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModelHub</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/light.css">
+    <link rel="stylesheet" href="css/dark.css">
+    <link rel="stylesheet" href="css/violet.css">
+</head>
+
+<body class="home-page" data-theme="light">
+
+
+<nav id="navbar" class="custom-navbar fixed-top" aria-label="Главное меню">
+    <div class="nav-wrapper">
+
+        <div class="nav-left">
+            <a href="index.html" class="logo">ModelHub</a>
+
+            <ul class="nav-links" id="navLinks"></ul>
+        </div>
+
+        <form class="search-box" action="search.html" method="GET" role="search" aria-label="Поиск по сайту">
+            <label for="site-search" class="visually-hidden">Поиск моделей и датасетов</label>
+            <svg class="icon">
+                <use href="sprite.svg#icon-search"></use>
+            </svg>
+            <input id="site-search" type="text" name="query" placeholder="Поиск моделей и датасетов">
+        </form>
+
+        <div class="nav-actions" id="navActions">
+            <a href="login.html" class="btn-login">Войти</a>
+            <a href="register.html" class="btn-register">Регистрация</a>
+        </div>
+
+    </div>
+</nav>
+
+<main id="main-content">
+
+    <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-content">
+
+            <div class="hero-badge">AI Model &amp; Dataset Hub</div>
+
+            <h1 class="hero-title" id="hero-title">ModelHub</h1>
+
+            <p class="hero-text">
+                ModelHub — социальная платформа для обмена AI-моделями и датасетами.
+                Здесь можно искать материалы по задаче, лицензии, размеру и фреймворку,
+                сохранять полезные проекты, смотреть метрики и изучать воспроизводимость
+            </p>
+
+            <div class="hero-buttons">
+                <a href="search.html" class="register-btn">Перейти к поиску</a>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="catalog-section">
+        <div class="section-header">
+            <div class="section-title">
+                <svg class="section-icon">
+                    <use href="sprite.svg#icon-trending"></use>
+                </svg>
+                <h2>Trending Models</h2>
+            </div>
+            <a href="search.html?type=models" class="see-all">See All</a>
+        </div>
+
+        <div class="cards-grid" id="trendingModels"></div>
+    </section>
+
+    <section class="catalog-section">
+        <div class="section-header">
+            <div class="section-title">
+                <svg class="section-icon">
+                    <use href="sprite.svg#icon-dataset"></use>
+                </svg>
+                <h2>Popular Datasets</h2>
+            </div>
+            <a href="search.html?type=datasets" class="see-all">See All</a>
+        </div>
+
+        <div class="cards-grid" id="popularDatasets"></div>
+    </section>
+
+</main>
+
+<div class="theme-switcher-fixed">
+    <button class="theme-btn" data-theme="light" onclick="setTheme('light')" aria-label="Светлая тема">
+        <svg class="icon">
+            <use href="sprite.svg#theme-light"></use>
+        </svg>
+    </button>
+
+    <button class="theme-btn" data-theme="dark" onclick="setTheme('dark')" aria-label="Тёмная тема">
+        <svg class="icon">
+            <use href="sprite.svg#theme-dark"></use>
+        </svg>
+    </button>
+
+    <button class="theme-btn" data-theme="violet" onclick="setTheme('violet')" aria-label="Фиолетовая тема">
+        <svg class="icon">
+            <use href="sprite.svg#theme-violet"></use>
+        </svg>
+    </button>
+</div>
+
+<script src="js/theme.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    const API_URL = 'http://localhost:3000';
+
+    window.addEventListener("scroll", function () {
+        const navbar = document.getElementById("navbar");
+
+        if (window.scrollY > 50) {
+            navbar.classList.add("scrolled");
+        } else {
+            navbar.classList.remove("scrolled");
+        }
+    });
+
+    async function loadHomeCards() {
+        const modelsContainer = document.getElementById('trendingModels');
+        const datasetsContainer = document.getElementById('popularDatasets');
+
+        if (!modelsContainer || !datasetsContainer) return;
+
+        try {
+            const modelsResponse = await axios.get(`${API_URL}/models`);
+            const datasetsResponse = await axios.get(`${API_URL}/datasets`);
+
+            const models = modelsResponse.data
+                .sort((a, b) => (b.stars || 0) - (a.stars || 0))
+                .slice(0, 4);
+
+            const datasets = datasetsResponse.data
+                .sort((a, b) => (b.downloads || 0) - (a.downloads || 0))
+                .slice(0, 4);
+
+            modelsContainer.innerHTML = models.map(model => `
+            <a href="model.html?id=${model.id}" class="model-card">
+                <div class="card-content">
+                    <h3>${model.title || model.name}</h3>
+                    <p class="meta">${model.author || 'Unknown'} · ${model.framework || 'AI Model'}</p>
+                    <p class="info">${model.task || 'ML Task'} · ${model.license || 'License'}</p>
+                    <p class="description">${model.description || ''}</p>
+                </div>
+
+                <div class="card-footer">
+                    <span class="rating">
+                        <svg class="rating-icon">
+                            <use href="sprite.svg#icon-star-outline"></use>
+                        </svg>
+                        ${model.stars || 0}
+                    </span>
+
+                    <span>${model.downloads || 0} Downloads</span>
+                </div>
+            </a>
+            `).join('');
+
+            datasetsContainer.innerHTML = datasets.map(dataset => `
+            <a href="model.html?id=${dataset.id}" class="model-card">
+                <div class="card-content">
+                    <h3>${dataset.title || dataset.name}</h3>
+                    <p class="meta">${dataset.task || 'Dataset'} · ${dataset.license || 'License'}</p>
+                    <p class="info">${dataset.size || 'Unknown size'} · ${dataset.format || 'Data'}</p>
+                    <p class="description">${dataset.description || 'Описание датасета отсутствует.'}</p>
+                </div>
+                <div class="card-footer">
+                    <span class="rating">
+                        <svg class="rating-icon">
+                            <use href="sprite.svg#icon-star-outline"></use>
+                        </svg>
+                        ${dataset.stars || 0}
+                    </span>
+                    <span>${dataset.downloads || 0} Downloads</span>
+                </div>
+            </a>
+        `).join('');
+
+        } catch (error) {
+            console.error('Ошибка загрузки карточек:', error);
+
+            modelsContainer.innerHTML = '<p>Не удалось загрузить модели.</p>';
+            datasetsContainer.innerHTML = '<p>Не удалось загрузить датасеты.</p>';
+        }
+    }
+
+    function updateNav() {
+        const token = localStorage.getItem('accessToken');
+        const userAvatar =
+            localStorage.getItem('userAvatar') || 'https://i.pravatar.cc/100';
+
+        if (token) {
+            navActions.innerHTML = `
+            <a href="profile.html" class="avatar-link" title="Профиль">
+                <img
+                    src="${userAvatar}"
+                    class="nav-avatar-img"
+                    alt="Профиль"
+                    loading="eager">
+            </a>
+        `;
+        } else {
+            navActions.innerHTML = `
+            <a href="login.html" class="btn-login">Войти</a>
+            <a href="register.html" class="btn-register">Регистрация</a>
+        `;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+    });
+
+    function logout() {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userRole');
+
+        window.location.href = 'login.html';
+    }
+
+    updateNav();
+
+    loadHomeCards();
+</script>
+
+</body>
+</html>
