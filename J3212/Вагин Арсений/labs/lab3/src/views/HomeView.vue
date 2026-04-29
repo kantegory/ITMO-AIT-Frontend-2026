@@ -4,7 +4,7 @@
       <div class="hero-content">
         <h2>SAPPORO 26 SS</h2>
         <h1>Quiet strength in motion</h1>
-        <router-link to="/catalog" class="btn btn-primary-ca">Explore Collection</router-link>
+        <router-link to="/catalog" class="btn btn-primary-ca">Исследовать коллекцию</router-link>
       </div>
     </section>
 
@@ -31,7 +31,7 @@
       </div>
       
       <div class="text-center mt-5">
-        <router-link to="/catalog" class="btn btn-outline-ca">View All Items</router-link>
+        <router-link to="/catalog" class="btn btn-outline-ca">Все товары</router-link>
       </div>
     </section>
   </div>

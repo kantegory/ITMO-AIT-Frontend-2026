@@ -2,16 +2,16 @@
   <div class="container flex-grow-1 mt-5 py-5" v-if="currentUser">
     <div class="row">
       <div class="col-md-4 col-lg-3 mb-4">
-        <h4>Account</h4>
+        <h4>Аккаунт</h4>
         <div class="list-group">
-          <a href="#" class="list-group-item active">Order History</a>
-          <a href="#" class="list-group-item">Profile Details</a>
+          <a href="#" class="list-group-item active">История заказов</a>
+          <a href="#" class="list-group-item">Данные профиля</a>
         </div>
       </div>
 
       <div class="col-md-8 col-lg-9 px-lg-5">
         <div class="d-flex justify-content-between align-items-center mb-5">
-          <h2 class="h3 mb-0">Order History</h2>
+          <h2 class="h3 mb-0">История заказов</h2>
           <span class="text-muted small">{{ currentUser.email }}</span>
         </div>
 

@@ -55,10 +55,28 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body px-5 pb-5 text-center">
+            <img :src="selectedProduct.image" class="img-fluid mb-3" style="max-height: 300px; object-fit: cover;">
             <p class="text-muted small mb-2">{{ selectedProduct.article }}</p>
             <h3 class="modal-title mb-3">{{ selectedProduct.name }}</h3>
             <p class="fs-4 mb-4">{{ selectedProduct.price }} ₽</p>
-            <button class="btn btn-primary-ca w-100">Добавить в корзину</button>
+
+            <div class="mb-4">
+              <label class="form-label d-block small text-uppercase">Выберите размер</label>
+              <div class="btn-group w-100" role="group">
+                <template v-for="size in ['S', 'M', 'L']" :key="size">
+                  <input type="radio" class="btn-check" :name="'size'+size" :id="'size'+size" :value="size" v-model="selectedSize">
+                  <label class="btn btn-outline-dark rounded-0" :for="'size'+size">{{ size }}</label>
+                </template>
+              </div>
+            </div>
+
+            <button 
+              class="btn btn-primary-ca w-100" 
+              @click="addToCart(selectedProduct, selectedSize)"
+              :disabled="!selectedSize"
+            >
+              Добавить в корзину
+            </button>
           </div>
         </div>
       </div>
@@ -70,6 +88,9 @@
 import { ref, onMounted } from 'vue'
 import { useProducts } from '../composables/useProducts'
 import ProductCard from '../components/ProductCard.vue'
+import { useCart } from '../composables/useCart'
+const { addToCart } = useCart()
+const selectedSize = ref('')
 
 const { fetchProducts, filteredProducts, isLoading, searchQuery, selectedCollection, selectedCategories } = useProducts()
 
