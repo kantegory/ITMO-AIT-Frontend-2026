@@ -1,0 +1,1 @@
+<template><footer>футфетиш</footer></template>
