@@ -19,10 +19,17 @@
           </li>
           
           <li class="nav-item">
-            <router-link class="nav-link d-flex align-items-center gap-2" to="/login" aria-label="Личный кабинет">
+            <router-link class="nav-link d-flex align-items-center gap-2" :to="currentUser ? '/profile' : '/login'" aria-label="Личный кабинет">
               <svg class="nav-icon" aria-hidden="true"><use href="#icon-profile"></use></svg>
               <span class="d-lg-none">Профиль</span>
             </router-link>
+          </li>
+          
+          <li class="nav-item" v-if="currentUser">
+            <a class="nav-link d-flex align-items-center gap-2 text-danger" href="#" @click.prevent="logout" style="color: var(--accent-red) !important;" aria-label="Выйти из аккаунта">
+              <svg class="nav-icon" aria-hidden="true"><use href="#icon-logout"></use></svg>
+              <span class="d-lg-none">Выйти</span>
+            </a>
           </li>
           
           <li class="nav-item">
@@ -38,6 +45,9 @@
 </template>
 
 <script setup>
+import { useAuth } from '../composables/useAuth'
+const { currentUser, logout } = useAuth()
+
 const toggleTheme = () => {
   let theme = document.documentElement.getAttribute('data-theme')
   let newTheme = theme === 'dark' ? 'light' : 'dark'
