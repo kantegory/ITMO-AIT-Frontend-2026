@@ -1,0 +1,236 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Ирина",
+      "lastName": "Крылова",
+      "email": "manager@dataforge.ru",
+      "password": "password123",
+      "role": "Менеджер",
+      "experience": "Senior"
+    },
+    {
+      "id": 2,
+      "firstName": "Анна",
+      "lastName": "Петрова",
+      "email": "annotator@dataforge.ru",
+      "password": "password123",
+      "role": "Исполнитель",
+      "experience": "Middle"
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "title": "Retail Shelf: камеры супермаркета",
+      "dashboardTitle": "Retail Shelf Vision",
+      "description": "Разметка ассортимента на полках магазина",
+      "type": "Bounding Box",
+      "typeCode": "bbox",
+      "status": "new",
+      "statusLabel": "Новые",
+      "statusVariant": "primary",
+      "progress": 76,
+      "quality": 96,
+      "deadline": "2026-03-22",
+      "worker": "Петрова А.",
+      "taskId": 1
+    },
+    {
+      "id": 2,
+      "title": "Call Center QA: маркировка диалогов",
+      "dashboardTitle": "Call Center QA",
+      "description": "Классификация обращений и причин эскалации",
+      "type": "Классификация",
+      "typeCode": "class",
+      "status": "in-progress",
+      "statusLabel": "В работе",
+      "statusVariant": "warning",
+      "progress": 54,
+      "quality": 89,
+      "deadline": "2026-03-19",
+      "worker": "Иванов К.",
+      "taskId": 2
+    },
+    {
+      "id": 3,
+      "title": "Road Damage: сегментация дефектов",
+      "dashboardTitle": "Road Damage Segmentation",
+      "description": "Контроль качества сегментации дорожных дефектов",
+      "type": "Segmentation",
+      "typeCode": "segmentation",
+      "status": "review",
+      "statusLabel": "На проверке",
+      "statusVariant": "success",
+      "progress": 33,
+      "quality": 93,
+      "deadline": "2026-03-18",
+      "worker": "Смирнова Н.",
+      "taskId": 3
+    },
+    {
+      "id": 4,
+      "title": "Logistics Drone View: трекинг объектов",
+      "dashboardTitle": "Logistics Drone View",
+      "description": "Разметка объектов на видеопотоке с дрона",
+      "type": "Bounding Box",
+      "typeCode": "bbox",
+      "status": "in-progress",
+      "statusLabel": "В работе",
+      "statusVariant": "warning",
+      "progress": 68,
+      "quality": 95,
+      "deadline": "2026-03-24",
+      "worker": "Сергеев Д.",
+      "taskId": 4
+    }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "projectId": 1,
+      "title": "Retail Shelf Vision / Frame #A-1488",
+      "instruction": "Инструкция: отметить все товарные единицы и проверить перекрытия.",
+      "assignee": "Петрова А.",
+      "progressCompleted": 21,
+      "progressTotal": 30,
+      "dueDate": "2026-03-16 23:59",
+      "status": "in-progress",
+      "annotationTools": ["Bounding Box", "Polygon", "Ключевые точки"],
+      "files": [
+        { "name": "frame_1488.jpg", "size": "5.2 MB" },
+        { "name": "scene_context.json", "size": "48 KB" },
+        { "name": "label_schema.yaml", "size": "4 KB" }
+      ],
+      "instructions": [
+        "Выделяйте только видимые товарные единицы.",
+        "Не объединяйте объекты разных SKU в один бокс.",
+        "Ставьте флаг \"unclear\" при частичной видимости менее 40%.",
+        "Проверьте пересечения перед отправкой."
+      ]
+    },
+    {
+      "id": 2,
+      "projectId": 2,
+      "title": "Call Center QA / Диалог #CC-024",
+      "instruction": "Определите категорию обращения, тональность и необходимость эскалации.",
+      "assignee": "Иванов К.",
+      "progressCompleted": 17,
+      "progressTotal": 25,
+      "dueDate": "2026-03-19 18:00",
+      "status": "in-progress",
+      "annotationTools": ["Классификация", "Теги", "Комментарий"],
+      "files": [
+        { "name": "dialog_024.mp3", "size": "8.1 MB" },
+        { "name": "transcript_024.txt", "size": "23 KB" },
+        { "name": "taxonomy.json", "size": "11 KB" }
+      ],
+      "instructions": [
+        "Укажите основную причину обращения клиента.",
+        "Отдельно отметьте эмоциональную окраску диалога.",
+        "При спорной классификации добавьте пояснение в комментарий.",
+        "Проверьте итоговые теги перед отправкой."
+      ]
+    },
+    {
+      "id": 3,
+      "projectId": 3,
+      "title": "Road Damage / Снимок #RD-305",
+      "instruction": "Постройте маски дефектов и проверьте края сегментации.",
+      "assignee": "Смирнова Н.",
+      "progressCompleted": 11,
+      "progressTotal": 18,
+      "dueDate": "2026-03-18 20:30",
+      "status": "review",
+      "annotationTools": ["Polygon", "Brush", "Ластик"],
+      "files": [
+        { "name": "road_305.png", "size": "6.7 MB" },
+        { "name": "camera_meta.json", "size": "16 KB" },
+        { "name": "classes.yaml", "size": "3 KB" }
+      ],
+      "instructions": [
+        "Выделяйте только подтвержденные дефекты полотна.",
+        "Не включайте дорожную разметку в область повреждений.",
+        "Используйте крупный масштаб на границах маски.",
+        "Перед отправкой убедитесь, что маска замкнута."
+      ]
+    },
+    {
+      "id": 4,
+      "projectId": 4,
+      "title": "Logistics Drone View / Frame #LD-912",
+      "instruction": "Отметьте все транспортные единицы и проверьте корректность трекинга между кадрами.",
+      "assignee": "Сергеев Д.",
+      "progressCompleted": 28,
+      "progressTotal": 40,
+      "dueDate": "2026-03-24 21:00",
+      "status": "in-progress",
+      "annotationTools": ["Bounding Box", "Track ID", "Комментарий"],
+      "files": [
+        { "name": "frame_912.jpg", "size": "4.6 MB" },
+        { "name": "prev_tracks.json", "size": "31 KB" },
+        { "name": "zones.geojson", "size": "9 KB" }
+      ],
+      "instructions": [
+        "Присваивайте один и тот же Track ID для одного объекта.",
+        "Отдельно размечайте припаркованный и движущийся транспорт.",
+        "При полном перекрытии сохраните последний валидный ID.",
+        "Проверьте, что в зоне разгрузки нет пропущенных объектов."
+      ]
+    }
+  ],
+  "workers": [
+    {
+      "id": 1,
+      "name": "Петрова Анна",
+      "role": "Исполнитель",
+      "currentLoad": 12,
+      "quality": 96,
+      "actionLabel": "Проверить",
+      "isNew": true
+    },
+    {
+      "id": 2,
+      "name": "Иванов Кирилл",
+      "role": "Валидатор",
+      "currentLoad": 7,
+      "quality": 88,
+      "actionLabel": "Назначить наставника",
+      "isNew": false
+    },
+    {
+      "id": 3,
+      "name": "Смирнова Нина",
+      "role": "Исполнитель",
+      "currentLoad": 9,
+      "quality": 92,
+      "actionLabel": "Проверить",
+      "isNew": true
+    },
+    {
+      "id": 4,
+      "name": "Сергеев Дмитрий",
+      "role": "Исполнитель",
+      "currentLoad": 14,
+      "quality": 95,
+      "actionLabel": "Понизить нагрузку",
+      "isNew": true
+    }
+  ],
+  "qualityStats": [
+    {
+      "id": 1,
+      "validation": 94,
+      "recheck": 12,
+      "sla": 97
+    }
+  ],
+  "teamSummary": [
+    {
+      "id": 1,
+      "assignedCount": 47,
+      "qaScore": 93.5,
+      "pendingValidation": 18
+    }
+  ]
+}
