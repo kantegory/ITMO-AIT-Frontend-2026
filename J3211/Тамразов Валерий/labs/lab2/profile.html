@@ -189,8 +189,8 @@
         checkAuth();
         updateNavbar();
 
-        var user = getUser();
-        var statusLabels = { success: 'Успешно', running: 'Запущен', failed: 'Ошибка', pending: 'Ожидание' };
+        const user = getUser();
+        const statusLabels = { success: 'Успешно', running: 'Запущен', failed: 'Ошибка', pending: 'Ожидание' };
 
         // Заполнить шапку профиля
         if (user) {
@@ -204,15 +204,15 @@
             .then(function(pipelines) {
                 if (!Array.isArray(pipelines)) pipelines = [];
                 document.getElementById('statPipelines').textContent = pipelines.length;
-                var total = 0;
+                let total = 0;
                 pipelines.forEach(function(p) { total += p.stepsDone; });
                 document.getElementById('statRuns').textContent = total;
 
-                var container = document.getElementById('tabPipelines');
+                const container = document.getElementById('tabPipelines');
                 container.textContent = '';
 
                 if (pipelines.length === 0) {
-                    var empty = document.createElement('p');
+                    const empty = document.createElement('p');
                     empty.className = 'text-muted';
                     empty.textContent = 'У вас пока нет пайплайнов';
                     container.appendChild(empty);
@@ -220,28 +220,28 @@
                 }
 
                 pipelines.forEach(function(p) {
-                    var card = document.createElement('div');
+                    const card = document.createElement('div');
                     card.className = 'pipeline-card';
 
-                    var row = document.createElement('div');
+                    const row = document.createElement('div');
                     row.className = 'd-flex justify-content-between align-items-center';
 
-                    var info = document.createElement('div');
-                    var h6 = document.createElement('h6');
+                    const info = document.createElement('div');
+                    const h6 = document.createElement('h6');
                     h6.className = 'mb-1';
-                    var link = document.createElement('a');
+                    const link = document.createElement('a');
                     link.href = 'pipeline.html?id=' + p.id;
                     link.className = 'text-decoration-none';
                     link.textContent = p.name;
                     h6.appendChild(link);
                     info.appendChild(h6);
 
-                    var meta = document.createElement('small');
+                    const meta = document.createElement('small');
                     meta.className = 'text-muted';
                     meta.textContent = 'Последний запуск: ' + p.lastRun + ' \u00b7 ' + p.env;
                     info.appendChild(meta);
 
-                    var badge = document.createElement('span');
+                    const badge = document.createElement('span');
                     badge.className = 'status-badge status-' + p.status;
                     badge.textContent = statusLabels[p.status] || p.status;
 
@@ -259,38 +259,38 @@
                 if (!Array.isArray(artifacts)) artifacts = [];
                 document.getElementById('statArtifacts').textContent = artifacts.length;
 
-                var container = document.getElementById('tabArtifacts');
+                const container = document.getElementById('tabArtifacts');
                 container.textContent = '';
 
                 if (artifacts.length === 0) {
-                    var empty = document.createElement('p');
+                    const empty = document.createElement('p');
                     empty.className = 'text-muted';
                     empty.textContent = 'Нет артефактов';
                     container.appendChild(empty);
                     return;
                 }
 
-                var wrapper = document.createElement('div');
+                const wrapper = document.createElement('div');
                 wrapper.className = 'table-responsive';
-                var table = document.createElement('table');
+                const table = document.createElement('table');
                 table.className = 'table';
 
-                var thead = document.createElement('thead');
-                var headRow = document.createElement('tr');
+                const thead = document.createElement('thead');
+                const headRow = document.createElement('tr');
                 ['Название', 'Тип', 'Размер', 'Версия', 'Дата'].forEach(function(t) {
-                    var th = document.createElement('th');
+                    const th = document.createElement('th');
                     th.textContent = t;
                     headRow.appendChild(th);
                 });
                 thead.appendChild(headRow);
                 table.appendChild(thead);
 
-                var tbody = document.createElement('tbody');
+                const tbody = document.createElement('tbody');
                 artifacts.forEach(function(a) {
-                    var tr = document.createElement('tr');
-                    var cols = [a.name, a.type, a.size, a.version || '\u2014', a.date];
+                    const tr = document.createElement('tr');
+                    const cols = [a.name, a.type, a.size, a.version || '\u2014', a.date];
                     cols.forEach(function(val) {
-                        var td = document.createElement('td');
+                        const td = document.createElement('td');
                         td.textContent = val;
                         tr.appendChild(td);
                     });
@@ -308,11 +308,11 @@
                 if (!Array.isArray(policies)) policies = [];
                 document.getElementById('statPolicies').textContent = policies.length;
 
-                var container = document.getElementById('tabPolicies');
+                const container = document.getElementById('tabPolicies');
                 container.textContent = '';
 
                 if (policies.length === 0) {
-                    var empty = document.createElement('p');
+                    const empty = document.createElement('p');
                     empty.className = 'text-muted';
                     empty.textContent = 'Нет политик';
                     container.appendChild(empty);
@@ -320,23 +320,23 @@
                 }
 
                 policies.forEach(function(pol) {
-                    var card = document.createElement('div');
+                    const card = document.createElement('div');
                     card.className = 'pipeline-card';
 
-                    var row = document.createElement('div');
+                    const row = document.createElement('div');
                     row.className = 'd-flex justify-content-between align-items-center';
 
-                    var info = document.createElement('div');
-                    var h6 = document.createElement('h6');
+                    const info = document.createElement('div');
+                    const h6 = document.createElement('h6');
                     h6.className = 'mb-1';
                     h6.textContent = pol.name;
                     info.appendChild(h6);
-                    var desc = document.createElement('small');
+                    const desc = document.createElement('small');
                     desc.className = 'text-muted';
                     desc.textContent = pol.description;
                     info.appendChild(desc);
 
-                    var badge = document.createElement('span');
+                    const badge = document.createElement('span');
                     badge.className = 'badge ' + (pol.status === 'active' ? 'bg-success' : 'bg-warning');
                     badge.textContent = pol.status === 'active' ? 'Активна' : 'На паузе';
 

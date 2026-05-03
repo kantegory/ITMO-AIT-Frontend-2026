@@ -191,67 +191,64 @@
         checkAuth();
         updateNavbar();
 
-        var allPipelines = [];
-
-        var statusLabels = {
+        const statusLabels = {
             success: 'Успешно',
             running: 'Запущен',
             failed: 'Ошибка',
             pending: 'Ожидание'
         };
 
-        var strategyLabels = {
+        const strategyLabels = {
             bluegreen: 'Blue/Green',
             canary: 'Canary',
             rolling: 'Rolling'
         };
 
-        var statusColors = {
+        const statusColors = {
             success: 'success',
             running: 'info',
             failed: 'danger',
             pending: 'warning'
         };
 
+        const ownerToUserId = { tamrazov: 1, ivanov: 2, petrov: 3 };
+
         function renderPipeline(p) {
-            var card = document.createElement('div');
+            const card = document.createElement('div');
             card.className = 'pipeline-card';
-            card.setAttribute('data-status', p.status);
-            card.setAttribute('data-env', p.env);
-            card.setAttribute('data-name', p.name);
 
-            var progress = p.stepsTotal > 0 ? Math.round((p.stepsDone / p.stepsTotal) * 100) : 0;
-            var progressClass = 'bg-' + statusColors[p.status];
-            var animated = p.status === 'running' ? ' progress-bar-striped progress-bar-animated' : '';
+            const progress = p.stepsTotal > 0 ? Math.round((p.stepsDone / p.stepsTotal) * 100) : 0;
+            const progressClass = 'bg-' + statusColors[p.status];
+            const animated = p.status === 'running' ? ' progress-bar-striped progress-bar-animated' : '';
 
-            var stepsText = p.stepsDone + '/' + p.stepsTotal + ' шагов';
+            let stepsText = p.stepsDone + '/' + p.stepsTotal + ' шагов';
             if (p.status === 'success') stepsText += ' завершено';
             if (p.duration) stepsText += ' \u00b7 ' + p.duration;
 
-            var topRow = document.createElement('div');
+            const topRow = document.createElement('div');
             topRow.className = 'd-flex justify-content-between align-items-start';
 
-            var info = document.createElement('div');
-            var h6 = document.createElement('h6');
+            const info = document.createElement('div');
+            const h6 = document.createElement('h6');
             h6.className = 'mb-1';
-            var link = document.createElement('a');
+            const link = document.createElement('a');
             link.href = 'pipeline.html?id=' + p.id;
             link.className = 'text-decoration-none';
             link.textContent = p.name;
             h6.appendChild(link);
 
-            var strategySpan = document.createElement('span');
+            const strategySpan = document.createElement('span');
             strategySpan.className = 'deploy-strategy strategy-' + p.strategy + ' ms-2';
             strategySpan.textContent = strategyLabels[p.strategy] || p.strategy;
             h6.appendChild(strategySpan);
             info.appendChild(h6);
 
-            var meta = document.createElement('small');
+            const meta = document.createElement('small');
             meta.className = 'text-muted';
             meta.textContent = p.ownerName + ' \u00b7 ' + p.env + ' \u00b7 ' + p.lastRun;
             info.appendChild(meta);
 
-            var badge = document.createElement('span');
+            const badge = document.createElement('span');
             badge.className = 'status-badge status-' + p.status;
             badge.textContent = statusLabels[p.status];
 
@@ -259,18 +256,18 @@
             topRow.appendChild(badge);
             card.appendChild(topRow);
 
-            var progressWrap = document.createElement('div');
+            const progressWrap = document.createElement('div');
             progressWrap.className = 'mt-2';
-            var progressBar = document.createElement('div');
+            const progressBar = document.createElement('div');
             progressBar.className = 'progress';
             progressBar.style.height = '4px';
-            var bar = document.createElement('div');
+            const bar = document.createElement('div');
             bar.className = 'progress-bar ' + progressClass + animated;
             bar.style.width = progress + '%';
             progressBar.appendChild(bar);
             progressWrap.appendChild(progressBar);
 
-            var stepsSmall = document.createElement('small');
+            const stepsSmall = document.createElement('small');
             stepsSmall.className = 'text-muted';
             stepsSmall.textContent = stepsText;
             progressWrap.appendChild(stepsSmall);
@@ -279,60 +276,69 @@
             return card;
         }
 
-        function loadPipelines() {
-            fetch(API_URL + '/pipelines', {
-                headers: authHeaders()
-            })
-            .then(function(res) { return res.json(); })
-            .then(function(data) {
-                allPipelines = Array.isArray(data) ? data : [];
-                applyFilters();
-            })
-            .catch(function(err) {
-                var list = document.getElementById('pipelinesList');
-                list.textContent = '';
-                var errP = document.createElement('p');
-                errP.className = 'text-danger text-center mt-4';
-                errP.textContent = 'Ошибка загрузки: ' + err.message;
-                list.appendChild(errP);
+        function buildFilterParams() {
+            const params = new URLSearchParams();
+
+            const searchText = document.getElementById('searchInput').value.trim();
+            if (searchText) params.append('name_like', searchText);
+
+            const envVal = document.getElementById('envFilter').value;
+            if (envVal !== 'all') params.append('env', envVal);
+
+            const ownerVal = document.getElementById('ownerFilter').value;
+            if (ownerVal !== 'all' && ownerToUserId[ownerVal]) {
+                params.append('userId', ownerToUserId[ownerVal]);
+            }
+
+            const statuses = [];
+            document.querySelectorAll('.filter-status').forEach(function(cb) {
+                if (cb.checked) statuses.push(cb.value);
             });
+            statuses.forEach(function(s) { params.append('status', s); });
+
+            return { params: params, hasStatus: statuses.length > 0 };
+        }
+
+        function renderList(pipelines) {
+            const list = document.getElementById('pipelinesList');
+            list.textContent = '';
+            pipelines.forEach(function(p) { list.appendChild(renderPipeline(p)); });
+            document.getElementById('noResults').classList.toggle('d-none', pipelines.length > 0);
         }
 
         function applyFilters() {
-            var searchText = (document.getElementById('searchInput').value || '').toLowerCase();
-            var envVal = document.getElementById('envFilter').value;
-            var ownerVal = document.getElementById('ownerFilter').value;
+            const { params, hasStatus } = buildFilterParams();
 
-            var checkedStatuses = [];
-            document.querySelectorAll('.filter-status').forEach(function(cb) {
-                if (cb.checked) checkedStatuses.push(cb.value);
-            });
-
-            var filtered = allPipelines.filter(function(p) {
-                var matchName = p.name.toLowerCase().indexOf(searchText) !== -1;
-                var matchStatus = checkedStatuses.indexOf(p.status) !== -1;
-                var matchEnv = envVal === 'all' || p.env === envVal;
-                var matchOwner = ownerVal === 'all' || (ownerVal === 'tamrazov' && p.userId === 1) || (ownerVal === 'ivanov' && p.userId === 2) || (ownerVal === 'petrov' && p.userId === 3);
-                return matchName && matchStatus && matchEnv && matchOwner;
-            });
-
-            var list = document.getElementById('pipelinesList');
-            list.textContent = '';
-
-            filtered.forEach(function(p) {
-                list.appendChild(renderPipeline(p));
-            });
-
-            var noResults = document.getElementById('noResults');
-            if (filtered.length === 0) {
-                noResults.classList.remove('d-none');
-            } else {
-                noResults.classList.add('d-none');
+            // Все чекбоксы статуса сняты — ни один пайплайн не подходит
+            if (!hasStatus) {
+                renderList([]);
+                return;
             }
+
+            fetch(API_URL + '/pipelines?' + params.toString(), { headers: authHeaders() })
+                .then(function(res) {
+                    if (!res.ok) throw new Error('HTTP ' + res.status);
+                    return res.json();
+                })
+                .then(function(data) {
+                    renderList(Array.isArray(data) ? data : []);
+                })
+                .catch(function(err) {
+                    const list = document.getElementById('pipelinesList');
+                    list.textContent = '';
+                    const errP = document.createElement('p');
+                    errP.className = 'text-danger text-center mt-4';
+                    errP.textContent = 'Ошибка загрузки: ' + err.message;
+                    list.appendChild(errP);
+                });
         }
 
-        // Привязка фильтров
-        document.getElementById('searchInput').addEventListener('input', applyFilters);
+        // Поиск с дебаунсом, чтобы не бить API на каждое нажатие
+        let searchTimer = null;
+        document.getElementById('searchInput').addEventListener('input', function() {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(applyFilters, 250);
+        });
         document.getElementById('envFilter').addEventListener('change', applyFilters);
         document.getElementById('ownerFilter').addEventListener('change', applyFilters);
         document.querySelectorAll('.filter-status').forEach(function(cb) {
@@ -346,7 +352,7 @@
             applyFilters();
         });
 
-        loadPipelines();
+        applyFilters();
     </script>
 </body>
 </html>

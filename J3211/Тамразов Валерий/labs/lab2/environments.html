@@ -282,20 +282,20 @@
         checkAuth();
         updateNavbar();
 
-        var strategyLabels = { bluegreen: 'Blue/Green', canary: 'Canary', rolling: 'Rolling' };
-        var envColors = { Production: 'success', Staging: 'warning', Development: 'info' };
-        var roleLabels = { admin: 'Админ', developer: 'Разработчик', viewer: 'Наблюдатель' };
-        var roleBadgeClass = { admin: 'bg-primary', developer: 'bg-info', viewer: 'bg-secondary' };
-        var accessLabels = { full: 'Полный', deploy: 'Деплой', view: 'Просмотр' };
+        const strategyLabels = { bluegreen: 'Blue/Green', canary: 'Canary', rolling: 'Rolling' };
+        const envColors = { Production: 'success', Staging: 'warning', Development: 'info' };
+        const roleLabels = { admin: 'Админ', developer: 'Разработчик', viewer: 'Наблюдатель' };
+        const roleBadgeClass = { admin: 'bg-primary', developer: 'bg-info', viewer: 'bg-secondary' };
+        const accessLabels = { full: 'Полный', deploy: 'Деплой', view: 'Просмотр' };
 
         function renderAccessCell(access) {
-            var td = document.createElement('td');
+            const td = document.createElement('td');
             if (access === 'full' || access === 'deploy') {
-                var icon = document.createElement('i');
+                const icon = document.createElement('i');
                 icon.className = 'bi bi-check-circle-fill text-success me-1';
                 td.appendChild(icon);
             } else {
-                var icon = document.createElement('i');
+                const icon = document.createElement('i');
                 icon.className = 'bi bi-eye-fill text-muted me-1';
                 td.appendChild(icon);
             }
@@ -307,49 +307,49 @@
         fetch(API_URL + '/environments', { headers: authHeaders() })
             .then(function(res) { return res.json(); })
             .then(function(envs) {
-                var container = document.getElementById('envsContainer');
+                const container = document.getElementById('envsContainer');
                 container.textContent = '';
 
                 envs.forEach(function(env) {
-                    var col = document.createElement('div');
+                    const col = document.createElement('div');
                     col.className = 'col-md-4';
 
-                    var card = document.createElement('div');
+                    const card = document.createElement('div');
                     card.className = 'env-card';
 
                     // Заголовок
-                    var header = document.createElement('div');
+                    const header = document.createElement('div');
                     header.className = 'd-flex justify-content-between align-items-center mb-3';
-                    var h5 = document.createElement('h5');
+                    const h5 = document.createElement('h5');
                     h5.className = 'mb-0';
-                    var dot = document.createElement('i');
+                    const dot = document.createElement('i');
                     dot.className = 'bi bi-circle-fill text-' + (envColors[env.name] || 'secondary') + ' me-1';
                     dot.style.fontSize = '0.6rem';
                     h5.appendChild(dot);
                     h5.appendChild(document.createTextNode(' ' + env.name));
                     header.appendChild(h5);
-                    var stratSpan = document.createElement('span');
+                    const stratSpan = document.createElement('span');
                     stratSpan.className = 'deploy-strategy strategy-' + env.strategy;
                     stratSpan.textContent = strategyLabels[env.strategy] || env.strategy;
                     header.appendChild(stratSpan);
                     card.appendChild(header);
 
                     // Метрики
-                    var metrics = document.createElement('div');
+                    const metrics = document.createElement('div');
                     metrics.className = 'small mb-2';
-                    var rows = [
+                    const rows = [
                         ['Активные модели:', env.models],
                         ['Запросов/мин:', env.rpm],
                         ['Uptime:', env.uptime],
                         ['Последний деплой:', env.lastDeploy]
                     ];
                     rows.forEach(function(r) {
-                        var row = document.createElement('div');
+                        const row = document.createElement('div');
                         row.className = 'd-flex justify-content-between mb-1';
-                        var label = document.createElement('span');
+                        const label = document.createElement('span');
                         label.className = 'text-muted';
                         label.textContent = r[0];
-                        var val = document.createElement('span');
+                        const val = document.createElement('span');
                         val.textContent = r[1];
                         row.appendChild(label);
                         row.appendChild(val);
@@ -357,12 +357,12 @@
                     });
                     card.appendChild(metrics);
 
-                    var hr = document.createElement('hr');
+                    const hr = document.createElement('hr');
                     card.appendChild(hr);
 
-                    var btns = document.createElement('div');
+                    const btns = document.createElement('div');
                     btns.className = 'd-flex gap-2';
-                    var settingsBtn = document.createElement('button');
+                    const settingsBtn = document.createElement('button');
                     settingsBtn.className = 'btn btn-outline-secondary btn-sm flex-grow-1';
                     settingsBtn.textContent = 'Настроить';
                     btns.appendChild(settingsBtn);
@@ -377,27 +377,27 @@
         fetch(API_URL + '/roles', { headers: authHeaders() })
             .then(function(res) { return res.json(); })
             .then(function(roles) {
-                var tbody = document.getElementById('rolesBody');
+                const tbody = document.getElementById('rolesBody');
                 tbody.textContent = '';
 
                 roles.forEach(function(r) {
-                    var tr = document.createElement('tr');
+                    const tr = document.createElement('tr');
 
                     // Пользователь
-                    var tdUser = document.createElement('td');
-                    var userDiv = document.createElement('div');
+                    const tdUser = document.createElement('td');
+                    const userDiv = document.createElement('div');
                     userDiv.className = 'd-flex align-items-center';
 
-                    var avatar = document.createElement('div');
+                    const avatar = document.createElement('div');
                     avatar.style.cssText = 'width:32px;height:32px;background:var(--accent-dim);border:1px solid var(--border-accent);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-family:var(--font-mono);font-size:0.75rem;font-weight:600;margin-right:10px;';
                     avatar.textContent = r.initials;
                     userDiv.appendChild(avatar);
 
-                    var nameDiv = document.createElement('div');
-                    var nameText = document.createElement('div');
+                    const nameDiv = document.createElement('div');
+                    const nameText = document.createElement('div');
                     nameText.textContent = r.name;
                     nameDiv.appendChild(nameText);
-                    var emailText = document.createElement('small');
+                    const emailText = document.createElement('small');
                     emailText.className = 'text-muted';
                     emailText.textContent = r.email;
                     nameDiv.appendChild(emailText);
@@ -406,8 +406,8 @@
                     tr.appendChild(tdUser);
 
                     // Роль
-                    var tdRole = document.createElement('td');
-                    var roleBadge = document.createElement('span');
+                    const tdRole = document.createElement('td');
+                    const roleBadge = document.createElement('span');
                     roleBadge.className = 'role-badge ' + (roleBadgeClass[r.role] || 'bg-secondary') + ' text-white';
                     roleBadge.textContent = roleLabels[r.role] || r.role;
                     tdRole.appendChild(roleBadge);

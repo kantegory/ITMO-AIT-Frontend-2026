@@ -105,11 +105,11 @@
 
         document.getElementById('registerForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            var errorEl = document.getElementById('regError');
+            const errorEl = document.getElementById('regError');
             errorEl.classList.add('d-none');
 
-            var password = document.getElementById('regPassword').value;
-            var confirm = document.getElementById('confirmPassword').value;
+            const password = document.getElementById('regPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
 
             if (password !== confirm) {
                 errorEl.textContent = 'Пароли не совпадают';
@@ -123,7 +123,7 @@
                 return;
             }
 
-            var userData = {
+            const userData = {
                 email: document.getElementById('email').value,
                 password: password,
                 firstName: document.getElementById('firstName').value,
