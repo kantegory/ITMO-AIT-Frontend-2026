@@ -1,8 +1,12 @@
-<script setup></script>
+<script setup>
+import { RouterView } from 'vue-router';
+import AppNavbar from '@/components/layout/AppNavbar.vue';
+import AppFooter from '@/components/layout/AppFooter.vue';
+</script>
 
 <template>
-  <main class="container py-5">
-    <h1>AI Hub — lab3 (Vue.js)</h1>
-    <p class="text-muted">Скаффолд проекта готов.</p>
-  </main>
+  <a href="#main-content" class="skip-link">Перейти к основному содержимому</a>
+  <AppNavbar />
+  <RouterView />
+  <AppFooter />
 </template>
