@@ -217,7 +217,7 @@ function renderDashboard(user, projects, tasks, workers, qualityStats) {
       const badgeVariant = getQualityBadgeVariant(project.quality);
       return `
         <tr>
-          <td>${escapeHtml(project.dashboardTitle)}</td>
+          <th scope="row">${escapeHtml(project.dashboardTitle)}</th>
           <td>${escapeHtml(project.type)}</td>
           <td>
             <div class="progress" role="progressbar" aria-label="progress ${project.progress}" aria-valuenow="${project.progress}" aria-valuemin="0" aria-valuemax="100">
@@ -400,9 +400,11 @@ function initToolButtons() {
   }
 
   toolButtons.forEach((button) => {
+    button.setAttribute("aria-pressed", button.classList.contains("active") ? "true" : "false");
     button.addEventListener("click", () => {
       toolButtons.forEach((item) => item.classList.remove("active"));
       button.classList.add("active");
+      toolButtons.forEach((item) => item.setAttribute("aria-pressed", item === button ? "true" : "false"));
       toolLabel.textContent = button.dataset.tool;
     });
   });
@@ -518,7 +520,7 @@ function renderWorkersPage(workers, summary) {
     .map(
       (worker) => `
         <tr>
-          <td>${escapeHtml(worker.name)}</td>
+          <th scope="row">${escapeHtml(worker.name)}</th>
           <td>${escapeHtml(worker.role)}</td>
           <td>${worker.currentLoad} задач</td>
           <td><span class="badge text-bg-${getQualityBadgeVariant(worker.quality)}">${worker.quality}%</span></td>
@@ -657,6 +659,7 @@ function clearAlerts(container) {
 
 function setButtonLoading(button, isLoading, label) {
   button.disabled = isLoading;
+  button.setAttribute("aria-busy", isLoading ? "true" : "false");
   button.textContent = label;
 }
 

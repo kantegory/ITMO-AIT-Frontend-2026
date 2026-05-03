@@ -25,6 +25,23 @@ body {
   background: var(--bg-main);
 }
 
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -48px;
+  z-index: 1200;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background: #111827;
+  color: #ffffff;
+  text-decoration: none;
+  transition: top 160ms ease;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
 h1,
 h2,
 h3,
@@ -86,6 +103,17 @@ h4,
   background: var(--brand-strong);
   border-color: var(--brand-strong);
   color: #fff;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 3px solid #0b5fff;
+  outline-offset: 2px;
 }
 
 .btn-outline-brand {
@@ -169,5 +197,18 @@ h4,
 
   .hero {
     border-radius: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .fade-up-delay,
+  .fade-up-delay-2,
+  .metric-card,
+  .project-card,
+  .skip-link {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
   }
 }

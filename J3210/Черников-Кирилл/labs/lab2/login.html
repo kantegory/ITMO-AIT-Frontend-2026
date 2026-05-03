@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg app-navbar sticky-top">
+    <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+    <nav class="navbar navbar-expand-lg app-navbar sticky-top" aria-label="Основная навигация">
       <div class="container py-2">
         <a class="navbar-brand fw-bold" href="dashboard.html">DataForge<span class="brand-dot">.</span></a>
         <button
@@ -44,7 +45,7 @@
       </div>
     </nav>
 
-    <main class="container auth-layout d-flex align-items-center py-4 py-lg-5">
+    <main id="main-content" role="main" class="container auth-layout d-flex align-items-center py-4 py-lg-5" tabindex="-1">
       <div class="row g-4 w-100 align-items-stretch">
         <div class="col-lg-6 fade-up">
           <section class="hero p-4 p-lg-5 h-100 d-flex flex-column justify-content-center">
@@ -62,17 +63,17 @@
         <div class="col-lg-6 fade-up fade-up-delay">
           <section class="form-card p-4 p-lg-5">
             <h2 class="h3 mb-4">Вход</h2>
-            <div id="login-alert"></div>
+            <div id="login-alert" role="status" aria-live="polite"></div>
             <form id="login-form" class="needs-validation" novalidate>
               <div class="mb-3">
-                <label class="form-label" for="email">Email</label>
-                <input id="email" type="email" class="form-control" required placeholder="you@company.com" />
-                <div class="invalid-feedback">Введите корректный email.</div>
-              </div>
+                  <label class="form-label" for="email">Email</label>
+                  <input id="email" type="email" class="form-control" required aria-required="true" placeholder="you@company.com" autocomplete="email" aria-describedby="login-email-feedback" />
+                  <div id="login-email-feedback" class="invalid-feedback">Введите корректный email.</div>
+                </div>
               <div class="mb-3">
                 <label class="form-label" for="password">Пароль</label>
-                <input id="password" type="password" class="form-control" required minlength="8" />
-                <div class="invalid-feedback">Минимум 8 символов.</div>
+                <input id="password" type="password" class="form-control" required aria-required="true" minlength="8" autocomplete="current-password" aria-describedby="login-password-feedback" />
+                <div id="login-password-feedback" class="invalid-feedback">Минимум 8 символов.</div>
               </div>
               <div class="d-flex justify-content-between align-items-center mb-4">
                 <div class="form-check">
@@ -88,12 +89,12 @@
       </div>
     </main>
 
-    <div class="modal fade" id="authSuccessModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="authSuccessModal" tabindex="-1" aria-labelledby="authSuccessTitle" aria-describedby="auth-success-text" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h3 class="modal-title fs-5">Успешный вход</h3>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h3 id="authSuccessTitle" class="modal-title fs-5">Успешный вход</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
           </div>
           <div id="auth-success-text" class="modal-body">
             Сессия успешно создана. Перейдите в личный кабинет для работы с проектами.

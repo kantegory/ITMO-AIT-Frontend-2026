@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg app-navbar sticky-top">
+    <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+    <nav class="navbar navbar-expand-lg app-navbar sticky-top" aria-label="Основная навигация">
       <div class="container py-2">
         <a class="navbar-brand fw-bold" href="dashboard.html">DataForge<span class="brand-dot">.</span></a>
         <button
@@ -46,14 +47,14 @@
       </div>
     </nav>
 
-    <main class="container py-4 py-lg-5">
+    <main id="main-content" role="main" class="container py-4 py-lg-5" tabindex="-1">
       <section class="hero p-4 p-lg-5 mb-4 fade-up">
-        <div class="d-flex flex-wrap justify-content-between gap-3 align-items-center">
+          <div class="d-flex flex-wrap justify-content-between gap-3 align-items-center">
           <div>
             <h1 class="display-6 fw-bold mb-2">Управление рабочими</h1>
             <p class="text-secondary mb-0">Распределение задач, валидация результатов и мониторинг метрик качества.</p>
           </div>
-          <button id="auto-assign-btn" class="btn btn-brand">Автораспределение задач</button>
+          <button id="auto-assign-btn" type="button" class="btn btn-brand" aria-label="Автораспределение задач">Автораспределение задач</button>
         </div>
       </section>
 
@@ -61,19 +62,19 @@
         <div class="col-md-4 fade-up">
           <article class="metric-card p-4">
             <p class="text-secondary mb-1">Назначено задач</p>
-            <h2 class="display-6 fw-bold mb-0" id="assigned-count">-</h2>
+            <h2 class="display-6 fw-bold mb-0" id="assigned-count" aria-live="polite">-</h2>
           </article>
         </div>
         <div class="col-md-4 fade-up fade-up-delay">
           <article class="metric-card p-4">
             <p class="text-secondary mb-1">Средний QA score</p>
-            <h2 id="qa-score" class="display-6 fw-bold mb-0">-</h2>
+            <h2 id="qa-score" class="display-6 fw-bold mb-0" aria-live="polite">-</h2>
           </article>
         </div>
         <div class="col-md-4 fade-up fade-up-delay-2">
           <article class="metric-card p-4">
             <p class="text-secondary mb-1">Ожидают валидации</p>
-            <h2 id="pending-validation" class="display-6 fw-bold mb-0">-</h2>
+            <h2 id="pending-validation" class="display-6 fw-bold mb-0" aria-live="polite">-</h2>
           </article>
         </div>
       </section>
@@ -82,16 +83,17 @@
         <h2 class="h4 mb-3">Команда</h2>
         <div class="table-responsive">
           <table class="table align-middle">
+            <caption class="visually-hidden">Таблица команды с ролями, нагрузкой и качеством</caption>
             <thead>
               <tr>
-                <th>Исполнитель</th>
-                <th>Роль</th>
-                <th>Текущая нагрузка</th>
-                <th>Качество</th>
-                <th>Действие</th>
+                <th scope="col">Исполнитель</th>
+                <th scope="col">Роль</th>
+                <th scope="col">Текущая нагрузка</th>
+                <th scope="col">Качество</th>
+                <th scope="col">Действие</th>
               </tr>
             </thead>
-            <tbody id="workers-table-body">
+            <tbody id="workers-table-body" aria-live="polite">
               <tr>
                 <td colspan="5" class="text-secondary">Загрузка команды...</td>
               </tr>
@@ -102,10 +104,10 @@
     </main>
 
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
-      <div id="action-toast" class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div id="action-toast" class="toast align-items-center border-0" role="status" aria-live="polite" aria-atomic="true">
         <div class="d-flex">
           <div class="toast-body">Задачи успешно распределены. Назначено +5 новых задач.</div>
-          <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Закрыть"></button>
         </div>
       </div>
     </div>

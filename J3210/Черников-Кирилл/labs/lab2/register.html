@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg app-navbar sticky-top">
+    <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+    <nav class="navbar navbar-expand-lg app-navbar sticky-top" aria-label="Основная навигация">
       <div class="container py-2">
         <a class="navbar-brand fw-bold" href="dashboard.html">DataForge<span class="brand-dot">.</span></a>
         <button
@@ -44,7 +45,7 @@
       </div>
     </nav>
 
-    <main class="container py-4 py-lg-5">
+    <main id="main-content" role="main" class="container py-4 py-lg-5" tabindex="-1">
       <div class="row g-4 align-items-stretch">
         <div class="col-lg-5 fade-up">
           <section class="hero p-4 p-lg-5 h-100">
@@ -64,59 +65,59 @@
         <div class="col-lg-7 fade-up fade-up-delay">
           <section class="form-card p-4 p-lg-5">
             <h2 class="h3 mb-4">Регистрация</h2>
-            <div id="register-alert"></div>
+            <div id="register-alert" role="status" aria-live="polite"></div>
             <form id="register-form" class="needs-validation" novalidate>
               <div class="row g-3">
                 <div class="col-md-6">
                   <label class="form-label" for="firstName">Имя</label>
-                  <input id="firstName" type="text" class="form-control" required />
-                  <div class="invalid-feedback">Укажите имя.</div>
+                  <input id="firstName" type="text" class="form-control" required aria-required="true" autocomplete="given-name" aria-describedby="reg-firstName-feedback" />
+                  <div id="reg-firstName-feedback" class="invalid-feedback">Укажите имя.</div>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label" for="lastName">Фамилия</label>
-                  <input id="lastName" type="text" class="form-control" required />
-                  <div class="invalid-feedback">Укажите фамилию.</div>
+                  <input id="lastName" type="text" class="form-control" required aria-required="true" autocomplete="family-name" aria-describedby="reg-lastName-feedback" />
+                  <div id="reg-lastName-feedback" class="invalid-feedback">Укажите фамилию.</div>
                 </div>
                 <div class="col-12">
                   <label class="form-label" for="regEmail">Email</label>
-                  <input id="regEmail" type="email" class="form-control" required />
-                  <div class="invalid-feedback">Введите корректный email.</div>
+                  <input id="regEmail" type="email" class="form-control" required aria-required="true" autocomplete="email" aria-describedby="reg-email-feedback" />
+                  <div id="reg-email-feedback" class="invalid-feedback">Введите корректный email.</div>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label" for="role">Роль</label>
-                  <select id="role" class="form-select" required>
+                  <select id="role" class="form-select" required aria-required="true" aria-describedby="reg-role-feedback">
                     <option value="" selected disabled>Выберите роль</option>
                     <option>Исполнитель</option>
                     <option>Валидатор</option>
                     <option>Менеджер</option>
                   </select>
-                  <div class="invalid-feedback">Выберите роль.</div>
+                  <div id="reg-role-feedback" class="invalid-feedback">Выберите роль.</div>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label" for="experience">Опыт</label>
-                  <select id="experience" class="form-select" required>
+                  <select id="experience" class="form-select" required aria-required="true" aria-describedby="reg-exp-feedback">
                     <option value="" selected disabled>Выберите уровень</option>
                     <option>Junior</option>
                     <option>Middle</option>
                     <option>Senior</option>
                   </select>
-                  <div class="invalid-feedback">Выберите уровень.</div>
+                  <div id="reg-exp-feedback" class="invalid-feedback">Выберите уровень.</div>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label" for="regPassword">Пароль</label>
-                  <input id="regPassword" type="password" class="form-control" minlength="8" required />
-                  <div class="invalid-feedback">Пароль должен быть от 8 символов.</div>
+                  <input id="regPassword" type="password" class="form-control" minlength="8" required aria-required="true" autocomplete="new-password" aria-describedby="reg-pass-feedback" />
+                  <div id="reg-pass-feedback" class="invalid-feedback">Пароль должен быть от 8 символов.</div>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label" for="regPassword2">Повтор пароля</label>
-                  <input id="regPassword2" type="password" class="form-control" minlength="8" required />
-                  <div class="invalid-feedback">Повторите пароль.</div>
+                  <input id="regPassword2" type="password" class="form-control" minlength="8" required aria-required="true" autocomplete="new-password" aria-describedby="reg-pass2-feedback" />
+                  <div id="reg-pass2-feedback" class="invalid-feedback">Повторите пароль.</div>
                 </div>
                 <div class="col-12">
                   <div class="form-check">
-                    <input id="policyCheck" type="checkbox" class="form-check-input" required />
+                    <input id="policyCheck" type="checkbox" class="form-check-input" required aria-required="true" aria-describedby="reg-policy-feedback" />
                     <label class="form-check-label" for="policyCheck">Согласен с правилами платформы и политикой обработки данных</label>
-                    <div class="invalid-feedback">Необходимо принять условия.</div>
+                    <div id="reg-policy-feedback" class="invalid-feedback">Необходимо принять условия.</div>
                   </div>
                 </div>
               </div>
@@ -128,12 +129,12 @@
       </div>
     </main>
 
-    <div class="modal fade" id="registerSuccessModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="registerSuccessModal" tabindex="-1" aria-labelledby="registerSuccessTitle" aria-describedby="register-success-text" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h3 class="modal-title fs-5">Аккаунт создан</h3>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h3 id="registerSuccessTitle" class="modal-title fs-5">Аккаунт создан</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
           </div>
           <div id="register-success-text" class="modal-body">
             Регистрация прошла успешно. Теперь можно перейти в личный кабинет и выбрать проекты.
