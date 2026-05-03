@@ -611,7 +611,7 @@ function updateNavbar(user) {
 
   const logoutItem = document.createElement("li");
   logoutItem.className = "nav-item";
-  logoutItem.innerHTML = '<button type="button" class="btn btn-sm btn-outline-brand ms-lg-2" id="logout-button">Выйти</button>';
+  logoutItem.innerHTML = '<button type="button" class="btn btn-sm btn-outline-brand ms-lg-2 d-flex align-items-center gap-1" id="logout-button"><svg class="nav-icon" aria-hidden="true"><use href="img/icons.svg#icon-logout"/></svg>Выйти</button>';
 
   navList.appendChild(userItem);
   navList.appendChild(logoutItem);
