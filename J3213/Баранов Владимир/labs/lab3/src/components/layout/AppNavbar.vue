@@ -47,6 +47,9 @@ function handleLogout() {
                         <RouterLink class="nav-link" :to="{ name: 'models' }" v-if="isAuthenticated">
                             Модели
                         </RouterLink>
+                        <RouterLink class="nav-link" :to="{ name: 'datasets' }" v-if="isAuthenticated">
+                            Датасеты
+                        </RouterLink>
                         <RouterLink class="nav-link" :to="{ name: 'login' }" v-if="!isAuthenticated">
                             Вход
                         </RouterLink>

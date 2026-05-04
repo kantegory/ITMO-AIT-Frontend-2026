@@ -40,6 +40,12 @@ const routes = [
         component: () => import("@/views/ModelsView.vue"),
         meta: { requireAuth: true },
     },
+    {
+        path: "/datasets",
+        name: "datasets",
+        component: () => import("@/views/DatasetsView.vue"),
+        meta: { requireAuth: true },
+    },
     { path: "/:pathMatch(.*)*", redirect: "/" },
 ];
 

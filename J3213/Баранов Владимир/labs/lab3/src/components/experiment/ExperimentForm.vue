@@ -1,17 +1,21 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useModels } from "@/composables/useModels.js";
+import { useDatasets } from "@/composables/useDatasets.js";
 
 const emit = defineEmits(["submit", "cancel"]);
 
 const { fetchActiveForSelect } = useModels();
+const { fetchAll: fetchDatasets } = useDatasets();
 const models = ref([]);
+const datasets = ref([]);
 
 const form = ref({
     name: "",
     metricName: "Accuracy",
     stage: "Train",
     modelId: "",
+    datasetId: "",
     metricValue: "",
     tags: "",
     description: "",
@@ -19,20 +23,29 @@ const form = ref({
 
 onMounted(async () => {
     try {
-        models.value = await fetchActiveForSelect();
+        const [modelsList, datasetsList] = await Promise.all([
+            fetchActiveForSelect(),
+            fetchDatasets(),
+        ]);
+        models.value = modelsList;
+        datasets.value = datasetsList;
     } catch {
         models.value = [];
+        datasets.value = [];
     }
 });
 
 function onSubmit() {
-    const selected = models.value.find((m) => Number(m.id) === Number(form.value.modelId));
+    const selectedModel = models.value.find((m) => Number(m.id) === Number(form.value.modelId));
+    const selectedDataset = datasets.value.find((d) => Number(d.id) === Number(form.value.datasetId));
     const payload = {
         name: form.value.name.trim(),
         metricName: form.value.metricName,
         stage: form.value.stage,
-        modelId: selected ? Number(selected.id) : null,
-        modelName: selected ? selected.name : "",
+        modelId: selectedModel ? Number(selectedModel.id) : null,
+        modelName: selectedModel ? selectedModel.name : "",
+        datasetId: selectedDataset ? Number(selectedDataset.id) : null,
+        datasetName: selectedDataset ? selectedDataset.name : "",
         metricValue: form.value.metricValue === "" ? null : Number(form.value.metricValue),
         tags: form.value.tags
             .split(",")
@@ -72,7 +85,7 @@ function onSubmit() {
             </div>
         </div>
         <div class="row g-2">
-            <div class="col-md-7 mb-3">
+            <div class="col-md-6 mb-3">
                 <label class="form-label">Модель</label>
                 <select v-model="form.modelId" class="form-select" required>
                     <option value="" disabled>Выберите модель</option>
@@ -84,18 +97,30 @@ function onSubmit() {
                     Нет активных моделей — сначала зарегистрируйте модель в разделе Модели.
                 </small>
             </div>
-            <div class="col-md-5 mb-3">
-                <label class="form-label">Значение метрики</label>
-                <input
-                    v-model="form.metricValue"
-                    type="number"
-                    step="0.0001"
-                    min="0"
-                    max="1"
-                    class="form-control"
-                    placeholder="0.91"
-                />
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Датасет</label>
+                <select v-model="form.datasetId" class="form-select" required>
+                    <option value="" disabled>Выберите датасет</option>
+                    <option v-for="d in datasets" :key="d.id" :value="d.id">
+                        {{ d.name }} <span v-if="d.type">— {{ d.type }}</span>
+                    </option>
+                </select>
+                <small v-if="datasets.length === 0" class="text-muted">
+                    Список датасетов пуст.
+                </small>
             </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Значение метрики</label>
+            <input
+                v-model="form.metricValue"
+                type="number"
+                step="0.0001"
+                min="0"
+                max="1"
+                class="form-control"
+                placeholder="0.91 (необязательно — заполнится после эксперимента)"
+            />
         </div>
         <div class="mb-3">
             <label class="form-label">Теги (через запятую)</label>

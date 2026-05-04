@@ -165,6 +165,11 @@ onMounted(load);
                                 </RouterLink>
                                 <span v-else class="text-muted">—</span>
                             </dd>
+                            <dt class="col-sm-4 text-muted">Датасет</dt>
+                            <dd class="col-sm-8">
+                                <span v-if="experiment.datasetName">{{ experiment.datasetName }}</span>
+                                <span v-else class="text-muted">—</span>
+                            </dd>
                             <dt class="col-sm-4 text-muted">Метрика</dt>
                             <dd class="col-sm-8">
                                 {{ experiment.metricName }}: {{ experiment.metricValue ?? "—" }}
