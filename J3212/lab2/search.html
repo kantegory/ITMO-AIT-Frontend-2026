@@ -35,7 +35,10 @@
         <form class="row g-3" id="search-form">
           <div class="col-12 col-md-6">
             <label for="search-query" class="form-label" data-i18n="search_query">Поиск</label>
-            <input type="text" class="form-control" id="search-query" data-i18n-placeholder="search_query_ph">
+            <div class="input-group">
+              <span class="input-group-text" aria-hidden="true"><svg class="icon"><use href="img/sprite.svg#icon-search"></use></svg></span>
+              <input type="text" class="form-control" id="search-query" data-i18n-placeholder="search_query_ph">
+            </div>
           </div>
           <div class="col-6 col-md-2">
             <label for="filter-status" class="form-label" data-i18n="search_status">Статус</label>
@@ -64,7 +67,7 @@
             </select>
           </div>
           <div class="col-12 col-md-12 d-flex align-items-end gap-2">
-            <button type="submit" class="btn btn-primary" data-i18n="search_btn">Найти</button>
+            <button type="submit" class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="img/sprite.svg#icon-search"></use></svg><span data-i18n="search_btn">Найти</span></button>
             <button type="reset" class="btn btn-outline-secondary" data-i18n="search_reset">Сбросить</button>
           </div>
         </form>
