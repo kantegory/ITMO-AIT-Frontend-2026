@@ -8,34 +8,44 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">ProjectHub</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Меню">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto align-items-center">
-          <li class="nav-item"><a class="nav-link" href="dashboard.html" data-i18n="nav_dashboard">Личный кабинет</a></li>
-          <li class="nav-item"><a class="nav-link active" href="search.html" data-i18n="nav_search">Поиск</a></li>
-          <li class="nav-item ms-2"><span class="navbar-text small"><a href="#" class="text-white text-decoration-none" data-i18n-set="ru">RU</a><span class="mx-1">|</span><a href="#" class="text-white text-decoration-none" data-i18n-set="en">EN</a></span></li>
-        </ul>
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="dashboard.html">Пользователь</a></li>
-        </ul>
+  <a href="#main-content" class="visually-hidden-focusable bg-primary text-white p-2">Перейти к основному содержимому</a>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="Основная навигация">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">ProjectHub</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Открыть меню">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto align-items-center">
+            <li class="nav-item"><a class="nav-link" href="dashboard.html" data-i18n="nav_dashboard">Личный кабинет</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="search.html" data-i18n="nav_search">Поиск</a></li>
+            <li class="nav-item ms-2" role="group" aria-label="Переключение языка">
+              <span class="navbar-text small">
+                <button type="button" class="btn btn-link btn-sm text-white text-decoration-none p-0" data-i18n-set="ru">RU</button>
+                <span class="mx-1" aria-hidden="true">|</span>
+                <button type="button" class="btn btn-link btn-sm text-white text-decoration-none p-0" data-i18n-set="en">EN</button>
+              </span>
+            </li>
+          </ul>
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="dashboard.html">Пользователь</a></li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </header>
 
-  <main class="container py-4">
+  <main id="main-content" class="container py-4" tabindex="-1">
     <h1 class="mb-4" data-i18n="search_title">Поиск задач и проектов</h1>
 
-    <div class="card mb-4">
+    <section class="card mb-4" aria-labelledby="filters-heading">
       <div class="card-body">
-        <form class="row g-3" id="search-form">
+        <h2 id="filters-heading" class="visually-hidden">Фильтры поиска</h2>
+        <form class="row g-3" id="search-form" role="search" aria-label="Поиск задач" novalidate>
           <div class="col-12 col-md-6">
             <label for="search-query" class="form-label" data-i18n="search_query">Поиск</label>
-            <input type="text" class="form-control" id="search-query" data-i18n-placeholder="search_query_ph">
+            <input type="search" class="form-control" id="search-query" data-i18n-placeholder="search_query_ph">
           </div>
           <div class="col-6 col-md-2">
             <label for="filter-status" class="form-label" data-i18n="search_status">Статус</label>
@@ -69,10 +79,12 @@
           </div>
         </form>
       </div>
-    </div>
+    </section>
 
-    <h2 class="h5 mb-3" data-i18n="search_results">Результаты</h2>
-    <div class="row g-3" id="search-results"></div>
+    <section aria-labelledby="results-heading">
+      <h2 id="results-heading" class="h5 mb-3" data-i18n="search_results">Результаты</h2>
+      <div class="row g-3" id="search-results" aria-live="polite" aria-busy="false"></div>
+    </section>
   </main>
 
   <footer class="bg-light py-3 mt-auto">
