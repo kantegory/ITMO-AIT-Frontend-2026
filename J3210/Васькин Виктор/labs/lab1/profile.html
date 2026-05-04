@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет | PosiMax</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg custom-navbar py-3" data-bs-theme="dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3 text-white" href="index.html">
+                Posi<span class="neon-text">Max</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50" href="index.html">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-bold" href="profile.html">Мой прогресс</a>
+                    </li>
+                </ul>
+                
+                <div class="dropdown mt-3 mt-lg-0">
+                    <a class="text-decoration-none d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://ui-avatars.com/api/?name=Ivan+Olegovich&background=a855f7&color=fff" class="rounded-circle border border-secondary" width="40" height="40" alt="Аватар">
+                        <span class="text-white ms-2 d-none d-md-inline fw-bold">Иван О.</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark mt-2 border-secondary shadow-lg">
+                        <li><a class="dropdown-item" href="profile.html">Личный кабинет</a></li>
+                        <li><a class="dropdown-item" href="#">Настройки</a></li>
+                        <li><hr class="dropdown-divider border-secondary"></li>
+                        <li><a class="dropdown-item text-danger fw-bold" href="index.html">Выйти</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-5 pt-3 mb-5">
+        
+        <div class="card bg-dark border-secondary rounded-4 p-4 mb-5">
+            <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
+                <div class="d-flex align-items-center mb-3 mb-md-0">
+                    <img src="https://ui-avatars.com/api/?name=Ivan+Olegovich&background=a855f7&color=fff&size=128" class="rounded-circle border border-3 border-secondary" alt="Аватар">
+                    <div class="ms-4">
+                        <h2 class="text-white fw-bold mb-1">Иван Олегович</h2>
+                        <div class="text-white-50 mb-2">ivan.olegovich@email.com</div>
+                        <span class="badge bg-neon rounded-pill px-3 py-2">Pro Member</span>
+                    </div>
+                </div>
+                <div class="d-flex gap-4 text-center">
+                    <div>
+                        <div class="fs-3 fw-bold text-white">4</div>
+                        <div class="text-white-50 small">Курса</div>
+                    </div>
+                    <div>
+                        <div class="fs-3 fw-bold text-white">12</div>
+                        <div class="text-white-50 small">Сертификатов</div>
+                    </div>
+                    <div>
+                        <div class="fs-3 fw-bold neon-text">4.9</div>
+                        <div class="text-white-50 small">Рейтинг</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs custom-tabs border-secondary mb-4" id="profileTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active bg-transparent fw-bold" data-bs-toggle="tab" data-bs-target="#student-panel" type="button" role="tab">🎓 Мое обучение</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link bg-transparent fw-bold" data-bs-toggle="tab" data-bs-target="#teacher-panel" type="button" role="tab">👨‍🏫 Преподавание</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="profileTabsContent">
+
+            <div class="tab-pane fade show active" id="student-panel" role="tabpanel">
+                <h4 class="text-white mb-4">Текущие курсы</h4>
+                <div class="row g-4">
+                    
+                    <div class="col-12 col-md-6">
+                        <div class="card bg-dark border-secondary rounded-4 p-3 d-flex flex-row align-items-center">
+                            <img src="img/course1.png" class="rounded-3 object-fit-cover" width="120" height="90" alt="Python">
+                            <div class="ms-3 w-100">
+                                <h5 class="text-white fw-bold mb-1">Python</h5>
+                                <div class="text-white-50 small mb-2">Пройдено 12 из 16 уроков</div>
+                                <div class="progress bg-secondary" style="height: 8px;">
+                                    <div class="progress-bar bg-neon" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-end mt-2">
+                                    <a href="course.html" class="btn btn-sm btn-outline-light rounded-pill px-3">Продолжить</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <div class="card bg-dark border-secondary rounded-4 p-3 d-flex flex-row align-items-center">
+                            <img src="img/course5.png" class="rounded-3 object-fit-cover" width="120" height="90" alt="SQL">
+                            <div class="ms-3 w-100">
+                                <h5 class="text-white fw-bold mb-1">Основы SQL</h5>
+                                <div class="text-success small mb-2">Курс завершен! 🏆</div>
+                                <div class="progress bg-secondary" style="height: 8px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-end mt-2">
+                                    <button class="btn btn-sm btn-neon rounded-pill px-3">Сертификат</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="teacher-panel" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="text-white mb-0">Мои авторские курсы</h4>
+                    <button type="button" class="btn btn-neon rounded-pill px-4 fw-bold" data-bs-toggle="modal" data-bs-target="#createCourseModal">
+                        + Создать курс
+                    </button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover border-secondary align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-white-50">Название</th>
+                                <th scope="col" class="text-white-50">Студентов</th>
+                                <th scope="col" class="text-white-50">Рейтинг</th>
+                                <th scope="col" class="text-white-50 text-end">Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-white fw-bold">Продвинутый Python</td>
+                                <td>342</td>
+                                <td class="text-warning">★★★★★</td>
+                                <td class="text-end">
+                                    <button class="btn btn-sm btn-outline-light rounded-pill">Редактировать</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+    <div class="modal fade" id="createCourseModal" tabindex="-1" aria-hidden="true" data-bs-theme="dark">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark border-secondary rounded-4">
+                
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title text-white fw-bold">Новый курс</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label text-white-50">Название курса</label>
+                            <input type="text" class="form-control bg-dark text-white border-secondary" placeholder="Например: Основы дизайна">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-white-50">Описание</label>
+                            <textarea class="form-control bg-dark text-white border-secondary" rows="3" placeholder="Кратко о чем курс..."></textarea>
+                        </div>
+                        <div class="row g-3 mb-4">
+                            <div class="col-6">
+                                <label class="form-label text-white-50">Цена (₽)</label>
+                                <input type="number" class="form-control bg-dark text-white border-secondary" placeholder="0 = Бесплатно">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label text-white-50">Обложка</label>
+                                <input class="form-control bg-dark text-white border-secondary" type="file">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="modal-footer border-secondary">
+                    <button type="button" class="btn btn-outline-light rounded-pill px-4" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-neon rounded-pill px-4 fw-bold" data-bs-dismiss="modal">Опубликовать</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

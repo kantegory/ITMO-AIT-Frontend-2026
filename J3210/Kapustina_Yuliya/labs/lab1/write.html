@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Написать фанфик</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        body {
+            background: white;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #ffa676, #fd7f59);
+        }
+
+        .editor-box {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .toolbar button {
+            margin-right: 5px;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        .tag {
+            background: #ffdfd1;
+            color: #d84315;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-block;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .tag:hover {
+            background: #ffb999;
+            transform: translateY(-2px);
+        }
+
+        .tag-remove {
+            margin-left: 6px;
+            cursor: pointer;
+            color: #d84315;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        .tag-remove:hover {
+            color: #d32f2f;
+            transform: scale(1.2);
+        }
+
+        .tag-input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .tag-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .tag-input:focus {
+            border-color: #ff7043;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 112, 67, 0.1);
+        }
+
+        .tag-add-btn {
+            background: #fd835e;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 18px;
+            color: white;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+
+        .tag-add-btn:hover {
+            background: #f4511e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(244, 81, 30, 0.2);
+        }
+
+        .btn-main {
+            background: #ff7043;
+            color: white;
+        }
+
+        .btn-main:hover {
+            background: #f4511e;
+        }
+
+        .btn-outline-main {
+            border: 1px solid #ff7043;
+            color: #ff7043;
+            background: transparent;
+        }
+
+        .btn-outline-main:hover {
+            background: #ff7043;
+            color: white;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">FanFicLib</a>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="search.html">Поиск</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Написать фанфик</a></li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Профиль</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container mt-4">
+
+        <h2 class="mb-4">Создание фанфика</h2>
+
+        <div class="editor-box">
+
+            <form>
+
+                <div class="row">
+
+                    <div class="col-md-8">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">Название фанфика</label>
+
+                            <input class="form-control" placeholder="Введите название">
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">Фандом</label>
+
+                            <select class="form-select">
+
+                                <option>Выберите фандом</option>
+                                <option>Harry Potter</option>
+                                <option>Naruto</option>
+                                <option>Marvel</option>
+                                <option>Star Wars</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label class="form-label">Описание</label>
+
+                    <textarea class="form-control" rows="3"></textarea>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">Рейтинг</label>
+
+                        <select class="form-select">
+
+                            <option>G</option>
+                            <option>PG</option>
+                            <option>PG-13</option>
+                            <option>R</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">Статус</label>
+
+                        <select class="form-select">
+
+                            <option>В процессе</option>
+                            <option>Закончен</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">Обложка</label>
+
+                        <input type="file" class="form-control">
+
+                    </div>
+
+                </div>
+
+
+                <div class="mt-3">
+                    <label class="form-label">Метки</label>
+                    
+                    <div class="tag-input-group">
+                        <input type="text" class="tag-input" id="tagInput" placeholder="Введите тег">
+                        <button type="button" class="tag-add-btn" id="addTagBtn">
+                            Добавить
+                        </button>
+                    </div>
+                    
+                    <div class="d-flex flex-wrap align-items-center" id="tagsContainer">
+                        <span class="tag" data-tag="романтика">
+                            романтика
+                            <span class="tag-remove" onclick="this.parentElement.remove()">×</span>
+                        </span>
+                        <span class="tag" data-tag="драма">
+                            драма
+                            <span class="tag-remove" onclick="this.parentElement.remove()">×</span>
+                        </span>
+                        <span class="tag" data-tag="приключения">
+                            приключения
+                            <span class="tag-remove" onclick="this.parentElement.remove()">×</span>
+                        </span>
+                        <span class="tag" data-tag="фэнтези">
+                            фэнтези
+                            <span class="tag-remove" onclick="this.parentElement.remove()">×</span>
+                        </span>
+                        <span class="tag" data-tag="боевик">
+                            боевик
+                            <span class="tag-remove" onclick="this.parentElement.remove()">×</span>
+                        </span>
+                        <span class="tag" data-tag="магия">
+                            магия
+                            <span class="tag-remove" onclick="this.parentElement.remove()">×</span>
+                        </span>
+                    </div>
+                    
+                    <small class="text-muted mt-2 d-block">
+                        <i class="bi bi-info-circle"></i> Нажмите на крестик, чтобы удалить тег
+                    </small>
+                </div>
+
+
+                <hr class="mt-4">
+
+
+                <h5>Текст главы</h5>
+
+                <div class="toolbar mb-2">
+
+                    <button type="button" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-type-bold"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-type-italic"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-outline-secondary btn-sm">
+                        H1
+                    </button>
+
+                </div>
+
+
+                <textarea class="form-control" rows="12" placeholder="Начните писать свою историю..."></textarea>
+
+
+                <div class="mt-4 text-end">
+
+                    <button class="btn btn-outline-main me-2"> Сохранить черновик</button>
+
+                    <button class="btn btn-main">Опубликовать</button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <footer class="text-center mt-5 p-4">
+        <p>© 2026 FanFicLib</p>
+    </footer>
+
+</body>
+
+</html>

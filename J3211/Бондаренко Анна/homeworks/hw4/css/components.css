@@ -1,0 +1,136 @@
+.dashboard-block,
+.terminal-box {
+    background: var(--surface-color);
+    border: var(--border);
+    box-shadow: 8px 8px 0 var(--shadow-color);
+    padding: 25px;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.block-title,
+.terminal-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+
+.terminal-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.terminal-table th, .terminal-table td {
+    border: 1px solid var(--border-color);
+    padding: 8px;
+    text-align: left;
+}
+
+.terminal-table th {
+    background: var(--border-color);
+    color: var(--surface-color);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--border-color);
+    padding: 10px 0;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--expense-color);
+}
+
+.progress {
+    background-color: var(--progress-bg);
+    border: 1px solid var(--border-color);
+    height: 32px;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    font-weight: 700;
+    line-height: 32px;
+    padding-left: 10px;
+    color: var(--progress-text);
+}
+
+.currency-card {
+    padding: 0;
+    box-shadow: none;
+    border: var(--border);
+    overflow: hidden;
+    background: var(--surface-color);
+    margin-bottom: 0;
+    height: 100%;
+}
+
+.currency-card-header {
+    margin: 0;
+    padding: 5px 10px;
+    font-size: 15px;
+    background: var(--border-color);
+    color: var(--surface-color);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.currency-card-body {
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.currency-card-body .icon {
+    width: 24px;
+    height: 24px;
+}
+
+.text-income {
+    color: var(--income-color) !important;
+}
+
+.text-expense {
+    color: var(--expense-color) !important;
+}
+
+.bg-income {
+    background-color: var(--income-color) !important;
+}
+
+.bg-expense {
+    background-color: var(--expense-color) !important;
+}
+
+@media (max-width: 768px) {
+    .terminal-table {
+        display: block !important;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .terminal-table thead, .terminal-table tbody {
+        display: table;
+        width: 100%;
+    }
+
+    .col-md-8 .terminal-table thead, .col-md-8 .terminal-table tbody, #searchTable thead, #searchTable tbody {
+        min-width: 650px;
+    }
+}

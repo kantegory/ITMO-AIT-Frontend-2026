@@ -1,0 +1,192 @@
+.gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: floatOrb 10s infinite ease-in-out alternate;
+}
+
+.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: #4f46e5;
+    top: -100px;
+    left: -100px;
+}
+
+.orb-2 {
+    width: 300px;
+    height: 300px;
+    background: #c026d3;
+    bottom: 10%;
+    right: -50px;
+    animation-delay: -2s;
+}
+
+.orb-3 {
+    width: 200px;
+    height: 200px;
+    background: #0ea5e9;
+    top: 40%;
+    left: 30%;
+    opacity: 0.4;
+    animation-delay: -5s;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 0%, #0B0F19 90%);
+}
+
+.floating-elements {
+    z-index: 1;
+}
+
+.float-item {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.1);
+    font-size: 2rem;
+    animation: floatIcon 6s infinite ease-in-out;
+}
+
+.float-1 {
+    top: 15%; left: 10%; animation-delay: 0s;
+}
+.float-2 {
+    top: 20%; right: 15%; animation-delay: 1s;
+}
+.float-3 {
+    bottom: 20%; left: 20%; animation-delay: 2s;
+}
+.float-4 {
+    bottom: 15%; right: 10%; animation-delay: 3s;
+}
+
+.hero-content {
+    z-index: 2;
+}
+
+h1 {
+    letter-spacing: -0.02em;
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+}
+
+.lead.hero-lead {
+    font-weight: 350;
+    font-size: 1.5rem;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.09);
+}
+
+
+.floating-card {
+    position: absolute;
+    background: rgba(16, 24, 42, 0.8);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    animation: floatCard 5s infinite ease-in-out;
+}
+
+.card-1 {
+    top: 10%;
+    left: 0;
+    animation-delay: 0s;
+}
+
+.card-2 {
+    bottom: 20%;
+    right: 0;
+    animation-delay: 1.5s;
+}
+
+.card-3 {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: floatCardCenter 6s infinite ease-in-out;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(168, 85, 247, 0.3));
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    padding: 1.5rem 2rem !important;
+}
+
+.hero .progress.mini-progress {
+    height: 4px;
+    width: 100px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.progress.mini-progress .progress-bar {
+    width: 75%;
+}
+
+@keyframes floatOrb {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(30px, 50px); }
+}
+
+@keyframes floatIcon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes floatCard {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+@keyframes floatCardCenter {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -55%) scale(1.05); }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.8s forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.delay-1 {
+    animation-delay: 0.1s;
+}
+.delay-2 {
+    animation-delay: 0.3s;
+}
+.delay-5 {
+    animation-delay: 0.5s;
+}
+
+.btn-all-courses {
+    transition: all 0.3s ease;
+}
+
+.btn-all-courses:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(78, 84, 200, 0.2);
+}
