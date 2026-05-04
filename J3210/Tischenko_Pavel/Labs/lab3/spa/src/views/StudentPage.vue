@@ -4,11 +4,14 @@
     <div v-if="statusMessage" class="alert py-2 mb-3" :class="statusType">{{ statusMessage }}</div>
     <section class="card shadow-sm mb-3">
       <div class="card-body">
-        <div class="mb-2">{{ fullName }}</div>
-        <div class="small text-secondary">Активных курсов: {{ enrollments.length }}</div>
-        <div class="small text-secondary">Средний прогресс: {{ avgProgress }}%</div>
-        <div class="small text-secondary">Последняя активность: {{ lastActivity }}</div>
-        <div class="small text-secondary">Следующий шаг: {{ nextStep }}</div>
+        <div class="mb-2 fw-medium">{{ fullName }}</div>
+        <div class="small student-stat-line">Активных курсов: {{ enrollments.length }}</div>
+        <div class="small student-stat-line">Средний прогресс: {{ avgProgress }}%</div>
+        <div class="small student-stat-line">Последняя активность: {{ lastActivity }}</div>
+        <div class="student-next-step mt-3 pt-3">
+          <div class="student-next-step-label">Следующий шаг</div>
+          <p class="student-next-step-main mb-0">{{ nextStep }}</p>
+        </div>
       </div>
     </section>
     <section class="card shadow-sm mb-3">

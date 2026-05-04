@@ -8,16 +8,6 @@ const useCoursesStore = defineStore('courses', {
     loading: false,
     error: ''
   }),
-  persist: {
-    enabled: true,
-    strategies: [
-      {
-        key: 'lab3-courses',
-        storage: localStorage,
-        paths: ['courses']
-      }
-    ]
-  },
   actions: {
     async loadCourses() {
       this.loading = true
