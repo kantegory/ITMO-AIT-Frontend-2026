@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="Интеграция с банковскими счетами в MyWallet. Настройте автоматический импорт операций и создайте правила для умного распределения по категориям.">
+    <title>Банк — MyWallet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/dark-theme.css">
+
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark px-3 mb-4 shadow-sm" aria-label="Верхнее меню">
+    <a class="navbar-brand fw-bold" href="dashboard.html">MyWallet</a>
+    <div class="d-flex align-items-center ms-auto">
+        <a href="dashboard.html" class="nav-link-custom me-2">Главная</a>
+        <a href="search.html" class="nav-link-custom me-2">Поиск</a>
+        <a href="reports.html" class="nav-link-custom me-2">Аналитика</a>
+        <a href="bank.html" class="nav-link-custom me-3 active" aria-current="page">Банк</a>
+        <span id="userNameDisplay" class="me-3 d-none d-sm-flex text-white"></span>
+        <button class="btn btn-outline-light btn-sm fw-bold border-0" onclick="logout()">Выйти</button>
+    </div>
+</nav>
+
+<main class="container">
+    <h1 class="visually-hidden">Синхронизация с банковским счетом</h1>
+
+    <div class="row g-4">
+        <div class="col-lg-5">
+            <section class="card p-4 shadow-sm border-0 h-100">
+                <h2 class="fw-bold h5 mb-3">Связь с банком</h2>
+                <p class="text-muted small">Подключите ваш банковский аккаунт для автоматического получения выписок.</p>
+
+                <div id="connectionStatus" class="p-3 rounded-3 mb-3 text-center"
+                     style="background: #f8fafc; border: 1px solid #e2e8f0;">
+                    <span class="text-muted fw-bold">Статус: Не подключено</span>
+                </div>
+
+                <button id="importBtn" class="btn btn-primary w-100 py-2 fw-bold shadow-sm"
+                        onclick="importTransactions()">
+                    Подключить и импортировать
+                </button>
+            </section>
+        </div>
+
+        <div class="col-lg-7">
+            <section class="card p-4 shadow-sm border-0 h-100">
+                <h2 class="fw-bold h5 mb-1">Настройка правил</h2>
+                <p class="text-muted small mb-4">Автоматически назначать категорию при импорте</p>
+
+                <div class="row g-2 mb-4">
+                    <div class="col-5">
+                        <label for="ruleKeyword" class="small fw-bold d-block mb-1 text-muted">Ключевое слово</label>
+                        <input type="text" id="ruleKeyword" class="form-control" placeholder="Напр: Uber">
+                    </div>
+                    <div class="col-5">
+                        <label for="ruleCat" class="small fw-bold d-block mb-1 text-muted">Категория</label>
+                        <input type="text" id="ruleCat" class="form-control" placeholder="Напр: Транспорт">
+                    </div>
+                    <div class="col-2">
+                        <label class="visually-hidden">Добавить правило</label>
+                        <button class="btn btn-success w-100 mt-4 py-2" onclick="addRule()" aria-label="Добавить">+
+                        </button>
+                    </div>
+                </div>
+
+                <div id="rulesList" aria-live="polite">
+                    <div class="text-center text-muted small mt-5">Правила еще не настроены</div>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
+
+<script>
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (!localStorage.getItem('isLoggedIn') || !user) {
+        window.location.href = 'index.html';
+    }
+
+    const fullName = localStorage.getItem('userFullName');
+    if (fullName && document.getElementById('userNameDisplay')) {
+        document.getElementById('userNameDisplay').innerText = fullName;
+    }
+
+    if (localStorage.getItem('bankConnected_' + user.id) === 'true') {
+        document.getElementById('connectionStatus').innerHTML = "<span class='text-success-a11y'>Банк успешно подключен</span>";
+        document.getElementById('importBtn').innerText = "Обновить данные из банка";
+    }
+
+    function loadRules() {
+        const rules = JSON.parse(localStorage.getItem('bankRules_' + user.id) || "[]");
+        const list = document.getElementById('rulesList');
+        if (rules.length === 0) {
+            list.innerHTML = '<div class="text-center text-muted small mt-5">Правила еще не настроены</div>';
+            return;
+        }
+
+        list.innerHTML = rules.map((r, index) => `
+            <div class="rule-card d-flex justify-content-between align-items-center p-2 mb-2 bg-white border rounded shadow-sm">
+                <div>
+                    <span class="badge bg-secondary me-2">${r.keyword}</span>
+                    → <span class="fw-bold text-dark">${r.category}</span>
+                </div>
+                <button class="btn-delete-a11y" onclick="deleteRule(${index})" aria-label="Удалить правило">✕</button>
+            </div>
+        `).join('');
+    }
+
+    function addRule() {
+        const keyword = document.getElementById('ruleKeyword').value.trim();
+        const category = document.getElementById('ruleCat').value.trim();
+        if (!keyword || !category) {
+            return alert("Заполните оба поля");
+        }
+
+        const rules = JSON.parse(localStorage.getItem('bankRules_' + user.id) || "[]");
+        rules.push({keyword, category});
+        localStorage.setItem('bankRules_' + user.id, JSON.stringify(rules));
+
+        document.getElementById('ruleKeyword').value = '';
+        document.getElementById('ruleCat').value = '';
+        loadRules();
+    }
+
+    function deleteRule(index) {
+        const rules = JSON.parse(localStorage.getItem('bankRules_' + user.id) || "[]");
+        rules.splice(index, 1);
+        localStorage.setItem('bankRules_' + user.id, JSON.stringify(rules));
+        loadRules();
+    }
+
+    loadRules();
+</script>
+<script src="js/shared.js"></script>
+<script src="js/main.js"></script>
+<script src="js/theme-toggle.js"></script>
+</body>
+</html>

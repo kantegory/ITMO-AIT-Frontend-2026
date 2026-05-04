@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск курсов - EduPlatform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar mb-4" aria-label="Главная навигация">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="dashboard.html">
+                <svg class="icon me-2"><use href="sprite.svg#icon-book"></use></svg>EduPlatform
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <svg class="icon me-1"><use href="sprite.svg#icon-book"></use></svg>Мои курсы
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="search.html" aria-current="page">
+                            <svg class="icon me-1"><use href="sprite.svg#icon-search"></use></svg>Поиск курсов
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <button id="themeToggle" class="theme-toggle-btn me-3 text-light" aria-label="Переключить тему">
+                        <svg class="icon"><use href="sprite.svg#icon-theme"></use></svg>
+                    </button>
+                    <span class="text-light me-3" id="userName">...</span>
+                    <a href="#" class="btn btn-outline-light btn-sm d-flex align-items-center" id="logoutBtn" role="button">
+                        <svg class="icon me-1"><use href="sprite.svg#icon-logout"></use></svg>Выйти
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <aside class="filter-sidebar mb-4" aria-label="Фильтры курсов">
+                    <h5>Фильтры</h5>
+                    <hr>
+                    <div class="mb-3">
+                        <label class="form-label" for="categorySelect">Категория</label>
+                        <select class="form-select" id="categorySelect">
+                            <option value="all">Все</option>
+                            <option value="programming">Программирование</option>
+                            <option value="design">Дизайн</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn-brand w-100" onclick="applyFilters()">
+                        <svg class="icon me-2"><use href="sprite.svg#icon-search"></use></svg>Применить
+                    </button>
+                </aside>
+            </div>
+
+            <div class="col-md-9">
+                <div class="row" id="courseContainer">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content edu-card">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="modalTitle">Подтверждение</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    Вы уверены, что хотите записаться на курс: <strong id="modalCourseTitle"></strong>?
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn-brand" onclick="confirmEnrollment()">Подтвердить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let selectedCourseId = "";
+        let selectedCourseTitle = "";
+        const myModal = new bootstrap.Modal(document.getElementById('buyModal'));
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            const localUser = JSON.parse(localStorage.getItem('user'));
+            if (!localUser) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            document.getElementById('userName').textContent = localUser.fullName;
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'index.html';
+            });
+
+            try {
+                const response = await fetch('http://localhost:3000/courses');
+                const allCourses = await response.json();
+                renderCourses(allCourses);
+            } catch (error) {
+                console.error('Ошибка загрузки курсов:', error);
+            }
+        });
+
+        function renderCourses(courses) {
+            const container = document.getElementById('courseContainer');
+            container.innerHTML = '';
+
+            courses.forEach(course => {
+                const cardHtml = `
+                    <div class="col-md-6 mb-4 course-item" data-category="${course.category}">
+                        <article class="edu-card course-card p-3 h-100 d-flex flex-column">
+                            <h5 class="course-title">${course.title}</h5>
+                            <p class="card-text text-muted">${course.description}</p>
+                            <div class="mt-auto d-flex justify-content-between align-items-center">
+                                <span class="course-price">${course.price}</span>
+                                <button type="button" class="btn-brand" onclick="prepareModal('${course.id}', '${course.title}')" aria-label="Записаться на курс: ${course.title}">
+                                    <svg class="icon me-1"><use href="sprite.svg#icon-book"></use></svg>Записаться
+                                </button>
+                            </div>
+                        </article>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', cardHtml);
+            });
+        }
+
+        function applyFilters() {
+            const category = document.getElementById('categorySelect').value;
+            const items = document.querySelectorAll('.course-item');
+
+            items.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function prepareModal(id, title) {
+            selectedCourseId = id;
+            selectedCourseTitle = title;
+            document.getElementById('modalCourseTitle').innerText = title;
+            myModal.show();
+        }
+
+        async function confirmEnrollment() {
+            const localUser = JSON.parse(localStorage.getItem('user'));
+
+            try {
+                const userRes = await fetch(`http://localhost:3000/users/${localUser.id}`);
+                const userData = await userRes.json();
+
+                const userCourses = userData.myCourses || [];
+
+                if (!userCourses.includes(selectedCourseId)) {
+                    userCourses.push(selectedCourseId);
+
+                    await fetch(`http://localhost:3000/users/${localUser.id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ myCourses: userCourses })
+                    });
+
+                    userData.myCourses = userCourses;
+                    localStorage.setItem('user', JSON.stringify(userData));
+                    alert('Курс "' + selectedCourseTitle + '" добавлен в личный кабинет!');
+                } else {
+                    alert('Вы уже записаны на этот курс.');
+                }
+
+                myModal.hide();
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Не удалось записаться на курс.');
+            }
+        }
+
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    </script>
+</body>
+</html>

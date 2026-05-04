@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <title>PipelineLab - Эксперименты</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+
+        <!-- Bootstrap CSS v5.3.2 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+                <div class="container">
+
+                    <a class="navbar-brand" href="index.html">PipelineLab</a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarMenu">
+
+                        <div class="navbar-nav ms-auto">
+                            <a class="nav-link" href="index.html">Главная</a>
+                            <a class="nav-link" href="dashboard.html">Личный кабинет</a>
+
+                            <a class="nav-link" href="experiments.html">Эксперименты</a>
+                            <a class="nav-link" href="models.html">Модели</a>
+                            <a class="nav-link" href="login.html">Вход</a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </nav>
+        </header>
+
+        <main>
+            <div class="container mt-5">
+
+                <h1 class="mb-4">Эксперименты</h1>
+
+                <div class="row">
+
+                    <div class="col-md-3 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-3">Фильтры</h5>
+
+                                <div class="mb-3">
+                                    <label for="dateFilter" class="form-label">Дата</label>
+                                    <select class="form-select" id="dateFilter">
+                                        <option selected>За всё время</option>
+                                        <option>За сегодня</option>
+                                        <option>За неделю</option>
+                                        <option>За месяц</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="metricFilter" class="form-label">Метрика</label>
+                                    <select class="form-select" id="metricFilter">
+                                        <option selected>Любая</option>
+                                        <option>Accuracy</option>
+                                        <option>ROC-AUC</option>
+                                        <option>F1-score</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="tagFilter" class="form-label">Тег</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="tagFilter"
+                                        placeholder="Например: baseline"
+                                    />
+                                </div>
+
+                                <button type="button" class="btn btn-primary w-100 mb-2" id="applyFilters">
+                                    Применить
+                                </button>
+
+                                <button type="button" class="btn btn-outline-secondary w-100" id="resetFilters">
+                                    Сбросить
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-9 mb-4">
+
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h5 class="card-title mb-3">Список экспериментов</h5>
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped mb-0" id="experimentsTable">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Название</th>
+                                                <th scope="col">Статус</th>
+                                                <th scope="col">Метрика</th>
+                                                <th scope="col">Дата</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><a href="experiment.html">#12</a></td>
+                                                <td>ResNet50 CIFAR10</td>
+                                                <td>Завершен</td>
+                                                <td>Accuracy: 0.91</td>
+                                                <td>10.03.2026</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="experiment.html">#11</a></td>
+                                                <td>XGBoost Credit Score</td>
+                                                <td>Завершен</td>
+                                                <td>ROC-AUC: 0.87</td>
+                                                <td>09.03.2026</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="experiment.html">#10</a></td>
+                                                <td>Baseline Logistic Regression</td>
+                                                <td>Выполняется</td>
+                                                <td>-</td>
+                                                <td>09.03.2026</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="experiment.html">#9</a></td>
+                                                <td>LightGBM Click Prediction</td>
+                                                <td>Завершен</td>
+                                                <td>F1-score: 0.76</td>
+                                                <td>05.03.2026</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+
+        <footer>
+        </footer>
+
+        <script>
+            const metricSelect = document.getElementById("metricFilter");
+            const tagInput = document.getElementById("tagFilter");
+            const applyButton = document.getElementById("applyFilters");
+            const resetButton = document.getElementById("resetFilters");
+            const table = document.getElementById("experimentsTable");
+
+            if (applyButton && table && metricSelect && tagInput) {
+                applyButton.addEventListener("click", function () {
+                    const metricValue = metricSelect.value;
+                    const tagValue = tagInput.value.toLowerCase();
+
+                    const rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+                    for (let i = 0; i < rows.length; i++) {
+                        const cells = rows[i].getElementsByTagName("td");
+                        const nameText = cells[1].textContent || cells[1].innerText;
+                        const metricText = cells[3].textContent || cells[3].innerText;
+                        const rowText = (nameText + " " + metricText).toLowerCase();
+
+                        let show = true;
+
+                        if (metricValue !== "Любая") {
+                            if (metricText.indexOf(metricValue) === -1) {
+                                show = false;
+                            }
+                        }
+
+                        if (tagValue) {
+                            if (rowText.indexOf(tagValue) === -1) {
+                                show = false;
+                            }
+                        }
+
+                        if (show) {
+                            rows[i].style.display = "";
+                        } else {
+                            rows[i].style.display = "none";
+                        }
+                    }
+                });
+            }
+
+            if (resetButton && table && metricSelect && tagInput) {
+                resetButton.addEventListener("click", function () {
+                    metricSelect.value = "Любая";
+                    tagInput.value = "";
+
+                    const rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+                    for (let i = 0; i < rows.length; i++) {
+                        rows[i].style.display = "";
+                    }
+                });
+            }
+        </script>
+
+        <!-- Bootstrap JavaScript Libraries -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>
+

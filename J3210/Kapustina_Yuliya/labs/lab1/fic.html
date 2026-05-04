@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Фанфик</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        body {
+            background: white;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #ffa676, #fd7f59);
+        }
+
+        .fic-header {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .fic-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .fic-author {
+            font-size: 18px;
+            font-weight: 500;
+            color: #f35c2e;
+            margin-bottom: 10px;
+        }
+
+        .fic-description {
+            font-size: 16px;
+            font-style: italic;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background: #ffd8c4;
+            color: #f4511e;
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .stats {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .stats i {
+            color: #ff7043;
+            margin-right: 3px;
+        }
+
+        .buttons {
+            margin-bottom: 15px;
+        }
+
+        .buttons .btn {
+            margin-right: 10px;
+        }
+
+        .chapter-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .fanfic-text {
+            line-height: 1.8;
+            font-size: 17px;
+            color: #2d3748;
+        }
+
+
+        #art-gallery {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        #art-gallery img {
+            flex: 0 0 auto;
+            height: 150px;
+            border-radius: 10px;
+        }
+
+        .comment {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #fic-text h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .btn-main {
+            background: #ff7043;
+            color: white;
+        }
+
+        .btn-like {
+            background: #ff5943;
+            color: white;
+        }
+
+        .btn-main:hover {
+            background: #fd7867;
+            color: white;
+        }
+
+
+        .btn-main:hover {
+            background: #f4511e;
+            color: white;
+        }
+
+        .footer {
+            background: #ff8a65;
+            color: white;
+            padding: 30px;
+            margin-top: 60px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">FanFicLib</a>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="search.html">Поиск</a></li>
+                    <li class="nav-item"><a class="nav-link" href="write.html">Написать фанфик</a></li>
+                </ul>
+                <a class="btn btn-light me-2" href="login.html">Вход</a>
+                <a class="btn btn-dark" href="register.html">Регистрация</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+
+        <article>
+
+            <header class="fic-header">
+                <h1 id="fic-title" class="fic-title">Тайна Хогвартса</h1>
+                <p id="fic-author" class="fic-author">Автор: Alex</p>
+                <p id="fic-description" class="fic-description">
+                    Этот фанфик рассказывает о таинственных событиях в Хогвартсе, когда Гарри и его друзья сталкиваются
+                    с неизвестной магией, угрожающей школе.
+                </p>
+
+                <div id="tags" class="mb-3">
+                    <span class="tag">магия</span>
+                    <span class="tag">приключения</span>
+                    <span class="tag">драма</span>
+                </div>
+
+                <div class="stats">
+                    <span><i class="bi bi-eye"></i> <span id="views-count">12000</span> просмотров</span>
+                    <span class="ms-3"><i class="bi bi-heart"></i> <span id="likes-count">450</span> лайков</span>
+                    <span class="ms-3"><i class="bi bi-chat"></i> <span id="comments-count">2</span> комментария</span>
+                </div>
+
+                <div class="buttons">
+                    <button id="like-btn" class="btn btn-like"><i class="bi bi-heart"></i> Лайк</button>
+                    <button id="fav-btn" class="btn btn-main"><i class="bi bi-bookmark"></i> В избранное</button>
+                </div>
+            </header>
+
+            <section>
+                <div id="fic-text" class="fanfic-text">
+                    <h2>Глава 1: Таинственный звук</h2>
+                    <p>Гарри шел по коридору, когда внезапно услышал странный звук...</p>
+                    <p>Он осторожно заглянул за угол и увидел магический свет, который мерцал в темноте.</p>
+                </div>
+            </section>
+
+            <section class="mt-4">
+                <h3>Арты</h3>
+                <div id="art-gallery">
+                    <img src="pics/art1.jpg" alt="арт 1">
+                    <img src="pics/art2.jpg" alt="арт 2">
+                    <img src="pics/art3.jpg" alt="арт 3">
+                    <img src="pics/art4.jpg" alt="арт 4">
+                </div>
+            </section>
+
+            <section class="mt-4" id="comments-section">
+                <h3>Комментарии</h3>
+
+                <div id="comments-container">
+                    <div class="comment"><strong>User1</strong>: Крутая история!</div>
+                    <div class="comment"><strong>User2</strong>: Жду продолжения!</div>
+                </div>
+
+                <div class="mt-3">
+                    <input type="text" id="comment-input" class="form-control mb-2"
+                        placeholder="Написать комментарий...">
+                    <button id="comment-btn" class="btn btn-main">Отправить</button>
+                </div>
+            </section>
+
+        </article>
+
+    </main>
+
+    <footer class="footer text-center">
+        <p>© 2026 FanFicLib</p>
+        <p>Платформа для фанфиков</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

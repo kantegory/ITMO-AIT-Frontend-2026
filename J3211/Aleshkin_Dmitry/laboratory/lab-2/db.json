@@ -1,0 +1,290 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Иван Иванов",
+      "email": "ivan@example.com",
+      "password": "123456",
+      "verified": true,
+      "joinedDate": "2024-01-15"
+    }
+  ],
+  "accounts": [
+    {
+      "id": 1,
+      "userId": 1,
+      "name": "Основной счет",
+      "bank": "Сбербанк",
+      "type": "debit",
+      "balance": 125450,
+      "currency": "RUB",
+      "icon": "bi-bank"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "name": "Зарплатная карта",
+      "bank": "Тинькофф",
+      "type": "credit",
+      "balance": 85340,
+      "currency": "RUB",
+      "icon": "bi-credit-card-2-front"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "name": "Наличные",
+      "bank": "Кошелек",
+      "type": "cash",
+      "balance": 15100,
+      "currency": "RUB",
+      "icon": "bi-wallet"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "name": "USD Счет",
+      "bank": "Сбережения",
+      "type": "currency",
+      "balance": 2300,
+      "currency": "USD",
+      "icon": "bi-currency-dollar"
+    }
+  ],
+  "transactions": [
+    {
+      "id": 1,
+      "userId": 1,
+      "accountId": 1,
+      "date": "2026-03-10",
+      "description": "Пятёрочка",
+      "category": "products",
+      "categoryName": "Продукты",
+      "amount": -2450,
+      "type": "expense",
+      "icon": "bi-cart"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "accountId": 2,
+      "date": "2026-03-09",
+      "description": "Зарплата",
+      "category": "income",
+      "categoryName": "Доход",
+      "amount": 85000,
+      "type": "income",
+      "icon": "bi-arrow-down"
+    },
+    {
+      "id": 3,
+      "userId": 2,
+      "accountId": 1,
+      "date": "2026-03-08",
+      "description": "АЗС Лукойл",
+      "category": "transport",
+      "categoryName": "Транспорт",
+      "amount": -2100,
+      "type": "expense",
+      "icon": "bi-car-front"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "accountId": 3,
+      "date": "2026-03-07",
+      "description": "Кинотеатр",
+      "category": "entertainment",
+      "categoryName": "Развлечения",
+      "amount": -800,
+      "type": "expense",
+      "icon": "bi-film"
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "accountId": 1,
+      "date": "2026-03-05",
+      "description": "Коммунальные услуги",
+      "category": "utilities",
+      "categoryName": "Коммуналка",
+      "amount": -5600,
+      "type": "expense",
+      "icon": "bi-lightning"
+    }
+  ],
+  "budgets": [
+    {
+      "id": 1,
+      "userId": 1,
+      "category": "products",
+      "categoryName": "Продукты",
+      "limit": 20000,
+      "spent": 15000,
+      "icon": "bi-cart",
+      "color": "primary"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "category": "transport",
+      "categoryName": "Транспорт",
+      "limit": 5000,
+      "spent": 3200,
+      "icon": "bi-car-front",
+      "color": "success"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "category": "entertainment",
+      "categoryName": "Развлечения",
+      "limit": 10000,
+      "spent": 8500,
+      "icon": "bi-film",
+      "color": "warning"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "category": "clothes",
+      "categoryName": "Одежда",
+      "limit": 8000,
+      "spent": 2100,
+      "icon": "bi-bag",
+      "color": "danger"
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "category": "health",
+      "categoryName": "Здоровье",
+      "limit": 5000,
+      "spent": 1500,
+      "icon": "bi-heart-pulse",
+      "color": "info"
+    }
+  ],
+  "banks": [
+    {
+      "id": 1,
+      "name": "Сбербанк",
+      "icon": "bi-bank",
+      "color": "primary"
+    },
+    {
+      "id": 2,
+      "name": "Тинькофф",
+      "icon": "bi-credit-card",
+      "color": "warning"
+    },
+    {
+      "id": 3,
+      "name": "Альфа-Банк",
+      "icon": "bi-bank",
+      "color": "danger"
+    },
+    {
+      "id": 4,
+      "name": "ВТБ",
+      "icon": "bi-bank",
+      "color": "primary"
+    },
+    {
+      "id": 5,
+      "name": "Газпромбанк",
+      "icon": "bi-bank",
+      "color": "info"
+    }
+  ],
+  "rules": [
+    {
+      "id": 1,
+      "userId": 1,
+      "keywords": "Пятёрочка, Магнит, Перекрёсток",
+      "categoryId": "products",
+      "categoryName": "Продукты",
+      "accountId": "all",
+      "active": true
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "keywords": "АЗС, Лукойл, Роснефть",
+      "categoryId": "transport",
+      "categoryName": "Транспорт",
+      "accountId": "all",
+      "active": true
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "keywords": "Кинотеатр, Netflix, Spotify",
+      "categoryId": "entertainment",
+      "categoryName": "Развлечения",
+      "accountId": "all",
+      "active": true
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "keywords": "Зарплата, ООО Компания",
+      "categoryId": "income",
+      "categoryName": "Доход",
+      "accountId": "salary",
+      "active": true
+    }
+  ],
+  "userBanks": [
+    {
+      "id": 1,
+      "userId": 1,
+      "name": "Сбербанк",
+      "icon": "bi-bank",
+      "color": "primary",
+      "connected": true,
+      "lastSync": "2 часа назад",
+      "error": false
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "name": "Тинькофф",
+      "icon": "bi-credit-card",
+      "color": "warning",
+      "connected": true,
+      "lastSync": "5 часов назад",
+      "error": false
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "name": "Альфа-Банк",
+      "icon": "bi-bank",
+      "color": "danger",
+      "connected": false,
+      "lastSync": "2 дня назад",
+      "error": true
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "name": "ВТБ",
+      "icon": "bi-bank",
+      "color": "primary",
+      "connected": false,
+      "lastSync": null,
+      "error": false
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "name": "Газпромбанк",
+      "icon": "bi-bank",
+      "color": "info",
+      "connected": false,
+      "lastSync": null,
+      "error": false
+    }
+  ]
+}

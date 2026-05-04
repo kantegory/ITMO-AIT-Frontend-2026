@@ -1,0 +1,86 @@
+input, select, textarea {
+    text-transform: uppercase;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.input-prefix {
+    padding-right: 12px;
+    font-weight: 700;
+}
+
+.terminal-input, select {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--border-color);
+    padding: 8px 0;
+    outline: 2px solid transparent;
+    min-height: 35px;
+}
+
+.terminal-input:focus, select:focus {
+    border-bottom-color: var(--accent-color);
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.terminal-btn {
+    display: block;
+    width: 100%;
+    background: var(--surface-color);
+    color: var(--border-color);
+    border: var(--border);
+    padding: 12px 20px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    margin-top: 10px;
+    transition: all 0.1s;
+}
+
+.terminal-btn:hover:not(:disabled) {
+    background: var(--border-color);
+    color: var(--surface-color);
+}
+
+.terminal-btn:disabled {
+    color: #767676;
+    border-color: #767676;
+    opacity: 1;
+    cursor: not-allowed;
+}
+
+.input-income {
+    border-bottom-color: var(--income-color) !important;
+}
+
+.input-expense {
+    border-bottom-color: var(--expense-color) !important;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

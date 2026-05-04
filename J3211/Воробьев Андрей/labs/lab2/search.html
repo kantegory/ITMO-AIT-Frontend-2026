@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Транзакции - Мои прекрасные расходы</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<div id="postlogin-site-navbar"></div>
+
+<main class="container mt-3">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+        <h2 class="fw-bold mb-0">История операций</h2>
+        <div class="d-grid d-md-flex gap-3">
+            <button class="btn btn-primary btn-custom" id="addAccountRule">+ Правило</button>
+            <button class="btn btn-primary btn-custom" id="addTransactionBtn">+ Транзакция</button>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            <form class="row g-3" id="filterForm" onsubmit="filterTransactions(event)">
+                <div class="col-md-3">
+                    <label class="form-label fw-bold me-2">Период</label>
+                    <label>
+                        <select class="form-select" name="period">
+                            <option>Март 2026</option>
+                            <option>Февраль 2026</option>
+                            <option>Весь период</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold me-2">Категория</label>
+                    <label>
+                        <select class="form-select" name="category">
+                            <option>Все категории</option>
+                            <option>Продукты</option>
+                            <option>Зарплата</option>
+                            <option>Транспорт</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold me-2">Счёт</label>
+                    <label>
+                        <select class="form-select" name="account">
+                            <option>Все счета</option>
+                            <option>Основная карта</option>
+                            <option>Наличные</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-outline-secondary w-100 fw-bold">Найти</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <div class="table-responsive">
+                <table class="table table-custom align-middle">
+                    <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Категория</th>
+                        <th>Счёт</th>
+                        <th>Комментарий</th>
+                        <th class="text-end">Сумма</th>
+                    </tr>
+                    </thead>
+                    <tbody id="transactionsTableBody">
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">Загрузка транзакций...</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer id="site-footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+<script type="module" src="js/core/includes.js"></script>
+<script type="module" src="js/pages/search.js"></script>
+
+</body>
+</html>
