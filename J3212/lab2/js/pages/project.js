@@ -36,6 +36,12 @@
       var card = document.createElement('div');
       card.className = 'card kanban-card mb-2 task-clickable';
       card.draggable = true;
+      card.tabIndex = 0;
+      card.setAttribute('role', 'listitem');
+      card.setAttribute('aria-label',
+        global.ProjectHubUI.getStatusLabel(task.status) + ': ' + (task.title || '') +
+        (task.priority ? ', приоритет ' + global.ProjectHubUI.getPriorityLabel(task.priority) : '')
+      );
       card.dataset.taskId = String(task.id || '');
 
       var badge = task.priority
@@ -69,6 +75,13 @@
         openTaskDetails(card.dataset.taskId);
       });
 
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openTaskDetails(card.dataset.taskId);
+        }
+      });
+
       column.appendChild(card);
     }
 
@@ -79,6 +92,9 @@
       var row = document.createElement('tr');
       row.className = 'task-clickable';
       row.dataset.taskId = String(task.id || '');
+      row.tabIndex = 0;
+      row.setAttribute('role', 'button');
+      row.setAttribute('aria-label', 'Открыть задачу: ' + (task.title || ''));
 
       row.innerHTML =
         '<td>' + global.ProjectHubUI.escapeHtml(task.title) + '</td>' +
@@ -90,6 +106,13 @@
 
       row.addEventListener('click', function () {
         openTaskDetails(row.dataset.taskId);
+      });
+
+      row.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openTaskDetails(row.dataset.taskId);
+        }
       });
 
       tbody.appendChild(row);
