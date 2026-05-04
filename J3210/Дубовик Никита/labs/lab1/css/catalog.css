@@ -1,0 +1,151 @@
+#filterSidebar {
+    background: linear-gradient(
+            145deg,
+            #f8f9ff 0%,
+            #ffffff 100%
+    );
+
+    border: 1px solid rgba(0, 123, 255, 0.15);
+    border-radius: 16px;
+
+    box-shadow:
+            0 4px 20px rgba(0, 123, 255, 0.06),
+            0 2px 6px rgba(0, 0, 0, 0.04);
+
+    transition:
+            box-shadow 0.25s ease,
+            border-color 0.25s ease;
+
+    padding: 1.25rem;
+    position: sticky;
+    top: 100px;
+    z-index: 10;
+}
+
+[data-bs-theme="dark"] #filterSidebar,
+body.dark-mode #filterSidebar {
+    background: linear-gradient(
+            145deg,
+            #2b3035 0%,
+            #22262b 100%
+    );
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow:
+            0 4px 20px rgba(0, 0, 0, 0.2),
+            0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#filterSidebar:hover {
+    box-shadow:
+            0 6px 24px rgba(0, 123, 255, 0.09),
+            0 3px 8px rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 123, 255, 0.25);
+}
+
+[data-bs-theme="dark"] #filterSidebar:hover,
+body.dark-mode #filterSidebar:hover {
+    box-shadow:
+            0 6px 24px rgba(0, 0, 0, 0.25),
+            0 3px 8px rgba(0, 0, 0, 0.35);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+#filterSidebar .fw-bold {
+    color: var(--bs-body-color, #212529);
+    font-weight: 600;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem !important;
+    border-bottom: 1px solid rgba(0, 123, 255, 0.12);
+}
+
+[data-bs-theme="dark"] #filterSidebar .fw-bold,
+body.dark-mode #filterSidebar .fw-bold {
+    color: #f8f9fa;
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+#filterSidebar .form-check-label,
+#filterSidebar .form-text {
+    color: var(--bs-body-color, #495057);
+    font-size: 0.9rem;
+}
+
+[data-bs-theme="dark"] #filterSidebar .form-check-label,
+[data-bs-theme="dark"] #filterSidebar .form-text,
+body.dark-mode #filterSidebar .form-check-label,
+body.dark-mode #filterSidebar .form-text {
+    color: #adb5bd;
+}
+
+#filterSidebar .form-control,
+#filterSidebar .form-select {
+    background: #fff;
+    border: 1px solid rgba(0, 123, 255, 0.2);
+}
+
+[data-bs-theme="dark"] #filterSidebar .form-control,
+[data-bs-theme="dark"] #filterSidebar .form-select,
+body.dark-mode #filterSidebar .form-control,
+body.dark-mode #filterSidebar .form-select {
+    background: #2a2e33;
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] #filterSidebar .form-control:focus,
+[data-bs-theme="dark"] #filterSidebar .form-select:focus,
+body.dark-mode #filterSidebar .form-control:focus,
+body.dark-mode #filterSidebar .form-select:focus {
+    background: #2a2e33;
+    border-color: rgba(100, 180, 255, 0.6);
+    box-shadow: 0 0 0 0.2rem rgba(100, 180, 255, 0.15);
+    color: #f8f9fa;
+}
+
+#filterSidebar .btn-primary {
+    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    border: none;
+    box-shadow: 0 3px 10px rgba(13, 110, 253, 0.2);
+    transition: all 0.2s ease;
+}
+
+#filterSidebar .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(13, 110, 253, 0.28);
+}
+
+#filterSidebar .btn-outline-secondary {
+    border-color: rgba(108, 117, 125, 0.35);
+    color: var(--bs-body-color, #495057);
+}
+
+[data-bs-theme="dark"] #filterSidebar .btn-outline-secondary,
+body.dark-mode #filterSidebar .btn-outline-secondary {
+    border-color: rgba(255, 255, 255, 0.35);
+    color: #f8f9fa;
+}
+
+#filterSidebar .btn-outline-secondary:hover {
+    background: rgba(108, 117, 125, 0.08);
+    border-color: rgba(108, 117, 125, 0.6);
+}
+
+[data-bs-theme="dark"] #filterSidebar .btn-outline-secondary:hover,
+body.dark-mode #filterSidebar .btn-outline-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 991px) {
+    #filterSidebar {
+        position: static;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 12px rgba(0, 123, 255, 0.04);
+    }
+
+    [data-bs-theme="dark"] #filterSidebar,
+    body.dark-mode #filterSidebar {
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    }
+}

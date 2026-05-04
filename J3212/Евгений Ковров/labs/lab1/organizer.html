@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="ru" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Контрамарка — Кабинет организатора</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" href="index.html">
+      <span class="badge brand-badge text-white">КМ</span>
+      Контрамарка
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="topNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="index.html">События</a></li>
+        <li class="nav-item"><a class="nav-link active" href="organizer.html">Организатору</a></li>
+      </ul>
+
+      <div class="d-flex gap-2">
+        <a class="btn btn-outline-secondary" href="login.html">Вход</a>
+        <a class="btn btn-primary" href="register.html">Регистрация</a>
+        <a class="btn btn-outline-primary" href="profile.html">Профиль</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="py-4">
+  <div class="container">
+    <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-2 mb-3">
+      <div>
+        <h1 class="h4 fw-semibold mb-1">Кабинет организатора</h1>
+        <div class="text-secondary">События, продажи, статусы и быстрые действия в одном месте.</div>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#payoutModal">
+          Выплаты
+        </button>
+        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#createEventModal">
+          Создать событие
+        </button>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="border rounded-4 p-3 p-lg-4">
+          <h2 class="h6 mb-3">Сводка</h2>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="text-secondary">Активных событий</div>
+            <div class="fw-semibold">3</div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <div class="text-secondary">Билетов продано (неделя)</div>
+            <div class="fw-semibold">148</div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <div class="text-secondary">Возвраты (неделя)</div>
+            <div class="fw-semibold">6</div>
+          </div>
+
+          <hr>
+
+          <div class="text-secondary small mb-2">Текущий баланс</div>
+          <div class="h4 fw-semibold mb-1">184 000 ₽</div>
+          <div class="text-secondary small">Ожидает выплаты: 56 000 ₽</div>
+
+          <button class="btn btn-outline-primary w-100 mt-3" type="button" data-bs-toggle="modal" data-bs-target="#payoutModal">
+            Запросить выплату
+          </button>
+        </div>
+
+        <div class="border rounded-4 p-3 p-lg-4 mt-4">
+          <h2 class="h6 mb-3">Быстрые настройки</h2>
+          <form>
+            <label class="form-label">Имя организатора</label>
+            <input class="form-control mb-3" value="Северная Сцена">
+
+            <label class="form-label">Эл. почта для уведомлений</label>
+            <input class="form-control mb-3" value="team@severscene.ru">
+
+            <label class="form-label">Телефон поддержки</label>
+            <input class="form-control mb-3" value="+7 812 600-12-12">
+
+            <button class="btn btn-primary w-100" type="button">Сохранить</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="border rounded-4 p-3 p-lg-4">
+          <div class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-md-center mb-3">
+            <h2 class="h6 mb-0">Мои события</h2>
+
+            <div class="d-flex gap-2">
+              <input class="form-control form-control-sm" placeholder="Поиск по названию">
+              <select class="form-select form-select-sm w-auto">
+                <option selected>Все статусы</option>
+                <option>Опубликовано</option>
+                <option>Черновик</option>
+                <option>Завершено</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table align-middle">
+              <thead>
+                <tr>
+                  <th>Событие</th>
+                  <th class="text-nowrap">Дата</th>
+                  <th class="text-nowrap">Продажи</th>
+                  <th class="text-nowrap">Статус</th>
+                  <th class="text-end">Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="fw-semibold">Джаз в Полуторке</div>
+                    <div class="text-secondary small">Санкт-Петербург • Новая Голландия, сцена «Полуторка»</div>
+                  </td>
+                  <td class="text-nowrap">12.03 20:00</td>
+                  <td class="text-nowrap">
+                    <div class="d-flex flex-column gap-1">
+                      <div class="d-flex justify-content-between small">
+                        <span class="text-secondary">76 / 120</span>
+                        <span class="text-secondary">63%</span>
+                      </div>
+                      <div class="progress" role="progressbar" aria-label="Sales" aria-valuenow="63" aria-valuemin="0" aria-valuemax="100" style="height: 8px;">
+                        <div class="progress-bar" style="width: 63%"></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="badge text-bg-success">Опубликовано</span></td>
+                  <td class="text-end">
+                    <div class="btn-group">
+                      <a class="btn btn-sm btn-outline-secondary" href="event-jazz.html">Открыть</a>
+                      <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#manageModal" data-title="Джаз в Полуторке">
+                        Управление
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="fw-semibold">Стендап: Пятничный микрофон</div>
+                    <div class="text-secondary small">Санкт-Петербург • Бар на Рубинштейна</div>
+                  </td>
+                  <td class="text-nowrap">15.03 19:30</td>
+                  <td class="text-nowrap">
+                    <div class="d-flex flex-column gap-1">
+                      <div class="d-flex justify-content-between small">
+                        <span class="text-secondary">49 / 90</span>
+                        <span class="text-secondary">54%</span>
+                      </div>
+                      <div class="progress" role="progressbar" aria-label="Sales" aria-valuenow="54" aria-valuemin="0" aria-valuemax="100" style="height: 8px;">
+                        <div class="progress-bar" style="width: 54%"></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="badge text-bg-success">Опубликовано</span></td>
+                  <td class="text-end">
+                    <div class="btn-group">
+                      <a class="btn btn-sm btn-outline-secondary" href="event-standup.html">Открыть</a>
+                      <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#manageModal" data-title="Стендап: Пятничный микрофон">
+                        Управление
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="fw-semibold">Невская фотоэкспо</div>
+                    <div class="text-secondary small">Санкт-Петербург • Севкабель Порт, павильон B</div>
+                  </td>
+                  <td class="text-nowrap">22.03 11:00</td>
+                  <td class="text-nowrap">
+                    <div class="d-flex flex-column gap-1">
+                      <div class="d-flex justify-content-between small">
+                        <span class="text-secondary">0 / 200</span>
+                        <span class="text-secondary">0%</span>
+                      </div>
+                      <div class="progress" role="progressbar" aria-label="Sales" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="height: 8px;">
+                        <div class="progress-bar" style="width: 0%"></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="badge text-bg-secondary">Черновик</span></td>
+                  <td class="text-end">
+                    <div class="btn-group">
+                      <a class="btn btn-sm btn-outline-secondary" href="event-jazz.html">Открыть</a>
+                      <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#manageModal" data-title="Невская фотоэкспо">
+                        Управление
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<div class="modal fade" id="createEventModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4">
+      <div class="modal-header">
+        <h5 class="modal-title">Создать событие</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <form>
+          <div class="row g-3">
+            <div class="col-md-8">
+              <label class="form-label">Название</label>
+              <input class="form-control" placeholder="Например, Джаз в Полуторке: весенний вечер" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Тип</label>
+              <select class="form-select">
+                <option selected>Концерт</option>
+                <option>Стендап</option>
+                <option>Спорт</option>
+                <option>Выставка</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Город</label>
+              <input class="form-control" placeholder="Санкт-Петербург" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Площадка</label>
+              <input class="form-control" placeholder="Новая Голландия, сцена «Полуторка»" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Дата</label>
+              <input type="date" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Время</label>
+              <input type="time" class="form-control" required>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Вместимость</label>
+              <input type="number" class="form-control" value="120" min="1">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Цена от</label>
+              <input type="number" class="form-control" value="1200" min="0">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Возраст</label>
+              <select class="form-select">
+                <option selected>18+</option>
+                <option>16+</option>
+                <option>12+</option>
+                <option>0+</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Описание</label>
+              <textarea class="form-control" rows="4" placeholder="Коротко: что это, почему стоит прийти, что важно знать."></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button class="btn btn-primary" data-bs-dismiss="modal">Сохранить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="manageModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header">
+        <h5 class="modal-title">Управление событием</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="text-secondary">Событие:</div>
+        <div class="fw-semibold" id="manageEventTitle">—</div>
+
+        <hr>
+
+        <div class="d-grid gap-2">
+          <button class="btn btn-outline-secondary" type="button">Редактировать</button>
+          <button class="btn btn-outline-secondary" type="button">Посмотреть список продаж</button>
+          <button class="btn btn-outline-secondary" type="button">Остановить продажи</button>
+          <button class="btn btn-outline-danger" type="button">Снять с публикации</button>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="payoutModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header">
+        <h5 class="modal-title">Выплаты</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="text-secondary mb-2">Доступно к выплате</div>
+        <div class="h4 fw-semibold mb-3">56 000 ₽</div>
+
+        <label class="form-label">Сумма</label>
+        <input class="form-control mb-3" type="number" value="56000" min="0">
+
+        <label class="form-label">Счёт</label>
+        <input class="form-control mb-1" placeholder="40817 810 0 0000 0000000">
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button class="btn btn-primary" data-bs-dismiss="modal">Запросить выплату</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  (function () {
+    const manageModal = document.getElementById('manageModal');
+    const manageEventTitle = document.getElementById('manageEventTitle');
+
+    if (!manageModal || !manageEventTitle) return;
+
+    manageModal.addEventListener('show.bs.modal', (event) => {
+      const button = event.relatedTarget;
+      const title = button?.getAttribute('data-title') || '—';
+      manageEventTitle.textContent = title;
+    });
+  })();
+</script>
+
+</body>
+</html>
