@@ -8,47 +8,56 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">ProjectHub</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Меню">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto align-items-center">
-          <li class="nav-item"><a class="nav-link" href="index.html" data-i18n="nav_home">Главная</a></li>
-          <li class="nav-item"><a class="nav-link active" href="login.html" data-i18n="nav_login">Вход</a></li>
-          <li class="nav-item"><a class="nav-link" href="register.html" data-i18n="nav_register">Регистрация</a></li>
-          <li class="nav-item ms-2"><span class="navbar-text small"><a href="#" class="text-white text-decoration-none" data-i18n-set="ru">RU</a><span class="mx-1">|</span><a href="#" class="text-white text-decoration-none" data-i18n-set="en">EN</a></span></li>
-        </ul>
+  <a href="#main-content" class="visually-hidden-focusable bg-primary text-white p-2">Перейти к основному содержимому</a>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="Основная навигация">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">ProjectHub</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Открыть меню">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item"><a class="nav-link" href="index.html" data-i18n="nav_home">Главная</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="login.html" data-i18n="nav_login">Вход</a></li>
+            <li class="nav-item"><a class="nav-link" href="register.html" data-i18n="nav_register">Регистрация</a></li>
+            <li class="nav-item ms-2" role="group" aria-label="Переключение языка">
+              <span class="navbar-text small">
+                <button type="button" class="btn btn-link btn-sm text-white text-decoration-none p-0" data-i18n-set="ru">RU</button>
+                <span class="mx-1" aria-hidden="true">|</span>
+                <button type="button" class="btn btn-link btn-sm text-white text-decoration-none p-0" data-i18n-set="en">EN</button>
+              </span>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </header>
 
-  <main class="auth-wrapper">
+  <main id="main-content" class="auth-wrapper" tabindex="-1">
     <div class="container">
-      <div class="auth-card card shadow mx-auto p-4">
-        <h2 class="text-center mb-4" data-i18n="login_title">Вход в аккаунт</h2>
-        <form id="login-form">
+      <section class="auth-card card shadow mx-auto p-4" aria-labelledby="login-title">
+        <h2 id="login-title" class="text-center mb-4" data-i18n="login_title">Вход в аккаунт</h2>
+        <form id="login-form" aria-describedby="login-error" novalidate>
           <div class="mb-3">
             <label for="login-email" class="form-label" data-i18n="login_email">Email</label>
-            <input type="email" class="form-control" id="login-email" data-i18n-placeholder="login_email" placeholder="name@example.com" required>
+            <input type="email" class="form-control" id="login-email" data-i18n-placeholder="login_email" placeholder="name@example.com" required autocomplete="email">
           </div>
           <div class="mb-3">
             <label for="login-password" class="form-label" data-i18n="login_password">Пароль</label>
-            <input type="password" class="form-control" id="login-password" required>
+            <input type="password" class="form-control" id="login-password" required autocomplete="current-password">
           </div>
           <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" id="login-remember">
             <label class="form-check-label" for="login-remember" data-i18n="login_remember">Запомнить меня</label>
           </div>
-          <div id="login-error" class="alert alert-danger d-none" role="alert"></div>
+          <div id="login-error" class="alert alert-danger d-none" role="alert" aria-live="polite"></div>
           <button type="submit" class="btn btn-primary w-100" data-i18n="login_submit">Войти</button>
         </form>
         <p class="text-center mt-3 mb-0 small text-muted">
           <span data-i18n="login_no_account">Нет аккаунта?</span> <a href="register.html" data-i18n="login_register_link">Зарегистрироваться</a>
         </p>
-      </div>
+      </section>
     </div>
   </main>
 

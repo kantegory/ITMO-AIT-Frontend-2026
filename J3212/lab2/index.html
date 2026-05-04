@@ -8,34 +8,37 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">ProjectHub</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Меню">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto align-items-center">
-          <li class="nav-item"><a class="nav-link active" href="index.html" data-i18n="nav_home">Главная</a></li>
-          <li class="nav-item"><a class="nav-link" href="login.html" data-i18n="nav_login">Вход</a></li>
-          <li class="nav-item"><a class="nav-link" href="register.html" data-i18n="nav_register">Регистрация</a></li>
-          <li class="nav-item ms-2">
-            <span class="navbar-text small">
-              <a href="#" class="text-white text-decoration-none" data-i18n-set="ru">RU</a>
-              <span class="mx-1">|</span>
-              <a href="#" class="text-white text-decoration-none" data-i18n-set="en">EN</a>
-            </span>
-          </li>
-        </ul>
+  <a href="#main-content" class="visually-hidden-focusable bg-primary text-white p-2">Перейти к основному содержимому</a>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="Основная навигация">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">ProjectHub</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Открыть меню">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html" data-i18n="nav_home">Главная</a></li>
+            <li class="nav-item"><a class="nav-link" href="login.html" data-i18n="nav_login">Вход</a></li>
+            <li class="nav-item"><a class="nav-link" href="register.html" data-i18n="nav_register">Регистрация</a></li>
+            <li class="nav-item ms-2" role="group" aria-label="Переключение языка">
+              <span class="navbar-text small">
+                <button type="button" class="btn btn-link btn-sm text-white text-decoration-none p-0" data-i18n-set="ru">RU</button>
+                <span class="mx-1" aria-hidden="true">|</span>
+                <button type="button" class="btn btn-link btn-sm text-white text-decoration-none p-0" data-i18n-set="en">EN</button>
+              </span>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </header>
 
-  <main class="py-5">
+  <main id="main-content" class="py-5" tabindex="-1">
     <div class="container">
-      <div class="row align-items-center">
+      <section aria-labelledby="hero-title" class="row align-items-center">
         <div class="col-lg-6">
-          <h1 class="display-4 fw-bold mb-4" data-i18n="index_hero">Управляйте проектами и командой в одном месте</h1>
+          <h1 id="hero-title" class="display-4 fw-bold mb-4" data-i18n="index_hero">Управляйте проектами и командой в одном месте</h1>
           <p class="lead text-muted mb-4" data-i18n="index_lead">
             Создавайте проекты, распределяйте задачи, отслеживайте сроки и обсуждайте идеи с командой.
           </p>
@@ -49,7 +52,7 @@
             <p class="text-muted mb-0 small" data-i18n="index_tagline">Сервис для управления проектами и командной работы</p>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   </main>
 
