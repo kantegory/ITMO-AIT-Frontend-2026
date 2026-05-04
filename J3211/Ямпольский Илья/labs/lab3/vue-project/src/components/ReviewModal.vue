@@ -84,7 +84,7 @@ export default {
         const reviewData = {
           eventId: props.eventId,
           userId: user.id,
-          userName: anonymous.value ? 'Аноним' : (user.firstName + ' ' + user.lastName),
+          userName: anonymous.value ? 'Аноним' : `${user.firstName} ${user.lastName}`,
           rating: rating.value,
           text: reviewText.value.trim(),
           anonymous: anonymous.value,
@@ -185,20 +185,4 @@ export default {
   font-size: 1.1rem;
 }
 
-.rating-select .btn-warning {
-  background: #ffc107 !important;
-  border-color: #ffc107 !important;
-  color: #000000 !important;
-}
-
-.rating-select .btn-outline-warning {
-  border-color: #ffc107 !important;
-  color: #ffc107 !important;
-  background: transparent !important;
-}
-
-.rating-select .btn-outline-warning:hover {
-  background: #ffc107 !important;
-  color: #000000 !important;
-}
 </style>

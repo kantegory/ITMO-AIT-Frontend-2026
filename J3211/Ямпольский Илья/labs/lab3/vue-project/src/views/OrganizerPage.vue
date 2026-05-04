@@ -66,7 +66,7 @@
                 </td>
                 <td>
                   <SvgIcon name="icon-chart" size="sm" class="me-2"/>
-                  {{ formatPrice(getSoldCount(event.id) * event.price) }} ₽
+                  {{ formatPrice(getEventRevenue(event)) }} ₽
                 </td>
                 <td>
                   <button type="button" class="btn btn-sm btn-outline-danger" @click="deleteEvent(event.id)">
@@ -138,6 +138,10 @@ export default {
       return count
     }
 
+    const getEventRevenue = (event) => {
+      return getSoldCount(event.id) * event.price
+    }
+
     const formatDate = (date) => {
       if (!date) return ''
       if (date.includes('-')) {
@@ -183,6 +187,7 @@ export default {
       formatDate,
       formatPrice,
       getSoldCount,
+      getEventRevenue,
       deleteEvent,
       totalTicketsSold,
       totalRevenue,

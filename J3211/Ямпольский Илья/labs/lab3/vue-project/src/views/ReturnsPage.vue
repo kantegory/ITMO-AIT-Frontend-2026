@@ -46,7 +46,7 @@ export default {
         const ticket = ticketsMap.value[ret.ticketId]
         return {
           ...ret,
-          eventName: ticket ? ticket.eventName : 'Билет #' + ret.ticketId,
+          eventName: ticket ? ticket.eventName : `Билет #${ret.ticketId}`,
           seats: ticket ? ticket.seats : ''
         }
       })

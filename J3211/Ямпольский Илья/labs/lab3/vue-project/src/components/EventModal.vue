@@ -19,7 +19,7 @@
             <div class="info-section mb-3">
               <p class="text-muted mb-2">{{ event?.type || 'Мероприятие' }}</p>
               <p class="text-muted mb-2">
-                <strong>Место:</strong> {{ event?.city }}{{ event?.venue ? ', ' + event?.venue : '' }}
+                <strong>Место:</strong> {{ event?.city }}{{ event?.venue ? `, ${event?.venue}` : '' }}
               </p>
               <p class="text-muted mb-0">
                 <strong>Описание:</strong> {{ event?.description || 'Нет описания' }}
@@ -339,45 +339,6 @@ export default {
   border: 2px solid var(--border-color) !important;
 }
 
-.seat {
-  width: 32px !important;
-  height: 32px !important;
-  border-radius: 4px !important;
-  flex-shrink: 0 !important;
-  border: 2px solid var(--legend-border) !important;
-  cursor: pointer !important;
-  transition: all 0.2s !important;
-  font-size: 12px !important;
-  font-weight: bold !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  color: #ffffff !important;
-}
-
-.seat.available {
-  background: var(--seat-available) !important;
-  border-color: var(--seat-available-hover) !important;
-}
-
-.seat.available:hover {
-  background: var(--seat-available-hover) !important;
-  transform: scale(1.1) !important;
-}
-
-.seat.selected {
-  background: var(--seat-selected) !important;
-  border-color: var(--seat-selected-hover) !important;
-  color: #000000 !important;
-}
-
-.seat.sold {
-  background: var(--seat-sold) !important;
-  border-color: var(--seat-sold-border) !important;
-  cursor: not-allowed !important;
-  opacity: 0.6 !important;
-}
-
 .legend-seat {
   width: 18px;
   height: 18px;
@@ -423,8 +384,4 @@ export default {
   text-align: center !important;
 }
 
-.price-section .card {
-  border: none !important;
-  box-shadow: none !important;
-}
 </style>
