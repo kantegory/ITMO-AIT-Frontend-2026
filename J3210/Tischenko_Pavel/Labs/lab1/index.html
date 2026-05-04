@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Подвал обучения - курсы</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-main sticky-top">
+  <div class="container py-2">
+    <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" href="index.html">
+      <span class="navbar-brand-mark"></span>
+      <span>Подвал обучения</span>
+    </a>
+    <button class="navbar-toggler border-0 shadow-none" type="button"
+            data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Переключить навигацию">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="mainNav">
+      <ul class="navbar-nav me-3">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html#search">Каталог курсов</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="student.html">Кабинет студента</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="teacher.html">Кабинет преподавателя</a>
+        </li>
+      </ul>
+      <div class="d-flex gap-2">
+        <a href="auth.html#login" class="btn btn-sm btn-outline-soft">Вход</a>
+        <a href="auth.html#register" class="btn btn-sm btn-outline-primary pill">Регистрация</a>
+      </div>
+    </div>
+  </div>
+</nav>
+<main class="container py-4 py-md-5">
+  <section class="glass-card p-3 p-md-4 p-lg-5 mb-4 mb-md-5">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-6">
+        <h1 class="hero-title mb-3">
+          Сверху кампус, снизу железо. <span>Подвал обучения для тех, кто хочет изменить себя</span>
+        </h1>
+        <p class="hero-subtitle mb-4">
+          Пауэрлифтинг, кроссфит, классический фитнес: выбираешь трек под цель и закрываешь недели одну за другой.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mb-4">
+          <span class="filter-chip active">Пауэрлифтинг</span>
+          <span class="filter-chip">Кроссфит</span>
+          <span class="filter-chip">Фитнес</span>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+          <a href="#search" class="btn btn-gradient pill">
+            Найти курс
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div id="search" class="tab-card p-3 p-md-4">
+          <p class="section-label mb-1">Поиск курсов</p>
+          <h2 class="section-title mb-3">Подбери тренировки под свои цели</h2>
+          <form class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label small text-muted">Направление</label>
+              <select id="filterDirection" class="form-select form-select-sm">
+                <option value="">Любое</option>
+                <option value="powerlifting">Пауэрлифтинг</option>
+                <option value="crossfit">Кроссфит</option>
+                <option value="fitness">Фитнес</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small text-muted">Уровень</label>
+              <select id="filterLevel" class="form-select form-select-sm">
+                <option value="">Любой</option>
+                <option value="beginner">Начальный</option>
+                <option value="intermediate">Средний</option>
+                <option value="any">Любой уровень</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small text-muted">Минимальная стоимость, ₽</label>
+              <input id="filterMinPrice" type="number" class="form-control form-control-sm">
+            </div>
+            <div class="col-12 d-flex flex-wrap justify-content-between align-items-center mt-1">
+              <span class="small text-muted mb-2 mb-md-0">
+                Фильтрация по направлению, уровню и цене.
+              </span>
+              <button id="filterButton" type="button" class="btn btn-sm btn-gradient pill">
+                Показать курсы
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="mb-4 mb-md-5">
+    <div class="d-flex justify-content-between align-items-baseline mb-3">
+      <div>
+        <p class="section-label mb-1">Каталог</p>
+        <h2 class="section-title">Курсы Подвала обучения</h2>
+      </div>
+      <a href="#search" class="small text-primary text-decoration-none">
+        Перейти к расширенному поиску
+      </a>
+    </div>
+    <div class="row g-3 g-md-4">
+      <div class="col-md-3">
+        <article class="course-card h-100 p-3"
+                 data-direction="powerlifting"
+                 data-level="beginner"
+                 data-price="4900">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <span class="badge-soft px-2 py-1">Пауэрлифтинг · База</span>
+            <span class="badge-soft px-2 py-1">Уровень: начальный</span>
+          </div>
+          <h3 class="h6 mb-2">Пауэрлифтинг: база силы</h3>
+          <p class="card-text small text-muted mb-3">
+            База: присед, жим, тяга: техника, разминка и базовая программа на 8 недель.
+          </p>
+          <ul class="list-unstyled small text-muted mb-3">
+            <li>· 8 модулей</li>
+            <li>· Таблица прогресса и чек‑лист разминки</li>
+          </ul>
+          <p class="price-tag small mb-3">Стоимость: 4 900 ₽</p>
+          <a href="course.html" class="btn btn-sm btn-outline-soft w-100 pill">
+            Открыть страницу курса
+          </a>
+        </article>
+      </div>
+      <div class="col-md-3">
+        <article class="course-card h-100 p-3"
+                 data-direction="crossfit"
+                 data-level="intermediate"
+                 data-price="5900">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <span class="badge-soft px-2 py-1">Кроссфит</span>
+            <span class="badge-soft px-2 py-1">Уровень: средний</span>
+          </div>
+          <h3 class="h6 mb-2">Кроссфит</h3>
+          <p class="card-text small text-muted mb-3">
+            Базовые движения, разбор форматов тренировок и как не умереть на первом комплексе
+          </p>
+          <ul class="list-unstyled small text-muted mb-3">
+            <li>· 10 модулей</li>
+            <li>· Таблица прогресса и чек‑лист разминки</li>
+          </ul>
+          <p class="price-tag small mb-3">Стоимость: 5 900 ₽</p>
+          <a href="course.html" class="btn btn-sm btn-outline-soft w-100 pill">
+            Открыть страницу курса
+          </a>
+        </article>
+      </div>
+      <div class="col-md-3">
+        <article class="course-card h-100 p-3"
+                 data-direction="fitness"
+                 data-level="any"
+                 data-price="3500">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <span class="badge-soft px-2 py-1">Фитнес</span>
+            <span class="badge-soft px-2 py-1">Уровень: для всех</span>
+          </div>
+          <h3 class="h6 mb-2">Фитнес</h3>
+          <p class="card-text small text-muted mb-3">
+            Простой план тренировок на зал/дом, который можно вписать в реальную жизнь.
+          </p>
+          <ul class="list-unstyled small text-muted mb-3">
+            <li>· 3 тренировки в неделю</li>
+            <li>· Варианты упражнений с и без оборудования</li>
+          </ul>
+          <p class="price-tag small mb-3">Стоимость: 3 500 ₽</p>
+          <a href="course.html" class="btn btn-sm btn-outline-soft w-100 pill">
+            Открыть страницу курса
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="filter.js"></script>
+</body>
+</html>
+
