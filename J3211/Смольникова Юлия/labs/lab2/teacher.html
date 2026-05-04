@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Мои курсы — Learnify</title>
+    <link rel="icon" href="data:,">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+
+<body class="dashboard-page">
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo-wrap">
+                <a href="index.html" class="logo text-decoration-none">
+                    <span class="logo-mark">L</span>
+                    <span class="logo-text">Learnify</span>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <span class="nav-icon">▣</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="teacher.html" class="nav-item active">
+                    <span class="nav-icon">👨‍🏫</span>
+                    <span>Мои курсы</span>
+                </a>
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">🗂</span>
+                    <span>Все курсы</span>
+                </a>
+            </nav>
+        </aside>
+
+        <div class="main">
+            <header class="topbar">
+                <div class="topbar-search">
+                    <input type="text" class="form-control search-input" placeholder="Поиск...">
+                </div>
+                <div class="topbar-user">
+                    <div class="user-meta">
+                        <div class="user-name" id="topbarUserName">Преподаватель</div>
+                        <div class="user-role" id="topbarUserRole">Автор курсов</div>
+                    </div>
+                    <div class="user-avatar" onclick="logout()" style="cursor:pointer;" title="Выйти">P</div>
+                </div>
+            </header>
+
+            <main class="content">
+                <section>
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                        <div>
+                            <h1 class="page-title mb-1">Мои курсы</h1>
+                            <p class="page-subtitle mb-0">Управление курсами, материалами и уроками</p>
+                        </div>
+                        <button class="btn btn-primary-custom" type="button" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+                            Добавить курс
+                        </button>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <div class="card stat-card h-100">
+                                <div class="stat-label">Всего курсов</div>
+                                <div class="stat-value" id="teacherCoursesCount">0</div>
+                                <div class="stat-note">Создано</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card stat-card h-100">
+                                <div class="stat-label">Студентов</div>
+                                <div class="stat-value text-primary" id="teacherStudentsCount">0</div>
+                                <div class="stat-note">Записано</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card stat-card h-100">
+                                <div class="stat-label">Активных</div>
+                                <div class="stat-value text-success" id="teacherActiveCoursesCount">0</div>
+                                <div class="stat-note">В работе</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                                <h5 class="fw-bold mb-0">Мои курсы</h5>
+                                <small class="text-muted">Управление контентом</small>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Курс</th>
+                                            <th>Студенты</th>
+                                            <th>Статус</th>
+                                            <th>Действия</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="teacherCoursesList">
+                                        <tr>
+                                            <td colspan="4" class="text-center text-muted py-4">Загрузка...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="fw-bold mb-3">Добавить материал</h5>
+                                    <form id="uploadMaterialForm">
+                                        <div class="mb-3">
+                                            <label for="materialCourseSelect" class="form-label">Выберите курс</label>
+                                            <select class="form-select" id="materialCourseSelect">
+                                                <option value="">Выберите курс</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="materialTitle" class="form-label">Название материала</label>
+                                            <input type="text" class="form-control" id="materialTitle" placeholder="Конспект лекции 1">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="materialLink" class="form-label">Ссылка на ресурс</label>
+                                            <input type="text" class="form-control" id="materialLink" placeholder="https://example.com/file.pdf">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary-custom w-100">Добавить материал</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="fw-bold mb-3">Добавить урок</h5>
+                                    <form id="addLessonForm">
+                                        <div class="mb-3">
+                                            <label for="lessonCourseSelect" class="form-label">Курс</label>
+                                            <select class="form-select" id="lessonCourseSelect">
+                                                <option value="">Выберите курс</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="lessonTitle" class="form-label">Название урока</label>
+                                            <input type="text" class="form-control" id="lessonTitle" placeholder="Введение в Bootstrap">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="lessonDuration" class="form-label">Длительность</label>
+                                            <input type="text" class="form-control" id="lessonDuration" placeholder="08:30">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="lessonVideoUrl" class="form-label">Ссылка на видео</label>
+                                            <input type="text" class="form-control" id="lessonVideoUrl" placeholder="YouTube ссылка или прямая .mp4">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary-custom w-100">Добавить урок</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addCourseModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Новый курс</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createCourseForm">
+                        <div class="mb-3">
+                            <label for="newCourseTitle" class="form-label">Название</label>
+                            <input type="text" id="newCourseTitle" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newCourseSubject" class="form-label">Предмет</label>
+                            <input type="text" id="newCourseSubject" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newCourseLevel" class="form-label">Уровень</label>
+                            <select id="newCourseLevel" class="form-select" required>
+                                <option value="">Выберите уровень</option>
+                                <option value="Новичок">Новичок</option>
+                                <option value="Средний">Средний</option>
+                                <option value="Продвинутый">Продвинутый</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newCoursePrice" class="form-label">Цена</label>
+                            <input type="number" id="newCoursePrice" class="form-control" min="0" value="0">
+                        </div>
+                        <div class="mb-3">
+                            <label for="newCourseDesc" class="form-label">Описание</label>
+                            <textarea id="newCourseDesc" class="form-control" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary-custom w-100">Создать курс</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editCourseModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Редактировать курс</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editCourseForm">
+                        <input type="hidden" id="editCourseId">
+                        <div class="mb-3">
+                            <label for="editCourseTitle" class="form-label">Название</label>
+                            <input type="text" id="editCourseTitle" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCourseSubject" class="form-label">Предмет</label>
+                            <input type="text" id="editCourseSubject" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCourseLevel" class="form-label">Уровень</label>
+                            <select id="editCourseLevel" class="form-select" required>
+                                <option value="">Выберите уровень</option>
+                                <option value="Новичок">Новичок</option>
+                                <option value="Средний">Средний</option>
+                                <option value="Продвинутый">Продвинутый</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCoursePrice" class="form-label">Цена</label>
+                            <input type="number" id="editCoursePrice" class="form-control" min="0" value="0">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCourseDesc" class="form-label">Описание</label>
+                            <textarea id="editCourseDesc" class="form-control" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary-custom w-100">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/teacher-page.js"></script>
+
+</body>
+
+</html>

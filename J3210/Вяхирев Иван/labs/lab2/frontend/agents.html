@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>InjectincoPlayground - Агенты</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand text-warning" href="dashboard.html">
+        <svg class="icon me-1"><use href="assets/sprite.svg#robot"></use></svg>
+        InjectincoPlayground
+      </a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="dashboard.html">Дашборд</a></li>
+          <li class="nav-item"><a class="nav-link active" href="agents.html">Агенты и Фильтры</a></li>
+          <li class="nav-item"><a class="nav-link" href="main-chat.html">Симуляция</a></li>
+        </ul>
+        <div class="text-light d-flex align-items-center">
+          <span id="username"></span>
+          <button onclick="toggleTheme()" class="btn btn-outline-warning ms-3" id="theme-btn" aria-label="Сменить тему">
+            <svg class="icon"><use href="assets/sprite.svg#moon-fill"></use></svg>
+          </button>
+          <button onclick="logout()" class="btn btn-danger ms-2">Выход</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mt-4">
+    <div class="row">
+      <aside class="col-md-3">
+        <div class="card mb-3 shadow-sm">
+          <div class="card-body">
+            <h5>Фильтры</h5>
+            <div class="mb-3">
+              <label class="form-label small" for="filterRole">Роль</label>
+              <select id="filterRole" class="form-select form-select-sm">
+                <option value="Все">Все</option>
+                <option value="Attacker">Attacker</option>
+                <option value="Defender">Defender</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small" for="filterAggro">Агрессия до (<span id="aggroVal">2.0</span>)</label>
+              <input type="range" id="filterAggro" class="form-range" min="0" max="2" step="0.1" value="2" oninput="document.getElementById('aggroVal').innerText=this.value">
+            </div>
+            <button class="btn btn-primary btn-sm w-100" onclick="applyFilters()">Применить</button>
+          </div>
+        </div>
+
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5>Новый агент</h5>
+            <form onsubmit="handleCreateAgent(event)">
+              <input type="text" name="name" class="form-control form-control-sm mb-2" placeholder="Имя" aria-label="Имя" required>
+              <select name="role" class="form-select form-select-sm mb-2" aria-label="Роль">
+                <option value="Attacker">Attacker</option>
+                <option value="Defender">Defender</option>
+              </select>
+              <input type="text" name="description" class="form-control form-control-sm mb-2" placeholder="Промпт" aria-label="Промпт" required>
+              <input type="text" name="icon" class="form-control form-control-sm mb-2" value="robot" aria-label="Иконка" required>
+              <input type="number" name="aggressiveness" class="form-control form-control-sm mb-2" step="0.1" value="0.5" aria-label="Агрессивность" required>
+              <input type="text" name="skills" class="form-control form-control-sm mb-2" placeholder="Навыки" aria-label="Навыки">
+              <button type="submit" class="btn btn-success btn-sm w-100">Создать</button>
+            </form>
+          </div>
+        </div>
+      </aside>
+
+      <div class="col-md-9">
+        <h4 class="mb-3">Библиотека агентов</h4>
+        <div class="row" id="agents-container"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/theme.js"></script>
+  <script src="js/agents.js"></script>
+</body>
+</html>
