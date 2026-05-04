@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FanFicLib</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background: white;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #ffa676, #fd7f59);
+        }
+
+        .hero {
+            background: linear-gradient(120deg, #ffb186, #fa764e);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero-rounded {
+            background: linear-gradient(120deg, #ffa676, #ff8a65);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #2d3748;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(253, 121, 68, 0.25);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card h5 {
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 0.75rem;
+        }
+        
+        .search {
+            padding: 30px 30px;
+        }
+
+        .fandom-tag {
+            display: inline-block;
+            background: #ffd8c4;
+            color: #f4511e;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .fic-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            color: #795548;
+            font-size: 0.9rem;
+        }
+
+        .fic-meta i {
+            color: #ff7043;
+            margin-right: 0.25rem;
+        }
+
+        .category-box {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 160px;
+            transition: 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .category-box:hover {
+            transform: translateY(-5px);
+            border-color: #ff8a65;
+            box-shadow: 0 12px 25px rgba(253, 121, 68, 0.25);
+        }
+
+        .category-box h5 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-box .count {
+            background: #ffefe8;
+            color: #2d3748;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            display: inline-block;
+            max-width: fit-content;
+            margin: 0 auto; 
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+
+        .btn-main {
+            background: #ff7043;
+            color: white;
+        }
+
+        .btn-main:hover {
+            background: #f4511e;
+        }
+
+        .footer {
+            background: #ff8a65;
+            color: white;
+            padding: 30px;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">FanFicLib</a>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="search.html">Поиск</a></li>
+                    <li class="nav-item"><a class="nav-link" href="write.html">Написать фанфик</a></li>
+                </ul>
+                <a class="btn btn-light me-2" href="login.html">Вход</a>
+                <a class="btn btn-dark" href="register.html">Регистрация</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Мир фанфиков</h1>
+            <p class="lead">Читай истории, делись своими и находи единомышленников</p>
+            <div class="d-flex justify-content-center mt-4 gap-2 search">
+                <input id="search-input" class="form-control form-control-lg" style="max-width:500px;"
+                    placeholder="Поиск фанфика...">
+                <button id="search-btn" class="btn btn-dark btn-lg">Поиск</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="container mt-5">
+
+        <h2 class="section-title">Популярные фанфики</h2>
+        <div id="popular-fics" class="row">
+            <div class="col-md-4 mb-4">
+                <a href="fic.html" class="text-decoration-none text-dark">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <span class="fandom-tag"><i class="bi bi-wand"></i> Harry Potter</span>
+                            <h5>Тайна Хогвартса</h5>
+                            <p class="text-muted small">
+                                Погрузитесь в мир магии и приключений, где скрытые комнаты Хогвартса таят древние
+                                тайны...
+                            </p>
+                            <div class="fic-meta">
+                                <span><i class="bi bi-heart-fill"></i> 2.3k</span>
+                                <span><i class="bi bi-chat-fill"></i> 158</span>
+                                <span><i class="bi bi-bookmark-fill"></i> 432</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <a href="#" class="text-decoration-none text-dark">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <span class="fandom-tag"><i class="bi bi-wand"></i> Harry Potter</span>
+                            <h5>Не Тайны Хогвартса</h5>
+                            <p class="text-muted small">
+                                История о необычных событиях в Хогвартсе, раскрывающих новые стороны волшебного мира.
+                            </p>
+                            <div class="fic-meta">
+                                <span><i class="bi bi-heart-fill"></i> 1.8k</span>
+                                <span><i class="bi bi-chat-fill"></i> 97</span>
+                                <span><i class="bi bi-bookmark-fill"></i> 310</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <a href="#" class="text-decoration-none text-dark">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <span class="fandom-tag"> The Chronicles of Narnia</span>
+                            <h5>Приключения в Нарнии</h5>
+                            <p class="text-muted small">
+                                Путешествуйте вместе с героями в волшебный мир Нарнии, где царят магия и необычные
+                                создания.
+                            </p>
+                            <div class="fic-meta">
+                                <span><i class="bi bi-heart-fill"></i> 3.1k</span>
+                                <span><i class="bi bi-chat-fill"></i> 204</span>
+                                <span><i class="bi bi-bookmark-fill"></i> 567</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <h2 class="section-title mt-5">Новые фанфики</h2>
+        <div id="new-fics" class="row">
+            <div class="col-md-4 mb-4">
+                <a href="#" class="text-decoration-none text-dark">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <span class="fandom-tag">Оригинальный</span>
+                            <h5>Герой</h5>
+                            <p class="text-muted small">
+                                История о герое, который проходит путь самопознания и открытия своих настоящих сил.
+                            </p>
+                            <div class="fic-meta">
+                                <span><i class="bi bi-heart-fill"></i> 540</span>
+                                <span><i class="bi bi-chat-fill"></i> 32</span>
+                                <span><i class="bi bi-bookmark-fill"></i> 89</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <a href="#" class="text-decoration-none text-dark">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <span class="fandom-tag"> Оригинальный</span>
+                            <h5>Магия времени</h5>
+                            <p class="text-muted small">
+                                В этом мире время подчиняется магии, и главный герой должен предотвратить катастрофу.
+                            </p>
+                            <div class="fic-meta">
+                                <span><i class="bi bi-heart-fill"></i> 620</span>
+                                <span><i class="bi bi-chat-fill"></i> 41</span>
+                                <span><i class="bi bi-bookmark-fill"></i> 112</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <h2 class="section-title mt-5">Популярные фандомы</h2>
+        <div id="fandoms" class="row g-4">
+            <div class="col-md-3 col-sm-6">
+                <div class="category-box">
+                    <h5>Harry Potter</h5>
+                    <span class="count">850 фанфиков</span>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="category-box">
+                    <h5>Lord of the Rings</h5>
+                    <span class="count">1000 фанфиков</span>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="category-box">
+                    <h5>Star Wars</h5>
+                    <span class="count">800 фанфиков</span>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="category-box">
+                    <h5>Marvel</h5>
+                    <span class="count">900 фанфиков</span>
+                </div>
+            </div>
+        </div>
+
+        <section class="hero-rounded mt-5">
+            <div class="container text-center">
+                <h2>Создай свой фанфик</h2>
+                <p>Поделись своей историей со всем миром</p>
+                <button type="button" class="btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    Начать писать
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Войти или зарегистрироваться</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Чтобы создавать фанфики, нужно войти в аккаунт или зарегистрироваться.</p>
+                    <a href="login.html" class="btn btn-secondary">Войти</a>
+                    <a href="register.html" class="btn btn-main">Регистрация</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer text-center">
+        <p>© 2026 FanFicLib</p>
+        <p>Платформа для фанфиков</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
