@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataPort – Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="d-flex dashboard">
+
+    <aside class="sidebar">
+        <div class="brand mb-4">DataPort</div>
+        <nav class="nav flex-column" aria-label="Основная навигация">
+            <a class="nav-link active" href="dashboard.html" aria-current="page">Dashboard</a>
+            <a class="nav-link" href="explore.html">Explore</a>
+            <a class="nav-link" href="my-models.html">My Models</a>
+            <a class="nav-link" href="my-datasets.html">My Datasets</a>
+            <a class="nav-link" href="my-subscriptions.html">Subscriptions</a>
+            <a class="nav-link" href="settings.html">Settings</a>
+            <hr>
+            <a class="nav-link text-danger" href="#" id="logoutBtn">Выход</a>
+        </nav>
+    </aside>
+
+    <main class="flex-grow-1">
+
+        <div class="topbar px-4 py-3 d-flex justify-content-between align-items-center">
+            <h1 class="page-title mb-0">Личный кабинет</h1>
+            <button class="btn btn-primary upload-btn" type="button" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                Загрузить
+            </button>
+        </div>
+
+        <div class="content-area">
+
+            <ul class="nav nav-pills mb-4" id="dashboardTabs" role="tablist" aria-label="Разделы личного кабинета">
+                <li class="nav-item">
+                    <button class="nav-link active" id="models-tab" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#models" aria-controls="models" aria-selected="true">Модели</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="datasets-tab" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#datasets" aria-controls="datasets" aria-selected="false">Датасеты</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="subscriptions-tab" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#subscriptions" aria-controls="subscriptions" aria-selected="false">Подписки</button>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+
+                <div class="tab-pane fade show active" id="models" role="tabpanel" aria-labelledby="models-tab" tabindex="0">
+                    <div class="row g-4" id="dashboard-models-row" aria-live="polite">
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="datasets" role="tabpanel" aria-labelledby="datasets-tab" tabindex="0">
+                    <div class="row g-4" id="dashboard-datasets-row" aria-live="polite">
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="subscriptions" role="tabpanel" aria-labelledby="subscriptions-tab" tabindex="0">
+                    <div class="row g-4" id="dashboard-subs-row" aria-live="polite"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-4 border-0 rounded-4 shadow">
+            <h5 class="mb-3 fw-bold" id="uploadModalTitle">Загрузить новый объект</h5>
+
+            <div class="mb-3">
+                <label class="form-label small text-muted" for="uploadName">Название</label>
+                <input class="form-control" id="uploadName" placeholder="Например: BERT-Base-Russian">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label small text-muted" for="uploadType">Тип</label>
+                <select class="form-select" id="uploadType">
+                    <option value="model">Модель</option>
+                    <option value="dataset">Датасет</option>
+                </select>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 mt-2">
+                <button class="btn btn-light px-4" type="button" data-bs-dismiss="modal">Отмена</button>
+                <button class="btn btn-primary px-4" type="button" id="submitUpload">Загрузить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
