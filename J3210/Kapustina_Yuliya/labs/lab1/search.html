@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Поиск фанфиков — FanFicLib</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background: white;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #ffa676, #fd7f59);
+        }
+
+        .filter-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .fic-title {
+            text-decoration: none;
+            color: #2d3748;
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: inline-block;
+            transition: color 0.3s;
+            margin-bottom: 5px;
+        }
+
+        .fic-title:hover {
+            color: #ff5722;
+        }
+
+        .fandom-tag {
+            display: inline-block;
+            background: #ffd8c4;
+            color: #f4511e;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tag {
+            background: #ffdfd1;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-right: 5px;
+            display: inline-block;
+            color: #f4511e;
+        }
+
+        .fic-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            color: #795548;
+            font-size: 0.9rem;
+        }
+
+        .fic-meta i {
+            color: #ff7043;
+            margin-right: 0.25rem;
+        }
+
+        .btn-main {
+            background: #ff7043;
+            color: white;
+        }
+
+        .btn-main:hover {
+            background: #f4511e;
+        }
+
+        .footer {
+            background: #ff8a65;
+            color: white;
+            padding: 30px;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">FanFicLib</a>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Поиск</a></li>
+                    <li class="nav-item"><a class="nav-link" href="write.html">Написать фанфик</a></li>
+                </ul>
+                <a class="btn btn-light me-2" href="login.html">Вход</a>
+                <a class="btn btn-dark" href="register.html">Регистрация</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+
+        <header class="mb-4">
+            <h1>Поиск фанфиков</h1>
+        </header>
+
+        <section class="row">
+            <aside class="col-md-3">
+                <div class="filter-box">
+                    <h2 class="h5">Фильтры</h2>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="filter-title">Название</label>
+                        <input id="filter-title" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="filter-fandom">Фандом</label>
+                        <select id="filter-fandom" class="form-select">
+                            <option>Любой</option>
+                            <option>Harry Potter</option>
+                            <option>Naruto</option>
+                            <option>Marvel</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="filter-rating">Рейтинг</label>
+                        <select id="filter-rating" class="form-select">
+                            <option>Любой</option>
+                            <option>G</option>
+                            <option>PG</option>
+                            <option>R</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="filter-status">Статус</label>
+                        <select id="filter-status" class="form-select">
+                            <option>Любой</option>
+                            <option>Закончен</option>
+                            <option>В процессе</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-main w-100" id="filter-btn">Найти</button>
+                </div>
+            </aside>
+
+            <section class="col-md-9" id="results">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <p class="text-muted mb-0">Найдено: 24 фанфика</p>
+                </div>
+                
+                <article class="card mb-3">
+                    <div class="card-body">
+                        <header>
+                            <a href="fic.html" class="fic-title">Тайна Хогвартса</a>
+                            <p class="text-muted mb-2">
+                                <i class="bi bi-person-circle"></i> Alex 
+                                <span class="ms-3"><i class="bi bi-calendar3"></i> 15.03.2026</span>
+                            </p>
+                            <span class="fandom-tag"><i class="bi bi-wand"></i> Harry Potter</span>
+                        </header>
+                        <p class="mt-2 mb-2">История о скрытых комнатах школы магии, где скрытые комнаты Хогвартса таят древние тайны...</p>
+                        <div class="mb-2">
+                            <span class="tag">магия</span>
+                            <span class="tag">приключения</span>
+                            <span class="tag">драма</span>
+                        </div>
+                        <div class="fic-meta">
+                            <span><i class="bi bi-heart-fill"></i> 2.3k</span>
+                            <span><i class="bi bi-chat-fill"></i> 158</span>
+                            <span><i class="bi bi-bookmark-fill"></i> 432</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card mb-3">
+                    <div class="card-body">
+                        <header>
+                            <a href="fic.html" class="fic-title">Путь шиноби</a>
+                            <p class="text-muted mb-2">
+                                <i class="bi bi-person-circle"></i> Kate
+                                <span class="ms-3"><i class="bi bi-calendar3"></i> 10.03.2026</span>
+                            </p>
+                            <span class="fandom-tag"><i class="bi bi-ninja"></i> Naruto</span>
+                        </header>
+                        <p class="mt-2 mb-2">Альтернативная история Наруто, где он попадает в другой мир и становится сильнейшим шиноби.</p>
+                        <div class="mb-2">
+                            <span class="tag">аниме</span>
+                            <span class="tag">боевик</span>
+                            <span class="tag">приключения</span>
+                        </div>
+                        <div class="fic-meta">
+                            <span><i class="bi bi-heart-fill"></i> 1.8k</span>
+                            <span><i class="bi bi-chat-fill"></i> 124</span>
+                            <span><i class="bi bi-bookmark-fill"></i> 310</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card mb-3">
+                    <div class="card-body">
+                        <header>
+                            <a href="fic.html" class="fic-title">Железный человек: Новая эра</a>
+                            <p class="text-muted mb-2">
+                                <i class="bi bi-person-circle"></i> TonyFan
+                                <span class="ms-3"><i class="bi bi-calendar3"></i> 05.03.2026</span>
+                            </p>
+                            <span class="fandom-tag"> Marvel</span>
+                        </header>
+                        <p class="mt-2 mb-2">Что если бы Тони Старк не погиб, а продолжил развивать технологии и создал новую команду?</p>
+                        <div class="mb-2">
+                            <span class="tag">экшн</span>
+                            <span class="tag">техно</span>
+                            <span class="tag">герои</span>
+                        </div>
+                        <div class="fic-meta">
+                            <span><i class="bi bi-heart-fill"></i> 3.2k</span>
+                            <span><i class="bi bi-chat-fill"></i> 215</span>
+                            <span><i class="bi bi-bookmark-fill"></i> 567</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card mb-3">
+                    <div class="card-body">
+                        <header>
+                            <a href="fic.html" class="fic-title">Кольцо Всевластия</a>
+                            <p class="text-muted mb-2">
+                                <i class="bi bi-person-circle"></i> FrodoFan
+                                <span class="ms-3"><i class="bi bi-calendar3"></i> 01.03.2026</span>
+                            </p>
+                            <span class="fandom-tag"><i class="bi bi-ring"></i> Lord of the Rings</span>
+                        </header>
+                        <p class="mt-2 mb-2">Альтернативный взгляд на путешествие Фродо, где ему помогают новые союзники.</p>
+                        <div class="mb-2">
+                            <span class="tag">фэнтези</span>
+                            <span class="tag">приключения</span>
+                            <span class="tag">эпос</span>
+                        </div>
+                        <div class="fic-meta">
+                            <span><i class="bi bi-heart-fill"></i> 2.1k</span>
+                            <span><i class="bi bi-chat-fill"></i> 98</span>
+                            <span><i class="bi bi-bookmark-fill"></i> 245</span>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </section>
+    </main>
+
+    <footer class="footer text-center">
+        <p>© 2026 FanFicLib</p>
+        <p>Платформа для фанфиков</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

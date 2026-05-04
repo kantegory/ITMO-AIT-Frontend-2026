@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hub - Models & Datasets</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">AI Hub</a>
+            
+            <div class="ms-auto" id="auth-nav">
+                <a href="login.html" class="btn btn-outline-light me-2">Log in</a>
+                <a href="register.html" class="btn btn-primary">Sign up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 id="detail-name">Loading...</h1>
+            <p class="text-muted"><span id="detail-type" class="badge bg-primary">...</span></p>
+        </div>
+        <div>
+            <button class="btn btn-outline-secondary" id="detail-stars">Star</button>
+            <button class="btn btn-outline-secondary" id="detail-forks">Fork</button>
+            <button class="btn btn-outline-primary ms-2" id="btn-subscribe" style="display: none;">Subscribe</button>
+        </div>
+    </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="item-card">
+                    <h4>Description</h4>
+                    <p id="detail-desc">...</p>
+                    
+                    <h4 class="mt-4">Usage Example</h4>
+                    <pre class="bg-light p-3 border rounded"><code id="detail-usage">...</code></pre>
+                </div>
+                <div class="mt-4">
+                    <h4>Discussions & Reproducibility</h4>
+                    <div class="item-card mb-3">
+                        <div id="comments-list">
+                            <!-- Fake first comment -->
+                            <div class="mb-3 border-bottom pb-2">
+                                <strong>Researcher1:</strong> 
+                                <p class="mb-1 text-muted small">Has anyone reproduced the accuracy metrics?</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <textarea id="comment-input" class="form-control mb-2" rows="2" placeholder="Start a discussion..."></textarea>
+                            <button id="post-comment-btn" class="btn btn-sm btn-primary">Post Comment</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="item-card">
+                    <h4>Metadata</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><strong>License:</strong> <span id="detail-lic">...</span></li>
+                        <li class="mb-2"><strong>Size:</strong> <span id="detail-size">...</span></li>
+                        <li class="mb-2"><strong>Task:</strong> <span id="detail-task">...</span></li>
+                        <li class="mb-2"><strong>Framework:</strong> <span id="detail-fw">...</span></li>
+                        <li class="mb-2"><strong>Metrics:</strong> <br><span id="detail-metrics" class="text-success fw-bold">...</span></li>
+                    </ul>
+                    <button class="btn btn-primary w-100 mt-3">Download (<span id="detail-dl">...</span>)</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
