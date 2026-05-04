@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Buy event tickets online. Client dashboard: tickets & refunding. ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> ticket-tac.com </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Ticket-Tac</a>
+
+            <button class="navbar-toggler" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#navMenu" 
+            aria-label="Open navigation menu">
+                <span class="navbar-toggler-icon" aria-hidden="true"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">Events</a>
+                    </li>
+                </ul>
+                <!-- toggle theme -->
+                <button onclick="toggleTheme()" class="theme-switch-alt" id="themeToggle" aria-label="Switch theme">
+                    <div class="theme-switch-alt-container">
+                        <div class="theme-switch-alt-icons">
+                            <span class="theme-icon-sun">☀️</span>
+                            <span class="theme-icon-moon">🌙</span>
+                        </div>
+                        <div class="theme-switch-alt-track">
+                            <div class="theme-switch-alt-thumb">
+                                <span id="themeIconAlt" class="theme-icon-active">☀️</span>
+                            </div>
+                        </div>
+                    </div>
+                    <span id="themeTextAlt" class="theme-text-alt">Dark mode</span>
+                </button>
+                <div class="d-flex" id="authButtons">
+                    <a href="login.html" class="btn btn-outline-light me-3">Login</a>
+                    <a href="register.html" class="btn btn-warning">Register</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="container my-5 flex-grow-1">
+
+        <h1 class="mb-4">My Account</h1>
+
+            <div class="row">
+            <!-- USER INFO -->
+                <div class="col-md-4">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <div class="bg-secondary rounded-circle mx-auto"
+                                    style="width:80px;height:80px;"></div>
+                            </div>
+                            <h5 id="userName">User Name</h5>
+                            <p class="text-muted" id="userEmail">email@email.com</p>
+                            <button class="btn btn-outline-danger btn-sm" onclick="logout()">
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TICKETS -->
+                <div class="col-md-8">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="mb-3">My Tickets</h5>
+                            <div id="ticketsList"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    </main>
+
+    <div class="modal fade" id="confirmModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmTitle">Confirm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body" id="confirmMessage"></div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button class="btn btn-danger" id="confirmActionBtn">
+          Yes
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+    <!-- Footer -->
+     <footer class="site-footer mt-auto">
+        <div class="container text-center">
+            <p class="mb-1">© 2026 EventTickets</p>
+            <small>ITMO AIT Front-End Project</small>
+        </div>
+    </footer>
+
+    <!-- Add JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
