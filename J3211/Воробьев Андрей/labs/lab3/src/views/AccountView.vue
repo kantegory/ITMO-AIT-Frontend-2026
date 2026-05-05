@@ -2,31 +2,20 @@
 import { computed, onMounted, ref } from 'vue'
 import BaseLayout from '@/layouts/BaseLayout.vue'
 import { useAuthStore } from '@/stores/auth'
-import { useModalStore } from '@/stores/modal'
 import { getAccountsByUser, getTransactionsByUser } from '@/api/finance'
+import { useFormatters } from '@/composables/useFormatters'
+import { useModalFeedback } from '@/composables/useModalFeedback'
+import { useAccountsById, useSortedTransactions } from '@/composables/useTransactionHelpers'
 
 const authStore = useAuthStore()
-const modalStore = useModalStore()
+const { showError } = useModalFeedback()
+const { formatMoney, formatDate, formatSignedAmount } = useFormatters()
 
 const accounts = ref([])
 const transactions = ref([])
 
-function formatMoney(value) {
-  return `${value.toLocaleString('ru-RU')} ₽`
-}
-
-function formatDate(dateISO) {
-  return new Date(dateISO).toLocaleDateString('ru-RU')
-}
-
-const accountsById = computed(() =>
-  accounts.value.reduce((acc, account) => {
-    acc[account.id] = account.name
-    return acc
-  }, {})
-)
-
-const sortedTransactions = computed(() => transactions.value.slice().sort((a, b) => new Date(b.date) - new Date(a.date)))
+const { accountsById } = useAccountsById(accounts)
+const { sortedTransactions } = useSortedTransactions(transactions)
 const recentTransactions = computed(() => sortedTransactions.value.slice(0, 5))
 
 const income = computed(() => sortedTransactions.value.filter((item) => item.amount > 0).reduce((sum, item) => sum + item.amount, 0))
@@ -44,7 +33,7 @@ async function initAccountPage() {
     accounts.value = loadedAccounts
     transactions.value = loadedTransactions
   } catch (error) {
-    modalStore.openInfo('Ошибка', error.message)
+    showError(error)
   }
 }
 
@@ -100,7 +89,7 @@ onMounted(() => {
                     <div><span class="fw-bold">{{ account.name }}</span></div>
                     <div class="text-end">
                       <div class="fw-bold" :class="account.balance >= 0 ? 'income-text' : 'expense-text'">
-                        {{ account.balance >= 0 ? '+' : '-' }} {{ Math.abs(account.balance).toLocaleString('ru-RU') }} ₽
+                        {{ formatSignedAmount(account.balance) }}
                       </div>
                     </div>
                   </div>
@@ -143,7 +132,7 @@ onMounted(() => {
                         <span class="badge bg-light text-dark border">{{ accountsById[transaction.accountId] }}</span>
                       </td>
                       <td class="text-end fw-bold" :class="transaction.amount >= 0 ? 'text-success' : 'text-danger'">
-                        {{ transaction.amount >= 0 ? '+' : '-' }} {{ Math.abs(transaction.amount).toLocaleString('ru-RU') }} ₽
+                        {{ formatSignedAmount(transaction.amount) }}
                       </td>
                     </tr>
                   </tbody>

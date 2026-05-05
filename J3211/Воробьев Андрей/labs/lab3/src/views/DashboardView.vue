@@ -2,18 +2,16 @@
 import { computed, onMounted, ref } from 'vue'
 import BaseLayout from '@/layouts/BaseLayout.vue'
 import { useAuthStore } from '@/stores/auth'
-import { useModalStore } from '@/stores/modal'
 import { getTransactionsByUser } from '@/api/finance'
+import { useFormatters } from '@/composables/useFormatters'
+import { useModalFeedback } from '@/composables/useModalFeedback'
 
 const authStore = useAuthStore()
-const modalStore = useModalStore()
+const { showError } = useModalFeedback()
+const { formatMoney } = useFormatters()
 
 const userTransactions = ref([])
 const selectedPeriod = ref('')
-
-function formatMoney(value) {
-  return `${Math.round(value).toLocaleString('ru-RU')} ₽`
-}
 
 function formatPeriodFromDate(dateISO) {
   const date = new Date(dateISO)
@@ -110,7 +108,7 @@ async function initDashboardPage() {
     userTransactions.value = await getTransactionsByUser(authStore.user.id)
     selectedPeriod.value = periods.value[0] || ''
   } catch (error) {
-    modalStore.openInfo('Ошибка', error.message)
+    showError(error)
   }
 }
 
@@ -137,13 +135,13 @@ onMounted(() => {
         <div class="col-md-4">
           <div class="stat-card">
             <small class="fw-bold">ДОХОДЫ</small>
-            <div id="dashboardIncome" class="fw-bold income-text mt-2">{{ formatMoney(currentStats?.income || 0) }}</div>
+            <div id="dashboardIncome" class="fw-bold income-text mt-2">{{ formatMoney(currentStats?.income || 0, { round: true }) }}</div>
           </div>
         </div>
         <div class="col-md-4">
           <div class="stat-card">
             <small class="fw-bold">РАСХОДЫ</small>
-            <div id="dashboardExpense" class="fw-bold expense-text mt-2">{{ formatMoney(currentStats?.expense || 0) }}</div>
+            <div id="dashboardExpense" class="fw-bold expense-text mt-2">{{ formatMoney(currentStats?.expense || 0, { round: true }) }}</div>
           </div>
         </div>
         <div class="col-md-4">
@@ -164,13 +162,13 @@ onMounted(() => {
                 <div v-for="([name, amount], index) in sortedCategoryExpenses" v-else :key="name" class="mb-4">
                   <div class="d-flex justify-content-between mb-1">
                     <span>{{ name }}</span>
-                    <span class="fw-bold">{{ formatMoney(amount) }}</span>
+                    <span class="fw-bold">{{ formatMoney(amount, { round: true }) }}</span>
                   </div>
                   <div class="progress">
                     <div
                       class="progress-bar"
                       :class="['bg-success', 'bg-info', 'bg-warning', 'bg-danger', 'bg-primary', 'bg-secondary'][index % 6]"
-                      :style="{ width: `${currentStats.totalExpense ? Math.round((amount / currentStats.totalExpense) * 100) : 0}%` }"
+                      :style="{ width: `${currentStats?.totalExpense ? Math.round((amount / currentStats.totalExpense) * 100) : 0}%` }"
                     />
                   </div>
                 </div>

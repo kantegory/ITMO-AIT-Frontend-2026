@@ -2,11 +2,11 @@
 import { reactive } from 'vue'
 import BaseLayout from '@/layouts/BaseLayout.vue'
 import { useAuthStore } from '@/stores/auth'
-import { useModalStore } from '@/stores/modal'
 import { createAccount } from '@/api/finance'
+import { useModalFeedback } from '@/composables/useModalFeedback'
 
 const authStore = useAuthStore()
-const modalStore = useModalStore()
+const { showError, showInfo } = useModalFeedback()
 
 const manualForm = reactive({
   accountName: ''
@@ -24,10 +24,10 @@ async function submitManualAccount() {
       accountName: manualForm.accountName,
       type: 'manual'
     })
-    modalStore.openInfo('Уведомление', `Счёт ${manualForm.accountName} создан.`)
+    showInfo('Уведомление', `Счёт ${manualForm.accountName} создан.`)
     manualForm.accountName = ''
   } catch (error) {
-    modalStore.openInfo('Ошибка', error.message)
+    showError(error)
   }
 }
 
@@ -38,11 +38,11 @@ async function submitApiAccount() {
       accountName: apiForm.accountName,
       type: 'api'
     })
-    modalStore.openInfo('Уведомление', `Счёт ${apiForm.accountName} подключен по API.`)
+    showInfo('Уведомление', `Счёт ${apiForm.accountName} подключен по API.`)
     apiForm.accountName = ''
     apiForm.apiKey = ''
   } catch (error) {
-    modalStore.openInfo('Ошибка', error.message)
+    showError(error)
   }
 }
 </script>

@@ -1,13 +1,11 @@
 <script setup>
 import { reactive } from 'vue'
-import { useRouter } from 'vue-router'
 import BaseLayout from '@/layouts/BaseLayout.vue'
 import { useAuthStore } from '@/stores/auth'
-import { useModalStore } from '@/stores/modal'
+import { useModalFeedback } from '@/composables/useModalFeedback'
 
-const router = useRouter()
 const authStore = useAuthStore()
-const modalStore = useModalStore()
+const { showError, showInfo, showInfoAndRedirect } = useModalFeedback()
 
 const form = reactive({
   email: '',
@@ -17,24 +15,20 @@ const form = reactive({
 
 async function register() {
   if (form.password.length < 6) {
-    modalStore.openInfo('Ошибка', 'Пароль должен содержать минимум 6 символов.')
+    showInfo('Ошибка', 'Пароль должен содержать минимум 6 символов.')
     return
   }
 
   if (form.password !== form.confirmPassword) {
-    modalStore.openInfo('Ошибка', 'Пароли не совпадают.')
+    showInfo('Ошибка', 'Пароли не совпадают.')
     return
   }
 
   try {
     await authStore.register(form.email, form.password)
-    modalStore.openInfo('Регистрация успешна', `Аккаунт ${form.email} создан.`)
-    setTimeout(() => {
-      router.push({ name: 'login' })
-      modalStore.close()
-    }, 900)
+    showInfoAndRedirect('Регистрация успешна', `Аккаунт ${form.email} создан.`, 'login')
   } catch (error) {
-    modalStore.openInfo('Ошибка', error.message)
+    showError(error)
   }
 }
 </script>

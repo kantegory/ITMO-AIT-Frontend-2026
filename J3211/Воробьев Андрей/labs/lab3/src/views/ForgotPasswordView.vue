@@ -1,12 +1,10 @@
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import BaseLayout from '@/layouts/BaseLayout.vue'
 import { findUserByEmail } from '@/api/finance'
-import { useModalStore } from '@/stores/modal'
+import { useModalFeedback } from '@/composables/useModalFeedback'
 
-const router = useRouter()
-const modalStore = useModalStore()
+const { showError, showInfo, showInfoAndRedirect } = useModalFeedback()
 const email = ref('')
 
 async function forgotPassword() {
@@ -14,17 +12,13 @@ async function forgotPassword() {
     const user = await findUserByEmail(email.value)
 
     if (!user) {
-      modalStore.openInfo('Ошибка', 'Аккаунт с таким email не найден.')
+      showInfo('Ошибка', 'Аккаунт с таким email не найден.')
       return
     }
 
-    modalStore.openInfo('Письмо отправлено', 'Инструкции по восстановлению пароля отправлены на email.')
-    setTimeout(() => {
-      router.push({ name: 'login' })
-      modalStore.close()
-    }, 900)
+    showInfoAndRedirect('Письмо отправлено', 'Инструкции по восстановлению пароля отправлены на email.', 'login')
   } catch (error) {
-    modalStore.openInfo('Ошибка', error.message)
+    showError(error)
   }
 }
 </script>

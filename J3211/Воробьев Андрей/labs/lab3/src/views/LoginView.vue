@@ -1,13 +1,11 @@
 <script setup>
 import { reactive } from 'vue'
-import { useRouter } from 'vue-router'
 import BaseLayout from '@/layouts/BaseLayout.vue'
 import { useAuthStore } from '@/stores/auth'
-import { useModalStore } from '@/stores/modal'
+import { useModalFeedback } from '@/composables/useModalFeedback'
 
-const router = useRouter()
 const authStore = useAuthStore()
-const modalStore = useModalStore()
+const { showError, showInfoAndRedirect } = useModalFeedback()
 
 const form = reactive({
   email: '',
@@ -17,13 +15,9 @@ const form = reactive({
 async function login() {
   try {
     await authStore.login(form.email, form.password)
-    modalStore.openInfo('Добро пожаловать', 'Вы успешно вошли в систему.')
-    setTimeout(() => {
-      router.push({ name: 'account' })
-      modalStore.close()
-    }, 900)
+    showInfoAndRedirect('Добро пожаловать', 'Вы успешно вошли в систему.', 'account')
   } catch (error) {
-    modalStore.openInfo('Ошибка', error.message)
+    showError(error)
   }
 }
 </script>

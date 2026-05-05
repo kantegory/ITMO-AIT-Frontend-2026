@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import BaseLayout from '@/layouts/BaseLayout.vue'
 import { useAuthStore } from '@/stores/auth'
 import { useModalStore } from '@/stores/modal'
@@ -12,9 +12,14 @@ import {
   getUserNotificationSettings,
   updateUserNotificationSettings
 } from '@/api/finance'
+import { useFormatters } from '@/composables/useFormatters'
+import { useModalFeedback } from '@/composables/useModalFeedback'
+import { useAccountsById } from '@/composables/useTransactionHelpers'
 
 const authStore = useAuthStore()
 const modalStore = useModalStore()
+const { showError, showInfo } = useModalFeedback()
+const { formatDate, formatSignedAmount } = useFormatters()
 
 const allTransactions = ref([])
 const accounts = ref([])
@@ -25,20 +30,7 @@ const filter = reactive({
   account: 'Все счета'
 })
 
-const accountsById = computed(() =>
-  accounts.value.reduce((acc, account) => {
-    acc[account.id] = account.name
-    return acc
-  }, {})
-)
-
-function formatDate(dateISO) {
-  return new Date(dateISO).toLocaleDateString('ru-RU')
-}
-
-function formatAmount(value) {
-  return `${value > 0 ? '+' : '-'} ${Math.abs(value).toLocaleString('ru-RU')} ₽`
-}
+const { accountsById } = useAccountsById(accounts)
 
 async function initSearchPage() {
   try {
@@ -52,7 +44,7 @@ async function initSearchPage() {
     allTransactions.value = loadedTransactions.sort((a, b) => new Date(b.date) - new Date(a.date))
     categories.value = [...new Set(categoriesData.map((cat) => cat.name))].sort((a, b) => a.localeCompare(b, 'ru'))
   } catch (error) {
-    modalStore.openInfo('Ошибка', error.message)
+    showError(error)
   }
 }
 
@@ -61,7 +53,7 @@ async function filterTransactions() {
     const transactions = await getTransactionsByFilter(authStore.user.id, filter)
     allTransactions.value = transactions.sort((a, b) => new Date(b.date) - new Date(a.date))
   } catch (error) {
-    modalStore.openInfo('Ошибка', error.message)
+    showError(error)
   }
 }
 
@@ -76,10 +68,10 @@ function openAddTransactionModal() {
         comment: data.comment,
         amount: data.amount
       })
-      modalStore.openInfo('Успех', 'Транзакция добавлена')
+      showInfo('Успех', 'Транзакция добавлена')
       await initSearchPage()
     } catch (error) {
-      modalStore.openInfo('Ошибка', error.message)
+      showError(error)
     }
   })
 }
@@ -90,13 +82,13 @@ async function openRuleModal() {
     modalStore.openRule(settings, async (notificationSettings) => {
       try {
         await updateUserNotificationSettings(authStore.user.id, notificationSettings)
-        modalStore.openInfo('Успех', 'Настройки уведомлений сохранены')
+        showInfo('Успех', 'Настройки уведомлений сохранены')
       } catch (error) {
-        modalStore.openInfo('Ошибка', error.message)
+        showError(error)
       }
     })
   } catch (error) {
-    modalStore.openInfo('Ошибка', error.message)
+    showError(error)
   }
 }
 
@@ -190,7 +182,7 @@ onMounted(() => {
                   <td><span class="badge bg-light text-dark border">{{ accountsById[transaction.accountId] }}</span></td>
                   <td class="text-muted">{{ transaction.comment }}</td>
                   <td class="text-end fw-bold" :class="transaction.amount >= 0 ? 'text-success' : 'text-danger'">
-                    {{ formatAmount(transaction.amount) }}
+                    {{ formatSignedAmount(transaction.amount) }}
                   </td>
                 </tr>
               </tbody>
