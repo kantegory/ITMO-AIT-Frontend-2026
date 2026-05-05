@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Транзакции - MFF</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg shadow-sm bg-white">
+  <div class="container">
+    <a class="navbar-brand text-custom fw-bold d-flex align-items-center gap-2" href="dash.html">
+      <img class="nav-logo" src="imgs/1.png" alt="Логотип MFF" width="35">
+      <span class="fs-3 fw-bolder">MFF</span>
+      <img class="nav-logo" src="imgs/2.png" alt="Логотип MFF" width="35">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" href="dash.html">Главная</a></li>
+        <li class="nav-item"><a class="nav-link active" href="transact.html">Транзакции</a></li>
+        <li class="nav-item"><a class="nav-link" href="accounts.html">Счета</a></li>
+      </ul>
+      <div class="d-flex">
+        <a href="login.html" class="btn btn-outline-custom btn-sm">Выйти</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3>История транзакций</h3>
+    <button class="btn btn-custom rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#addTransactionModal">
+      + Новая запись
+    </button>
+  </div>
+
+  <div class="card shadow-sm border-0 rounded-4 mb-4">
+    <div class="card-body">
+      <form id="filterForm" class="row g-3">
+        <div class="col-md-2">
+          <label class="form-label text-muted small mb-1">Поиск</label>
+          <input id="searchInput" type="text" class="form-control" placeholder="Ключевые слова...">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label text-muted small mb-1">Категория</label>
+          <select class="form-select" id="categoryFilter">
+            <option value="all">Все категории</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label class="form-label text-muted small mb-1">От даты</label>
+          <input id="dateFrom" type="date" class="form-control">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label text-muted small mb-1">До даты</label>
+          <input id="dateTo" type="date" class="form-control">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label text-muted small mb-1">Счёт</label>
+          <select class="form-select" id="accountFilter">
+            <option value="all">Все счета</option>
+          </select>
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+          <button id="applyFilterBtn" type="submit" class="btn btn-secondary w-100">Применить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0 rounded-4">
+    <div class="card-body p-0">
+      <div class="table-responsive table-scroll-container">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light sticky-table-header">
+          <tr>
+            <th class="ps-4 py-3">Дата</th>
+            <th class="py-3">Описание</th>
+            <th class="py-3">Счет</th>
+            <th class="py-3">Категория</th>
+            <th class="pe-4 py-3">Сумма</th>
+          </tr>
+          </thead>
+          <tbody id="transTable">
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addTransactionModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0 shadow-lg">
+
+      <div class="modal-header border-bottom-0 pb-0 pt-4 px-4">
+        <h5 class="modal-title fw-bold text-dark-custom">Новая транзакция</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+
+      <div class="modal-body p-4">
+        <form id="addTransactionForm">
+          <div class="mb-3">
+            <label class="form-label text-muted small fw-bold text-uppercase mb-1 letter-spacing-1">Описание</label>
+            <input type="text" id="newTransDesc" class="form-control bg-light border-0" placeholder="Например: поход в вольчек" required>
+          </div>
+
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <label class="form-label text-muted small fw-bold text-uppercase mb-1 letter-spacing-1">Категория</label>
+              <input type="text" id="newTransCategory" list="categoryList" class="form-control bg-light border-0" placeholder="Выберите или введите..." autocomplete="off" required>
+              <datalist id="categoryList"></datalist>
+            </div>
+            <div class="col-6">
+              <label class="form-label text-muted small fw-bold text-uppercase mb-1 letter-spacing-1">Дата</label>
+              <input type="date" id="newTransDate" class="form-control bg-light border-0" required>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label text-muted small fw-bold text-uppercase mb-1 letter-spacing-1">Счёт</label>
+            <select id="newTransAccount" class="form-select bg-light border-0" required>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label text-muted small fw-bold text-uppercase mb-1 letter-spacing-1">Операция</label>
+            <select id="newTransType" class="form-select bg-light border-0" required>
+              <option value="expense">Расход</option>
+              <option value="income">Доход</option>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label text-muted small fw-bold text-uppercase mb-1 letter-spacing-1">Сумма (₽)</label>
+            <input type="number" id="newTransAmount" class="form-control form-control-lg bg-light border-0" placeholder="0.00" required>
+          </div>
+
+          <button type="submit" class="btn btn-custom w-100 py-3 mb-3">
+            Сохранить транзакцию
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/transact.js"></script>
+</html>

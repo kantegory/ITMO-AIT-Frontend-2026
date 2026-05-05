@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Личный кабинет</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="account.css" />
+</head>
+
+<body>
+  <div class="account-shell">
+    <div class="account-wrapper">
+      <aside class="account-sidebar">
+        <div class="account-avatar-row">
+          <div class="account-avatar" id="accountAvatar">
+            <span id="accountAvatarInitials">??</span>
+          </div>
+          <div>
+            <div class="account-username">Ваш никнейм</div>
+            <div class="account-email">you@example.com</div>
+
+            <button class="btn btn-outline-secondary btn-sm mt-2" id="changeAvatarBtn">
+              <i class="bi bi-image me-1"></i> Изменить аватар
+            </button>
+          </div>
+        </div>
+
+        <hr class="sidebar-divider" />
+
+        <nav class="sidebar-nav">
+          <button class="sidebar-item active" data-tab="favorites">
+            <i class="bi bi-heart"></i>
+            <span>Понравившиеся модели</span>
+          </button>
+          <button class="sidebar-item" data-tab="uploads">
+            <i class="bi bi-cloud-upload"></i>
+            <span>Загруженные модели</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="index.html" class="btn btn-outline-secondary btn-sm w-100 mb-2">
+            <i class="bi bi-house-door me-2"></i> На главную
+          </a>
+
+          <div class="d-flex justify-content-between align-items-center w-100">
+            <span>Всего лайков к вашим моделям</span>
+            <span class="sidebar-metric-pill">
+              <i class="bi bi-hand-thumbs-up"></i> 0
+            </span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="account-main">
+        <div class="account-main-header">
+          <div>
+            <div class="account-main-title">Личный кабинет</div>
+            <div class="account-main-subtitle" id="tabDescription">
+              В этом разделе будут ваши понравившиеся и загруженные модели.
+            </div>
+          </div>
+          <button class="btn-upload">
+            <i class="bi bi-plus-lg"></i>
+            Загрузить модель
+          </button>
+        </div>
+
+        <section class="account-content">
+          <div class="account-content-inner w-100" id="tabFavorites">
+            <div id="favoritesList" class="row g-3">
+              <!-- сюда рендерим карточки избранных -->
+            </div>
+
+            <div id="favoritesEmpty" class="text-center mt-4">
+              <div class="account-placeholder-icon">
+                <i class="bi bi-heart"></i>
+              </div>
+              <div class="account-placeholder-title">
+                У вас пока нет понравившихся моделей
+              </div>
+              <p class="account-placeholder-text">
+                Отмечайте ❤ и ★ понравившиеся модели на главной странице, и
+                они появятся здесь.
+              </p>
+            </div>
+          </div>
+
+          <div class="account-content-inner d-none" id="tabUploads">
+            <div class="account-placeholder-icon">
+              <i class="bi bi-cloud-upload"></i>
+            </div>
+            <div class="account-placeholder-title">
+              У вас пока нет загруженных моделей
+            </div>
+            <p class="account-placeholder-text">
+              Нажмите «Загрузить модель», чтобы поделиться своей моделью с
+              сообществом.
+            </p>
+          </div>
+        </section>
+
+        <div class="sidebar-footer">
+          <a href="index.html" class="btn btn-outline-secondary btn-sm w-100 mb-2">
+            <i class="bi bi-house-door me-2"></i> На главную
+          </a>
+
+          <button class="btn btn-outline-danger btn-sm w-100 mb-2" id="logoutBtnSidebar">
+            <i class="bi bi-box-arrow-right me-2"></i> Выйти
+          </button>
+
+          <div class="d-flex justify-content-between align-items-center w-100">
+            <span>Всего лайков к вашим моделям</span>
+            <span class="sidebar-metric-pill">
+              <i class="bi bi-hand-thumbs-up"></i> 0
+            </span>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const sidebarItems = document.querySelectorAll(".sidebar-item");
+    const favoritesPanel = document.getElementById("tabFavorites");
+    const uploadsPanel = document.getElementById("tabUploads");
+    const tabDescription = document.getElementById("tabDescription");
+
+    sidebarItems.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        sidebarItems.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const tab = btn.getAttribute("data-tab");
+        if (tab === "favorites") {
+          favoritesPanel.classList.remove("d-none");
+          uploadsPanel.classList.add("d-none");
+          tabDescription.textContent =
+            "Здесь появятся модели, которые вы отметили как понравившиеся.";
+        } else {
+          favoritesPanel.classList.add("d-none");
+          uploadsPanel.classList.remove("d-none");
+          tabDescription.textContent =
+            "Здесь будут перечислены модели, которые вы загрузили на платформу.";
+        }
+      });
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const token = localStorage.getItem("token");
+      const userRaw = localStorage.getItem("user");
+
+      if (!token || !userRaw) {
+        window.location.href = "registration.html";
+        return;
+      }
+
+      const user = JSON.parse(userRaw);
+
+      document.querySelector(".account-username").textContent = user.name;
+      document.querySelector(".account-email").textContent = user.email;
+
+      function getInitials(name) {
+        if (!name) return "??";
+        const parts = name.trim().split(/\s+/);
+        if (parts.length === 1) {
+          return parts[0].charAt(0).toUpperCase();
+        }
+        const first = parts[0].charAt(0).toUpperCase();
+        const second = parts[1].charAt(0).toUpperCase();
+        return first + second;
+      }
+
+      const initialsEl = document.getElementById("accountAvatarInitials");
+      if (initialsEl) {
+        initialsEl.textContent = getInitials(user.name);
+      }
+
+      try {
+        const res = await fetch("http://localhost:3001/me", {
+          headers: { Authorization: "Bearer " + token },
+        });
+
+        if (!res.ok) {
+          console.warn("ME error", await res.text());
+          return;
+        }
+
+        const data = await res.json();
+      } catch (e) {
+        console.error(e);
+      }
+
+      const logoutBtn = document.getElementById("logoutBtnSidebar");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          window.location.href = "index.html";
+        });
+      }
+
+      const changeAvatarBtn = document.getElementById("changeAvatarBtn");
+      if (changeAvatarBtn) {
+        changeAvatarBtn.addEventListener("click", () => {
+          alert("Здесь позже появится загрузка аватарки");
+        });
+      }
+
+      async function loadFavorites() {
+        const favoritesListEl = document.getElementById("favoritesList");
+        const favoritesEmptyEl = document.getElementById("favoritesEmpty");
+        if (!favoritesListEl || !favoritesEmptyEl) return;
+
+        favoritesListEl.innerHTML = "";
+
+        const favIds = JSON.parse(
+          localStorage.getItem("favoriteModelIds") || "[]",
+        );
+        if (!favIds.length) {
+          favoritesEmptyEl.style.display = "block";
+          return;
+        }
+
+        try {
+          const models = [];
+          for (const id of favIds) {
+            const res = await fetch(`http://localhost:3001/api/model/${id}`);
+            if (!res.ok) continue;
+            const m = await res.json();
+            models.push(m);
+          }
+
+          if (!models.length) {
+            favoritesEmptyEl.style.display = "block";
+            return;
+          }
+
+          favoritesEmptyEl.style.display = "none";
+
+          models.forEach((model) => {
+            const row = document.createElement("div");
+            row.className = "favorite-row card mb-2 shadow-sm";
+            row.dataset.id = model.id;
+
+            row.innerHTML = `
+    <div class="card-body py-2 px-3 d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-start flex-grow-1">
+        <div class="me-3">
+          <div class="mb-1" style="text-align:left;">
+            <span class="badge bg-primary me-1">
+              ${model.tagLabel || model.shortType || model.category || ""}
+            </span>
+          </div>
+        </div>
+        <div>
+          <div class="fw-semibold mb-1" style="font-size:0.95rem; text-align:left;">
+            ${model.title}
+          </div>
+          <div class="text-muted" style="font-size:0.82rem; max-width:480px; text-align:left;">
+            ${model.description}
+          </div>
+          <div class="mt-1 d-flex align-items-center gap-3" style="font-size:0.78rem;">
+            <span>
+              <i class="bi bi-download me-1"></i>${model.downloads ?? 0}
+            </span>
+            <span class="d-flex align-items-center gap-2">
+              <span class="favorite-toggle-btn" title="Убрать из избранного" style="cursor:pointer;">
+                <i class="bi bi-star-fill text-warning"></i>
+              </span>
+              <span>
+                <i class="bi bi-heart-fill text-danger me-1"></i>${model.likes ?? 0}
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+            favoritesListEl.appendChild(row);
+          });
+
+          favoritesListEl
+            .querySelectorAll(".favorite-toggle-btn")
+            .forEach((btn) => {
+              btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                const row = e.currentTarget.closest(".favorite-row");
+                if (!row) return;
+
+                const id = Number(row.dataset.id);
+                let favIds = JSON.parse(
+                  localStorage.getItem("favoriteModelIds") || "[]",
+                );
+                favIds = favIds.filter((x) => x !== id);
+                localStorage.setItem(
+                  "favoriteModelIds",
+                  JSON.stringify(favIds),
+                );
+
+                row.remove();
+
+                if (!favoritesListEl.querySelector(".favorite-row")) {
+                  favoritesEmptyEl.style.display = "block";
+                }
+              });
+            });
+        } catch (e) {
+          console.error("loadFavorites error", e);
+          favoritesEmptyEl.style.display = "block";
+        }
+      }
+
+      loadFavorites();
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>YOLOv8 Object Detection | MLShare</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+    
+    <header class="navbar navbar-expand-md">
+        <div class="container-fluid">
+            
+            <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <a class="navbar-brand d-none d-md-inline" href="index.html">
+                <h2 class="fw-bolder"> MLShare </h2>
+            </a>
+            
+            <div class="dropdown ms-auto">
+                <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="userMenuToggle" data-bs-toggle="dropdown">
+                    <img src="https://www.placekittens.com/32/32" alt="Аватар пользователя" width="32" height="32" class="rounded-circle me-2">
+                    <span>Иван Иванов</span>
+                </a>
+                
+                <ul class="dropdown-menu dropdown-menu-dark shadow" id="userMenuDropdown">
+                    <li><a class="dropdown-item" href="index.html">Личный кабинет</a></li>
+                    <li><a class="dropdown-item" href="#">Настройки</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="login.html">Выйти</a></li>
+                </ul>
+            </div>
+            
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <aside class="col-md-3 col-lg-2 p-0 border-end" id="sidebarMenuWrapper">
+                <div class="offcanvas-md offcanvas-start" id="sidebarMenu">
+                    
+                    <div class="offcanvas-header">
+                        <h4 class="offcanvas-title" id="sidebarMenuLabel">
+                            <a class="navbar-brand" href="index.html">MLShare</a>
+                        </h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu"></button>
+                    </div>
+
+                    <nav class="offcanvas-body p-0 sidebar-menu-scroll-area">
+                        <ul class="nav flex-column w-100 nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="index.html">
+                                    <i class="bi bi-person-badge me-2"></i> Мой профиль
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="subscriptions.html">
+                                    <i class="bi bi-bell me-2"></i> Подписки
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold text-bg-secondary" href="hub.html">
+                                    <i class="bi bi-search me-2"></i> Хаб
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="#">
+                                    <i class="bi bi-cloud-upload me-2"></i> Загрузить
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+
+            <main class="col-md-9 col-lg-10 px-md-4">
+                
+                <section class="d-flex flex-column flex-md-row justify-content-between align-items-md-start mb-3 gap-3">
+                    <div>
+                        <h1 class="display-5 fw-bold mb-1">
+                            <span class="text-muted">ultralytics /</span> YOLOv8-Detection
+                        </h1>
+                        <p class="text-muted fs-5">Мощная модель для детекции объектов в реальном времени.</p>
+                    </div>
+                    
+                    <article class="d-flex align-items-center gap-2 bg-white rounded-pill flex-shrink-0">
+                        <img src="https://placekittens.com/32/32" class="rounded-circle" width="32" height="32">
+                        <div>
+                            <div class="small text-muted">Создатель</div>
+                            <a href="#" class="text-decoration-none text-dark">ultralytics</a>
+                        </div>
+                    </article>
+                </section>
+
+                <section class="d-flex flex-column flex-xl-row justify-content-between align-items-xl-center gap-2 mb-3">
+                    
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="badge rounded-pill text-bg-primary fs-6 fw-normal">Computer Vision</span>
+                        <span class="badge rounded-pill text-bg-secondary fs-6 fw-normal">PyTorch</span>
+                        <span class="badge rounded-pill border text-dark bg-white fs-6 fw-normal">Object Detection</span>
+                        <span class="badge rounded-pill border text-dark bg-white fs-6 fw-normal">GPL-3.0</span>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2">
+                        <button class="btn btn-outline-secondary d-flex align-items-center gap-2 rounded-pill fw-normal" id="modelStarButton" type="button">
+                            <i class="bi bi-star"></i> Star
+                            <span class="badge bg-secondary rounded-pill">1,024</span>
+                        </button>
+                        
+                        <button class="btn btn-outline-secondary d-flex align-items-center gap-2 rounded-pill fw-normal" id="modelForkButton" type="button">
+                            <i class="bi bi-diagram-2"></i> Fork
+                            <span class="badge bg-secondary rounded-pill">128</span>
+                        </button>
+
+                        <button class="btn bg-primary text-white d-flex align-items-center gap-2 rounded-pill fw-normal" id="openUseModelCodeModalButton" type="button" data-bs-toggle="modal" data-bs-target="#useCodeModal">
+                            <i class="bi bi-code-slash"></i> Use in Code
+                        </button>
+
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary rounded-circle" id="modelActionsMenuButton" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-three-dots"></i>
+                            </button>
+                            <ul class="dropdown-menu" id="modelActionsMenu">
+                                <li><button class="dropdown-item" id="bookmarkModelButton" type="button"><i class="bi bi-bookmark me-2"></i>Добавить в Bookmarks</button></li>
+                                <li><button class="dropdown-item" id="shareModelButton" type="button"><i class="bi bi-share me-2"></i>Поделиться</button></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><button class="dropdown-item text-danger" id="reportModelButton" type="button"><i class="bi bi-flag me-2"></i>Пожаловаться</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <ul class="nav nav-tabs" id="modelTabs">
+                        <li class="nav-item">
+                            <button class="nav-link active" id="model-card-tab" data-bs-toggle="tab" data-bs-target="#card" type="button">
+                                Карточка модели
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" id="model-discussions-tab" data-bs-toggle="tab" data-bs-target="#discussions" type="button">
+                                Обсуждения
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" id="model-artifacts-tab" data-bs-toggle="tab" data-bs-target="#artifacts" type="button">
+                                Файлы и артефакты
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content bg-white p-4" id="modelTabsContent">
+                        
+                        <div class="tab-pane fade show active" id="card">
+                            <h3 class="fw-bold mb-3">Описание модели</h3>
+                            <p><strong>YOLOv8</strong> (You Only Look Once version 8) — это новейшая версия семейства моделей YOLO, созданная Ultralytics. Она устанавливает новый уровень state-of-the-art для задач детекции объектов, сегментации изображений и классификации. Модель оптимизирована для работы на CPU и GPU.</p>
+                            
+                            <h4 class="fw-bold mt-4 mb-3">Пример использования</h4>
+                            <p>Вы можете легко запустить модель на Python, используя встроенный интерфейс библиотеки <code>ultralytics</code>.</p>
+                            
+                            <pre class="code-inline-block" id="modelUsageExampleCode"><code>from ultralytics import YOLO
+
+# Загружаем предобученную модель
+model = YOLO("yolov8n.pt")
+
+# Запускаем предсказание на картинке
+results = model.predict("https://ultralytics.com/images/bus.jpg")</code></pre>
+
+                            <h4 class="fw-bold mt-4 mb-3">Метрики (COCO Dataset)</h4>
+                            <table class="table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Model</th>
+                                        <th>Size (Pixels)</th>
+                                        <th>mAP (val)</th>
+                                        <th>Params (M)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>YOLOv8n</td>
+                                        <td>640</td>
+                                        <td>37.3</td>
+                                        <td>3.2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>YOLOv8x</td>
+                                        <td>640</td>
+                                        <td>53.9</td>
+                                        <td>68.2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane fade" id="discussions" role="tabpanel">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="fw-bold">Обсуждения</h4>
+                                <button class="btn bg-primary text-white" id="createModelDiscussionButton" type="button">Создать тему</button>
+                            </div>
+                            
+                            <ul class="list-group list-group-flush" id="modelDiscussionsList">
+                                <li class="list-group-item py-3" >
+                                    <div class="d-flex justify-content-between">
+                                        <h6 class="mb-1 fw-bold">Issue with ONNX export on Mac M1</h6>
+                                        <small class="text-muted">3 дня назад</small>
+                                    </div>
+                                    <p class="mb-1">При попытке экспорта модели в формат ONNX получаю ошибку Tensor mismatch...</p>
+                                </li>
+                                <li href="#" class="list-group-item list-group-item-action py-3">
+                                    <div class="d-flex justify-content-between">
+                                        <h6 class="mb-1 fw-bold">How to fine-tune on custom dataset?</h6>
+                                        <small class="text-muted">Неделю назад</small>
+                                    </div>
+                                    <p class="mb-1 text-muted small">Подскажите, какой формат разметки датасета нужен для дообучения этой версии?</p>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-pane fade" id="artifacts" role="tabpanel">
+                            <h4 class="fw-bold mb-3">Файлы модели</h4>
+                            
+                            <table class="table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Имя файла</th>
+                                        <th>Размер</th>
+                                        <th>Обновлено</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="modelArtifactsList">
+                                    <tr>
+                                        <td><i class="bi bi-file-earmark-code text-muted me-2"></i> config.json</td>
+                                        <td>1.2 KB</td>
+                                        <td>2 мес. назад</td>
+                                        <td><button class="btn" id="downloadConfigJsonButton" type="button"><i class="bi bi-download"></i></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="bi bi-box-seam text-muted me-2"></i> yolov8n.pt</td>
+                                        <td>6.2 MB</td>
+                                        <td>1 мес. назад</td>
+                                        <td><button class="btn" id="downloadYolov8nButton" type="button"><i class="bi bi-download"></i></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="bi bi-box-seam text-muted me-2"></i> yolov8x.pt</td>
+                                        <td>136.5 MB</td>
+                                        <td>1 мес. назад</td>
+                                        <td><button class="btn" id="downloadYolov8xButton" type="button"><i class="bi bi-download"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="useCodeModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title fw-bold" id="useCodeModalLabel"><i class="bi bi-code-slash me-2"></i> Использование модели</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                
+                <div class="modal-body p-4">
+
+                    <select class="form-select mb-4 fw-semibold border-secondary" id="modelRuntimeSelect">
+                        <option value="python" selected>Python (ultralytics)</option>
+                        <option value="pytorch">Python (PyTorch Hub)</option>
+                        <option value="cli">Command Line (CLI)</option>
+                    </select>
+                        <pre class="code-inline-block" id="modelUseCodeSnippet"><code>from ultralytics import YOLO
+
+# Загружаем предобученную модель
+model = YOLO("yolov8n.pt")
+
+# Запускаем предсказание на картинке
+results = model.predict("https://ultralytics.com/images/bus.jpg")</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

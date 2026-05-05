@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Личный кабинет">
+    <title>СИСТЕМА_СЧЁТ : ДАШБОРД</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/form.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/modals.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+</head>
+<body>
+
+<header>
+    <nav class="navbar-terminal" aria-label="Основное меню">
+        <div class="navbar-brand" role="heading" aria-level="1">[ СИСТЕМА_СЧЁТ ]</div>
+        <button class="menu-toggle-btn" id="mobileMenuToggleBtn" aria-label="Открыть мобильное меню">[ МЕНЮ ]</button>
+        <div class="nav-links" id="navLinksContainer">
+            <button class="menu-close-btn" id="mobileMenuCloseBtn" aria-label="Закрыть меню">[ X ]</button>
+            <a href="dashboard.html">ГЛАВНАЯ</a>
+            <a href="search.html">ПОИСК</a>
+            <a href="reports.html">ОТЧЁТЫ</a>
+            <a href="settings.html">НАСТРОЙКИ</a>
+            <button class="mode-btn" id="theme-toggle" aria-label="Переключить цветовую тему">[ LIGHT_MODE ]</button>
+            <a href="index.html" aria-label="Выйти из системы">[ ВЫХОД ]</a>
+        </div>
+    </nav>
+</header>
+
+<div class="menu-overlay" id="mobileMenuOverlayElement"></div>
+
+<main id="main-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="dashboard-block">
+                    <div class="block-title" role="heading" aria-level="2">&gt; ТЕКУЩИЙ_БАЛАНС</div>
+                    <div class="balance-value">
+                        <svg class="icon" style="font-size: 40px; margin-right: 10px; color: var(--border-color);">
+                            <use href="../sprite.svg#icon-money"></use>
+                        </svg>
+                        <span id="totalBalanceValue">0.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="dashboard-block">
+                    <div class="block-title" role="heading" aria-level="2">&gt; МОИ_СЧЕТА</div>
+                    <table class="terminal-table">
+                        <caption class="visually-hidden">Список ваших банковских счетов</caption>
+                        <thead>
+                        <tr>
+                            <th scope="col">НАЗВАНИЕ</th>
+                            <th scope="col">БАЛАНС</th>
+                        </tr>
+                        </thead>
+                        <tbody id="accountsTableBody"></tbody>
+                    </table>
+                    <button class="terminal-btn" id="openAddAccountModalBtn" aria-label="Добавить новый счёт">[ + НОВЫЙ_СЧЁТ ]</button>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="dashboard-block">
+                    <div class="block-title" role="heading" aria-level="2">&gt; ПОСЛЕДНИЕ_ТРАНЗАКЦИИ</div>
+                    <table class="terminal-table">
+                        <caption class="visually-hidden">Последние финансовые операции</caption>
+                        <thead>
+                        <tr>
+                            <th scope="col">ДАТА</th>
+                            <th scope="col">СЧЁТ</th>
+                            <th scope="col">ОПИСАНИЕ</th>
+                            <th scope="col">КАТЕГОРИЯ</th>
+                            <th scope="col">СУММА</th>
+                        </tr>
+                        </thead>
+                        <tbody id="transactionsTableBody"></tbody>
+                    </table>
+                    <button class="terminal-btn" id="openModalBtn" aria-label="Добавить новую транзакцию">[ + ДОБАВИТЬ_ТРАНЗАКЦИЮ ]</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-block mt-3">
+            <div class="block-title" role="heading" aria-level="2">&gt; КУРСЫ_ВАЛЮТ</div>
+            <div class="row g-2 mb-2" id="cRow1"></div>
+            <div class="row g-2 mb-2" id="cRow2"></div>
+            <div class="row g-2" id="cRow3"></div>
+        </div>
+    </div>
+</main>
+
+<div class="modal-overlay" id="txModal" role="dialog" aria-modal="true" aria-labelledby="txModalTitle">
+    <div class="terminal-box">
+        <button class="close-btn" data-close-modal="txModal" aria-label="Закрыть окно">[ X ]</button>
+        <div class="terminal-title" id="txModalTitle" role="heading" aria-level="2">[ НОВАЯ_ТРАНЗАКЦИЯ ]</div>
+
+        <form id="txForm">
+            <div class="tx-type-selector">
+                <button type="button" class="tx-type-btn" data-type="expense" aria-label="Тип операции: Расход">РАСХОД</button>
+                <button type="button" class="tx-type-btn" data-type="income" aria-label="Тип операции: Доход">ДОХОД</button>
+            </div>
+
+            <div class="input-group">
+                <label for="txAccount" class="input-prefix" style="cursor: pointer;">&gt; СЧЁТ:</label>
+                <select id="txAccount" class="terminal-input"></select>
+            </div>
+
+            <div class="input-group">
+                <label for="txDesc" class="input-prefix" style="cursor: pointer;">&gt; ОПИСАНИЕ:</label>
+                <input type="text" id="txDesc" class="terminal-input" placeholder="ТАКСИ" autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <label for="txDate" class="input-prefix" style="cursor: pointer;">&gt; ДАТА:</label>
+                <input type="text" id="txDate" class="terminal-input" placeholder="ДД.ММ.ГГГГ" aria-label="Дата в формате день, месяц, год">
+            </div>
+
+            <div class="input-group">
+                <label for="txCategory" class="input-prefix" style="cursor: pointer;">&gt; КАТЕГОРИЯ:</label>
+                <select id="txCategory" class="terminal-input">
+                    <option value="РАЗНОЕ" selected>[ РАЗНОЕ ]</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="txSum" class="input-prefix" style="cursor: pointer;">&gt; СУММА:</label>
+                <input type="text" id="txSum" class="terminal-input" placeholder="0.00" autocomplete="off">
+            </div>
+
+            <button type="submit" class="terminal-btn">[ СОХРАНИТЬ_ТРАНЗАКЦИЮ ]</button>
+        </form>
+    </div>
+</div>
+
+<div class="modal-overlay" id="addAccountModal" role="dialog" aria-modal="true" aria-labelledby="addAccTitle">
+    <div class="terminal-box">
+        <button class="close-btn" data-close-modal="addAccountModal" aria-label="Закрыть окно">[ X ]</button>
+        <div class="terminal-title" id="addAccTitle" role="heading" aria-level="2">[ РЕГИСТРАЦИЯ_СЧЁТА ]</div>
+
+        <form id="addAccountForm">
+            <div class="input-group">
+                <label for="newAccountName" class="input-prefix" style="cursor: pointer;">&gt; НАЗВАНИЕ:</label>
+                <input type="text" id="newAccountName" class="terminal-input" placeholder="КАРТА" autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <label for="newAccountBalance" class="input-prefix" style="cursor: pointer;">&gt; БАЛАНС:</label>
+                <input type="number" step="0.01" id="newAccountBalance" class="terminal-input" placeholder="0.00">
+            </div>
+
+            <button type="submit" class="terminal-btn">[ СОЗДАТЬ_СЧЁТ ]</button>
+        </form>
+    </div>
+</div>
+<script src="../js/api.js" defer></script>
+<script src="../js/core.js" defer></script>
+<script src="../js/dashboard.js" defer></script>
+<script src="../js/theme.js"></script>
+</body>
+</html>
