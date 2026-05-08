@@ -76,7 +76,15 @@ function setupTheme() {
 
     const topbar = document.querySelector(".topbar");
     const authActions = document.querySelector("header .ms-auto");
-    if (topbar) topbar.appendChild(btn);
+    if (topbar) {
+        const actions = document.createElement("div");
+        const mainAction = topbar.querySelector(".upload-btn, #saveSettingsBtn");
+
+        actions.className = "ms-auto d-flex align-items-center gap-2";
+        if (mainAction) actions.appendChild(mainAction);
+        actions.appendChild(btn);
+        topbar.appendChild(actions);
+    }
     if (authActions) authActions.prepend(btn);
 }
 
@@ -336,6 +344,7 @@ function renderSubscriptions() {
             </td>
             <td><span class="tag">${s.updates}</span></td>
             <td>Активна</td>
+            <td>${s.date}</td>
             <td class="text-end pe-4">
                 <button class="btn btn-light btn-sm text-danger" onclick="deleteItem('subs', ${s.id})">Отписаться</button>
             </td>
