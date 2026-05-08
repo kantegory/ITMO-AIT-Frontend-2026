@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>DataPort – Детали датасета</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="d-flex dashboard">
+    <div class="sidebar">
+        <div class="brand mb-4">DataPort</div>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="dashboard.html">Dashboard</a>
+            <a class="nav-link" href="explore.html">Explore</a>
+            <a class="nav-link" href="my-models.html">My Models</a>
+            <a class="nav-link active" href="my-datasets.html">My Datasets</a>
+            <a class="nav-link" href="my-subscriptions.html">Subscriptions</a>
+            <a class="nav-link" href="settings.html">Settings</a>
+            <hr>
+            <a class="nav-link text-danger" href="#" id="logoutBtn">Выход</a>
+        </nav>
+    </div>
+
+    <div class="flex-grow-1">
+        <div class="topbar px-4 py-3 d-flex align-items-center">
+            <a href="javascript:history.back()" class="btn btn-light btn-sm me-3">← Назад</a>
+            <div class="page-title" id="dsTitle">Загрузка...</div>
+        </div>
+
+        <div class="content-area">
+            <div class="row">
+                <div class="col-md-8">
+                    <ul class="nav nav-tabs border-0 mb-3" id="datasetTabs">
+                        <li class="nav-item">
+                            <button class="nav-link active border-0" data-bs-toggle="tab" data-bs-target="#desc-tab">Описание</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link border-0" data-bs-toggle="tab" data-bs-target="#preview-tab">Предпросмотр</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link border-0" data-bs-toggle="tab" data-bs-target="#discuss-tab">Обсуждения</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="desc-tab">
+                            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                                <h5 class="fw-bold mb-3">Карточка данных</h5>
+                                <p class="text-muted mb-4" id="dsDescription">-</p>
+
+                                <h6 class="fw-bold mb-2">Статистика</h6>
+                                <div class="row g-3 mb-4">
+                                    <div class="col-6 col-md-3">
+                                        <div class="p-3 bg-light rounded-3 text-center">
+                                            <div class="small text-muted">Строк</div>
+                                            <div class="fw-bold" id="dsRows">-</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3">
+                                        <div class="p-3 bg-light rounded-3 text-center">
+                                            <div class="small text-muted">Формат</div>
+                                            <div class="fw-bold" id="dsFormat">-</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="preview-tab">
+                            <div class="card border-0 shadow-sm rounded-4 p-4">
+                                <h5 class="fw-bold mb-3">Первые 5 строк</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-sm small text-muted">
+                                        <thead>
+                                        <tr>
+                                            <th>id</th>
+                                            <th>text/image_path</th>
+                                            <th>label</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr><td>001</td><td>/data/train/img_01.jpg</td><td>cat</td></tr>
+                                        <tr><td>002</td><td>/data/train/img_02.jpg</td><td>dog</td></tr>
+                                        <tr><td>003</td><td>/data/train/img_03.jpg</td><td>cat</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="discuss-tab">
+                            <div class="card border-0 shadow-sm rounded-4 p-4">
+                                <h5 class="fw-bold mb-3">Вопросы по данным</h5>
+                                <div class="mb-4">
+                                    <textarea class="form-control mb-2" id="commentInput" rows="2" placeholder="Спросить автора о разметке..."></textarea>
+                                    <button class="btn btn-primary btn-sm" onclick="addComment()">Отправить</button>
+                                </div>
+                                <div id="commentsList">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                        <div class="d-flex gap-2 mb-4">
+                            <button class="btn btn-outline-primary flex-grow-1" onclick="socialAction('like', 'dataset')">
+                                ♥ <span id="dsLikes">0</span>
+                            </button>
+                            <button class="btn btn-outline-secondary flex-grow-1" onclick="socialAction('fork', 'dataset')">
+                                ⑂ <span id="dsForks">0</span>
+                            </button>
+                        </div>
+                        <h5 class="fw-bold mb-4">Информация</h5>
+                        <div class="mb-3">
+                            <label class="small text-muted d-block">Размер архива</label>
+                            <span class="fw-semibold" id="dsSize">-</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small text-muted d-block">Дата обновления</label>
+                            <span class="fw-semibold" id="dsDate">-</span>
+                        </div>
+                        <div class="mb-4">
+                            <label class="small text-muted d-block mb-1">Теги</label>
+                            <span class="tag" id="dsTag">-</span>
+                        </div>
+                        <button class="btn btn-primary w-100 py-2">Скачать Dataset (.zip)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="app.js"></script>
+<script>
+    function loadDatasetLikes() {
+        const p = new URLSearchParams(window.location.search);
+        const id = parseInt(p.get('id'));
+        const d = myDatasets.find(x => x.id === id) || globalDatasets.find(x => x.id === id);
+        if (d && document.getElementById('dsLikes')) {
+            document.getElementById('dsLikes').innerText = d.likes || 0;
+        }
+    }
+    window.addEventListener('DOMContentLoaded', loadDatasetLikes);
+</script>
+</body>
+</html>
