@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useProjects } from '@/composables/useProjects.js'
 import AppModal from '@/components/AppModal.vue'
@@ -31,13 +31,19 @@ const infoTitle = computed(() => {
   return ''
 })
 
-onMounted(async () => {
-  try {
-    await refreshProject(projectId.value)
-  } catch {
-    loadError.value = true
-  }
-})
+watch(
+  projectId,
+  async (id) => {
+    if (!id) return
+    loadError.value = false
+    try {
+      await refreshProject(id)
+    } catch {
+      loadError.value = true
+    }
+  },
+  { immediate: true },
+)
 
 function openActionModal(type) {
   if (type === 'team') teamModalRef.value?.show()
@@ -46,15 +52,17 @@ function openActionModal(type) {
   else if (type === 'discussion') discussionModalRef.value?.show()
 }
 
-function openTaskDetail(task) {
+async function openTaskDetail(task) {
   selectedTask.value = task
   selectedFile.value = null
+  await nextTick()
   infoModalRef.value?.show()
 }
 
-function openFileDetail(file) {
+async function openFileDetail(file) {
   selectedFile.value = file
   selectedTask.value = null
+  await nextTick()
   infoModalRef.value?.show()
 }
 
@@ -79,7 +87,13 @@ function tasksForStatus(status) {
       </div>
     </div>
 
-    <div v-else-if="project" class="container layout-stack">
+    <div v-else-if="!project" class="container">
+      <div class="panel-card mt-4">
+        <p class="mb-0">Проект не найден или ссылка устарела.</p>
+      </div>
+    </div>
+
+    <div v-else class="container layout-stack">
       <section class="panel-card panel-header" aria-labelledby="projectTitle">
         <div class="row g-4 align-items-stretch">
           <div class="col-lg-8">

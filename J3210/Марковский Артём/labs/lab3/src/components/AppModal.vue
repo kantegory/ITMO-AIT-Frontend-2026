@@ -1,5 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { Modal } from 'bootstrap'
 
 const props = defineProps({
   title: { type: String, default: '' },
@@ -10,7 +11,13 @@ const modalEl = ref(null)
 let bsModal = null
 
 onMounted(() => {
-  bsModal = window.bootstrap.Modal.getOrCreateInstance(modalEl.value)
+  bsModal = Modal.getOrCreateInstance(modalEl.value)
+})
+
+onBeforeUnmount(() => {
+  bsModal?.hide()
+  bsModal?.dispose()
+  bsModal = null
 })
 
 function show() {

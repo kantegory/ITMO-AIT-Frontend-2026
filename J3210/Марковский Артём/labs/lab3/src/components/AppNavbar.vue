@@ -1,6 +1,7 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { Collapse } from 'bootstrap'
 import { authState, clearSession } from '@/stores/auth.js'
 import { useTheme } from '@/composables/useTheme.js'
 
@@ -11,6 +12,16 @@ const { theme, toggleTheme } = useTheme()
 const isAuth = computed(() => authState.isAuth)
 const userName = computed(() => authState.userName)
 const isDark = computed(() => theme.value === 'dark')
+
+watch(
+  () => route.fullPath,
+  () => {
+    const el = document.getElementById('appNav')
+    if (el?.classList.contains('show')) {
+      Collapse.getOrCreateInstance(el, { toggle: false }).hide()
+    }
+  },
+)
 
 function logout() {
   clearSession()
