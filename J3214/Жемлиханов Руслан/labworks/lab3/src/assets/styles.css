@@ -1,0 +1,182 @@
+:root {
+  --sidebar-width: 250px;
+}
+
+.icon {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+  vertical-align: middle;
+}
+
+.icon-sm {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.icon-lg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.brand-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid currentColor;
+  border-radius: 0.375rem;
+  font-weight: 700;
+}
+
+.theme-toggle {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 1080;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  transform: translateY(-200%);
+  z-index: 2000;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.auth-layout {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.auth-panel {
+  width: min(100%, 480px);
+}
+
+.app-layout {
+  min-height: 100vh;
+}
+
+.app-sidebar {
+  width: var(--sidebar-width);
+  min-height: 100vh;
+  position: sticky;
+  top: 0;
+}
+
+.app-main {
+  min-width: 0;
+}
+
+.router-link-active.nav-link {
+  color: var(--bs-nav-pills-link-active-color);
+  background-color: var(--bs-nav-pills-link-active-bg);
+}
+
+.pipeline-graph .dag-flow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.pipeline-graph__task {
+  min-width: 190px;
+  padding: 0.75rem;
+  border: 1px solid;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+.pipeline-graph__task h3 {
+  font-size: 1rem;
+  margin: 0 0 0.5rem;
+}
+
+.pipeline-graph__task.active {
+  outline: 2px solid;
+  outline-offset: 2px;
+}
+
+.flow-arrow {
+  font-size: 1.2rem;
+}
+
+.pipeline-logs {
+  border: 1px solid;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.9rem;
+  max-height: 320px;
+  overflow: auto;
+}
+
+.pipeline-logs p {
+  margin-bottom: 0.5rem;
+}
+
+.read {
+  opacity: 0.6;
+}
+
+.notification-menu {
+  width: min(22rem, calc(100vw - 2rem));
+}
+
+html[data-bs-theme="dark"] body {
+  background-color: #121212;
+}
+
+html[data-bs-theme="dark"] .bg-white,
+html[data-bs-theme="dark"] .card-header.bg-white,
+html[data-bs-theme="dark"] .navbar.bg-white,
+html[data-bs-theme="dark"] .dropdown-menu,
+html[data-bs-theme="dark"] .offcanvas {
+  background-color: #1f1f1f !important;
+}
+
+html[data-bs-theme="dark"] .text-dark {
+  color: #f5f5f5 !important;
+}
+
+html[data-bs-theme="dark"] .border,
+html[data-bs-theme="dark"] .border-bottom,
+html[data-bs-theme="dark"] .border-end,
+html[data-bs-theme="dark"] .table > :not(caption) > * > * {
+  border-color: #3a3a3a !important;
+}
+
+html[data-bs-theme="dark"] .table-light,
+html[data-bs-theme="dark"] .table-light > th,
+html[data-bs-theme="dark"] .table-light > td {
+  background-color: #2a2a2a !important;
+  color: #f5f5f5 !important;
+}
+
+@media (max-width: 991.98px) {
+  .app-sidebar {
+    display: none;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .pipeline-graph .dag-flow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .flow-arrow {
+    transform: rotate(90deg);
+    align-self: center;
+  }
+}
