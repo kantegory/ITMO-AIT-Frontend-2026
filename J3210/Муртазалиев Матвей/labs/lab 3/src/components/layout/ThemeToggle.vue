@@ -18,4 +18,3 @@ import { useTheme } from "@/composables/useTheme";
 
 const { isGraphite, themeLabel, toggleTheme } = useTheme();
 </script>
-

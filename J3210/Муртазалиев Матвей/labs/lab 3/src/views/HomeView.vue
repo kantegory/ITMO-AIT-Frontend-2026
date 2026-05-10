@@ -12,9 +12,9 @@
               FinFlow помогает видеть движение денег в реальном времени, быстро находить нужные транзакции и принимать решения на основе отчётов и прогнозов.
             </p>
             <div class="d-flex flex-wrap gap-3 mt-4">
-              <RouterLink class="btn btn-accent btn-lg" to="/login">Открыть демо-кабинет</RouterLink>
+              <RouterLink class="btn btn-accent btn-lg" to="/login">Начать</RouterLink>
               <button class="btn btn-outline-dark btn-lg" type="button" @click="showQuickStart = true">
-                Быстрый вход
+                Данные для демо
               </button>
             </div>
           </div>
@@ -100,4 +100,3 @@ const features = [
   { icon: "chart", title: "Отчёты", copy: "Графики расходов, разбивка по категориям и краткий финансовый прогноз." },
 ];
 </script>
-

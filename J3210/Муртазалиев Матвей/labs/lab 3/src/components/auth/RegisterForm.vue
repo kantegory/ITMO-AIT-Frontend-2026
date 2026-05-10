@@ -39,17 +39,21 @@
           <div class="col-md-6">
             <label class="plan-card">
               <input v-model="form.plan" type="radio" name="plan" value="Starter" />
-              <span class="plan-card__title">Starter</span>
-              <span class="plan-card__price">Бесплатно</span>
-              <span class="plan-card__copy">1 банк, ручное ведение бюджета</span>
+              <span class="plan-card__body">
+                <span class="plan-card__title">Starter</span>
+                <span class="plan-card__price">Бесплатно</span>
+                <span class="plan-card__copy">Один банк и ручное ведение бюджета</span>
+              </span>
             </label>
           </div>
           <div class="col-md-6">
             <label class="plan-card">
               <input v-model="form.plan" type="radio" name="plan" value="Pro" />
-              <span class="plan-card__title">Pro</span>
-              <span class="plan-card__price">₽ 399 / месяц</span>
-              <span class="plan-card__copy">Прогнозы, отчёты и автоправила</span>
+              <span class="plan-card__body">
+                <span class="plan-card__title">Pro</span>
+                <span class="plan-card__price">₽ 399 / месяц</span>
+                <span class="plan-card__copy">Прогнозы, отчёты и правила автокатегоризации</span>
+              </span>
             </label>
           </div>
         </div>
@@ -120,4 +124,3 @@ async function submit() {
   }
 }
 </script>
-

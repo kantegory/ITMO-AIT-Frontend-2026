@@ -59,13 +59,13 @@
       <div class="divider-text"><span>или продолжить через</span></div>
     </div>
     <div class="col-sm-6">
-      <button class="btn btn-outline-dark w-100" type="button">
-        <SvgIcon name="google" class-name="icon--inline me-2" />Google
+      <button class="btn btn-outline-dark btn-social w-100" type="button">
+        <SvgIcon name="google" />Google
       </button>
     </div>
     <div class="col-sm-6">
-      <button class="btn btn-outline-dark w-100" type="button">
-        <SvgIcon name="apple" class-name="icon--inline me-2" />Apple ID
+      <button class="btn btn-outline-dark btn-social w-100" type="button">
+        <SvgIcon name="apple" />Apple ID
       </button>
     </div>
   </form>
@@ -125,4 +125,3 @@ async function submit() {
   }
 }
 </script>
-
