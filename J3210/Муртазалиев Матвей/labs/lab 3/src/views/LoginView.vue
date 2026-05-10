@@ -8,7 +8,7 @@
               <span class="section-label">Авторизация</span>
               <h1 class="h3 mb-0 mt-2">Войти</h1>
             </div>
-            <RouterLink class="text-decoration-none small fw-semibold" to="/register">Создать аккаунт</RouterLink>
+            <RouterLink class="link-accent text-decoration-none small fw-semibold" to="/register">Создать аккаунт</RouterLink>
           </div>
           <LoginForm />
         </div>
@@ -21,4 +21,3 @@
 import { RouterLink } from "vue-router";
 import LoginForm from "@/components/auth/LoginForm.vue";
 </script>
-

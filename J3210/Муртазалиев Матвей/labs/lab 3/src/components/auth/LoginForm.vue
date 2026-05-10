@@ -43,7 +43,7 @@
         <input id="rememberMe" class="form-check-input" type="checkbox" checked />
         <label class="form-check-label" for="rememberMe">Запомнить меня</label>
       </div>
-      <button class="btn btn-link p-0 text-decoration-none" type="button" @click="showReset = true">
+      <button class="btn btn-link link-accent p-0 text-decoration-none" type="button" @click="showReset = true">
         Забыли пароль?
       </button>
     </div>

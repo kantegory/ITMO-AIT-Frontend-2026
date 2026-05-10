@@ -16,6 +16,7 @@
   --accent-outline: rgba(15, 75, 176, 0.34);
   --accent-soft: rgba(36, 118, 255, 0.14);
   --accent-contrast: #ffffff;
+  --link-accent: #1657c4;
   --header-bg: rgba(255, 255, 255, 0.82);
   --focus-ring: rgba(36, 118, 255, 0.28);
   --shadow: 0 18px 50px rgba(31, 41, 51, 0.08);
@@ -65,7 +66,8 @@ html[data-theme="graphite"] {
   --accent-border: #ffb073;
   --accent-outline: rgba(255, 176, 115, 0.42);
   --accent-soft: rgba(255, 138, 61, 0.18);
-  --accent-contrast: #14171d;
+  --accent-contrast: #ffffff;
+  --link-accent: #ff9b54;
   --header-bg: rgba(20, 23, 29, 0.88);
   --focus-ring: rgba(255, 138, 61, 0.32);
   --shadow: 0 20px 48px rgba(0, 0, 0, 0.34);
@@ -113,11 +115,27 @@ body {
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 0.25s;
+  transition-timing-function: ease;
+}
+
 #app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   color: var(--text);
+  --bs-body-color: var(--text);
+  --bs-body-bg: var(--bg);
+  --bs-secondary-color: var(--muted);
+  --bs-link-color: var(--link-accent);
+  --bs-link-hover-color: var(--accent);
+  --bs-modal-color: var(--text);
+  --bs-modal-bg: var(--surface-solid);
+  --bs-border-color: var(--border);
 }
 
 main {
@@ -223,6 +241,19 @@ textarea:focus-visible {
   text-decoration: none;
 }
 
+.brand-mark:hover,
+.brand-mark:focus,
+.brand-mark.router-link-active {
+  color: var(--text) !important;
+}
+
+html[data-theme="graphite"] .brand-mark,
+html[data-theme="graphite"] .brand-mark:hover,
+html[data-theme="graphite"] .brand-mark:focus,
+html[data-theme="graphite"] .brand-mark.router-link-active {
+  color: #f3f0e9 !important;
+}
+
 .navbar-toggler {
   border-color: var(--button-muted-border);
 }
@@ -320,6 +351,11 @@ html[data-theme="graphite"] .nav-link:hover {
   border: 1px solid var(--border);
 }
 
+.btn-theme .icon {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
 .btn-theme:hover,
 .btn-theme:focus,
 .btn-theme[aria-pressed="true"] {
@@ -331,6 +367,18 @@ html[data-theme="graphite"] .nav-link:hover {
 
 .btn .icon {
   margin-top: -0.08rem;
+}
+
+.btn-link,
+.link-accent {
+  color: var(--link-accent) !important;
+}
+
+.btn-link:hover,
+.btn-link:focus,
+.link-accent:hover,
+.link-accent:focus {
+  color: var(--accent) !important;
 }
 
 .hero-section,
@@ -527,6 +575,7 @@ html[data-theme="graphite"] .nav-link:hover {
 .forecast-box,
 .plan-card,
 .mini-info-card {
+  color: var(--text);
   padding: 1rem;
   border: 1px solid var(--border);
   border-radius: 0.8rem;
@@ -697,9 +746,11 @@ html[data-theme="graphite"] .nav-link:hover {
 .custom-modal {
   border-radius: 0.9rem;
   background: var(--surface-solid);
+  color: var(--text);
 }
 
 .modal-content {
+  color: var(--text);
   border: 1px solid var(--border);
   background: var(--surface-solid);
 }

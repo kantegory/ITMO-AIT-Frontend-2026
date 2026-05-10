@@ -1,5 +1,5 @@
 export function formatCurrency(value) {
-  return `₽ ${Number(value || 0).toLocaleString("ru-RU")}`;
+  return `${Number(value || 0).toLocaleString("ru-RU").replace(/\u00a0/g, " ")} ₽`;
 }
 
 export function formatLongDate(value) {
@@ -44,4 +44,3 @@ export function formatLastSync(lastSyncAt, status) {
 
   return `Последняя синхронизация: ${date.toLocaleDateString("ru-RU")} в ${time}`;
 }
-

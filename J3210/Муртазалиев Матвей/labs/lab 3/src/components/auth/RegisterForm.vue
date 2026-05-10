@@ -24,7 +24,7 @@
         aria-describedby="register-password-hint password-strength-text"
         required
       />
-      <small id="register-password-hint" class="text-secondary d-block mt-2">Для демо достаточно пароля длиной от 8 символов.</small>
+      <small id="register-password-hint" class="text-secondary d-block mt-2">Пароль минимум 8 символов.</small>
       <div class="password-strength mt-3">
         <div class="password-strength__bar">
           <span role="progressbar" aria-label="Надежность пароля" aria-valuemin="0" aria-valuemax="100" :aria-valuenow="strength.percent" :style="{ width: `${strength.percent}%` }"></span>
@@ -105,8 +105,8 @@ const strength = computed(() => {
   const password = form.password.trim();
 
   if (password.length >= 12) return { percent: 100, label: "Сильный пароль" };
-  if (password.length >= 8) return { percent: 70, label: "Нормально для демо" };
-  if (password.length > 0) return { percent: 35, label: "Лучше сделать подлиннее" };
+  if (password.length >= 8) return { percent: 70, label: "Средний пароль" };
+  if (password.length > 0) return { percent: 35, label: "Слабый пароль" };
   return { percent: 0, label: "Укажите пароль" };
 });
 

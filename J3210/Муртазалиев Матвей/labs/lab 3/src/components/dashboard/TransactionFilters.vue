@@ -30,7 +30,7 @@
       <p class="mb-0 text-secondary" role="status" aria-live="polite">
         Найдено транзакций: <strong>{{ count }}</strong>
       </p>
-      <button class="btn btn-link text-decoration-none p-0" type="button" @click="$emit('reset')">Сбросить фильтры</button>
+      <button class="btn btn-link link-accent text-decoration-none p-0" type="button" @click="$emit('reset')">Сбросить фильтры</button>
     </div>
   </form>
 </template>
@@ -53,4 +53,3 @@ defineProps({
   },
 });
 </script>
-
