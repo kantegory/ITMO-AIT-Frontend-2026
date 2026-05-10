@@ -1,9 +1,9 @@
 <template>
   <AppLayout>
     <header class="main-content__header">
-      <h1>Обзор пайплайнов</h1>
+      <h1>{{ t('dashboard.title') }}</h1>
       <button type="button" class="btn btn-primary" @click="showNewExpModal = true" aria-haspopup="dialog">
-        Новый эксперимент
+        {{ t('dashboard.newExperiment') }}
       </button>
     </header>
 
@@ -11,31 +11,31 @@
       <div class="col-md-4">
         <div class="stat-card">
           <h2>{{ experiments.length }}</h2>
-          <p>Всего экспериментов</p>
+          <p>{{ t('dashboard.totalExperiments') }}</p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="stat-card">
           <h2>{{ models.length }}</h2>
-          <p>Всего моделей</p>
+          <p>{{ t('dashboard.totalModels') }}</p>
         </div>
       </div>
     </section>
 
     <section class="recent-experiments content-panel">
-      <h2>Последние эксперименты</h2>
+      <h2>{{ t('dashboard.recentExperiments') }}</h2>
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>Название</th>
-              <th>Модель</th>
-              <th>Метрика</th>
-              <th>Значение метрики</th>
-              <th>Дата</th>
-              <th>Длительность</th>
-              <th>Статус</th>
-              <th></th>
+              <th scope="col">{{ t('common.name') }}</th>
+              <th scope="col">{{ t('common.model') }}</th>
+              <th scope="col">{{ t('common.metric') }}</th>
+              <th scope="col">{{ t('common.metricValue') }}</th>
+              <th scope="col">{{ t('common.date') }}</th>
+              <th scope="col">{{ t('common.duration') }}</th>
+              <th scope="col">{{ t('common.status') }}</th>
+              <th scope="col"><span class="visually-hidden">{{ t('common.actions') }}</span></th>
             </tr>
           </thead>
           <tbody>
@@ -68,7 +68,7 @@
       </div>
       <div class="d-flex justify-content-end mt-3">
         <router-link to="/experiments" class="btn btn-secondary btn-min-width">
-          Все эксперименты
+          {{ t('dashboard.allExperiments') }}
         </router-link>
       </div>
     </section>
@@ -88,9 +88,11 @@ import AppLayout from '../components/AppLayout.vue'
 import NewExperimentModal from '../components/NewExperimentModal.vue'
 import { useApi } from '../composables/useApi'
 import { useAuth } from '../composables/useAuth'
+import { useLocale } from '../composables/useLocale'
 
 const { getExperiments, getModels, deleteExperiment } = useApi()
 const { currentUser } = useAuth()
+const { t } = useLocale()
 
 const experiments = ref([])
 const models = ref([])
@@ -108,7 +110,7 @@ async function loadData() {
 }
 
 async function handleDeleteExp(id) {
-  if (confirm('Удалить запись?')) {
+  if (confirm(t('dashboard.deleteConfirm'))) {
     await deleteExperiment(id)
     await loadData()
   }

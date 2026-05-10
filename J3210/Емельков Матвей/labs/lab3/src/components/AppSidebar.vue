@@ -10,7 +10,7 @@
           exact-active-class="sidebar__link--active"
         >
           <svg width="20" height="20" class="me-2"><use href="/img/sprite.svg#icon-home"></use></svg>
-          Личный кабинет
+          {{ t('nav.dashboard') }}
         </router-link>
         <router-link
           to="/experiments"
@@ -18,7 +18,7 @@
           active-class="sidebar__link--active"
         >
           <svg width="20" height="20" class="me-2"><use href="/img/sprite.svg#icon-experiments"></use></svg>
-          Эксперименты
+          {{ t('nav.experiments') }}
         </router-link>
         <router-link
           to="/models"
@@ -26,7 +26,7 @@
           active-class="sidebar__link--active"
         >
           <svg width="20" height="20" class="me-2"><use href="/img/sprite.svg#icon-models"></use></svg>
-          Модели
+          {{ t('nav.models') }}
         </router-link>
       </nav>
 
@@ -38,14 +38,14 @@
           aria-expanded="false"
         >
           <svg width="20" height="20" class="me-2"><use href="/img/sprite.svg#icon-user"></use></svg>
-          <span>{{ currentUser?.name || 'Загрузка...' }}</span>
+          <span>{{ currentUser?.name || '...' }}</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark">
           <li>
-            <a class="dropdown-item" href="#" @click.prevent="$emit('openSettings')">Настройки</a>
+            <a class="dropdown-item" href="#" @click.prevent="$emit('openSettings')">{{ t('nav.settings') }}</a>
           </li>
           <li>
-            <a class="dropdown-item text-danger" href="#" @click.prevent="handleLogout">Выйти</a>
+            <a class="dropdown-item text-danger" href="#" @click.prevent="handleLogout">{{ t('nav.logout') }}</a>
           </li>
         </ul>
       </footer>
@@ -56,11 +56,13 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useAuth } from '../composables/useAuth'
+import { useLocale } from '../composables/useLocale'
 
 defineEmits(['openSettings'])
 
 const router = useRouter()
 const { currentUser, logout } = useAuth()
+const { t } = useLocale()
 
 function handleLogout() {
   logout()

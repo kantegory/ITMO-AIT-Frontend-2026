@@ -12,30 +12,30 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title" id="newExpModalTitle">Создать новый эксперимент</h4>
+            <h4 class="modal-title" id="newExpModalTitle">{{ t('expModal.title') }}</h4>
             <button type="button" class="btn-close" @click="close" aria-label="Закрыть"></button>
           </div>
           <div class="modal-body">
             <form @submit.prevent="handleSubmit">
               <div class="mb-3">
-                <label class="form-label">Модель</label>
+                <label class="form-label">{{ t('expModal.modelLabel') }}</label>
                 <select v-model="selectedModel" class="form-select" @change="autoFillName">
-                  <option value="" disabled>Выберите модель...</option>
+                  <option value="" disabled>{{ t('expModal.selectModel') }}</option>
                   <option v-for="model in models" :key="model.id" :value="model.name">
                     {{ model.name }}
                   </option>
                 </select>
               </div>
               <div class="mb-3">
-                <label class="form-label">Название эксперимента</label>
-                <input v-model="expName" type="text" class="form-control" placeholder="Experiment_N">
-                <div class="form-text">Автозаполняется при выборе модели. Можно изменить вручную.</div>
+                <label class="form-label">{{ t('expModal.nameLabel') }}</label>
+                <input v-model="expName" type="text" class="form-control" :placeholder="t('expModal.namePlaceholder')">
+                <div class="form-text">{{ t('expModal.nameHint') }}</div>
               </div>
               <div v-if="error" class="alert alert-danger py-2">{{ error }}</div>
               <div class="d-flex justify-content-between mt-3">
-                <button type="button" class="btn btn-secondary" @click="close">Отмена</button>
+                <button type="button" class="btn btn-secondary" @click="close">{{ t('common.cancel') }}</button>
                 <button type="submit" class="btn btn-primary" :disabled="loading">
-                  {{ loading ? 'Создание...' : 'Создать' }}
+                  {{ loading ? t('expModal.creating') : t('expModal.create') }}
                 </button>
               </div>
             </form>
@@ -50,12 +50,14 @@
 import { ref, watch } from 'vue'
 import { useApi } from '../composables/useApi'
 import { useAuth } from '../composables/useAuth'
+import { useLocale } from '../composables/useLocale'
 
 const props = defineProps(['show', 'models'])
 const emit = defineEmits(['close', 'created'])
 
 const { getExperiments, createExperiment } = useApi()
 const { currentUser } = useAuth()
+const { t } = useLocale()
 
 const selectedModel = ref('')
 const expName = ref('')
@@ -88,11 +90,11 @@ async function handleSubmit() {
   error.value = ''
 
   if (!selectedModel.value) {
-    error.value = 'Выберите модель!'
+    error.value = t('expModal.selectModelError')
     return
   }
   if (!expName.value.trim()) {
-    error.value = 'Введите название эксперимента!'
+    error.value = t('expModal.nameError')
     return
   }
 
@@ -103,7 +105,7 @@ async function handleSubmit() {
       e => e.name.toLowerCase() === expName.value.trim().toLowerCase()
     )
     if (isDuplicate) {
-      error.value = 'Эксперимент с таким названием уже существует!'
+      error.value = t('expModal.duplicateError')
       return
     }
 
@@ -121,7 +123,7 @@ async function handleSubmit() {
     emit('created')
     close()
   } catch {
-    error.value = 'Ошибка при создании эксперимента'
+    error.value = t('expModal.createError')
   } finally {
     loading.value = false
   }

@@ -12,12 +12,12 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="settingsModalTitle">Настройки профиля</h5>
+            <h5 class="modal-title" id="settingsModalTitle">{{ t('settings.title') }}</h5>
             <button type="button" class="btn-close" @click="$emit('close')" aria-label="Закрыть"></button>
           </div>
           <div class="modal-body">
             <div class="mb-3">
-              <label class="form-label fw-bold">Внешний вид</label>
+              <label class="form-label fw-bold">{{ t('settings.appearance') }}</label>
               <div class="form-check form-switch">
                 <input
                   class="form-check-input"
@@ -27,22 +27,27 @@
                   :checked="theme === 'dark'"
                   @change="toggleTheme"
                 >
-                <label class="form-check-label" for="darkModeSwitch">Темная тема</label>
+                <label class="form-check-label" for="darkModeSwitch">{{ t('settings.darkMode') }}</label>
               </div>
             </div>
             <div class="mb-3">
-              <label for="interfaceLanguage" class="form-label fw-bold">Язык интерфейса</label>
-              <select id="interfaceLanguage" class="form-select">
-                <option selected>Русский</option>
-                <option>English</option>
+              <label for="interfaceLanguage" class="form-label fw-bold">{{ t('settings.language') }}</label>
+              <select
+                id="interfaceLanguage"
+                class="form-select"
+                :value="locale"
+                @change="setLocale($event.target.value)"
+              >
+                <option value="ru">Русский</option>
+                <option value="en">English</option>
               </select>
             </div>
           </div>
           <div class="modal-footer justify-content-between">
             <button type="button" class="btn btn-outline-danger" @click="handleDeleteProfile">
-              Удалить профиль
+              {{ t('settings.deleteProfile') }}
             </button>
-            <button type="button" class="btn btn-primary" @click="$emit('close')">Сохранить</button>
+            <button type="button" class="btn btn-primary" @click="$emit('close')">{{ t('settings.save') }}</button>
           </div>
         </div>
       </div>
@@ -55,6 +60,7 @@ import { useRouter } from 'vue-router'
 import { useTheme } from '../composables/useTheme'
 import { useAuth } from '../composables/useAuth'
 import { useApi } from '../composables/useApi'
+import { useLocale } from '../composables/useLocale'
 
 defineProps(['show'])
 defineEmits(['close'])
@@ -63,9 +69,10 @@ const router = useRouter()
 const { theme, toggleTheme } = useTheme()
 const { currentUser, logout } = useAuth()
 const { getExperiments, getModels, deleteExperiment, deleteModel, deleteUser } = useApi()
+const { t, locale, setLocale } = useLocale()
 
 async function handleDeleteProfile() {
-  if (!confirm('ВНИМАНИЕ! Это необратимое действие. Удалить профиль и все данные?')) return
+  if (!confirm(t('settings.deleteConfirm'))) return
   const user = currentUser.value
   try {
     const [expRes, modelsRes] = await Promise.all([
@@ -80,7 +87,7 @@ async function handleDeleteProfile() {
     logout()
     router.push('/login')
   } catch (e) {
-    alert('Не удалось удалить профиль.')
+    alert(t('settings.deleteError'))
   }
 }
 </script>

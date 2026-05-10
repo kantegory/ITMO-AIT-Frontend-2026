@@ -1,33 +1,33 @@
 <template>
   <AppLayout>
     <header class="main-content__header">
-      <h1>Реестр моделей</h1>
+      <h1>{{ t('models.title') }}</h1>
       <button class="btn btn-primary" @click="showNewModelModal = true" aria-haspopup="dialog">
-        Зарегистрировать модель
+        {{ t('models.register') }}
       </button>
     </header>
 
-    <p class="text-muted mb-4">Управление версиями моделей и их статусами.</p>
+    <p class="text-muted mb-4">{{ t('models.description') }}</p>
 
-    <section class="content-panel mb-4" aria-label="Поиск моделей">
+    <section class="content-panel mb-4" :aria-label="t('models.searchSectionLabel')">
       <form class="filters-row" @submit.prevent="filterModels" role="search">
         <div class="filter-field filter-field--grow">
-          <label for="modelSearch" class="form-label text-muted small">Поиск по названию</label>
+          <label for="modelSearch" class="form-label text-muted small">{{ t('models.searchLabel') }}</label>
           <input
               v-model="searchQuery"
               type="search"
               class="form-control"
               id="modelSearch"
-              placeholder="Например, ResNet"
-              aria-label="Поиск модели по названию"
+              :placeholder="t('models.searchPlaceholder')"
+              :aria-label="t('models.searchAriaLabel')"
           >
         </div>
         <div class="filter-field filter-field--btn">
-          <button type="submit" class="btn btn-secondary">Найти</button>
+          <button type="submit" class="btn btn-secondary">{{ t('models.searchBtn') }}</button>
         </div>
         <div v-if="searchQuery" class="filter-field filter-field--btn">
-          <button type="button" class="btn btn-outline-secondary" @click="clearSearch" aria-label="Сбросить поиск">
-            Сбросить
+          <button type="button" class="btn btn-outline-secondary" @click="clearSearch" :aria-label="t('models.resetAriaLabel')">
+            {{ t('models.resetBtn') }}
           </button>
         </div>
       </form>
@@ -39,7 +39,7 @@
         role="status"
         aria-live="polite"
     >
-      Модели не найдены
+      {{ t('models.notFound') }}
     </div>
 
     <article
@@ -59,7 +59,7 @@
             >🗑
             </button>
           </div>
-          <small class="text-muted">Последнее обновление: {{ model.date || 'Неизвестно' }}</small>
+          <small class="text-muted">{{ t('models.lastUpdated') }} {{ model.date || t('models.unknown') }}</small>
         </div>
         <button
             class="btn btn-outline-secondary btn-sm"
@@ -68,7 +68,7 @@
             :aria-expanded="openIndexes.includes(index)"
             :aria-controls="`model-versions-${model.id}`"
         >
-          {{ openIndexes.includes(index) ? 'Скрыть версии' : 'Показать версии' }}
+          {{ openIndexes.includes(index) ? t('models.hideVersions') : t('models.showVersions') }}
         </button>
       </div>
 
@@ -81,15 +81,15 @@
           <table class="table table-striped align-middle mb-0" :aria-label="`Версии модели ${model.name}`">
             <thead class="table-light">
             <tr>
-              <th scope="col" class="col-version ps-4">Версия</th>
-              <th scope="col" class="col-stage">Стадия</th>
-              <th scope="col" class="col-metrics">Метрики</th>
-              <th scope="col" class="col-action">Действия</th>
+              <th scope="col" class="col-version ps-4">{{ t('models.versionCol') }}</th>
+              <th scope="col" class="col-stage">{{ t('models.stageCol') }}</th>
+              <th scope="col" class="col-metrics">{{ t('models.metricsCol') }}</th>
+              <th scope="col" class="col-action">{{ t('models.actionsCol') }}</th>
             </tr>
             </thead>
             <tbody>
             <tr v-if="getVersions(model.name).length === 0">
-              <td colspan="4" class="text-center p-3 text-muted">Версии не найдены</td>
+              <td colspan="4" class="text-center p-3 text-muted">{{ t('models.noVersions') }}</td>
             </tr>
             <tr v-for="v in getVersions(model.name)" :key="v.id">
               <td class="ps-4">
@@ -102,7 +102,7 @@
               </td>
               <td>Acc: {{ v.metricValue }}</td>
               <td>
-                <router-link :to="`/experiments/${v.id}`" class="text-decoration-none">Детали</router-link>
+                <router-link :to="`/experiments/${v.id}`" class="text-decoration-none">{{ t('models.details') }}</router-link>
               </td>
             </tr>
             </tbody>
@@ -125,9 +125,11 @@ import AppLayout from '../components/AppLayout.vue'
 import NewModelModal from '../components/NewModelModal.vue'
 import {useApi} from '../composables/useApi'
 import {useAuth} from '../composables/useAuth'
+import {useLocale} from '../composables/useLocale'
 
 const {getModels, getExperiments, deleteModel} = useApi()
 const {currentUser} = useAuth()
+const {t} = useLocale()
 
 const allModels = ref([])
 const filteredModels = ref([])
@@ -163,7 +165,7 @@ function clearSearch() {
 }
 
 async function handleDeleteModel(id) {
-  if (confirm('Вы уверены, что хотите удалить эту модель?')) {
+  if (confirm(t('models.deleteConfirm'))) {
     await deleteModel(id)
     await loadData()
   }

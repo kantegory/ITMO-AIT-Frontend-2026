@@ -1,67 +1,68 @@
 <template>
   <AppLayout>
     <header class="main-content__header">
-      <h1>Эксперименты</h1>
+      <h1>{{ t('experiments.title') }}</h1>
       <button type="button" class="btn btn-primary" @click="showNewExpModal = true" aria-haspopup="dialog">
-        Новый эксперимент
+        {{ t('dashboard.newExperiment') }}
       </button>
     </header>
 
-    <section class="content-panel" aria-label="Фильтры экспериментов">
+    <section class="content-panel" :aria-label="t('experiments.filtersLabel')">
       <form class="filters-row" @submit.prevent="applyFilters" role="search">
         <div class="filter-field filter-field--grow">
-          <label for="searchInput" class="form-label text-muted small">Поиск по названию</label>
+          <label for="searchInput" class="form-label text-muted small">{{ t('experiments.searchLabel') }}</label>
           <input
             v-model="filters.name"
             type="search"
             class="form-control"
             id="searchInput"
-            placeholder="Например, ResNet или CV"
-            aria-label="Поиск эксперимента по названию"
+            :placeholder="t('experiments.searchPlaceholder')"
+            :aria-label="t('experiments.searchAriaLabel')"
           >
         </div>
         <div class="filter-field">
-          <label for="dateFilter" class="form-label text-muted small">Дата создания</label>
+          <label for="dateFilter" class="form-label text-muted small">{{ t('experiments.dateLabel') }}</label>
           <input
             v-model="filters.date"
             type="date"
             class="form-control"
             id="dateFilter"
-            aria-label="Фильтр по дате создания"
+            :key="locale"
+            :aria-label="t('experiments.dateAriaLabel')"
           >
         </div>
         <div class="filter-field">
-          <label for="metricFilter" class="form-label text-muted small">Значение метрики</label>
+          <label for="metricFilter" class="form-label text-muted small">{{ t('experiments.metricLabel') }}</label>
           <select
             v-model="filters.metricOrder"
             class="form-select"
             id="metricFilter"
-            aria-label="Сортировка по значению метрики"
+            :aria-label="t('experiments.metricAriaLabel')"
           >
-            <option value="">Не сортировать</option>
-            <option value="desc">По убыванию</option>
-            <option value="asc">По возрастанию</option>
+            <option value="">{{ t('experiments.noSort') }}</option>
+            <option value="desc">{{ t('experiments.sortDesc') }}</option>
+            <option value="asc">{{ t('experiments.sortAsc') }}</option>
           </select>
         </div>
         <div class="filter-field filter-field--btn">
-          <button type="submit" class="btn btn-secondary w-100">Применить</button>
+          <button type="submit" class="btn btn-secondary w-100">{{ t('experiments.apply') }}</button>
         </div>
       </form>
     </section>
 
-    <section class="content-panel" aria-label="Список экспериментов">
+    <section class="content-panel" :aria-label="t('experiments.tableLabel')">
       <div class="table-responsive">
         <table class="table table-hover align-middle">
           <thead class="table-light">
             <tr>
-              <th scope="col">Название</th>
-              <th scope="col">Модель</th>
-              <th scope="col">Метрика</th>
-              <th scope="col">Значение метрики</th>
-              <th scope="col">Дата</th>
-              <th scope="col">Длительность</th>
-              <th scope="col">Статус</th>
-              <th scope="col"><span class="visually-hidden">Действия</span></th>
+              <th scope="col">{{ t('common.name') }}</th>
+              <th scope="col">{{ t('common.model') }}</th>
+              <th scope="col">{{ t('common.metric') }}</th>
+              <th scope="col">{{ t('common.metricValue') }}</th>
+              <th scope="col">{{ t('common.date') }}</th>
+              <th scope="col">{{ t('common.duration') }}</th>
+              <th scope="col">{{ t('common.status') }}</th>
+              <th scope="col"><span class="visually-hidden">{{ t('common.actions') }}</span></th>
             </tr>
           </thead>
           <tbody>
@@ -90,7 +91,12 @@
               </td>
             </tr>
             <tr v-if="displayedExperiments.length === 0">
-              <td colspan="8" class="text-center text-muted py-3">Эксперименты не найдены</td>
+              <td
+                colspan="8"
+                class="text-center text-muted py-3"
+                role="status"
+                aria-live="polite"
+              >{{ t('experiments.notFound') }}</td>
             </tr>
           </tbody>
         </table>
@@ -112,9 +118,11 @@ import AppLayout from '../components/AppLayout.vue'
 import NewExperimentModal from '../components/NewExperimentModal.vue'
 import { useApi } from '../composables/useApi'
 import { useAuth } from '../composables/useAuth'
+import { useLocale } from '../composables/useLocale'
 
 const { getExperiments, getModels, deleteExperiment } = useApi()
 const { currentUser } = useAuth()
+const { t, locale } = useLocale()
 
 const displayedExperiments = ref([])
 const models = ref([])
@@ -159,7 +167,7 @@ async function applyFilters() {
 }
 
 async function handleDeleteExp(id) {
-  if (confirm('Удалить запись?')) {
+  if (confirm(t('experiments.deleteConfirm'))) {
     await deleteExperiment(id)
     await applyFilters()
   }

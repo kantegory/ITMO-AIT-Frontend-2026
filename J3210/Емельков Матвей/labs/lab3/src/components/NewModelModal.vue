@@ -12,19 +12,19 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="newModelModalTitle">Регистрация новой модели</h5>
+            <h5 class="modal-title" id="newModelModalTitle">{{ t('modelModal.title') }}</h5>
             <button type="button" class="btn-close" @click="close" aria-label="Закрыть"></button>
           </div>
           <div class="modal-body">
             <form @submit.prevent="handleSubmit">
               <div class="mb-3">
-                <label class="form-label">Название модели</label>
-                <input v-model="modelName" type="text" class="form-control" placeholder="Например, CV_model">
+                <label class="form-label">{{ t('modelModal.nameLabel') }}</label>
+                <input v-model="modelName" type="text" class="form-control" :placeholder="t('modelModal.namePlaceholder')">
               </div>
               <div class="mb-3">
-                <label class="form-label">Библиотека / Фреймворк</label>
+                <label class="form-label">{{ t('modelModal.framework') }}</label>
                 <select v-model="framework" class="form-select">
-                  <option value="" disabled>Выберите библиотеку...</option>
+                  <option value="" disabled>{{ t('modelModal.selectFramework') }}</option>
                   <option value="pytorch">PyTorch</option>
                   <option value="tensorflow">TensorFlow</option>
                   <option value="sklearn">Scikit-learn</option>
@@ -32,12 +32,12 @@
                 </select>
               </div>
               <div class="mb-3">
-                <label class="form-label">Путь к артефактам</label>
+                <label class="form-label">{{ t('modelModal.artifactPath') }}</label>
                 <input v-model="artifactPath" type="text" class="form-control">
-                <div class="form-text">Укажите путь к хранилищу весов модели.</div>
+                <div class="form-text">{{ t('modelModal.artifactHint') }}</div>
               </div>
               <div class="mb-3">
-                <label class="form-label">Начальная стадия</label>
+                <label class="form-label">{{ t('modelModal.stage') }}</label>
                 <div>
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" v-model="stage" value="none" id="stageNone">
@@ -50,14 +50,14 @@
                 </div>
               </div>
               <div class="mb-3">
-                <label class="form-label">Описание</label>
+                <label class="form-label">{{ t('modelModal.description') }}</label>
                 <textarea v-model="description" class="form-control" rows="2"></textarea>
               </div>
               <div v-if="error" class="alert alert-danger py-2">{{ error }}</div>
               <div class="d-flex justify-content-between mt-3">
-                <button type="button" class="btn btn-secondary" @click="close">Отмена</button>
+                <button type="button" class="btn btn-secondary" @click="close">{{ t('common.cancel') }}</button>
                 <button type="submit" class="btn btn-primary" :disabled="loading">
-                  {{ loading ? 'Сохранение...' : 'Зарегистрировать' }}
+                  {{ loading ? t('modelModal.saving') : t('modelModal.register') }}
                 </button>
               </div>
             </form>
@@ -72,12 +72,14 @@
 import { ref } from 'vue'
 import { useApi } from '../composables/useApi'
 import { useAuth } from '../composables/useAuth'
+import { useLocale } from '../composables/useLocale'
 
 defineProps(['show'])
 const emit = defineEmits(['close', 'created'])
 
 const { createModel, getModels } = useApi()
 const { currentUser } = useAuth()
+const { t } = useLocale()
 
 const modelName = ref('')
 const framework = ref('')
@@ -101,11 +103,11 @@ async function handleSubmit() {
   error.value = ''
 
   if (!modelName.value.trim()) {
-    error.value = 'Введите название модели!'
+    error.value = t('modelModal.nameError')
     return
   }
   if (!framework.value) {
-    error.value = 'Выберите фреймворк!'
+    error.value = t('modelModal.frameworkError')
     return
   }
 
@@ -116,7 +118,7 @@ async function handleSubmit() {
       m => m.name.toLowerCase() === modelName.value.trim().toLowerCase()
     )
     if (isDuplicate) {
-      error.value = 'Модель с таким названием уже существует!'
+      error.value = t('modelModal.duplicateError')
       return
     }
 
@@ -133,7 +135,7 @@ async function handleSubmit() {
     emit('created')
     close()
   } catch {
-    error.value = 'Ошибка при создании модели'
+    error.value = t('modelModal.createError')
   } finally {
     loading.value = false
   }
