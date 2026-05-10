@@ -1,6 +1,6 @@
 import { computed, reactive } from "vue";
 
-const SESSION_STORAGE_KEY = "makars-event-lab2-session";
+const SESSION_STORAGE_KEY = "makars-event-lab3-session";
 
 function loadSession() {
   try {

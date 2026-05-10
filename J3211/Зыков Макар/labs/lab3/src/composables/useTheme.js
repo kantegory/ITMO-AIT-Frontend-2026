@@ -1,6 +1,6 @@
 import { computed, reactive } from "vue";
 
-const THEME_STORAGE_KEY = "makars-event-lab2-theme";
+const THEME_STORAGE_KEY = "makars-event-lab3-theme";
 const DARK_COLOR_SCHEME_QUERY = "(prefers-color-scheme: dark)";
 
 const state = reactive({
