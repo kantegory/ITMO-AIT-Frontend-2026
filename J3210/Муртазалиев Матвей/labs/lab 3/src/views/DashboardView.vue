@@ -8,10 +8,10 @@
           <p class="page-banner__copy">{{ summary.description }}</p>
         </div>
         <div class="page-banner__actions">
-          <button class="btn btn-accent" type="button" @click="openAction('Новая транзакция', 'Добавьте ручную операцию, если она ещё не импортировалась из банка.')">
+          <button class="btn btn-accent" type="button" @click="openTransactionModal">
             <SvgIcon name="plus" class-name="icon--inline me-2" />Добавить транзакцию
           </button>
-          <button class="btn btn-outline-dark" type="button" @click="openAction('Создать бюджет', 'Настройте новый лимит по категории или отдельному счёту.')">
+          <button class="btn btn-outline-dark" type="button" @click="openBudgetModal">
             <SvgIcon name="sliders" class-name="icon--inline me-2" />Новый бюджет
           </button>
         </div>
@@ -84,13 +84,69 @@
       <div class="modal-content custom-modal">
         <div class="modal-header border-0">
           <h2 id="actionModalTitle" class="h4 mb-0">{{ actionModal.title }}</h2>
-          <button type="button" class="btn-close" aria-label="Закрыть" @click="actionModal.open = false"></button>
+          <button type="button" class="btn-close" aria-label="Закрыть" @click="closeActionModal"></button>
         </div>
         <div class="modal-body">
-          <p class="text-secondary mb-0">{{ actionModal.text }}</p>
-        </div>
-        <div class="modal-footer border-0">
-          <button type="button" class="btn btn-accent w-100" @click="actionModal.open = false">Понятно</button>
+          <form class="row g-3" @submit.prevent="submitAction">
+            <template v-if="actionModal.mode === 'transaction'">
+              <div class="col-12">
+                <label class="form-label" for="transactionTitle">Название</label>
+                <input id="transactionTitle" v-model.trim="transactionForm.title" class="form-control" type="text" placeholder="Например, Кофе" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="transactionCategory">Категория</label>
+                <select id="transactionCategory" v-model="transactionForm.category" class="form-select">
+                  <option>Еда</option>
+                  <option>Транспорт</option>
+                  <option>Дом</option>
+                  <option>Подписки</option>
+                  <option>Доход</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="transactionType">Тип</label>
+                <select id="transactionType" v-model="transactionForm.type" class="form-select">
+                  <option value="expense">Расход</option>
+                  <option value="income">Доход</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="transactionAmount">Сумма</label>
+                <input id="transactionAmount" v-model="transactionForm.amount" class="form-control" type="number" min="1" step="1" placeholder="2500" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="transactionDate">Дата</label>
+                <input id="transactionDate" v-model="transactionForm.date" class="form-control" type="date" required />
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="transactionAccount">Счет</label>
+                <select id="transactionAccount" v-model="transactionForm.accountName" class="form-select">
+                  <option v-for="account in accounts" :key="account.id">{{ account.name }}</option>
+                </select>
+              </div>
+            </template>
+
+            <template v-else>
+              <div class="col-12">
+                <label class="form-label" for="budgetCategory">Категория</label>
+                <input id="budgetCategory" v-model.trim="budgetForm.category" class="form-control" type="text" placeholder="Например, Книги" required />
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="budgetLimit">Лимит</label>
+                <input id="budgetLimit" v-model="budgetForm.limit" class="form-control" type="number" min="1" step="1" placeholder="5000" required />
+              </div>
+            </template>
+
+            <div v-if="actionModal.error" class="col-12">
+              <div class="alert alert-danger mb-0" role="alert">{{ actionModal.error }}</div>
+            </div>
+            <div class="col-12 d-flex gap-2">
+              <button type="button" class="btn btn-outline-dark w-50" @click="closeActionModal">Отмена</button>
+              <button type="submit" class="btn btn-accent w-50" :disabled="actionModal.busy">
+                {{ actionModal.busy ? "Сохраняем..." : "Сохранить" }}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -110,8 +166,11 @@ import TransactionList from "@/components/dashboard/TransactionList.vue";
 import { useAuth } from "@/composables/useAuth";
 import { useFinanceData } from "@/composables/useFinanceData";
 import { useTransactionsFilter } from "@/composables/useTransactionsFilter";
+import { apiRequest } from "@/services/api";
+import { buildBudgetPayload, buildTransactionPayload } from "@/utils/dashboardActions";
 import { buildDashboardSummary } from "@/utils/financeMetrics";
-import { formatCurrency } from "@/utils/formatters";
+import { sortTransactions } from "@/utils/financeMetrics";
+import { formatCurrency, formatDate } from "@/utils/formatters";
 
 const auth = useAuth();
 const {
@@ -125,8 +184,23 @@ const {
 const { filters, categories, filteredTransactions, resetFilters } = useTransactionsFilter(transactions);
 const actionModal = reactive({
   open: false,
+  mode: "transaction",
   title: "",
-  text: "",
+  busy: false,
+  error: "",
+});
+const transactionForm = reactive({
+  title: "",
+  category: "Еда",
+  amount: "",
+  type: "expense",
+  accountName: "",
+  provider: "manual",
+  date: formatDate(new Date()),
+});
+const budgetForm = reactive({
+  category: "",
+  limit: "",
 });
 
 const summary = computed(() => buildDashboardSummary({
@@ -136,10 +210,70 @@ const summary = computed(() => buildDashboardSummary({
   transactions: transactions.value,
 }));
 
-function openAction(title, text) {
-  actionModal.title = title;
-  actionModal.text = text;
+function openTransactionModal() {
+  resetTransactionForm();
+  actionModal.mode = "transaction";
+  actionModal.title = "Добавить транзакцию";
+  actionModal.error = "";
   actionModal.open = true;
+}
+
+function openBudgetModal() {
+  resetBudgetForm();
+  actionModal.mode = "budget";
+  actionModal.title = "Создать бюджет";
+  actionModal.error = "";
+  actionModal.open = true;
+}
+
+function closeActionModal() {
+  actionModal.open = false;
+  actionModal.busy = false;
+  actionModal.error = "";
+}
+
+function resetTransactionForm() {
+  transactionForm.title = "";
+  transactionForm.category = "Еда";
+  transactionForm.amount = "";
+  transactionForm.type = "expense";
+  transactionForm.accountName = accounts.value[0]?.name || "Текущий счёт";
+  transactionForm.provider = "manual";
+  transactionForm.date = formatDate(new Date());
+}
+
+function resetBudgetForm() {
+  budgetForm.category = "";
+  budgetForm.limit = "";
+}
+
+async function submitAction() {
+  actionModal.busy = true;
+  actionModal.error = "";
+
+  try {
+    const currentSession = await auth.ensureSession();
+
+    if (actionModal.mode === "transaction") {
+      const created = await apiRequest("/transactions", {
+        method: "POST",
+        body: buildTransactionPayload(transactionForm, currentSession.user.id),
+      });
+      transactions.value = sortTransactions([created, ...transactions.value]);
+    } else {
+      const created = await apiRequest("/budgets", {
+        method: "POST",
+        body: buildBudgetPayload(budgetForm, currentSession.user.id),
+      });
+      budgets.value = [created, ...budgets.value];
+    }
+
+    closeActionModal();
+  } catch (requestError) {
+    actionModal.error = requestError.message || "Не удалось сохранить данные.";
+  } finally {
+    actionModal.busy = false;
+  }
 }
 
 onMounted(loadDashboardData);
