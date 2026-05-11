@@ -2,10 +2,10 @@ import { createApp } from 'vue'
 import App from '@/App.vue'
 import router from '@/router'
 import store from '@/stores'
-import '@/assets/style.css'
-import '@/assets/auth.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap'
+import '@/assets/style.css'
+import '@/assets/auth.css'
 
 const app = createApp(App)
 app.use(store)
