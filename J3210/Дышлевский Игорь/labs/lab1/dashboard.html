@@ -42,9 +42,12 @@
                                 >
                             </li>
                             <li class="nav-item auth" hidden>
-                                <a class="nav-link active" href="dashboard.html"
-                                    >Аккаунт</a
-                                >
+                                <a class="nav-link active" href="dashboard.html">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use href="sprites.svg#user" />
+                                    </svg>
+                                    Аккаунт
+                                </a>
                             </li>
                             <li class="nav-item ms-lg-2 auth" hidden>
                                 <a
@@ -230,8 +233,8 @@
                     .join(", ");
                 const badge =
                     i.type === "model"
-                        ? '<span class="badge bg-primary mb-2">Model</span>'
-                        : '<span class="badge bg-success mb-2">Dataset</span>';
+                        ? '<span class="badge bg-primary mb-2"><svg class="icon" aria-hidden="true"><use href="sprites.svg#model"/></svg> Model</span>'
+                        : '<span class="badge bg-success mb-2"><svg class="icon" aria-hidden="true"><use href="sprites.svg#dataset"/></svg> Dataset</span>';
                 return `
                     <li class="col-md-4">
                         <article class="card p-4">
