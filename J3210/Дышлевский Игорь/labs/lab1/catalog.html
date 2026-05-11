@@ -41,15 +41,23 @@
                                     >Каталог</a
                                 >
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item auth" hidden>
                                 <a class="nav-link" href="dashboard.html"
-                                    >Кабинет</a
+                                    >Аккаунт</a
                                 >
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item ms-lg-2 auth" hidden>
+                                <a
+                                    class="btn btn-accent btn-sm"
+                                    href="#"
+                                    id="logout"
+                                    >Выйти</a
+                                >
+                            </li>
+                            <li class="nav-item notauth" hidden>
                                 <a class="nav-link" href="login.html">Вход</a>
                             </li>
-                            <li class="nav-item ms-lg-2">
+                            <li class="nav-item ms-lg-2 notauth" hidden>
                                 <a
                                     class="btn btn-accent btn-sm"
                                     href="register.html"
@@ -63,8 +71,18 @@
         </header>
 
         <main class="container py-5">
+            <section class="text-center mb-5">
+                <h1 class="fw-bold mb-3 display-4">AInator</h1>
+                <p class="text-muted mb-2 fs-5">
+                    Платформа для моделей и датасетов
+                </p>
+                <p class="text-muted fst-italic small mb-0">
+                    Без СМС, но с регистрацией
+                </p>
+            </section>
+
             <section class="mb-4">
-                <h1 class="fw-bold mb-3">Каталог</h1>
+                <h2 class="fw-bold mb-3">Каталог</h2>
                 <form class="row g-2" action="catalog.html">
                     <div class="col-md-9">
                         <input
@@ -112,8 +130,8 @@
                                     name="task"
                                 >
                                     <option value="all">Любая</option>
-                                    <option value="cv">Computer Vision</option>
-                                    <option value="nlp">NLP</option>
+                                    <option value="CV">Computer Vision</option>
+                                    <option value="NLP">NLP</option>
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -126,8 +144,10 @@
                                     name="license"
                                 >
                                     <option value="all">Любая</option>
-                                    <option value="mit">MIT</option>
-                                    <option value="apache">Apache-2.0</option>
+                                    <option value="MIT">MIT</option>
+                                    <option value="Apache-2.0">
+                                        Apache-2.0
+                                    </option>
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -140,8 +160,8 @@
                                     name="framework"
                                 >
                                     <option value="all">Любой</option>
-                                    <option value="pytorch">PyTorch</option>
-                                    <option value="tensorflow">
+                                    <option value="PyTorch">PyTorch</option>
+                                    <option value="TensorFlow">
                                         TensorFlow
                                     </option>
                                 </select>
@@ -151,85 +171,64 @@
                 </div>
 
                 <div class="col-lg-9">
-                    <ul class="row g-4 list-unstyled mb-0">
-                        <li class="col-md-6 item model nlp mit pytorch">
-                            <article class="card p-4 h-100">
-                                <span class="badge bg-primary mb-2">Model</span>
-                                <h3 class="h6 fw-bold">
-                                    <a href="details.html">GPT</a>
-                                </h3>
-                                <p class="text-muted small">PyTorch, MIT</p>
-                                <small class="text-muted"
-                                    >8 stars, 120 downloads</small
-                                >
-                            </article>
-                        </li>
-                        <li class="col-md-6 item dataset cv mit">
-                            <article class="card p-4 h-100">
-                                <span class="badge bg-success mb-2"
-                                    >Dataset</span
-                                >
-                                <h3 class="h6 fw-bold">
-                                    <a href="details.html">CIFAR-10</a>
-                                </h3>
-                                <p class="text-muted small">MIT</p>
-                                <small class="text-muted"
-                                    >4 stars, 50 downloads</small
-                                >
-                            </article>
-                        </li>
-                        <li class="col-md-6 item model cv apache tensorflow">
-                            <article class="card p-4 h-100">
-                                <span class="badge bg-primary mb-2">Model</span>
-                                <h3 class="h6 fw-bold">
-                                    <a href="details.html">YOLO</a>
-                                </h3>
-                                <p class="text-muted small">
-                                    TensorFlow, Apache-2.0
-                                </p>
-                                <small class="text-muted"
-                                    >3 stars, 30 downloads</small
-                                >
-                            </article>
-                        </li>
-                    </ul>
+                    <ul id="results" class="row g-4 list-unstyled mb-0"></ul>
                 </div>
             </div>
         </main>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="auth.js"></script>
         <script>
-            function applyFilters() {
+            let items = [];
+
+            fetch("http://localhost:3000/items")
+                .then((r) => r.json())
+                .then((d) => {
+                    items = d;
+                    render();
+                });
+
+            function render() {
                 const type = document.getElementById("type").value;
                 const task = document.getElementById("task").value;
                 const license = document.getElementById("license").value;
                 const framework = document.getElementById("framework").value;
 
-                document.querySelectorAll(".item").forEach(function (card) {
-                    const matches =
-                        (type === "all" || card.classList.contains(type)) &&
-                        (task === "all" || card.classList.contains(task)) &&
-                        (license === "all" ||
-                            card.classList.contains(license)) &&
-                        (framework === "all" ||
-                            card.classList.contains(framework));
+                const filtered = items.filter(
+                    (i) =>
+                        (type === "all" || i.type === type) &&
+                        (task === "all" || i.task === task) &&
+                        (license === "all" || i.license === license) &&
+                        (framework === "all" || i.framework === framework),
+                );
 
-                    card.style.display = matches ? "" : "none";
-                });
+                document.getElementById("results").innerHTML = filtered
+                    .map((i) => {
+                        const meta = [i.framework, i.license]
+                            .filter(Boolean)
+                            .join(", ");
+                        const badge =
+                            i.type === "model"
+                                ? '<span class="badge bg-primary mb-2">Model</span>'
+                                : '<span class="badge bg-success mb-2">Dataset</span>';
+                        return `
+                            <li class="col-md-6">
+                                <article class="card p-4 h-100">
+                                    ${badge}
+                                    <h3 class="h6 fw-bold">
+                                        <a href="details.html">${i.name}</a>
+                                    </h3>
+                                    <p class="text-muted small">${meta}</p>
+                                    <small class="text-muted">${i.stars} stars, ${i.downloads} downloads</small>
+                                </article>
+                            </li>`;
+                    })
+                    .join("");
             }
 
             document
-                .getElementById("type")
-                .addEventListener("change", applyFilters);
-            document
-                .getElementById("task")
-                .addEventListener("change", applyFilters);
-            document
-                .getElementById("license")
-                .addEventListener("change", applyFilters);
-            document
-                .getElementById("framework")
-                .addEventListener("change", applyFilters);
+                .querySelectorAll("select")
+                .forEach((el) => el.addEventListener("change", render));
         </script>
     </body>
 </html>

@@ -70,7 +70,7 @@
             <div class="col-md-5">
                 <section class="card p-5">
                     <h3 class="fw-bold mb-4">Вход</h3>
-                    <form action="dashboard.html">
+                    <form onsubmit="login(event)">
                         <div class="mb-3">
                             <label class="form-label" for="email">Email</label>
                             <input
@@ -117,5 +117,28 @@
         </main>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            if (localStorage.accessToken) {
+                location.href = "dashboard.html";
+            }
+
+            async function login(e) {
+                e.preventDefault();
+                const data = Object.fromEntries(new FormData(e.target));
+                const res = await fetch("http://localhost:3000/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                });
+                if (!res.ok) {
+                    alert("Неверные email или пароль");
+                    return;
+                }
+                const { accessToken, user } = await res.json();
+                localStorage.accessToken = accessToken;
+                localStorage.user = JSON.stringify(user);
+                location.href = "dashboard.html";
+            }
+        </script>
     </body>
 </html>
