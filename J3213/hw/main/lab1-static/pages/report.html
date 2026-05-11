@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Manager — Отчёты</title>
+    <meta name="description" content="Аналитика расходов и ключевые показатели по финансовым операциям.">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css">
+    <link rel="icon" href="../favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="report">
+<header class="site-header">
+    <nav class="navbar navbar-expand-lg" aria-label="Основная навигация">
+        <div class="container-fluid shell-container">
+            <a class="navbar-brand" href="../index.html">
+                <svg class="icon-inline" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-wallet"></use></svg>
+                <span>Finance Manager</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Открыть меню">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto gap-lg-2">
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Кабинет</a></li>
+                    <li class="nav-item"><a class="nav-link" href="transactions.html">Транзакции</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="report.html">Отчёты</a></li>
+                    <li class="nav-item">
+                        <button class="btn btn-sm btn-outline-light theme-toggle" type="button" data-theme-toggle aria-label="Сменить тему"><span class="theme-glyph" aria-hidden="true">☾</span></button>
+                    </li>
+                    <li class="nav-item"><a class="btn btn-sm btn-outline-light" href="login.html">Вход</a></li>
+                    <li class="nav-item"><a class="btn btn-sm btn-primary" href="register.html">Регистрация</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <section class="container-fluid shell-container">
+        <div class="page-head">
+            <div class="page-copy">
+                <div class="kicker mb-3">
+                    <svg class="feature-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-chart"></use></svg>
+                    Аналитика
+                </div>
+                <h1 class="section-title">Отчёт по расходам и балансу</h1>
+                <p class="lead mt-3">Доходы и расходы разделены, а категории показаны и в полосах, и в круговой диаграмме.</p>
+            </div>
+            <div class="small-note" id="report-period">Актуальная сводка по последним операциям</div>
+        </div>
+
+        <div class="report-kpis">
+            <article class="report-kpi">
+                <p class="muted mb-2">Доходы</p>
+                <div class="report-value" data-report-stat="income-total">—</div>
+                <div class="small-note">Все поступления</div>
+            </article>
+            <article class="report-kpi">
+                <p class="muted mb-2">Расходы</p>
+                <div class="report-value" data-report-stat="expense-total">—</div>
+                <div class="small-note">Все списания</div>
+            </article>
+            <article class="report-kpi">
+                <p class="muted mb-2">Средний расход</p>
+                <div class="report-value" data-report-stat="avg-expense">—</div>
+                <div class="small-note">На одну расходную операцию</div>
+            </article>
+            <article class="report-kpi">
+                <p class="muted mb-2">Крупнейшая категория</p>
+                <div class="report-value report-value--text" data-report-stat="top-category">—</div>
+                <div class="small-note">По суммарным расходам</div>
+            </article>
+            <article class="report-kpi">
+                <p class="muted mb-2">Прогноз остатка</p>
+                <div class="report-value" data-report-stat="forecast">—</div>
+                <div class="small-note">Баланс минус средний расход</div>
+            </article>
+        </div>
+
+        <div class="report-layout">
+            <section class="chart-card" aria-labelledby="spending-chart-title">
+                <div class="section-head">
+                    <div>
+                        <h2 id="spending-chart-title">Распределение расходов</h2>
+                        <p>Категории отсортированы по сумме: от самых крупных к более умеренным.</p>
+                    </div>
+                </div>
+                <div id="expense-chart" class="chart-list"></div>
+            </section>
+
+            <section class="chart-card report-donut-card" aria-labelledby="insights-title">
+                <div class="section-head">
+                    <div>
+                        <h2 id="insights-title">Ключевые выводы</h2>
+                        <p>Короткая сводка по самым важным значениям и долям категорий.</p>
+                    </div>
+                </div>
+                <div class="ring-chart mx-auto" id="report-donut" style="--ring-progress:0"><span id="report-donut-value">0%</span></div>
+                <div id="report-donut-list" class="report-donut-list"></div>
+                <div id="insights-list" class="summary-list"></div>
+            </section>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container-fluid shell-container d-flex flex-column flex-md-row justify-content-between gap-2">
+        <p>Finance Manager</p>
+        <p>Категории расходов, показатели и прогноз остатка.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

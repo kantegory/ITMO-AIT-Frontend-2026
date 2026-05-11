@@ -1,0 +1,353 @@
+@import './variables.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(13, 110, 253, 0.12), transparent 28%),
+    radial-gradient(circle at top right, rgba(255, 193, 7, 0.12), transparent 22%),
+    var(--bg);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+a, button, input, select {
+  transition: all .2s ease;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+  padding-block: 2rem 4rem;
+}
+
+.site-header .navbar {
+  backdrop-filter: blur(14px);
+  background: color-mix(in srgb, var(--surface-strong) 86%, transparent);
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  padding-block: 1.5rem 2rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 2000;
+  background: var(--primary);
+  color: #fff;
+  padding: .75rem 1rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.surface-card,
+.hero-card,
+.auth-card,
+.stat-card,
+.table-panel,
+.chart-card,
+.filter-panel,
+.account-card,
+.budget-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+}
+
+.surface-card,
+.auth-card,
+.stat-card,
+.table-panel,
+.chart-card,
+.filter-panel,
+.account-card,
+.budget-card {
+  padding: 1.25rem;
+}
+
+.auth-card {
+  max-width: 540px;
+  margin-inline: auto;
+  padding: 2rem;
+}
+
+.section-title {
+  font-size: clamp(1.6rem, 1.2rem + 1vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.hero-kicker,
+.badge-soft {
+  display: inline-flex;
+  gap: .5rem;
+  align-items: center;
+  padding: .45rem .8rem;
+  border-radius: 999px;
+  background: var(--surface-soft);
+  color: var(--primary-strong);
+  font-weight: 700;
+  font-size: .9rem;
+}
+
+.muted,
+.small-note {
+  color: var(--muted);
+}
+
+.form-control,
+.form-select {
+  border-radius: var(--radius-sm);
+  padding-block: .75rem;
+  border-color: var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary);
+  box-shadow: var(--focus-ring);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.btn {
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+}
+
+.icon-inline {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex-shrink: 0;
+}
+
+.hero-image-shell {
+  min-height: 320px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line-color);
+  background: color-mix(in srgb, var(--surface-soft) 62%, transparent);
+  padding: 1.25rem;
+}
+
+.hero-image {
+  width: min(58%, 320px);
+  display: block;
+}
+
+.hero-image--dark {
+  display: none;
+}
+
+:root[data-theme='dark'] .hero-image-shell {
+  background: linear-gradient(180deg, rgba(12, 18, 10, 0.94), rgba(16, 26, 13, 0.88));
+}
+
+:root[data-theme='dark'] .hero-image--light {
+  display: none;
+}
+
+:root[data-theme='dark'] .hero-image--dark {
+  display: block;
+}
+
+.metric-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: .35rem;
+}
+
+.metric-delta.positive {
+  color: var(--success);
+}
+
+.metric-delta.negative {
+  color: var(--danger);
+}
+
+.progress {
+  height: .9rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-soft) 80%, transparent);
+}
+
+.progress-bar {
+  border-radius: 999px;
+}
+
+.chart-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.chart-bar-wrap {
+  display: grid;
+  gap: .45rem;
+}
+
+.chart-bar-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-weight: 700;
+}
+
+.chart-bar {
+  height: 14px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-soft) 75%, transparent);
+  overflow: hidden;
+}
+
+.chart-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary), var(--success));
+}
+
+.table-panel .table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  white-space: nowrap;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--muted);
+  background: color-mix(in srgb, var(--surface-soft) 70%, transparent);
+}
+
+.transaction-type-income {
+  color: var(--success);
+  font-weight: 700;
+}
+
+.transaction-type-expense {
+  color: var(--danger);
+  font-weight: 700;
+}
+
+@media (max-width: 767.98px) {
+  .auth-card { padding: 1.4rem; }
+  .surface-card,
+  .stat-card,
+  .table-panel,
+  .chart-card,
+  .filter-panel,
+  .account-card,
+  .budget-card { padding: 1rem; }
+}
+
+
+.home-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr);
+  gap: 2rem;
+}
+
+.home-bank-card {
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.home-bank-icon {
+  width: min(58%, 280px);
+  height: auto;
+  color: var(--primary);
+}
+
+:root[data-theme='dark'] .home-bank-icon {
+  color: #dce7d7;
+}
+
+@media (max-width: 991.98px) {
+  .home-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-bank-card {
+    min-height: 220px;
+  }
+
+  .home-bank-icon {
+    width: min(50%, 220px);
+  }
+}
+
+
+.home-hero-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.home-bank-icon {
+  flex: 0 0 auto;
+  width: 96px;
+  height: 96px;
+  color: var(--accent);
+}
+
+:root[data-theme='dark'] .home-bank-icon {
+  color: var(--accent);
+}
+
+@media (max-width: 991.98px) {
+  .home-hero-head {
+    align-items: flex-start;
+  }
+
+  .home-bank-icon {
+    width: 72px;
+    height: 72px;
+  }
+}
