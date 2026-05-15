@@ -13,7 +13,7 @@
         <div class="auth-title">Вход в систему</div>
         <div class="auth-sub">ML Experiment Tracker</div>
 
-        <div v-if="error" class="err-msg">{{ error }}</div>
+        <div v-if="action.error.value" class="err-msg">{{ action.error.value }}</div>
 
         <div class="mb-3">
           <label class="flabel" for="li-email">Email</label>
@@ -28,8 +28,8 @@
                  autocomplete="current-password" aria-required="true" />
         </div>
 
-        <button class="btn-accent w-100" @click="doLogin" :disabled="loading">
-          {{ loading ? 'Вход...' : 'Войти' }}
+        <button class="btn-accent w-100" @click="doLogin" :disabled="action.loading.value">
+          {{ action.loading.value ? 'Вход...' : 'Войти' }}
         </button>
 
         <div class="auth-switch">
@@ -45,42 +45,27 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import SvgSprite from '@/components/SvgSprite.vue'
-import { mapActions } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
+import { useAsyncAction } from '@/composables/useAsyncAction'
 
-export default {
-  name: 'LoginPage',
-  components: { SvgSprite },
+const router = useRouter()
+const authStore = useAuthStore()
+const action = useAsyncAction()
 
-  data() {
-    return {
-      form: { email: '', password: '' },
-      error: '',
-      loading: false
-    }
-  },
+const form = reactive({ email: '', password: '' })
 
-  methods: {
-    ...mapActions(useAuthStore, ['login']),
-
-    async doLogin() {
-      this.error = ''
-      if (!this.form.email || !this.form.password) {
-        this.error = 'Заполните все поля'
-        return
-      }
-      this.loading = true
-      try {
-        await this.login(this.form.email, this.form.password)
-        this.$router.push('/dashboard')
-      } catch (e) {
-        this.error = e.response?.data?.error || 'Ошибка входа'
-      } finally {
-        this.loading = false
-      }
-    }
+async function doLogin() {
+  if (!form.email || !form.password) {
+    action.error.value = 'Заполните все поля'
+    return
   }
+  await action.execute(async () => {
+    await authStore.login(form.email, form.password)
+    router.push('/dashboard')
+  })
 }
 </script>

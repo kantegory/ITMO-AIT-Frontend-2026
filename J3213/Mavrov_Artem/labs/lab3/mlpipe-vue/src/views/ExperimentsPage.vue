@@ -1,7 +1,7 @@
 <template>
   <AppShell title="Эксперименты">
     <template #actions>
-      <button class="btn-sm" @click="showCreate = true">
+      <button class="btn-sm" @click="modal.open()">
         <svg class="svg-icon me-1" aria-hidden="true"><use href="#icon-plus-lg"></use></svg>
         Новый
       </button>
@@ -12,16 +12,16 @@
 
       <div class="filter-bar mb-3">
         <input v-model="search" class="finput sm" placeholder="Поиск по имени..." />
-        <select v-model="statusFilter" class="finput sm">
+        <select v-model="extraFilter" class="finput sm">
           <option value="">Все статусы</option>
           <option value="active">Активные</option>
           <option value="archived">Архив</option>
         </select>
-        <button class="btn-sm" @click="applyFilter">
+        <button class="btn-sm" @click="apply">
           <svg class="svg-icon me-1" aria-hidden="true"><use href="#icon-funnel"></use></svg>
           Найти
         </button>
-        <button class="btn-sm" @click="resetFilter">Сброс</button>
+        <button class="btn-sm" @click="reset">Сброс</button>
       </div>
 
       <table class="t">
@@ -62,10 +62,10 @@
       </table>
     </div>
 
-    <div v-if="showCreate" class="modal-overlay" @click.self="showCreate = false">
+    <div v-if="modal.isOpen.value" class="modal-overlay" @click.self="modal.close()">
       <div class="panel" style="width:420px;margin:auto">
         <div class="phead">Новый эксперимент</div>
-        <div v-if="createError" class="err-msg">{{ createError }}</div>
+        <div v-if="createAction.error.value" class="err-msg">{{ createAction.error.value }}</div>
         <div class="mb-2">
           <label class="flabel">Название</label>
           <input v-model="newExp.name" class="finput" placeholder="my-experiment" />
@@ -82,9 +82,9 @@
           </select>
         </div>
         <div style="display:flex;gap:.5rem;justify-content:flex-end">
-          <button class="btn-sm" @click="showCreate = false">Отмена</button>
-          <button class="btn-accent" @click="doCreate" :disabled="creating">
-            {{ creating ? 'Создание...' : 'Создать' }}
+          <button class="btn-sm" @click="modal.close()">Отмена</button>
+          <button class="btn-accent" @click="doCreate" :disabled="createAction.loading.value">
+            {{ createAction.loading.value ? 'Создание...' : 'Создать' }}
           </button>
         </div>
       </div>
@@ -92,69 +92,51 @@
   </AppShell>
 </template>
 
-<script>
+<script setup>
+import { reactive, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
 import AppShell from '@/layouts/AppShell.vue'
-import { mapState, mapActions } from 'pinia'
 import { useExperimentsStore } from '@/stores/experiments'
 import { useAuthStore } from '@/stores/auth'
+import { useModal } from '@/composables/useModal'
+import { useAsyncAction } from '@/composables/useAsyncAction'
+import { useListFilter } from '@/composables/useListFilter'
 
-export default {
-  name: 'ExperimentsPage',
-  components: { AppShell },
+const experimentsStore = useExperimentsStore()
+const authStore = useAuthStore()
+const { experiments } = storeToRefs(experimentsStore)
+const { user } = storeToRefs(authStore)
 
-  data() {
-    return {
-      search: '',
-      statusFilter: '',
-      activeSearch: '',
-      activeStatus: '',
-      showCreate: false,
-      creating: false,
-      createError: '',
-      newExp: { name: '', tags: '', status: 'active' }
-    }
-  },
+const modal = useModal()
+const createAction = useAsyncAction()
 
-  computed: {
-    ...mapState(useExperimentsStore, ['experiments']),
-    ...mapState(useAuthStore, ['user']),
-    filtered() {
-      return this.experiments.filter(e => {
-        const matchName = !this.activeSearch || e.name.toLowerCase().includes(this.activeSearch.toLowerCase())
-        const matchStatus = !this.activeStatus || e.status === this.activeStatus
-        return matchName && matchStatus
-      })
-    }
-  },
+const { search, extraFilter, filtered, apply, reset } = useListFilter(
+  experiments,
+  (exp, s, status) => {
+    const matchName   = !s      || exp.name.toLowerCase().includes(s.toLowerCase())
+    const matchStatus = !status || exp.status === status
+    return matchName && matchStatus
+  }
+)
 
-  methods: {
-    ...mapActions(useExperimentsStore, ['loadExperiments', 'createExperiment']),
-    applyFilter() { this.activeSearch = this.search; this.activeStatus = this.statusFilter },
-    resetFilter() { this.search = ''; this.statusFilter = ''; this.activeSearch = ''; this.activeStatus = '' },
-    async doCreate() {
-      this.createError = ''
-      if (!this.newExp.name) { this.createError = 'Введите название'; return }
-      this.creating = true
-      try {
-        await this.createExperiment({
-          ...this.newExp,
-          date: new Date().toISOString().slice(0, 10),
-          runs: 0,
-          best: '—',
-          owner: this.user?.name || 'unknown'
-        })
-        this.showCreate = false
-        this.newExp = { name: '', tags: '', status: 'active' }
-      } catch (e) {
-        this.createError = 'Ошибка создания'
-      } finally {
-        this.creating = false
-      }
-    }
-  },
+const newExp = reactive({ name: '', tags: '', status: 'active' })
 
-  mounted() { this.loadExperiments() }
+async function doCreate() {
+  if (!newExp.name) { createAction.error.value = 'Введите название'; return }
+  await createAction.execute(async () => {
+    await experimentsStore.createExperiment({
+      ...newExp,
+      date:  new Date().toISOString().slice(0, 10),
+      runs:  0,
+      best:  '—',
+      owner: user.value?.name || 'unknown'
+    })
+    modal.close()
+    Object.assign(newExp, { name: '', tags: '', status: 'active' })
+  })
 }
+
+onMounted(() => experimentsStore.loadExperiments())
 </script>
 
 <style scoped>

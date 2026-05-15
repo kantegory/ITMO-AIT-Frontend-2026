@@ -1,7 +1,7 @@
 <template>
   <AppShell title="Артефакт-стор">
     <template #actions>
-      <button class="btn-sm" @click="showCreate = true">
+      <button class="btn-sm" @click="modal.open()">
         <svg class="svg-icon me-1" aria-hidden="true"><use href="#icon-cloud-upload"></use></svg>
         Загрузить
       </button>
@@ -35,10 +35,10 @@
       </table>
     </div>
 
-    <div v-if="showCreate" class="modal-overlay" @click.self="showCreate = false">
+    <div v-if="modal.isOpen.value" class="modal-overlay" @click.self="modal.close()">
       <div class="panel" style="width:420px;margin:auto">
         <div class="phead">Новый артефакт</div>
-        <div v-if="createError" class="err-msg">{{ createError }}</div>
+        <div v-if="createAction.error.value" class="err-msg">{{ createAction.error.value }}</div>
         <div class="mb-2">
           <label class="flabel">Имя файла</label>
           <input v-model="newArt.name" class="finput" placeholder="model.pkl" />
@@ -57,9 +57,9 @@
           <input v-model="newArt.size" class="finput" placeholder="4.2 MB" />
         </div>
         <div style="display:flex;gap:.5rem;justify-content:flex-end">
-          <button class="btn-sm" @click="showCreate = false">Отмена</button>
-          <button class="btn-accent" @click="doCreate" :disabled="creating">
-            {{ creating ? 'Сохранение...' : 'Сохранить' }}
+          <button class="btn-sm" @click="modal.close()">Отмена</button>
+          <button class="btn-accent" @click="doCreate" :disabled="createAction.loading.value">
+            {{ createAction.loading.value ? 'Сохранение...' : 'Сохранить' }}
           </button>
         </div>
       </div>
@@ -67,58 +67,44 @@
   </AppShell>
 </template>
 
-<script>
+<script setup>
+import { reactive, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
 import AppShell from '@/layouts/AppShell.vue'
-import { mapState, mapActions } from 'pinia'
 import { useArtifactsStore } from '@/stores/artifacts'
 import { useAuthStore } from '@/stores/auth'
+import { useModal } from '@/composables/useModal'
+import { useAsyncAction } from '@/composables/useAsyncAction'
 
-export default {
-  name: 'ArtifactsPage',
-  components: { AppShell },
+const artifactsStore = useArtifactsStore()
+const authStore = useAuthStore()
+const { artifacts } = storeToRefs(artifactsStore)
+const { user } = storeToRefs(authStore)
 
-  data() {
-    return {
-      showCreate: false,
-      creating: false,
-      createError: '',
-      newArt: { name: '', type: 'model', size: '' }
-    }
-  },
+const modal = useModal()
+const createAction = useAsyncAction()
 
-  computed: {
-    ...mapState(useArtifactsStore, ['artifacts']),
-    ...mapState(useAuthStore, ['user'])
-  },
+const newArt = reactive({ name: '', type: 'model', size: '' })
 
-  methods: {
-    ...mapActions(useArtifactsStore, ['loadArtifacts', 'createArtifact', 'deleteArtifact']),
-    async doDelete(id) {
-      if (!confirm('Удалить артефакт?')) return
-      await this.deleteArtifact(id)
-    },
-    async doCreate() {
-      this.createError = ''
-      if (!this.newArt.name) { this.createError = 'Введите имя файла'; return }
-      this.creating = true
-      try {
-        await this.createArtifact({
-          ...this.newArt,
-          date: new Date().toISOString().slice(0, 10),
-          owner: this.user?.name || 'unknown'
-        })
-        this.showCreate = false
-        this.newArt = { name: '', type: 'model', size: '' }
-      } catch (e) {
-        this.createError = 'Ошибка сохранения'
-      } finally {
-        this.creating = false
-      }
-    }
-  },
-
-  mounted() { this.loadArtifacts() }
+async function doDelete(id) {
+  if (!confirm('Удалить артефакт?')) return
+  await artifactsStore.deleteArtifact(id)
 }
+
+async function doCreate() {
+  if (!newArt.name) { createAction.error.value = 'Введите имя файла'; return }
+  await createAction.execute(async () => {
+    await artifactsStore.createArtifact({
+      ...newArt,
+      date:  new Date().toISOString().slice(0, 10),
+      owner: user.value?.name || 'unknown'
+    })
+    modal.close()
+    Object.assign(newArt, { name: '', type: 'model', size: '' })
+  })
+}
+
+onMounted(() => artifactsStore.loadArtifacts())
 </script>
 
 <style scoped>

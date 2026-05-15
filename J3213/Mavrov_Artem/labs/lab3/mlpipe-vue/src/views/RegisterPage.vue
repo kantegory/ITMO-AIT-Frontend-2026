@@ -13,7 +13,7 @@
         <div class="auth-title">Регистрация</div>
         <div class="auth-sub">Создайте аккаунт MLPipe</div>
 
-        <div v-if="error" class="err-msg">{{ error }}</div>
+        <div v-if="action.error.value" class="err-msg">{{ action.error.value }}</div>
 
         <div class="mb-3">
           <label class="flabel" for="reg-name">Имя</label>
@@ -41,8 +41,8 @@
           </select>
         </div>
 
-        <button class="btn-accent w-100" @click="doRegister" :disabled="loading">
-          {{ loading ? 'Регистрация...' : 'Зарегистрироваться' }}
+        <button class="btn-accent w-100" @click="doRegister" :disabled="action.loading.value">
+          {{ action.loading.value ? 'Регистрация...' : 'Зарегистрироваться' }}
         </button>
 
         <div class="auth-switch">
@@ -53,42 +53,27 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import SvgSprite from '@/components/SvgSprite.vue'
-import { mapActions } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
+import { useAsyncAction } from '@/composables/useAsyncAction'
 
-export default {
-  name: 'RegisterPage',
-  components: { SvgSprite },
+const router = useRouter()
+const authStore = useAuthStore()
+const action = useAsyncAction()
 
-  data() {
-    return {
-      form: { name: '', email: '', password: '', role: 'ML Engineer' },
-      error: '',
-      loading: false
-    }
-  },
+const form = reactive({ name: '', email: '', password: '', role: 'ML Engineer' })
 
-  methods: {
-    ...mapActions(useAuthStore, ['register']),
-
-    async doRegister() {
-      this.error = ''
-      if (!this.form.name || !this.form.email || this.form.password.length < 6) {
-        this.error = 'Заполните все поля. Пароль минимум 6 символов.'
-        return
-      }
-      this.loading = true
-      try {
-        await this.register(this.form.name, this.form.email, this.form.password, this.form.role)
-        this.$router.push('/dashboard')
-      } catch (e) {
-        this.error = e.response?.data?.error || 'Ошибка регистрации'
-      } finally {
-        this.loading = false
-      }
-    }
+async function doRegister() {
+  if (!form.name || !form.email || form.password.length < 6) {
+    action.error.value = 'Заполните все поля. Пароль минимум 6 символов.'
+    return
   }
+  await action.execute(async () => {
+    await authStore.register(form.name, form.email, form.password, form.role)
+    router.push('/dashboard')
+  })
 }
 </script>

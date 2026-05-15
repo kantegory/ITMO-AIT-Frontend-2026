@@ -69,39 +69,31 @@
   </AppShell>
 </template>
 
-<script>
+<script setup>
+import { computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import AppShell from '@/layouts/AppShell.vue'
-import { mapState, mapActions } from 'pinia'
 import { useExperimentsStore } from '@/stores/experiments'
 import { useArtifactsStore } from '@/stores/artifacts'
 
-export default {
-  name: 'ExperimentDetailPage',
-  components: { AppShell },
+const route = useRoute()
+const experimentsStore = useExperimentsStore()
+const artifactsStore = useArtifactsStore()
 
-  computed: {
-    ...mapState(useExperimentsStore, ['experiments']),
-    ...mapState(useArtifactsStore, ['artifacts']),
-    experiment() {
-      return this.experiments.find(e => String(e.id) === String(this.$route.params.id))
-    },
-    expArtifacts() {
-      return this.artifacts.filter(a => String(a.expId) === String(this.$route.params.id))
-    }
-  },
+const { experiments } = storeToRefs(experimentsStore)
+const { artifacts }   = storeToRefs(artifactsStore)
 
-  methods: {
-    ...mapActions(useExperimentsStore, ['loadExperiments']),
-    ...mapActions(useArtifactsStore, ['loadArtifacts', 'deleteArtifact']),
-    async doDeleteArtifact(id) {
-      if (!confirm('Удалить артефакт?')) return
-      await this.deleteArtifact(id)
-    }
-  },
+const experiment  = computed(() => experiments.value.find(e => String(e.id) === String(route.params.id)))
+const expArtifacts = computed(() => artifacts.value.filter(a => String(a.expId) === String(route.params.id)))
 
-  mounted() {
-    this.loadExperiments()
-    this.loadArtifacts()
-  }
+async function doDeleteArtifact(id) {
+  if (!confirm('Удалить артефакт?')) return
+  await artifactsStore.deleteArtifact(id)
 }
+
+onMounted(() => {
+  experimentsStore.loadExperiments()
+  artifactsStore.loadArtifacts()
+})
 </script>

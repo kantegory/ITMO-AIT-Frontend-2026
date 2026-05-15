@@ -59,35 +59,28 @@
   </AppShell>
 </template>
 
-<script>
+<script setup>
+import { computed, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
 import AppShell from '@/layouts/AppShell.vue'
-import { mapState, mapActions } from 'pinia'
 import { useExperimentsStore } from '@/stores/experiments'
 import { useModelsStore } from '@/stores/models'
 import { useArtifactsStore } from '@/stores/artifacts'
 
-export default {
-  name: 'DashboardPage',
-  components: { AppShell },
+const experimentsStore = useExperimentsStore()
+const modelsStore = useModelsStore()
+const artifactsStore = useArtifactsStore()
 
-  computed: {
-    ...mapState(useExperimentsStore, ['experiments']),
-    ...mapState(useModelsStore, ['models']),
-    ...mapState(useArtifactsStore, ['artifacts']),
-    deployedCount() { return this.models.filter(m => m.deployed).length },
-    recentExperiments() { return [...this.experiments].slice(0, 5) }
-  },
+const { experiments } = storeToRefs(experimentsStore)
+const { models }      = storeToRefs(modelsStore)
+const { artifacts }   = storeToRefs(artifactsStore)
 
-  methods: {
-    ...mapActions(useExperimentsStore, ['loadExperiments']),
-    ...mapActions(useModelsStore, ['loadModels']),
-    ...mapActions(useArtifactsStore, ['loadArtifacts'])
-  },
+const deployedCount    = computed(() => models.value.filter(m => m.deployed).length)
+const recentExperiments = computed(() => experiments.value.slice(0, 5))
 
-  mounted() {
-    this.loadExperiments()
-    this.loadModels()
-    this.loadArtifacts()
-  }
-}
+onMounted(() => {
+  experimentsStore.loadExperiments()
+  modelsStore.loadModels()
+  artifactsStore.loadArtifacts()
+})
 </script>

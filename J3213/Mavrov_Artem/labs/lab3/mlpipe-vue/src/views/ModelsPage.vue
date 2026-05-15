@@ -1,7 +1,7 @@
 <template>
   <AppShell title="Модели">
     <template #actions>
-      <button class="btn-sm" @click="showCreate = true">
+      <button class="btn-sm" @click="modal.open()">
         <svg class="svg-icon me-1" aria-hidden="true"><use href="#icon-plus-lg"></use></svg>
         Новая модель
       </button>
@@ -27,9 +27,7 @@
             <td><span style="font-family:monospace">{{ m.ver }}</span></td>
             <td>{{ m.fw }}</td>
             <td><span style="font-family:monospace;font-size:.78rem">{{ m.metrics }}</span></td>
-            <td>
-              <span :class="'stage-' + m.stage">{{ m.stage }}</span>
-            </td>
+            <td><span :class="'stage-' + m.stage">{{ m.stage }}</span></td>
             <td>
               <span :class="m.deployed ? 'dep-on' : 'dep-off'">
                 {{ m.deployed ? 'Да' : 'Нет' }}
@@ -45,10 +43,10 @@
       </table>
     </div>
 
-    <div v-if="showCreate" class="modal-overlay" @click.self="showCreate = false">
+    <div v-if="modal.isOpen.value" class="modal-overlay" @click.self="modal.close()">
       <div class="panel" style="width:420px;margin:auto">
         <div class="phead">Новая модель</div>
-        <div v-if="createError" class="err-msg">{{ createError }}</div>
+        <div v-if="createAction.error.value" class="err-msg">{{ createAction.error.value }}</div>
         <div class="mb-2">
           <label class="flabel">Название</label>
           <input v-model="newModel.name" class="finput" placeholder="my-model" />
@@ -70,9 +68,9 @@
           </select>
         </div>
         <div style="display:flex;gap:.5rem;justify-content:flex-end">
-          <button class="btn-sm" @click="showCreate = false">Отмена</button>
-          <button class="btn-accent" @click="doCreate" :disabled="creating">
-            {{ creating ? 'Создание...' : 'Создать' }}
+          <button class="btn-sm" @click="modal.close()">Отмена</button>
+          <button class="btn-accent" @click="doCreate" :disabled="createAction.loading.value">
+            {{ createAction.loading.value ? 'Создание...' : 'Создать' }}
           </button>
         </div>
       </div>
@@ -80,53 +78,39 @@
   </AppShell>
 </template>
 
-<script>
+<script setup>
+import { reactive, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
 import AppShell from '@/layouts/AppShell.vue'
-import { mapState, mapActions } from 'pinia'
 import { useModelsStore } from '@/stores/models'
 import { useAuthStore } from '@/stores/auth'
+import { useModal } from '@/composables/useModal'
+import { useAsyncAction } from '@/composables/useAsyncAction'
 
-export default {
-  name: 'ModelsPage',
-  components: { AppShell },
+const modelsStore = useModelsStore()
+const authStore = useAuthStore()
+const { models } = storeToRefs(modelsStore)
+const { user } = storeToRefs(authStore)
 
-  data() {
-    return {
-      showCreate: false,
-      creating: false,
-      createError: '',
-      newModel: { name: '', ver: 'v1.0', fw: '', stage: 'dev', metrics: '', deployed: false }
-    }
-  },
+const modal = useModal()
+const createAction = useAsyncAction()
 
-  computed: {
-    ...mapState(useModelsStore, ['models']),
-    ...mapState(useAuthStore, ['user'])
-  },
+const newModel = reactive({ name: '', ver: 'v1.0', fw: '', stage: 'dev', metrics: '', deployed: false })
 
-  methods: {
-    ...mapActions(useModelsStore, ['loadModels', 'createModel', 'updateModel']),
-    async toggleDeploy(m) {
-      await this.updateModel(m.id, { deployed: !m.deployed, stage: !m.deployed ? 'prod' : 'staging' })
-    },
-    async doCreate() {
-      this.createError = ''
-      if (!this.newModel.name) { this.createError = 'Введите название'; return }
-      this.creating = true
-      try {
-        await this.createModel({ ...this.newModel, owner: this.user?.name || 'unknown' })
-        this.showCreate = false
-        this.newModel = { name: '', ver: 'v1.0', fw: '', stage: 'dev', metrics: '', deployed: false }
-      } catch (e) {
-        this.createError = 'Ошибка создания'
-      } finally {
-        this.creating = false
-      }
-    }
-  },
-
-  mounted() { this.loadModels() }
+async function toggleDeploy(m) {
+  await modelsStore.updateModel(m.id, { deployed: !m.deployed, stage: !m.deployed ? 'prod' : 'staging' })
 }
+
+async function doCreate() {
+  if (!newModel.name) { createAction.error.value = 'Введите название'; return }
+  await createAction.execute(async () => {
+    await modelsStore.createModel({ ...newModel, owner: user.value?.name || 'unknown' })
+    modal.close()
+    Object.assign(newModel, { name: '', ver: 'v1.0', fw: '', stage: 'dev', metrics: '', deployed: false })
+  })
+}
+
+onMounted(() => modelsStore.loadModels())
 </script>
 
 <style scoped>

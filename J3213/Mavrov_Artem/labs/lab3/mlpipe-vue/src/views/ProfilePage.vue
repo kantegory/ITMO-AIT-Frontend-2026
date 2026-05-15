@@ -24,20 +24,14 @@
   </AppShell>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
 import AppShell from '@/layouts/AppShell.vue'
-import { mapState } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
 
-export default {
-  name: 'ProfilePage',
-  components: { AppShell },
+const authStore = useAuthStore()
+const { user, token } = storeToRefs(authStore)
 
-  computed: {
-    ...mapState(useAuthStore, ['user', 'token']),
-    userInitial() {
-      return this.user?.name?.[0]?.toUpperCase() || '?'
-    }
-  }
-}
+const userInitial = computed(() => user.value?.name?.[0]?.toUpperCase() || '?')
 </script>

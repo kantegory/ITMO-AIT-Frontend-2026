@@ -15,16 +15,12 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import SvgSprite from '@/components/SvgSprite.vue'
 import AppSidebar from '@/components/AppSidebar.vue'
 import AppTopbar from '@/components/AppTopbar.vue'
 
-export default {
-  name: 'AppShell',
-  components: { SvgSprite, AppSidebar, AppTopbar },
-  props: {
-    title: { type: String, default: 'MLPipe' }
-  }
-}
+defineProps({
+  title: { type: String, default: 'MLPipe' }
+})
 </script>

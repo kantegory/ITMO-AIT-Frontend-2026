@@ -13,7 +13,7 @@
         :key="item.to"
         :to="item.to"
         class="nav-item"
-        :class="{ active: $route.name === item.name }"
+        :class="{ active: route.name === item.name }"
       >
         <svg class="svg-icon" aria-hidden="true"><use :href="'#icon-' + item.icon"></use></svg>
         <span>{{ item.label }}</span>
@@ -35,38 +35,29 @@
   </aside>
 </template>
 
-<script>
-import { mapState, mapActions } from 'pinia'
+<script setup>
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
 
-export default {
-  name: 'AppSidebar',
+const route  = useRoute()
+const router = useRouter()
+const authStore = useAuthStore()
+const { user } = storeToRefs(authStore)
 
-  data() {
-    return {
-      navItems: [
-        { to: '/dashboard',  name: 'dashboard',  label: 'Дашборд',       icon: 'grid-1x2-fill' },
-        { to: '/experiments',name: 'experiments', label: 'Эксперименты',  icon: 'activity' },
-        { to: '/models',     name: 'models',      label: 'Модели',        icon: 'box-seam-fill' },
-        { to: '/artifacts',  name: 'artifacts',   label: 'Артефакт-стор', icon: 'archive-fill' },
-        { to: '/profile',    name: 'profile',     label: 'Мой кабинет',   icon: 'person-fill' },
-      ]
-    }
-  },
+const userInitial = computed(() => user.value?.name?.[0]?.toUpperCase() || '?')
 
-  computed: {
-    ...mapState(useAuthStore, ['user']),
-    userInitial() {
-      return this.user?.name?.[0]?.toUpperCase() || '?'
-    }
-  },
+const navItems = [
+  { to: '/dashboard',   name: 'dashboard',   label: 'Дашборд',       icon: 'grid-1x2-fill' },
+  { to: '/experiments', name: 'experiments', label: 'Эксперименты',  icon: 'activity' },
+  { to: '/models',      name: 'models',      label: 'Модели',        icon: 'box-seam-fill' },
+  { to: '/artifacts',   name: 'artifacts',   label: 'Артефакт-стор', icon: 'archive-fill' },
+  { to: '/profile',     name: 'profile',     label: 'Мой кабинет',   icon: 'person-fill' },
+]
 
-  methods: {
-    ...mapActions(useAuthStore, ['logout']),
-    async doLogout() {
-      await this.logout()
-      this.$router.push('/login')
-    }
-  }
+async function doLogout() {
+  await authStore.logout()
+  router.push('/login')
 }
 </script>

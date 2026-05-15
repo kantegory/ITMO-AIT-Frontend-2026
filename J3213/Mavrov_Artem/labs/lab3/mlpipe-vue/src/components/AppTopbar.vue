@@ -10,30 +10,26 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'AppTopbar',
-  props: {
-    title: { type: String, required: true }
-  },
-  data() {
-    return {
-      isDark: true
-    }
-  },
-  mounted() {
-    const saved = localStorage.getItem('mlpipe_theme')
-    const prefersDark = !window.matchMedia('(prefers-color-scheme: light)').matches
-    this.isDark = saved ? saved === 'dark' : prefersDark
-    document.documentElement.setAttribute('data-theme', this.isDark ? 'dark' : 'light')
-  },
-  methods: {
-    toggleTheme() {
-      this.isDark = !this.isDark
-      const theme = this.isDark ? 'dark' : 'light'
-      localStorage.setItem('mlpipe_theme', theme)
-      document.documentElement.setAttribute('data-theme', theme)
-    }
-  }
+<script setup>
+import { ref, onMounted } from 'vue'
+
+defineProps({
+  title: { type: String, required: true }
+})
+
+const isDark = ref(true)
+
+onMounted(() => {
+  const saved = localStorage.getItem('mlpipe_theme')
+  const prefersDark = !window.matchMedia('(prefers-color-scheme: light)').matches
+  isDark.value = saved ? saved === 'dark' : prefersDark
+  document.documentElement.setAttribute('data-theme', isDark.value ? 'dark' : 'light')
+})
+
+function toggleTheme() {
+  isDark.value = !isDark.value
+  const theme = isDark.value ? 'dark' : 'light'
+  localStorage.setItem('mlpipe_theme', theme)
+  document.documentElement.setAttribute('data-theme', theme)
 }
 </script>
