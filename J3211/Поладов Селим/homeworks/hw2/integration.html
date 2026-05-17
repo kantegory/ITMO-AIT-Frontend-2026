@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Интеграции — 67 Финансы</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <aside class="sidebar d-flex flex-column" aria-label="Боковая панель">
+    <a href="dashboard.html" class="brand text-decoration-none" aria-label="67 Финансы — на главную">67 Финансы</a>
+    <nav class="flex-grow-1 pt-2" aria-label="Основная навигация">
+      <a href="dashboard.html" class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>Главная</span>
+      </a>
+      <a href="transactions.html" class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+        <span>Транзакции</span>
+      </a>
+      <a href="reports.html" class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        <span>Отчёты</span>
+      </a>
+      <a href="integration.html" class="nav-link active" aria-current="page">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+        <span>Интеграции</span>
+      </a>
+    </nav>
+    <div class="nav-bottom px-3 pb-3">
+      <a href="#" class="nav-link" onclick="logout()" aria-label="Выйти из аккаунта">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        <span>Выход</span>
+      </a>
+    </div>
+  </aside>
+  <main class="main-wrap">
+    <div class="header-row">
+      <h1>Интеграция с платёжными аккаунтами</h1>
+      <div class="header-actions">
+        <div class="dropdown">
+          <button type="button" class="user-menu dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false" aria-label="Меню пользователя" aria-haspopup="true">
+            <div class="user-avatar" aria-hidden="true">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <span class="d-none d-md-inline" id="user-name">—</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" role="menu">
+            <li role="none"><a class="dropdown-item" href="settings.html" role="menuitem">Настройки</a></li>
+            <li role="none"><hr class="dropdown-divider"></li>
+            <li role="none"><a class="dropdown-item text-danger" href="#" role="menuitem" onclick="logout(); return false;">Выйти</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="transaction-toast" class="alert alert-success d-none mb-3 py-2"
+      role="alert" aria-live="polite" aria-atomic="true">
+      Транзакция успешно добавлена
+    </div>
+
+    <section class="content-card mb-4" aria-label="Импорт транзакций">
+      <h2 class="h5 mb-3">Импорт транзакций</h2>
+      <p class="text-muted small mb-3">Подключите банк или загрузите выписку, чтобы автоматически учитывать операции.</p>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="integration-card h-100">
+            <div class="mb-2" aria-hidden="true">📄</div>
+            <div class="fw-medium">Выгрузка из файла</div>
+            <div class="small text-muted mb-2">CSV, Excel, QIF</div>
+            <input type="file" class="form-control d-none" id="importFile" accept=".csv,.xls,.xlsx,.qif" aria-label="Выбрать файл для импорта">
+            <label for="importFile" class="btn btn-outline-secondary btn-sm">Выбрать файл</label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="integration-card h-100">
+            <div class="mb-2" aria-hidden="true">🏦</div>
+            <div class="fw-medium">Подключить банк</div>
+            <div class="small text-muted mb-2">Сбер, Олег Т-Банк, ВТБ и др.</div>
+            <button type="button" class="btn btn-primary btn-sm"
+              data-bs-toggle="modal" data-bs-target="#bankModal"
+              aria-haspopup="dialog">Подключить</button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="integration-card h-100">
+            <div class="mb-2" aria-hidden="true">📋</div>
+            <div class="fw-medium">Ручной ввод</div>
+            <div class="small text-muted mb-2">Добавить операцию вручную</div>
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              data-bs-toggle="modal" data-bs-target="#manualModal"
+              aria-haspopup="dialog">Добавить</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-card mb-4" aria-label="Подключённые банки">
+      <h2 class="h5 mb-3">Подключённые банки</h2>
+      <div id="banks-list" aria-live="polite">
+        <p class="text-muted small mb-0">Загрузка...</p>
+      </div>
+    </section>
+
+    <section class="content-card" aria-label="Настройка правил категоризации">
+      <h2 class="h5 mb-3">Настройка правил</h2>
+      <p class="text-muted small mb-3">Создайте правила для автоматической категоризации и учёта транзакций.</p>
+      <div class="table-responsive">
+        <table class="table align-middle mb-0" aria-label="Правила категоризации">
+          <thead>
+            <tr>
+              <th scope="col">Условие</th>
+              <th scope="col">Категория</th>
+              <th scope="col">Действие</th>
+              <th scope="col"><span class="visually-hidden">Управление</span></th>
+            </tr>
+          </thead>
+          <tbody id="rules-tbody" aria-live="polite">
+            <tr><td colspan="4" class="text-center text-muted py-3">Загрузка...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-3">
+        <button type="button" class="btn btn-primary"
+          data-bs-toggle="modal" data-bs-target="#ruleModal"
+          aria-haspopup="dialog">+ Добавить правило</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal fade" id="bankModal" tabindex="-1"
+    aria-labelledby="bankModalLabel" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="bankModalLabel">Подключение банка</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <form id="bank-connect-form">
+          <div class="modal-body">
+            <p class="text-muted small">Выберите банк для подключения. Данные передаются по защищённому соединению.</p>
+            <label class="form-label" for="bank-select">Банк</label>
+            <select class="form-select mb-3" id="bank-select" aria-required="true">
+              <option>Сбер</option>
+              <option>Олег Т-Банк</option>
+              <option>ВТБ</option>
+              <option>Альфа-Банк</option>
+            </select>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="bankAgree" aria-required="true">
+              <label class="form-check-label small" for="bankAgree">Согласен с условиями передачи данных</label>
+            </div>
+            <div id="bank-agree-error" class="text-danger small mt-1 d-none" role="alert">Необходимо принять условия</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-primary">Подключить</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="manualModal" tabindex="-1"
+    aria-labelledby="manualModalLabel" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="manualModalLabel">Добавить транзакцию</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <form onsubmit="addTransaction(event)" novalidate>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label" for="manual-name">Название</label>
+              <input type="text" class="form-control" id="manual-name" name="name"
+                placeholder="Например: Продукты" required aria-required="true">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="manual-counterparty">Контрагент</label>
+              <input type="text" class="form-control" id="manual-counterparty" name="counterparty"
+                placeholder="Магазин, компания...">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="manual-amount">Сумма, ₽</label>
+              <input type="number" class="form-control" id="manual-amount" name="amount"
+                placeholder="0" min="1" required aria-required="true">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="manual-category">Категория</label>
+              <select class="form-select" id="manual-category" name="category">
+                <option>Продукты</option>
+                <option>Транспорт</option>
+                <option>Развлечения</option>
+                <option>Жильё</option>
+                <option>Техника</option>
+                <option>Авто</option>
+                <option>Накопления</option>
+                <option>Доход</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="ruleModal" tabindex="-1"
+    aria-labelledby="ruleModalLabel" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="ruleModalLabel">Новое правило</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <form onsubmit="saveRule(event)" novalidate>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label" for="rule-condition">Условие</label>
+              <select class="form-select" id="rule-condition" name="condition">
+                <option>Контрагент содержит</option>
+                <option>Сумма больше</option>
+                <option>Сумма меньше</option>
+                <option>Комментарий содержит</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="rule-value">Значение</label>
+              <input type="text" class="form-control" id="rule-value" name="value"
+                placeholder="Текст или число" required aria-required="true">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="rule-category">Категория</label>
+              <select class="form-select" id="rule-category" name="category">
+                <option>Продукты</option>
+                <option>Транспорт</option>
+                <option>Развлечения</option>
+                <option>Жильё</option>
+                <option>Техника</option>
+                <option>Авто</option>
+                <option>Крупные траты</option>
+                <option>Доход</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-primary">Создать правило</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/integration.js"></script>
+</body>
+</html>

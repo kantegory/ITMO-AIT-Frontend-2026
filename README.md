@@ -274,7 +274,8 @@ https://www.youtube.com/watch?v=8LFbS78a4Rw
 
 ### Фреймворк Vue.JS: основы, работа с менеджером зависимостей npm
 
-Презентация: https://disk.yandex.ru/i/CtrJOV1w5biiMw
+Презентация: https://disk.yandex.ru/i/CtrJOV1w5biiMw  
+Пример, который делали на лекции: https://github.com/kantegory/mentoring/tree/master/33_vue_notes_example
 
 ### Домашняя работа 5: изучение основ работы с менеджером зависимостей npm
 
@@ -307,7 +308,7 @@ https://www.youtube.com/watch?v=8LFbS78a4Rw
 
 ### Лабораторная работа 3: Разработка одностраничного веб-приложения (SPA) с использованием фреймворка Vue.JS
 
-Дедлайн:
+Дедлайн: 11.05.26
 
 Мигрировать ранее разработанное приложение (в рамках ЛР1 и ЛР2) на фреймворк Vue.JS.
 
@@ -320,4 +321,4 @@ https://www.youtube.com/watch?v=8LFbS78a4Rw
 
 ### Контрольная работа 2
 
-Дата проведения: 
+Дата проведения: 18.05.26

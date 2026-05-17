@@ -119,20 +119,36 @@ body {
 }
 
 /* Анимация появления комментария */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes smoothFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.99);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .animate-fade-in {
-    animation: fadeIn 0.5s ease-out forwards;
+    /* cubic-bezier для плавности */
+    animation: smoothFadeIn 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 /* Стили для кнопок в шапке модели */
-#starBtn, #forkBtn {
+.btn-social-action {
     border-radius: 12px !important;
     font-weight: 600;
-    min-width: 120px;
+    min-width: 100px;
+    height: 42px;
+    padding: 0 !important;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+
+    transition: all 0.3s ease;
 }
 
 /* Список воспроизводимости */

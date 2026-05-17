@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Транзакции — 67 Финансы</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/light.css" rel="stylesheet">
+  <link href="css/dark.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme')
+      var preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      var theme = saved || preferred
+      document.documentElement.setAttribute('data-theme', theme)
+      document.documentElement.setAttribute('data-bs-theme', theme)
+    })()
+  </script>
+  <script src="js/theme.js"></script>
+</head>
+<body>
+  <aside class="sidebar d-flex flex-column" aria-label="Боковая панель">
+    <a href="dashboard.html" class="brand text-decoration-none" aria-label="67 Финансы — на главную">67 Финансы</a>
+    <nav class="flex-grow-1 pt-2" aria-label="Основная навигация">
+      <a href="dashboard.html" class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="img/icons.svg#icon-home"/></svg>
+        <span>Главная</span>
+      </a>
+      <a href="transactions.html" class="nav-link active" aria-current="page">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="img/icons.svg#icon-transactions"/></svg>
+        <span>Транзакции</span>
+      </a>
+      <a href="reports.html" class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="img/icons.svg#icon-reports"/></svg>
+        <span>Отчёты</span>
+      </a>
+      <a href="integration.html" class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="img/icons.svg#icon-integration"/></svg>
+        <span>Интеграции</span>
+      </a>
+    </nav>
+    <div class="nav-bottom px-3 pb-3">
+      <a href="#" class="nav-link" onclick="logout()" aria-label="Выйти из аккаунта">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="img/icons.svg#icon-logout"/></svg>
+        <span>Выход</span>
+      </a>
+    </div>
+  </aside>
+  <main class="main-wrap">
+    <div class="header-row">
+      <h1>Транзакции</h1>
+      <div class="header-actions">
+        <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" aria-label="Переключить тему">
+          <svg class="icon-moon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><use href="img/icons.svg#icon-moon"/></svg>
+          <svg class="icon-sun" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" style="display:none"><use href="img/icons.svg#icon-sun"/></svg>
+        </button>
+        <div class="dropdown">
+          <button type="button" class="user-menu dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false" aria-label="Меню пользователя" aria-haspopup="true">
+            <div class="user-avatar" aria-hidden="true">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="img/icons.svg#icon-user"/></svg>
+            </div>
+            <span class="d-none d-md-inline" id="user-name">—</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" role="menu">
+            <li role="none"><a class="dropdown-item" href="settings.html" role="menuitem">Настройки</a></li>
+            <li role="none"><hr class="dropdown-divider"></li>
+            <li role="none"><a class="dropdown-item text-danger" href="#" role="menuitem" onclick="logout(); return false;">Выйти</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <section class="content-card mb-3" aria-label="Фильтры транзакций">
+      <div class="row g-2 filter-row">
+        <div class="col-12 col-md-4">
+          <label class="visually-hidden" for="search-input">Поиск по транзакциям</label>
+          <div class="input-group">
+            <span class="input-group-text search-icon border-end-0" aria-hidden="true">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="img/icons.svg#icon-search"/></svg>
+            </span>
+            <input type="search" class="form-control border-start-0" id="search-input"
+              placeholder="Поиск по транзакциям" aria-label="Поиск по транзакциям">
+          </div>
+        </div>
+        <div class="col-6 col-md-2">
+          <label class="visually-hidden" for="category-filter">Категория</label>
+          <select class="form-select" id="category-filter" aria-label="Фильтр по категории">
+            <option value="">Категория</option>
+            <option>Доход</option>
+            <option>Продукты</option>
+            <option>Транспорт</option>
+            <option>Развлечения</option>
+            <option>Жильё</option>
+            <option>Техника</option>
+            <option>Авто</option>
+            <option>Крупная покупка</option>
+            <option>Накопления</option>
+          </select>
+        </div>
+        <div class="col-6 col-md-2">
+          <label class="visually-hidden" for="amount-from">Сумма от</label>
+          <input type="number" class="form-control" id="amount-from"
+            placeholder="Сумма от" aria-label="Минимальная сумма">
+        </div>
+        <div class="col-6 col-md-2">
+          <label class="visually-hidden" for="date-from">Дата от</label>
+          <input type="text" class="form-control" id="date-from"
+            placeholder="Дата от" aria-label="Дата начала периода"
+            onfocus="this.type='date'" onblur="if(!this.value) this.type='text'">
+        </div>
+        <div class="col-6 col-md-2">
+          <label class="visually-hidden" for="date-to">Дата до</label>
+          <input type="text" class="form-control" id="date-to"
+            placeholder="Дата до" aria-label="Дата конца периода"
+            onfocus="this.type='date'" onblur="if(!this.value) this.type='text'">
+        </div>
+      </div>
+    </section>
+
+    <section class="content-card" aria-label="Список транзакций">
+      <div class="table-responsive">
+        <table class="table align-middle mb-0" aria-label="Транзакции">
+          <thead>
+            <tr>
+              <th scope="col">Название / Контрагент</th>
+              <th scope="col">Тип</th>
+              <th scope="col">Сумма</th>
+              <th scope="col">Дата</th>
+              <th scope="col">Счёт</th>
+              <th scope="col"><span class="visually-hidden">Действия</span></th>
+            </tr>
+          </thead>
+          <tbody id="transactions-tbody" aria-live="polite">
+            <tr><td colspan="6" class="text-center text-muted py-3">Загрузка...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal fade" id="transactionModal" tabindex="-1"
+    aria-labelledby="transactionModalLabel" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="transactionModalLabel">Детали транзакции</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-1"><strong>Название:</strong> <span id="modal-name"></span></p>
+          <p class="mb-1"><strong>Контрагент:</strong> <span id="modal-counterparty"></span></p>
+          <p class="mb-1"><strong>Тип:</strong> <span id="modal-category"></span></p>
+          <p class="mb-1"><strong>Сумма:</strong> <span id="modal-amount"></span></p>
+          <p class="mb-1"><strong>Дата:</strong> <span id="modal-date"></span></p>
+          <p class="mb-0"><strong>Счёт:</strong> <span id="modal-account"></span></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/transactions.js"></script>
+</body>
+</html>

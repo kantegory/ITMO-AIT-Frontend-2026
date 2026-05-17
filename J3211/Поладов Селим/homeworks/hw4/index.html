@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>67 Финансы — Управление личными финансами</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/light.css" rel="stylesheet">
+  <link href="css/dark.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme')
+      var preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      var theme = saved || preferred
+      document.documentElement.setAttribute('data-theme', theme)
+      document.documentElement.setAttribute('data-bs-theme', theme)
+    })()
+  </script>
+  <script src="js/theme.js"></script>
+</head>
+<body>
+  <button id="theme-toggle" class="theme-toggle-fixed" onclick="toggleTheme()" aria-label="Переключить тему">
+    <svg class="icon-moon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><use href="img/icons.svg#icon-moon"/></svg>
+    <svg class="icon-sun" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" style="display:none"><use href="img/icons.svg#icon-sun"/></svg>
+  </button>
+  <main class="auth-page">
+    <div class="auth-card text-center">
+      <a href="login.html" class="brand brand-hero text-decoration-none d-inline-block mb-4" aria-label="67 Финансы — на главную">67 Финансы</a>
+      <h1 class="h2">Управление личными финансами</h1>
+      <p class="subtitle">Следите за счетами, транзакциями и бюджетом в одном месте</p>
+      <div class="d-flex gap-2 justify-content-center flex-wrap" role="navigation" aria-label="Действия">
+        <a href="login.html" class="btn btn-primary px-4">Войти</a>
+        <a href="register.html" class="btn btn-outline-secondary px-4">Регистрация</a>
+        <a href="dashboard.html" class="btn btn-outline-secondary px-4">Личный кабинет</a>
+      </div>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MLDrop – платформа моделей и датасетов</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: #000;
+      color: #fff;
+      padding: 8px;
+      z-index: 100;
+      text-decoration: none;
+    }
+    .skip-link:focus { top: 0; }
+    button:focus-visible, a:focus-visible, .scroll-item:focus-visible {
+      outline: 3px solid #005fcc;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Перейти к содержанию</a>
+
+  <nav class="navbar navbar-expand-lg glass-navbar" aria-label="Главная навигация">
+    <div class="container">
+      <a class="navbar-brand" href="index.html" aria-label="MLDrop на главную">MLDrop</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-label="Показать меню">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <form class="d-flex ms-lg-4 my-2 my-lg-0 navbar-search" id="searchForm" role="search" aria-label="Поиск по сайту">
+          <input class="form-control form-control-sm me-2" type="search" placeholder="Поиск моделей и датасетов" id="searchInput" aria-label="Поисковый запрос">
+          <button class="btn btn-outline-glass btn-sm" type="submit" aria-label="Найти"><i class="bi bi-search" aria-hidden="true"></i></button>
+        </form>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="models.html">Модели</a></li>
+          <li class="nav-item"><a class="nav-link" href="datasets.html">Наборы данных</a></li>
+          <li class="nav-item"><a class="nav-link" href="spaces.html">Пространства</a></li>
+          <li class="nav-item d-flex align-items-center ms-lg-3" id="navAuthArea">
+            <button id="themeToggleBtn" class="btn btn-outline-glass btn-sm me-2" aria-label="Переключить тему">
+              <i class="bi bi-moon-fill" aria-hidden="true"></i>
+            </button>
+            <a class="btn btn-outline-glass btn-sm me-2" href="login.html">Войти</a>
+            <a class="btn btn-primary-glass btn-sm" href="registration.html">Регистрация</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content" class="container hero-wrapper">
+    <h1 class="hero-title">Добро пожаловать на платформу обмена моделями и датасетами</h1>
+    <p class="hero-subtitle">Здесь вы можете делиться своими моделями, публиковать датасеты, проверять метрики и ставить отзывы.</p>
+
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="scroll-container" aria-roledescription="Карусель" aria-label="Популярные модели">
+          <div class="scroll-wrapper">
+            <div class="scroll-track" id="modelsTrack" role="group" aria-label="Список моделей"></div>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-arrow" id="carouselPrev" aria-label="Предыдущий слайд"><i class="bi bi-chevron-left" aria-hidden="true"></i></button>
+          <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Навигация по слайдам"></div>
+          <button class="carousel-arrow" id="carouselNext" aria-label="Следующий слайд"><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <section class="popular-section" aria-labelledby="popular-heading">
+      <div class="popular-card">
+        <div id="popular-heading" class="popular-title">Популярно сейчас</div>
+        <p class="popular-subtitle">Кликните по тегу, чтобы отфильтровать модели в карусели.</p>
+        <div class="popular-tags">
+          <span class="popular-tag-pill" data-search="GPT" role="button" tabindex="0" aria-label="Показать чат-модели">Топ‑чат‑модели</span>
+          <span class="popular-tag-pill" data-search="ResNet" role="button" tabindex="0" aria-label="Показать компактные модели">Компактные модели для продакшена</span>
+          <span class="popular-tag-pill" data-search="dataset" role="button" tabindex="0" aria-label="Показать наборы данных">Наборы для обучения с нуля</span>
+          <span class="popular-tag-pill" data-search="Traffic" role="button" tabindex="0" aria-label="Показать MLOps пайплайны">Готовые пайплайны MLOps</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="index-main.js"></script>
+  <script src="theme.js"></script>
+</body>
+</html>

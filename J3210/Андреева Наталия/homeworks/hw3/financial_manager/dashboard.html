@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="Главная панель MyWallet. Просматривайте текущий баланс, доступный бюджет на месяц, актуальные курсы мировых валют и последние транзакции.">
+    <title>Личный кабинет — MyWallet</title>
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style">
+    <link rel="preload" href="css/base.css" as="style">
+    <link rel="preload" href="css/layout.css" as="style">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/dark-theme.css">
+
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark mb-4 shadow-sm" aria-label="Главная навигация">
+    <div class="container-fluid d-flex align-items-center">
+        <a class="navbar-brand fw-bold" href="dashboard.html">MyWallet</a>
+        <div class="d-flex align-items-center ms-auto">
+            <a href="dashboard.html" class="nav-link-custom me-2 active" aria-current="page">Главная</a>
+            <a href="search.html" class="nav-link-custom me-2">Поиск</a>
+            <a href="reports.html" class="nav-link-custom me-2">Аналитика</a>
+            <a href="bank.html" class="nav-link-custom me-3">Банк</a>
+            <span id="userNameDisplay" class="me-3 d-none d-sm-flex text-white"></span>
+            <button class="btn btn-logout btn-sm fw-bold" onclick="logout()">Выйти</button>
+        </div>
+    </div>
+</nav>
+
+<main class="container">
+    <h1 class="visually-hidden">Панель управления финансами</h1>
+
+    <div class="row g-3 mb-5">
+        <div class="col-12 col-md-4">
+            <section class="card p-4 h-100 shadow-sm border-0">
+                <h2 class="text-muted small fw-bold text-uppercase h6">Мои счета</h2>
+                <p id="accBalance" class="fw-bold h2 mb-0">0 ₽</p>
+            </section>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <section class="card p-4 h-100 shadow-sm border-0">
+                <label for="budgetBar" id="budgetLabel" class="text-muted small fw-bold text-uppercase d-block mb-2">
+                    Бюджет на месяц
+                </label>
+                <div class="progress" style="height: 14px; border-radius: 10px;">
+                    <div class="progress-bar bg-success" id="budgetBar" role="progressbar"
+                         aria-labelledby="budgetLabel" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    </div>
+                </div>
+                <p id="budgetStatus" class="text-muted mt-2 mb-0">0 из 50 000 ₽</p>
+            </section>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <button class="btn btn-primary w-100 py-3 fw-bold mb-2 shadow border-0" data-bs-toggle="modal"
+                    data-bs-target="#addMoneyModal">
+                + Добавить транзакцию
+            </button>
+        </div>
+    </div>
+
+    <section class="mb-5" aria-labelledby="currency-title">
+        <h2 id="currency-title" class="fw-bold mb-4 text-center text-muted h4">Мировые валюты</h2>
+
+        <div class="row mb-3">
+            <div class="col-12">
+                <div id="rate-usd"></div>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+            <div class="col-md-4">
+                <div id="rate-eur"></div>
+            </div>
+            <div class="col-md-4">
+                <div id="rate-cny"></div>
+            </div>
+            <div class="col-md-4">
+                <div id="rate-gbp"></div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-6 col-md-3">
+                <div id="rate-jpy"></div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div id="rate-try"></div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div id="rate-kzt"></div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div id="rate-amd"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="card p-4 mb-5 shadow-sm border-0">
+        <h2 class="mb-3 fw-bold h5">Последние транзакции</h2>
+        <ul class="list-group list-group-flush" id="recentTrans" aria-label="Список последних операций"></ul>
+    </section>
+</main>
+
+<div class="modal fade" id="addMoneyModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow" style="border-radius: 20px;">
+            <div class="modal-body p-4">
+                <h2 class="mb-4 fw-bold h5" id="modalTitle">Новая операция</h2>
+                <div class="mb-3">
+                    <label for="typeInput" class="form-label small fw-bold text-muted">Тип операции</label>
+                    <select id="typeInput" class="form-select">
+                        <option value="plus">Доход (+)</option>
+                        <option value="minus">Расход (-)</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="catInput" class="form-label small fw-bold text-muted">Категория</label>
+                    <input type="text" id="catInput" class="form-control" placeholder="Напр: Продукты">
+                </div>
+                <div class="mb-3">
+                    <label for="dateInput" class="form-label small fw-bold text-muted">Дата операции</label>
+                    <input type="date" id="dateInput" class="form-control" tabindex="0">
+                </div>
+                <div class="mb-4">
+                    <label for="sumInput" class="form-label small fw-bold text-muted">Сумма</label>
+                    <input type="number" id="sumInput" class="form-control" placeholder="0.00">
+                </div>
+                <button id="saveBtn" class="btn btn-success w-100 fw-bold py-2 text-white border-0">Сохранить операцию
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+<script src="js/shared.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/theme-toggle.js"></script>
+</body>
+</html>

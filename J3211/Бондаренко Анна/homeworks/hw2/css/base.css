@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+    --bg-color: #f0f0ee;
+    --surface-color: #ffffff;
+    --border-color: #1a1a1a;
+    --accent-color: #555555;
+    --income-color: #1a5e3a;
+    --expense-color: #a04100;
+    --border: 2px solid var(--border-color);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'JetBrains Mono', monospace;
+    border-radius: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--border-color);
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+.navbar-terminal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--surface-color);
+    border-bottom: var(--border);
+    padding: 15px 20px;
+    margin-bottom: 30px;
+}
+
+.navbar-brand {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.nav-links a {
+    color: var(--border-color);
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 2px 5px;
+    border: 1px solid transparent;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background: var(--border-color);
+    color: var(--surface-color);
+}
+
+.dashboard-block,
+.terminal-box {
+    background: var(--surface-color);
+    border: var(--border);
+    box-shadow: 8px 8px 0 var(--border-color);
+    padding: 25px;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.block-title,
+.terminal-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+
+.terminal-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.terminal-table th,
+.terminal-table td {
+    border: 1px solid var(--border-color);
+    padding: 8px;
+    text-align: left;
+}
+
+.terminal-table th {
+    background: var(--border-color);
+    color: var(--surface-color);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.text-income {
+    color: var(--income-color) !important;
+}
+
+.text-expense {
+    color: var(--expense-color) !important;
+}
+
+.bg-income {
+    background-color: var(--income-color) !important;
+}
+
+.bg-expense {
+    background-color: var(--expense-color) !important;
+}
+
+.menu-toggle-btn {
+    display: none;
+    background: var(--border-color);
+    color: var(--surface-color);
+    border: none;
+    padding: 5px 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.menu-close-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--border-color);
+    font-weight: 700;
+    font-size: 20px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    text-align: right;
+    width: 100%;
+}
+
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+}
+
+.menu-overlay.active {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .terminal-table {
+        display: block !important;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-collapse: collapse;
+    }
+
+    .terminal-table thead,
+    .terminal-table tbody {
+        display: table;
+        width: 100%;
+    }
+
+    .col-md-8 .terminal-table thead,
+    .col-md-8 .terminal-table tbody,
+    #searchTable thead,
+    #searchTable tbody {
+        min-width: 650px;
+    }
+
+    .menu-toggle-btn {
+        display: block;
+    }
+
+    .navbar-terminal {
+        justify-content: space-between;
+        padding: 10px 15px;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100%;
+        background: var(--surface-color);
+        border-left: 4px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        z-index: 1001;
+        transition: right 0.3s ease-in-out;
+        gap: 15px;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .nav-links a {
+        margin-left: 0;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        display: block;
+        width: 100%;
+    }
+
+    .menu-close-btn {
+        display: block;
+        color: var(--expense-color);
+    }
+}

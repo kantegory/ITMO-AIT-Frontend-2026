@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Банк — MyWallet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-primary px-3 mb-4 shadow-sm">
+    <a class="navbar-brand fw-bold" href="dashboard.html">MyWallet</a>
+    <div class="d-flex align-items-center ms-auto">
+        <a href="dashboard.html" class="nav-link-custom me-2">Главная</a>
+        <a href="search.html" class="nav-link-custom me-2">Поиск</a>
+        <a href="reports.html" class="nav-link-custom me-2">Аналитика</a>
+        <a href="bank.html" class="nav-link-custom me-3 active">Банк</a>
+        <span id="userNameDisplay" class="me-3 d-none d-sm-flex"></span>
+        <button class="btn btn-outline-light btn-sm fw-bold border-0" onclick="logout()">Выйти</button>
+    </div>
+</nav>
+
+<main class="container">
+    <div class="row g-4">
+        <div class="col-lg-5">
+            <div class="card p-4 shadow-sm border-0 h-100">
+                <h5 class="fw-bold mb-3">Связь с банком</h5>
+                <p class="text-muted small">Подключите ваш банковский аккаунт для автоматического получения выписок.</p>
+
+                <div id="connectionStatus" class="p-3 rounded-3 mb-3 text-center" style="background: #f1f4f9;">
+                    <span class="text-muted">Статус: Не подключено</span>
+                </div>
+
+                <button id="importBtn" class="btn btn-primary w-100 py-2 fw-bold" onclick="importTransactions()">
+                    Подключить и импортировать
+                </button>
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="card p-4 shadow-sm border-0 h-100">
+                <h5 class="fw-bold mb-1">Настройка правил</h5>
+                <p class="text-muted small mb-4">Автоматически назначать категорию при импорте</p>
+
+                <div class="row g-2 mb-4">
+                    <div class="col-5"><input type="text" id="ruleKeyword" class="form-control"
+                                              placeholder="Ключевое слово"></div>
+                    <div class="col-5"><input type="text" id="ruleCat" class="form-control" placeholder="Категория">
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-success w-100" onclick="addRule()">+</button>
+                    </div>
+                </div>
+
+                <div id="rulesList">
+                    <div class="text-center text-muted small mt-5">Правила еще не настроены</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (!localStorage.getItem('isLoggedIn') || !user) {
+        window.location.href = 'index.html';
+    }
+
+    const fullName = localStorage.getItem('userFullName');
+    if (fullName && document.getElementById('userNameDisplay')) {
+        document.getElementById('userNameDisplay').innerText = fullName;
+    }
+
+    if (localStorage.getItem('bankConnected_' + user.id) === 'true') {
+        document.getElementById('connectionStatus').innerHTML = "<span class='text-success fw-bold'>Банк успешно подключен</span>";
+        document.getElementById('importBtn').innerText = "Обновить данные из банка";
+    }
+
+    function loadRules() {
+        const rules = JSON.parse(localStorage.getItem('bankRules_' + user.id) || "[]");
+        const list = document.getElementById('rulesList');
+        if (rules.length === 0) return;
+
+        list.innerHTML = rules.map((r, index) => `
+            <div class="rule-card d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="badge bg-secondary me-2">${r.keyword}</span>
+                    → <span class="fw-bold">${r.category}</span>
+                </div>
+                <button class="btn btn-sm text-danger border-0" onclick="deleteRule(${index})">✕</button>
+            </div>
+        `).join('');
+    }
+
+    function addRule() {
+        const keyword = document.getElementById('ruleKeyword').value.trim();
+        const category = document.getElementById('ruleCat').value.trim();
+        if (!keyword || !category) {
+            return alert("Заполните оба поля");
+        }
+
+        const rules = JSON.parse(localStorage.getItem('bankRules_' + user.id) || "[]");
+        rules.push({keyword, category});
+        localStorage.setItem('bankRules_' + user.id, JSON.stringify(rules));
+
+        document.getElementById('ruleKeyword').value = '';
+        document.getElementById('ruleCat').value = '';
+        loadRules();
+    }
+
+    function deleteRule(index) {
+        const rules = JSON.parse(localStorage.getItem('bankRules_' + user.id) || "[]");
+        rules.splice(index, 1);
+        localStorage.setItem('bankRules_' + user.id, JSON.stringify(rules));
+        loadRules();
+    }
+
+    loadRules();
+</script>
+<script src="js/shared.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
