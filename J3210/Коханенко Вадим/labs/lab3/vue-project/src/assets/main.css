@@ -1,0 +1,546 @@
+/* Jсновное */
+* {
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+main {
+    flex: 1;
+}
+
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-card: #ffffff;
+    --bg-input: #ffffff;
+    --bg-footer: #f8f9fa;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --text-muted: #6c757d;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --shadow-hover: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="dark"] {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --bg-card: #2d2d2d;
+    --bg-input: #3d3d3d;
+    --bg-footer: #2d2d2d;
+    --text-primary: #e9ecef;
+    --text-secondary: #adb5bd;
+    --text-muted: #adb5bd;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --shadow-hover: rgba(0, 0, 0, 0.4);
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+h1, h2, h3, h4, h5, h6, p, span, div, li, a {
+    color: inherit;
+}
+
+/* элементы в темной теме */
+[data-theme="dark"] .badge.bg-light {
+    background-color: #3d3d3d !important;
+    color: #e9ecef !important;
+}
+
+[data-theme="dark"] .badge.text-dark {
+    color: #e9ecef !important;
+}
+
+[data-theme="dark"] .btn-outline-success {
+    color: #198754;
+    border-color: #198754;
+}
+
+[data-theme="dark"] .btn-outline-success:hover {
+    background-color: #198754;
+    color: white;
+}
+
+[data-theme="dark"] .btn-outline-secondary {
+    color: var(--text-secondary);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .btn-outline-secondary:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .bg-white {
+    background-color: var(--bg-card) !important;
+}
+
+[data-theme="dark"] .text-muted {
+    color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] .bg-light {
+    background-color: var(--bg-secondary) !important;
+}
+
+/* карточки */
+.card, .stat-card, .info-card, .note-card, .route-card, .destination-card {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: var(--text-primary);
+}
+
+.card:hover, .stat-card:hover, .note-card:hover, .route-card:hover, .destination-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px var(--shadow-hover);
+}
+
+.card-body, .card-header, .card-footer {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.card-header {
+    border-bottom-color: var(--border-color);
+}
+
+.card-footer {
+    border-top-color: var(--border-color);
+}
+
+.card-title {
+    color: var(--text-primary);
+}
+
+.card-text {
+    color: var(--text-secondary);
+}
+
+.card-subtitle {
+    color: var(--text-muted) !important;
+}
+
+/* статистика в ЛК */
+.welcome-section {
+    background: linear-gradient(135deg, #198754, #39a774);
+    color: white;
+    padding: 40px 0;
+    border-radius: 0 0 20px 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #198754;
+}
+
+.stat-icon .icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: #198754;
+}
+
+.stat-card .text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* поиск */
+.hero-search {
+    background: linear-gradient(135deg, #198754, #39a774);
+    padding: 60px 0;
+    color: white;
+    border-radius: 0 0 30px 30px;
+    margin-bottom: 40px;
+}
+
+.hero-search h1, .hero-search p {
+    color: white;
+}
+
+.filter-section {
+    background: var(--bg-card);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 20px var(--shadow-color);
+    margin-bottom: 30px;
+}
+
+.filter-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--text-secondary);
+}
+
+.destination-img {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.destination-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
+}
+
+[data-theme="dark"] .destination-badge {
+    background: rgba(0, 0, 0, 0.8);
+    color: #198754;
+}
+
+.price-tag {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #198754;
+}
+
+.rating-stars {
+    color: #ffc107;
+}
+
+.rating-stars .icon {
+    fill: #ffc107;
+    color: #ffc107;
+}
+
+/* странички напрвалений */
+.destination-hero {
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-radius: 0 0 30px 30px;
+    margin-bottom: 40px;
+}
+
+.destination-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+    border-radius: 0 0 30px 30px;
+    display: flex;
+    align-items: flex-end;
+    padding: 40px;
+    color: white;
+}
+
+.destination-title {
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.info-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.quick-info-icon {
+    font-size: 2rem;
+    color: #198754;
+    margin-bottom: 10px;
+}
+
+.price-large {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #198754;
+}
+
+.attraction-item {
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.attraction-item:last-child {
+    border-bottom: none;
+}
+
+.attraction-item h3, .attraction-item p {
+    color: var(--text-primary);
+}
+
+.destination-card .card-title {
+    color: var(--text-primary);
+}
+
+.destination-card .card-text {
+    color: var(--text-secondary);
+}
+
+.destination-card .badge.bg-light {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+}
+
+/* заглушки */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    color: var(--text-muted);
+}
+
+.empty-state .icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+/* формы */
+.form-control, .form-select, .input-group-text {
+    background-color: var(--bg-input);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border-color: #198754;
+    box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+label, .form-label {
+    color: var(--text-primary);
+}
+
+/* навигация */
+.nav-tabs {
+    border-bottom-color: var(--border-color);
+}
+
+.nav-tabs .nav-link {
+    color: var(--text-secondary);
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.nav-tabs .nav-link.active {
+    background-color: var(--bg-primary);
+    border-color: var(--border-color);
+    border-bottom-color: var(--bg-primary);
+    color: #198754;
+}
+
+/* уведы */
+.notification-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    min-width: 300px;
+    max-width: 400px;
+    background: var(--bg-card);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    animation: slideIn 0.3s ease;
+    border-left: 4px solid #198754;
+}
+
+.notification-toast.error {
+    border-left-color: #dc3545;
+}
+
+.notification-toast .notification-content {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.notification-toast .notification-message {
+    flex: 1;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.notification-toast .notification-close {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
+
+/* иконки */
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+    vertical-align: middle;
+}
+
+.btn .icon, .nav-link .icon {
+    margin-right: 0.25em;
+}
+
+.rating-large .icon {
+    width: 1.2em;
+    height: 1.2em;
+    fill: #ffc107;
+    color: #ffc107;
+}
+
+/* кнопка смена темы */
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    margin-left: 10px;
+}
+
+.theme-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+/* регистрация */
+.auth-wrapper {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.auth-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px var(--shadow-color);
+}
+
+.auth-card .card-header {
+    background: #198754;
+    color: white;
+    border-radius: 15px 15px 0 0;
+    padding: 20px;
+    border: none;
+}
+
+.auth-card .card-body {
+    background-color: var(--bg-card);
+}
+
+/* модалки */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal-container {
+    background: var(--bg-card);
+    border-radius: 12px;
+    max-width: 90%;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-container.modal-lg {
+    max-width: 800px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn-close-custom {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    opacity: 0.8;
+}
+
+.btn-close-custom:hover {
+    opacity: 1;
+}
