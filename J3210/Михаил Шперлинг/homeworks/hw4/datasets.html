@@ -10,21 +10,24 @@
 </head>
 <body class="bg-light">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" aria-label="Главная навигация">
     <div class="container">
         <a class="navbar-brand fw-bold" href="index.html">AI Hub</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключатель навигации">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item"><a class="nav-link" href="index.html">Модели</a></li>
-                <li class="nav-item"><a class="nav-link active" href="datasets.html">Датасеты</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="datasets.html">Датасеты</a></li>
             </ul>
             <div class="d-flex align-items-center">
+                <button id="themeToggle" class="btn btn-link text-light me-3 p-0 border-0" aria-label="Переключить тему">
+                    <i class="bi bi-moon-fill fs-5" id="themeIcon" aria-hidden="true"></i>
+                </button>
                 <a href="login.html" class="btn btn-outline-light me-2">Вход</a>
                 <a href="register.html" class="btn btn-primary">Регистрация</a>
-                <a href="profile.html" class="btn btn-secondary ms-2"><i class="bi bi-person-circle"></i></a>
+                <a href="profile.html" class="btn btn-secondary ms-2" aria-label="Профиль пользователя"><i class="bi bi-person-circle" aria-hidden="true"></i></a>
             </div>
         </div>
     </div>
@@ -32,7 +35,7 @@
 
 <div class="container mt-4">
     <div class="row">
-        <aside class="col-md-3 mb-4">
+        <aside class="col-md-3 mb-4" aria-label="Фильтры">
             <div class="card p-3 shadow-sm border-0">
                 <h5 class="fw-bold">Фильтры</h5>
                 <hr>
@@ -50,7 +53,7 @@
                     <label class="form-check-label" for="audio">Аудио</label>
                 </div>
                 
-                <h6 class="text-muted text-uppercase small fw-bold mt-4">Формат</h6>
+                <label for="formatSelect" class="text-muted text-uppercase small fw-bold mt-4 mb-2 d-block">Формат</label>
                 <select id="formatSelect" class="form-select border-0 bg-light">
                     <option value="all" selected>Все форматы</option>
                     <option value="csv">CSV / Parquet</option>
@@ -60,87 +63,14 @@
             </div>
         </aside>
 
-        <main class="col-md-9">
+        <main class="col-md-9" aria-label="Список датасетов">
             <div class="input-group mb-4 shadow-sm">
-                <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-                <input type="text" id="searchInput" class="form-control border-start-0 ps-0" placeholder="Поиск по датасетам...">
-                <button class="btn btn-primary">Найти</button>
+                <span class="input-group-text bg-white border-end-0" id="search-dataset-addon"><i class="bi bi-search" aria-hidden="true"></i></span>
+                <input type="text" id="searchInput" class="form-control border-start-0 ps-0" placeholder="Поиск по датасетам..." aria-label="Поиск по датасетам" aria-describedby="search-dataset-addon">
+                <button class="btn btn-primary" id="searchBtn">Найти</button>
             </div>
 
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-                
-                <div class="col model-col" data-task="nlp" data-format="json">
-                    <div class="card h-100 shadow-sm border-0 model-card">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="#" class="text-decoration-none">WikiText-103</a></h5>
-                            <p class="card-text text-muted small">Большая коллекция качественных статей из Википедии для обучения языковых моделей.</p>
-                            <div class="mb-3">
-                                <span class="badge bg-success">Датасет</span>
-                                <span class="badge bg-info-soft border text-primary">NLP</span>
-                                <span class="badge bg-light text-dark border">JSONL</span>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 5.2k • <i class="bi bi-download"></i> 8.1M</small>
-                                <span class="text-muted small">515 MB</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col model-col" data-task="cv" data-format="images">
-                    <div class="card h-100 shadow-sm border-0 model-card">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="#" class="text-decoration-none">COCO-2017</a></h5>
-                            <p class="card-text text-muted small">Масштабный датасет для обнаружения объектов, сегментации и описания изображений.</p>
-                            <div class="mb-3">
-                                <span class="badge bg-success">Датасет</span>
-                                <span class="badge bg-success bg-opacity-10 border text-success">Computer Vision</span>
-                                <span class="badge bg-light text-dark border">ZIP</span>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 14.8k • <i class="bi bi-download"></i> 2.5M</small>
-                                <span class="text-muted small">25 GB</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col model-col" data-task="audio" data-format="images">
-                    <div class="card h-100 shadow-sm border-0 model-card">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="#" class="text-decoration-none">Common Voice 15.0</a></h5>
-                            <p class="card-text text-muted small">Мультиязычный датасет голосовых записей от Mozilla для обучения систем распознавания речи.</p>
-                            <div class="mb-3">
-                                <span class="badge bg-success">Датасет</span>
-                                <span class="badge bg-danger bg-opacity-10 border text-danger">Audio</span>
-                                <span class="badge bg-light text-dark border">MP3/TAR</span>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 9.1k • <i class="bi bi-download"></i> 1.1M</small>
-                                <span class="text-muted small">110 GB</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col model-col" data-task="nlp" data-format="csv">
-                    <div class="card h-100 shadow-sm border-0 model-card">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="#" class="text-decoration-none">IMDB Movie Reviews</a></h5>
-                            <p class="card-text text-muted small">Датасет для бинарной классификации тональности текста на основе отзывов о фильмах.</p>
-                            <div class="mb-3">
-                                <span class="badge bg-success">Датасет</span>
-                                <span class="badge bg-info-soft border text-primary">NLP</span>
-                                <span class="badge bg-light text-dark border">CSV</span>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 3.4k • <i class="bi bi-download"></i> 900k</small>
-                                <span class="text-muted small">80 MB</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="row row-cols-1 row-cols-md-2 g-4" id="dataContainer" aria-live="polite">
             </div>
         </main>
     </div>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Hub</title>
+    <!-- Предотвращение мигания темы до загрузки Vue -->
+    <script>
+      (function () {
+        const t = localStorage.getItem('theme')
+        const dark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (t === 'dark' || (!t && dark)) {
+          document.documentElement.setAttribute('data-theme', 'dark')
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
