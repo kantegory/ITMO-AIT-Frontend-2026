@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InjectincoPlayground - Simulation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand text-warning" href="dashboard.html">
+        <svg class="icon me-1"><use href="assets/sprite.svg#robot"></use></svg>
+        InjectincoPlayground
+      </a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="dashboard.html">Дашборд</a></li>
+          <li class="nav-item"><a class="nav-link" href="agents.html">Агенты и Фильтры</a></li>
+        </ul>
+        <div class="text-light d-flex align-items-center">
+          <span id="username"></span>
+          <button onclick="toggleTheme()" class="btn btn-outline-warning ms-3" id="theme-btn" aria-label="Сменить тему">
+            <svg class="icon"><use href="assets/sprite.svg#moon-fill"></use></svg>
+          </button>
+          <button onclick="logout()" class="btn btn-danger ms-2">Выход</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mt-4">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card mb-3 border-info shadow-sm">
+            <div class="card-header bg-info text-dark">Blue Team</div>
+            <div class="card-body py-2" id="blue-list"></div>
+        </div>
+        <div class="card mb-3 border-danger shadow-sm">
+            <div class="card-header bg-danger text-white">Red Team</div>
+            <div class="card-body py-2" id="red-list"></div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card shadow-sm">
+          <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            <span>Live Simulation</span>
+            <span id="status-indicator" class="badge bg-secondary">Idle</span>
+          </div>
+          <div class="card-body shadow-inner" id="chat-box" style="height: 550px; overflow-y: auto; background-image: radial-gradient(#808080 1px, transparent 1px); background-size: 20px 20px;"></div>
+          <div class="card-footer">
+            <form onsubmit="startSimulation(event)" class="input-group">
+              <input type="text" id="chatInput" class="form-control" placeholder="Опишите ситуацию для агентов..." aria-label="Опишите ситуацию для агентов" required>
+              <button class="btn btn-primary" id="sendBtn" type="submit">Запустить</button>
+              <button class="btn btn-danger d-none" id="stopBtn" type="button" onclick="stopSimulation()">
+                <svg class="icon me-1"><use href="assets/sprite.svg#stop-fill"></use></svg>
+                Стоп
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/theme.js"></script>
+  <script src="js/main-chat.js"></script>
+</body>
+</html>

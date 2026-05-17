@@ -2,14 +2,154 @@
 <html lang="ru">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Фанфик | FanFicLib</title>
+
+    <title>Фанфик</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="dark.css">
-    <script src="js/api.js"></script>
+
+    <style>
+        body {
+            background: white;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #ffa676, #fd7f59);
+        }
+
+        .fic-header {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .fic-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .fic-author {
+            font-size: 18px;
+            font-weight: 500;
+            color: #f35c2e;
+            margin-bottom: 10px;
+        }
+
+        .fic-description {
+            font-size: 16px;
+            font-style: italic;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background: #ffd8c4;
+            color: #f4511e;
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .stats {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .stats i {
+            color: #ff7043;
+            margin-right: 3px;
+        }
+
+        .buttons {
+            margin-bottom: 15px;
+        }
+
+        .buttons .btn {
+            margin-right: 10px;
+        }
+
+        .chapter-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .fanfic-text {
+            line-height: 1.8;
+            font-size: 17px;
+            color: #2d3748;
+        }
+
+
+        #art-gallery {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        #art-gallery img {
+            flex: 0 0 auto;
+            height: 150px;
+            border-radius: 10px;
+        }
+
+        .comment {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #fic-text h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .btn-main {
+            background: #ff7043;
+            color: white;
+        }
+
+        .btn-like {
+            background: #ff5943;
+            color: white;
+        }
+
+        .btn-main:hover {
+            background: #fd7867;
+            color: white;
+        }
+
+
+        .btn-main:hover {
+            background: #f4511e;
+            color: white;
+        }
+
+        .footer {
+            background: #ff8a65;
+            color: white;
+            padding: 30px;
+            margin-top: 60px;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -17,10 +157,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.html">FanFicLib</a>
-            <button id="darkModeBtn" class="btn btn-outline-light ms-3">Тёмная тема</button>
-            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav" aria-label="Меню навигации">
-                <span class="navbar-toggler-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Меню</span>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="nav">
                 <ul class="navbar-nav me-auto">
@@ -28,89 +166,77 @@
                     <li class="nav-item"><a class="nav-link" href="search.html">Поиск</a></li>
                     <li class="nav-item"><a class="nav-link" href="write.html">Написать фанфик</a></li>
                 </ul>
-                <ul class="navbar-nav ms-auto" id="navRight">
-                    <li class="nav-item"><a class="nav-link" href="login.html">Вход</a></li>
-                    <li class="nav-item"><a class="nav-link" href="register.html">Регистрация</a></li>
-                </ul>
+                <a class="btn btn-light me-2" href="login.html">Вход</a>
+                <a class="btn btn-dark" href="register.html">Регистрация</a>
             </div>
         </div>
     </nav>
 
     <main class="container mt-4">
+
         <article>
-            <div class="fic-card">
-                <div class="d-flex align-items-center gap-2 flex-wrap">
-                    <h1 class="fw-bold mb-0" id="ficTitle">Загрузка...</h1>
-                    <span class="rating-tag" id="ficRating">-</span>
+
+            <header class="fic-header">
+                <h1 id="fic-title" class="fic-title">Тайна Хогвартса</h1>
+                <p id="fic-author" class="fic-author">Автор: Alex</p>
+                <p id="fic-description" class="fic-description">
+                    Этот фанфик рассказывает о таинственных событиях в Хогвартсе, когда Гарри и его друзья сталкиваются
+                    с неизвестной магией, угрожающей школе.
+                </p>
+
+                <div id="tags" class="mb-3">
+                    <span class="tag">магия</span>
+                    <span class="tag">приключения</span>
+                    <span class="tag">драма</span>
                 </div>
 
-                <div class="mt-2 d-flex gap-3 text-secondary">
-                    <span class="d-flex align-items-center gap-1">
-                        <a href="#" id="ficAuthorLink" class="text-decoration-none author-info">Загрузка...</a>
-                    </span>
-                    <span class="d-flex align-items-center gap-1">
-                        <span class="date-info"></span> <span id="ficDate">-</span>
-                    </span>
+                <div class="stats">
+                    <span><i class="bi bi-eye"></i> <span id="views-count">12000</span> просмотров</span>
+                    <span class="ms-3"><i class="bi bi-heart"></i> <span id="likes-count">450</span> лайков</span>
+                    <span class="ms-3"><i class="bi bi-chat"></i> <span id="comments-count">2</span> комментария</span>
                 </div>
 
-                <div class="mt-2">
-                    <span class="fandom-tag" id="ficFandom">-</span>
+                <div class="buttons">
+                    <button id="like-btn" class="btn btn-like"><i class="bi bi-heart"></i> Лайк</button>
+                    <button id="fav-btn" class="btn btn-main"><i class="bi bi-bookmark"></i> В избранное</button>
                 </div>
+            </header>
 
-                <p class="mt-3 mb-3 fic-description" id="ficDescription">Загрузка...</p>
-
-                <div class="d-flex flex-wrap gap-2 mb-3" id="ficTags"></div>
-
-                <div class="d-flex gap-4 text-secondary">
-                    <span class="d-flex align-items-center gap-1">
-                        <span class="meta-eye" id="views-count">0</span> просмотров
-                    </span>
-                    <span class="d-flex align-items-center gap-1">
-                        <span class="meta-heart" id="likes-count">0</span> лайков
-                    </span>
-                    <span class="d-flex align-items-center gap-1">
-                        <span class="meta-chat" id="comments-count">0</span> комментариев
-                    </span>
+            <section>
+                <div id="fic-text" class="fanfic-text">
+                    <h2>Глава 1: Таинственный звук</h2>
+                    <p>Гарри шел по коридору, когда внезапно услышал странный звук...</p>
+                    <p>Он осторожно заглянул за угол и увидел магический свет, который мерцал в темноте.</p>
                 </div>
+            </section>
 
-                <div class="mt-4">
-                    <button id="like-btn" class="btn btn-like">
-                        <span class="meta-heart">Нравится</span>
-                    </button>
+            <section class="mt-4">
+                <h3>Арты</h3>
+                <div id="art-gallery">
+                    <img src="pics/art1.jpg" alt="арт 1">
+                    <img src="pics/art2.jpg" alt="арт 2">
+                    <img src="pics/art3.jpg" alt="арт 3">
+                    <img src="pics/art4.jpg" alt="арт 4">
                 </div>
-            </div>
-
-            <div class="chapter-nav p-3 rounded-3 mb-3 d-flex justify-content-between align-items-center">
-                <button id="prevChapterBtn" class="btn btn-outline-secondary" disabled>
-                    <span class="icon-chevron-left"></span>Предыдущая
-                </button>
-                <span id="chapterInfo" class="text-muted">Глава 1 / 1</span>
-                <button id="nextChapterBtn" class="btn btn-outline-secondary" disabled>
-                    Следующая <span class="icon-chevron-right"></span>
-                </button>
-            </div>
-
-            <div class="fic-content-wrapper p-4 rounded-3">
-                <div class="fanfic-text" style="line-height: 1.8;" id="ficContent">Загрузка...</div>
+            </section>
 
             <section class="mt-4" id="comments-section">
                 <h3>Комментарии</h3>
+
                 <div id="comments-container">
-                    <p class="text-muted text-center">Загрузка комментариев...</p>
+                    <div class="comment"><strong>User1</strong>: Крутая история!</div>
+                    <div class="comment"><strong>User2</strong>: Жду продолжения!</div>
                 </div>
-                <div class="mt-3" id="commentForm">
-                    <div class="comment-input-group">
-                        <input type="text" id="comment-input" class="form-control"
-                            placeholder="Написать комментарий...">
-                        <button id="comment-btn" class="btn btn-main">Отправить</button>
-                    </div>
-                </div>
-                <div id="commentAuthMessage" class="alert alert-warning mt-2" style="display: none;">
-                    Чтобы оставить комментарий, <a href="login.html">войдите</a> или <a
-                        href="register.html">зарегистрируйтесь</a>
+
+                <div class="mt-3">
+                    <input type="text" id="comment-input" class="form-control mb-2"
+                        placeholder="Написать комментарий...">
+                    <button id="comment-btn" class="btn btn-main">Отправить</button>
                 </div>
             </section>
+
         </article>
+
     </main>
 
     <footer class="footer text-center">
@@ -119,412 +245,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const API_URL = 'http://localhost:3000/api';
 
-        // Получаем ID фанфика из URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const ficId = urlParams.get('id');
-
-        console.log('ID фанфика:', ficId);
-
-        if (!ficId) {
-            window.location.href = 'index.html';
-        }
-
-        let ficData = null;
-        let commentsData = [];
-        let currentChapter = 0;
-        let chapters = [];
-        let userLiked = false;
-
-        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-        const userData = localStorage.getItem('user') || sessionStorage.getItem('user');
-        let currentUser = userData ? JSON.parse(userData) : null;
-
-        // Обновление навигации
-        function updateNav() {
-            const navRight = document.getElementById('navRight');
-
-            if (token && currentUser) {
-                navRight.innerHTML = `
-                    <li class="nav-item">
-                        <a class="nav-link" href="profile.html">Профиль</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id="navLogoutBtn">Выйти</a>
-                    </li>
-                `;
-
-                document.getElementById('navLogoutBtn')?.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('user');
-                    sessionStorage.removeItem('token');
-                    sessionStorage.removeItem('user');
-                    window.location.href = 'index.html';
-                });
-            } else {
-                navRight.innerHTML = `
-                    <li class="nav-item">
-                        <a class="nav-link" href="login.html">Вход</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="register.html">Регистрация</a>
-                    </li>
-                `;
-            }
-        }
-
-        // Разбивка на главы
-        function splitIntoChapters(content) {
-            const chapterRegex = /<h2[^>]*>(.*?)<\/h2>/gi;
-            const chapters = [];
-            let match;
-            let chapterTitles = [];
-
-            while ((match = chapterRegex.exec(content)) !== null) {
-                chapterTitles.push(match[1]);
-            }
-
-            if (chapterTitles.length === 0) {
-                return [{
-                    title: 'Полная версия',
-                    content: content
-                }];
-            }
-
-            let currentPos = 0;
-            for (let i = 0; i < chapterTitles.length; i++) {
-                const titlePattern = new RegExp(`<h2[^>]*>${escapeRegex(chapterTitles[i])}<\\/h2>`, 'i');
-                const matchObj = titlePattern.exec(content.substring(currentPos));
-
-                if (matchObj) {
-                    const startPos = currentPos + matchObj.index;
-                    const endPos = i < chapterTitles.length - 1
-                        ? currentPos + content.substring(currentPos).search(new RegExp(`<h2[^>]*>${escapeRegex(chapterTitles[i + 1])}<\\/h2>`, 'i'))
-                        : content.length;
-
-                    chapters.push({
-                        title: chapterTitles[i],
-                        content: content.substring(startPos, endPos)
-                    });
-                    currentPos = endPos;
-                }
-            }
-
-            return chapters;
-        }
-
-        function escapeRegex(string) {
-            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        }
-
-        function displayChapter() {
-            if (!chapters.length) return;
-            const chapter = chapters[currentChapter];
-            document.getElementById('ficContent').innerHTML = chapter.content;
-            document.getElementById('chapterInfo').textContent = `Глава ${currentChapter + 1} / ${chapters.length}`;
-            document.getElementById('prevChapterBtn').disabled = currentChapter === 0;
-            document.getElementById('nextChapterBtn').disabled = currentChapter === chapters.length - 1;
-        }
-
-        // Проверка, лайкнул ли пользователь
-        async function checkUserLiked() {
-            if (!token) return;
-            try {
-                const response = await fetch(`${API_URL}/user/likes`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                if (response.ok) {
-                    const likedFics = await response.json();
-                    userLiked = likedFics.some(f => f.id === ficData.id);
-                    updateLikeButton();
-                }
-            } catch (error) {
-                console.error('Ошибка проверки лайка:', error);
-            }
-        }
-
-        function updateLikeButton() {
-            const likeBtn = document.getElementById('like-btn');
-            if (userLiked) {
-                likeBtn.classList.add('liked');
-                likeBtn.innerHTML = '<span class="meta-heart">Нравится</span>';
-            } else {
-                likeBtn.classList.remove('liked');
-                likeBtn.innerHTML = '<span class="icon-heart-empty">Нравится</span>';
-            }
-        }
-
-        // Загрузка фанфика
-        async function loadFic() {
-            console.log('Загрузка фанфика с ID:', ficId);
-            try {
-                const response = await fetch(`${API_URL}/fics/${ficId}`);
-                console.log('Статус ответа:', response.status);
-
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('Данные получены');
-
-                    ficData = data.fic;
-                    commentsData = data.comments || [];
-
-                    document.getElementById('ficTitle').textContent = ficData.title;
-                    document.getElementById('ficRating').textContent = ficData.rating;
-
-                    const authorLink = document.getElementById('ficAuthorLink');
-                    authorLink.textContent = ficData.authorName;
-                    authorLink.href = `profile.html?username=${encodeURIComponent(ficData.authorName)}`;
-
-                    document.getElementById('ficDate').textContent = formatDate(ficData.createdAt);
-                    document.getElementById('ficFandom').textContent = ficData.fandom;
-                    document.getElementById('ficDescription').textContent = ficData.description;
-                    document.getElementById('views-count').textContent = ficData.views;
-                    document.getElementById('likes-count').textContent = ficData.likes;
-
-                    const tagsContainer = document.getElementById('ficTags');
-                    tagsContainer.innerHTML = '';
-                    if (ficData.tags) {
-                        ficData.tags.forEach(tag => {
-                            tagsContainer.innerHTML += `<span class="tag">${escapeHtml(tag)}</span>`;
-                        });
-                    }
-
-                    if (ficData.content) {
-                        chapters = splitIntoChapters(ficData.content);
-                        displayChapter();
-                    } else {
-                        document.getElementById('ficContent').innerHTML = '<p>Текст фанфика отсутствует</p>';
-                    }
-
-                    await checkUserLiked();
-
-                    if (token && ficData.status !== 'draft') {
-                        try {
-                            await fetch(`${API_URL}/history`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': `Bearer ${token}`
-                                },
-                                body: JSON.stringify({ ficId: ficData.id })
-                            });
-                        } catch (err) {
-                            console.error('Ошибка записи истории:', err);
-                        }
-                    }
-
-                    loadComments();
-                } else {
-                    document.getElementById('ficContent').innerHTML = '<p class="text-danger">Фанфик не найден</p>';
-                }
-            } catch (error) {
-                console.error('Ошибка:', error);
-                document.getElementById('ficContent').innerHTML = '<p class="text-danger">Ошибка загрузки фанфика</p>';
-            }
-        }
-
-        async function loadComments() {
-            const container = document.getElementById('comments-container');
-            if (!commentsData || commentsData.length === 0) {
-                container.innerHTML = '<p class="text-muted text-center">Пока нет комментариев. Будьте первым!</p>';
-                return;
-            }
-
-            container.innerHTML = '';
-
-            for (const comment of commentsData) {
-                let avatarUrl = 'pics/ava.jpg';
-
-                try {
-                    const response = await fetch(`${API_URL}/profile/${comment.username}`);
-                    if (response.ok) {
-                        const userData = await response.json();
-                        if (userData.user.avatar && userData.user.avatar !== 'default-avatar.png') {
-                            avatarUrl = `pics/${userData.user.avatar}`;
-                        }
-                    }
-                } catch (error) {
-                    console.error('Ошибка загрузки аватара для', comment.username, error);
-                }
-
-                const commentHtml = `
-            <div class="comment mb-2">
-                <div class="card-body py-2">
-                    <div class="d-flex align-items-center gap-2 mb-1">
-                       <img src="${avatarUrl}" 
-                            class="rounded-circle" 
-                            style="width: 32px; height: 32px; object-fit: cover;"
-                            alt="Аватар пользователя ${escapeHtml(comment.username)}"
-                            onerror="this.src='pics/ava.jpg'">
-                        <a href="profile.html?username=${encodeURIComponent(comment.username)}" class="fw-bold text-decoration-none" style="color: #ff7043;">${escapeHtml(comment.username)}</a>
-                        <small class="text-secondary ms-auto">${formatDateTime(comment.createdAt)}</small>
-                    </div>
-                    <div class="ms-4">${escapeHtml(comment.content)}</div>
-                </div>
-            </div>
-        `;
-                container.innerHTML += commentHtml;
-            }
-
-            document.getElementById('comments-count').textContent = commentsData.length;
-        }
-
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('ru-RU');
-        }
-
-        function formatDateTime(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleString('ru-RU');
-        }
-
-        function escapeHtml(str) {
-            if (!str) return '';
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
-
-        // Обработчик лайка
-        let isLiking = false;
-        document.getElementById('like-btn')?.addEventListener('click', async () => {
-            if (!token) {
-                alert('Войдите в аккаунт, чтобы ставить лайки');
-                return;
-            }
-
-            if (isLiking) return;
-            isLiking = true;
-
-            const likeBtn = document.getElementById('like-btn');
-
-            try {
-                const response = await fetch(`${API_URL}/fics/${ficId}/like`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    document.getElementById('likes-count').textContent = data.likes;
-                    userLiked = data.liked;
-                    updateLikeButton();
-                } else {
-                    alert('Ошибка при лайке');
-                }
-            } catch (error) {
-                console.error('Ошибка:', error);
-                alert('Ошибка подключения к серверу');
-            } finally {
-                isLiking = false;
-            }
-        });
-
-        // Обработчик комментария
-        document.getElementById('comment-btn')?.addEventListener('click', async () => {
-            const text = document.getElementById('comment-input').value.trim();
-            if (!text) return;
-
-            if (!token) {
-                alert('Войдите в аккаунт, чтобы оставить комментарий');
-                return;
-            }
-
-            const commentBtn = document.getElementById('comment-btn');
-            const originalText = commentBtn.textContent;
-            commentBtn.textContent = 'Отправка...';
-            commentBtn.disabled = true;
-
-            try {
-                console.log('Отправка комментария к фанфику:', ficId);
-                console.log('Текст:', text);
-
-                const response = await fetch(`${API_URL}/fics/${ficId}/comments`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ content: text })
-                });
-
-                console.log('Статус ответа:', response.status);
-                const data = await response.json();
-                console.log('Ответ:', data);
-
-                if (response.ok) {
-                    commentsData.push(data);
-                    loadComments();
-                    document.getElementById('comment-input').value = '';
-                } else {
-                    alert(data.error || 'Ошибка при отправке комментария');
-                }
-            } catch (error) {
-                console.error('Ошибка:', error);
-                alert('Ошибка подключения к серверу: ' + error.message);
-            } finally {
-                commentBtn.textContent = originalText;
-                commentBtn.disabled = false;
-            }
-        });
-
-        // Навигация по главам
-        document.getElementById('prevChapterBtn')?.addEventListener('click', () => {
-            if (currentChapter > 0) {
-                currentChapter--;
-                displayChapter();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        });
-
-        document.getElementById('nextChapterBtn')?.addEventListener('click', () => {
-            if (currentChapter < chapters.length - 1) {
-                currentChapter++;
-                displayChapter();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        });
-
-        // Проверка авторизации для комментариев
-        if (!token) {
-            document.getElementById('commentForm').style.display = 'none';
-            document.getElementById('commentAuthMessage').style.display = 'block';
-        }
-
-         // Переключение тёмной темы
-        const darkModeBtn = document.getElementById('darkModeBtn');
-
-        if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            darkModeBtn.textContent = 'Светлая тема';
-        }
-
-        darkModeBtn.addEventListener('click', () => {
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-
-            if (isDark) {
-                document.documentElement.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-                darkModeBtn.textContent = 'Тёмная тема';
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-                darkModeBtn.textContent = 'Светлая тема';
-            }
-        });
-
-
-        // Запуск
-        updateNav();
-        loadFic();
-    </script>
 </body>
 
 </html>

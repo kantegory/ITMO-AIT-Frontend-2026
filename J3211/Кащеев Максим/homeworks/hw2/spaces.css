@@ -1,0 +1,173 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  color: #0f172a;
+  background: radial-gradient(
+    circle at top right,
+    #fef6ff 0,
+    #e9f2ff 40%,
+    #c9e4ff 100%
+  );
+  overflow-x: hidden;
+}
+
+.glass-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.06)
+  );
+  border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
+}
+.glass-navbar .nav-link {
+  color: rgba(15, 23, 42, 0.8);
+}
+.glass-navbar .nav-link.active {
+  color: #111827;
+  font-weight: 600;
+}
+
+.btn-outline-glass {
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: rgba(255, 255, 255, 0.4);
+  color: #111827;
+}
+.btn-primary-glass {
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(120deg, #5eaace, #a86bff);
+  color: #f9fafb;
+  box-shadow: 0 12px 26px rgba(56, 189, 248, 0.35);
+}
+
+.page-shell {
+  padding: 32px 16px 40px;
+}
+.page-title {
+  font-size: clamp(1.6rem, 2.5vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 6px;
+}
+.page-subtitle {
+  max-width: 640px;
+  font-size: 0.96rem;
+  color: #4b5563;
+  margin-bottom: 22px;
+}
+
+.spaces-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.space-card {
+  position: relative;
+  border-radius: 1.3rem;
+  padding: 16px 18px 14px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(209, 213, 219, 0.9);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.space-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 38px rgba(15, 23, 42, 0.2);
+}
+
+.space-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(129, 140, 248, 0.08);
+  color: #312e81;
+  border: 1px solid rgba(129, 140, 248, 0.4);
+  cursor: pointer;
+}
+
+.space-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.space-meta {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.space-desc {
+  font-size: 0.86rem;
+  color: #4b5563;
+  margin-top: 2px;
+  margin-bottom: 8px;
+}
+
+.space-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.space-stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.space-stats span i {
+  margin-right: 3px;
+}
+
+.space-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.like-btn {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+.like-btn:hover {
+  background: rgba(248, 113, 113, 0.12);
+}
+
+@media (max-width: 575.98px) {
+  .page-shell {
+    padding-top: 24px;
+  }
+}

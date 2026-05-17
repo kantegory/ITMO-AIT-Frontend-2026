@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tripatropa - Поиск направлений</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="search.html">
+          <i class="bi bi-compass text-primary me-2"></i>
+          Tripatropa
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+          aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarMain">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="search.html">
+                Поиск
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="profile.html">Профиль</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="collaboration.html">Совместное планирование</a>
+            </li>
+          </ul>
+          <div class="d-flex">
+            <a href="login.html" class="btn btn-outline-primary btn-sm">
+              Войти
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero-section bg-light border-bottom">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-7">
+              <h1 class="hero-title mb-2">
+                Найдите следующий маршрут для путешествия
+              </h1>
+              <p class="text-muted mb-0">
+                Tripatropa помогает быстро собрать удобный маршрут с учётом
+                бюджета, формата отдыха и длительности поездки.
+              </p>
+            </div>
+            <div class="col-lg-5 mt-3 mt-lg-0 text-lg-end text-muted-sm">
+              <span class="badge rounded-pill bg-primary-subtle text-primary me-2 hero-badge">
+                <i class="bi bi-globe2 me-1"></i> 120+ направлений
+              </span>
+              <span class="badge rounded-pill bg-success-subtle text-success hero-badge">
+                <i class="bi bi-people me-1"></i> Совместное планирование
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="py-4">
+        <div class="container">
+          <div class="card tripatropa-card mb-4 mt-2">
+            <div class="card-body">
+              <form class="row gy-3 gx-3 align-items-end" data-search-form>
+                <div class="col-md-4">
+                  <label for="destinationInput" class="form-label">Направление</label>
+                  <input type="text" class="form-control" id="destinationInput"
+                    placeholder="Стамбул, Иран, Дзержинск" />
+                </div>
+                <div class="col-md-2">
+                  <label for="typeSelect" class="form-label">Тип</label>
+                  <select class="form-select" id="typeSelect">
+                    <option value="any" selected>Любой</option>
+                    <option value="city">Город</option>
+                    <option value="nature">Природа</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label for="budgetRange" class="form-label d-flex justify-content-between">
+                    <span>Бюджет до</span>
+                    <span class="text-muted-sm" id="budgetValue"></span>
+                  </label>
+                  <input type="range" class="form-range" min="10000" max="200000" step="10000" value="200000"
+                    id="budgetRange" />
+                </div>
+                <div class="col-md-2">
+                  <label for="durationSelect" class="form-label">Длительность</label>
+                  <select class="form-select" id="durationSelect">
+                    <option value="any" selected>Любая</option>
+                    <option value="1-3">1–3 дня</option>
+                    <option value="4-7">4–7 дней</option>
+                    <option value="8-14">8–14 дней</option>
+                    <option value="15+">15+ дней</option>
+                  </select>
+                </div>
+                <div class="col-md-1 d-grid">
+                  <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-search"></i>
+                  </button>
+                </div>
+                <div class="col-12 d-flex justify-content-between align-items-center mt-2">
+                  <div class="text-muted-sm">
+                    Найдено <span id="routesCount">6 маршрутов</span>.
+                  </div>
+                  <div>
+                    <label for="sortSelect" class="form-label me-2 mb-0 text-muted-sm">
+                      Сортировка
+                    </label>
+                    <select id="sortSelect" class="form-select form-select-sm d-inline-block" style="width: auto">
+                      <option value="popular" selected>Популярность</option>
+                      <option value="price">Цена</option>
+                      <option value="duration">Длительность</option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="row g-4" data-routes-grid>
+            <div class="col-md-6 col-lg-4" data-route-card data-title="уикенд в париже" data-type="city"
+              data-budget="80000" data-duration-group="1-3" data-duration-days="3">
+              <div class="card tripatropa-card h-100">
+                <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=900&q=80"
+                  class="card-img-top" alt="Париж" />
+                <div class="card-body">
+                  <h5 class="card-title mb-1">Уикенд в Париже</h5>
+                  <p class="card-text text-muted-sm mb-2">
+                    Классический городской маршрут с основными достопримечательностями
+                    и прогулками по набережным Сены.
+                  </p>
+                  <div class="mb-3 d-flex flex-wrap gap-2">
+                    <span class="badge bg-primary-subtle text-primary">
+                      <i class="bi bi-buildings me-1"></i> Город
+                    </span>
+                    <span class="badge bg-success-subtle text-success">
+                      3 дня
+                    </span>
+                    <span class="badge bg-secondary-subtle text-secondary">
+                      80 000 ₽
+                    </span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <a href="destination.html" class="btn btn-outline-primary btn-sm">
+                      Открыть
+                    </a>
+                    <button type="button" class="btn btn-outline-secondary btn-sm btn-save-route" data-saved="false">
+                      Сохранить
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-route-card data-title="дубай" data-type="city" data-budget="120000"
+              data-duration-group="4-7" data-duration-days="5">
+              <div class="card tripatropa-card h-100">
+                <img src="https://i.pinimg.com/736x/da/5f/b6/da5fb6ec0a21b430d6563f815cb02a66.jpg" class="card-img-top"
+                  alt="Набережная и небоскрёбы Дубая" />
+                <div class="card-body">
+                  <h5 class="card-title mb-1">Дубай: небоскрёбы и пустыня</h5>
+                  <p class="card-text text-muted-sm mb-2">
+                    Современный город с небоскрёбами, набережной и выездом в
+                    пустыню на сафари.
+                  </p>
+                  <div class="mb-3 d-flex flex-wrap gap-2">
+                    <span class="badge bg-primary-subtle text-primary">
+                      <i class="bi bi-buildings me-1"></i> Город
+                    </span>
+                    <span class="badge bg-success-subtle text-success">
+                      5 дней
+                    </span>
+                    <span class="badge bg-secondary-subtle text-secondary">
+                      120 000 ₽
+                    </span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <a href="destination.html" class="btn btn-outline-primary btn-sm">
+                      Открыть
+                    </a>
+                    <button type="button" class="btn btn-outline-secondary btn-sm btn-save-route" data-saved="false">
+                      Сохранить
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-route-card data-title="эр-рияд саудовская аравия" data-type="city"
+              data-budget="90000" data-duration-group="4-7" data-duration-days="4">
+              <div class="card tripatropa-card h-100">
+                <img src="https://i.pinimg.com/originals/eb/6b/ec/eb6bec88560169afcab224a19244f402.jpg"
+                  class="card-img-top" alt="Верблюды в пустыне рядом с Эр-Риядом" />
+                <div class="card-body">
+                  <h5 class="card-title mb-1">
+                    Эр‑Рияд: современный Ближний Восток
+                  </h5>
+                  <p class="card-text text-muted-sm mb-2">
+                    Четырёхдневный маршрут по деловым кварталам, музеям и
+                    смотровым площадкам столицы Саудовской Аравии.
+                  </p>
+                  <div class="mb-3 d-flex flex-wrap gap-2">
+                    <span class="badge bg-primary-subtle text-primary">
+                      <i class="bi bi-buildings me-1"></i> Город
+                    </span>
+                    <span class="badge bg-success-subtle text-success">
+                      4 дня
+                    </span>
+                    <span class="badge bg-secondary-subtle text-secondary">
+                      90 000 ₽
+                    </span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <a href="destination.html" class="btn btn-outline-primary btn-sm">
+                      Открыть
+                    </a>
+                    <button type="button" class="btn btn-outline-secondary btn-sm btn-save-route" data-saved="false">
+                      Сохранить
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-route-card data-title="манама бахрейн" data-type="city"
+              data-budget="70000" data-duration-group="1-3" data-duration-days="3">
+              <div class="card tripatropa-card h-100">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/BBD_birds_eye_view.jpg/960px-BBD_birds_eye_view.jpg"
+                  class="card-img-top" alt="Скайлайн Манамы на закате" />
+                <div class="card-body">
+                  <h5 class="card-title mb-1">Манама: набережная и суки</h5>
+                  <p class="card-text text-muted-sm mb-2">
+                    Короткий городской уикенд: прогулки по набережной,
+                    традиционные рынки и местная кухня.
+                  </p>
+                  <div class="mb-3 d-flex flex-wrap gap-2">
+                    <span class="badge bg-primary-subtle text-primary">
+                      <i class="bi bi-buildings me-1"></i> Город
+                    </span>
+                    <span class="badge bg-success-subtle text-success">
+                      3 дня
+                    </span>
+                    <span class="badge bg-secondary-subtle text-secondary">
+                      70 000 ₽
+                    </span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <a href="destination.html" class="btn btn-outline-primary btn-sm">
+                      Открыть
+                    </a>
+                    <button type="button" class="btn btn-outline-secondary btn-sm btn-save-route" data-saved="false">
+                      Сохранить
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-route-card data-title="эль-кувейт кувейт" data-type="city"
+              data-budget="85000" data-duration-group="4-7" data-duration-days="4">
+              <div class="card tripatropa-card h-100">
+                <img src="https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?auto=format&fit=crop&w=900&q=80"
+                  class="card-img-top" alt="Эль-Кувейт" />
+                <div class="card-body">
+                  <h5 class="card-title mb-1">
+                    Эль‑Кувейт: башни, набережная и музеи
+                  </h5>
+                  <p class="card-text text-muted-sm mb-2">
+                    4‑дневный маршрут по архитектурным символам города и
+                    побережью Персидского залива.
+                  </p>
+                  <div class="mb-3 d-flex flex-wrap gap-2">
+                    <span class="badge bg-primary-subtle text-primary">
+                      <i class="bi bi-buildings me-1"></i> Город
+                    </span>
+                    <span class="badge bg-success-subtle text-success">
+                      4 дня
+                    </span>
+                    <span class="badge bg-secondary-subtle text-secondary">
+                      85 000 ₽
+                    </span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <a href="destination.html" class="btn btn-outline-primary btn-sm">
+                      Открыть
+                    </a>
+                    <button type="button" class="btn btn-outline-secondary btn-sm btn-save-route" data-saved="false">
+                      Сохранить
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-route-card data-title="доха катар" data-type="city" data-budget="110000"
+              data-duration-group="4-7" data-duration-days="5">
+              <div class="card tripatropa-card h-100">
+                <img
+                  src="https://resize.tripster.ru/EKUYYwAXTIjcjAeUhzBdlNEOqeQ=/fit-in/1220x600/filters:no_upscale()/https://cdn.tripster.ru/photos/36f52e0e-1667-4e82-ba41-0529ce9b7b6a.jpg"
+                  class="card-img-top" alt="Доха" />
+                <div class="card-body">
+                  <h5 class="card-title mb-1">Доха: музей, корниш и сук</h5>
+                  <p class="card-text text-muted-sm mb-2">
+                    5‑дневный маршрут по музею исламского искусства, набережной
+                    Корниш и рынкам Сук Ваккиф.
+                  </p>
+                  <div class="mb-3 d-flex flex-wrap gap-2">
+                    <span class="badge bg-primary-subtle text-primary">
+                      <i class="bi bi-buildings me-1"></i> Город
+                    </span>
+                    <span class="badge bg-success-subtle text-success">
+                      5 дней
+                    </span>
+                    <span class="badge bg-secondary-subtle text-secondary">
+                      110 000 ₽
+                    </span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <a href="destination.html" class="btn btn-outline-primary btn-sm">
+                      Открыть
+                    </a>
+                    <button type="button" class="btn btn-outline-secondary btn-sm btn-save-route" data-saved="false">
+                      Сохранить
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="bg-white border-top py-3 mt-4">
+      <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <div class="text-muted-sm mb-2 mb-md-0">
+          2026 Tripatropa
+        </div>
+      </div>
+    </footer>
+  </div>
+  <div class="position-fixed bottom-0 end-0 p-3 toast-container-custom">
+    <div id="mainToast" class="toast align-items-center text-bg-primary border-0" role="status" aria-live="polite"
+      aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          Действие выполнено
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+          aria-label="Закрыть"></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>

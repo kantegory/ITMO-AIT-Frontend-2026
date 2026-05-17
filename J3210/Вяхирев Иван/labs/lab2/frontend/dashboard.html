@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InjectincoPlayground - Личный кабинет</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand text-warning" href="dashboard.html">
+        <svg class="icon me-1"><use href="assets/sprite.svg#robot"></use></svg>
+        InjectincoPlayground
+      </a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link active" href="dashboard.html">Дашборд</a></li>
+          <li class="nav-item"><a class="nav-link" href="agents.html">Агенты и Фильтры</a></li>
+          <li class="nav-item"><a class="nav-link" href="main-chat.html">Симуляция</a></li>
+        </ul>
+        <div class="text-light d-flex align-items-center">
+          <span id="username"></span>
+          <button onclick="toggleTheme()" class="btn btn-outline-warning ms-3" id="theme-btn" aria-label="Сменить тему">
+            <svg class="icon"><use href="assets/sprite.svg#moon-fill"></use></svg>
+          </button>
+          <button onclick="logout()" class="btn btn-danger ms-2">Выход</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mt-4">
+    <div class="row mb-4">
+      <div class="col-6">
+        <h2>Управление симуляциями</h2>
+      </div>
+      <div class="col-6 text-end">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal">
+          <svg class="icon me-1"><use href="assets/sprite.svg#plus-circle-fill"></use></svg>
+          Создать новую симуляцию
+        </button>
+      </div>
+    </div>
+    <div class="row" id="simulations-container"></div>
+  </main>
+
+  <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createModalLabel">Создать симуляцию</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <form onsubmit="createSimulation(event)">
+            <div class="mb-3">
+              <label class="form-label" for="simName">Название</label>
+              <input type="text" id="simName" name="name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="simStatus">Статус</label>
+              <select id="simStatus" name="status" class="form-select">
+                <option value="Активно">Активно</option>
+                <option value="Пауза">Приостановлено</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="simDescription">Описание</label>
+              <input type="text" id="simDescription" name="description" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="simBlueTeam">Blue Team</label>
+              <input type="text" id="simBlueTeam" name="blue_team_name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="simRedTeam">Red Team</label>
+              <input type="text" id="simRedTeam" name="red_team_name" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Создать</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
