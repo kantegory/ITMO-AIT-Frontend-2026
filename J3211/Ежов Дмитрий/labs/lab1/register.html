@@ -168,12 +168,13 @@
     </head>
 
     <body class="bg-grid">
-        <div class="bg-glow-1"></div>
-        <div class="bg-glow-2"></div>
+        <a href="#main" class="skip-link">Перейти к основному содержимому</a>
+        <div class="bg-glow-1" aria-hidden="true"></div>
+        <div class="bg-glow-2" aria-hidden="true"></div>
 
-        <div class="auth-wrap">
+        <main id="main" class="auth-wrap">
             <div class="auth-box card-glass">
-                <a href="index.html" class="auth-logo">
+                <a href="index.html" class="auth-logo" aria-label="ТаскерAI — на главную">
                     <div class="auth-logo-icon">
                         <svg
                             width="18"
@@ -183,8 +184,7 @@
                             stroke="white"
                             stroke-width="2.5"
                             stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
+                            stroke-linejoin="round" aria-hidden="true" focusable="false">
                             <polygon
                                 points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
                             />
@@ -198,7 +198,7 @@
                     Уже есть аккаунт? <a href="index.html">Войти</a>
                 </p>
 
-                <form id="regForm" novalidate>
+                <form id="regForm" novalidate aria-label="Форма регистрации">
                     <div class="form-group">
                         <label class="form-label" for="name">Имя</label>
                         <div class="input-wrapper">
@@ -209,19 +209,23 @@
                                 stroke="currentColor"
                                 stroke-width="2"
                                 stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
+                                stroke-linejoin="round" aria-hidden="true" focusable="false">
                                 <circle cx="12" cy="8" r="4" />
                                 <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
                             </svg>
                             <input
                                 type="text"
                                 id="name"
+                                name="name"
                                 class="form-input"
                                 placeholder="Ваше имя"
+                                autocomplete="name"
+                                required
+                                aria-required="true"
+                                aria-describedby="nameErr"
                             />
                         </div>
-                        <span class="form-error">Введите имя</span>
+                        <span class="form-error" id="nameErr">Введите имя</span>
                     </div>
 
                     <div class="form-group">
@@ -234,8 +238,7 @@
                                 stroke="currentColor"
                                 stroke-width="2"
                                 stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
+                                stroke-linejoin="round" aria-hidden="true" focusable="false">
                                 <rect
                                     width="20"
                                     height="16"
@@ -250,11 +253,16 @@
                             <input
                                 type="email"
                                 id="email"
+                                name="email"
                                 class="form-input"
                                 placeholder="you@example.com"
+                                autocomplete="email"
+                                required
+                                aria-required="true"
+                                aria-describedby="emailErr"
                             />
                         </div>
-                        <span class="form-error">Введите корректный email</span>
+                        <span class="form-error" id="emailErr">Введите корректный email</span>
                     </div>
 
                     <div class="form-group">
@@ -267,8 +275,7 @@
                                 stroke="currentColor"
                                 stroke-width="2"
                                 stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
+                                stroke-linejoin="round" aria-hidden="true" focusable="false">
                                 <rect
                                     width="18"
                                     height="11"
@@ -281,13 +288,21 @@
                             <input
                                 type="password"
                                 id="password"
+                                name="password"
                                 class="form-input with-right"
                                 placeholder="Минимум 8 символов"
+                                autocomplete="new-password"
+                                required
+                                minlength="8"
+                                aria-required="true"
+                                aria-describedby="pwdErr"
                             />
                             <button
                                 type="button"
                                 class="icon-right"
                                 id="togglePwd"
+                                aria-label="Показать или скрыть пароль"
+                                aria-pressed="false"
                             >
                                 <svg
                                     id="eyeOff"
@@ -299,8 +314,7 @@
                                     stroke-width="2"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
-                                    style="display: none"
-                                >
+                                    style="display: none" aria-hidden="true" focusable="false">
                                     <path
                                         d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"
                                     />
@@ -311,7 +325,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <span class="form-error"
+                        <span class="form-error" id="pwdErr"
                             >Пароль минимум 8 символов</span
                         >
                     </div>
@@ -328,8 +342,7 @@
                                 stroke="currentColor"
                                 stroke-width="2"
                                 stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
+                                stroke-linejoin="round" aria-hidden="true" focusable="false">
                                 <path
                                     d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
                                 />
@@ -337,16 +350,21 @@
                             <input
                                 type="password"
                                 id="confirm"
+                                name="confirm"
                                 class="form-input"
                                 placeholder="Повторите пароль"
+                                autocomplete="new-password"
+                                required
+                                aria-required="true"
+                                aria-describedby="confirmErr"
                             />
                         </div>
-                        <span class="form-error">Пароли не совпадают</span>
+                        <span class="form-error" id="confirmErr">Пароли не совпадают</span>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label" for="role">Роль</label>
-                        <select id="role" class="form-select-custom">
+                        <select id="role" name="role" class="form-select-custom" required aria-required="true">
                             <option value="manager">
                                 Менеджер — создаёт и распределяет задачи
                             </option>
@@ -364,7 +382,7 @@
 
                     <div class="form-group" style="margin-bottom: 24px">
                         <label class="checkbox-custom">
-                            <input type="checkbox" id="terms" />
+                            <input type="checkbox" id="terms" name="terms" required aria-required="true" aria-describedby="termsErr" />
                             <span class="checkbox-box">
                                 <svg
                                     width="11"
@@ -374,8 +392,7 @@
                                     stroke="white"
                                     stroke-width="2.5"
                                     stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                >
+                                    stroke-linejoin="round" aria-hidden="true" focusable="false">
                                     <polyline points="2 6 5 9 10 3" />
                                 </svg>
                             </span>
@@ -394,7 +411,7 @@
                         >
                     </div>
 
-                    <div id="formError" class="form-error" style="display:none; margin-bottom: 12px;"></div>
+                    <div id="formError" class="form-error" role="alert" aria-live="assertive" style="display:none; margin-bottom: 12px;"></div>
 
                     <button type="submit" class="btn-primary-custom w-full" id="submitBtn">
                         Создать аккаунт
@@ -405,7 +422,7 @@
                     Уже есть аккаунт? <a href="index.html">Войти →</a>
                 </p>
             </div>
-        </div>
+        </main>
 
         <script type="module" src="/src/pages/register.ts"></script>
     </body>

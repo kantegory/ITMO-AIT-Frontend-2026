@@ -48,9 +48,11 @@
         border-radius: var(--radius-lg);
       }
 
+      .task-table { overflow: hidden; }
+
       .task-row {
         display: grid;
-        grid-template-columns: 1fr 100px 120px 100px;
+        grid-template-columns: minmax(0,1fr) 100px 120px 100px;
         align-items: center;
         padding: 13px 18px;
         border-bottom: 1px solid var(--border-subtle);
@@ -109,29 +111,36 @@
       .activity-text strong { color: var(--text-primary); font-weight: 500; }
       .activity-time { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
 
+      @media (max-width: 1200px) {
+        .task-row { grid-template-columns: minmax(0,1fr) 110px 110px; }
+        .task-row > :nth-child(3) { display: none; }
+      }
+
       @media (max-width: 1100px) {
         .stats-grid { grid-template-columns: repeat(2, 1fr); }
         .bottom-grid { grid-template-columns: 1fr; }
-        .right-col { flex-direction: row; }
+        .right-col { flex-direction: row; flex-wrap: wrap; }
+        .right-col > div { flex: 1 1 280px; min-width: 0; }
       }
 
       @media (max-width: 768px) {
-        .task-row { grid-template-columns: 1fr 90px; }
-        .task-row > :nth-child(3),
-        .task-row > :nth-child(4) { display: none; }
+        .task-row { grid-template-columns: minmax(0,1fr) 90px; }
+        .task-row > :nth-child(2),
+        .task-row > :nth-child(3) { display: none; }
       }
     </style>
   </head>
 
   <body class="bg-grid">
-    <div class="bg-glow-1"></div>
-    <div class="bg-glow-2"></div>
+    <a href="#main" class="skip-link">Перейти к основному содержимому</a>
+    <div class="bg-glow-1" aria-hidden="true"></div>
+    <div class="bg-glow-2" aria-hidden="true"></div>
 
     <div class="app-layout">
-      <aside class="sidebar">
-        <a href="index.html" class="sidebar-logo">
-          <div class="sidebar-logo-icon">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <aside class="sidebar" aria-label="Боковая навигация">
+        <a href="index.html" class="sidebar-logo" aria-label="ТаскерAI — на главную">
+          <div class="sidebar-logo-icon" aria-hidden="true">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
             </svg>
           </div>
@@ -140,22 +149,22 @@
 
         <div class="sidebar-section">
           <p class="sidebar-section-label">Основное</p>
-          <a href="dashboard.html" class="nav-item active">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <a href="dashboard.html" class="nav-item active" aria-current="page">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
               <rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/>
               <rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/>
             </svg>
             Обзор
           </a>
           <a href="search.html" class="nav-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
               <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
             </svg>
             Поиск задач
             <span class="nav-badge">24</span>
           </a>
           <a href="task.html" class="nav-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
               <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
             </svg>
             Мои задачи
@@ -166,19 +175,19 @@
         <div class="sidebar-section">
           <p class="sidebar-section-label">Проекты</p>
           <a href="#" class="nav-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
               <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
             </svg>
             ТаскерAI — ядро
           </a>
           <a href="#" class="nav-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
               <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
             </svg>
             AI-ассистент
           </a>
           <a href="#" class="nav-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
               <path d="M5 12h14"/><path d="M12 5v14"/>
             </svg>
             Новый проект
@@ -200,21 +209,21 @@
         <header class="topbar">
           <span class="topbar-title">Личный кабинет</span>
           <div class="topbar-right">
-            <button class="icon-btn" title="Уведомления">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <button type="button" class="icon-btn" title="Уведомления" aria-label="Уведомления">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
                 <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
               </svg>
               <span class="notif-dot"></span>
             </button>
-            <button class="icon-btn" title="Настройки">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <button type="button" class="icon-btn" title="Настройки" aria-label="Настройки">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
                 <circle cx="12" cy="12" r="3"/>
               </svg>
             </button>
-            <a href="#" class="icon-btn" title="Выйти" id="logoutBtn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <a href="#" class="icon-btn" title="Выйти" id="logoutBtn" role="button" aria-label="Выйти">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
                 <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
               </svg>
@@ -222,7 +231,7 @@
           </div>
         </header>
 
-        <main class="page-body">
+        <main class="page-body" id="main">
           <div class="page-greeting">
             <h1 id="greeting">Загружаем…</h1>
             <p id="greetingSub">&nbsp;</p>
@@ -264,7 +273,7 @@
                   <span>Статус</span>
                   <span>Дедлайн</span>
                 </div>
-                <div id="taskList">
+                <div id="taskList" aria-live="polite" aria-busy="true">
                   <div class="task-row" style="color: var(--text-muted); justify-content: center; display: flex;">Загружаем задачи…</div>
                 </div>
               </div>
@@ -275,7 +284,7 @@
                 <div class="section-header">
                   <span class="section-title">Прогресс проектов</span>
                 </div>
-                <div class="task-table" id="projectList" style="padding: 18px 18px 10px;">
+                <div class="task-table" id="projectList" aria-live="polite" style="padding: 18px 18px 10px;">
                   <div style="color: var(--text-muted); font-size: 0.85rem;">Загружаем проекты…</div>
                 </div>
               </div>
@@ -285,7 +294,7 @@
                   <span class="section-title">Активность</span>
                 </div>
                 <div class="task-table" style="padding: 8px;">
-                  <div class="activity-list" id="activityList">
+                  <div class="activity-list" id="activityList" aria-live="polite">
                     <div style="padding: 10px 12px; color: var(--text-muted); font-size: 0.8rem;">Загружаем активность…</div>
                   </div>
                 </div>
@@ -295,12 +304,14 @@
         </main>
 
         <footer class="lab-nav-strip">
-          <span class="lab-nav-strip-label">Страницы:</span>
-          <a href="index.html"     class="lab-link">Вход</a>
-          <a href="register.html"  class="lab-link">Регистрация</a>
-          <a href="dashboard.html" class="lab-link current">Кабинет</a>
-          <a href="search.html"    class="lab-link">Поиск</a>
-          <a href="task.html"      class="lab-link">Задача</a>
+          <nav aria-label="Страницы лабы" style="display:contents">
+            <span class="lab-nav-strip-label">Страницы:</span>
+            <a href="index.html"     class="lab-link">Вход</a>
+            <a href="register.html"  class="lab-link">Регистрация</a>
+            <a href="dashboard.html" class="lab-link current" aria-current="page">Кабинет</a>
+            <a href="search.html"    class="lab-link">Поиск</a>
+            <a href="task.html"      class="lab-link">Задача</a>
+          </nav>
         </footer>
       </div>
     </div>

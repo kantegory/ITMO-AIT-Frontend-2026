@@ -158,13 +158,14 @@
     </head>
 
     <body class="bg-grid">
-        <div class="bg-glow-1"></div>
-        <div class="bg-glow-2"></div>
+        <a href="#main" class="skip-link">Перейти к основному содержимому</a>
+        <div class="bg-glow-1" aria-hidden="true"></div>
+        <div class="bg-glow-2" aria-hidden="true"></div>
 
-        <div class="page-wrap">
+        <main id="main" class="page-wrap">
             <div class="auth-box card-glass">
-                <a href="index.html" class="auth-logo">
-                    <div class="auth-logo-icon">
+                <a href="index.html" class="auth-logo" aria-label="ТаскерAI — на главную">
+                    <div class="auth-logo-icon" aria-hidden="true">
                         <svg
                             width="18"
                             height="18"
@@ -174,6 +175,8 @@
                             stroke-width="2.5"
                             stroke-linecap="round"
                             stroke-linejoin="round"
+                            aria-hidden="true"
+                            focusable="false"
                         >
                             <polygon
                                 points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
@@ -188,7 +191,7 @@
                     Нет аккаунта? <a href="register.html">Зарегистрироваться</a>
                 </p>
 
-                <form id="loginForm" novalidate>
+                <form id="loginForm" novalidate aria-label="Форма входа">
                     <div class="form-group">
                         <label class="form-label" for="email">Email</label>
                         <div class="input-wrapper">
@@ -200,6 +203,8 @@
                                 stroke-width="2"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
+                                aria-hidden="true"
+                                focusable="false"
                             >
                                 <rect
                                     width="20"
@@ -215,11 +220,16 @@
                             <input
                                 type="email"
                                 id="email"
+                                name="email"
                                 class="form-input"
                                 placeholder="you@example.com"
+                                autocomplete="email"
+                                required
+                                aria-required="true"
+                                aria-describedby="emailErr"
                             />
                         </div>
-                        <span class="form-error">Введите корректный email</span>
+                        <span class="form-error" id="emailErr">Введите корректный email</span>
                     </div>
 
                     <div class="form-group">
@@ -233,6 +243,8 @@
                                 stroke-width="2"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
+                                aria-hidden="true"
+                                focusable="false"
                             >
                                 <rect
                                     width="18"
@@ -246,13 +258,20 @@
                             <input
                                 type="password"
                                 id="password"
+                                name="password"
                                 class="form-input with-right"
                                 placeholder="Ваш пароль"
+                                autocomplete="current-password"
+                                required
+                                aria-required="true"
+                                aria-describedby="passwordErr"
                             />
                             <button
                                 type="button"
                                 class="icon-right"
                                 id="togglePwd"
+                                aria-label="Показать или скрыть пароль"
+                                aria-pressed="false"
                             >
                                 <svg
                                     id="eyeOn"
@@ -264,6 +283,8 @@
                                     stroke-width="2"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
+                                    aria-hidden="true"
+                                    focusable="false"
                                 >
                                     <path
                                         d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"
@@ -281,6 +302,8 @@
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     style="display: none"
+                                    aria-hidden="true"
+                                    focusable="false"
                                 >
                                     <path
                                         d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"
@@ -292,10 +315,10 @@
                                 </svg>
                             </button>
                         </div>
-                        <span class="form-error">Введите пароль</span>
+                        <span class="form-error" id="passwordErr">Введите пароль</span>
                     </div>
 
-                    <div id="formError" class="form-error" style="display:none; margin-bottom: 12px;"></div>
+                    <div id="formError" class="form-error" role="alert" aria-live="assertive" style="display:none; margin-bottom: 12px;"></div>
 
                     <button type="submit" class="btn-primary-custom w-full" id="submitBtn">
                         Войти
@@ -303,28 +326,27 @@
                 </form>
             </div>
 
-            <!-- Навигация по страницам лабы -->
-            <div class="lab-nav">
-                <p class="lab-nav-title">Страницы проекта</p>
-                <div class="lab-nav-grid">
-                    <a href="index.html" class="lab-nav-item current">
-                        <span>🔐</span> Вход
+            <nav class="lab-nav" aria-label="Страницы проекта">
+                <p class="lab-nav-title" id="labNavTitle">Страницы проекта</p>
+                <div class="lab-nav-grid" role="list" aria-labelledby="labNavTitle">
+                    <a href="index.html" class="lab-nav-item current" aria-current="page" role="listitem">
+                        <span aria-hidden="true">🔐</span> Вход
                     </a>
-                    <a href="register.html" class="lab-nav-item">
-                        <span>📝</span> Регистрация
+                    <a href="register.html" class="lab-nav-item" role="listitem">
+                        <span aria-hidden="true">📝</span> Регистрация
                     </a>
-                    <a href="dashboard.html" class="lab-nav-item">
-                        <span>🏠</span> Кабинет
+                    <a href="dashboard.html" class="lab-nav-item" role="listitem">
+                        <span aria-hidden="true">🏠</span> Кабинет
                     </a>
-                    <a href="search.html" class="lab-nav-item">
-                        <span>🔍</span> Поиск задач
+                    <a href="search.html" class="lab-nav-item" role="listitem">
+                        <span aria-hidden="true">🔍</span> Поиск задач
                     </a>
-                    <a href="task.html" class="lab-nav-item">
-                        <span>✅</span> Задача
+                    <a href="task.html" class="lab-nav-item" role="listitem">
+                        <span aria-hidden="true">✅</span> Задача
                     </a>
                 </div>
-            </div>
-        </div>
+            </nav>
+        </main>
 
         <script type="module" src="/src/pages/login.ts"></script>
     </body>
