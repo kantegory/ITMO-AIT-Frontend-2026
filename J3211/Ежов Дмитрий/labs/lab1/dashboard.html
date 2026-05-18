@@ -186,11 +186,11 @@
         </div>
 
         <div class="sidebar-footer">
-          <a href="#" class="user-card">
-            <div class="user-avatar">Д</div>
+          <a href="#" class="user-card" id="userCard">
+            <div class="user-avatar" id="userAvatar">·</div>
             <div>
-              <div class="user-info-name">Дмитрий Ежов</div>
-              <div class="user-info-role">Менеджер</div>
+              <div class="user-info-name" id="userName">…</div>
+              <div class="user-info-role" id="userRole">…</div>
             </div>
           </a>
         </div>
@@ -213,7 +213,7 @@
                 <circle cx="12" cy="12" r="3"/>
               </svg>
             </button>
-            <a href="index.html" class="icon-btn" title="Выйти">
+            <a href="#" class="icon-btn" title="Выйти" id="logoutBtn">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
                 <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
@@ -224,29 +224,29 @@
 
         <main class="page-body">
           <div class="page-greeting">
-            <h1>Добрый день, Дмитрий 👋</h1>
-            <p>У вас 3 задачи на сегодня и 2 просроченных</p>
+            <h1 id="greeting">Загружаем…</h1>
+            <p id="greetingSub">&nbsp;</p>
           </div>
 
           <div class="stats-grid">
             <div class="stat-card">
               <div class="stat-label">Всего задач</div>
-              <div class="stat-value violet">24</div>
-              <div class="stat-sub">+3 за эту неделю</div>
+              <div class="stat-value violet" id="statTotal">—</div>
+              <div class="stat-sub">У вас в работе</div>
             </div>
             <div class="stat-card">
               <div class="stat-label">В работе</div>
-              <div class="stat-value yellow">7</div>
-              <div class="stat-sub">Назначено на меня</div>
+              <div class="stat-value yellow" id="statInProgress">—</div>
+              <div class="stat-sub">Активные сейчас</div>
             </div>
             <div class="stat-card">
               <div class="stat-label">Выполнено</div>
-              <div class="stat-value green">14</div>
-              <div class="stat-sub">За этот месяц</div>
+              <div class="stat-value green" id="statDone">—</div>
+              <div class="stat-sub">Закрытые задачи</div>
             </div>
             <div class="stat-card">
               <div class="stat-label">Просрочено</div>
-              <div class="stat-value red">2</div>
+              <div class="stat-value red" id="statOverdue">—</div>
               <div class="stat-sub">Требуют внимания</div>
             </div>
           </div>
@@ -257,67 +257,16 @@
                 <span class="section-title">Мои задачи</span>
                 <a href="search.html" class="section-link">Все задачи →</a>
               </div>
-              <div class="task-table">
+              <div class="task-table" id="taskTable">
                 <div class="task-row header-row">
                   <span>Задача</span>
                   <span>Приоритет</span>
                   <span>Статус</span>
                   <span>Дедлайн</span>
                 </div>
-                <a href="task.html" class="task-row">
-                  <div>
-                    <div class="task-name">Разработать API авторизации</div>
-                    <div class="task-name task-project">ТаскерAI — ядро</div>
-                  </div>
-                  <span class="priority high"><span class="priority-dot"></span>Высокий</span>
-                  <span class="status-badge progress">В работе</span>
-                  <span class="task-deadline overdue">28 апр</span>
-                </a>
-                <a href="task.html" class="task-row">
-                  <div>
-                    <div class="task-name">Написать тесты для модуля задач</div>
-                    <div class="task-name task-project">ТаскерAI — ядро</div>
-                  </div>
-                  <span class="priority medium"><span class="priority-dot"></span>Средний</span>
-                  <span class="status-badge todo">К выполнению</span>
-                  <span class="task-deadline">2 мая</span>
-                </a>
-                <a href="task.html" class="task-row">
-                  <div>
-                    <div class="task-name">Интеграция AI-подсказок</div>
-                    <div class="task-name task-project">AI-ассистент</div>
-                  </div>
-                  <span class="priority high"><span class="priority-dot"></span>Высокий</span>
-                  <span class="status-badge review">На ревью</span>
-                  <span class="task-deadline">3 мая</span>
-                </a>
-                <a href="task.html" class="task-row">
-                  <div>
-                    <div class="task-name">Дизайн страницы задачи</div>
-                    <div class="task-name task-project">ТаскерAI — ядро</div>
-                  </div>
-                  <span class="priority low"><span class="priority-dot"></span>Низкий</span>
-                  <span class="status-badge done">Выполнено</span>
-                  <span class="task-deadline">25 апр</span>
-                </a>
-                <a href="task.html" class="task-row">
-                  <div>
-                    <div class="task-name">Настроить CI/CD pipeline</div>
-                    <div class="task-name task-project">AI-ассистент</div>
-                  </div>
-                  <span class="priority medium"><span class="priority-dot"></span>Средний</span>
-                  <span class="status-badge progress">В работе</span>
-                  <span class="task-deadline">7 мая</span>
-                </a>
-                <a href="task.html" class="task-row">
-                  <div>
-                    <div class="task-name">Оптимизация базы данных</div>
-                    <div class="task-name task-project">ТаскерAI — ядро</div>
-                  </div>
-                  <span class="priority low"><span class="priority-dot"></span>Низкий</span>
-                  <span class="status-badge todo">К выполнению</span>
-                  <span class="task-deadline overdue">26 апр</span>
-                </a>
+                <div id="taskList">
+                  <div class="task-row" style="color: var(--text-muted); justify-content: center; display: flex;">Загружаем задачи…</div>
+                </div>
               </div>
             </div>
 
@@ -326,34 +275,8 @@
                 <div class="section-header">
                   <span class="section-title">Прогресс проектов</span>
                 </div>
-                <div class="task-table" style="padding: 18px 18px 10px;">
-                  <div class="project-item">
-                    <div class="project-row">
-                      <span class="project-name">ТаскерAI — ядро</span>
-                      <span class="project-pct">68%</span>
-                    </div>
-                    <div class="progress-track">
-                      <div class="progress-fill" style="width:68%"></div>
-                    </div>
-                  </div>
-                  <div class="project-item">
-                    <div class="project-row">
-                      <span class="project-name">AI-ассистент</span>
-                      <span class="project-pct">34%</span>
-                    </div>
-                    <div class="progress-track">
-                      <div class="progress-fill" style="width:34%"></div>
-                    </div>
-                  </div>
-                  <div class="project-item">
-                    <div class="project-row">
-                      <span class="project-name">Документация</span>
-                      <span class="project-pct">90%</span>
-                    </div>
-                    <div class="progress-track">
-                      <div class="progress-fill" style="width:90%"></div>
-                    </div>
-                  </div>
+                <div class="task-table" id="projectList" style="padding: 18px 18px 10px;">
+                  <div style="color: var(--text-muted); font-size: 0.85rem;">Загружаем проекты…</div>
                 </div>
               </div>
 
@@ -362,35 +285,8 @@
                   <span class="section-title">Активность</span>
                 </div>
                 <div class="task-table" style="padding: 8px;">
-                  <div class="activity-list">
-                    <div class="activity-item">
-                      <div class="activity-icon">✅</div>
-                      <div>
-                        <div class="activity-text"><strong>Алексей</strong> закрыл задачу «Дизайн страницы задачи»</div>
-                        <div class="activity-time">10 минут назад</div>
-                      </div>
-                    </div>
-                    <div class="activity-item">
-                      <div class="activity-icon">💬</div>
-                      <div>
-                        <div class="activity-text"><strong>Мария</strong> оставила комментарий к «Интеграция AI»</div>
-                        <div class="activity-time">42 минуты назад</div>
-                      </div>
-                    </div>
-                    <div class="activity-item">
-                      <div class="activity-icon">📎</div>
-                      <div>
-                        <div class="activity-text"><strong>Вы</strong> прикрепили файл к «API авторизации»</div>
-                        <div class="activity-time">2 часа назад</div>
-                      </div>
-                    </div>
-                    <div class="activity-item">
-                      <div class="activity-icon">🔀</div>
-                      <div>
-                        <div class="activity-text"><strong>Никита</strong> переместил задачу в «На ревью»</div>
-                        <div class="activity-time">вчера, 18:30</div>
-                      </div>
-                    </div>
+                  <div class="activity-list" id="activityList">
+                    <div style="padding: 10px 12px; color: var(--text-muted); font-size: 0.8rem;">Загружаем активность…</div>
                   </div>
                 </div>
               </div>
@@ -408,5 +304,6 @@
         </footer>
       </div>
     </div>
+    <script type="module" src="/src/pages/dashboard.ts"></script>
   </body>
 </html>

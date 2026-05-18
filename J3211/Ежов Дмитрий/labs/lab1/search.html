@@ -413,11 +413,11 @@
                 </div>
 
                 <div class="sidebar-footer">
-                    <a href="#" class="user-card">
-                        <div class="user-avatar">Д</div>
+                    <a href="#" class="user-card" id="userCard">
+                        <div class="user-avatar" id="userAvatar">·</div>
                         <div>
-                            <div class="user-info-name">Дмитрий Ежов</div>
-                            <div class="user-info-role">Менеджер</div>
+                            <div class="user-info-name" id="userName">…</div>
+                            <div class="user-info-role" id="userRole">…</div>
                         </div>
                     </a>
                 </div>
@@ -433,7 +433,7 @@
                         >
                             + Новая задача
                         </button>
-                        <a href="index.html" class="icon-btn" title="Выйти">
+                        <a href="#" class="icon-btn" title="Выйти" id="logoutBtn">
                             <svg
                                 width="16"
                                 height="16"
@@ -491,17 +491,11 @@
 
                         <select class="filter-select" id="filterProject">
                             <option value="">Проект: все</option>
-                            <option value="core">ТаскерAI — ядро</option>
-                            <option value="ai">AI-ассистент</option>
-                            <option value="docs">Документация</option>
                         </select>
 
                         <select class="filter-select" id="filterAssignee">
                             <option value="">Исполнитель: все</option>
-                            <option value="me">Я</option>
-                            <option value="alex">Алексей</option>
-                            <option value="maria">Мария</option>
-                            <option value="nikita">Никита</option>
+                            <option value="me">Только мои</option>
                         </select>
 
                         <div id="activeTags" style="display: flex; gap: 6px; flex-wrap: wrap"></div>
@@ -522,151 +516,11 @@
                         </div>
                     </div>
 
-                    <div class="task-grid" id="taskGrid">
-                        <a href="task.html" class="task-card" data-status="progress" data-priority="high" data-project="core" data-assignee="me">
-                            <div>
-                                <div class="task-card-title">Разработать API авторизации</div>
-                                <div class="task-card-meta">
-                                    <span class="meta-project"><span class="meta-dot"></span>ТаскерAI — ядро</span>
-                                    <span>Дмитрий Ежов</span>
-                                </div>
-                            </div>
-                            <span class="priority high"><span class="priority-dot"></span>Высокий</span>
-                            <span class="status-badge progress">В работе</span>
-                            <span class="task-deadline overdue">28 апр 2026</span>
-                            <button class="task-menu-btn" onclick="event.preventDefault()">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
-                                </svg>
-                            </button>
-                        </a>
+                    <div class="task-grid" id="taskGrid"></div>
 
-                        <a href="task.html" class="task-card" data-status="todo" data-priority="medium" data-project="core" data-assignee="me">
-                            <div>
-                                <div class="task-card-title">Написать тесты для модуля задач</div>
-                                <div class="task-card-meta">
-                                    <span class="meta-project"><span class="meta-dot"></span>ТаскерAI — ядро</span>
-                                    <span>Дмитрий Ежов</span>
-                                </div>
-                            </div>
-                            <span class="priority medium"><span class="priority-dot"></span>Средний</span>
-                            <span class="status-badge todo">К выполнению</span>
-                            <span class="task-deadline">2 мая 2026</span>
-                            <button class="task-menu-btn" onclick="event.preventDefault()">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
-                                </svg>
-                            </button>
-                        </a>
+                    <div id="loadingState" style="text-align:center; padding: 40px 0; color: var(--text-muted); font-size: 0.9rem;">Загружаем…</div>
 
-                        <a href="task.html" class="task-card" data-status="review" data-priority="high" data-project="ai" data-assignee="me">
-                            <div>
-                                <div class="task-card-title">Интеграция AI-подсказок в интерфейс задач</div>
-                                <div class="task-card-meta">
-                                    <span class="meta-project"><span class="meta-dot"></span>AI-ассистент</span>
-                                    <span>Дмитрий Ежов</span>
-                                </div>
-                            </div>
-                            <span class="priority high"><span class="priority-dot"></span>Высокий</span>
-                            <span class="status-badge review">На ревью</span>
-                            <span class="task-deadline">3 мая 2026</span>
-                            <button class="task-menu-btn" onclick="event.preventDefault()">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
-                                </svg>
-                            </button>
-                        </a>
-
-                        <a href="task.html" class="task-card" data-status="done" data-priority="low" data-project="core" data-assignee="alex">
-                            <div>
-                                <div class="task-card-title">Дизайн страницы задачи</div>
-                                <div class="task-card-meta">
-                                    <span class="meta-project"><span class="meta-dot"></span>ТаскерAI — ядро</span>
-                                    <span>Алексей</span>
-                                </div>
-                            </div>
-                            <span class="priority low"><span class="priority-dot"></span>Низкий</span>
-                            <span class="status-badge done">Выполнено</span>
-                            <span class="task-deadline">25 апр 2026</span>
-                            <button class="task-menu-btn" onclick="event.preventDefault()">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
-                                </svg>
-                            </button>
-                        </a>
-
-                        <a href="task.html" class="task-card" data-status="progress" data-priority="medium" data-project="ai" data-assignee="nikita">
-                            <div>
-                                <div class="task-card-title">Настроить CI/CD pipeline</div>
-                                <div class="task-card-meta">
-                                    <span class="meta-project"><span class="meta-dot"></span>AI-ассистент</span>
-                                    <span>Никита</span>
-                                </div>
-                            </div>
-                            <span class="priority medium"><span class="priority-dot"></span>Средний</span>
-                            <span class="status-badge progress">В работе</span>
-                            <span class="task-deadline">7 мая 2026</span>
-                            <button class="task-menu-btn" onclick="event.preventDefault()">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
-                                </svg>
-                            </button>
-                        </a>
-
-                        <a href="task.html" class="task-card" data-status="todo" data-priority="low" data-project="core" data-assignee="me">
-                            <div>
-                                <div class="task-card-title">Оптимизация запросов к базе данных</div>
-                                <div class="task-card-meta">
-                                    <span class="meta-project"><span class="meta-dot"></span>ТаскерAI — ядро</span>
-                                    <span>Дмитрий Ежов</span>
-                                </div>
-                            </div>
-                            <span class="priority low"><span class="priority-dot"></span>Низкий</span>
-                            <span class="status-badge todo">К выполнению</span>
-                            <span class="task-deadline overdue">26 апр 2026</span>
-                            <button class="task-menu-btn" onclick="event.preventDefault()">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
-                                </svg>
-                            </button>
-                        </a>
-
-                        <a href="task.html" class="task-card" data-status="review" data-priority="high" data-project="docs" data-assignee="maria">
-                            <div>
-                                <div class="task-card-title">Документация REST API</div>
-                                <div class="task-card-meta">
-                                    <span class="meta-project"><span class="meta-dot"></span>Документация</span>
-                                    <span>Мария</span>
-                                </div>
-                            </div>
-                            <span class="priority high"><span class="priority-dot"></span>Высокий</span>
-                            <span class="status-badge review">На ревью</span>
-                            <span class="task-deadline">5 мая 2026</span>
-                            <button class="task-menu-btn" onclick="event.preventDefault()">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
-                                </svg>
-                            </button>
-                        </a>
-
-                        <a href="task.html" class="task-card" data-status="done" data-priority="medium" data-project="docs" data-assignee="maria">
-                            <div>
-                                <div class="task-card-title">Написать README для AI-модуля</div>
-                                <div class="task-card-meta">
-                                    <span class="meta-project"><span class="meta-dot"></span>Документация</span>
-                                    <span>Мария</span>
-                                </div>
-                            </div>
-                            <span class="priority medium"><span class="priority-dot"></span>Средний</span>
-                            <span class="status-badge done">Выполнено</span>
-                            <span class="task-deadline">22 апр 2026</span>
-                            <button class="task-menu-btn" onclick="event.preventDefault()">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
-                                </svg>
-                            </button>
-                        </a>
-                    </div>
+                    
 
                     <div
                         id="emptyState"
@@ -702,60 +556,6 @@
             </div>
         </div>
 
-        <script>
-            const cards = Array.from(document.querySelectorAll(".task-card"));
-            const searchInput = document.getElementById("searchInput");
-            const countLabel = document.getElementById("countLabel");
-            const emptyState = document.getElementById("emptyState");
-
-            const filters = { status: "", priority: "", project: "", assignee: "", query: "" };
-
-            function applyFilters() {
-                let visible = 0;
-                cards.forEach((card) => {
-                    const title = card.querySelector(".task-card-title").textContent.toLowerCase();
-                    const meta = card.querySelector(".task-card-meta").textContent.toLowerCase();
-
-                    const show =
-                        (!filters.query || title.includes(filters.query) || meta.includes(filters.query)) &&
-                        (!filters.status || card.dataset.status === filters.status) &&
-                        (!filters.priority || card.dataset.priority === filters.priority) &&
-                        (!filters.project || card.dataset.project === filters.project) &&
-                        (!filters.assignee || card.dataset.assignee === filters.assignee);
-
-                    card.style.display = show ? "" : "none";
-                    if (show) visible++;
-                });
-
-                countLabel.textContent = visible;
-                emptyState.style.display = visible === 0 ? "block" : "none";
-            }
-
-            searchInput.addEventListener("input", () => {
-                filters.query = searchInput.value.toLowerCase().trim();
-                applyFilters();
-            });
-
-            [
-                ["filterStatus", "status"],
-                ["filterPriority", "priority"],
-                ["filterProject", "project"],
-                ["filterAssignee", "assignee"],
-            ].forEach(([id, key]) => {
-                document.getElementById(id).addEventListener("change", function () {
-                    filters[key] = this.value;
-                    applyFilters();
-                });
-            });
-
-            document.getElementById("resetFilters").addEventListener("click", () => {
-                Object.keys(filters).forEach((k) => (filters[k] = ""));
-                searchInput.value = "";
-                ["filterStatus", "filterPriority", "filterProject", "filterAssignee"].forEach(
-                    (id) => (document.getElementById(id).value = "")
-                );
-                applyFilters();
-            });
-        </script>
+        <script type="module" src="/src/pages/search.ts"></script>
     </body>
 </html>

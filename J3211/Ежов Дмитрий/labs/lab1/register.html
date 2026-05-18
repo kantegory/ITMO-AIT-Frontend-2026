@@ -394,7 +394,9 @@
                         >
                     </div>
 
-                    <button type="submit" class="btn-primary-custom w-full">
+                    <div id="formError" class="form-error" style="display:none; margin-bottom: 12px;"></div>
+
+                    <button type="submit" class="btn-primary-custom w-full" id="submitBtn">
                         Создать аккаунт
                     </button>
                 </form>
@@ -405,62 +407,6 @@
             </div>
         </div>
 
-        <script>
-            // Валидация
-            const form = document.getElementById("regForm");
-
-            form.addEventListener("submit", (e) => {
-                e.preventDefault();
-                let ok = true;
-
-                const fields = [
-                    {
-                        el: document.getElementById("name"),
-                        check: (v) => v.trim().length >= 2,
-                    },
-                    {
-                        el: document.getElementById("email"),
-                        check: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
-                    },
-                    {
-                        el: document.getElementById("password"),
-                        check: (v) => v.length >= 8,
-                    },
-                    {
-                        el: document.getElementById("confirm"),
-                        check: (v) => v === pwdInput.value && v !== "",
-                    },
-                ];
-
-                fields.forEach(({ el, check }) => {
-                    if (check(el.value)) {
-                        el.classList.remove("is-invalid");
-                        el.classList.add("is-valid");
-                    } else {
-                        el.classList.remove("is-valid");
-                        el.classList.add("is-invalid");
-                        ok = false;
-                    }
-                });
-
-                const terms = document.getElementById("terms");
-                const termsErr = document.getElementById("termsErr");
-                if (!terms.checked) {
-                    termsErr.style.display = "block";
-                    ok = false;
-                } else termsErr.style.display = "none";
-
-                if (ok) window.location.href = "dashboard.html";
-            });
-
-            // Снимаем красную рамку при вводе
-            ["name", "email", "password", "confirm"].forEach((id) => {
-                document
-                    .getElementById(id)
-                    .addEventListener("input", function () {
-                        this.classList.remove("is-invalid", "is-valid");
-                    });
-            });
-        </script>
+        <script type="module" src="/src/pages/register.ts"></script>
     </body>
 </html>

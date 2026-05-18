@@ -467,11 +467,11 @@
                 </div>
 
                 <div class="sidebar-footer">
-                    <a href="#" class="user-card">
-                        <div class="user-avatar">Д</div>
+                    <a href="#" class="user-card" id="userCard">
+                        <div class="user-avatar" id="userAvatar">·</div>
                         <div>
-                            <div class="user-info-name">Дмитрий Ежов</div>
-                            <div class="user-info-role">Менеджер</div>
+                            <div class="user-info-name" id="userName">…</div>
+                            <div class="user-info-role" id="userRole">…</div>
                         </div>
                     </a>
                 </div>
@@ -503,7 +503,7 @@
                                 <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
                             </svg>
                         </button>
-                        <a href="index.html" class="icon-btn" title="Выйти">
+                        <a href="#" class="icon-btn" title="Выйти" id="logoutBtn">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
                                 <polyline points="16 17 21 12 16 7" />
@@ -513,144 +513,41 @@
                     </div>
                 </header>
 
-                <div class="task-layout">
+                <div class="task-layout" id="taskLayout">
                     <div class="task-main">
                         <div class="task-title-row">
                             <div class="task-done-check" id="doneCheck">
-                                <svg
-                                    width="12"
-                                    height="12"
-                                    viewBox="0 0 12 12"
-                                    fill="none"
-                                    stroke="white"
-                                    stroke-width="2.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    style="display: none"
-                                    id="checkIcon"
-                                >
+                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: none" id="checkIcon">
                                     <polyline points="2 6 5 9 10 3" />
                                 </svg>
                             </div>
-                            <h1 class="task-title">Разработать API авторизации</h1>
+                            <h1 class="task-title" id="taskTitle">Загружаем…</h1>
                         </div>
 
-                        <div class="task-badges">
-                            <span class="badge status-progress">В работе</span>
-                            <span class="badge priority-high">🔴 Высокий приоритет</span>
-                            <span class="badge tag">#backend</span>
-                            <span class="badge tag">#auth</span>
-                            <span class="badge tag">#api</span>
-                        </div>
+                        <div class="task-badges" id="taskBadges"></div>
 
                         <div class="section-block">
                             <div class="section-block-title">Описание</div>
-                            <div class="task-description">
-                                <p>
-                                    Необходимо реализовать REST API для авторизации пользователей. Эндпоинт
-                                    <code>POST /auth/login</code> принимает <code>email</code> и <code>password</code>,
-                                    возвращает JWT-токен с временем жизни 24 часа.
-                                </p>
-                                <p>
-                                    Токен должен содержать <code>user_id</code>, <code>role</code> и <code>exp</code>.
-                                    Реализовать middleware для проверки токена на защищённых маршрутах.
-                                    Также нужен эндпоинт <code>POST /auth/refresh</code> для обновления токена.
-                                </p>
-                                <p>
-                                    Покрыть unit-тестами: успешный вход, неверный пароль, истёкший токен, невалидный токен.
-                                </p>
-                            </div>
+                            <div class="task-description" id="taskDescription"></div>
                         </div>
 
                         <div class="section-block">
-                            <div class="section-block-title">Подзадачи — 2 из 4 выполнено</div>
-                            <div class="subtask-list">
-                                <div class="subtask-item done-item">
-                                    <div class="subtask-check done" onclick="toggleSubtask(this)">
-                                        <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="2 6 5 9 10 3" />
-                                        </svg>
-                                    </div>
-                                    <span class="subtask-text">Спроектировать схему БД для пользователей</span>
-                                    <span class="subtask-assignee">Дмитрий</span>
-                                </div>
-
-                                <div class="subtask-item done-item">
-                                    <div class="subtask-check done" onclick="toggleSubtask(this)">
-                                        <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="2 6 5 9 10 3" />
-                                        </svg>
-                                    </div>
-                                    <span class="subtask-text">Реализовать эндпоинт POST /auth/login</span>
-                                    <span class="subtask-assignee">Дмитрий</span>
-                                </div>
-
-                                <div class="subtask-item">
-                                    <div class="subtask-check" onclick="toggleSubtask(this)"></div>
-                                    <span class="subtask-text">Реализовать middleware проверки JWT</span>
-                                    <span class="subtask-assignee">Никита</span>
-                                </div>
-
-                                <div class="subtask-item">
-                                    <div class="subtask-check" onclick="toggleSubtask(this)"></div>
-                                    <span class="subtask-text">Написать unit-тесты</span>
-                                    <span class="subtask-assignee">Дмитрий</span>
-                                </div>
-                            </div>
+                            <div class="section-block-title" id="subtasksTitle">Подзадачи</div>
+                            <div class="subtask-list" id="subtaskList"></div>
                         </div>
 
                         <div class="section-block">
                             <div class="section-block-title">Вложения</div>
-                            <div class="attachments-grid">
-                                <a href="#" class="attachment">
-                                    <div class="attachment-preview">📄</div>
-                                    <div class="attachment-info">
-                                        <div class="attachment-name">auth-spec.pdf</div>
-                                        <div class="attachment-size">128 КБ</div>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="attachment">
-                                    <div class="attachment-preview">📊</div>
-                                    <div class="attachment-info">
-                                        <div class="attachment-name">db-schema.png</div>
-                                        <div class="attachment-size">84 КБ</div>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="attachment">
-                                    <div class="attachment-preview img-preview">JWT FLOW</div>
-                                    <div class="attachment-info">
-                                        <div class="attachment-name">jwt-flow.svg</div>
-                                        <div class="attachment-size">12 КБ</div>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="attachment">
-                                    <div class="attachment-preview">🎬</div>
-                                    <div class="attachment-info">
-                                        <div class="attachment-name">demo.mp4</div>
-                                        <div class="attachment-size">14 МБ</div>
-                                    </div>
-                                </a>
-
-                                <div class="attach-add" onclick="document.getElementById('fileInput').click()">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M5 12h14" /><path d="M12 5v14" />
-                                    </svg>
-                                    Добавить файл
-                                </div>
-                                <input type="file" id="fileInput" style="display: none" multiple />
-                            </div>
+                            <div class="attachments-grid" id="attachmentList"></div>
                         </div>
                     </div>
 
                     <div class="task-sidebar">
                         <div class="meta-section">
                             <div class="meta-label">Статус</div>
-                            <select class="meta-select">
+                            <select class="meta-select" id="statusSelect">
                                 <option value="todo">К выполнению</option>
-                                <option value="progress" selected>В работе</option>
+                                <option value="progress">В работе</option>
                                 <option value="review">На ревью</option>
                                 <option value="done">Выполнено</option>
                             </select>
@@ -658,18 +555,18 @@
 
                         <div class="meta-section">
                             <div class="meta-label">Приоритет</div>
-                            <select class="meta-select">
+                            <select class="meta-select" id="prioritySelect">
                                 <option value="low">Низкий</option>
                                 <option value="medium">Средний</option>
-                                <option value="high" selected>Высокий</option>
+                                <option value="high">Высокий</option>
                             </select>
                         </div>
 
                         <div class="meta-section">
                             <div class="meta-label">Исполнитель</div>
-                            <div class="assignee-row">
-                                <div class="assignee-ava">Д</div>
-                                Дмитрий Ежов
+                            <div class="assignee-row" id="assigneeRow">
+                                <div class="assignee-ava" id="assigneeAvatar">·</div>
+                                <span id="assigneeName">—</span>
                             </div>
                         </div>
 
@@ -679,47 +576,23 @@
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
                                 </svg>
-                                ТаскерAI — ядро
+                                <span id="projectName">—</span>
                             </div>
                         </div>
 
                         <div class="meta-section">
                             <div class="meta-label">Дедлайн</div>
-                            <input type="date" class="meta-date-input" value="2026-04-28" />
+                            <input type="date" class="meta-date-input" id="deadlineInput" />
                         </div>
 
                         <div class="meta-section">
                             <div class="meta-label">Создана</div>
-                            <div class="meta-value" style="font-size: 0.82rem; color: var(--text-muted)">
-                                20 апреля 2026
-                            </div>
-                        </div>
-
-                        <div class="divider-line"></div>
-
-                        <div class="meta-section">
-                            <div class="meta-label">История изменений</div>
-                            <div class="side-activity">
-                                <div class="side-event">
-                                    <div class="side-event-dot"></div>
-                                    <div><strong>Никита</strong> взял подзадачу · 28 апр</div>
-                                </div>
-                                <div class="side-event">
-                                    <div class="side-event-dot"></div>
-                                    <div><strong>Дмитрий</strong> прикрепил demo.mp4 · 27 апр</div>
-                                </div>
-                                <div class="side-event">
-                                    <div class="side-event-dot"></div>
-                                    <div>Статус изменён на «В работе» · 22 апр</div>
-                                </div>
-                                <div class="side-event">
-                                    <div class="side-event-dot"></div>
-                                    <div><strong>Дмитрий</strong> создал задачу · 20 апр</div>
-                                </div>
-                            </div>
+                            <div class="meta-value" id="createdAt" style="font-size: 0.82rem; color: var(--text-muted)">—</div>
                         </div>
                     </div>
                 </div>
+
+                <div id="taskError" style="display:none; padding: 30px; color:#f87171; text-align:center;"></div>
 
                 <footer class="lab-nav-strip">
                     <span class="lab-nav-strip-label">Страницы:</span>
@@ -732,23 +605,6 @@
             </div>
         </div>
 
-        <script>
-            const doneCheck = document.getElementById("doneCheck");
-            const checkIcon = document.getElementById("checkIcon");
-
-            doneCheck.addEventListener("click", () => {
-                doneCheck.classList.toggle("checked");
-                checkIcon.style.display = doneCheck.classList.contains("checked") ? "block" : "none";
-            });
-
-            function toggleSubtask(el) {
-                const item = el.closest(".subtask-item");
-                const isDone = el.classList.toggle("done");
-                item.classList.toggle("done-item", isDone);
-                el.innerHTML = isDone
-                    ? `<svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg>`
-                    : "";
-            }
-        </script>
+        <script type="module" src="/src/pages/task.ts"></script>
     </body>
 </html>

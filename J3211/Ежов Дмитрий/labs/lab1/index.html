@@ -295,7 +295,9 @@
                         <span class="form-error">Введите пароль</span>
                     </div>
 
-                    <button type="submit" class="btn-primary-custom w-full">
+                    <div id="formError" class="form-error" style="display:none; margin-bottom: 12px;"></div>
+
+                    <button type="submit" class="btn-primary-custom w-full" id="submitBtn">
                         Войти
                     </button>
                 </form>
@@ -324,42 +326,6 @@
             </div>
         </div>
 
-        <script>
-            const pwdInput = document.getElementById("password");
-
-            document
-                .getElementById("togglePwd")
-                .addEventListener("click", () => {
-                    const show = pwdInput.type === "password";
-                    pwdInput.type = show ? "text" : "password";
-                    document.getElementById("eyeOn").style.display = show
-                        ? "none"
-                        : "";
-                    document.getElementById("eyeOff").style.display = show
-                        ? ""
-                        : "none";
-                });
-
-            document
-                .getElementById("loginForm")
-                .addEventListener("submit", (e) => {
-                    e.preventDefault();
-                    const email = document.getElementById("email");
-                    const pwd = document.getElementById("password");
-                    let ok = true;
-
-                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-                        email.classList.add("is-invalid");
-                        ok = false;
-                    } else email.classList.remove("is-invalid");
-
-                    if (!pwd.value) {
-                        pwd.classList.add("is-invalid");
-                        ok = false;
-                    } else pwd.classList.remove("is-invalid");
-
-                    if (ok) window.location.href = "dashboard.html";
-                });
-        </script>
+        <script type="module" src="/src/pages/login.ts"></script>
     </body>
 </html>
