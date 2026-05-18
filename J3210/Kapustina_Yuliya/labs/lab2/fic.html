@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Фанфик | FanFicLib</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dark.css">
+    <script src="js/api.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">FanFicLib</a>
+            <button id="darkModeBtn" class="btn btn-outline-light ms-3">Тёмная тема</button>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav" aria-label="Меню навигации">
+                <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Меню</span>
+            </button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="search.html">Поиск</a></li>
+                    <li class="nav-item"><a class="nav-link" href="write.html">Написать фанфик</a></li>
+                </ul>
+                <ul class="navbar-nav ms-auto" id="navRight">
+                    <li class="nav-item"><a class="nav-link" href="login.html">Вход</a></li>
+                    <li class="nav-item"><a class="nav-link" href="register.html">Регистрация</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        <article>
+            <div class="fic-card">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                    <h1 class="fw-bold mb-0" id="ficTitle">Загрузка...</h1>
+                    <span class="rating-tag" id="ficRating">-</span>
+                </div>
+
+                <div class="mt-2 d-flex gap-3 text-secondary">
+                    <span class="d-flex align-items-center gap-1">
+                        <a href="#" id="ficAuthorLink" class="text-decoration-none author-info">Загрузка...</a>
+                    </span>
+                    <span class="d-flex align-items-center gap-1">
+                        <span class="date-info"></span> <span id="ficDate">-</span>
+                    </span>
+                </div>
+
+                <div class="mt-2">
+                    <span class="fandom-tag" id="ficFandom">-</span>
+                </div>
+
+                <p class="mt-3 mb-3 fic-description" id="ficDescription">Загрузка...</p>
+
+                <div class="d-flex flex-wrap gap-2 mb-3" id="ficTags"></div>
+
+                <div class="d-flex gap-4 text-secondary">
+                    <span class="d-flex align-items-center gap-1">
+                        <span class="meta-eye" id="views-count">0</span> просмотров
+                    </span>
+                    <span class="d-flex align-items-center gap-1">
+                        <span class="meta-heart" id="likes-count">0</span> лайков
+                    </span>
+                    <span class="d-flex align-items-center gap-1">
+                        <span class="meta-chat" id="comments-count">0</span> комментариев
+                    </span>
+                </div>
+
+                <div class="mt-4">
+                    <button id="like-btn" class="btn btn-like">
+                        <span class="meta-heart">Нравится</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="chapter-nav p-3 rounded-3 mb-3 d-flex justify-content-between align-items-center">
+                <button id="prevChapterBtn" class="btn btn-outline-secondary" disabled>
+                    <span class="icon-chevron-left"></span>Предыдущая
+                </button>
+                <span id="chapterInfo" class="text-muted">Глава 1 / 1</span>
+                <button id="nextChapterBtn" class="btn btn-outline-secondary" disabled>
+                    Следующая <span class="icon-chevron-right"></span>
+                </button>
+            </div>
+
+            <div class="fic-content-wrapper p-4 rounded-3">
+                <div class="fanfic-text" style="line-height: 1.8;" id="ficContent">Загрузка...</div>
+
+            <section class="mt-4" id="comments-section">
+                <h3>Комментарии</h3>
+                <div id="comments-container">
+                    <p class="text-muted text-center">Загрузка комментариев...</p>
+                </div>
+                <div class="mt-3" id="commentForm">
+                    <div class="comment-input-group">
+                        <input type="text" id="comment-input" class="form-control"
+                            placeholder="Написать комментарий...">
+                        <button id="comment-btn" class="btn btn-main">Отправить</button>
+                    </div>
+                </div>
+                <div id="commentAuthMessage" class="alert alert-warning mt-2" style="display: none;">
+                    Чтобы оставить комментарий, <a href="login.html">войдите</a> или <a
+                        href="register.html">зарегистрируйтесь</a>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="footer text-center">
+        <p>© 2026 FanFicLib</p>
+        <p>Платформа для фанфиков</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+
+        // Получаем ID фанфика из URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const ficId = urlParams.get('id');
+
+        console.log('ID фанфика:', ficId);
+
+        if (!ficId) {
+            window.location.href = 'index.html';
+        }
+
+        let ficData = null;
+        let commentsData = [];
+        let currentChapter = 0;
+        let chapters = [];
+        let userLiked = false;
+
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        const userData = localStorage.getItem('user') || sessionStorage.getItem('user');
+        let currentUser = userData ? JSON.parse(userData) : null;
+
+        // Обновление навигации
+        function updateNav() {
+            const navRight = document.getElementById('navRight');
+
+            if (token && currentUser) {
+                navRight.innerHTML = `
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">Профиль</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="navLogoutBtn">Выйти</a>
+                    </li>
+                `;
+
+                document.getElementById('navLogoutBtn')?.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    sessionStorage.removeItem('token');
+                    sessionStorage.removeItem('user');
+                    window.location.href = 'index.html';
+                });
+            } else {
+                navRight.innerHTML = `
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Вход</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Регистрация</a>
+                    </li>
+                `;
+            }
+        }
+
+        // Разбивка на главы
+        function splitIntoChapters(content) {
+            const chapterRegex = /<h2[^>]*>(.*?)<\/h2>/gi;
+            const chapters = [];
+            let match;
+            let chapterTitles = [];
+
+            while ((match = chapterRegex.exec(content)) !== null) {
+                chapterTitles.push(match[1]);
+            }
+
+            if (chapterTitles.length === 0) {
+                return [{
+                    title: 'Полная версия',
+                    content: content
+                }];
+            }
+
+            let currentPos = 0;
+            for (let i = 0; i < chapterTitles.length; i++) {
+                const titlePattern = new RegExp(`<h2[^>]*>${escapeRegex(chapterTitles[i])}<\\/h2>`, 'i');
+                const matchObj = titlePattern.exec(content.substring(currentPos));
+
+                if (matchObj) {
+                    const startPos = currentPos + matchObj.index;
+                    const endPos = i < chapterTitles.length - 1
+                        ? currentPos + content.substring(currentPos).search(new RegExp(`<h2[^>]*>${escapeRegex(chapterTitles[i + 1])}<\\/h2>`, 'i'))
+                        : content.length;
+
+                    chapters.push({
+                        title: chapterTitles[i],
+                        content: content.substring(startPos, endPos)
+                    });
+                    currentPos = endPos;
+                }
+            }
+
+            return chapters;
+        }
+
+        function escapeRegex(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function displayChapter() {
+            if (!chapters.length) return;
+            const chapter = chapters[currentChapter];
+            document.getElementById('ficContent').innerHTML = chapter.content;
+            document.getElementById('chapterInfo').textContent = `Глава ${currentChapter + 1} / ${chapters.length}`;
+            document.getElementById('prevChapterBtn').disabled = currentChapter === 0;
+            document.getElementById('nextChapterBtn').disabled = currentChapter === chapters.length - 1;
+        }
+
+        // Проверка, лайкнул ли пользователь
+        async function checkUserLiked() {
+            if (!token) return;
+            try {
+                const response = await fetch(`${API_URL}/user/likes`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (response.ok) {
+                    const likedFics = await response.json();
+                    userLiked = likedFics.some(f => f.id === ficData.id);
+                    updateLikeButton();
+                }
+            } catch (error) {
+                console.error('Ошибка проверки лайка:', error);
+            }
+        }
+
+        function updateLikeButton() {
+            const likeBtn = document.getElementById('like-btn');
+            if (userLiked) {
+                likeBtn.classList.add('liked');
+                likeBtn.innerHTML = '<span class="meta-heart">Нравится</span>';
+            } else {
+                likeBtn.classList.remove('liked');
+                likeBtn.innerHTML = '<span class="icon-heart-empty">Нравится</span>';
+            }
+        }
+
+        // Загрузка фанфика
+        async function loadFic() {
+            console.log('Загрузка фанфика с ID:', ficId);
+            try {
+                const response = await fetch(`${API_URL}/fics/${ficId}`);
+                console.log('Статус ответа:', response.status);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Данные получены');
+
+                    ficData = data.fic;
+                    commentsData = data.comments || [];
+
+                    document.getElementById('ficTitle').textContent = ficData.title;
+                    document.getElementById('ficRating').textContent = ficData.rating;
+
+                    const authorLink = document.getElementById('ficAuthorLink');
+                    authorLink.textContent = ficData.authorName;
+                    authorLink.href = `profile.html?username=${encodeURIComponent(ficData.authorName)}`;
+
+                    document.getElementById('ficDate').textContent = formatDate(ficData.createdAt);
+                    document.getElementById('ficFandom').textContent = ficData.fandom;
+                    document.getElementById('ficDescription').textContent = ficData.description;
+                    document.getElementById('views-count').textContent = ficData.views;
+                    document.getElementById('likes-count').textContent = ficData.likes;
+
+                    const tagsContainer = document.getElementById('ficTags');
+                    tagsContainer.innerHTML = '';
+                    if (ficData.tags) {
+                        ficData.tags.forEach(tag => {
+                            tagsContainer.innerHTML += `<span class="tag">${escapeHtml(tag)}</span>`;
+                        });
+                    }
+
+                    if (ficData.content) {
+                        chapters = splitIntoChapters(ficData.content);
+                        displayChapter();
+                    } else {
+                        document.getElementById('ficContent').innerHTML = '<p>Текст фанфика отсутствует</p>';
+                    }
+
+                    await checkUserLiked();
+
+                    if (token && ficData.status !== 'draft') {
+                        try {
+                            await fetch(`${API_URL}/history`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${token}`
+                                },
+                                body: JSON.stringify({ ficId: ficData.id })
+                            });
+                        } catch (err) {
+                            console.error('Ошибка записи истории:', err);
+                        }
+                    }
+
+                    loadComments();
+                } else {
+                    document.getElementById('ficContent').innerHTML = '<p class="text-danger">Фанфик не найден</p>';
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                document.getElementById('ficContent').innerHTML = '<p class="text-danger">Ошибка загрузки фанфика</p>';
+            }
+        }
+
+        async function loadComments() {
+            const container = document.getElementById('comments-container');
+            if (!commentsData || commentsData.length === 0) {
+                container.innerHTML = '<p class="text-muted text-center">Пока нет комментариев. Будьте первым!</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+
+            for (const comment of commentsData) {
+                let avatarUrl = 'pics/ava.jpg';
+
+                try {
+                    const response = await fetch(`${API_URL}/profile/${comment.username}`);
+                    if (response.ok) {
+                        const userData = await response.json();
+                        if (userData.user.avatar && userData.user.avatar !== 'default-avatar.png') {
+                            avatarUrl = `pics/${userData.user.avatar}`;
+                        }
+                    }
+                } catch (error) {
+                    console.error('Ошибка загрузки аватара для', comment.username, error);
+                }
+
+                const commentHtml = `
+            <div class="comment mb-2">
+                <div class="card-body py-2">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                       <img src="${avatarUrl}" 
+                            class="rounded-circle" 
+                            style="width: 32px; height: 32px; object-fit: cover;"
+                            alt="Аватар пользователя ${escapeHtml(comment.username)}"
+                            onerror="this.src='pics/ava.jpg'">
+                        <a href="profile.html?username=${encodeURIComponent(comment.username)}" class="fw-bold text-decoration-none" style="color: #ff7043;">${escapeHtml(comment.username)}</a>
+                        <small class="text-secondary ms-auto">${formatDateTime(comment.createdAt)}</small>
+                    </div>
+                    <div class="ms-4">${escapeHtml(comment.content)}</div>
+                </div>
+            </div>
+        `;
+                container.innerHTML += commentHtml;
+            }
+
+            document.getElementById('comments-count').textContent = commentsData.length;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU');
+        }
+
+        function formatDateTime(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('ru-RU');
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // Обработчик лайка
+        let isLiking = false;
+        document.getElementById('like-btn')?.addEventListener('click', async () => {
+            if (!token) {
+                alert('Войдите в аккаунт, чтобы ставить лайки');
+                return;
+            }
+
+            if (isLiking) return;
+            isLiking = true;
+
+            const likeBtn = document.getElementById('like-btn');
+
+            try {
+                const response = await fetch(`${API_URL}/fics/${ficId}/like`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('likes-count').textContent = data.likes;
+                    userLiked = data.liked;
+                    updateLikeButton();
+                } else {
+                    alert('Ошибка при лайке');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Ошибка подключения к серверу');
+            } finally {
+                isLiking = false;
+            }
+        });
+
+        // Обработчик комментария
+        document.getElementById('comment-btn')?.addEventListener('click', async () => {
+            const text = document.getElementById('comment-input').value.trim();
+            if (!text) return;
+
+            if (!token) {
+                alert('Войдите в аккаунт, чтобы оставить комментарий');
+                return;
+            }
+
+            const commentBtn = document.getElementById('comment-btn');
+            const originalText = commentBtn.textContent;
+            commentBtn.textContent = 'Отправка...';
+            commentBtn.disabled = true;
+
+            try {
+                console.log('Отправка комментария к фанфику:', ficId);
+                console.log('Текст:', text);
+
+                const response = await fetch(`${API_URL}/fics/${ficId}/comments`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ content: text })
+                });
+
+                console.log('Статус ответа:', response.status);
+                const data = await response.json();
+                console.log('Ответ:', data);
+
+                if (response.ok) {
+                    commentsData.push(data);
+                    loadComments();
+                    document.getElementById('comment-input').value = '';
+                } else {
+                    alert(data.error || 'Ошибка при отправке комментария');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Ошибка подключения к серверу: ' + error.message);
+            } finally {
+                commentBtn.textContent = originalText;
+                commentBtn.disabled = false;
+            }
+        });
+
+        // Навигация по главам
+        document.getElementById('prevChapterBtn')?.addEventListener('click', () => {
+            if (currentChapter > 0) {
+                currentChapter--;
+                displayChapter();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        document.getElementById('nextChapterBtn')?.addEventListener('click', () => {
+            if (currentChapter < chapters.length - 1) {
+                currentChapter++;
+                displayChapter();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        // Проверка авторизации для комментариев
+        if (!token) {
+            document.getElementById('commentForm').style.display = 'none';
+            document.getElementById('commentAuthMessage').style.display = 'block';
+        }
+
+         // Переключение тёмной темы
+        const darkModeBtn = document.getElementById('darkModeBtn');
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            darkModeBtn.textContent = 'Светлая тема';
+        }
+
+        darkModeBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                darkModeBtn.textContent = 'Тёмная тема';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                darkModeBtn.textContent = 'Светлая тема';
+            }
+        });
+
+
+        // Запуск
+        updateNav();
+        loadFic();
+    </script>
+</body>
+
+</html>
