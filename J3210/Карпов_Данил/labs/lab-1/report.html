@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчёт — Лабораторная работа №1</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 25mm 20mm 30mm;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 14pt;
+            line-height: 1.5;
+            color: #000;
+            background: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ── Экранный вид ── */
+        @media screen {
+            body { background: #e0e0e0; padding: 20px; }
+            .page {
+                background: #fff;
+                width: 155mm;   /* A4 - поля: 210 - 30 - 25 = 155 мм */
+                min-height: 257mm;
+                margin: 0 auto 20px;
+                padding: 0;
+                box-shadow: 0 2px 8px rgba(0,0,0,.3);
+            }
+        }
+
+        /* ── Печать ──
+           @page уже задаёт поля, поэтому .page — просто
+           flow-контейнер без ширины и padding'а                 */
+        @media print {
+            body { background: white; }
+            .page {
+                page-break-after: always;
+                width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+            .page:last-child { page-break-after: auto; }
+            img, .screenshot { max-width: 100%; }
+        }
+
+        /* Титульный лист */
+        .title-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 257mm;
+            justify-content: space-between;
+        }
+        @media print {
+            .title-page { min-height: 90vh; }
+        }
+        .title-page .university {
+            font-size: 14pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 1.4;
+        }
+        .title-page .discipline-block { margin-top: 40mm; }
+        .title-page .discipline { font-size: 16pt; font-weight: bold; }
+        .title-page .doc-type { font-size: 14pt; margin-top: 8mm; }
+        .title-page .lab-title { font-size: 14pt; margin-top: 6mm; }
+        .title-page .author-block {
+            text-align: right;
+            align-self: flex-end;
+            margin-top: auto;
+        }
+        .title-page .author-block p { margin: 3mm 0; font-size: 14pt; }
+        .title-page .city-year { margin-top: auto; font-size: 14pt; }
+
+        /* Контентные страницы */
+        .content-page h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin: 0 0 8mm 0;
+        }
+        .content-page p {
+            text-align: justify;
+            margin: 0 0 4mm 0;
+            text-indent: 1.25cm;
+        }
+        .content-page p.no-indent { text-indent: 0; }
+        .content-page ul { margin: 0 0 5mm 0; padding-left: 1.5cm; }
+        .content-page ul li { margin-bottom: 2mm; }
+
+        /* Скриншоты */
+        .screenshot {
+            display: block;
+            width: 100%;
+            border: 1px solid #ccc;
+            margin: 5mm 0 2mm 0;
+        }
+        .fig-caption {
+            text-align: center;
+            font-size: 11pt;
+            color: #444;
+            margin: 0 0 6mm 0;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══ Страница 1 — Титульный лист ══ -->
+<div class="page">
+    <div class="title-page">
+        <div class="university">
+            Санкт-Петербургский национальный<br>
+            исследовательский университет ИТМО
+        </div>
+
+        <div class="discipline-block">
+            <p class="discipline"><u>Дисциплина:</u> Фронт-энд разработка</p>
+            <p class="doc-type">Отчёт</p>
+            <p class="lab-title">Лабораторная работа №1</p>
+        </div>
+
+        <div class="author-block">
+            <p>Выполнил:</p>
+            <p>Карпов Данил Иванович</p>
+            <p>Группа J3210</p>
+            <p>ИСУ: 466130</p>
+            <br>
+            <p>Проверил:</p>
+            <p>Добряков Д. И.</p>
+        </div>
+
+        <div class="city-year">
+            <p>Санкт-Петербург</p>
+            <p>2026 г.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Страница 2 — Задача ══ -->
+<div class="page content-page">
+    <h2>Задача</h2>
+
+    <p>
+        В рамках данной лабораторной работы было предложено выбрать один из нескольких
+        вариантов. Выбранный вариант останется единым на весь курс и будет использоваться
+        в последующих лабораторных работах.
+    </p>
+
+    <p>
+        По выбранному варианту необходимо выполнить вёрстку сайта средствами HTML, CSS
+        и Bootstrap. Продумать и реализовать моменты, в которых необходим JS (например,
+        открытие модальных окон).
+    </p>
+
+    <p class="no-indent">Выбранный вариант:</p>
+    <ul>
+        <li>Платформа для онлайн-курсов и обучения.</li>
+        <li>Каждый из сайтов обязательно должен включать в себя:
+            <ul>
+                <li>Вход</li>
+                <li>Регистрация</li>
+                <li>Личный кабинет пользователя (купленные курсы, прогресс, сертификаты)</li>
+                <li>Поиск курсов с фильтрацией по предмету, уровню и цене</li>
+                <li>Страница курса (видео-лекции, материалы, задания, обсуждения)</li>
+                <li>Личный кабинет преподавателя (загрузка материалов, управление курсами)</li>
+            </ul>
+        </li>
+    </ul>
+
+    <p>
+        Дополнительно было принято решение реализовать полноценный REST-бэкенд на базе
+        JSON Server (файл <code>db.json</code>), что позволило организовать работу с данными
+        через HTTP-запросы и продемонстрировать асинхронную загрузку контента.
+    </p>
+</div>
+
+<!-- ══ Страница 3 — Ход работы: структура и авторизация ══ -->
+<div class="page content-page">
+    <h2>Ход работы</h2>
+
+    <p>
+        Разработана файловая структура проекта и базовые стили. Настроена поддержка
+        светлой и тёмной тем оформления с сохранением выбора в <code>localStorage</code>.
+        В качестве UI-фреймворка использован Bootstrap 5.3.3; иконки подключены через
+        Bootstrap Icons 1.11.3 и SVG-спрайт.
+    </p>
+
+    <p>
+        Сверстана главная страница (<strong>index.html</strong>) с секцией-героем,
+        блоком популярных курсов, загружаемых асинхронно из API, и блоком преимуществ
+        платформы. На время загрузки отображаются skeleton-плейсхолдеры.
+    </p>
+
+    <img src="images/screenshots/01_index.png" alt="Главная страница Minion Courses" class="screenshot">
+    <p class="fig-caption">Рисунок 1 — Главная страница (index.html)</p>
+
+    <p>
+        Созданы страницы авторизации (<strong>login.html</strong>) и регистрации
+        (<strong>register.html</strong>). Формы реализованы с Bootstrap Validation API
+        (<code>needs-validation</code>): при отправке невалидной формы поля подсвечиваются.
+        Кнопка блокируется и показывает спиннер во время запроса к серверу.
+    </p>
+</div>
+
+<!-- ══ Страница 4 — Вход и регистрация (скриншоты) ══ -->
+<div class="page content-page">
+    <img src="images/screenshots/02_login.png" alt="Страница входа" class="screenshot">
+    <p class="fig-caption">Рисунок 2 — Страница входа (login.html)</p>
+
+    <img src="images/screenshots/03_register.png" alt="Страница регистрации" class="screenshot">
+    <p class="fig-caption">Рисунок 3 — Страница регистрации (register.html)</p>
+
+    <p>
+        Модуль <strong>auth.js</strong> хранит JWT-токен и данные пользователя в
+        <code>localStorage</code> и динамически обновляет навигационную панель:
+        для неавторизованных — кнопки «Войти» и «Регистрация», для авторизованных —
+        дропдаун с аватаром и пунктом выхода через модальное подтверждение.
+    </p>
+</div>
+
+<!-- ══ Страница 5 — Каталог курсов ══ -->
+<div class="page content-page">
+    <p>
+        Разработана страница каталога курсов (<strong>search.html</strong>). Для
+        отображения использована адаптивная сетка Bootstrap Grid
+        (<code>row-cols-1 row-cols-md-2 row-cols-xl-3</code>). В боковой панели
+        реализована фильтрация по трём критериям: категория, уровень и тип цены.
+        Фильтры — чекбоксы Bootstrap; при изменении любого из них функция
+        <code>applyFilters()</code> мгновенно скрывает или показывает карточки
+        без перезагрузки страницы.
+    </p>
+
+    <img src="images/screenshots/04_search.png" alt="Каталог курсов с фильтрацией" class="screenshot">
+    <p class="fig-caption">Рисунок 4 — Каталог курсов с фильтрацией (search.html)</p>
+</div>
+
+<!-- ══ Страница 6 — Страница курса ══ -->
+<div class="page content-page">
+    <p>
+        Разработана страница детального просмотра курса (<strong>course.html</strong>).
+        Идентификатор курса передаётся через URL (<code>?id=…</code>), данные
+        загружаются из API. Для организации информации использован компонент Bootstrap Tabs
+        (<code>nav-tabs</code>, <code>tab-content</code>): вкладки «Обзор», «Содержание»
+        и «Обсуждения» переключаются средствами Bootstrap JS. Боковая панель отображает
+        рейтинг, цену и кнопку записи на курс.
+    </p>
+
+    <img src="images/screenshots/05_course.png" alt="Страница курса" class="screenshot">
+    <p class="fig-caption">Рисунок 5 — Страница курса (course.html)</p>
+</div>
+
+<!-- ══ Страница 7 — Личный кабинет студента ══ -->
+<div class="page content-page">
+    <p>
+        Реализован личный кабинет студента (<strong>profile.html</strong>). Страница
+        отображает имя, email и статистику пользователя. Раздел «Мои курсы» показывает
+        список записанных курсов с прогрессом, визуализированным через Bootstrap Progress
+        (<code>progress-bar</code>). Завершённые курсы отмечены бейджем «Завершён».
+        Раздел «Сертификаты» выводит список полученных сертификатов.
+    </p>
+
+    <img src="images/screenshots/06_profile.png" alt="Личный кабинет студента" class="screenshot">
+    <p class="fig-caption">Рисунок 6 — Личный кабинет студента (profile.html)</p>
+</div>
+
+<!-- ══ Страница 8 — Кабинет преподавателя ══ -->
+<div class="page content-page">
+    <p>
+        Создан личный кабинет преподавателя (<strong>teacher.html</strong>). На странице
+        отображается список авторских курсов со статистикой: количество студентов,
+        средний рейтинг, цена. Кнопка «Создать курс» открывает модальное окно Bootstrap
+        (<code>data-bs-toggle="modal"</code>) с формой ввода названия, описания,
+        категории, уровня и цены.
+    </p>
+
+    <img src="images/screenshots/07_teacher.png" alt="Кабинет преподавателя" class="screenshot">
+    <p class="fig-caption">Рисунок 7 — Личный кабинет преподавателя (teacher.html)</p>
+
+    <p>
+        Для обеспечения доступности на всех страницах добавлены ARIA-атрибуты
+        (<code>role</code>, <code>aria-label</code>, <code>aria-live</code>),
+        семантические теги и skip-ссылки для перехода к основному содержимому.
+        Бэкенд реализован на JSON Server (порт 3001) и запускается командой
+        <code>npm start</code>.
+    </p>
+
+    <img src="images/screenshots/08_dark_theme.png" alt="Тёмная тема" class="screenshot">
+    <p class="fig-caption">Рисунок 8 — Тёмная тема оформления</p>
+</div>
+
+<!-- ══ Страница 9 — Вывод ══ -->
+<div class="page content-page">
+    <h2>Вывод</h2>
+
+    <p>
+        В ходе выполнения лабораторной работы были освоены принципы вёрстки адаптивных
+        веб-приложений с использованием HTML5, CSS3 и фреймворка Bootstrap 5.
+    </p>
+
+    <p>
+        На практике применены знания о семантической разметке, системе сеток Bootstrap
+        Grid и утилитарных классах для отступов, типографики и цветов. Реализованы
+        интерактивные компоненты Bootstrap: Modal, Tabs, Dropdown, Progress, Spinner —
+        работающие «из коробки» посредством data-атрибутов.
+    </p>
+
+    <p>
+        Закреплены навыки работы с DOM API и Fetch API: написаны скрипты для
+        асинхронной загрузки данных из JSON Server, динамической фильтрации карточек
+        курсов, валидации форм и управления состоянием авторизации с хранением данных
+        в <code>localStorage</code>.
+    </p>
+
+    <p>
+        Дополнительно реализованы переключатель светлой/тёмной темы с сохранением
+        выбора между сессиями, skeleton-экраны загрузки и обработка ошибок сети.
+        Все страницы соответствуют базовым стандартам доступности: добавлены
+        ARIA-атрибуты, семантические теги и skip-ссылки.
+    </p>
+
+    <p>
+        Разработанный прототип платформы «Minion Courses» полностью соответствует
+        заявленным требованиям предметной области и включает все обязательные страницы:
+        главную, вход, регистрацию, каталог с фильтрацией, страницу курса, личный
+        кабинет студента и кабинет преподавателя.
+    </p>
+</div>
+
+</body>
+</html>
