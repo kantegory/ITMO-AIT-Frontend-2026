@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InjectincoPlayground - Регистрация</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand text-warning" href="dashboard.html">
+        <svg class="icon me-1"><use href="assets/sprite.svg#robot"></use></svg>
+        InjectincoPlayground
+      </a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="dashboard.html">Дашборд</a></li>
+          <li class="nav-item"><a class="nav-link" href="agents.html">Агенты и Фильтры</a></li>
+          <li class="nav-item"><a class="nav-link" href="main-chat.html">Симуляция</a></li>
+        </ul>
+        <div class="d-flex align-items-center">
+          <a href="login.html" class="btn btn-light">Вход</a>
+          <a href="register.html" class="btn btn-primary active ms-2">Регистрация</a>
+          <button onclick="toggleTheme()" class="btn btn-outline-warning ms-3" id="theme-btn" aria-label="Сменить тему">
+            <svg class="icon"><use href="assets/sprite.svg#moon-fill"></use></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <svg class="icon icon-lg text-primary mb-3">
+              <use href="assets/sprite.svg#robot"></use>
+            </svg>
+            <h3 class="mt-2 mb-4">Регистрация</h3>
+            <form onsubmit="handleRegister(event)">
+              <div class="mb-3 text-start">
+                <label class="form-label" for="regEmail">Email адрес</label>
+                <input type="email" class="form-control" name="email" id="regEmail" required>
+              </div>
+              <div class="mb-3 text-start">
+                <label class="form-label" for="regPassword">Пароль</label>
+                <input type="password" class="form-control" name="password" id="regPassword" required>
+              </div>
+              <button class="btn btn-primary w-100 mb-3" type="submit">Создать аккаунт</button>
+              <a href="login.html">Войти</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>

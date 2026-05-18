@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Регистрация – MLDrop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="registration.css">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    .skip-link { position: absolute; top: -40px; left: 0; background: #000; color: #fff; padding: 8px; z-index: 100; }
+    .skip-link:focus { top: 0; }
+    button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid #005fcc; outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <a href="#register-form" class="skip-link">Перейти к форме регистрации</a>
+  <section class="vh-100 d-flex align-items-center">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+          <div class="card shadow-sm">
+            <div class="card-body p-4 p-md-5">
+              <h1 class="h3 mb-3 text-center">Создать аккаунт</h1>
+              <form id="registerForm" aria-label="Форма регистрации">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Имя</label>
+                  <input type="text" class="form-control" id="name" placeholder="Ваше имя" required autocomplete="name" aria-required="true">
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" placeholder="123@gmail.com" required autocomplete="email" aria-required="true">
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Пароль</label>
+                  <input type="password" class="form-control" id="password" placeholder="Минимум 6 символов" required autocomplete="new-password" aria-required="true">
+                </div>
+                <div class="mb-3">
+                  <label for="password2" class="form-label">Повторите пароль</label>
+                  <input type="password" class="form-control" id="password2" placeholder="Повторите пароль" required autocomplete="off" aria-required="true">
+                </div>
+                <div class="form-check mb-3">
+                  <input class="form-check-input" type="checkbox" id="terms">
+                  <label class="form-check-label" for="terms">Я принимаю условия</label>
+                </div>
+                <div class="d-grid mb-3">
+                  <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                </div>
+                <p class="text-center">Уже есть аккаунт? <a href="login.html">Войти</a></p>
+                <div class="d-flex gap-2">
+                  <a href="index.html" class="btn btn-outline-secondary flex-grow-1">На главную</a>
+                  <button id="themeToggleBtn" class="btn btn-outline-glass" aria-label="Переключить тему">
+                    <svg class="icon" aria-hidden="true"><use href="sprite.svg#icon-moon"></use></svg>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="registration.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="theme.js"></script>
+</body>
+</html>

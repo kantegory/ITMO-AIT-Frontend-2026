@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог курсов | NexusEdu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-blob-1"></div><div class="bg-blob-2"></div>
+    <header>
+        <nav class="navbar navbar-expand-lg glass m-3 px-4 py-3" aria-label="Главная навигация">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold text-white fs-4" href="index.html"><svg width="24" height="24" class="me-2"><use href="img/sprite.svg#icon-logo"></use></svg>NexusEdu</a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navBar" aria-controls="navBar" aria-expanded="false" aria-label="Переключить навигацию">
+                    <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navBar">
+                    <ul class="navbar-nav me-auto ms-4 gap-3">
+                        <li class="nav-item"><a class="nav-link text-white fw-bold border-bottom" href="index.html" aria-current="page">Каталог</a></li>
+                        <li class="nav-item"><a class="nav-link text-white-50" href="profile.html">Мой кабинет</a></li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <button id="themeToggle" class="btn btn-sm btn-outline-secondary rounded-pill me-3" aria-label="Переключить тему"><svg width="18" height="18"><use href="img/sprite.svg#icon-theme"></use></svg><span>Тема</span></button>
+                        <a href="auth.html" id="navAuthBtn" class="btn glass-btn px-4" aria-label="Страница авторизации">Войти</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-5 mb-5">
+        <h1 class="visually-hidden">Каталог учебных курсов</h1>
+        
+        <div class="row g-4">
+            <aside class="col-lg-3">
+                <div class="glass p-4 sticky-top" style="top: 20px;">
+                    <h2 class="fw-bold fs-5 mb-4">Фильтры</h2>
+                    <form onsubmit="applyFilters(event)" aria-label="Форма фильтрации курсов">
+                        <div class="mb-3">
+                            <label for="searchCourse" class="form-label text-white-50">Поиск</label>
+                            <input type="text" id="searchCourse" class="form-control glass-input" placeholder="Например: Python..." aria-label="Текстовый поиск по курсам">
+                        </div>
+                        <div class="mb-3">
+                            <label for="categoryFilter" class="form-label text-white-50">Направление</label>
+                            <select id="categoryFilter" class="form-select glass-input text-white" aria-label="Выбор направления">
+                                <option value="">Все направления</option>
+                                <option value="Frontend">Frontend</option>
+                                <option value="Backend">Backend</option>
+                                <option value="Data Science">Data Science</option>
+                                <option value="AI">AI / Deep Learning</option>
+                            </select>
+                        </div>
+                        <div class="mb-4 mt-4">
+                            <label for="priceRange" class="form-label text-white-50 d-flex justify-content-between w-100">
+                                <span>Цена</span><span id="priceValue" class="text-white fw-bold">До 100 000 ₽</span>
+                            </label>
+                            <input type="range" class="form-range" min="0" max="150000" step="5000" value="100000" id="priceRange" aria-label="Ползунок максимальной цены">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label text-white-50">Уровень</label>
+                            <div class="form-check mb-2 d-flex align-items-center gap-2">
+                                <input class="form-check-input glass-input m-0" type="checkbox" id="lvl1" value="lvl1" aria-label="Уровень Junior">
+                                <label class="form-check-label" for="lvl1">Junior</label>
+                            </div>
+                            <div class="form-check mb-2 d-flex align-items-center gap-2">
+                                <input class="form-check-input glass-input m-0" type="checkbox" id="lvl2" value="lvl2" aria-label="Уровень Middle">
+                                <label class="form-check-label" for="lvl2">Middle</label>
+                            </div>
+                            <div class="form-check d-flex align-items-center gap-2">
+                                <input class="form-check-input glass-input m-0" type="checkbox" id="lvl3" value="lvl3" aria-label="Уровень Senior">
+                                <label class="form-check-label" for="lvl3">Senior</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn glass-btn w-100 py-2" aria-label="Применить фильтры">Применить</button>
+                    </form>
+                </div>
+            </aside>
+            <section class="col-lg-9" aria-label="Список курсов">
+                <h2 class="visually-hidden">Доступные курсы</h2>
+                
+                <div class="row g-4" id="coursesContainer">
+                    <div class="col-12 text-center mt-5" aria-live="polite"><span class="spinner-border text-primary" role="status"></span> Загрузка...</div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

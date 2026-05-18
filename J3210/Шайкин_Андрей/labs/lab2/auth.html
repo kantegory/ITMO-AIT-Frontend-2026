@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход и Регистрация | NexusEdu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="d-flex align-items-center justify-content-center vh-100">
+    <div class="bg-blob-1"></div>
+    <div class="bg-blob-2"></div>
+    <main class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="glass p-5">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1 class="fw-bold mb-0"><svg width="40" height="40" class="me-2"><use href="img/sprite.svg#icon-logo"></use></svg>NexusEdu</h1>
+                        <button id="themeToggle" class="btn btn-sm btn-outline-secondary rounded-pill" aria-label="Переключить тему"><svg width="18" height="18"><use href="img/sprite.svg#icon-theme"></use></svg><span>Тема</span></button>
+                    </div>
+                    <ul class="nav nav-pills nav-justified mb-4" id="pills-tab" role="tablist" aria-label="Вкладки авторизации">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active fw-bold" id="tab-login" data-bs-toggle="pill" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">Вход</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link fw-bold" id="tab-register" data-bs-toggle="pill" data-bs-target="#register" type="button" role="tab" aria-controls="register" aria-selected="false">Регистрация</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="tab-login">
+                            <form onsubmit="login(event)" aria-label="Форма входа">
+                                <input type="email" name="email" class="form-control glass-input mb-3 py-2" placeholder="Email" aria-label="Введите Email" required>
+                                <input type="password" name="password" class="form-control glass-input mb-4 py-2" placeholder="Пароль" aria-label="Введите пароль" required>
+                                <button type="submit" class="btn glass-btn w-100 py-2 fs-5">Войти</button>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="tab-register">
+                            <form onsubmit="register(event)" aria-label="Форма регистрации">
+                                <input type="text" name="firstName" class="form-control glass-input mb-3 py-2" placeholder="Имя" aria-label="Ваше имя" required>
+                                <input type="text" name="lastName" class="form-control glass-input mb-3 py-2" placeholder="Фамилия" aria-label="Ваша фамилия" required>
+                                <input type="email" name="email" class="form-control glass-input mb-3 py-2" placeholder="Email" aria-label="Ваш Email" required>
+                                <input type="password" name="password" class="form-control glass-input mb-4 py-2" placeholder="Пароль" aria-label="Придумайте пароль" required>
+                                <button type="submit" class="btn glass-btn w-100 py-2 fs-5">Создать аккаунт</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шаблон Урока | NexusEdu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-blob-1"></div>
+    <div class="bg-blob-2"></div>
+
+    <header>
+        <nav class="navbar glass m-3 px-4 py-2 d-flex justify-content-between" aria-label="Навигация по уроку">
+            <div>
+                <a class="navbar-brand text-white fw-bold fs-6" href="profile.html"><span class="fs-4 align-middle me-2" aria-hidden="true">←</span> Вернуться в кабинет</a>
+                <span class="text-white-50 d-none d-md-inline fw-bold ms-3">Шаблон: Просмотр курса</span>
+            </div>
+            <button id="themeToggle" class="btn btn-sm btn-outline-secondary rounded-pill" aria-label="Переключить тему"><svg width="18" height="18"><use href="img/sprite.svg#icon-theme"></use></svg><span>Тема</span></button>
+        </nav>
+    </header>
+
+    <main class="container mt-4 mb-5">
+        <div class="row g-4 flex-column-reverse flex-lg-row">
+            <section class="col-lg-8" aria-label="Основной контент урока">
+                <div class="glass mb-4 overflow-hidden position-relative" style="aspect-ratio: 16/9; background: #000;">
+                    <img src="img/video-cover.jpg" class="w-100 h-100 opacity-50" style="object-fit: cover;" alt="Заставка видео-лекции">
+                    <div class="position-absolute top-50 start-50 translate-middle">
+                        <button class="btn rounded-circle d-flex align-items-center justify-content-center glass-hover" aria-label="Воспроизвести видео" style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); width: 70px; height: 70px; border: 1px solid rgba(255,255,255,0.4);">
+                            <span class="fs-2 text-white ps-1" aria-hidden="true"><svg width="30" height="30" class="ms-1"><use href="img/sprite.svg#icon-play"></use></svg></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass p-4">
+                    <h1 class="fs-3 fw-bold mb-4">Урок 5: Выбранная тема</h1>
+                    <ul class="nav nav-tabs border-secondary border-opacity-25 mb-4" id="lessonTabs" role="tablist">
+                        <li class="nav-item" role="presentation"><button class="nav-link active bg-transparent border-0 border-bottom border-primary border-3 text-white fw-bold" data-bs-toggle="tab" data-bs-target="#desc" role="tab" aria-selected="true">Теория</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link bg-transparent border-0 text-white-50" data-bs-toggle="tab" data-bs-target="#discuss" role="tab" aria-selected="false">Обсуждение</button></li>
+                    </ul>
+
+                    <div class="tab-content text-white-50 lh-lg">
+                        <div class="tab-pane fade show active" id="desc" role="tabpanel">
+                            <p>В этом уроке мы разберем основные концепции. Вы научитесь:</p>
+                            <ul><li>Понимать архитектуру</li><li>Писать чистый код</li></ul>
+                            <a href="#" class="btn btn-sm btn-outline-info rounded-pill px-3 mt-3" aria-label="Скачать презентацию в формате PDF"><svg width="16" height="16" class="me-1"><use href="img/sprite.svg#icon-file"></use></svg> Презентация.pdf</a>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="discuss" role="tabpanel">
+                            <form class="d-flex gap-3 mb-4" aria-label="Форма отправки вопроса">
+                                <div class="rounded-circle default-avatar flex-shrink-0" style="width:50px; height:50px; font-size: 1.5rem;" aria-hidden="true"><svg width="50%" height="50%"><use href="img/sprite.svg#icon-user"></use></svg></div>
+                                <div class="w-100">
+                                    <input type="text" class="form-control glass-input mb-2" placeholder="Задайте вопрос преподавателю..." aria-label="Текст вопроса">
+                                    <button type="submit" class="btn glass-btn btn-sm px-4" aria-label="Отправить вопрос">Отправить</button>
+                                </div>
+                            </form>
+                            <article class="d-flex gap-3 border-top border-secondary border-opacity-25 pt-3">
+                                <div class="rounded-circle default-avatar flex-shrink-0" style="width:40px; height:40px; font-size: 1.2rem;" aria-hidden="true"><svg width="50%" height="50%"><use href="img/sprite.svg#icon-user"></use></svg></div>
+                                <div>
+                                    <h4 class="text-white mb-1 small fw-bold">Александр Смирнов <span class="text-white-50 ms-2 fw-normal">2 часа назад</span></h4>
+                                    <p class="small mb-0">Какую версию использовать для старта?</p>
+                                    <div class="d-flex gap-2 mt-2 align-items-center"><span class="badge bg-primary">Ответ:</span><span class="small">Используйте всегда самую последнюю стабильную.</span></div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="col-lg-4" aria-label="Оглавление курса">
+                <div class="glass p-4 h-100">
+                    <h2 class="fs-5 fw-bold mb-4">Содержание</h2>
+                    <div class="accordion" id="courseAccordion">
+                        <div class="accordion-item bg-transparent border-0 mb-2">
+                            <h3 class="accordion-header fs-6">
+                                <button class="accordion-button glass-input text-white shadow-none" style="background: rgba(37, 99, 235, 0.2) !important;" type="button" data-bs-toggle="collapse" data-bs-target="#mod1" aria-expanded="true">Модуль 1</button>
+                            </h3>
+                            <div id="mod1" class="accordion-collapse collapse show" data-bs-parent="#courseAccordion">
+                                <nav class="accordion-body p-2" aria-label="Список уроков модуля 1">
+                                    <a href="#" class="d-block text-info fw-bold text-decoration-none p-2 rounded" style="background: rgba(255,255,255,0.05);" aria-current="page"><span aria-hidden="true"><svg width="30" height="30" class="ms-1"><use href="img/sprite.svg#icon-play"></use></svg></span> 5. Выбранная тема</a>
+                                    <a href="#" class="d-block text-white-50 text-decoration-none p-2 rounded mt-1">6. Практика</a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        const tabs = document.querySelectorAll('button[data-bs-toggle="tab"]');
+        tabs.forEach(tab => {
+            tab.addEventListener('show.bs.tab', (e) => {
+                tabs.forEach(t => { t.classList.remove('text-white', 'fw-bold', 'border-bottom', 'border-primary', 'border-3'); t.classList.add('text-white-50'); });
+                e.target.classList.remove('text-white-50'); e.target.classList.add('text-white', 'fw-bold', 'border-bottom', 'border-primary', 'border-3');
+            });
+        });
+    </script>
+</body>
+</html>

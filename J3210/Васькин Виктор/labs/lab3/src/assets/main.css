@@ -1,0 +1,166 @@
+:root {
+    --bg-main: #0f172a;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --nav-bg: rgba(15, 23, 42, 0.85);
+    --nav-border: #1e293b;
+    --neon-primary: #7e22ce;
+    --neon-hover: #6b21a8;
+    --neon-shadow: rgba(168, 85, 247, 0.6);
+    --input-placeholder: #64748b;
+    --input-focus-bg: #1e293b;
+    --border-color: #334155;
+    --card-bg: #1e293b;
+    --card-hover-shadow: rgba(0, 0, 0, 0.4);
+    --tab-color: #94a3b8;
+    --tab-active-border: #334155;
+}[data-theme="light"] {
+    --bg-main: #f8fafc;
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --nav-bg: rgba(255, 255, 255, 0.9);
+    --nav-border: #e2e8f0;
+    --neon-primary: #9333ea;
+    --neon-hover: #7e22ce;
+    --neon-shadow: rgba(147, 51, 234, 0.3);
+    --input-placeholder: #94a3b8;
+    --input-focus-bg: #ffffff;
+    --border-color: #cbd5e1;
+    --card-bg: #ffffff;
+    --card-hover-shadow: rgba(0, 0, 0, 0.1);
+    --tab-color: #64748b;
+    --tab-active-border: #cbd5e1;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--bg-main); 
+    color: var(--text-main);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+[data-theme="light"] .card.bg-dark,
+[data-theme="light"] .auth-card,
+[data-theme="light"] .filter-top-bar,
+[data-theme="light"] .form-control.bg-dark,[data-theme="light"] .form-select.bg-dark,
+[data-theme="light"] .modal-content.bg-dark { 
+    background-color: var(--card-bg) !important; 
+}[data-theme="light"] .text-white { color: var(--text-main) !important; }[data-theme="light"] .text-white-50 { color: var(--text-muted) !important; }[data-theme="light"] .border-secondary { border-color: var(--border-color) !important; }
+[data-theme="light"] .btn-outline-light { border-color: var(--border-color); color: var(--text-main); }
+[data-theme="light"] .btn-outline-light:hover { background-color: #e2e8f0; color: var(--text-main); }
+[data-theme="light"] .dropdown-menu-dark { background-color: var(--card-bg); border-color: var(--border-color); }
+[data-theme="light"] .dropdown-menu-dark .dropdown-item { color: var(--text-main); }
+[data-theme="light"] .dropdown-menu-dark .dropdown-item:hover { background-color: #f1f5f9; color: var(--text-main); }
+[data-theme="light"] .navbar-toggler-icon { filter: invert(1); }
+
+[data-theme="light"] .table-dark {
+    --bs-table-bg: var(--card-bg);
+    --bs-table-color: var(--text-main);
+    --bs-table-border-color: var(--border-color);
+    --bs-table-hover-bg: rgba(147, 51, 234, 0.05);
+    --bs-table-hover-color: var(--text-main);
+}
+[data-theme="light"] .ratio > img.bg-dark { background-color: var(--card-bg) !important; }
+[data-theme="light"] .ratio > div.bg-dark.bg-opacity-50 { background-color: rgba(0, 0, 0, 0.4) !important; }
+
+.custom-navbar {
+    background-color: var(--nav-bg); 
+    backdrop-filter: blur(12px); 
+    border-bottom: 1px solid var(--nav-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.neon-text {
+    color: var(--neon-primary);
+    text-shadow: 0 0 15px var(--neon-shadow);
+}
+
+.btn-neon {
+    background-color: var(--neon-primary); 
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-neon:hover {
+    background-color: var(--neon-hover);
+    color: white;
+    box-shadow: 0 0 20px var(--neon-shadow); 
+    transform: translateY(-2px); 
+}
+
+.form-control::placeholder { color: var(--input-placeholder); }
+.form-control:focus {
+    background-color: var(--input-focus-bg);
+    color: var(--text-main);
+    border-color: var(--neon-primary);
+    box-shadow: 0 0 0 0.25rem rgba(168, 85, 247, 0.25);
+}
+
+.custom-toggler {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+}
+
+.auth-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 30px var(--card-hover-shadow);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.text-neon { color: var(--neon-primary); text-decoration: none; transition: color 0.3s ease; }
+.text-neon:hover { color: var(--neon-hover); text-decoration: underline; }
+
+.filter-top-bar {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.course-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border: 1px solid var(--border-color) !important;
+    background-color: var(--card-bg) !important;
+}
+.course-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px var(--card-hover-shadow);
+    border-color: var(--neon-primary) !important; 
+}
+
+.bg-neon { background-color: var(--neon-primary); color: white; }
+
+.image-placeholder {
+    height: 180px;
+    object-fit: cover;
+    background-color: var(--bg-main);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.custom-range::-webkit-slider-thumb { background: var(--neon-primary); }
+.custom-range::-webkit-slider-thumb:active { background: var(--neon-hover); }
+
+.custom-tabs { border-bottom: 2px solid var(--tab-active-border); }
+.custom-tabs .nav-link { color: var(--tab-color); border: none; padding-bottom: 12px; margin-bottom: -2px; }
+.custom-tabs .nav-link:hover { color: var(--text-main); border: none; }
+.custom-tabs .nav-link.active { color: var(--neon-primary) !important; border-bottom: 2px solid var(--neon-primary) !important; }
+
+.custom-list-group .list-group-item:hover { background-color: rgba(168, 85, 247, 0.05) !important; cursor: pointer; }
+
+.progress { background-color: var(--border-color) !important; border-radius: 10px; }
+.progress-bar.bg-neon {
+    background-color: var(--neon-primary) !important;
+    border-radius: 10px;
+    box-shadow: 0 0 10px var(--neon-shadow);
+}
+
+.visually-hidden {
+    position: absolute !important; width: 1px !important; height: 1px !important;
+    padding: 0 !important; margin: -1px !important; overflow: hidden !important;
+    clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important;
+}

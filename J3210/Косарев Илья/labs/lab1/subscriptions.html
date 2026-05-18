@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Мои подписки | MLShare</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+    
+    <header class="navbar navbar-expand-md">
+        <div class="container-fluid">
+            
+            <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <a class="navbar-brand d-none d-md-inline" href="index.html">
+                <h2 class="fw-bolder"> MLShare </h2>
+            </a>
+            
+            <div class="dropdown ms-auto">
+                <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="userMenuToggle" data-bs-toggle="dropdown">
+                    <img src="https://www.placekittens.com/32/32" alt="Аватар пользователя" width="32" height="32" class="rounded-circle me-2">
+                    <span>Иван Иванов</span>
+                </a>
+                
+                <ul class="dropdown-menu dropdown-menu-dark shadow" id="userMenuDropdown">
+                    <li><a class="dropdown-item" href="index.html">Личный кабинет</a></li>
+                    <li><a class="dropdown-item" href="#">Настройки</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="login.html">Выйти</a></li>
+                </ul>
+            </div>
+            
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row" id="subscriptionsLayoutRow">
+            
+            <aside class="col-md-3 col-lg-2 p-0 border-end" id="sidebarMenuWrapper">
+                <div class="offcanvas-md offcanvas-start" id="sidebarMenu">
+                    
+                    <div class="offcanvas-header">
+                        <h4 class="offcanvas-title" id="sidebarMenuLabel">
+                            <a class="navbar-brand" href="index.html">MLShare</a>
+                        </h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu"></button>
+                    </div>
+
+                    <nav class="offcanvas-body p-0 sidebar-menu-scroll-area">
+                        <ul class="nav flex-column w-100 nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="index.html">
+                                    <i class="bi bi-person-badge me-2"></i> Мой профиль
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold text-bg-secondary" href="subscriptions.html">
+                                    <i class="bi bi-bell me-2"></i> Подписки
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="hub.html">
+                                    <i class="bi bi-search me-2"></i> Хаб
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="#">
+                                    <i class="bi bi-cloud-upload me-2"></i> Загрузить
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+
+        <main class="col-md-9 col-lg-10 px-md-4">
+            <section class="mb-4">
+                <h1 class="display-5 fw-bold mb-2">Мои подписки</h1>
+                <p class="text-muted fs-5">
+                    Авторы и организации, за обновлениями которых вы следите.
+                </p>
+            </section>
+
+            <section class="mb-4" id="subscriptionsSearchSection">
+                <div class="input-group input-group-lg rounded subscriptions-search-group" id="subscriptionsSearchBar">
+                    <span class="input-group-text bg-white border-end-0 text-muted">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" class="form-control border-start-0 ps-0" id="subscriptionsSearchInput" placeholder="Поиск по имени или @username..." autocomplete="off">
+                </div>
+            </section>
+
+            <section id="subscriptionsSection">
+                <h5 class="mb-3 text-muted" id="subscriptionsCount">Вы подписаны на 3 аккаунта</h5>
+                
+                <ul class="list-group rounded-3" id="subscriptionsList">
+
+                    <li class="list-group-item d-flex flex-column flex-lg-row justify-content-between align-items-lg-center">
+                        
+                        <div class="d-flex align-items-center gap-2 mb-3 mb-md-0">
+                            <img src="https://placekittens.com/60/60" class="rounded-circle" width="60" height="60">
+                            <div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <h5 class="mb-0 fw-bold">Hugging Face</h5>
+                                    <span class="badge bg-primary">Организация</span>
+                                </div>
+                                <div class="text-muted small">@huggingface</div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex align-items-center justify-content-between justify-content-lg-end gap-3">
+                            <div class="d-flex gap-3 text-center">
+                                <div>
+                                    <div class="fw-bold">1.2k</div>
+                                    <div class="text-muted">Моделей</div>
+                                </div>
+                                <div class="vr"></div>
+                                <div>
+                                    <div class="fw-bold">850</div>
+                                    <div class="text-muted">Датасетов</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-danger btn-sm rounded-pill px-3 flex-shrink-0">
+                                <i class="bi bi-person-x-fill me-1"></i> Отписаться
+                            </button>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item d-flex flex-column flex-lg-row justify-content-between align-items-lg-center">
+                        
+                        <div class="d-flex align-items-center gap-2 mb-3 mb-md-0">
+                            <img src="https://placekittens.com/60/60" class="rounded-circle" width="60" height="60">
+                            <div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <h5 class="mb-0 fw-bold">Andrew_ng</h5>
+                                    <span class="badge bg-secondary">AI Researcher</span>
+                                </div>
+                                <div class="text-muted small">@andrew_ng</div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex align-items-center justify-content-between justify-content-lg-end gap-3">
+                            <div class="d-flex gap-3 text-center">
+                                <div>
+                                    <div class="fw-bold">230</div>
+                                    <div class="text-muted">Моделей</div>
+                                </div>
+                                <div class="vr"></div>
+                                <div>
+                                    <div class="fw-bold">85</div>
+                                    <div class="text-muted">Датасетов</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-danger btn-sm rounded-pill px-3 flex-shrink-0">
+                                <i class="bi bi-person-x-fill me-1"></i> Отписаться
+                            </button>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item d-flex flex-column flex-lg-row justify-content-between align-items-lg-center">
+                        
+                        <div class="d-flex align-items-center gap-2 mb-3 mb-md-0">
+                            <img src="https://placekittens.com/60/60" class="rounded-circle" width="60" height="60">
+                            <div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <h5 class="mb-0 fw-bold">Anne Lihyu</h5>
+                                    <span class="badge bg-secondary">Data Scientist</span>
+                                </div>
+                                <div class="text-muted small">@anne_lihyu</div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex align-items-center justify-content-between justify-content-lg-end gap-3">
+                            <div class="d-flex gap-3 text-center">
+                                <div>
+                                    <div class="fw-bold">172</div>
+                                    <div class="text-muted">Моделей</div>
+                                </div>
+                                <div class="vr"></div>
+                                <div>
+                                    <div class="fw-bold">8</div>
+                                    <div class="text-muted">Датасетов</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-danger btn-sm rounded-pill px-3 flex-shrink-0">
+                                <i class="bi bi-person-x-fill me-1"></i> Отписаться
+                            </button>
+                        </div>
+                    </li>
+
+                </ul>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
