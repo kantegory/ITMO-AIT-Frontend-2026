@@ -1,11 +1,6 @@
-<script setup lang="ts">
-defineProps<{
-  theme: 'light' | 'dark'
-}>()
-
-defineEmits<{
-  (e: 'toggle-theme'): void
-}>()
+<script setup>
+defineProps(['theme'])
+defineEmits(['toggle-theme'])
 </script>
 
 <template>
