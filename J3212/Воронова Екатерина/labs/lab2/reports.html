@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Отчёты — FinFlow</title>
 
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem("finflow-theme");
+      const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const theme = savedTheme || (systemDark ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
   <link rel="stylesheet" href="css/style.css" />
@@ -15,36 +24,43 @@
     <aside class="sidebar">
       <div class="sidebar-brand">FinFlow</div>
 
-      <nav class="sidebar-nav">
-        <a href="dashboard.html" class="sidebar-link"><i class="bi bi-grid"></i> Кабинет</a>
-        <a href="transactions.html" class="sidebar-link"><i class="bi bi-arrow-left-right"></i> Транзакции</a>
-        <a href="reports.html" class="sidebar-link active"><i class="bi bi-bar-chart-line"></i> Отчёты</a>
-        <a href="integrations.html" class="sidebar-link"><i class="bi bi-link-45deg"></i> Интеграции</a>
-        <a href="#" class="sidebar-link"><i class="bi bi-wallet2"></i> Счета</a>
-        <a href="#" class="sidebar-link"><i class="bi bi-pie-chart"></i> Бюджеты</a>
-        <a href="#" class="sidebar-link logout-link"><i class="bi bi-box-arrow-left"></i> Выход</a>
+      <nav class="sidebar-nav" aria-label="Боковое меню">
+        <a href="dashboard.html" class="sidebar-link"><i class="bi bi-grid" aria-hidden="true"></i> Кабинет</a>
+        <a href="transactions.html" class="sidebar-link"><i class="bi bi-arrow-left-right" aria-hidden="true"></i> Транзакции</a>
+        <a href="reports.html" class="sidebar-link active" aria-current="page"><i class="bi bi-bar-chart-line" aria-hidden="true"></i> Отчёты</a>
+        <a href="integrations.html" class="sidebar-link"><i class="bi bi-link-45deg" aria-hidden="true"></i> Интеграции</a>
+        <a href="#" class="sidebar-link" aria-disabled="true" tabindex="-1"><i class="bi bi-wallet2" aria-hidden="true"></i> Счета</a>
+        <a href="#" class="sidebar-link" aria-disabled="true" tabindex="-1"><i class="bi bi-pie-chart" aria-hidden="true"></i> Бюджеты</a>
+        <a href="#" class="sidebar-link logout-link"><i class="bi bi-box-arrow-left" aria-hidden="true"></i> Выход</a>
       </nav>
     </aside>
 
     <main class="main-content">
       <div class="topbar">
         <div class="topbar-search">
-          <i class="bi bi-search"></i>
-          <input type="text" placeholder="Поиск отчётов..." />
+          <i class="bi bi-search" aria-hidden="true"></i>
+          <input type="text" placeholder="Поиск отчётов..." aria-label="Поиск отчётов" />
         </div>
         <div class="topbar-user">
-          <button class="icon-btn"><i class="bi bi-bell"></i></button>
+          <button class="icon-btn theme-toggle" type="button" aria-label="Переключить тему">
+            <i class="bi bi-moon-stars" aria-hidden="true"></i>
+          </button>
+
+          <button class="icon-btn" aria-label="Уведомления">
+            <i class="bi bi-bell" aria-hidden="true"></i>
+          </button>
+
           <div class="user-chip">
-            <div class="avatar-circle">A</div>
+            <div class="avatar-circle" aria-hidden="true">A</div>
             <span>Anna</span>
           </div>
         </div>
       </div>
 
-      <section class="content-section">
+      <section class="content-section" aria-labelledby="reports-title">
         <div class="page-header">
           <div>
-            <h1>Отчёты и аналитика</h1>
+            <h1 id="reports-title">Отчёты и аналитика</h1>
             <p>Анализируйте доходы, расходы, категории и прогнозы бюджета</p>
           </div>
         </div>
@@ -86,7 +102,7 @@
                 <h5>Динамика расходов за 6 месяцев</h5>
               </div>
 
-              <div class="chart-placeholder huge">
+              <div class="chart-placeholder huge" aria-hidden="true">
                 <div class="bar h35"></div>
                 <div class="bar h50"></div>
                 <div class="bar h45"></div>
@@ -109,7 +125,9 @@
                     <span>Продукты</span>
                     <span>32%</span>
                   </div>
-                  <div class="progress custom-progress"><div class="progress-bar w-32"></div></div>
+                  <div class="progress custom-progress" aria-label="Расходы по категории Продукты 32 процентов">
+                    <div class="progress-bar w-32" role="progressbar" aria-valuenow="32" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
                 </div>
 
                 <div class="category-line">
@@ -117,7 +135,9 @@
                     <span>Транспорт</span>
                     <span>14%</span>
                   </div>
-                  <div class="progress custom-progress"><div class="progress-bar w-14"></div></div>
+                  <div class="progress custom-progress" aria-label="Расходы по категории Транспорт 14 процентов">
+                    <div class="progress-bar w-14" role="progressbar" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
                 </div>
 
                 <div class="category-line">
@@ -125,7 +145,9 @@
                     <span>Развлечения</span>
                     <span>18%</span>
                   </div>
-                  <div class="progress custom-progress"><div class="progress-bar w-18"></div></div>
+                  <div class="progress custom-progress" aria-label="Расходы по категории Развлечения 18 процентов">
+                    <div class="progress-bar w-18" role="progressbar" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
                 </div>
 
                 <div class="category-line">
@@ -133,7 +155,9 @@
                     <span>Подписки</span>
                     <span>10%</span>
                   </div>
-                  <div class="progress custom-progress"><div class="progress-bar w-10"></div></div>
+                  <div class="progress custom-progress" aria-label="Расходы по категории Подписки 10 процентов">
+                    <div class="progress-bar w-10" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
                 </div>
 
                 <div class="category-line">
@@ -141,7 +165,9 @@
                     <span>Коммунальные услуги</span>
                     <span>26%</span>
                   </div>
-                  <div class="progress custom-progress"><div class="progress-bar w-26"></div></div>
+                  <div class="progress custom-progress" aria-label="Расходы по категории Коммунальные услуги 26 процентов">
+                    <div class="progress-bar w-26" role="progressbar" aria-valuenow="26" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -181,17 +207,17 @@
               </div>
 
               <div class="recommendation-box">
-                <i class="bi bi-lightbulb"></i>
+                <i class="bi bi-lightbulb" aria-hidden="true"></i>
                 <p>Сократите траты на доставку и подписки, чтобы уменьшить расходы в следующем месяце.</p>
               </div>
 
               <div class="recommendation-box">
-                <i class="bi bi-lightbulb"></i>
+                <i class="bi bi-lightbulb" aria-hidden="true"></i>
                 <p>Увеличьте бюджет категории “Транспорт”, так как текущие расходы стабильно растут.</p>
               </div>
 
               <div class="recommendation-box">
-                <i class="bi bi-lightbulb"></i>
+                <i class="bi bi-lightbulb" aria-hidden="true"></i>
                 <p>Перенесите часть свободных средств на накопительный счёт для роста сбережений.</p>
               </div>
             </div>

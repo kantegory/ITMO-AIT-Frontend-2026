@@ -85,8 +85,15 @@ function renderBudgets(budgets) {
           <span>${item.category}</span>
           <span>${item.spent.toLocaleString("ru-RU")} / ${item.limit.toLocaleString("ru-RU")} ₽</span>
         </div>
-        <div class="progress custom-progress">
-          <div class="progress-bar" style="width:${percent}%"></div>
+        <div class="progress custom-progress" aria-label="Использование бюджета категории ${item.category}">
+          <div
+            class="progress-bar"
+            style="width:${percent}%"
+            role="progressbar"
+            aria-valuenow="${percent}"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
         </div>
       </div>
     `;

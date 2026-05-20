@@ -27,7 +27,10 @@ function renderIntegrations(items) {
           </span>
         </div>
         <p class="text-muted">${item.description}</p>
-        <button class="btn ${item.connected ? "btn-outline-main" : "btn-main"} w-100">
+        <button
+          class="btn ${item.connected ? "btn-outline-main" : "btn-main"} w-100"
+          aria-label="${item.connected ? `Отключить интеграцию ${item.name}` : `Подключить интеграцию ${item.name}`}"
+        >
           ${item.connected ? "Отключить" : "Подключить"}
         </button>
       </div>
@@ -45,7 +48,12 @@ function renderRules(items) {
         <strong>${item.condition} → ${item.category}</strong>
         <p>${item.description}</p>
       </div>
-      <button class="btn btn-sm btn-outline-main">Изменить</button>
+      <button
+        class="btn btn-sm btn-outline-main"
+        aria-label="Изменить правило ${item.condition} → ${item.category}"
+      >
+        Изменить
+      </button>
     </div>
   `).join("");
 }

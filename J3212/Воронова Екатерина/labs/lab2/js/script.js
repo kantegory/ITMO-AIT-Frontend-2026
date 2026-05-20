@@ -1,7 +1,52 @@
 document.addEventListener("DOMContentLoaded", () => {
+  initTheme();
   initPasswordToggles();
   initTransactionFilters();
 });
+
+function initTheme() {
+  const toggleButtons = document.querySelectorAll(".theme-toggle");
+
+  toggleButtons.forEach((button) => {
+    updateThemeButton(button);
+
+    button.addEventListener("click", () => {
+      const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+      const nextTheme = currentTheme === "dark" ? "light" : "dark";
+
+      document.documentElement.setAttribute("data-theme", nextTheme);
+      localStorage.setItem("finflow-theme", nextTheme);
+
+      document.querySelectorAll(".theme-toggle").forEach(updateThemeButton);
+    });
+  });
+}
+
+function updateThemeButton(button) {
+  const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+  const icon = button.querySelector("i");
+  const text = button.querySelector(".theme-toggle-text");
+
+  if (currentTheme === "dark") {
+    button.setAttribute("aria-label", "Переключить на светлую тему");
+    if (icon) {
+      icon.className = "bi bi-sun";
+      icon.setAttribute("aria-hidden", "true");
+    }
+    if (text) {
+      text.textContent = "Светлая тема";
+    }
+  } else {
+    button.setAttribute("aria-label", "Переключить на тёмную тему");
+    if (icon) {
+      icon.className = "bi bi-moon-stars";
+      icon.setAttribute("aria-hidden", "true");
+    }
+    if (text) {
+      text.textContent = "Тёмная тема";
+    }
+  }
+}
 
 function initPasswordToggles() {
   const toggleButtons = document.querySelectorAll(".btn-password-toggle");
@@ -15,12 +60,16 @@ function initPasswordToggles() {
 
       if (input.type === "password") {
         input.type = "text";
+        button.setAttribute("aria-pressed", "true");
+        button.setAttribute("aria-label", "Скрыть пароль");
         if (icon) {
           icon.classList.remove("bi-eye");
           icon.classList.add("bi-eye-slash");
         }
       } else {
         input.type = "password";
+        button.setAttribute("aria-pressed", "false");
+        button.setAttribute("aria-label", "Показать пароль");
         if (icon) {
           icon.classList.remove("bi-eye-slash");
           icon.classList.add("bi-eye");
@@ -43,9 +92,9 @@ function initTransactionFilters() {
   const resetButton = document.getElementById("resetFilters");
   const countElement = document.getElementById("transactionCount");
 
-  const rows = Array.from(table.querySelectorAll("tbody tr"));
-
   function applyFilters() {
+    const rows = Array.from(table.querySelectorAll("tbody tr"));
+
     const searchValue = searchInput.value.trim().toLowerCase();
     const categoryValue = categoryFilter.value;
     const minValue = minAmount.value ? Number(minAmount.value) : null;
