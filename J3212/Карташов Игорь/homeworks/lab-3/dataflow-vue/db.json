@@ -1,0 +1,54 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Igor",
+      "lastName": "Kartashov",
+      "email": "igor@company.com",
+      "password": "admin123",
+      "role": "Admin",
+      "team": "Data Engineering",
+      "timezone": "UTC+3",
+      "memberSince": "Jan 2025"
+    }
+  ],
+  "pipelines": [
+    { "id": 1, "name": "etl_users_daily", "schedule": "0 2 * * *", "lastRun": "2026-03-10 02:00", "status": "success" },
+    { "id": 2, "name": "sync_orders_warehouse", "schedule": "*/30 * * * *", "lastRun": "2026-03-10 11:30", "status": "success" },
+    { "id": 3, "name": "ml_training_pipeline", "schedule": "0 6 * * 1", "lastRun": "2026-03-09 06:00", "status": "running" },
+    { "id": 4, "name": "report_generator_v2", "schedule": "0 8 * * *", "lastRun": "2026-03-10 08:00", "status": "failed" },
+    { "id": 5, "name": "clickstream_ingestion", "schedule": "*/5 * * * *", "lastRun": "2026-03-10 11:45", "status": "success" },
+    { "id": 6, "name": "backup_postgres_daily", "schedule": "0 1 * * *", "lastRun": "2026-03-10 01:00", "status": "success" }
+  ],
+  "tasks": [
+    { "id": 1, "pipelineId": 1, "taskId": "task_001", "name": "extract_users", "icon": "database", "start": "2026-03-10 02:00:01", "duration": "14s", "status": "success", "order": 1 },
+    { "id": 2, "pipelineId": 1, "taskId": "task_002", "name": "validate_schema", "icon": "shield-check", "start": "2026-03-10 02:00:16", "duration": "3s", "status": "success", "order": 2 },
+    { "id": 3, "pipelineId": 1, "taskId": "task_003", "name": "transform_pii", "icon": "incognito", "start": "2026-03-10 02:00:19", "duration": "15s", "status": "success", "order": 3, "parallel": true },
+    { "id": 4, "pipelineId": 1, "taskId": "task_004", "name": "transform_geo", "icon": "geo-alt", "start": "2026-03-10 02:00:19", "duration": "19s", "status": "success", "order": 3, "parallel": true },
+    { "id": 5, "pipelineId": 1, "taskId": "task_005", "name": "load_warehouse", "icon": "cloud-upload", "start": "2026-03-10 02:00:53", "duration": "2m 48s", "status": "success", "order": 4 },
+    { "id": 6, "pipelineId": 1, "taskId": "task_006", "name": "notify_team", "icon": "send", "start": "2026-03-10 02:03:42", "duration": "1s", "status": "success", "order": 5 }
+  ],
+  "logs": [
+    { "id": 1, "pipelineId": 1, "time": "2026-03-10 02:00:01", "level": "info", "message": "Starting DAG run: etl_users_daily" },
+    { "id": 2, "pipelineId": 1, "time": "2026-03-10 02:00:01", "level": "info", "message": "Executing task: extract_users" },
+    { "id": 3, "pipelineId": 1, "time": "2026-03-10 02:00:15", "level": "ok", "message": "Extracted 142,387 rows from users table" },
+    { "id": 4, "pipelineId": 1, "time": "2026-03-10 02:00:16", "level": "info", "message": "Executing task: validate_schema" },
+    { "id": 5, "pipelineId": 1, "time": "2026-03-10 02:00:18", "level": "warn", "message": "Column 'phone' has 2,341 null values" },
+    { "id": 6, "pipelineId": 1, "time": "2026-03-10 02:00:19", "level": "info", "message": "Running parallel: transform_pii, transform_geo" },
+    { "id": 7, "pipelineId": 1, "time": "2026-03-10 02:00:38", "level": "ok", "message": "Transforms completed" },
+    { "id": 8, "pipelineId": 1, "time": "2026-03-10 02:00:53", "level": "info", "message": "Executing task: load_warehouse" },
+    { "id": 9, "pipelineId": 1, "time": "2026-03-10 02:03:41", "level": "ok", "message": "Loaded 142,387 rows into warehouse" },
+    { "id": 10, "pipelineId": 1, "time": "2026-03-10 02:03:43", "level": "ok", "message": "DAG completed. Duration: 4m 12s" }
+  ],
+  "runs": [
+    { "id": 1, "pipelineId": 1, "runId": "scheduled__2026-03-10", "start": "2026-03-10 02:00", "duration": "4m 12s", "status": "success" },
+    { "id": 2, "pipelineId": 1, "runId": "scheduled__2026-03-09", "start": "2026-03-09 02:00", "duration": "4m 05s", "status": "success" },
+    { "id": 3, "pipelineId": 1, "runId": "manual__2026-03-07", "start": "2026-03-07 15:22", "duration": "5m 01s", "status": "failed" },
+    { "id": 4, "pipelineId": 1, "runId": "scheduled__2026-03-07", "start": "2026-03-07 02:00", "duration": "4m 11s", "status": "success" }
+  ],
+  "connections": [
+    { "id": 1, "userId": 1, "name": "prod_postgres", "type": "PostgreSQL", "host": "prod-db:5432", "icon": "database", "iconColor": "primary", "status": "Active" },
+    { "id": 2, "userId": 1, "name": "aws_s3_data_lake", "type": "S3", "host": "s3://company-data-lake", "icon": "cloud", "iconColor": "warning", "status": "Active" },
+    { "id": 3, "userId": 1, "name": "slack_notifications", "type": "Slack", "host": "#data-alerts", "icon": "chat-dots", "iconColor": "danger", "status": "Expiring" }
+  ]
+}
