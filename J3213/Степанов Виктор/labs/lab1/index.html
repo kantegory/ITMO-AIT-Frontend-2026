@@ -9,6 +9,9 @@
     .page { display: none; }
     .page.active { display: block; }
     .navbar-brand { font-weight: bold; }
+    .model-card { cursor: pointer; }
+    .filter-section { margin-bottom: 16px; }
+    .filter-section h6 { font-weight: 600; margin-bottom: 8px; font-size: 14px; }
   </style>
 </head>
 <body>
@@ -18,6 +21,7 @@
   <div class="container">
     <a class="navbar-brand" href="#" onclick="navigate('home')">🧠 ModelHub</a>
     <div class="d-flex gap-2 align-items-center">
+      <a class="nav-link text-white" href="#" onclick="navigate('search')">Каталог</a>
       <button class="btn btn-outline-light btn-sm" onclick="navigate('login')">Войти</button>
       <button class="btn btn-primary btn-sm" onclick="navigate('register')">Регистрация</button>
     </div>
@@ -30,33 +34,30 @@
     <div class="container">
       <h1 class="mb-3">AI Model & Dataset Hub</h1>
       <p class="lead mb-4">Платформа для публикации и поиска моделей и датасетов машинного обучения</p>
-      <div class="d-flex gap-2">
-        <button class="btn btn-primary" onclick="navigate('login')">Войти</button>
-        <button class="btn btn-outline-light" onclick="navigate('register')">Зарегистрироваться</button>
+      <div class="row g-2 mb-4" style="max-width: 500px;">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Поиск..." id="heroSearchInput">
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-primary" onclick="heroSearch()">Найти</button>
+        </div>
+      </div>
+      <div class="d-flex gap-4">
+        <div><h4 class="mb-0">47K+</h4><small class="text-secondary">Моделей</small></div>
+        <div><h4 class="mb-0">12K+</h4><small class="text-secondary">Датасетов</small></div>
+        <div><h4 class="mb-0">180K+</h4><small class="text-secondary">Пользователей</small></div>
       </div>
     </div>
   </div>
-  <div class="container py-5">
-    <h4 class="mb-3">О платформе</h4>
-    <div class="row g-3">
-      <div class="col-md-4">
-        <div class="card p-3">
-          <h5>🧠 Модели</h5>
-          <p class="text-muted mb-0">Публикуйте и находите ML-модели с метриками и примерами использования</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card p-3">
-          <h5>📦 Датасеты</h5>
-          <p class="text-muted mb-0">Делитесь датасетами для обучения и тестирования моделей</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card p-3">
-          <h5>🤝 Сообщество</h5>
-          <p class="text-muted mb-0">Обсуждайте, форкайте и улучшайте работы других исследователей</p>
-        </div>
-      </div>
+  <div class="container py-4">
+    <h4 class="mb-3">Популярные модели</h4>
+    <div class="row g-3" id="homeModelsList"></div>
+    <h4 class="mt-5 mb-3">Категории</h4>
+    <div class="d-flex flex-wrap gap-2">
+      <button class="btn btn-outline-secondary btn-sm" onclick="goSearch('NLP')">NLP</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="goSearch('Computer Vision')">Computer Vision</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="goSearch('Tabular')">Tabular</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="goSearch('Audio')">Audio</button>
     </div>
   </div>
 </div>
@@ -81,9 +82,7 @@
       <div id="loginError" class="alert alert-danger d-none"></div>
       <button class="btn btn-primary w-100 mb-3" onclick="doLogin()">Войти</button>
       <hr>
-      <button class="btn btn-outline-secondary w-100 mb-2" onclick="alert('GitHub OAuth в разработке')">
-        Войти через GitHub
-      </button>
+      <button class="btn btn-outline-secondary w-100 mb-2" onclick="alert('GitHub OAuth в разработке')">Войти через GitHub</button>
       <p class="text-center mt-3 mb-0" style="font-size: 14px;">
         Нет аккаунта? <a href="#" onclick="navigate('register')">Зарегистрироваться</a>
       </p>
@@ -135,23 +134,184 @@
   </div>
 </div>
 
+<!-- ПОИСК -->
+<div id="page-search" class="page">
+  <div class="bg-dark text-white py-3">
+    <div class="container">
+      <h5 class="mb-2">Каталог моделей и датасетов</h5>
+      <div class="row g-2" style="max-width: 600px;">
+        <div class="col">
+          <input type="text" class="form-control" id="searchInput" placeholder="Поиск по названию..." oninput="doSearch()">
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-primary" onclick="doSearch()">Найти</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container py-4">
+    <div class="row g-4">
+      <div class="col-lg-3">
+        <div class="card p-3">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="mb-0 fw-bold">Фильтры</h6>
+            <button class="btn btn-link btn-sm p-0 text-decoration-none" onclick="clearFilters()">Сбросить</button>
+          </div>
+          <div class="filter-section">
+            <h6>Тип</h6>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="typeF" id="typeAll" value="all" checked onchange="doSearch()">
+              <label class="form-check-label" for="typeAll">Все</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="typeF" id="typeModel" value="model" onchange="doSearch()">
+              <label class="form-check-label" for="typeModel">Модели</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="typeF" id="typeDataset" value="dataset" onchange="doSearch()">
+              <label class="form-check-label" for="typeDataset">Датасеты</label>
+            </div>
+          </div>
+          <div class="filter-section">
+            <h6>Задача</h6>
+            <div class="form-check"><input class="form-check-input task-f" type="checkbox" value="NLP" id="fNLP" onchange="doSearch()"><label class="form-check-label" for="fNLP">NLP</label></div>
+            <div class="form-check"><input class="form-check-input task-f" type="checkbox" value="Computer Vision" id="fCV" onchange="doSearch()"><label class="form-check-label" for="fCV">Computer Vision</label></div>
+            <div class="form-check"><input class="form-check-input task-f" type="checkbox" value="Tabular" id="fTab" onchange="doSearch()"><label class="form-check-label" for="fTab">Tabular</label></div>
+            <div class="form-check"><input class="form-check-input task-f" type="checkbox" value="Audio" id="fAud" onchange="doSearch()"><label class="form-check-label" for="fAud">Audio</label></div>
+          </div>
+          <div class="filter-section">
+            <h6>Фреймворк</h6>
+            <div class="form-check"><input class="form-check-input fw-f" type="checkbox" value="PyTorch" id="fPT" onchange="doSearch()"><label class="form-check-label" for="fPT">PyTorch</label></div>
+            <div class="form-check"><input class="form-check-input fw-f" type="checkbox" value="TensorFlow" id="fTF" onchange="doSearch()"><label class="form-check-label" for="fTF">TensorFlow</label></div>
+            <div class="form-check"><input class="form-check-input fw-f" type="checkbox" value="scikit-learn" id="fSK" onchange="doSearch()"><label class="form-check-label" for="fSK">scikit-learn</label></div>
+          </div>
+          <div class="filter-section">
+            <h6>Лицензия</h6>
+            <div class="form-check"><input class="form-check-input lic-f" type="checkbox" value="MIT" id="fMIT" onchange="doSearch()"><label class="form-check-label" for="fMIT">MIT</label></div>
+            <div class="form-check"><input class="form-check-input lic-f" type="checkbox" value="Apache 2.0" id="fAP" onchange="doSearch()"><label class="form-check-label" for="fAP">Apache 2.0</label></div>
+            <div class="form-check"><input class="form-check-input lic-f" type="checkbox" value="CC BY 4.0" id="fCC" onchange="doSearch()"><label class="form-check-label" for="fCC">CC BY 4.0</label></div>
+          </div>
+          <div class="filter-section">
+            <h6>Сортировка</h6>
+            <select class="form-select form-select-sm" id="sortF" onchange="doSearch()">
+              <option value="stars">По звёздам</option>
+              <option value="downloads">По загрузкам</option>
+              <option value="date">По дате</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <small class="text-muted" id="resultsCount"></small>
+        <div class="row g-3 mt-1" id="searchResults"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+const MODELS = [
+  { id:1, type:'model', name:'ru-bert-base', owner:'yandex-research', task:'NLP', framework:'PyTorch', license:'Apache 2.0', stars:1240, downloads:18400, size:'440MB', desc:'BERT предобученный на русскоязычном корпусе 250GB', date:'2026-05-12' },
+  { id:2, type:'model', name:'efficientnet-b4-food', owner:'sber-ai', task:'Computer Vision', framework:'PyTorch', license:'MIT', stars:847, downloads:12300, size:'75MB', desc:'EfficientNet-B4 для классификации блюд (500 классов)', date:'2026-05-08' },
+  { id:3, type:'model', name:'catboost-churn-v2', owner:'vtector', task:'Tabular', framework:'scikit-learn', license:'MIT', stars:312, downloads:4200, size:'12MB', desc:'CatBoost для предсказания оттока клиентов, ROC-AUC 0.94', date:'2026-04-30' },
+  { id:4, type:'model', name:'whisper-ru-finetune', owner:'speechlab', task:'Audio', framework:'PyTorch', license:'Apache 2.0', stars:621, downloads:9100, size:'290MB', desc:'Whisper small файн-тюненный на русской речи, WER 8.3%', date:'2026-05-01' },
+  { id:5, type:'model', name:'llama3-ru-instruct', owner:'open-ru-llm', task:'NLP', framework:'PyTorch', license:'MIT', stars:3420, downloads:54000, size:'14GB', desc:'LLaMA-3 8B файн-тюн на русских инструкциях', date:'2026-05-15' },
+  { id:6, type:'dataset', name:'ru-news-clf', owner:'vtector', task:'NLP', framework:'', license:'CC BY 4.0', stars:198, downloads:3100, size:'2.3GB', desc:'400K русскоязычных новостных статей с метками (12 классов)', date:'2026-05-05' },
+  { id:7, type:'dataset', name:'wildberries-reviews', owner:'ecom-data', task:'NLP', framework:'', license:'CC BY 4.0', stars:445, downloads:8200, size:'890MB', desc:'2M отзывов с Wildberries с оценками и категориями', date:'2026-04-25' },
+  { id:8, type:'dataset', name:'road-signs-ru', owner:'autodrive-lab', task:'Computer Vision', framework:'', license:'MIT', stars:289, downloads:5600, size:'4.1GB', desc:'120K изображений дорожных знаков с разметкой YOLO/COCO', date:'2026-03-15' },
+];
+
+function fmtNum(n) { return n >= 1000 ? (n/1000).toFixed(1)+'K' : n; }
+
+function makeCard(m, col) {
+  return `<div class="${col}">
+    <div class="card model-card h-100 p-3">
+      <div class="d-flex justify-content-between align-items-start mb-2">
+        <div><small class="text-muted">@${m.owner}</small><h6 class="mb-0 fw-bold">${m.name}</h6></div>
+        <span class="badge ${m.type==='dataset'?'bg-warning text-dark':'bg-primary'}">${m.type==='dataset'?'Dataset':'Model'}</span>
+      </div>
+      <p class="text-muted mb-2" style="font-size:13px;">${m.desc}</p>
+      <div class="d-flex flex-wrap gap-1 mb-2">
+        <span class="badge bg-light text-dark border">${m.task}</span>
+        ${m.framework?`<span class="badge bg-light text-dark border">${m.framework}</span>`:''}
+        <span class="badge bg-light text-dark border">${m.license}</span>
+      </div>
+      <div class="d-flex gap-3 mt-auto pt-2 border-top" style="font-size:13px;">
+        <span>⭐ ${fmtNum(m.stars)}</span>
+        <span>📥 ${fmtNum(m.downloads)}</span>
+        <span class="ms-auto text-muted">${m.size}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
 function navigate(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
   window.scrollTo(0, 0);
+  if (page === 'home') renderHome();
+  if (page === 'search') setTimeout(doSearch, 50);
+}
+
+function heroSearch() {
+  const q = document.getElementById('heroSearchInput').value;
+  navigate('search');
+  setTimeout(() => { document.getElementById('searchInput').value = q; doSearch(); }, 100);
+}
+
+function goSearch(task) {
+  navigate('search');
+  setTimeout(() => {
+    document.querySelectorAll('.task-f').forEach(cb => { cb.checked = cb.value === task; });
+    doSearch();
+  }, 100);
+}
+
+function renderHome() {
+  const top = [...MODELS].filter(m => m.type==='model').sort((a,b) => b.stars-a.stars).slice(0,3);
+  document.getElementById('homeModelsList').innerHTML = top.map(m => makeCard(m,'col-md-4')).join('');
+}
+
+function doSearch() {
+  const q = (document.getElementById('searchInput')?.value||'').toLowerCase();
+  const type = document.querySelector('input[name="typeF"]:checked')?.value||'all';
+  const tasks = [...document.querySelectorAll('.task-f:checked')].map(c=>c.value);
+  const fws = [...document.querySelectorAll('.fw-f:checked')].map(c=>c.value);
+  const lics = [...document.querySelectorAll('.lic-f:checked')].map(c=>c.value);
+  const sort = document.getElementById('sortF')?.value||'stars';
+
+  let results = MODELS.filter(m => {
+    if (type!=='all' && m.type!==type) return false;
+    if (tasks.length && !tasks.includes(m.task)) return false;
+    if (fws.length && m.type==='model' && !fws.includes(m.framework)) return false;
+    if (lics.length && !lics.includes(m.license)) return false;
+    if (q && !m.name.includes(q) && !m.desc.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  if (sort==='stars') results.sort((a,b)=>b.stars-a.stars);
+  else if (sort==='downloads') results.sort((a,b)=>b.downloads-a.downloads);
+  else results.sort((a,b)=>b.date.localeCompare(a.date));
+
+  document.getElementById('resultsCount').textContent = `Найдено: ${results.length}`;
+  document.getElementById('searchResults').innerHTML = results.length
+    ? results.map(m=>makeCard(m,'col-md-6 col-xl-4')).join('')
+    : '<div class="col-12"><p class="text-muted">Ничего не найдено.</p></div>';
+}
+
+function clearFilters() {
+  document.querySelectorAll('.task-f,.fw-f,.lic-f').forEach(c=>c.checked=false);
+  document.getElementById('typeAll').checked=true;
+  document.getElementById('searchInput').value='';
+  doSearch();
 }
 
 function doLogin() {
   const email = document.getElementById('loginEmail').value.trim();
   const pass = document.getElementById('loginPass').value;
   const errEl = document.getElementById('loginError');
-  if (!email || !pass) {
-    errEl.textContent = 'Заполните все поля';
-    errEl.classList.remove('d-none');
-    return;
-  }
+  if (!email||!pass) { errEl.textContent='Заполните все поля'; errEl.classList.remove('d-none'); return; }
   errEl.classList.add('d-none');
   alert('Вход выполнен! (в разработке)');
 }
@@ -163,26 +323,14 @@ function doRegister() {
   const pass2 = document.getElementById('regPass2').value;
   const agree = document.getElementById('agreeTerms').checked;
   const errEl = document.getElementById('regError');
-
-  if (!name || !email || !pass) {
-    errEl.textContent = 'Заполните все поля';
-    errEl.classList.remove('d-none');
-    return;
-  }
-  if (pass !== pass2) {
-    errEl.textContent = 'Пароли не совпадают';
-    errEl.classList.remove('d-none');
-    return;
-  }
-  if (!agree) {
-    errEl.textContent = 'Примите условия использования';
-    errEl.classList.remove('d-none');
-    return;
-  }
+  if (!name||!email||!pass) { errEl.textContent='Заполните все поля'; errEl.classList.remove('d-none'); return; }
+  if (pass!==pass2) { errEl.textContent='Пароли не совпадают'; errEl.classList.remove('d-none'); return; }
+  if (!agree) { errEl.textContent='Примите условия использования'; errEl.classList.remove('d-none'); return; }
   errEl.classList.add('d-none');
   alert('Аккаунт создан! (в разработке)');
 }
 
+renderHome();
 navigate('home');
 </script>
 </body>
