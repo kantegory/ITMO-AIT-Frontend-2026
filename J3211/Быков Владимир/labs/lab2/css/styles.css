@@ -4,7 +4,7 @@
     --surface-soft-bg: #F3F1ED;
 
     --text-main: #1F1F1D;
-    --text-muted: #8A8A8A;
+    --text-muted: #747474;
 
     --accent: #A0937D;
     --accent-hover: #877B68;
@@ -112,6 +112,19 @@ a:hover {
     box-shadow: 0 0 0 0.25rem rgba(160, 147, 125, 0.25);
 }
 
+.form-message {
+    min-height: 1.5rem;
+    color: var(--text-muted);
+}
+
+.form-message.is-error {
+    color: #A94442;
+}
+
+.form-message.is-success {
+    color: #3C763D;
+}
+
 .list-group-item {
     color: var(--text-main);
     background-color: var(--surface-bg);
@@ -154,8 +167,11 @@ a:hover {
     height: 16%;
 }
 
-.project-card.is-hidden {
-    display: none;
+.empty-state {
+    padding: 1rem;
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    color: var(--text-muted);
 }
 
 @media (max-width: 576px) {
