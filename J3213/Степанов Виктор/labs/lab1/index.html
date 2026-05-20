@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ModelHub</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .page { display: none; }
+    .page.active { display: block; }
+    .navbar-brand { font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#" onclick="navigate('home')">🧠 ModelHub</a>
+    <div class="d-flex gap-2 align-items-center">
+      <button class="btn btn-outline-light btn-sm" onclick="navigate('login')">Войти</button>
+      <button class="btn btn-primary btn-sm" onclick="navigate('register')">Регистрация</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ГЛАВНАЯ -->
+<div id="page-home" class="page">
+  <div class="bg-dark text-white py-5">
+    <div class="container">
+      <h1 class="mb-3">AI Model & Dataset Hub</h1>
+      <p class="lead mb-4">Платформа для публикации и поиска моделей и датасетов машинного обучения</p>
+      <div class="d-flex gap-2">
+        <button class="btn btn-primary" onclick="navigate('login')">Войти</button>
+        <button class="btn btn-outline-light" onclick="navigate('register')">Зарегистрироваться</button>
+      </div>
+    </div>
+  </div>
+  <div class="container py-5">
+    <h4 class="mb-3">О платформе</h4>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="card p-3">
+          <h5>🧠 Модели</h5>
+          <p class="text-muted mb-0">Публикуйте и находите ML-модели с метриками и примерами использования</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3">
+          <h5>📦 Датасеты</h5>
+          <p class="text-muted mb-0">Делитесь датасетами для обучения и тестирования моделей</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3">
+          <h5>🤝 Сообщество</h5>
+          <p class="text-muted mb-0">Обсуждайте, форкайте и улучшайте работы других исследователей</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ВХОД -->
+<div id="page-login" class="page">
+  <div class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 56px); background: #f8f9fa;">
+    <div class="card p-4" style="width: 380px;">
+      <h4 class="mb-4 text-center">Вход</h4>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" id="loginEmail" placeholder="you@example.com">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Пароль</label>
+        <input type="password" class="form-control" id="loginPass" placeholder="Пароль">
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="rememberMe">
+        <label class="form-check-label" for="rememberMe">Запомнить меня</label>
+      </div>
+      <div id="loginError" class="alert alert-danger d-none"></div>
+      <button class="btn btn-primary w-100 mb-3" onclick="doLogin()">Войти</button>
+      <hr>
+      <button class="btn btn-outline-secondary w-100 mb-2" onclick="alert('GitHub OAuth в разработке')">
+        Войти через GitHub
+      </button>
+      <p class="text-center mt-3 mb-0" style="font-size: 14px;">
+        Нет аккаунта? <a href="#" onclick="navigate('register')">Зарегистрироваться</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- РЕГИСТРАЦИЯ -->
+<div id="page-register" class="page">
+  <div class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 56px); background: #f8f9fa;">
+    <div class="card p-4" style="width: 420px;">
+      <h4 class="mb-4 text-center">Регистрация</h4>
+      <div class="row g-2 mb-3">
+        <div class="col">
+          <label class="form-label">Имя</label>
+          <input type="text" class="form-control" id="regName" placeholder="Иван">
+        </div>
+        <div class="col">
+          <label class="form-label">Фамилия</label>
+          <input type="text" class="form-control" id="regSurname" placeholder="Иванов">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input type="text" class="form-control" id="regUsername" placeholder="ivan123">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" id="regEmail" placeholder="you@example.com">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Пароль</label>
+        <input type="password" class="form-control" id="regPass" placeholder="Минимум 8 символов">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Подтвердите пароль</label>
+        <input type="password" class="form-control" id="regPass2" placeholder="Повторите пароль">
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="agreeTerms">
+        <label class="form-check-label" for="agreeTerms">Согласен с условиями использования</label>
+      </div>
+      <div id="regError" class="alert alert-danger d-none"></div>
+      <button class="btn btn-primary w-100" onclick="doRegister()">Создать аккаунт</button>
+      <p class="text-center mt-3 mb-0" style="font-size: 14px;">
+        Уже есть аккаунт? <a href="#" onclick="navigate('login')">Войти</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function navigate(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginError');
+  if (!email || !pass) {
+    errEl.textContent = 'Заполните все поля';
+    errEl.classList.remove('d-none');
+    return;
+  }
+  errEl.classList.add('d-none');
+  alert('Вход выполнен! (в разработке)');
+}
+
+function doRegister() {
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass = document.getElementById('regPass').value;
+  const pass2 = document.getElementById('regPass2').value;
+  const agree = document.getElementById('agreeTerms').checked;
+  const errEl = document.getElementById('regError');
+
+  if (!name || !email || !pass) {
+    errEl.textContent = 'Заполните все поля';
+    errEl.classList.remove('d-none');
+    return;
+  }
+  if (pass !== pass2) {
+    errEl.textContent = 'Пароли не совпадают';
+    errEl.classList.remove('d-none');
+    return;
+  }
+  if (!agree) {
+    errEl.textContent = 'Примите условия использования';
+    errEl.classList.remove('d-none');
+    return;
+  }
+  errEl.classList.add('d-none');
+  alert('Аккаунт создан! (в разработке)');
+}
+
+navigate('home');
+</script>
+</body>
+</html>
