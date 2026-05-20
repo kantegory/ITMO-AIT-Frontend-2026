@@ -2,7 +2,9 @@ import { login } from '../api/auth';
 import { extractErrorMessage } from '../api/client';
 import { redirectIfAuthed } from '../utils/guard';
 import { mustGet } from '../utils/render';
+import { initTheme } from '../utils/theme';
 
+initTheme();
 redirectIfAuthed();
 
 const form = mustGet<HTMLFormElement>('#loginForm');

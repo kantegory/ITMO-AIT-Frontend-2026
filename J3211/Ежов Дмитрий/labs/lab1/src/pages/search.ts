@@ -6,6 +6,7 @@ import type { Priority, Project, Task, TaskStatus, User } from '../types/domain'
 import type { TaskFilters } from '../types/api';
 import { debounce } from '../utils/debounce';
 import { requireAuth } from '../utils/guard';
+import { initTheme } from '../utils/theme';
 import {
   escapeHtml,
   formatDate,
@@ -14,6 +15,7 @@ import {
   statusLabel,
 } from '../utils/render';
 
+initTheme();
 const user = requireAuth();
 
 renderUserCard(user);

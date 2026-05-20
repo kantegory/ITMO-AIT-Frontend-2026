@@ -5,6 +5,7 @@ import { getProjects } from '../api/projects';
 import { getTasks } from '../api/tasks';
 import type { Activity, Project, Task, User } from '../types/domain';
 import { requireAuth } from '../utils/guard';
+import { initTheme } from '../utils/theme';
 import {
   escapeHtml,
   formatDate,
@@ -14,6 +15,7 @@ import {
   statusLabel,
 } from '../utils/render';
 
+initTheme();
 const user = requireAuth();
 
 renderUserCard(user);

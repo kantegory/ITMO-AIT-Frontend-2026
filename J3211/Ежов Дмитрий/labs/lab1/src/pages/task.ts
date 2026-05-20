@@ -5,7 +5,9 @@ import { getTask, updateTask } from '../api/tasks';
 import type { Attachment, Priority, Subtask, Task, TaskStatus, User } from '../types/domain';
 import { requireAuth } from '../utils/guard';
 import { escapeHtml, formatDate, mustGet } from '../utils/render';
+import { initTheme } from '../utils/theme';
 
+initTheme();
 const user = requireAuth();
 
 renderUserCard(user);
