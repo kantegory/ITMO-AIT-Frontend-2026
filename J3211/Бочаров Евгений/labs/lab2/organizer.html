@@ -1,0 +1,635 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Организатор - MAX афиша</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<svg style="display: none;">
+    <use href="images/sprite.svg#icon-moon"></use>
+</svg>
+
+<!-- Навигация -->
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark" aria-label="Главная навигация">
+    <div class="container">
+        <a class="navbar-brand" href="index.html" aria-label="MAX афиша - на главную">MAX афиша</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Открыть меню навигации">
+            <span class="navbar-toggler-icon" aria-hidden="true"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                <li class="nav-item" data-auth-guest><a class="nav-link" href="login.html">Вход</a></li>
+                <li class="nav-item" data-auth-guest><a class="nav-link" href="register.html">Регистрация</a></li>
+                <li class="nav-item" data-auth-user><a class="nav-link" href="profile.html">Личный кабинет</a></li>
+                <li class="nav-item" data-auth-user data-role-organizer><a class="nav-link active" aria-current="page" href="organizer.html">Организатору</a></li>
+                <li class="nav-item" data-auth-user>
+                    <button class="nav-link btn btn-link text-decoration-none" id="logout-btn">Выйти</button>
+                </li>
+                <div class="d-flex">
+                    <button class="btn btn-outline-light theme-switch" type="button" aria-label="Переключить тему">
+                        <svg class="icon" aria-hidden="true"><use href="images/sprite.svg#icon-moon"></use></svg> Тёмная тема
+                    </button>
+                </div>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Основной контент -->
+<main class="container my-5" id="main-content">
+
+    <!-- Заголовок -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fs-2 mb-0">Панель организатора</h1>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createEventModal" aria-haspopup="dialog">
+            <svg class="icon me-1" aria-hidden="true"><use href="images/sprite.svg#icon-plus"></use></svg> Создать событие
+        </button>
+    </div>
+
+    <!-- Проверка доступа -->
+    <div id="organizer-access-error" class="alert alert-danger d-none" role="alert">
+        <svg class="icon me-2" aria-hidden="true"><use href="images/sprite.svg#icon-lock"></use></svg>
+        Доступ только для организаторов. <a href="index.html" class="alert-link">На главную</a>
+    </div>
+
+    <!-- Загрузка -->
+    <div id="organizer-loading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Загрузка...</span>
+        </div>
+        <p class="mt-3 text-muted">Загрузка данных...</p>
+    </div>
+
+    <!-- Контент панели -->
+    <div id="organizer-content" class="d-none">
+
+        <!-- Статистика -->
+        <div class="row mb-4">
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h6 class="card-subtitle text-muted mb-2">Всего мероприятий</h6>
+                        <p class="card-title fs-3 mb-0" id="stats-events-count">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h6 class="card-subtitle text-muted mb-2">Продано билетов</h6>
+                        <p class="card-title fs-3 mb-0" id="stats-tickets-count">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h6 class="card-subtitle text-muted mb-2">Выручка</h6>
+                        <p class="card-title fs-3 mb-0" id="stats-revenue">0 ₽</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вкладки -->
+        <ul class="nav nav-tabs mb-3" id="organizerTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="events-tab" data-bs-toggle="tab" data-bs-target="#events" type="button" role="tab">Мои мероприятия</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="analytics-tab" data-bs-toggle="tab" data-bs-target="#analytics" type="button" role="tab">Аналитика</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab">Настройки</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="organizerTabsContent">
+
+            <!-- Мои мероприятия -->
+            <div class="tab-pane fade show active" id="events" role="tabpanel">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover shadow-sm">
+                        <caption class="visually-hidden">Список моих мероприятий</caption>
+                        <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Событие</th>
+                            <th scope="col">Дата</th>
+                            <th scope="col">Место</th>
+                            <th scope="col">Продано</th>
+                            <th scope="col">Выручка</th>
+                            <th scope="col">Статус</th>
+                            <th scope="col">Действия</th>
+                        </tr>
+                        </thead>
+                        <tbody id="organizer-events-list">
+                        <!-- Загрузится через JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="organizer-events-empty" class="text-center py-4 text-muted d-none">
+                    <p>У вас пока нет мероприятий</p>
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createEventModal">
+                        + Создать первое событие
+                    </button>
+                </div>
+            </div>
+
+            <!-- Аналитика -->
+            <div class="tab-pane fade" id="analytics" role="tabpanel">
+                <div class="alert alert-info">
+                    <svg class="icon me-2" aria-hidden="true"><use href="images/sprite.svg#icon-chart"></use></svg>
+                    Графики и подробная аналитика будут доступны в следующей версии
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">Продажи по дням</div>
+                            <div class="card-body text-center py-5 text-muted">
+                                <svg class="icon icon-xxl mb-3"><use href="images/sprite.svg#icon-chart-bar"></use></svg>
+                                <p>Диаграмма будет здесь</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">Популярные события</div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush" id="popular-events-list">
+                                    <li class="list-group-item text-muted">Данные загружаются...</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Настройки -->
+            <div class="tab-pane fade" id="settings" role="tabpanel">
+                <form id="organizer-settings-form">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-header">Профиль организатора</div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Имя</label>
+                                    <input type="text" class="form-control" id="org-firstname" disabled>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Фамилия</label>
+                                    <input type="text" class="form-control" id="org-lastname" disabled>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" id="org-email" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Телефон для связи</label>
+                                <input type="tel" class="form-control" id="org-phone">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Название организации</label>
+                                <input type="text" class="form-control" id="org-company" placeholder="ООО «Пример»">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+<!-- Модальное окно: создание события -->
+<div class="modal fade" id="createEventModal" tabindex="-1" aria-labelledby="createEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="create-event-form">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createEventModalLabel">Новое событие</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="alert alert-warning d-none" id="create-event-auth-warning">
+                        Необходимо войти как организатор
+                    </div>
+
+                    <!-- Основная информация -->
+                    <h6 class="mb-3">Основная информация</h6>
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="event-title" class="form-label">Название события *</label>
+                            <input type="text" class="form-control" id="event-title" required minlength="3" maxlength="100">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="event-type" class="form-label">Тип *</label>
+                            <select class="form-select" id="event-type" required>
+                                <option value="">Выберите...</option>
+                                <option value="theater">Театр</option>
+                                <option value="concert">Концерт</option>
+                                <option value="standup">Стендап</option>
+                                <option value="festival">Фестиваль</option>
+                                <option value="other">Другое</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="event-description" class="form-label">Краткое описание *</label>
+                        <textarea class="form-control" id="event-description" rows="2" required maxlength="200"></textarea>
+                        <div class="form-text">Для карточки события (до 200 символов)</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="event-long-description" class="form-label">Полное описание</label>
+                        <textarea class="form-control" id="event-long-description" rows="4" maxlength="2000"></textarea>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="event-age" class="form-label">Возрастное ограничение</label>
+                            <select class="form-select" id="event-age">
+                                <option value="0+">0+</option>
+                                <option value="6+">6+</option>
+                                <option value="12+">12+</option>
+                                <option value="16+" selected>16+</option>
+                                <option value="18+">18+</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="event-duration" class="form-label">Длительность (мин)</label>
+                            <input type="number" class="form-control" id="event-duration" min="30" max="480" value="120">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="event-poster" class="form-label">URL постера</label>
+                            <input type="url" class="form-control" id="event-poster" placeholder="https://...">
+                        </div>
+                    </div>
+
+                    <!-- Место проведения -->
+                    <h6 class="mb-3 mt-4">Место проведения</h6>
+                    <div class="mb-3">
+                        <label for="venue-name" class="form-label">Название площадки *</label>
+                        <input type="text" class="form-control" id="venue-name" required>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="venue-address" class="form-label">Адрес *</label>
+                            <input type="text" class="form-control" id="venue-address" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="venue-metro" class="form-label">Метро</label>
+                            <input type="text" class="form-control" id="venue-metro" placeholder="м. Пример">
+                        </div>
+                    </div>
+
+                    <!-- Даты и цены -->
+                    <h6 class="mb-3 mt-4">Даты и цены</h6>
+                    <div class="mb-3">
+                        <label class="form-label">Дата и время *</label>
+                        <input type="datetime-local" class="form-control" id="event-datetime" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Категории билетов</label>
+                        <div id="prices-container">
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" placeholder="Название (напр. Партер)" name="price-name" required>
+                                <input type="number" class="form-control" placeholder="Цена, ₽" name="price-value" min="0" required>
+                                <button type="button" class="btn btn-outline-danger remove-price-btn">×</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" id="add-price-btn">+ Добавить категорию</button>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Создать событие</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно: редактирование события -->
+<div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="edit-event-form">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editEventModalLabel">Редактировать событие</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="edit-event-id">
+
+                    <div class="mb-3">
+                        <label for="edit-event-title" class="form-label">Название</label>
+                        <input type="text" class="form-control" id="edit-event-title" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit-event-description" class="form-label">Описание</label>
+                        <textarea class="form-control" id="edit-event-description" rows="2" required></textarea>
+                    </div>
+
+                    <!-- Остальные поля как в create-event-form -->
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <div class="container">
+        <span>&copy; 2026 eugeron52</span>
+    </div>
+</footer>
+
+<!-- Скрипты -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/api.js" type="module"></script>
+<script src="js/auth.js" type="module"></script>
+<script type="module">
+    import { EventsAPI, TicketsAPI, UsersAPI } from './js/api.js';
+    import { Auth } from './js/auth.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const accessErrorEl = document.getElementById('organizer-access-error');
+        const loadingEl = document.getElementById('organizer-loading');
+        const contentEl = document.getElementById('organizer-content');
+
+        // Проверка: авторизован ли как организатор
+        if (!Auth.isAuthenticated() || !Auth.hasRole('organizer')) {
+            loadingEl.classList.add('d-none');
+            accessErrorEl.classList.remove('d-none');
+            return;
+        }
+
+        try {
+            const user = Auth.getCurrentUser();
+
+            // Заполнение настроек
+            document.getElementById('org-firstname').value = user.firstName;
+            document.getElementById('org-lastname').value = user.lastName;
+            document.getElementById('org-email').value = user.email;
+            document.getElementById('org-phone').value = user.phone || '';
+            document.getElementById('org-company').value = user.company || '';
+
+            // Загрузка мероприятий
+            await loadOrganizerEvents(user.id);
+
+            // Показываем контент
+            loadingEl.classList.add('d-none');
+            contentEl.classList.remove('d-none');
+
+        } catch (error) {
+            console.error('Organizer load error:', error);
+            loadingEl.classList.add('d-none');
+            accessErrorEl.classList.remove('d-none');
+            accessErrorEl.textContent = 'Ошибка: ' + error.message;
+        }
+
+        // Обработчик выхода
+        document.getElementById('logout-btn')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            Auth.logout();
+            window.location.href = 'index.html';
+        });
+
+        // Форма создания события
+        document.getElementById('create-event-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const user = Auth.getCurrentUser();
+
+            // Сбор цен
+            const prices = {};
+            let priceId = 1;
+            document.querySelectorAll('#prices-container .input-group').forEach(group => {
+                const name = group.querySelector('[name="price-name"]').value;
+                const value = group.querySelector('[name="price-value"]').value;
+                if (name && value) {
+                    prices[`cat${priceId++}`] = { name, price: parseInt(value) };
+                }
+            });
+
+            if (Object.keys(prices).length === 0) {
+                alert('Добавьте хотя бы одну категорию билетов');
+                return;
+            }
+
+            const datetime = document.getElementById('event-datetime').value;
+
+            const eventData = {
+                title: document.getElementById('event-title').value,
+                description: document.getElementById('event-description').value,
+                longDescription: document.getElementById('event-long-description').value || '',
+                type: document.getElementById('event-type').value,
+                ageRestriction: document.getElementById('event-age').value,
+                duration: parseInt(document.getElementById('event-duration').value) || 120,
+                poster: document.getElementById('event-poster').value || 'https://via.placeholder.com/400x220?text=Event',
+                venue: {
+                    name: document.getElementById('venue-name').value,
+                    address: document.getElementById('venue-address').value,
+                    metro: document.getElementById('venue-metro').value || ''
+                },
+                organizerId: user.id,
+                dates: [{
+                    id: `d${Date.now()}`,
+                    datetime: new Date(datetime).toISOString(),
+                    available: true
+                }],
+                prices: prices,
+                createdAt: new Date().toISOString()
+            };
+
+            try {
+                // ВАЖНО: получаем ответ с сервера, включая ID
+                const newEvent = await EventsAPI.create(eventData);
+                console.log('Событие создано с ID:', newEvent.id);
+
+                // Закрыть модалку и обновить список
+                bootstrap.Modal.getInstance(document.getElementById('createEventModal'))?.hide();
+                document.getElementById('create-event-form').reset();
+                document.getElementById('prices-container').innerHTML = `
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" placeholder="Название (напр. Партер)" name="price-name" required>
+                <input type="number" class="form-control" placeholder="Цена, ₽" name="price-value" min="0" required>
+                <button type="button" class="btn btn-outline-danger remove-price-btn">×</button>
+            </div>
+        `;
+
+                await loadOrganizerEvents(user.id);
+                alert('Событие успешно создано! ID: ' + newEvent.id);
+
+            } catch (error) {
+                console.error('Ошибка создания:', error);
+                alert('Ошибка создания: ' + error.message);
+            }
+        });
+
+        // Динамическое добавление категорий цен
+        document.getElementById('add-price-btn')?.addEventListener('click', () => {
+            const container = document.getElementById('prices-container');
+            const div = document.createElement('div');
+            div.className = 'input-group mb-2';
+            div.innerHTML = `
+                <input type="text" class="form-control" placeholder="Название" name="price-name" required>
+                <input type="number" class="form-control" placeholder="Цена, ₽" name="price-value" min="0" required>
+                <button type="button" class="btn btn-outline-danger remove-price-btn">×</button>
+            `;
+            container.appendChild(div);
+        });
+
+        // Удаление категории цены
+        document.getElementById('prices-container')?.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-price-btn')) {
+                e.target.closest('.input-group').remove();
+            }
+        });
+
+        // Сохранение настроек
+        document.getElementById('organizer-settings-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = Auth.getCurrentUser();
+
+            try {
+                await UsersAPI.update(user.id, {
+                    phone: document.getElementById('org-phone').value,
+                    company: document.getElementById('org-company').value
+                });
+                alert('Настройки сохранены!');
+            } catch (err) {
+                alert('Ошибка: ' + err.message);
+            }
+        });
+    });
+
+    async function loadOrganizerEvents(organizerId) {
+        const listEl = document.getElementById('organizer-events-list');
+        const emptyEl = document.getElementById('organizer-events-empty');
+        const statsEvents = document.getElementById('stats-events-count');
+        const statsTickets = document.getElementById('stats-tickets-count');
+        const statsRevenue = document.getElementById('stats-revenue');
+
+        try {
+            const events = await EventsAPI.getAll({ organizerId });
+
+            if (!events || events.length === 0) {
+                listEl.innerHTML = '';
+                emptyEl.classList.remove('d-none');
+                statsEvents.textContent = '0';
+                statsTickets.textContent = '0';
+                statsRevenue.textContent = '0 ₽';
+                return;
+            }
+
+            emptyEl.classList.add('d-none');
+            statsEvents.textContent = events.length;
+
+            let totalTickets = 0;
+            let totalRevenue = 0;
+
+            listEl.innerHTML = events.map(event => {
+                const firstDate = event.dates?.[0]?.datetime ? new Date(event.dates[0].datetime) : null;
+                const isPast = firstDate && firstDate < new Date();
+
+                // Простая симуляция статистики
+                const sold = Math.floor(Math.random() * 100);
+                const capacity = 300;
+                const avgPrice = Object.values(event.prices || {})[0]?.price || 3000;
+                const revenue = sold * avgPrice;
+
+                totalTickets += sold;
+                totalRevenue += revenue;
+
+                return `
+                    <tr>
+                        <td>
+                            <strong>${event.title}</strong>
+                            <div class="small text-muted">${event.description}</div>
+                        </td>
+                        <td>${firstDate ? firstDate.toLocaleDateString('ru-RU') : '—'}</td>
+                        <td>${event.venue?.name || '—'}</td>
+                        <td>${sold} / ${capacity}</td>
+                        <td>${revenue.toLocaleString('ru-RU')} ₽</td>
+                        <td>
+                            <span class="badge bg-${isPast ? 'secondary' : 'success'}">
+                                ${isPast ? 'Прошло' : 'Активно'}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-danger delete-event-btn"
+                data-event-id="${event.id}"
+                type="button"
+                title="Удалить">
+            Удалить
+        </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            // Обновление статистики
+            statsTickets.textContent = totalTickets.toLocaleString('ru-RU');
+            statsRevenue.textContent = totalRevenue.toLocaleString('ru-RU') + ' ₽';
+
+            // Популярные события (заглушка)
+            const popularList = document.getElementById('popular-events-list');
+            if (popularList) {
+                popularList.innerHTML = events.slice(0, 3).map(event => `
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>${event.title}</span>
+                        <span class="badge bg-primary rounded-pill">${Math.floor(Math.random() * 50) + 10} прод.</span>
+                    </li>
+                `).join('');
+            }
+
+        } catch (error) {
+            listEl.innerHTML = `<tr><td colspan="7" class="text-danger">Ошибка загрузки: ${error.message}</td></tr>`;
+        }
+    }
+    document.getElementById('organizer-events-list')?.addEventListener('click', async (e) => {
+        const user = Auth.getCurrentUser();
+
+        // Кнопка удаления
+        const deleteBtn = e.target.closest('.delete-event-btn');
+        if (deleteBtn) {
+            const eventId = deleteBtn.dataset.eventId;
+            console.log('Удаление события:', eventId);
+
+            if (confirm('Вы уверены, что хотите удалить это событие?')) {
+                try {
+                    await EventsAPI.delete(eventId);
+                    await loadOrganizerEvents(user.id);
+                    alert('Событие успешно удалено!');
+                } catch (error) {
+                    console.error('Ошибка удаления:', error);
+                    alert('Ошибка удаления: ' + error.message);
+                }
+            }
+            return;
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "max-afisha-lab2",
+  "version": "1.0.0",
+  "main": "index.html",
+  "scripts": {
+    "server": "json-server --watch db.json --routes routes.json --host 0.0.0.0 --port 3000 --middlewares ./node_modules/json-server-auth",
+    "start": "npx serve . -l 8080 -C",
+    "dev": "concurrently \"npm run server\" \"npm run start\""
+  },
+  "private": true,
+  "dependencies": {
+    "json-server": "^0.17.4",
+    "json-server-auth": "^2.1.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "serve": "^14.2.1"
+  }
+}
