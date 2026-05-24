@@ -47,7 +47,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
@@ -55,9 +55,9 @@ import { useAuthStore } from '@/stores/auth'
 const auth = useAuthStore()
 const router = useRouter()
 
-const form = ref({ name: '', email: '', password: '', role: 'student' as 'student' | 'teacher' })
+const form = ref({ name: '', email: '', password: '', role: 'student' })
 const loading = ref(false)
-const error = ref<string | null>(null)
+const error = ref(null)
 
 async function handleRegister() {
   loading.value = true
@@ -65,10 +65,8 @@ async function handleRegister() {
   try {
     await auth.register(form.value)
     router.push('/')
-  } catch (e: unknown) {
-    error.value =
-      (e as { response?: { data?: { error?: string } } })?.response?.data?.error ||
-      'Ошибка регистрации. Попробуйте снова.'
+  } catch (e) {
+    error.value = e?.response?.data?.error || 'Ошибка регистрации. Попробуйте снова.'
   } finally {
     loading.value = false
   }

@@ -74,7 +74,7 @@
   </main>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { onMounted } from 'vue'
 import CourseCard from '@/components/CourseCard.vue'
 import SkeletonCard from '@/components/SkeletonCard.vue'

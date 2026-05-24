@@ -42,18 +42,23 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
-import type { Course } from '@/types'
 
-const props = defineProps<{ course: Course }>()
+const props = defineProps({
+  course: {
+    type: Object,
+    required: true
+  }
+})
 
-const categoryMap: Record<string, string> = {
+const categoryMap = {
   programming: 'Программирование',
   design: 'Дизайн',
   data: 'Data Science',
 }
-const levelMap: Record<string, string> = {
+
+const levelMap = {
   beginner: 'Начинающий',
   intermediate: 'Средний',
   advanced: 'Продвинутый',
@@ -67,7 +72,7 @@ const shortDescription = computed(() =>
     : props.course.description,
 )
 
-function onImgError(e: Event) {
-  ;(e.target as HTMLImageElement).src = 'https://placehold.co/400x200/ffd43b/333?text=Course'
+function onImgError(e) {
+  e.target.src = 'https://placehold.co/400x200/ffd43b/333?text=Course'
 }
 </script>

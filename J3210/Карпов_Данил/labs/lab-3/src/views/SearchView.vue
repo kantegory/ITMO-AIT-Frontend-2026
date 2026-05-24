@@ -84,7 +84,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, computed, onMounted } from 'vue'
 import CourseCard from '@/components/CourseCard.vue'
 import SkeletonCard from '@/components/SkeletonCard.vue'
@@ -93,7 +93,7 @@ import { useCourses } from '@/composables/useCourses'
 const { courses, loading, fetchCourses } = useCourses()
 
 const search = ref('')
-const sortBy = ref<'rating' | 'price' | 'title'>('rating')
+const sortBy = ref('rating')
 const filters = ref({ category: '', level: '', priceType: '' })
 
 onMounted(() => fetchCourses())

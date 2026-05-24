@@ -1,8 +1,6 @@
 import { ref, watch } from 'vue'
 
-const theme = ref<'light' | 'dark'>(
-  (localStorage.getItem('theme') as 'light' | 'dark') || 'light',
-)
+const theme = ref(localStorage.getItem('theme') || 'light')
 
 watch(
   theme,

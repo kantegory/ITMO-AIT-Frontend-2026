@@ -48,7 +48,7 @@
   </nav>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useAuthStore } from '@/stores/auth'
 import { useTheme } from '@/composables/useTheme'
 import { useRouter } from 'vue-router'

@@ -101,27 +101,26 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useApi } from '@/composables/useApi'
-import type { Course } from '@/types'
 
 const auth = useAuthStore()
 const { get, post } = useApi()
 
-const courses = ref<Course[]>([])
+const courses = ref([])
 const loading = ref(false)
 const creating = ref(false)
-const createError = ref<string | null>(null)
-const createSuccess = ref<string | null>(null)
+const createError = ref(null)
+const createSuccess = ref(null)
 
 const form = ref({
   title: '',
   description: '',
-  category: 'programming' as Course['category'],
-  level: 'beginner' as Course['level'],
-  priceType: 'free' as Course['priceType'],
+  category: 'programming',
+  level: 'beginner',
+  priceType: 'free',
   price: 0,
   duration: '',
   lessonsCount: 10,
@@ -131,7 +130,7 @@ onMounted(async () => {
   if (!auth.user) return
   loading.value = true
   try {
-    courses.value = await get<Course[]>('/courses', { teacherId: auth.user.id })
+    courses.value = await get('/courses', { teacherId: auth.user.id })
   } finally {
     loading.value = false
   }
@@ -143,7 +142,7 @@ async function handleCreate() {
   createError.value = null
   createSuccess.value = null
   try {
-    const newCourse = await post<Course>('/courses', {
+    const newCourse = await post('/courses', {
       ...form.value,
       teacherId: auth.user.id,
       teacherName: auth.user.name,
@@ -164,10 +163,8 @@ async function handleCreate() {
       duration: '',
       lessonsCount: 10,
     }
-  } catch (e: unknown) {
-    createError.value =
-      (e as { response?: { data?: { error?: string } } })?.response?.data?.error ||
-      'Ошибка создания курса'
+  } catch (e) {
+    createError.value = e?.response?.data?.error || 'Ошибка создания курса'
   } finally {
     creating.value = false
   }

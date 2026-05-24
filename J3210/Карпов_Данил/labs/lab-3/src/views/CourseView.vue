@@ -112,13 +112,12 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useCourses } from '@/composables/useCourses'
 import { useApi } from '@/composables/useApi'
-import type { Course, Enrollment } from '@/types'
 
 const route = useRoute()
 const router = useRouter()
@@ -126,7 +125,7 @@ const auth = useAuthStore()
 const { fetchCourse, loading } = useCourses()
 const { get, post } = useApi()
 
-const course = ref<Course | null>(null)
+const course = ref(null)
 const enrolled = ref(false)
 const enrolling = ref(false)
 
@@ -136,7 +135,7 @@ onMounted(async () => {
 
   if (auth.isLoggedIn && course.value) {
     try {
-      const enrollments = await get<Enrollment[]>('/my-enrollments')
+      const enrollments = await get('/my-enrollments')
       enrolled.value = enrollments.some((e) => e.courseId === id)
     } catch {
       // not enrolled
@@ -157,7 +156,7 @@ async function handleEnroll() {
   }
 }
 
-function onImgError(e: Event) {
-  ;(e.target as HTMLImageElement).src = 'https://placehold.co/400x220/ffd43b/333?text=Course'
+function onImgError(e) {
+  e.target.src = 'https://placehold.co/400x220/ffd43b/333?text=Course'
 }
 </script>

@@ -114,22 +114,17 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useApi } from '@/composables/useApi'
-import type { Certificate, Enrollment, Course } from '@/types'
-
-interface EnrollmentWithCourse extends Enrollment {
-  course?: Course
-}
 
 const auth = useAuthStore()
 const { get } = useApi()
 
-const tab = ref<'courses' | 'certificates'>('courses')
-const enrollments = ref<EnrollmentWithCourse[]>([])
-const certificates = ref<Certificate[]>([])
+const tab = ref('courses')
+const enrollments = ref([])
+const certificates = ref([])
 const loadingEnrollments = ref(false)
 const loadingCerts = ref(false)
 
@@ -138,8 +133,8 @@ const completedCount = computed(() => enrollments.value.filter((e) => e.progress
 onMounted(async () => {
   loadingEnrollments.value = true
   try {
-    const raw = await get<Enrollment[]>('/my-enrollments')
-    const courses = await get<Course[]>('/courses')
+    const raw = await get('/my-enrollments')
+    const courses = await get('/courses')
     enrollments.value = raw.map((e) => ({
       ...e,
       course: courses.find((c) => c.id === e.courseId),
@@ -150,7 +145,7 @@ onMounted(async () => {
 
   loadingCerts.value = true
   try {
-    certificates.value = await get<Certificate[]>('/certificates')
+    certificates.value = await get('/certificates')
   } finally {
     loadingCerts.value = false
   }

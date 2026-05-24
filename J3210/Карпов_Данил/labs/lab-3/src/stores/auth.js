@@ -1,11 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import type { User, LoginPayload, RegisterPayload } from '@/types'
 import { useApi } from '@/composables/useApi'
 
 export const useAuthStore = defineStore('auth', () => {
-  const token = ref<string | null>(localStorage.getItem('token'))
-  const user = ref<User | null>(null)
+  const token = ref(localStorage.getItem('token'))
+  const user = ref(null)
 
   const isLoggedIn = computed(() => !!token.value)
 
@@ -14,21 +13,21 @@ export const useAuthStore = defineStore('auth', () => {
   async function fetchUser() {
     if (!token.value) return
     try {
-      user.value = await get<User>('/me')
+      user.value = await get('/me')
     } catch {
       logout()
     }
   }
 
-  async function login(payload: LoginPayload) {
-    const data = await post<{ token: string; user: User }>('/login', payload)
+  async function login(payload) {
+    const data = await post('/login', payload)
     token.value = data.token
     user.value = data.user
     localStorage.setItem('token', data.token)
   }
 
-  async function register(payload: RegisterPayload) {
-    const data = await post<{ token: string; user: User }>('/register', payload)
+  async function register(payload) {
+    const data = await post('/register', payload)
     token.value = data.token
     user.value = data.user
     localStorage.setItem('token', data.token)

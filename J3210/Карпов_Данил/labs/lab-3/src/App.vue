@@ -3,6 +3,6 @@
   <RouterView />
 </template>
 
-<script setup lang="ts">
+<script setup>
 import AppNavbar from '@/components/AppNavbar.vue'
 </script>

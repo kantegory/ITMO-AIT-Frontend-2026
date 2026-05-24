@@ -11,13 +11,13 @@ client.interceptors.request.use((config) => {
 })
 
 export function useApi() {
-  async function get<T>(url: string, params?: Record<string, unknown>): Promise<T> {
-    const { data } = await client.get<T>(url, { params })
+  async function get(url, params) {
+    const { data } = await client.get(url, { params })
     return data
   }
 
-  async function post<T>(url: string, body: unknown): Promise<T> {
-    const { data } = await client.post<T>(url, body)
+  async function post(url, body) {
+    const { data } = await client.post(url, body)
     return data
   }
 

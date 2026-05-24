@@ -53,7 +53,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
@@ -63,7 +63,7 @@ const router = useRouter()
 
 const form = ref({ email: '', password: '' })
 const loading = ref(false)
-const error = ref<string | null>(null)
+const error = ref(null)
 
 async function handleLogin() {
   loading.value = true
@@ -71,10 +71,8 @@ async function handleLogin() {
   try {
     await auth.login(form.value)
     router.push('/')
-  } catch (e: unknown) {
-    error.value =
-      (e as { response?: { data?: { error?: string } } })?.response?.data?.error ||
-      'Неверный email или пароль'
+  } catch (e) {
+    error.value = e?.response?.data?.error || 'Неверный email или пароль'
   } finally {
     loading.value = false
   }
@@ -83,6 +81,7 @@ async function handleLogin() {
 function fillStudent() {
   form.value = { email: 'admin@minion.ru', password: 'admin123' }
 }
+
 function fillTeacher() {
   form.value = { email: 'teacher@minion.ru', password: 'teacher123' }
 }
