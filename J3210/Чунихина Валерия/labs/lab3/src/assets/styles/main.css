@@ -253,6 +253,7 @@ body.bg-light {
 #searchForm {
   padding: 0.35rem;
   background-color: var(--surface) !important;
+  transition: outline-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 #searchForm .form-control,
@@ -260,8 +261,27 @@ body.bg-light {
   border-radius: 999px !important;
 }
 
+#searchForm .form-control {
+  min-width: 0;
+  padding-right: 1.6rem !important;
+}
+
+#searchForm .form-control:focus,
+#searchForm .form-control:focus-visible,
+#searchForm .btn:focus,
+#searchForm .btn:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#searchForm:focus-within {
+  outline: 3px solid var(--bloom-orange);
+  outline-offset: 4px;
+}
+
 #searchForm .btn {
   min-width: 120px;
+  flex-shrink: 0;
 }
 
 .nav-link {

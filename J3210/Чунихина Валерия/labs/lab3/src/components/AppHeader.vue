@@ -23,13 +23,32 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <div class="navbar-nav ms-auto align-items-center">
           <RouterLink class="nav-link mx-2" to="/">Поиск</RouterLink>
-          <RouterLink class="nav-link mx-2" to="/login">Вход</RouterLink>
-          <button type="button" class="btn btn-outline-primary ms-lg-3 theme-toggle">
-            Тёмная тема
-          </button>
-          <RouterLink class="btn btn-accent ms-lg-3 shadow-sm" to="/register">
-            Создать сад
-          </RouterLink>
+
+          <!-- Авторизован -->
+          <template v-if="currentUser">
+            <RouterLink class="nav-link mx-2" to="/profile">Профиль</RouterLink>
+
+            <span class="nav-link mx-2 user-badge">
+              <svg class="ui-icon me-1" aria-hidden="true" width="14" height="14">
+                <use href="/sprite.svg#icon-flower"></use>
+              </svg>
+              {{ currentUser.name }}
+            </span>
+
+            <button class="btn btn-sm btn-outline-secondary ms-2" @click="handleLogout">
+              Выйти
+            </button>
+          </template>
+
+          <!-- Не авторизован -->
+          <template v-else>
+            <RouterLink class="nav-link mx-2" to="/login">Вход</RouterLink>
+            <RouterLink class="btn btn-accent ms-lg-3 shadow-sm" to="/register">
+              Создать сад
+            </RouterLink>
+          </template>
+
+          <ThemeToggle class="ms-2" />
         </div>
       </div>
     </div>
@@ -37,5 +56,28 @@
 </template>
 
 <script setup>
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
+
+import ThemeToggle from '@/components/ThemeToggle.vue'
+import { currentUser, useAuth } from '@/composables/useAuth'
+
+const router = useRouter()
+const { logout } = useAuth(router)
+
+function handleLogout() {
+  logout(router)
+}
 </script>
+
+<style scoped>
+.user-badge {
+  font-weight: 500;
+  color: var(--bloom-green);
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
