@@ -4,10 +4,11 @@
     --surface-soft-bg: #F3F1ED;
 
     --text-main: #1F1F1D;
-    --text-muted: #747474;
+    --text-muted: #565656;
 
-    --accent: #A0937D;
-    --accent-hover: #877B68;
+    --accent: #67573B;
+    --accent-hover: #4F422D;
+    --focus-color: #1F6FEB;
 
     --border-color: #DDD7CB;
     --shadow-color: rgba(31, 31, 29, 0.08);
@@ -26,6 +27,33 @@ a:hover {
     color: var(--accent-hover);
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 3px solid var(--focus-color);
+    outline-offset: 3px;
+}
+
+.skip-link {
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    z-index: 1080;
+    padding: 0.75rem 1rem;
+    color: var(--surface-bg);
+    background-color: var(--text-main);
+    border-radius: 0 0 8px 8px;
+    transform: translateY(-120%);
+}
+
+.skip-link:focus {
+    color: var(--surface-bg);
+    transform: translateY(0);
+}
+
 .app-header {
     background-color: var(--page-bg);
 }
@@ -37,6 +65,10 @@ a:hover {
 
 .page.is-active {
     display: block;
+}
+
+.page[hidden] {
+    display: none;
 }
 
 .hero {
@@ -109,7 +141,7 @@ a:hover {
 .form-control:focus,
 .form-select:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 0.25rem rgba(160, 147, 125, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(103, 87, 59, 0.25);
 }
 
 .form-message {
@@ -118,11 +150,11 @@ a:hover {
 }
 
 .form-message.is-error {
-    color: #A94442;
+    color: #8A1F17;
 }
 
 .form-message.is-success {
-    color: #3C763D;
+    color: #246B2A;
 }
 
 .list-group-item {
@@ -137,13 +169,17 @@ a:hover {
     --bs-table-border-color: var(--border-color);
 }
 
+.table caption {
+    color: var(--text-muted);
+}
+
 .annotation-viewer {
     position: relative;
     min-height: 320px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     background:
-            linear-gradient(135deg, rgba(160, 147, 125, 0.22), rgba(31, 31, 29, 0.08)),
+            linear-gradient(135deg, rgba(103, 87, 59, 0.22), rgba(31, 31, 29, 0.08)),
             var(--surface-soft-bg);
 }
 
@@ -157,7 +193,7 @@ a:hover {
     color: var(--text-main);
     font-weight: 600;
     padding: 0.25rem 0.5rem;
-    background-color: rgba(250, 250, 250, 0.78);
+    background-color: rgba(250, 250, 250, 0.86);
 }
 
 .annotation-box-small {
@@ -172,6 +208,17 @@ a:hover {
     border: 1px dashed var(--border-color);
     border-radius: 8px;
     color: var(--text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
 }
 
 @media (max-width: 576px) {

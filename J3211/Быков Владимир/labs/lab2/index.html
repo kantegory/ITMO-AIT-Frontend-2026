@@ -8,52 +8,55 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<header class="border-bottom sticky-top app-header">
-    <nav class="navbar navbar-expand-lg container">
-        <a class="navbar-brand fw-semibold" href="#" data-page-link="home">DataMark</a>
+<a class="skip-link" href="#mainContent">Перейти к основному содержимому</a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-label="Открыть меню">
-            <span class="navbar-toggler-icon"></span>
+<header class="border-bottom sticky-top app-header">
+    <nav class="navbar navbar-expand-lg container" aria-label="Основная навигация">
+        <a class="navbar-brand fw-semibold" href="#home" data-page-link="home" data-nav-link aria-current="page">DataMark</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu"
+                aria-controls="mainMenu" aria-expanded="false" aria-label="Открыть меню навигации">
+            <span class="navbar-toggler-icon" aria-hidden="true"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="mainMenu">
             <ul class="navbar-nav ms-auto gap-lg-2">
-                <li class="nav-item"><a class="nav-link" href="#" data-page-link="projects">Проекты</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" data-page-link="task">Задача</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" data-page-link="workers">Рабочие</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" data-page-link="dashboard">Кабинет</a></li>
+                <li class="nav-item"><a class="nav-link" href="#projects" data-page-link="projects" data-nav-link>Проекты</a></li>
+                <li class="nav-item"><a class="nav-link" href="#task" data-page-link="task" data-nav-link>Задача</a></li>
+                <li class="nav-item"><a class="nav-link" href="#workers" data-page-link="workers" data-nav-link>Рабочие</a></li>
+                <li class="nav-item"><a class="nav-link" href="#dashboard" data-page-link="dashboard" data-nav-link>Кабинет</a></li>
             </ul>
 
             <div class="d-flex gap-2 ms-lg-3">
-                <a class="btn btn-link login-link" href="#" data-page-link="login" id="loginLink">Войти</a>
-                <a class="btn btn-primary" href="#" data-page-link="register" id="registerLink">Регистрация</a>
+                <a class="btn btn-link login-link" href="#login" data-page-link="login" data-nav-link id="loginLink">Войти</a>
+                <a class="btn btn-primary" href="#register" data-page-link="register" data-nav-link id="registerLink">Регистрация</a>
                 <button class="btn btn-outline-primary d-none" type="button" id="logoutButton">Выйти</button>
             </div>
         </div>
     </nav>
 </header>
 
-<main>
-    <section class="page is-active" data-page="home">
+<main id="mainContent" tabindex="-1">
+    <section class="page is-active" id="home" data-page="home" aria-labelledby="homeTitle">
         <div class="hero">
             <div class="container py-5">
                 <div class="row align-items-center g-4">
                     <div class="col-lg-7">
                         <p class="section-label mb-2">Платформа для ML-разметки</p>
-                        <h1 class="display-5 fw-bold">Подготовка данных, аннотация и контроль качества в одном интерфейсе</h1>
+                        <h1 class="display-5 fw-bold" id="homeTitle">Подготовка данных, аннотация и контроль качества в одном интерфейсе</h1>
                         <p class="lead muted-text mt-3">
                             DataMark помогает создавать проекты разметки, назначать задания исполнителям и отслеживать качество датасетов.
                         </p>
                         <div class="d-flex flex-wrap gap-2 mt-4">
-                            <a class="btn btn-primary btn-lg" href="#" data-page-link="projects">Смотреть проекты</a>
-                            <a class="btn btn-outline-primary btn-lg" href="#" data-page-link="login">Войти в кабинет</a>
+                            <a class="btn btn-primary btn-lg" href="#projects" data-page-link="projects">Смотреть проекты</a>
+                            <a class="btn btn-outline-primary btn-lg" href="#login" data-page-link="login">Войти в кабинет</a>
                         </div>
                     </div>
 
                     <div class="col-lg-5">
-                        <article class="status-panel p-4">
-                            <h2 class="h5 mb-3">Сводка из API</h2>
-                            <ul class="list-unstyled m-0" id="summaryList">
+                        <article class="status-panel p-4" aria-labelledby="summaryTitle">
+                            <h2 class="h5 mb-3" id="summaryTitle">Сводка из API</h2>
+                            <ul class="list-unstyled m-0" id="summaryList" aria-live="polite" aria-busy="false">
                                 <li class="py-2 muted-text">Данные будут загружены с JSON-server.</li>
                             </ul>
                         </article>
@@ -63,83 +66,97 @@
         </div>
     </section>
 
-    <section class="page" data-page="login">
+    <section class="page" id="login" data-page="login" aria-labelledby="loginTitle" hidden>
         <div class="container narrow py-5">
-            <h1 class="h3 mb-4">Вход</h1>
+            <h1 class="h3 mb-4" id="loginTitle">Вход</h1>
 
-            <form class="card card-body shadow-sm" id="loginForm">
+            <form class="card card-body shadow-sm" id="loginForm" aria-describedby="loginHelp" autocomplete="on">
+                <p class="visually-hidden" id="loginHelp">Введите почту и пароль аккаунта DataMark.</p>
+
                 <label class="form-label" for="loginEmail">Почта</label>
-                <input class="form-control mb-3" id="loginEmail" type="email" placeholder="name@example.com" required>
+                <input class="form-control mb-3" id="loginEmail" name="loginEmail" type="email"
+                       placeholder="name@example.com" autocomplete="email" aria-describedby="loginMessage" required>
 
                 <label class="form-label" for="loginPassword">Пароль</label>
-                <input class="form-control mb-3" id="loginPassword" type="password" placeholder="Введите пароль" required>
+                <input class="form-control mb-3" id="loginPassword" name="loginPassword" type="password"
+                       placeholder="Введите пароль" autocomplete="current-password" aria-describedby="loginMessage" required>
 
                 <button class="btn btn-primary" type="submit">Войти</button>
-                <p class="form-message mt-3 mb-0" id="loginMessage"></p>
+                <p class="form-message mt-3 mb-0" id="loginMessage" aria-live="polite"></p>
             </form>
 
             <p class="mt-3 mb-0 muted-text">
                 Нет аккаунта?
-                <a href="#" data-page-link="register">Зарегистрироваться</a>
+                <a href="#register" data-page-link="register">Зарегистрироваться</a>
             </p>
         </div>
     </section>
 
-    <section class="page" data-page="register">
+    <section class="page" id="register" data-page="register" aria-labelledby="registerTitle" hidden>
         <div class="container narrow py-5">
-            <h1 class="h3 mb-4">Регистрация</h1>
+            <h1 class="h3 mb-4" id="registerTitle">Регистрация</h1>
 
-            <form class="card card-body shadow-sm" id="registerForm">
+            <form class="card card-body shadow-sm" id="registerForm" aria-describedby="registerHelp" autocomplete="on">
+                <p class="visually-hidden" id="registerHelp">Заполните поля регистрации для создания аккаунта.</p>
+
                 <label class="form-label" for="name">Имя</label>
-                <input class="form-control mb-3" id="name" type="text" placeholder="Владимир Быков" required>
+                <input class="form-control mb-3" id="name" name="name" type="text"
+                       placeholder="Владимир Быков" autocomplete="name" aria-describedby="registerMessage" required>
 
                 <label class="form-label" for="email">Почта</label>
-                <input class="form-control mb-3" id="email" type="email" placeholder="name@example.com" required>
+                <input class="form-control mb-3" id="email" name="email" type="email"
+                       placeholder="name@example.com" autocomplete="email" aria-describedby="registerMessage" required>
 
                 <label class="form-label" for="password">Пароль</label>
-                <input class="form-control mb-3" id="password" type="password" placeholder="Минимум 4 символа" required>
+                <input class="form-control mb-3" id="password" name="password" type="password"
+                       placeholder="Минимум 4 символа" autocomplete="new-password" minlength="4"
+                       aria-describedby="registerMessage" required>
 
                 <label class="form-label" for="role">Роль</label>
-                <select class="form-select mb-3" id="role">
+                <select class="form-select mb-3" id="role" name="role" aria-describedby="registerMessage" required>
                     <option>Менеджер проекта</option>
                     <option>Аннотатор</option>
                     <option>Валидатор</option>
                 </select>
 
                 <button class="btn btn-primary" type="submit">Зарегистрироваться</button>
-                <p class="form-message mt-3 mb-0" id="registerMessage"></p>
+                <p class="form-message mt-3 mb-0" id="registerMessage" aria-live="polite"></p>
             </form>
         </div>
     </section>
 
-    <section class="page" data-page="dashboard">
+    <section class="page" id="dashboard" data-page="dashboard" aria-labelledby="dashboardTitle" hidden>
         <div class="container py-5">
             <div class="d-flex flex-wrap justify-content-between gap-3 mb-4">
                 <div>
-                    <h1 class="h3 mb-1">Личный кабинет пользователя</h1>
-                    <p class="muted-text mb-0" id="userInfo">Для просмотра данных выполните вход.</p>
+                    <h1 class="h3 mb-1" id="dashboardTitle">Личный кабинет пользователя</h1>
+                    <p class="muted-text mb-0" id="userInfo" aria-live="polite">Для просмотра данных выполните вход.</p>
                 </div>
-                <button class="btn btn-outline-primary" type="button" id="reloadButton">Обновить данные</button>
+                <button class="btn btn-outline-primary" type="button" id="reloadButton" aria-controls="dashboardStats projectList workerList taskCard">
+                    Обновить данные
+                </button>
             </div>
 
-            <div class="row g-3" id="dashboardStats"></div>
+            <div class="row g-3" id="dashboardStats" aria-live="polite" aria-busy="false"></div>
         </div>
     </section>
 
-    <section class="page" data-page="projects">
+    <section class="page" id="projects" data-page="projects" aria-labelledby="projectsTitle" hidden>
         <div class="container py-5">
             <div class="d-flex flex-wrap justify-content-between gap-3 mb-4">
                 <div>
-                    <h1 class="h3 mb-1">Поиск проектов и заданий</h1>
+                    <h1 class="h3 mb-1" id="projectsTitle">Поиск проектов и заданий</h1>
                     <p class="muted-text mb-0">Фильтрация по статусу, типу аннотации и исполнителю.</p>
                 </div>
-                <button class="btn btn-outline-primary" type="button" id="resetFilters">Сбросить фильтры</button>
+                <button class="btn btn-outline-primary" type="button" id="resetFilters" aria-controls="projectList">
+                    Сбросить фильтры
+                </button>
             </div>
 
-            <form class="row g-3 mb-4">
+            <form class="row g-3 mb-4" role="search" aria-labelledby="projectsTitle">
                 <div class="col-md-4">
                     <label class="form-label" for="statusFilter">Статус</label>
-                    <select class="form-select" id="statusFilter">
+                    <select class="form-select" id="statusFilter" aria-controls="projectList">
                         <option value="all">Все</option>
                         <option value="active">Активен</option>
                         <option value="review">Проверка</option>
@@ -149,7 +166,7 @@
 
                 <div class="col-md-4">
                     <label class="form-label" for="typeFilter">Тип аннотации</label>
-                    <select class="form-select" id="typeFilter">
+                    <select class="form-select" id="typeFilter" aria-controls="projectList">
                         <option value="all">Все</option>
                         <option value="image">Изображения</option>
                         <option value="text">Текст</option>
@@ -159,7 +176,7 @@
 
                 <div class="col-md-4">
                     <label class="form-label" for="workerFilter">Исполнитель</label>
-                    <select class="form-select" id="workerFilter">
+                    <select class="form-select" id="workerFilter" aria-controls="projectList">
                         <option value="all">Все</option>
                         <option value="anna">Анна</option>
                         <option value="igor">Игорь</option>
@@ -168,24 +185,24 @@
                 </div>
             </form>
 
-            <div class="row g-3" id="projectList"></div>
+            <div class="row g-3" id="projectList" aria-live="polite" aria-busy="false"></div>
         </div>
     </section>
 
-    <section class="page" data-page="task">
+    <section class="page" id="task" data-page="task" aria-labelledby="taskTitle" hidden>
         <div class="container py-5">
-            <h1 class="h3 mb-4">Страница задачи аннотации</h1>
+            <h1 class="h3 mb-4" id="taskTitle">Страница задачи аннотации</h1>
 
             <div class="row g-4">
                 <article class="col-lg-8">
-                    <div class="card card-body h-100" id="taskCard">
+                    <div class="card card-body h-100" id="taskCard" aria-live="polite" aria-busy="false">
                         <p class="muted-text mb-0">Задача будет загружена с API.</p>
                     </div>
                 </article>
 
-                <aside class="col-lg-4">
+                <aside class="col-lg-4" aria-labelledby="toolsTitle">
                     <div class="card card-body h-100">
-                        <h2 class="h5">Инструменты</h2>
+                        <h2 class="h5" id="toolsTitle">Инструменты</h2>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item px-0">Прямоугольная область</li>
                             <li class="list-group-item px-0">Класс объекта</li>
@@ -198,12 +215,13 @@
         </div>
     </section>
 
-    <section class="page" data-page="workers">
+    <section class="page" id="workers" data-page="workers" aria-labelledby="workersTitle" hidden>
         <div class="container py-5">
-            <h1 class="h3 mb-4">Управление рабочими</h1>
+            <h1 class="h3 mb-4" id="workersTitle">Управление рабочими</h1>
 
             <div class="table-responsive">
                 <table class="table align-middle">
+                    <caption>Список исполнителей, их ролей, количества заданий и процента качества</caption>
                     <thead>
                     <tr>
                         <th scope="col">Исполнитель</th>
@@ -212,7 +230,7 @@
                         <th scope="col">Качество</th>
                     </tr>
                     </thead>
-                    <tbody id="workerList"></tbody>
+                    <tbody id="workerList" aria-live="polite" aria-busy="false"></tbody>
                 </table>
             </div>
         </div>
@@ -222,7 +240,7 @@
 <footer class="py-4 border-top">
     <div class="container d-flex flex-wrap justify-content-between gap-2">
         <span>DataMark, 2026</span>
-        <span class="muted-text">для любого использования</span>
+        <span class="muted-text">учебный проект</span>
     </div>
 </footer>
 
@@ -231,7 +249,7 @@
         <article class="modal-content">
             <header class="modal-header">
                 <h2 class="modal-title h5" id="instructionTitle">Инструкция к задаче</h2>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Закрыть инструкцию"></button>
             </header>
             <div class="modal-body" id="instructionText"></div>
         </article>

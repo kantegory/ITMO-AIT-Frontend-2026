@@ -21,9 +21,12 @@ const state = {
 };
 
 const pageLinks = document.querySelectorAll('[data-page-link]');
+const navigationLinks = document.querySelectorAll('[data-nav-link]');
 const pages = document.querySelectorAll('[data-page]');
 
 const elements = {
+    mainContent: document.querySelector('#mainContent'),
+
     loginLink: document.querySelector('#loginLink'),
     registerLink: document.querySelector('#registerLink'),
     logoutButton: document.querySelector('#logoutButton'),
@@ -48,12 +51,55 @@ const elements = {
     resetFilters: document.querySelector('#resetFilters')
 };
 
-function showPage(pageName) {
+function getPageNames() {
+    return Array.from(pages).map((page) => page.dataset.page);
+}
+
+function getInitialPage() {
+    const hashPage = window.location.hash.replace('#', '');
+
+    return getPageNames().includes(hashPage) ? hashPage : 'home';
+}
+
+function setBusy(isBusy) {
+    [
+        elements.summaryList,
+        elements.dashboardStats,
+        elements.projectList,
+        elements.workerList,
+        elements.taskCard
+    ].forEach((element) => {
+        element.setAttribute('aria-busy', String(isBusy));
+    });
+}
+
+function showPage(pageName, shouldFocusMain = true) {
+    const nextPage = getPageNames().includes(pageName) ? pageName : 'home';
+
     pages.forEach((page) => {
-        page.classList.toggle('is-active', page.dataset.page === pageName);
+        const isCurrentPage = page.dataset.page === nextPage;
+
+        page.classList.toggle('is-active', isCurrentPage);
+        page.hidden = !isCurrentPage;
     });
 
+    navigationLinks.forEach((link) => {
+        if (link.dataset.pageLink === nextPage) {
+            link.setAttribute('aria-current', 'page');
+        } else {
+            link.removeAttribute('aria-current');
+        }
+    });
+
+    if (window.location.hash !== `#${nextPage}`) {
+        window.history.replaceState(null, '', `#${nextPage}`);
+    }
+
     window.scrollTo(0, 0);
+
+    if (shouldFocusMain) {
+        elements.mainContent.focus({ preventScroll: true });
+    }
 }
 
 function getFilters() {
@@ -80,6 +126,8 @@ function renderAll() {
 }
 
 function loadData() {
+    setBusy(true);
+
     return loadApiData(state.token)
         .then((data) => {
             state.projects = data.projects;
@@ -88,7 +136,8 @@ function loadData() {
 
             renderAll();
         })
-        .catch(() => showApiError(elements));
+        .catch(() => showApiError(elements))
+        .finally(() => setBusy(false));
 }
 
 pageLinks.forEach((link) => {
@@ -96,6 +145,10 @@ pageLinks.forEach((link) => {
         event.preventDefault();
         showPage(link.dataset.pageLink);
     });
+});
+
+window.addEventListener('hashchange', () => {
+    showPage(getInitialPage(), false);
 });
 
 elements.loginForm.addEventListener('submit', (event) => {
@@ -162,5 +215,6 @@ elements.resetFilters.addEventListener('click', () => {
     updateProjectList();
 });
 
+showPage(getInitialPage(), false);
 updateAuthView(elements, state);
 loadData();
