@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Демо-сайт для домашних работ 2-4: доступность, темизация, SVG-спрайт">
+    <title>Мой сайт — ДЗ 2-4</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- SVG-спрайт (HW4) -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+        <symbol id="icon-sun" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5" fill="currentColor"/>
+            <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <line x1="12" y1="1" x2="12" y2="4"/>
+                <line x1="12" y1="20" x2="12" y2="23"/>
+                <line x1="1" y1="12" x2="4" y2="12"/>
+                <line x1="20" y1="12" x2="23" y2="12"/>
+                <line x1="4.2" y1="4.2" x2="6.3" y2="6.3"/>
+                <line x1="17.7" y1="17.7" x2="19.8" y2="19.8"/>
+                <line x1="4.2" y1="19.8" x2="6.3" y2="17.7"/>
+                <line x1="17.7" y1="6.3" x2="19.8" y2="4.2"/>
+            </g>
+        </symbol>
+        <symbol id="icon-moon" viewBox="0 0 24 24">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" fill="currentColor"/>
+        </symbol>
+        <symbol id="icon-home" viewBox="0 0 24 24">
+            <path d="M3 12L12 3l9 9v9h-6v-6H9v6H3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </symbol>
+        <symbol id="icon-mail" viewBox="0 0 24 24">
+            <rect x="2" y="4" width="20" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M2 6l10 7 10-7" fill="none" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+        <symbol id="icon-user" viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="4" fill="currentColor"/>
+            <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="currentColor"/>
+        </symbol>
+    </svg>
+
+    <a href="#main" class="skip-link">Перейти к основному содержимому</a>
+
+    <header class="header" role="banner">
+        <nav class="nav" aria-label="Главная навигация">
+            <a href="#main" class="nav__logo" aria-label="На главную">
+                <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#icon-home"/></svg>
+                <span>МойСайт</span>
+            </a>
+            <ul class="nav__list">
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+            <button type="button" class="theme-toggle" id="themeToggle" aria-label="Переключить тему" aria-pressed="false">
+                <svg class="icon icon--sun" width="20" height="20" aria-hidden="true"><use href="#icon-sun"/></svg>
+                <svg class="icon icon--moon" width="20" height="20" aria-hidden="true"><use href="#icon-moon"/></svg>
+            </button>
+        </nav>
+    </header>
+
+    <main id="main" class="main">
+        <section class="hero" aria-labelledby="hero-title">
+            <h1 id="hero-title">Добро пожаловать</h1>
+            <p>Демо-сайт с поддержкой доступности, тёмной темы и SVG-спрайта.</p>
+        </section>
+
+        <section id="about" aria-labelledby="about-title">
+            <h2 id="about-title">О нас</h2>
+            <p>Мы делаем доступные веб-интерфейсы с заботой о пользователях.</p>
+        </section>
+
+        <section id="contact" aria-labelledby="contact-title">
+            <h2 id="contact-title">Контакты</h2>
+            <ul class="contacts">
+                <li>
+                    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#icon-mail"/></svg>
+                    <a href="mailto:hello@example.com">hello@example.com</a>
+                </li>
+                <li>
+                    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#icon-user"/></svg>
+                    <span>Команда МойСайт</span>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <p>&copy; 2026 МойСайт</p>
+    </footer>
+
+    <script src="theme.js"></script>
+</body>
+</html>
