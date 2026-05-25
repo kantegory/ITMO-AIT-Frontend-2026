@@ -28,7 +28,8 @@
     </div>
     <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3">
       <p class="mb-0 text-secondary" role="status" aria-live="polite">
-        Найдено транзакций: <strong>{{ count }}</strong>
+        <template v-if="loading">Загрузка...</template>
+        <template v-else>Найдено транзакций: <strong>{{ count }}</strong></template>
       </p>
       <button class="btn btn-link link-accent text-decoration-none p-0" type="button" @click="$emit('reset')">Сбросить фильтры</button>
     </div>
@@ -50,6 +51,10 @@ defineProps({
   count: {
     type: Number,
     required: true,
+  },
+  loading: {
+    type: Boolean,
+    default: false,
   },
 });
 </script>

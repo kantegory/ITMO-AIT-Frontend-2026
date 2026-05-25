@@ -65,6 +65,22 @@ export async function getCollection(resource, userId) {
   return apiRequest(`/${resource}?${query.toString()}`);
 }
 
+export async function getFilteredTransactions(userId, filters) {
+  const query = new URLSearchParams({
+    userId: String(userId),
+    _sort: "date",
+    _order: "desc",
+  });
+
+  if (filters.search) query.set("q", filters.search);
+  if (filters.category && filters.category !== "all") query.set("category", filters.category);
+  if (filters.amount) query.set("amount_lte", String(filters.amount));
+  if (filters.from) query.set("date_gte", filters.from);
+  if (filters.to) query.set("date_lte", filters.to);
+
+  return apiRequest(`/transactions?${query.toString()}`);
+}
+
 async function seedUserData(user, plan = "Starter") {
   const [accounts, budgets, transactions, integrations, rules] = await Promise.all([
     getCollection("accounts", user.id),

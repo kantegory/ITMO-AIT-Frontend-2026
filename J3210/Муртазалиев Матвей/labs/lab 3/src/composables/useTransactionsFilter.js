@@ -1,4 +1,5 @@
-import { computed, reactive } from "vue";
+import { computed, reactive, ref, watch } from "vue";
+import { getFilteredTransactions } from "@/services/authApi";
 
 export function filterTransactions(transactions, filters) {
   return transactions.filter((item) => {
@@ -18,7 +19,7 @@ export function filterTransactions(transactions, filters) {
   });
 }
 
-export function useTransactionsFilter(transactions) {
+export function useTransactionsFilter(transactions, userId) {
   const filters = reactive({
     search: "",
     category: "all",
@@ -27,11 +28,33 @@ export function useTransactionsFilter(transactions) {
     to: "",
   });
 
-  const categories = computed(() => (
-    [...new Set(transactions.value.map((item) => item.category).filter(Boolean))]
-  ));
+  const filteredTransactions = ref([]);
+  const filterLoading = ref(false);
 
-  const filteredTransactions = computed(() => filterTransactions(transactions.value, filters));
+  const categories = computed(() =>
+    [...new Set(transactions.value.map((item) => item.category).filter(Boolean))]
+  );
+
+  let debounceTimer = null;
+
+  async function fetchFiltered() {
+    const id = userId.value;
+    if (!id) return;
+    filterLoading.value = true;
+    try {
+      filteredTransactions.value = await getFilteredTransactions(id, filters);
+    } finally {
+      filterLoading.value = false;
+    }
+  }
+
+  function scheduleFilter() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(fetchFiltered, 300);
+  }
+
+  watch(filters, scheduleFilter, { deep: true });
+  watch(userId, (id) => { if (id) fetchFiltered(); }, { immediate: true });
 
   function resetFilters() {
     filters.search = "";
@@ -45,6 +68,7 @@ export function useTransactionsFilter(transactions) {
     filters,
     categories,
     filteredTransactions,
+    filterLoading,
     resetFilters,
   };
 }

@@ -55,6 +55,7 @@
                 :filters="filters"
                 :categories="categories"
                 :count="filteredTransactions.length"
+                :loading="filterLoading"
                 @reset="resetFilters"
               />
               <TransactionList :transactions="filteredTransactions" />
@@ -181,7 +182,8 @@ const {
   error,
   loadDashboardData,
 } = useFinanceData();
-const { filters, categories, filteredTransactions, resetFilters } = useTransactionsFilter(transactions);
+const userId = computed(() => auth.session.value?.user?.id ?? null);
+const { filters, categories, filteredTransactions, filterLoading, resetFilters } = useTransactionsFilter(transactions, userId);
 const actionModal = reactive({
   open: false,
   mode: "transaction",
