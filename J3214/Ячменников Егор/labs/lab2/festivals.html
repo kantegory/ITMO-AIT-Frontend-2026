@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Билеты.ру — Фестивали</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/style.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">Билеты.ру</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="concerts.html">Концерты</a></li>
+                    <li class="nav-item"><a class="nav-link" href="festivals.html">Фестивали</a></li>
+                    <li class="nav-item"><a class="nav-link" href="theatre.html">Театр</a></li>
+                </ul>
+                <div class="d-flex" id="auth-btn">
+                    <a href="auth.html" class="btn btn-outline-light me-2">Вход</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section text-center" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/festivals_pic.jpg') center;">
+        <div class="container">
+            <h1 class="display-3 fw-bold">Фестивали</h1>
+            <p class="lead">Найдите билеты на лучшие мероприятия вашего города</p>
+        </div>
+    </header>
+
+    <section class="container my-5">
+        <div class="card shadow-sm p-4">
+            <form class="row g-3" id="filter-form">
+                <div class="col-md-4">
+                    <label class="form-label">Дата</label>
+                    <input type="date" class="form-control" id="filter-date">
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label">Место</label>
+                    <input type="text" class="form-control" id="filter-place" placeholder="Город или площадка">
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">Найти</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <main class="container mb-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="events-container" data-type="festival">
+            
+        </div>
+    </main>
+
+    <footer class="bg-dark text-light py-4 mt-auto">
+        <div class="container text-center">
+            <p>© 2026 Билеты.ру</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="scripts/filter.js"></script>
+    <script src="scripts/check_auth.js"></script>
+</body>
+</html>
