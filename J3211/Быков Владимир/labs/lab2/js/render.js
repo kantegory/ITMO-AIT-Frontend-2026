@@ -139,8 +139,11 @@ export function renderProjects(projectList, projects, showPage) {
                             <li>Качество: ${project.quality}%</li>
                         </ul>
                         <a class="btn btn-sm btn-outline-primary mt-auto align-self-start" href="#task"
-                           data-page-link="task" aria-label="Открыть задачу проекта ${title}">
-                            Открыть задачу
+                            data-page-link="task" aria-label="Открыть задачу проекта ${title}">
+                            <svg class="icon" aria-hidden="true" focusable="false">
+                                <use href="assets/icons.svg#icon-open"></use>
+                            </svg>
+                            <span>Открыть задачу</span>
                         </a>
                     </div>
                 </div>
@@ -192,7 +195,10 @@ export function renderTask(taskCard, instructionText, tasks) {
         </div>
         <button class="btn btn-primary align-self-start" type="button" data-bs-toggle="modal"
                 data-bs-target="#instructionModal" aria-haspopup="dialog" aria-controls="instructionModal">
-            Открыть инструкцию
+            <svg class="icon" aria-hidden="true" focusable="false">
+                <use href="assets/icons.svg#icon-info"></use>
+            </svg>
+            <span>Открыть инструкцию</span>
         </button>
     `;
 }
