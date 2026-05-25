@@ -110,7 +110,7 @@ async function fetchAndRenderDashboard() {
             models.forEach((model, index) => {
                 const versions = experiments.filter(e => e.model === model.name);
                 const card = document.createElement("div");
-                card.className = "card mb-3 shadow-sm border-0";
+                card.className = "card mb-3 shadow-sm border-0 overflow-hidden";
                 card.innerHTML = `
                     <div class="card-header bg-white d-flex justify-content-between align-items-center">
                         <div>
@@ -332,4 +332,17 @@ async function loadExperimentDetails() {
         alert("Не удалось загрузить данные эксперимента.");
         window.location.href = "search_page.html";
     }
+}
+
+const savedTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', savedTheme);
+
+const themeSwitch = document.getElementById('darkModeSwitch');
+if (themeSwitch) {
+    themeSwitch.checked = (savedTheme === 'dark');
+    themeSwitch.addEventListener('change', () => {
+        const newTheme = themeSwitch.checked ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
 }
