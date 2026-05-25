@@ -1,0 +1,306 @@
+{
+  "users": [
+    {
+      "email": "alice@test.app",
+      "password": "$2a$10$EdoMMgut00gBXaiON/jGteLqCLXKMk/G3xGEEKtnjfTH3cvlfhCka",
+      "name": "Alice",
+      "role": "developer",
+      "id": 2
+    },
+    {
+      "email": "newuser@test.app",
+      "password": "$2a$10$0mig63DkIbSoW94OzPTLeOwfSbu12lNuZVKbQYg4VOVRtFtUdiB7a",
+      "name": "New User",
+      "role": "developer",
+      "id": 3
+    },
+    {
+      "email": "ezhoff@gmail.com",
+      "password": "$2a$10$X4PwjmvtQsaNHxBIbbosAu8WmeJCbzBcAQSOpJX/yKfTcN7NspSz2",
+      "name": "dmitriy",
+      "role": "manager",
+      "id": 1
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "name": "ТаскерAI — ядро",
+      "progress": 68
+    },
+    {
+      "id": 2,
+      "name": "AI-ассистент",
+      "progress": 34
+    },
+    {
+      "id": 3,
+      "name": "Документация",
+      "progress": 90
+    }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Разработать API авторизации",
+      "description": "Спроектировать и реализовать REST-эндпоинты регистрации, логина и обновления токена. Использовать JWT, добавить middleware для защиты приватных роутов.",
+      "projectId": 1,
+      "assigneeId": 1,
+      "status": "progress",
+      "priority": "high",
+      "deadline": "2026-05-24",
+      "tags": [
+        "backend",
+        "auth",
+        "security"
+      ],
+      "subtasks": [
+        {
+          "id": 1,
+          "text": "Спроектировать схему БД для пользователей",
+          "assigneeId": 1,
+          "done": true
+        },
+        {
+          "id": 2,
+          "text": "Написать /login и /register эндпоинты",
+          "assigneeId": 1,
+          "done": true
+        },
+        {
+          "id": 3,
+          "text": "Добавить middleware для JWT-валидации",
+          "assigneeId": 1,
+          "done": false
+        },
+        {
+          "id": 4,
+          "text": "Покрыть тестами happy-path и негативные сценарии",
+          "assigneeId": 1,
+          "done": false
+        }
+      ],
+      "attachments": [
+        {
+          "name": "auth-spec.pdf",
+          "size": 131072,
+          "icon": "📄"
+        },
+        {
+          "name": "db-schema.png",
+          "size": 86016,
+          "icon": "🖼"
+        },
+        {
+          "name": "jwt-flow.svg",
+          "size": 12288,
+          "icon": "📐"
+        }
+      ],
+      "createdAt": "2026-04-10T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "title": "Написать тесты для модуля задач",
+      "description": "Покрыть unit-тестами CRUD-операции над задачами, edge cases по фильтрации и сортировке.",
+      "projectId": 1,
+      "assigneeId": 1,
+      "status": "todo",
+      "priority": "medium",
+      "deadline": "2026-05-30",
+      "tags": [
+        "testing",
+        "backend"
+      ],
+      "subtasks": [
+        {
+          "id": 1,
+          "text": "Тесты на создание задачи",
+          "assigneeId": 1,
+          "done": false
+        },
+        {
+          "id": 2,
+          "text": "Тесты на фильтрацию",
+          "assigneeId": 1,
+          "done": false
+        }
+      ],
+      "attachments": [],
+      "createdAt": "2026-04-12T09:30:00Z"
+    },
+    {
+      "id": 3,
+      "title": "Сверстать страницу детальной задачи",
+      "description": "Адаптивная вёрстка карточки задачи с чек-листом подзадач, боковой панелью метаданных и историей изменений.",
+      "projectId": 2,
+      "assigneeId": 1,
+      "status": "done",
+      "priority": "medium",
+      "deadline": "2026-04-20",
+      "tags": [
+        "frontend",
+        "ui"
+      ],
+      "subtasks": [],
+      "attachments": [
+        {
+          "name": "mockup.fig",
+          "size": 524288,
+          "icon": "🎨"
+        }
+      ],
+      "createdAt": "2026-04-05T12:00:00Z"
+    },
+    {
+      "id": 4,
+      "title": "Интегрировать AI-ассистент в дашборд",
+      "description": "Добавить виджет с подсказками от AI на главной странице.",
+      "projectId": 2,
+      "assigneeId": 1,
+      "status": "review",
+      "priority": "high",
+      "deadline": "2026-05-22",
+      "tags": [
+        "ai",
+        "frontend"
+      ],
+      "subtasks": [
+        {
+          "id": 1,
+          "text": "Подключить SDK",
+          "assigneeId": 1,
+          "done": true
+        },
+        {
+          "id": 2,
+          "text": "Сверстать виджет",
+          "assigneeId": 1,
+          "done": true
+        },
+        {
+          "id": 3,
+          "text": "Code review",
+          "assigneeId": 1,
+          "done": false
+        }
+      ],
+      "attachments": [],
+      "createdAt": "2026-04-15T14:00:00Z"
+    },
+    {
+      "id": 5,
+      "title": "Обновить документацию по API",
+      "description": "Дописать раздел по эндпоинтам авторизации и обновить OpenAPI-спецификацию.",
+      "projectId": 3,
+      "assigneeId": 1,
+      "status": "progress",
+      "priority": "low",
+      "deadline": "2026-06-05",
+      "tags": [
+        "docs"
+      ],
+      "subtasks": [],
+      "attachments": [],
+      "createdAt": "2026-04-18T11:00:00Z"
+    },
+    {
+      "id": 6,
+      "title": "Исправить баг с фильтрацией задач",
+      "description": "При выборе нескольких фильтров одновременно результаты не пересекаются корректно.",
+      "projectId": 1,
+      "assigneeId": 1,
+      "status": "todo",
+      "priority": "high",
+      "deadline": "2026-05-19",
+      "tags": [
+        "bug",
+        "frontend"
+      ],
+      "subtasks": [],
+      "attachments": [],
+      "createdAt": "2026-04-20T16:30:00Z"
+    },
+    {
+      "id": 7,
+      "title": "Провести аудит зависимостей",
+      "description": "Проверить npm audit и обновить уязвимые пакеты.",
+      "projectId": 1,
+      "assigneeId": 1,
+      "status": "done",
+      "priority": "low",
+      "deadline": "2026-04-25",
+      "tags": [
+        "security",
+        "devops"
+      ],
+      "subtasks": [],
+      "attachments": [],
+      "createdAt": "2026-04-08T09:00:00Z"
+    },
+    {
+      "id": 8,
+      "title": "Настроить CI-пайплайн",
+      "description": "Добавить шаги lint, тесты и сборку в GitHub Actions.",
+      "projectId": 2,
+      "assigneeId": 1,
+      "status": "progress",
+      "priority": "medium",
+      "deadline": "2026-05-28",
+      "tags": [
+        "devops",
+        "ci"
+      ],
+      "subtasks": [
+        {
+          "id": 1,
+          "text": "Lint workflow",
+          "assigneeId": 1,
+          "done": true
+        },
+        {
+          "id": 2,
+          "text": "Test workflow",
+          "assigneeId": 1,
+          "done": false
+        }
+      ],
+      "attachments": [],
+      "createdAt": "2026-04-22T10:00:00Z"
+    }
+  ],
+  "activity": [
+    {
+      "id": 1,
+      "userId": 1,
+      "action": "completed",
+      "targetType": "task",
+      "targetId": 7,
+      "createdAt": "2026-04-25T15:30:00Z"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "action": "commented",
+      "targetType": "task",
+      "targetId": 1,
+      "createdAt": "2026-04-24T12:10:00Z"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "action": "created",
+      "targetType": "task",
+      "targetId": 6,
+      "createdAt": "2026-04-20T16:30:00Z"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "action": "updated",
+      "targetType": "project",
+      "targetId": 2,
+      "createdAt": "2026-04-18T09:00:00Z"
+    }
+  ]
+}
