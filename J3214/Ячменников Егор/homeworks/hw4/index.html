@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Билеты.ру — Платформа для покупки билетов</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="styles/style.css" rel="stylesheet">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">Билеты.ру</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="concerts.html">Концерты</a></li>
+                    <li class="nav-item"><a class="nav-link" href="festivals.html">Фестивали</a></li>
+                    <li class="nav-item"><a class="nav-link" href="theatre.html">Театр</a></li>
+                </ul>
+                <div class="d-flex" id="auth-btn">
+                    <a href="auth.html" class="btn btn-outline-light me-2">Вход</a>
+                </div>
+                <button id="theme-toggle" class="btn btn-outline-light btn-sm ms-3" aria-label="Переключить тему">
+                    <i class="bi bi-moon-fill" id="theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section text-center" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/hero_section_pic.jpg') center;">
+        <div class="container">
+            <h1 class="display-3 fw-bold">События, которые нельзя пропустить</h1>
+            <p class="lead">Найдите билеты на лучшие мероприятия вашего города</p>
+        </div>
+    </header>
+
+    <section class="container my-5">
+        <div class="card shadow-sm p-4">
+            <form class="row g-3" id="filter-form">
+                <div class="col-md-4">
+                    <label class="form-label" for="filter-type">Тип мероприятия</label>
+                    <select class="form-select" id="filter-type">
+                        <option value="" selected>Все типы</option>
+                        <option value="concert">Концерт</option>
+                        <option value="festival">Фестиваль</option>
+                        <option value="theatre">Театр</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="filter-date">Дата</label>
+                    <input type="date" class="form-control" id="filter-date">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="filter-place">Место</label>
+                    <input type="text" class="form-control" id="filter-place" placeholder="Город или площадка">
+                </div>
+                <div class="col-md-2 d-flex align-items-end gap-2">
+                    <button type="submit" class="btn btn-primary w-100">Найти</button>
+                    <button type="button" class="btn btn-outline-secondary w-100" id="btn-reset">Сбросить</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <main class="container mb-5">
+        <h2 class="mb-4">Популярные события</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="events-container">
+            
+        </div>
+    </main>
+
+    <footer class="bg-dark text-light py-4 mt-auto">
+        <div class="container">
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
+                <p class="mb-3 mb-sm-0">© 2026 Билеты.ру</p>
+                
+                <div class="footer-social-links">
+                    <a href="#" class="social-link me-3" aria-label="Мы в Telegram">
+                        <svg class="social-icon"><use href="images/sprite.svg#icon-tg"></use></svg>
+                    </a>
+                    
+                    <a href="#" class="social-link me-3" aria-label="Мы ВКонтакте">
+                        <svg class="social-icon"><use href="images/sprite.svg#icon-vk"></use></svg>
+                    </a>
+                    
+                    <a href="#" class="social-link" aria-label="Мы в Instagram">
+                        <svg class="social-icon"><use href="images/sprite.svg#icon-inst"></use></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="scripts/filter.js"></script>
+    <script src="scripts/check_auth.js"></script>
+    <script src="scripts/theme.js"></script>
+</body>
+</html>
