@@ -12,6 +12,9 @@ import {
     updateAuthView
 } from './render.js';
 
+const THEME_STORAGE_KEY = 'datamark-theme';
+const systemThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
 const state = {
     token: getSavedToken(),
     user: getSavedUser(),
@@ -26,6 +29,9 @@ const pages = document.querySelectorAll('[data-page]');
 
 const elements = {
     mainContent: document.querySelector('#mainContent'),
+
+    themeToggle: document.querySelector('#themeToggle'),
+    themeToggleText: document.querySelector('#themeToggleText'),
 
     loginLink: document.querySelector('#loginLink'),
     registerLink: document.querySelector('#registerLink'),
@@ -50,6 +56,38 @@ const elements = {
     workerFilter: document.querySelector('#workerFilter'),
     resetFilters: document.querySelector('#resetFilters')
 };
+
+function getSystemTheme() {
+    return systemThemeQuery.matches ? 'dark' : 'light';
+}
+
+function getSavedTheme() {
+    return localStorage.getItem(THEME_STORAGE_KEY);
+}
+
+function getCurrentTheme() {
+    return getSavedTheme() || getSystemTheme();
+}
+
+function updateThemeButton(theme) {
+    const isDark = theme === 'dark';
+
+    elements.themeToggle.setAttribute('aria-pressed', String(isDark));
+    elements.themeToggle.setAttribute('aria-label', isDark ? 'Включить светлую тему' : 'Включить тёмную тему');
+    elements.themeToggleText.textContent = isDark ? 'Светлая тема' : 'Тёмная тема';
+}
+
+function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    updateThemeButton(theme);
+}
+
+function toggleTheme() {
+    const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+
+    localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+    applyTheme(nextTheme);
+}
 
 function getPageNames() {
     return Array.from(pages).map((page) => page.dataset.page);
@@ -151,6 +189,14 @@ window.addEventListener('hashchange', () => {
     showPage(getInitialPage(), false);
 });
 
+systemThemeQuery.addEventListener('change', () => {
+    if (!getSavedTheme()) {
+        applyTheme(getSystemTheme());
+    }
+});
+
+elements.themeToggle.addEventListener('click', toggleTheme);
+
 elements.loginForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
@@ -215,6 +261,7 @@ elements.resetFilters.addEventListener('click', () => {
     updateProjectList();
 });
 
+applyTheme(getCurrentTheme());
 showPage(getInitialPage(), false);
 updateAuthView(elements, state);
 loadData();

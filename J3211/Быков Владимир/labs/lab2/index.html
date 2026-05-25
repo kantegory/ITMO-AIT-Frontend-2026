@@ -4,6 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DataMark - аннотация данных для ML</title>
+    <script>
+        const savedTheme = localStorage.getItem('datamark-theme');
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = savedTheme || systemTheme;
+    </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -27,7 +32,10 @@
                 <li class="nav-item"><a class="nav-link" href="#dashboard" data-page-link="dashboard" data-nav-link>Кабинет</a></li>
             </ul>
 
-            <div class="d-flex gap-2 ms-lg-3">
+            <div class="d-flex flex-wrap gap-2 ms-lg-3">
+                <button class="btn btn-outline-primary theme-toggle" type="button" id="themeToggle" aria-pressed="false">
+                    <span id="themeToggleText">Тёмная тема</span>
+                </button>
                 <a class="btn btn-link login-link" href="#login" data-page-link="login" data-nav-link id="loginLink">Войти</a>
                 <a class="btn btn-primary" href="#register" data-page-link="register" data-nav-link id="registerLink">Регистрация</a>
                 <button class="btn btn-outline-primary d-none" type="button" id="logoutButton">Выйти</button>
