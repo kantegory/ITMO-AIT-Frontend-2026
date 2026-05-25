@@ -85,7 +85,7 @@ function submitComment() {
           </div>
 
           <div class="mt-3 mt-lg-0 d-flex gap-2 align-items-center flex-wrap">
-            <!-- Счётчик звёзд -->
+            <!-- Звёзды — просто счётчик, как было -->
             <button
               type="button"
               class="btn btn-social-action shadow-sm"
@@ -98,7 +98,7 @@ function submitComment() {
               <span class="count">{{ formatCount(stars) }}</span>
             </button>
 
-            <!-- Переключатель для форков -->
+            <!-- Переключатель форка -->
             <button
               type="button"
               class="btn btn-social-action shadow-sm"
