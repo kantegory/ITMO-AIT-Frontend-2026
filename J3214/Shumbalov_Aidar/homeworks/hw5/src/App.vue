@@ -66,7 +66,7 @@ function resetFilters() {
       @reset="resetFilters"
     />
 
-    <section class="courses-section">
+    <section id="courses" class="courses-section">
       <div class="section-heading">
         <h2>Каталог курсов</h2>
         <span>{{ filteredCourses.length }} из {{ courses.length }}</span>
@@ -87,6 +87,14 @@ function resetFilters() {
         <p>Измените поисковый запрос или сбросьте фильтры.</p>
         <button type="button" @click="resetFilters">Сбросить фильтры</button>
       </div>
+    </section>
+
+    <section id="report" class="report-section" aria-labelledby="report-title">
+      <h2 id="report-title">Отчёт по домашней работе</h2>
+      <p>
+        Проект запущен через npm и Vite. В приложении используются Vue-компоненты,
+        реактивные переменные, computed-свойства, props, emit и v-model.
+      </p>
     </section>
   </main>
 </template>
