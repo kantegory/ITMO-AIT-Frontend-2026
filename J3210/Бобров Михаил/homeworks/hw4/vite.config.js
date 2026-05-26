@@ -2,6 +2,7 @@ import { resolve } from "node:path";
 import { defineConfig } from "vite";
 
 const pages = [
+    "index",
     "dashboard",
     "dataset-details",
     "explore",
