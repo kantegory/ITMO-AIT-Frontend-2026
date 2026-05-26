@@ -57,7 +57,7 @@ function pipelineColor(task) {
   <div class="hf-profile container-fluid px-0">
     <div class="hf-layout">
 
-      <!-- LEFT SIDEBAR -->
+      <!-- Левый sidebar -->
       <aside class="hf-sidebar">
         <div class="hf-avatar-wrap">
           <img
@@ -120,7 +120,7 @@ function pipelineColor(task) {
         </ul>
       </aside>
 
-      <!-- MAIN CONTENT -->
+      <!-- основной контент -->
       <main class="hf-main" id="main-content" tabindex="-1">
         <nav class="hf-tabs" aria-label="Разделы профиля">
           <button
@@ -143,7 +143,7 @@ function pipelineColor(task) {
           </select>
         </div>
 
-        <!-- Models -->
+        <!-- Модели -->
         <section v-if="activeTab === 'uploads'">
           <div v-if="sortedModels.length === 0" class="hf-empty">
             Моделей пока нет. Нажмите «Новый», чтобы добавить.
@@ -171,7 +171,7 @@ function pipelineColor(task) {
           </article>
         </section>
 
-        <!-- Datasets -->
+        <!-- Датасеты -->
         <section v-else-if="activeTab === 'datasets'">
           <div v-if="sortedDatasets.length === 0" class="hf-empty">Датасетов пока нет.</div>
           <article v-for="dataset in sortedDatasets" :key="dataset.id" class="hf-item">
@@ -191,7 +191,7 @@ function pipelineColor(task) {
           </article>
         </section>
 
-        <!-- Subscriptions -->
+        <!-- Подписки -->
         <section v-else>
           <article v-for="sub in subscriptions" :key="sub.id" class="hf-item hf-item--sub">
             <div class="hf-item-left">
@@ -315,15 +315,30 @@ function pipelineColor(task) {
   padding: 0.65rem 1rem; background: none; border: none;
   border-bottom: 2px solid transparent; margin-bottom: -2px;
   font-size: 0.9rem; font-weight: 500; cursor: pointer;
-  color: var(--text-muted, #6b7280); transition: color .15s;
+  color: var(--text-muted, #6b7280); transition: color .15s, border-color .15s;
 }
-.hf-tab:hover { color: var(--text-color, #111827); }
-.hf-tab--active { color: var(--text-color, #111827); border-bottom-color: var(--bloom-green, #3f8d4e); font-weight: 700; }
+.hf-tab:hover { color: var(--bloom-green, #3f8d4e); }
+
+/* Активный таб: зелёный текст + зелёная черта */
+.hf-tab--active {
+  color: var(--bloom-green, #3f8d4e);
+  border-bottom-color: var(--bloom-green, #3f8d4e);
+  font-weight: 700;
+}
 
 .hf-tab-count {
-  font-size: 0.72rem; background: var(--border-color, #e5e7eb);
-  color: var(--text-muted, #6b7280); border-radius: 20px;
-  padding: 1px 7px; font-weight: 600;
+  font-size: 0.72rem;
+  background: var(--bloom-green, #3f8d4e);
+  color: #fff;
+  border-radius: 20px;
+  padding: 1px 7px;
+  font-weight: 600;
+}
+
+/* Неактивные табы: счётчик серый */
+.hf-tab:not(.hf-tab--active) .hf-tab-count {
+  background: rgba(128, 128, 128, 0.25);
+  color: var(--text-muted, #6b7280);
 }
 
 .hf-sort-row { display: flex; align-items: center; gap: 0.5rem; justify-content: flex-end; margin-bottom: 0.75rem; }
