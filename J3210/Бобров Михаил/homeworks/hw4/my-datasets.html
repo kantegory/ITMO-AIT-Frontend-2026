@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataPort – Список датасетов</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="d-flex dashboard">
+    <aside class="sidebar">
+        <div class="brand mb-4">DataPort</div>
+        <nav class="nav flex-column" aria-label="Основная навигация">
+            <a class="nav-link" href="dashboard.html">Dashboard</a>
+            <a class="nav-link" href="explore.html">Explore</a>
+            <a class="nav-link" href="my-models.html">My Models</a>
+            <a class="nav-link active" href="my-datasets.html" aria-current="page">My Datasets</a>
+            <a class="nav-link" href="my-subscriptions.html">Subscriptions</a>
+            <a class="nav-link" href="settings.html">Settings</a>
+            <hr>
+            <a class="nav-link text-danger" href="#" id="logoutBtn"><svg class="icon" aria-hidden="true"><use href="sprite.svg#logout"></use></svg>Выход</a>
+        </nav>
+    </aside>
+
+    <main class="flex-grow-1">
+        <div class="topbar px-4 py-3 d-flex justify-content-between align-items-center">
+            <h1 class="page-title mb-0">Мои датасеты</h1>
+            <button class="btn btn-primary upload-btn" type="button" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                <svg class="icon" aria-hidden="true"><use href="sprite.svg#upload"></use></svg>Загрузить датасет
+            </button>
+        </div>
+
+        <div class="content-area">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <caption class="visually-hidden">Список загруженных датасетов</caption>
+                        <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4 py-3" scope="col">Название</th>
+                            <th scope="col">Теги</th>
+                            <th scope="col">Размер</th>
+                            <th scope="col">Дата</th>
+                            <th class="text-end pe-4" scope="col">Действия</th>
+                        </tr>
+                        </thead>
+                        <tbody id="datasets-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <nav class="mt-4" aria-label="Страницы списка датасетов">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Назад</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#" aria-current="page">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Вперед</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </main>
+</div>
+
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadDatasetTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-4">
+            <h5 class="mb-3" id="uploadDatasetTitle">Загрузка датасета</h5>
+            <label class="form-label visually-hidden" for="datasetUploadName">Название датасета</label>
+            <input class="form-control mb-2" id="datasetUploadName" placeholder="Название датасета">
+            <label class="form-label visually-hidden" for="datasetUploadCategory">Категория датасета</label>
+            <select class="form-select mb-3" id="datasetUploadCategory">
+                <option>Computer Vision</option>
+                <option>NLP</option>
+                <option>Tabular</option>
+                <option>Audio</option>
+            </select>
+            <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Отмена</button>
+                <button class="btn btn-primary" type="button"><svg class="icon" aria-hidden="true"><use href="sprite.svg#upload"></use></svg>Загрузить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
