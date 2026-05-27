@@ -78,7 +78,7 @@
         '<span class="text-muted small">' + byCategory[cat].toLocaleString('ru-RU') + ' ₽ (' + pct + '%)</span>' +
         '</div>' +
         '<div class="progress" style="height:8px" role="progressbar" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100">' +
-        '<div class="progress-bar" style="width:' + pct + '%"></div></div></div>';
+        '<div class="progress-bar" style="width:' + pct + '%;background-color:' + (CATEGORY_COLORS[cat] || '#6c757d') + '"></div></div></div>';
     }).join('');
 
     document.getElementById('categories-card').innerHTML = '<div class="card-body">' + (rows || '<p class="text-muted mb-0">Нет данных о расходах</p>') + '</div>';

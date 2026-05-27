@@ -47,6 +47,15 @@ var CATEGORY_BADGES = {
   services: 'bg-info'
 };
 
+var CATEGORY_COLORS = {
+  income: '#198754',
+  food: '#ffc107',
+  housing: '#6c757d',
+  transport: '#c0392b',
+  entertainment: '#0dcaf0',
+  services: '#0dcaf0'
+};
+
 function formatAmount(amount) {
   var sign = amount >= 0 ? '+' : '−';
   return sign + ' ' + Math.abs(amount).toLocaleString('ru-RU') + ' ₽';
