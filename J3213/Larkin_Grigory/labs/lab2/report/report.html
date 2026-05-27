@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Отчёт ЛР2 — Ларкин Григорий</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; color: #222; font-size: 14px; line-height: 1.6; }
+    h1 { font-size: 18px; }
+    h2 { font-size: 15px; margin-top: 24px; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+    td, th { border: 1px solid #ccc; padding: 6px 10px; text-align: left; }
+    th { background: #f5f5f5; }
+    code { background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 13px; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 4px; font-size: 12px; overflow-x: auto; }
+    @media print { body { margin: 20px; } }
+  </style>
+</head>
+<body>
+
+<h1>Лабораторная работа №2<br>Взаимодействие с внешним API</h1>
+
+<table>
+  <tr><td><b>Студент</b></td><td>Ларкин Григорий Михайлович</td></tr>
+  <tr><td><b>Группа</b></td><td>J3213</td></tr>
+  <tr><td><b>Вариант</b></td><td>4 — Сервис для управления личными финансами и бюджетом</td></tr>
+  <tr><td><b>Проект</b></td><td>aNikral</td></tr>
+</table>
+
+<h2>1. Цель работы</h2>
+<p>
+  Подключить моковое API к ранее разработанному сайту (ЛР1). Реализовать авторизацию и загрузку данных
+  через fetch-запросы к локальному JSON-серверу вместо статически захардкоженных данных.
+</p>
+
+<h2>2. Используемые технологии</h2>
+<ul>
+  <li><b>json-server 0.17</b> — имитация REST API на основе <code>db.json</code></li>
+  <li><b>Fetch API</b> — выполнение HTTP-запросов из браузера</li>
+  <li><b>localStorage</b> — хранение токена авторизации</li>
+  <li><b>Bootstrap 5.3</b> — UI-фреймворк</li>
+</ul>
+
+<h2>3. Структура проекта</h2>
+<pre>lab2/
+├── db.json              # база данных json-server
+├── package.json         # зависимости (json-server)
+├── index.html           # страница входа
+├── register.html        # страница регистрации
+├── dashboard.html       # личный кабинет
+├── transactions.html    # транзакции с фильтрацией
+├── accounts.html        # счета (с добавлением через API)
+├── reports.html         # отчёты по расходам
+├── css/style.css
+├── js/
+│   ├── api.js           # базовые функции apiGet / apiPost
+│   ├── auth.js          # login / register / requireAuth / logout
+│   └── main.js          # темизация, утилиты рендеринга
+└── icons/sprite.svg</pre>
+
+<h2>4. Структура базы данных</h2>
+<p>Файл <code>db.json</code> содержит три коллекции:</p>
+<ul>
+  <li><b>users</b> — пользователи: <code>id, name, email, password</code></li>
+  <li><b>accounts</b> — счета: <code>id, userId, name, mask, balance</code></li>
+  <li><b>transactions</b> — транзакции: <code>id, userId, description, category, date, amount</code></li>
+</ul>
+
+<h2>5. Реализация авторизации</h2>
+<p>
+  При входе выполняется <code>GET /users?email=...</code>, из результата находится пользователь
+  с совпадающим паролем. В <code>localStorage</code> сохраняются <code>token</code> (base64 от id+timestamp)
+  и <code>userId</code>. На каждой защищённой странице вызывается <code>requireAuth()</code>,
+  который перенаправляет на <code>index.html</code> при отсутствии токена.
+</p>
+
+<h2>6. Работа с API на страницах</h2>
+<table>
+  <tr><th>Страница</th><th>Запросы</th><th>Функциональность</th></tr>
+  <tr>
+    <td>Вход</td>
+    <td><code>GET /users?email=</code></td>
+    <td>Проверка учётных данных, сохранение токена</td>
+  </tr>
+  <tr>
+    <td>Регистрация</td>
+    <td><code>GET /users?email=</code>, <code>POST /users</code></td>
+    <td>Проверка уникальности email, создание пользователя</td>
+  </tr>
+  <tr>
+    <td>Кабинет</td>
+    <td><code>GET /transactions?userId=</code>, <code>GET /accounts?userId=</code></td>
+    <td>Расчёт баланса, доходов, расходов; последние 5 транзакций</td>
+  </tr>
+  <tr>
+    <td>Транзакции</td>
+    <td><code>GET /transactions?userId=</code></td>
+    <td>Список транзакций, клиентская фильтрация по описанию и категории</td>
+  </tr>
+  <tr>
+    <td>Счета</td>
+    <td><code>GET /accounts?userId=</code>, <code>POST /accounts</code></td>
+    <td>Список счетов, добавление нового счёта через модальное окно</td>
+  </tr>
+  <tr>
+    <td>Отчёты</td>
+    <td><code>GET /transactions?userId=</code></td>
+    <td>Сводка доходов/расходов, разбивка расходов по категориям с прогресс-барами</td>
+  </tr>
+</table>
+
+<h2>7. Запуск</h2>
+<pre>cd J3213/Larkin_Grigory/labs/lab2
+npm install
+npm run api     # запускает json-server на http://localhost:3000</pre>
+<p>Открыть <code>index.html</code> в браузере. Демо-аккаунт: <code>user@example.com</code> / <code>password123</code></p>
+
+<h2>8. Вывод</h2>
+<p>
+  В ходе лабораторной работы была реализована имитация взаимодействия с REST API
+  средствами json-server и Fetch API. Данные пользователей, счетов и транзакций
+  хранятся в <code>db.json</code> и динамически загружаются при открытии страниц.
+  Реализована авторизация с хранением токена в <code>localStorage</code> и защитой маршрутов.
+</p>
+
+</body>
+</html>
