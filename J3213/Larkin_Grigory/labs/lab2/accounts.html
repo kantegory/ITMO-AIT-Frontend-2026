@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>aNikral — Счета</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-body border-bottom" aria-label="Основная навигация">
+  <div class="container">
+    <a class="navbar-brand brand-name" href="dashboard.html">a<span>Nikral</span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-label="Открыть меню">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="dashboard.html"><svg width="16" height="16" class="me-1"><use href="icons/sprite.svg#icon-home"/></svg>Кабинет</a></li>
+        <li class="nav-item"><a class="nav-link" href="transactions.html"><svg width="16" height="16" class="me-1"><use href="icons/sprite.svg#icon-list"/></svg>Транзакции</a></li>
+        <li class="nav-item"><a class="nav-link" href="reports.html"><svg width="16" height="16" class="me-1"><use href="icons/sprite.svg#icon-chart"/></svg>Отчёты</a></li>
+        <li class="nav-item"><a class="nav-link active" href="accounts.html"><svg width="16" height="16" class="me-1"><use href="icons/sprite.svg#icon-card"/></svg>Счета</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" id="logout-btn"><svg width="16" height="16" class="me-1"><use href="icons/sprite.svg#icon-logout"/></svg>Выйти</a></li>
+      </ul>
+      <button id="theme-toggle" class="btn btn-sm btn-outline-secondary ms-3" type="button">Тёмная</button>
+    </div>
+  </div>
+</nav>
+
+<main class="container my-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h4 mb-0">Счета</h1>
+    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addAccountModal">
+      + Добавить счёт
+    </button>
+  </div>
+
+  <div class="row g-3" id="accounts-list">
+    <div class="col-12 text-muted">Загрузка...</div>
+  </div>
+</main>
+
+<div class="modal fade" id="addAccountModal" tabindex="-1" aria-labelledby="addAccountModalLabel" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addAccountModalLabel">Добавить счёт</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+        <div id="account-error" class="alert alert-danger d-none" role="alert"></div>
+        <form id="add-account-form" novalidate>
+          <div class="mb-3">
+            <label class="form-label" for="account-name">Название счёта</label>
+            <input type="text" class="form-control" id="account-name" placeholder="Сбербанк — дебетовая" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="account-mask">Последние 4 цифры</label>
+            <input type="text" class="form-control" id="account-mask" placeholder="1234" maxlength="4" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="account-balance">Начальный баланс (₽)</label>
+            <input type="number" class="form-control" id="account-balance" placeholder="0" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-primary" id="save-account-btn">Сохранить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script>
+  requireAuth();
+
+  var userId = parseInt(localStorage.getItem('userId'));
+
+  function loadAccounts() {
+    apiGet('/accounts?userId=' + userId).then(function (accounts) {
+      if (accounts.length === 0) {
+        document.getElementById('accounts-list').innerHTML =
+          '<div class="col-12 text-muted">Счетов пока нет. Добавьте первый счёт.</div>';
+        return;
+      }
+      var cards = accounts.map(function (a) {
+        return '<div class="col-md-6">' +
+          '<div class="card p-3">' +
+          '<div class="d-flex justify-content-between align-items-start">' +
+          '<div><div class="fw-semibold">' + a.name + '</div>' +
+          '<div class="text-muted small">•••• ' + a.mask + '</div>' +
+          '<div class="mt-2 fw-bold">' + a.balance.toLocaleString('ru-RU') + ' ₽</div></div>' +
+          '</div></div></div>';
+      }).join('');
+      document.getElementById('accounts-list').innerHTML = cards;
+    }).catch(function () {
+      showError(document.getElementById('accounts-list'), 'Не удалось загрузить счета. Запущен ли json-server?');
+    });
+  }
+
+  loadAccounts();
+
+  document.getElementById('save-account-btn').addEventListener('click', function () {
+    var name = document.getElementById('account-name').value.trim();
+    var mask = document.getElementById('account-mask').value.trim();
+    var balance = parseInt(document.getElementById('account-balance').value, 10) || 0;
+    var errEl = document.getElementById('account-error');
+
+    if (!name || !mask) {
+      errEl.textContent = 'Заполните название и последние 4 цифры';
+      errEl.classList.remove('d-none');
+      return;
+    }
+
+    errEl.classList.add('d-none');
+    apiPost('/accounts', { userId: userId, name: name, mask: mask, balance: balance })
+      .then(function () {
+        bootstrap.Modal.getInstance(document.getElementById('addAccountModal')).hide();
+        document.getElementById('add-account-form').reset();
+        loadAccounts();
+      })
+      .catch(function (err) {
+        errEl.textContent = err.message;
+        errEl.classList.remove('d-none');
+      });
+  });
+</script>
+</body>
+</html>
