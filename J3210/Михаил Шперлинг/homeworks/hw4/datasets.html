@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hub | Датасеты</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" aria-label="Главная навигация">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">AI Hub</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключатель навигации">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Модели</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="datasets.html">Датасеты</a></li>
+            </ul>
+            <div class="d-flex align-items-center">
+                <button id="themeToggle" class="btn btn-link text-light me-3 p-0 border-0" aria-label="Переключить тему">
+                    <i class="bi bi-moon-fill fs-5" id="themeIcon" aria-hidden="true"></i>
+                </button>
+                <a href="login.html" class="btn btn-outline-light me-2">Вход</a>
+                <a href="register.html" class="btn btn-primary">Регистрация</a>
+                <a href="profile.html" class="btn btn-secondary ms-2" aria-label="Профиль пользователя"><i class="bi bi-person-circle" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="row">
+        <aside class="col-md-3 mb-4" aria-label="Фильтры">
+            <div class="card p-3 shadow-sm border-0">
+                <h5 class="fw-bold">Фильтры</h5>
+                <hr>
+                <h6 class="text-muted text-uppercase small fw-bold">Тип данных</h6>
+                <div class="form-check">
+                    <input class="form-check-input task-filter" type="checkbox" id="nlp" value="nlp">
+                    <label class="form-check-label" for="nlp">Текст (NLP)</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input task-filter" type="checkbox" id="cv" value="cv">
+                    <label class="form-check-label" for="cv">Изображения (CV)</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input task-filter" type="checkbox" id="audio" value="audio">
+                    <label class="form-check-label" for="audio">Аудио</label>
+                </div>
+                
+                <label for="formatSelect" class="text-muted text-uppercase small fw-bold mt-4 mb-2 d-block">Формат</label>
+                <select id="formatSelect" class="form-select border-0 bg-light">
+                    <option value="all" selected>Все форматы</option>
+                    <option value="csv">CSV / Parquet</option>
+                    <option value="json">JSON / JSONL</option>
+                    <option value="images">ZIP (Images)</option>
+                </select>
+            </div>
+        </aside>
+
+        <main class="col-md-9" aria-label="Список датасетов">
+            <div class="input-group mb-4 shadow-sm">
+                <span class="input-group-text bg-white border-end-0" id="search-dataset-addon"><i class="bi bi-search" aria-hidden="true"></i></span>
+                <input type="text" id="searchInput" class="form-control border-start-0 ps-0" placeholder="Поиск по датасетам..." aria-label="Поиск по датасетам" aria-describedby="search-dataset-addon">
+                <button class="btn btn-primary" id="searchBtn">Найти</button>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 g-4" id="dataContainer" aria-live="polite">
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

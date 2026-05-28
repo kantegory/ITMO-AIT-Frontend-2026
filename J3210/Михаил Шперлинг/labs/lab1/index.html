@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hub | Поиск моделей</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">AI Hub</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link active" href="index.html">Модели</a></li>
+                <li class="nav-item"><a class="nav-link" href="datasets.html">Датасеты</a></li>
+            </ul>
+            <div class="d-flex align-items-center">
+                <a href="login.html" class="btn btn-outline-light me-2">Вход</a>
+                <a href="register.html" class="btn btn-primary">Регистрация</a>
+                <a href="profile.html" class="btn btn-secondary ms-2"><i class="bi bi-person-circle"></i></a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="row">
+        <aside class="col-md-3 mb-4">
+            <div class="card p-3 shadow-sm border-0">
+                <h5 class="fw-bold">Фильтры</h5>
+                <hr>
+                <h6 class="text-muted text-uppercase small fw-bold">Задача</h6>
+                <div class="form-check">
+                    <input class="form-check-input task-filter" type="checkbox" id="nlp" value="nlp">
+                    <label class="form-check-label" for="nlp">NLP (Текст)</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input task-filter" type="checkbox" id="cv" value="cv">
+                    <label class="form-check-label" for="cv">Computer Vision</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input task-filter" type="checkbox" id="audio" value="audio">
+                    <label class="form-check-label" for="audio">Audio / Speech</label>
+                </div>
+                
+                <h6 class="text-muted text-uppercase small fw-bold mt-4">Фреймворк</h6>
+                <select id="frameworkSelect" class="form-select border-0 bg-light">
+                    <option value="all" selected>Все</option>
+                    <option value="pytorch">PyTorch</option>
+                    <option value="tensorflow">TensorFlow</option>
+                    <option value="jax">JAX</option>
+                </select>
+            </div>
+        </aside>
+
+        <main class="col-md-9">
+            <div class="input-group mb-4 shadow-sm">
+                <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                <input type="text" id="searchInput" class="form-control border-start-0 ps-0" placeholder="Поиск по названию или описанию (например, Llama)...">
+                <button class="btn btn-primary">Найти</button>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                
+                <div class="col model-col" data-task="nlp" data-framework="pytorch">
+                    <div class="card h-100 shadow-sm border-0 model-card">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="model.html" class="text-decoration-none">Llama-3-8B-Instruct</a></h5>
+                            <p class="card-text text-muted small">Meta's latest large language model fine-tuned for chat and conversational AI.</p>
+                            <div class="mb-3">
+                                <span class="badge bg-primary">Модель</span>
+                                <span class="badge bg-info-soft border text-primary">NLP</span>
+                                <span class="badge bg-light text-dark border">PyTorch</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 12.5k • <i class="bi bi-download"></i> 1.2M</small>
+                                <span class="text-muted small">4.5 GB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col model-col" data-task="cv" data-framework="tensorflow">
+                    <div class="card h-100 shadow-sm border-0 model-card">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="#" class="text-decoration-none">Stable-Diffusion-XL</a></h5>
+                            <p class="card-text text-muted small">Модель для генерации высококачественных изображений по текстовому описанию.</p>
+                            <div class="mb-3">
+                                <span class="badge bg-primary">Модель</span>
+                                <span class="badge bg-success bg-opacity-10 border text-success">Computer Vision</span>
+                                <span class="badge bg-light text-dark border">TensorFlow</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 8.9k • <i class="bi bi-download"></i> 3.4M</small>
+                                <span class="text-muted small">6.9 GB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col model-col" data-task="audio" data-framework="jax">
+                    <div class="card h-100 shadow-sm border-0 model-card">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="#" class="text-decoration-none">Whisper-v3-Large</a></h5>
+                            <p class="card-text text-muted small">Модель от OpenAI для распознавания речи (STT) с поддержкой множества языков.</p>
+                            <div class="mb-3">
+                                <span class="badge bg-primary">Модель</span>
+                                <span class="badge bg-danger bg-opacity-10 border text-danger">Audio</span>
+                                <span class="badge bg-light text-dark border">JAX</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 15.2k • <i class="bi bi-download"></i> 800k</small>
+                                <span class="text-muted small">3.1 GB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col model-col" data-task="cv" data-framework="pytorch">
+                    <div class="card h-100 shadow-sm border-0 model-card">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="#" class="text-decoration-none">YOLOv9-Object-Detection</a></h5>
+                            <p class="card-text text-muted small">Быстрая и точная модель для обнаружения объектов на фото и видео в реальном времени.</p>
+                            <div class="mb-3">
+                                <span class="badge bg-primary">Модель</span>
+                                <span class="badge bg-success bg-opacity-10 border text-success">Computer Vision</span>
+                                <span class="badge bg-light text-dark border">PyTorch</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> 4.1k • <i class="bi bi-download"></i> 500k</small>
+                                <span class="text-muted small">150 MB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
