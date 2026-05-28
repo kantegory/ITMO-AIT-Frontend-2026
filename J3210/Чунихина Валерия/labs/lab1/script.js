@@ -117,6 +117,7 @@ async function loadModels(filterParams = "") {
             const library = escapeHtml(model.library_name || "Transformers");
             const headingLevelClass = index === 0 ? "h4" : "h5";
 
+            // В карточках главной страницы используем иконки из общего SVG-спрайта.
             grid.insertAdjacentHTML(
                 "beforeend",
                 `
@@ -125,10 +126,15 @@ async function loadModels(filterParams = "") {
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-start mb-3">
                                 <span class="badge bg-primary text-white">${task}</span>
-                                <span class="text-muted small" aria-label="${downloads} загрузок">📥 ${downloads}</span>
+                                <span class="text-muted small d-inline-flex align-items-center gap-1" aria-label="${downloads} загрузок">
+                                    <svg class="ui-icon ui-icon-sm" aria-hidden="true">
+                                        <use href="sprite.svg#icon-download"></use>
+                                    </svg>
+                                    ${downloads}
+                                </span>
                             </div>
                             <h3 id="model-card-title-${index}" class="card-title ${headingLevelClass} fw-bold">
-                                ${modelName}${index === 0 ? ' <span aria-hidden="true">🌟</span>' : ""}
+                                ${modelName}
                             </h3>
                             <p class="small text-muted mb-1">Автор: ${author}</p>
                             <div class="d-flex justify-content-between align-items-center mt-4">
@@ -182,7 +188,12 @@ async function loadHuggingFaceTrends() {
                     <article class="card h-100 card-hover p-3 shadow-sm border-0" aria-labelledby="trend-title-${index}">
                         <div class="card-body">
                             <h3 id="trend-title-${index}" class="h6 fw-bold text-truncate">${modelName}</h3>
-                            <p class="small text-muted mb-0" aria-label="${downloads} загрузок">📥 ${downloads}</p>
+                            <p class="small text-muted mb-0 d-inline-flex align-items-center gap-1" aria-label="${downloads} загрузок">
+                                <svg class="ui-icon ui-icon-sm" aria-hidden="true">
+                                    <use href="sprite.svg#icon-download"></use>
+                                </svg>
+                                ${downloads}
+                            </p>
                         </div>
                     </article>
                 </div>`
