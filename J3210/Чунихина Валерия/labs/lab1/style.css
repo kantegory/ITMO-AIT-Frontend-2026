@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap');
 
 :root {
-    --bloom-green: #5E8D5A;
+    --bloom-green: #2f5a31;
     --bloom-blue: #A2C2E1;
-    --bloom-orange: #F4A261;
+    --bloom-orange: #8f4b17;
     --bloom-bg: #FAF9F6;
     --text-dark: #2F3640;
 }
@@ -14,83 +14,161 @@ body {
     color: var(--text-dark);
 }
 
-/* Навигация */
+.skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    z-index: 2000;
+    padding: 0.75rem 1rem;
+    background-color: var(--bloom-green);
+    color: #fff;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+    top: 1rem;
+    color: #fff;
+}
+
 .navbar {
     background-color: white !important;
     border-bottom: 2px solid rgba(94, 141, 90, 0.1);
 }
-.navbar-brand { color: var(--text-dark) !important; }
 
-/* Анимация цветка в логотипе */
+.navbar-brand {
+    color: var(--text-dark) !important;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.5rem 0;
+}
+
 .brand-flower {
     display: inline-block;
     transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
 .navbar-brand:hover .brand-flower {
     transform: rotate(45deg) scale(1.2);
     color: var(--bloom-orange);
 }
 
-/* Кнопки */
 .btn-primary {
     background-color: var(--bloom-green) !important;
     border-color: var(--bloom-green) !important;
     border-radius: 12px !important;
 }
+
 .btn-accent {
     background-color: var(--bloom-orange) !important;
-    color: white !important;
+    color: #fff !important;
+    font-weight: 700;
     border-radius: 12px !important;
 }
+
 .btn-outline-primary {
     color: var(--bloom-green) !important;
     border-color: var(--bloom-green) !important;
     border-radius: 12px !important;
 }
+
 .btn-outline-primary:hover {
     background-color: var(--bloom-green) !important;
     color: white !important;
 }
 
-/* Карточки */
 .card {
     border-radius: 20px !important;
     border: none !important;
 }
+
 .card-hover:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
 }
 
-/* Баджи */
-.badge-model { background-color: var(--bloom-blue) !important; color: white; border-radius: 8px !important; }
-.badge-dataset { background-color: var(--bloom-green) !important; color: white; border-radius: 8px !important; }
+.badge-model {
+    background-color: #dbe8f5 !important;
+    color: #1e3a5f !important;
+    border-radius: 8px !important;
+    font-weight: 700;
+}
 
-/* Кастомные фоны для иконок в профиле */
-.bg-soft-blue { background-color: #E3F2FD; font-size: 1.5rem; }
-.bg-soft-green { background-color: #E8F5E9; font-size: 1.5rem; }
+.badge-dataset {
+    background-color: #dbeede !important;
+    color: #214d2a !important;
+    border-radius: 8px !important;
+    font-weight: 700;
+}
 
-/* Поля ввода */
-.form-control, .form-select {
+.bg-soft-blue {
+    background-color: #E3F2FD;
+    font-size: 1.5rem;
+}
+
+.bg-soft-green {
+    background-color: #E8F5E9;
+    font-size: 1.5rem;
+}
+
+.form-control,
+.form-select {
     border-radius: 12px !important;
     padding: 0.75rem 1rem !important;
 }
 
-/* Подсветка активной ссылки */
+.btn,
+.form-control,
+.form-select {
+    min-height: 48px;
+}
+
+.btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.btn-sm {
+    min-height: 44px;
+}
+
+#searchForm {
+    padding: 0.35rem;
+}
+
+#searchForm .form-control,
+#searchForm .btn {
+    border-radius: 999px !important;
+}
+
+#searchForm .btn {
+    min-width: 120px;
+}
+
 .nav-link.active {
     color: var(--bloom-green) !important;
     font-weight: 700;
 }
 
-/* Подсветка иконки профиля */
 .nav-link:hover {
     color: var(--bloom-orange) !important;
     transition: color 0.3s ease;
 }
 
-/* стиль вкладок в профиле */
+.nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.75rem 0.9rem !important;
+}
+
 .nav-pills .nav-link {
-    color: var(--bloom-green) !important; /* Текст неактивных вкладок теперь зеленый */
+    color: var(--bloom-green) !important;
     font-weight: 600;
     padding: 10px 25px;
     border-radius: 12px !important;
@@ -98,27 +176,23 @@ body {
     background: transparent;
 }
 
-/* Стиль активной вкладки*/
 .nav-pills .nav-link.active {
     background-color: var(--bloom-green) !important;
     color: white !important;
     box-shadow: 0 4px 15px rgba(94, 141, 90, 0.25) !important;
 }
 
-/* Эффект при наведении на неактивную вкладку */
 .nav-pills .nav-link:hover:not(.active) {
-    background-color: rgba(94, 141, 90, 0.1) !important; /* Очень бледный зеленый фон */
+    background-color: rgba(94, 141, 90, 0.1) !important;
     color: var(--bloom-green) !important;
 }
 
-/* Контейнер для вкладок */
 #profileTabs {
     background-color: white;
     border: 1px solid rgba(94, 141, 90, 0.1);
     display: inline-flex;
 }
 
-/* Анимация появления комментария */
 @keyframes smoothFadeIn {
     0% {
         opacity: 0;
@@ -131,27 +205,88 @@ body {
 }
 
 .animate-fade-in {
-    /* cubic-bezier для плавности */
     animation: smoothFadeIn 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-/* Стили для кнопок в шапке модели */
 .btn-social-action {
     border-radius: 12px !important;
     font-weight: 600;
     min-width: 100px;
     height: 42px;
     padding: 0 !important;
-
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 3px;
-
     transition: all 0.3s ease;
 }
 
-/* Список воспроизводимости */
 .list-group-item {
     background-color: transparent !important;
+}
+
+.text-muted,
+.form-text {
+    color: #4f5963 !important;
+}
+
+.text-warning {
+    color: #8a5200 !important;
+    font-weight: 600;
+}
+
+.touch-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.4rem 0.25rem;
+}
+
+.auth-link {
+    color: var(--bloom-orange) !important;
+}
+
+.model-meta-link {
+    color: #214d2a !important;
+    text-decoration: underline !important;
+    text-underline-offset: 0.18em;
+    text-decoration-thickness: 2px;
+}
+
+.model-meta-link:hover,
+.model-meta-link:focus-visible {
+    color: #16361d !important;
+}
+
+:focus-visible {
+    outline: 3px solid var(--bloom-orange) !important;
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #searchForm {
+        display: grid;
+        gap: 0.75rem;
+        background: transparent !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        overflow: visible !important;
+    }
+
+    #searchForm .form-control,
+    #searchForm .btn {
+        width: 100%;
+        border-radius: 16px !important;
+    }
 }

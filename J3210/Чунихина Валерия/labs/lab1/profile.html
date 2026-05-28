@@ -3,25 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Моя Оранжерея — AIBloom</title>
+    <title>Моя оранжерея - AIBloom</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-light">
+<a class="skip-link" href="#main-content">Перейти к содержимому профиля</a>
+<div id="appStatus" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
 
-<!-- Навигация -->
-<nav class="navbar navbar-expand-lg navbar-light sticky-top shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light sticky-top shadow-sm" aria-label="Основная навигация">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html">
-            <span class="brand-flower">🏵️</span> AIBloom
+        <a class="navbar-brand fw-bold" href="index.html" aria-label="AIBloom, перейти на главную страницу">
+            <span class="brand-flower" aria-hidden="true">🏵️</span> AIBloom
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Открыть меню навигации">
+            <span class="navbar-toggler-icon" aria-hidden="true"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto align-items-center">
                 <li class="nav-item"><a class="nav-link mx-2" href="index.html">Поиск</a></li>
-                <li class="nav-item"><a class="nav-link active mx-2" href="profile.html">👤 Профиль</a></li>
+                <li class="nav-item"><a class="nav-link active mx-2" href="profile.html" aria-current="page">Профиль</a></li>
                 <li class="nav-item"><a class="btn btn-sm btn-outline-danger ms-lg-3" href="index.html">Выйти</a></li>
             </ul>
         </div>
@@ -30,133 +31,128 @@
 
 <div class="container mt-5">
     <div class="row">
-        <!-- Левая колонка -->
-        <aside class="col-lg-4 mb-4">
-            <div class="card border-0 shadow-sm text-center p-4">
+        <aside class="col-lg-4 mb-4" aria-labelledby="profileCardTitle">
+            <section class="card border-0 shadow-sm text-center p-4">
                 <div class="position-relative d-inline-block mx-auto mb-3">
                     <img src="https://ui-avatars.com/api/?name=Gardener&background=F4A261&color=fff&size=128"
-                         class="rounded-circle" style="border: 5px solid var(--bloom-bg);" alt="Avatar">
+                         class="rounded-circle"
+                         style="border: 5px solid var(--bloom-bg);"
+                         alt="Аватар пользователя">
                 </div>
-                <h4 class="fw-bold">Главный Садовник</h4>
+                <h1 id="profileCardTitle" class="h4 fw-bold">Главный Садовник</h1>
                 <p class="text-muted small">Выращиваю нейросети с 2023 года • Москва</p>
 
-                <div class="d-flex justify-content-around mt-4 py-3 bg-light rounded-4">
-                    <div><strong class="d-block">12</strong><small class="text-muted">Моделей</small></div>
-                    <div><strong class="d-block">5</strong><small class="text-muted">Данных</small></div>
-                    <div><strong class="d-block">250</strong><small class="text-muted">Звезд</small></div>
-                </div>
-                <button class="btn btn-outline-primary btn-sm w-100 mt-4">Редактировать профиль</button>
-            </div>
+                <ul class="list-unstyled d-flex justify-content-around mt-4 py-3 bg-light rounded-4 mb-0" aria-label="Статистика профиля">
+                    <li><strong class="d-block">12</strong><small class="text-muted">Моделей</small></li>
+                    <li><strong class="d-block">5</strong><small class="text-muted">Данных</small></li>
+                    <li><strong class="d-block">250</strong><small class="text-muted">Звезд</small></li>
+                </ul>
+                <button type="button" class="btn btn-outline-primary btn-sm w-100 mt-4">Редактировать профиль</button>
+            </section>
         </aside>
 
-        <!-- Правая колонка -->
-        <main class="col-lg-8">
-            <!-- Вкладки -->
-            <ul class="nav nav-pills mb-4 bg-white p-2 rounded-4 shadow-sm" id="profileTabs" role="tablist">
+        <main id="main-content" class="col-lg-8" tabindex="-1">
+            <ul class="nav nav-pills mb-4 bg-white p-2 rounded-4 shadow-sm" id="profileTabs" role="tablist" aria-label="Разделы профиля">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active rounded-3" id="uploads-tab" data-bs-toggle="pill" data-bs-target="#uploads" type="button" role="tab">
-                        🌿 Мои саженцы
+                    <button class="nav-link active rounded-3" id="uploads-tab" data-bs-toggle="pill" data-bs-target="#uploads" type="button" role="tab" aria-controls="uploads" aria-selected="true">
+                        Мои саженцы
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-3" id="subs-tab" data-bs-toggle="pill" data-bs-target="#subs" type="button" role="tab">
-                        🌻 Подписки
+                    <button class="nav-link rounded-3" id="subs-tab" data-bs-toggle="pill" data-bs-target="#subs" type="button" role="tab" aria-controls="subs" aria-selected="false">
+                        Подписки
                     </button>
                 </li>
             </ul>
 
             <div class="tab-content" id="profileTabsContent">
-                <!-- Вкладка Загрузки -->
-                <div class="tab-pane fade show active" id="uploads" role="tabpanel">
+                <section class="tab-pane fade show active" id="uploads" role="tabpanel" aria-labelledby="uploads-tab">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h4 class="fw-bold mb-0">Мой инвентарь</h4>
-                        <button class="btn btn-accent shadow-sm" data-bs-toggle="modal" data-bs-target="#uploadModal">
-                            + Добавить в сад
+                        <h2 class="h4 fw-bold mb-0">Мой инвентарь</h2>
+                        <button type="button" class="btn btn-accent shadow-sm" data-bs-toggle="modal" data-bs-target="#uploadModal" aria-haspopup="dialog">
+                            Добавить в сад
                         </button>
                     </div>
 
-                    <div id="user-models-list">
+                    <div id="user-models-list" aria-live="polite" aria-busy="false">
                         <div class="text-center py-5 text-muted">Загрузка ваших саженцев...</div>
                     </div>
 
-                    <!-- Секция Модели -->
-                    <h6 class="text-uppercase small fw-bold text-muted mb-3" style="letter-spacing: 1px;">Модели</h6>
-                    <div class="card border-0 shadow-sm mb-4 card-hover">
+                    <h3 class="text-uppercase small fw-bold text-muted mb-3" style="letter-spacing: 1px;">Модели</h3>
+                    <article class="card border-0 shadow-sm mb-4 card-hover">
                         <div class="card-body d-flex justify-content-between align-items-center p-4">
                             <div class="d-flex align-items-center">
-                                <div class="bg-soft-blue p-3 rounded-4 me-3">🌳</div>
+                                <div class="bg-soft-blue p-3 rounded-4 me-3" aria-hidden="true">🌳</div>
                                 <div>
-                                    <h6 class="mb-1 fw-bold">My-Awesome-BERT-Model</h6>
+                                    <h4 class="h6 mb-1 fw-bold">My-Awesome-BERT-Model</h4>
                                     <span class="badge badge-model mb-1">Model</span>
                                     <br><small class="text-muted">Загружено 2 дня назад • PyTorch</small>
                                 </div>
                             </div>
-                            <button class="btn btn-sm btn-outline-danger">Удалить</button>
+                            <button type="button" class="btn btn-sm btn-outline-danger" aria-label="Удалить модель My-Awesome-BERT-Model">Удалить</button>
                         </div>
-                    </div>
+                    </article>
 
-                    <!-- Секция Датасеты-->
-                    <h6 class="text-uppercase small fw-bold text-muted mb-3" style="letter-spacing: 1px;">Наборы данных</h6>
-                    <div class="card border-0 shadow-sm mb-3 card-hover">
+                    <h3 class="text-uppercase small fw-bold text-muted mb-3" style="letter-spacing: 1px;">Наборы данных</h3>
+                    <article class="card border-0 shadow-sm mb-3 card-hover">
                         <div class="card-body d-flex justify-content-between align-items-center p-4">
                             <div class="d-flex align-items-center">
-                                <div class="bg-soft-green p-3 rounded-4 me-3">🍱</div>
+                                <div class="bg-soft-green p-3 rounded-4 me-3" aria-hidden="true">🌱</div>
                                 <div>
-                                    <h6 class="mb-1 fw-bold">Dataset-Botanical-Seeds</h6>
+                                    <h4 class="h6 mb-1 fw-bold">Dataset-Botanical-Seeds</h4>
                                     <span class="badge badge-dataset mb-1">Dataset</span>
                                     <br><small class="text-muted">Загружено неделю назад • 450 MB</small>
                                 </div>
                             </div>
-                            <button class="btn btn-sm btn-outline-danger">Удалить</button>
+                            <button type="button" class="btn btn-sm btn-outline-danger" aria-label="Удалить набор данных Dataset-Botanical-Seeds">Удалить</button>
                         </div>
-                    </div>
-                </div>
+                    </article>
+                </section>
 
-                <!-- Вкладка Подписки -->
-                <div class="tab-pane fade" id="subs" role="tabpanel">
-                    <h4 class="fw-bold mb-4">Сады, за которыми вы следите</h4>
-                    <div class="card border-0 shadow-sm mb-3 card-hover">
+                <section class="tab-pane fade" id="subs" role="tabpanel" aria-labelledby="subs-tab">
+                    <h2 class="h4 fw-bold mb-4">Сады, за которыми вы следите</h2>
+                    <article class="card border-0 shadow-sm mb-3 card-hover">
                         <div class="card-body d-flex justify-content-between align-items-center p-3">
                             <div class="d-flex align-items-center">
-                                <img src="https://ui-avatars.com/api/?name=AI+Expert&background=A2C2E1" class="rounded-circle me-3" width="50">
+                                <img src="https://ui-avatars.com/api/?name=AI+Expert&background=A2C2E1" class="rounded-circle me-3" width="50" height="50" alt="Аватар пользователя Нейро-Ботаник">
                                 <div>
-                                    <h6 class="mb-0 fw-bold">Нейро-Ботаник</h6>
+                                    <h3 class="h6 mb-0 fw-bold">Нейро-Ботаник</h3>
                                     <small class="text-muted">42 модели • Топ-1 месяца</small>
                                 </div>
                             </div>
-                            <button class="btn btn-sm btn-outline-primary">В гости</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary">В гости</button>
                         </div>
-                    </div>
-                </div>
+                    </article>
+                </section>
             </div>
         </main>
     </div>
 </div>
 
-<!-- Модальное окно -->
-<div class="modal fade" id="uploadModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalTitle" aria-describedby="uploadModalDescription" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded-5">
             <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title fw-bold" style="color: var(--bloom-green);">Новое пополнение</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h2 class="modal-title h5 fw-bold" id="uploadModalTitle" style="color: var(--bloom-green);">Новое пополнение</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть окно"></button>
             </div>
             <div class="modal-body p-4">
+                <p id="uploadModalDescription" class="text-muted small">Добавьте новую модель или набор данных в свой личный сад.</p>
                 <form id="uploadForm">
                     <div class="mb-3">
-                        <label class="form-label small fw-bold text-uppercase">Что вы сажаете?</label>
-                        <select id="modelType" class="form-select bg-light border-0 py-2">
+                        <label for="modelType" class="form-label small fw-bold text-uppercase">Что вы сажаете?</label>
+                        <select id="modelType" class="form-select bg-light border-0 py-2" name="type">
                             <option value="model">Нейронную модель</option>
-                            <option value="dataset">Набор данных (Датасет)</option>
+                            <option value="dataset">Набор данных (датасет)</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label small fw-bold text-uppercase">Название</label>
-                        <input type="text" id="modelName" class="form-control" placeholder="Введите имя..." required>
+                        <label for="modelName" class="form-label small fw-bold text-uppercase">Название</label>
+                        <input type="text" id="modelName" name="name" class="form-control" placeholder="Введите имя..." required>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label small fw-bold text-uppercase">Файлы</label>
-                        <input type="file" class="form-control border-0 bg-light py-3">
+                        <label for="uploadFiles" class="form-label small fw-bold text-uppercase">Файлы</label>
+                        <input type="file" id="uploadFiles" name="files" class="form-control border-0 bg-light py-3">
                     </div>
                     <button type="submit" class="btn btn-primary w-100 py-2 shadow-sm">Запустить рост</button>
                 </form>

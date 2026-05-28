@@ -3,31 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIBloom — Сад нейросетей и данных</title>
-
-    <!-- Bootstrap -->
+    <title>AIBloom - Сад нейросетей и данных</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- стили -->
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-    </body>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+<div id="appStatus" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
 
-<!-- навигационная панель -->
-<nav class="navbar navbar-expand-lg navbar-light sticky-top shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light sticky-top shadow-sm" aria-label="Основная навигация">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html">
-            <span class="brand-flower">🏵️</span> AIBloom
+        <a class="navbar-brand fw-bold" href="index.html" aria-label="AIBloom, перейти на главную страницу">
+            <span class="brand-flower" aria-hidden="true">🏵️</span> AIBloom
         </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Открыть меню навигации">
+            <span class="navbar-toggler-icon" aria-hidden="true"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <div class="navbar-nav ms-auto align-items-center">
-                <a class="nav-link active mx-2" href="index.html">Поиск</a>
+                <a class="nav-link active mx-2" href="index.html" aria-current="page">Поиск</a>
                 <a class="nav-link mx-2" href="login.html">Вход</a>
                 <a class="btn btn-accent ms-lg-3 shadow-sm" href="register.html">Создать сад</a>
             </div>
@@ -35,59 +31,53 @@
     </div>
 </nav>
 
-<!-- Заголовок страницы -->
-<header class="container mt-5">
+<header class="container mt-5" aria-labelledby="hero-title">
     <div class="row">
         <div class="col-12 text-center text-lg-start">
-            <h1 class="display-5 fw-bold mb-3 flower-dot">Плодородная почва для ваших моделей</h1>
+            <h1 id="hero-title" class="display-5 fw-bold mb-3 flower-dot">Плодородная почва для ваших моделей</h1>
             <p class="lead text-muted">Исследуйте, выращивайте и делитесь лучшими решениями в мире ИИ.</p>
         </div>
     </div>
 </header>
 
-<!-- Основной контент (фильтры и поиск) -->
 <div class="container my-5">
     <div class="row">
-
-        <!-- Сетка фильтров -->
-        <aside class="col-lg-3 mb-4">
+        <aside class="col-lg-3 mb-4" aria-labelledby="filters-title">
             <div class="card p-4 border-0 shadow-sm sticky-lg-top" style="top: 100px;">
-                <h5 class="mb-3 fw-bold" style="color: var(--bloom-green);">Параметры роста</h5>
-                <form id="filterForm">
+                <h2 id="filters-title" class="h5 mb-3 fw-bold" style="color: var(--bloom-green);">Параметры роста</h2>
+                <form id="filterForm" aria-describedby="filtersHelp">
+                    <p id="filtersHelp" class="visually-hidden">Выберите задачу, фреймворк и лицензию, затем примените фильтры.</p>
 
-                    <!-- Фильтр по Задаче -->
                     <div class="mb-4">
-                        <label class="form-label small fw-bold text-uppercase">Задача (Task)</label>
-                        <select id="taskSelect" class="form-select border-0 bg-light">
+                        <label for="taskSelect" class="form-label small fw-bold text-uppercase">Задача</label>
+                        <select id="taskSelect" name="task" class="form-select border-0 bg-light">
                             <option value="">Все задачи</option>
-                            <option value="text-classification">NLP (Текст)</option>
+                            <option value="text-classification">NLP (текст)</option>
                             <option value="image-classification">Computer Vision</option>
                             <option value="audio-classification">Audio</option>
                             <option value="reinforcement-learning">Reinforcement Learning</option>
                         </select>
                     </div>
 
-                    <!-- Фильтр по Фреймворку -->
-                    <div class="mb-4">
-                        <label class="form-label small fw-bold text-uppercase">Фреймворк</label>
+                    <fieldset class="mb-4">
+                        <legend class="form-label small fw-bold text-uppercase">Фреймворк</legend>
                         <div class="form-check mb-1">
-                            <input class="form-check-input fw-check" type="checkbox" id="pt" value="pytorch">
+                            <input class="form-check-input fw-check" type="checkbox" id="pt" value="pytorch" name="framework">
                             <label class="form-check-label small" for="pt">PyTorch</label>
                         </div>
                         <div class="form-check mb-1">
-                            <input class="form-check-input fw-check" type="checkbox" id="tf" value="tensorflow">
+                            <input class="form-check-input fw-check" type="checkbox" id="tf" value="tensorflow" name="framework">
                             <label class="form-check-label small" for="tf">TensorFlow</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input fw-check" type="checkbox" id="jax" value="jax">
+                            <input class="form-check-input fw-check" type="checkbox" id="jax" value="jax" name="framework">
                             <label class="form-check-label small" for="jax">JAX / Flax</label>
                         </div>
-                    </div>
+                    </fieldset>
 
-                    <!-- Фильтр по Лицензии -->
                     <div class="mb-4">
-                        <label class="form-label small fw-bold text-uppercase">Лицензия</label>
-                        <select id="licenseSelect" class="form-select border-0 bg-light">
+                        <label for="licenseSelect" class="form-label small fw-bold text-uppercase">Лицензия</label>
+                        <select id="licenseSelect" name="license" class="form-select border-0 bg-light">
                             <option value="">Любая лицензия</option>
                             <option value="mit">MIT</option>
                             <option value="apache-2.0">Apache 2.0</option>
@@ -101,34 +91,40 @@
             </div>
         </aside>
 
-        <!-- Сетка результатов поиска -->
-        <main class="col-lg-9">
-            <div class="input-group mb-5 shadow-sm rounded-pill overflow-hidden bg-white">
-                <!-- с id="searchInput" -->
-                <input type="text" id="searchInput" class="form-control border-0 px-4 py-3" placeholder="Найдите модель, датасет или автора...">
-                <button id="searchBtn" class="btn btn-primary px-4">Поиск</button>
-            </div>
+        <main id="main-content" class="col-lg-9" tabindex="-1">
+            <form id="searchForm" class="input-group mb-5 shadow-sm rounded-pill overflow-hidden bg-white" role="search" aria-labelledby="searchLabel">
+                <label id="searchLabel" for="searchInput" class="visually-hidden">Поиск модели, датасета или автора</label>
+                <input type="text" id="searchInput" class="form-control border-0 px-4 py-3" placeholder="Найдите модель, датасет или автора..." autocomplete="off" aria-describedby="searchHelp">
+                <span id="searchHelp" class="visually-hidden">Введите запрос и нажмите кнопку поиска.</span>
+                <button id="searchBtn" type="submit" class="btn btn-primary px-4">Поиск</button>
+            </form>
 
-            <div class="row" id="model-grid">
-                <!-- JS загружает 7 карточек из Hugging Face -->
-            </div>
+            <section aria-labelledby="resultsTitle">
+                <h2 id="resultsTitle" class="visually-hidden">Результаты поиска</h2>
+                <div class="row" id="model-grid" role="status" aria-live="polite" aria-busy="false">
+                    <p class="visually-hidden">Результаты поиска будут загружены автоматически.</p>
+                </div>
+            </section>
         </main>
     </div>
 </div>
 
-<!-- Секция Трендов Hugging Face -->
-<section class="container my-5 py-5 border-top">
+<section class="container my-5 py-5 border-top" aria-labelledby="trendsTitle">
     <div class="d-flex align-items-center mb-4">
-        <h3 class="fw-bold mb-0 flower-dot">Мировые тренды (Hugging Face API)</h3>
-        <span class="badge bg-soft-blue text-primary ms-3">Live Data</span>
+        <h2 id="trendsTitle" class="h3 fw-bold mb-0 flower-dot">Мировые тренды</h2>
+        <span class="badge bg-soft-blue text-primary ms-3" aria-label="Данные обновляются в реальном времени">Live Data</span>
     </div>
 
-    <div id="hf-trends-grid" class="row">
-        <!-- JS вставляет 8 карточек в формате 1 + 3 + 4 -->
+    <div id="hf-trends-grid" class="row" role="status" aria-live="polite" aria-busy="true">
         <div class="text-center py-5">
-            <div class="spinner-border text-success" role="status"></div>
+            <div class="spinner-border text-success" role="status" aria-hidden="true"></div>
             <p class="mt-2 text-muted">Ищем лучшие саженцы нейросетей в мире...</p>
+            <span class="visually-hidden">Загрузка трендов</span>
         </div>
     </div>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

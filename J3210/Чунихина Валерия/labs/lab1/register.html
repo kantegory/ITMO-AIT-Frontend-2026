@@ -1,81 +1,74 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Регистрация — AIBloom</title>
-  <!-- Подключаем Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - AIBloom</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-light">
+<a class="skip-link" href="#main-content">Перейти к форме регистрации</a>
+<div id="appStatus" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
 
-<!-- Навигация -->
-<nav class="navbar navbar-expand-lg navbar-light sticky-top shadow-sm">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="index.html">
-      <span class="brand-flower">🏵️</span> AIBloom
-    </a>
-    <div class="navbar-nav ms-auto">
-      <a class="nav-link" href="index.html">Поиск</a>
-      <a class="nav-link" href="login.html">Вход</a>
+<nav class="navbar navbar-expand-lg navbar-light sticky-top shadow-sm" aria-label="Основная навигация">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html" aria-label="AIBloom, перейти на главную страницу">
+            <span class="brand-flower" aria-hidden="true">🏵️</span> AIBloom
+        </a>
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="index.html">Поиск</a>
+            <a class="nav-link" href="login.html">Вход</a>
+        </div>
     </div>
-  </div>
 </nav>
 
-<!-- Форма регистрации -->
-<div class="container mt-5">
-  <div class="row justify-content-center align-items-center" style="min-height: 75vh;">
-    <div class="col-md-6 col-lg-5">
-      <div class="card border-0 shadow-sm p-4">
-        <div class="card-body">
-          <div class="text-center mb-4">
-            <h3 class="fw-bold" style="color: var(--bloom-green);">Создать аккаунт</h3>
-            <p class="text-muted small">Начните выращивать свои идеи вместе с AIBloom</p>
-          </div>
+<main id="main-content" class="container mt-5" tabindex="-1">
+    <div class="row justify-content-center align-items-center" style="min-height: 75vh;">
+        <div class="col-md-6 col-lg-5">
+            <section class="card border-0 shadow-sm p-4" aria-labelledby="registerTitle">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <h1 id="registerTitle" class="h3 fw-bold" style="color: var(--bloom-green);">Создать аккаунт</h1>
+                        <p id="registerDescription" class="text-muted small mb-0">Начните выращивать свои идеи вместе с AIBloom.</p>
+                    </div>
 
-          <form id="registerForm">
-            <!-- Поле Имя с id -->
-            <div class="mb-3">
-              <label class="form-label small fw-bold text-uppercase">Полное имя</label>
-              <input type="text" id="regName" class="form-control px-3 py-2" placeholder="Петя Иванов" required>
-            </div>
+                    <form id="registerForm" aria-describedby="registerDescription">
+                        <div class="mb-3">
+                            <label for="regName" class="form-label small fw-bold text-uppercase">Полное имя</label>
+                            <input type="text" id="regName" name="name" class="form-control px-3 py-2" placeholder="Петя Иванов" autocomplete="name" required>
+                        </div>
 
-            <!-- Поле Email с id -->
-            <div class="mb-3">
-              <label class="form-label small fw-bold text-uppercase">Email</label>
-              <input type="email" id="regEmail" class="form-control px-3 py-2" placeholder="name@example.com" required>
-            </div>
+                        <div class="mb-3">
+                            <label for="regEmail" class="form-label small fw-bold text-uppercase">Email</label>
+                            <input type="email" id="regEmail" name="email" class="form-control px-3 py-2" placeholder="name@example.com" autocomplete="email" inputmode="email" required>
+                        </div>
 
-            <!-- Поле Пароль с id -->
-            <div class="mb-3">
-              <label class="form-label small fw-bold text-uppercase">Пароль</label>
-              <input type="password" id="regPassword" class="form-control px-3 py-2" placeholder="Придумайте надежный пароль" required>
-            </div>
+                        <div class="mb-3">
+                            <label for="regPassword" class="form-label small fw-bold text-uppercase">Пароль</label>
+                            <input type="password" id="regPassword" name="password" class="form-control px-3 py-2" placeholder="Придумайте надежный пароль" autocomplete="new-password" required>
+                        </div>
 
-            <!-- Чекбокс согласия -->
-            <div class="mb-4 form-check">
-              <input type="checkbox" class="form-check-input" id="terms" required>
-              <label class="form-check-label small text-muted" for="terms">
-                Я согласен с условиями использования и политикой посева данных
-              </label>
-            </div>
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" class="form-check-input" id="terms" required>
+                            <label class="form-check-label small text-muted" for="terms">
+                                Я согласен с условиями использования и политикой посева данных.
+                            </label>
+                        </div>
 
-            <!-- Кнопка регистрации -->
-            <button type="submit" class="btn btn-accent w-100 py-2 mb-3 shadow-sm">Зарегистрироваться</button>
+                        <button type="submit" class="btn btn-accent w-100 py-2 mb-3 shadow-sm">Зарегистрироваться</button>
 
-            <div class="text-center">
-              <span class="small text-muted">Уже в саду? </span>
-              <a href="login.html" class="small fw-bold text-decoration-none" style="color: var(--bloom-green);">Войти в аккаунт</a>
-            </div>
-          </form>
+                        <div class="text-center">
+                            <span class="small text-muted">Уже в саду? </span>
+                            <a href="login.html" class="small fw-bold text-decoration-none touch-link" style="color: var(--bloom-green);">Войти в аккаунт</a>
+                        </div>
+                    </form>
+                </div>
+            </section>
         </div>
-      </div>
     </div>
-  </div>
-</div>
+</main>
 
-<!-- Скрипты -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="script.js"></script>
 </body>

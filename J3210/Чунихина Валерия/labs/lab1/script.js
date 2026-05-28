@@ -1,362 +1,521 @@
-const API_URL = "http://localhost:3000"; // адрес сервера
-const HF_API_BASE = "https://huggingface.co/api/models"; // Внешнее API
+const API_URL = "http://localhost:3000";
+const HF_API_BASE = "https://huggingface.co/api/models";
 
+function announce(message) {
+    const statusRegion = document.getElementById("appStatus");
+    if (!statusRegion) return;
 
-// Функция загрузки 7 моделей для главной сетки (1 + 3 + 3)
+    statusRegion.textContent = "";
+    window.setTimeout(() => {
+        statusRegion.textContent = message;
+    }, 50);
+}
+
+function setBusy(element, isBusy) {
+    if (element) {
+        element.setAttribute("aria-busy", String(isBusy));
+    }
+}
+
+function escapeHtml(value = "") {
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+}
+
+function formatCount(value) {
+    return Number(value || 0).toLocaleString("ru-RU");
+}
+
+function getModelDetailsUrl(model) {
+    if (model.detailsPage) {
+        return model.detailsPage;
+    }
+
+    if (model.name === "Forest-Vision v2") {
+        return "details.html";
+    }
+
+    return null;
+}
+
 async function loadModels(filterParams = "") {
     const grid = document.getElementById("model-grid");
     if (!grid) return;
 
-    // спиннер загрузки пока ждем ответ от API
-    grid.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-success"></div></div>';
+    setBusy(grid, true);
+    grid.innerHTML = `
+        <div class="text-center py-5 w-100">
+            <div class="spinner-border text-success" role="status" aria-hidden="true"></div>
+            <p class="mt-2 text-muted mb-0">Загружаем результаты поиска...</p>
+            <span class="visually-hidden">Загрузка результатов поиска</span>
+        </div>
+    `;
 
     try {
-        // запрос: сортировка по скачиваниям, лимит 7 штук + параметры фильтров
         const url = `${HF_API_BASE}?sort=downloads&direction=-1&limit=7&full=true${filterParams}`;
         const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+
         const models = await response.json();
-
         grid.innerHTML = "";
+
+        if (!models.length) {
+            grid.innerHTML = `<p class="text-muted py-4">По вашему запросу ничего не найдено.</p>`;
+            announce("Результаты поиска не найдены.");
+            return;
+        }
+
         models.forEach((model, index) => {
-            let colClass = (index === 0) ? "col-12 mb-4" : "col-md-4 mb-4";
+            const colClass = index === 0 ? "col-12 mb-4" : "col-md-4 mb-4";
+            const modelName = escapeHtml(model.modelId.split("/").pop());
+            const author = escapeHtml(model.modelId.split("/")[0]);
+            const downloads = formatCount(model.downloads);
+            const task = escapeHtml(model.pipeline_tag || "AI Model");
+            const library = escapeHtml(model.library_name || "Transformers");
+            const headingLevelClass = index === 0 ? "h4" : "h5";
 
-            // убираем лишнее из названия и проверяем наличие тегов
-            const modelName = model.modelId.split('/').pop();
-            const author = model.modelId.split('/')[0];
-            const downloads = model.downloads ? model.downloads.toLocaleString() : 0;
-            const task = model.pipeline_tag || "AI Model";
-
-            // создаем HTML карточки
-            grid.innerHTML += `
+            grid.insertAdjacentHTML(
+                "beforeend",
+                `
                 <div class="${colClass}">
-                    <div class="card h-100 border-0 shadow-sm card-hover ${index === 0 ? 'bg-light-bloom' : ''}">
+                    <article class="card h-100 border-0 shadow-sm card-hover ${index === 0 ? "bg-light-bloom" : ""}" aria-labelledby="model-card-title-${index}">
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-start mb-3">
                                 <span class="badge bg-primary text-white">${task}</span>
-                                <span class="text-muted small">📥 ${downloads}</span>
+                                <span class="text-muted small" aria-label="${downloads} загрузок">📥 ${downloads}</span>
                             </div>
-                            <h5 class="card-title fw-bold">${modelName} ${index === 0 ? '🌟' : ''}</h5>
+                            <h3 id="model-card-title-${index}" class="card-title ${headingLevelClass} fw-bold">
+                                ${modelName}${index === 0 ? ' <span aria-hidden="true">🌟</span>' : ""}
+                            </h3>
                             <p class="small text-muted mb-1">Автор: ${author}</p>
                             <div class="d-flex justify-content-between align-items-center mt-4">
                                 <span class="small" style="color: var(--bloom-green); font-weight: 500;">
-                                    ${model.library_name || 'Transformers'}
+                                    ${library}
                                 </span>
-                                <a href="https://huggingface.co/${model.modelId}" target="_blank" class="btn btn-sm ${index === 0 ? 'btn-primary' : 'btn-outline-primary'} px-3">Изучить</a>
+                                <a href="https://huggingface.co/${encodeURIComponent(model.modelId).replace("%2F", "/")}" target="_blank" rel="noopener noreferrer" class="btn btn-sm ${index === 0 ? "btn-primary" : "btn-outline-primary"} px-3" aria-label="Открыть страницу модели ${modelName} на Hugging Face в новой вкладке">
+                                    Изучить
+                                </a>
                             </div>
                         </div>
-                    </div>
-                </div>`;
+                    </article>
+                </div>`
+            );
         });
+
+        announce(`Загружено ${models.length} результатов поиска.`);
     } catch (error) {
         console.error("Ошибка API:", error);
+        grid.innerHTML = `<p class="text-danger py-4">Не удалось загрузить модели. Проверьте подключение к интернету и повторите попытку.</p>`;
+        announce("Не удалось загрузить результаты поиска.");
+    } finally {
+        setBusy(grid, false);
     }
 }
 
-// Функция загрузки мировых трендов (8 простых карточек внизу страницы)
 async function loadHuggingFaceTrends() {
-    const container = document.getElementById('hf-trends-grid');
+    const container = document.getElementById("hf-trends-grid");
     if (!container) return;
+
+    setBusy(container, true);
+
     try {
         const response = await fetch(`${HF_API_BASE}?sort=downloads&direction=-1&limit=8`);
+
+        if (!response.ok) {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+
         const models = await response.json();
-        container.innerHTML = '';
-        models.forEach((model) => {
-            container.innerHTML += `
+        container.innerHTML = "";
+
+        models.forEach((model, index) => {
+            const modelName = escapeHtml(model.modelId.split("/").pop());
+            const downloads = formatCount(model.downloads);
+
+            container.insertAdjacentHTML(
+                "beforeend",
+                `
                 <div class="col-md-3 mb-4">
-                    <div class="card h-100 card-hover p-3 shadow-sm border-0">
+                    <article class="card h-100 card-hover p-3 shadow-sm border-0" aria-labelledby="trend-title-${index}">
                         <div class="card-body">
-                            <h6 class="fw-bold text-truncate">${model.modelId.split('/').pop()}</h6>
-                            <p class="small text-muted mb-0">📥 ${model.downloads.toLocaleString()}</p>
+                            <h3 id="trend-title-${index}" class="h6 fw-bold text-truncate">${modelName}</h3>
+                            <p class="small text-muted mb-0" aria-label="${downloads} загрузок">📥 ${downloads}</p>
                         </div>
-                    </div>
-                </div>`;
+                    </article>
+                </div>`
+            );
         });
-    } catch (e) { console.error(e); }
+
+        announce("Блок мировых трендов обновлен.");
+    } catch (error) {
+        console.error("Ошибка загрузки трендов:", error);
+        container.innerHTML = `<p class="text-danger py-4">Не удалось загрузить мировые тренды.</p>`;
+        announce("Не удалось загрузить мировые тренды.");
+    } finally {
+        setBusy(container, false);
+    }
 }
 
-// Загрузка моделей конкретного пользователя
 async function loadUserModels() {
-    const container = document.getElementById('user-models-list'); // Добавь этот id в profile.html
+    const container = document.getElementById("user-models-list");
     if (!container) return;
 
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (!currentUser) return;
 
+    setBusy(container, true);
+
     try {
         const response = await fetch(`${API_URL}/models?userId=${currentUser.id}`);
-        const models = await response.json();
 
+        if (!response.ok) {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+
+        const models = await response.json();
         container.innerHTML = "";
+
         if (models.length === 0) {
-            container.innerHTML = '<p class="text-muted py-4">Ваш личный сад пока пуст.</p>';
+            container.innerHTML = `<p class="text-muted py-4">Ваш личный сад пока пуст.</p>`;
+            announce("В вашем профиле пока нет загруженных моделей.");
             return;
         }
 
-        models.forEach(model => {
-            container.innerHTML += `
-                <div class="card border-0 shadow-sm mb-3">
+        models.forEach((model) => {
+            const safeName = escapeHtml(model.name);
+            const safeType = escapeHtml(model.type);
+            const icon = model.type === "model" ? "🌳" : "🌱";
+            const detailsUrl = getModelDetailsUrl(model);
+            const titleMarkup = detailsUrl
+                ? `<a href="${escapeHtml(detailsUrl)}" class="text-decoration-none text-reset fw-bold" aria-label="Открыть тестовую страницу модели ${safeName}">${safeName}</a>`
+                : safeName;
+            const actionMarkup = detailsUrl
+                ? `<div class="d-flex gap-2 align-items-center">
+                        <a href="${escapeHtml(detailsUrl)}" class="btn btn-sm btn-outline-primary" aria-label="Перейти на страницу модели ${safeName}">
+                            Открыть
+                        </a>
+                        <button type="button" onclick="deleteUserModel('${model.id}')" class="btn btn-sm btn-outline-danger" aria-label="Удалить элемент ${safeName}">
+                            Удалить
+                        </button>
+                   </div>`
+                : `<button type="button" onclick="deleteUserModel('${model.id}')" class="btn btn-sm btn-outline-danger" aria-label="Удалить элемент ${safeName}">
+                        Удалить
+                   </button>`;
+
+            container.insertAdjacentHTML(
+                "beforeend",
+                `
+                <article class="card border-0 shadow-sm mb-3">
                     <div class="card-body d-flex justify-content-between align-items-center p-4">
                         <div class="d-flex align-items-center">
-                            <div class="bg-soft-blue p-3 rounded-4 me-3">${model.type === 'model' ? '🌳' : '🍱'}</div>
+                            <div class="bg-soft-blue p-3 rounded-4 me-3" aria-hidden="true">${icon}</div>
                             <div>
-                                <h6 class="mb-1 fw-bold">${model.name}</h6>
-                                <span class="badge bg-light text-dark mb-1">${model.type}</span>
+                                <h3 class="h6 mb-1">${titleMarkup}</h3>
+                                <span class="badge bg-light text-dark mb-1">${safeType}</span>
                                 <br><small class="text-muted">Личный проект пользователя</small>
                             </div>
                         </div>
-                        <button onclick="deleteUserModel('${model.id}')" class="btn btn-sm btn-outline-danger">Удалить</button>
+                        ${actionMarkup}
                     </div>
-                </div>`;
+                </article>`
+            );
         });
-    } catch (e) { console.error(e); }
+    } catch (error) {
+        console.error("Ошибка загрузки пользовательских моделей:", error);
+        container.innerHTML = `<p class="text-danger py-4">Не удалось загрузить ваш инвентарь.</p>`;
+        announce("Не удалось загрузить данные профиля.");
+    } finally {
+        setBusy(container, false);
+    }
 }
 
-// Удаление модели пользователя
-window.deleteUserModel = async function(id) {
-    if (!confirm("Вы уверены?")) return;
-    await fetch(`${API_URL}/models/${id}`, { method: 'DELETE' });
-    loadUserModels();
-}
+window.deleteUserModel = async function (id) {
+    if (!confirm("Вы уверены, что хотите удалить этот элемент?")) return;
 
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("🏵️ AIBloom: Оранжерея готова к работе!");
+    try {
+        await fetch(`${API_URL}/models/${id}`, { method: "DELETE" });
+        announce("Элемент удален из вашего сада.");
+        loadUserModels();
+    } catch (error) {
+        console.error("Ошибка удаления:", error);
+        alert("Не удалось удалить элемент.");
+        announce("Не удалось удалить элемент.");
+    }
+};
 
-    // Логика формы входа (с fetch)
-    const loginForm = document.getElementById('loginForm');
+document.addEventListener("DOMContentLoaded", () => {
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+    const filterForm = document.getElementById("filterForm");
+    const searchForm = document.getElementById("searchForm");
+    const commentForm = document.getElementById("commentForm");
+    const commentList = document.getElementById("commentList");
+    const commentInput = document.getElementById("commentInput");
+    const uploadForm = document.getElementById("uploadForm");
+    const starBtn = document.getElementById("starBtn");
+    const forkBtn = document.getElementById("forkBtn");
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
     if (loginForm) {
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
+        loginForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
 
             try {
-                // запрос к json-серверу
                 const response = await fetch(`${API_URL}/users?email=${email}&password=${password}`);
+
+                if (!response.ok) {
+                    throw new Error(`Request failed with status ${response.status}`);
+                }
+
                 const users = await response.json();
 
                 if (users.length > 0) {
-                    localStorage.removeItem("currentUser"); // Сначала удаляем старого
-                    localStorage.setItem("currentUser", JSON.stringify(users[0])); // Записываем нового
-
-                    // если пользователь найден, сохраняем его в память браузера
                     localStorage.setItem("currentUser", JSON.stringify(users[0]));
+                    announce(`Вы вошли как ${users[0].name}.`);
                     alert(`Добро пожаловать в сад, ${users[0].name}!`);
-                    window.location.href = 'profile.html';
+                    window.location.href = "profile.html";
                 } else {
-                    alert("Ошибка: Неверный email или пароль!");
+                    announce("Ошибка входа: неверный email или пароль.");
+                    alert("Ошибка: неверный email или пароль.");
                 }
             } catch (error) {
-                alert("Ошибка: Нужно запустить json-server!");
+                console.error("Ошибка входа:", error);
+                announce("Нужно запустить json-server.");
+                alert("Ошибка: нужно запустить json-server!");
             }
         });
     }
 
-    // Логика формы регистрации (с post запросом)
-    const registerForm = document.getElementById('registerForm');
     if (registerForm) {
-        registerForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        registerForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
 
-            // сбор данных из полей
             const newUser = {
-                name: document.getElementById('regName').value,
-                email: document.getElementById('regEmail').value,
-                password: document.getElementById('regPassword').value
+                name: document.getElementById("regName").value,
+                email: document.getElementById("regEmail").value,
+                password: document.getElementById("regPassword").value
             };
 
             try {
-                // отправка данных на сервер
                 const response = await fetch(`${API_URL}/users`, {
-                    method: 'POST',
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json'
+                        "Content-Type": "application/json"
                     },
                     body: JSON.stringify(newUser)
                 });
 
-                if (response.ok) {
-                    alert('Семена посеяны! Аккаунт успешно создан в базе.');
-                    window.location.href = 'login.html';
+                if (!response.ok) {
+                    throw new Error(`Request failed with status ${response.status}`);
                 }
+
+                announce("Аккаунт успешно создан.");
+                alert("Семена посеяны! Аккаунт успешно создан в базе.");
+                window.location.href = "login.html";
             } catch (error) {
                 console.error("Ошибка при регистрации:", error);
-                alert('Не удалось сохранить пользователя. Проверьте json-server.');
+                announce("Не удалось сохранить пользователя.");
+                alert("Не удалось сохранить пользователя. Проверьте json-server.");
             }
         });
     }
 
-    // Проверка авторизации и обновление профиля
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
     if (currentUser) {
-        // меняем Вход на имя пользователя в навигации (на всех страницах)
         const navLoginLink = document.querySelector('a[href="login.html"]');
         if (navLoginLink) {
-            navLoginLink.innerHTML = `👤 ${currentUser.name}`;
+            navLoginLink.textContent = currentUser.name;
             navLoginLink.href = "profile.html";
+            navLoginLink.setAttribute("aria-label", `Профиль пользователя ${currentUser.name}`);
         }
 
-        // 2. меняем имя в боковой панели профиля (только на profile.html)
-        // найти h4 внутри aside
-        const profileName = document.querySelector('aside h4');
+        const profileName = document.querySelector("aside h1, aside h4");
         if (profileName) {
-            profileName.innerText = currentUser.name;
+            profileName.textContent = currentUser.name;
         }
 
-        // подпись под именем
-        const profileSubtext = document.querySelector('aside p.text-muted');
+        const profileSubtext = document.querySelector("aside p.text-muted");
         if (profileSubtext) {
-            profileSubtext.innerText = `Выращиваю нейросети с 2024 года • ${currentUser.email}`;
+            profileSubtext.textContent = `Выращиваю нейросети с 2024 года • ${currentUser.email}`;
         }
     }
 
-    // Логика фильтрации (связь фильтров с API)
-    const filterForm = document.getElementById('filterForm');
-    const searchBtn = document.getElementById('searchBtn');
+    const applyFilters = (event) => {
+        if (event) event.preventDefault();
 
-    const applyFilters = (e) => {
-        if (e) e.preventDefault();
-        let tags = [];
+        const tags = [];
         let filterQuery = "";
+        const searchInput = document.getElementById("searchInput");
 
-        const searchInput = document.getElementById('searchInput');
-        if (searchInput && searchInput.value) filterQuery += `&search=${encodeURIComponent(searchInput.value)}`;
+        if (searchInput && searchInput.value.trim()) {
+            filterQuery += `&search=${encodeURIComponent(searchInput.value.trim())}`;
+        }
 
-        const task = document.getElementById('taskSelect').value;
-        if (task) tags.push(task);
+        const taskSelect = document.getElementById("taskSelect");
+        const licenseSelect = document.getElementById("licenseSelect");
 
-        const license = document.getElementById('licenseSelect').value;
-        if (license) tags.push(`license:${license}`);
+        if (taskSelect && taskSelect.value) {
+            tags.push(taskSelect.value);
+        }
 
-        document.querySelectorAll('.fw-check:checked').forEach(check => tags.push(check.value));
+        if (licenseSelect && licenseSelect.value) {
+            tags.push(`license:${licenseSelect.value}`);
+        }
 
-        if (tags.length > 0) filterQuery += `&filter=${tags.join(',')}`;
+        document.querySelectorAll(".fw-check:checked").forEach((checkbox) => {
+            tags.push(checkbox.value);
+        });
+
+        if (tags.length > 0) {
+            filterQuery += `&filter=${tags.join(",")}`;
+        }
+
         loadModels(filterQuery);
     };
 
-    if (filterForm) filterForm.addEventListener('submit', applyFilters);
-    if (searchBtn) searchBtn.addEventListener('click', applyFilters);
+    if (filterForm) {
+        filterForm.addEventListener("submit", applyFilters);
+    }
 
-    // загрузка данных при старте
+    if (searchForm) {
+        searchForm.addEventListener("submit", applyFilters);
+    }
+
     loadModels();
     loadHuggingFaceTrends();
     loadUserModels();
 
-
-    // Логика модального окна загрузки
-    const uploadForm = document.getElementById('uploadForm');
     if (uploadForm) {
-        uploadForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        uploadForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
             if (!currentUser) return;
 
-            const btn = e.target.querySelector('button');
-            const originalText = btn.innerHTML;
+            const submitButton = event.target.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
 
-            btn.innerHTML = "🌱 Посев...";
-            btn.disabled = true;
+            submitButton.innerHTML = "🌱 Посев...";
+            submitButton.disabled = true;
 
             const newModel = {
-                name: document.getElementById('modelName').value,
-                type: document.getElementById('modelType').value,
-                userId: currentUser.id, // модель к ID текущего пользователя
+                name: document.getElementById("modelName").value,
+                type: document.getElementById("modelType").value,
+                userId: currentUser.id,
                 stars: 0
             };
 
             try {
-                await fetch(`${API_URL}/models`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                const response = await fetch(`${API_URL}/models`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(newModel)
                 });
 
-                alert('Модель успешно сохранена в вашем личном инвентаре!');
-                const modal = bootstrap.Modal.getInstance(document.getElementById('uploadModal'));
-                modal.hide();
+                if (!response.ok) {
+                    throw new Error(`Request failed with status ${response.status}`);
+                }
+
+                announce("Новый элемент добавлен в ваш сад.");
+                alert("Модель успешно сохранена в вашем личном инвентаре!");
+
+                const modalElement = document.getElementById("uploadModal");
+                const modal = modalElement ? bootstrap.Modal.getInstance(modalElement) : null;
+                if (modal) {
+                    modal.hide();
+                }
+
                 uploadForm.reset();
-                loadUserModels(); // обновление списка в профиле
-            } catch (e) {
-                alert('Ошибка при сохранении');
+                loadUserModels();
+            } catch (error) {
+                console.error("Ошибка сохранения:", error);
+                announce("Не удалось сохранить элемент.");
+                alert("Ошибка при сохранении.");
             } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
             }
         });
     }
 
-    // Логика звезд
-    const starBtn = document.getElementById('starBtn');
     if (starBtn) {
-        const countSpan = starBtn.querySelector('.count');
-        let count = parseInt(countSpan.innerText.replace(' ', ''));
+        const countSpan = starBtn.querySelector(".count");
+        let count = parseInt(countSpan.textContent.replace(/\s/g, ""), 10);
+        let isStarred = localStorage.getItem("modelStarred") === "true";
 
-        // Проверяем, ставил ли пользователь звезду ранее (в localStorage)
-        let isStarred = localStorage.getItem('modelStarred') === 'true';
-
-        if (isStarred) {
-            starBtn.classList.replace('btn-outline-primary', 'btn-primary');
-        }
-
-        starBtn.addEventListener('click', () => {
-            isStarred = !isStarred;
-            localStorage.setItem('modelStarred', isStarred);
+        const syncStarState = () => {
+            starBtn.setAttribute("aria-pressed", String(isStarred));
+            starBtn.setAttribute(
+                "aria-label",
+                `${isStarred ? "Убрать звезду у модели" : "Поставить звезду модели"}. Сейчас ${formatCount(count)} звёзд.`
+            );
 
             if (isStarred) {
-                starBtn.classList.replace('btn-outline-primary', 'btn-primary');
-                count++;
+                starBtn.classList.replace("btn-outline-primary", "btn-primary");
             } else {
-                starBtn.classList.replace('btn-primary', 'btn-outline-primary');
-                count--;
+                starBtn.classList.replace("btn-primary", "btn-outline-primary");
             }
-            countSpan.innerText = count.toLocaleString();
+        };
+
+        syncStarState();
+
+        starBtn.addEventListener("click", () => {
+            isStarred = !isStarred;
+            localStorage.setItem("modelStarred", String(isStarred));
+            count += isStarred ? 1 : -1;
+            countSpan.textContent = formatCount(count);
+            syncStarState();
+            announce(isStarred ? "Вы поставили звезду модели." : "Вы убрали звезду у модели.");
         });
     }
 
-    // Логика обсуждений (добавление сообщений)
-    const commentForm = document.getElementById('commentForm');
-    const commentList = document.getElementById('commentList');
-    const commentInput = document.getElementById('commentInput');
-
-    if (commentForm) {
-        commentForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+    if (commentForm && commentList && commentInput) {
+        commentForm.addEventListener("submit", (event) => {
+            event.preventDefault();
             const text = commentInput.value.trim();
 
-            if (text) {
-                // новый элемент комментария
-                const newComment = document.createElement('div');
-                newComment.className = 'd-flex mb-3 pb-3 border-bottom animate-fade-in';
-                newComment.innerHTML = `
-                    <img src="https://ui-avatars.com/api/?name=Guest&background=F4A261&color=fff" class="rounded-circle me-3" width="40" height="40">
-                    <div>
-                        <h6 class="mb-0 fw-bold">Вы (Гость) <span class="badge bg-light text-muted fw-normal ms-2">Только что</span></h6>
-                        <p class="mb-0 small text-muted">${text}</p>
-                    </div>
-                `;
+            if (!text) return;
 
-                // в начало списка
-                commentList.prepend(newComment);
-                commentInput.value = '';
-            }
+            const newComment = document.createElement("article");
+            newComment.className = "d-flex mb-3 pb-3 border-bottom animate-fade-in";
+            newComment.setAttribute("role", "listitem");
+            newComment.innerHTML = `
+                <img src="https://ui-avatars.com/api/?name=Guest&background=F4A261&color=fff" class="rounded-circle me-3" width="40" height="40" alt="Ваш аватар">
+                <div>
+                    <h3 class="h6 mb-0 fw-bold">Вы (Гость) <span class="badge bg-light text-muted fw-normal ms-2">Только что</span></h3>
+                    <p class="mb-0 small text-muted">${escapeHtml(text)}</p>
+                </div>
+            `;
+
+            commentList.prepend(newComment);
+            commentInput.value = "";
+            announce("Комментарий добавлен.");
         });
     }
 
-    // Логика форков
-    const forkBtn = document.getElementById('forkBtn');
     if (forkBtn) {
-        forkBtn.addEventListener('click', () => {
-            alert('Модель успешно скопирована (форкнута) в ваш сад!');
-            const forkCount = forkBtn.querySelector('.count');
-            forkCount.innerText = parseInt(forkCount.innerText) + 1;
+        forkBtn.addEventListener("click", () => {
+            const forkCount = forkBtn.querySelector(".count");
+            const nextCount = parseInt(forkCount.textContent.replace(/\s/g, ""), 10) + 1;
+            forkCount.textContent = formatCount(nextCount);
+            forkBtn.setAttribute("aria-label", `Сделать форк модели. Сейчас ${formatCount(nextCount)} форков.`);
+            announce("Модель скопирована в ваш сад.");
+            alert("Модель успешно скопирована (форкнута) в ваш сад!");
         });
     }
 
-    // Логика выхода из аккаунта
     const logoutBtn = document.querySelector('a[href="index.html"].btn-outline-danger');
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem("currentUser"); // Удаляем пользователя из памяти
-            // После этого ссылка сама перекинет на index.html
+        logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("currentUser");
+            announce("Вы вышли из аккаунта.");
         });
     }
 });
