@@ -1,5 +1,6 @@
 const API_URL = "http://localhost:3000";
 const HF_API_BASE = "https://huggingface.co/api/models";
+const THEME_STORAGE_KEY = "aibloom-theme";
 
 function announce(message) {
     const statusRegion = document.getElementById("appStatus");
@@ -40,6 +41,41 @@ function getModelDetailsUrl(model) {
     }
 
     return null;
+}
+
+// Блок функций ниже отвечает за выбор, применение и сохранение темы сайта.
+function getPreferredTheme() {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+function updateThemeToggleLabel(theme) {
+    const toggle = document.getElementById("themeToggle");
+    if (!toggle) return;
+
+    const nextThemeLabel = theme === "dark" ? "Светлая тема" : "Тёмная тема";
+    toggle.textContent = nextThemeLabel;
+    toggle.setAttribute("aria-label", `Переключить тему. Сейчас активна ${theme === "dark" ? "тёмная" : "светлая"} тема.`);
+}
+
+function applyTheme(theme) {
+    document.body.dataset.theme = theme;
+    updateThemeToggleLabel(theme);
+}
+
+function initTheme() {
+    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+    const theme = savedTheme || getPreferredTheme();
+    applyTheme(theme);
+
+    const toggle = document.getElementById("themeToggle");
+    if (!toggle) return;
+
+    toggle.addEventListener("click", () => {
+        const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
+        localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+        applyTheme(nextTheme);
+        announce(`Тема сайта переключена: ${nextTheme === "dark" ? "тёмная" : "светлая"}.`);
+    });
 }
 
 async function loadModels(filterParams = "") {
@@ -262,6 +298,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const starBtn = document.getElementById("starBtn");
     const forkBtn = document.getElementById("forkBtn");
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    // Инициализация темы должна срабатывать при загрузке каждой страницы.
+    initTheme();
 
     if (loginForm) {
         loginForm.addEventListener("submit", async (event) => {

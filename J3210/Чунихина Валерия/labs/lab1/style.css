@@ -1,17 +1,59 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap');
 
 :root {
+    /* Базовые переменные светлой темы */
+    --page-bg: #faf9f6;
+    --surface: #ffffff;
+    --surface-soft: #f3f6f1;
+    --surface-contrast: #172019;
+    --text-main: #2f3640;
+    --text-muted: #4f5963;
+    --border-soft: rgba(94, 141, 90, 0.15);
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
+
     --bloom-green: #2f5a31;
-    --bloom-blue: #A2C2E1;
     --bloom-orange: #8f4b17;
-    --bloom-bg: #FAF9F6;
-    --text-dark: #2F3640;
+    --accent-contrast: #ffffff;
+
+    --badge-model-bg: #dbe8f5;
+    --badge-model-text: #1e3a5f;
+    --badge-dataset-bg: #dbeede;
+    --badge-dataset-text: #214d2a;
+
+    --soft-blue-bg: #e3f2fd;
+    --soft-green-bg: #e8f5e9;
 }
 
-body {
+body[data-theme="dark"] {
+    /* Дополнительная тёмная тема переключает только значения переменных */
+    --page-bg: #121714;
+    --surface: #1b221e;
+    --surface-soft: #232c26;
+    --surface-contrast: #0e1411;
+    --text-main: #edf3ee;
+    --text-muted: #b7c2b9;
+    --border-soft: rgba(255, 255, 255, 0.12);
+    --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.28);
+
+    --bloom-green: #8fc98b;
+    --bloom-orange: #d89a63;
+    --accent-contrast: #102010;
+
+    --badge-model-bg: #243446;
+    --badge-model-text: #dce9ff;
+    --badge-dataset-bg: #223928;
+    --badge-dataset-text: #d8f1dc;
+
+    --soft-blue-bg: #223240;
+    --soft-green-bg: #243428;
+}
+
+body,
+body.bg-light {
     font-family: 'Jost', sans-serif;
-    background-color: var(--bloom-bg);
-    color: var(--text-dark);
+    background-color: var(--page-bg) !important;
+    color: var(--text-main) !important;
+    transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .skip-link {
@@ -21,7 +63,7 @@ body {
     z-index: 2000;
     padding: 0.75rem 1rem;
     background-color: var(--bloom-green);
-    color: #fff;
+    color: var(--accent-contrast);
     border-radius: 12px;
     text-decoration: none;
     transition: top 0.2s ease;
@@ -29,16 +71,16 @@ body {
 
 .skip-link:focus {
     top: 1rem;
-    color: #fff;
+    color: var(--accent-contrast);
 }
 
 .navbar {
-    background-color: white !important;
-    border-bottom: 2px solid rgba(94, 141, 90, 0.1);
+    background-color: var(--surface) !important;
+    border-bottom: 2px solid var(--border-soft);
 }
 
 .navbar-brand {
-    color: var(--text-dark) !important;
+    color: var(--text-main) !important;
     display: inline-flex;
     align-items: center;
     min-height: 44px;
@@ -58,12 +100,14 @@ body {
 .btn-primary {
     background-color: var(--bloom-green) !important;
     border-color: var(--bloom-green) !important;
+    color: var(--accent-contrast) !important;
     border-radius: 12px !important;
 }
 
 .btn-accent {
     background-color: var(--bloom-orange) !important;
-    color: #fff !important;
+    border-color: var(--bloom-orange) !important;
+    color: var(--accent-contrast) !important;
     font-weight: 700;
     border-radius: 12px !important;
 }
@@ -71,52 +115,102 @@ body {
 .btn-outline-primary {
     color: var(--bloom-green) !important;
     border-color: var(--bloom-green) !important;
+    background-color: transparent !important;
     border-radius: 12px !important;
 }
 
 .btn-outline-primary:hover {
     background-color: var(--bloom-green) !important;
-    color: white !important;
+    color: var(--accent-contrast) !important;
 }
 
-.card {
+.btn-outline-danger {
+    border-radius: 12px !important;
+}
+
+.card,
+.modal-content {
+    background-color: var(--surface) !important;
+    color: var(--text-main);
     border-radius: 20px !important;
     border: none !important;
+    transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .card-hover:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+    box-shadow: var(--shadow-soft) !important;
 }
 
 .badge-model {
-    background-color: #dbe8f5 !important;
-    color: #1e3a5f !important;
+    background-color: var(--badge-model-bg) !important;
+    color: var(--badge-model-text) !important;
     border-radius: 8px !important;
     font-weight: 700;
 }
 
 .badge-dataset {
-    background-color: #dbeede !important;
-    color: #214d2a !important;
+    background-color: var(--badge-dataset-bg) !important;
+    color: var(--badge-dataset-text) !important;
     border-radius: 8px !important;
     font-weight: 700;
 }
 
 .bg-soft-blue {
-    background-color: #E3F2FD;
+    background-color: var(--soft-blue-bg);
     font-size: 1.5rem;
 }
 
 .bg-soft-green {
-    background-color: #E8F5E9;
+    background-color: var(--soft-green-bg);
     font-size: 1.5rem;
+}
+
+.bg-light,
+.table thead.bg-light,
+.badge.bg-light {
+    background-color: var(--surface-soft) !important;
+    color: var(--text-main) !important;
+}
+
+.bg-white {
+    background-color: var(--surface) !important;
+    color: var(--text-main) !important;
+}
+
+.bg-dark {
+    background-color: var(--surface-contrast) !important;
+}
+
+.table {
+    color: var(--text-main);
+    --bs-table-color: var(--text-main);
+    --bs-table-bg: transparent;
+    --bs-table-hover-color: var(--text-main);
+    --bs-table-hover-bg: var(--surface-soft);
+}
+
+.table > :not(caption) > * > * {
+    border-bottom-color: var(--border-soft);
+}
+
+.breadcrumb-item,
+.breadcrumb-item.active,
+.breadcrumb-item + .breadcrumb-item::before {
+    color: var(--text-muted);
 }
 
 .form-control,
 .form-select {
+    background-color: var(--surface) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-soft) !important;
     border-radius: 12px !important;
     padding: 0.75rem 1rem !important;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
 }
 
 .btn,
@@ -139,6 +233,7 @@ body {
 
 #searchForm {
     padding: 0.35rem;
+    background-color: var(--surface) !important;
 }
 
 #searchForm .form-control,
@@ -150,6 +245,14 @@ body {
     min-width: 120px;
 }
 
+.nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.75rem 0.9rem !important;
+    color: var(--text-main) !important;
+}
+
 .nav-link.active {
     color: var(--bloom-green) !important;
     font-weight: 700;
@@ -158,13 +261,6 @@ body {
 .nav-link:hover {
     color: var(--bloom-orange) !important;
     transition: color 0.3s ease;
-}
-
-.nav-link {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    padding: 0.75rem 0.9rem !important;
 }
 
 .nav-pills .nav-link {
@@ -178,18 +274,18 @@ body {
 
 .nav-pills .nav-link.active {
     background-color: var(--bloom-green) !important;
-    color: white !important;
+    color: var(--accent-contrast) !important;
     box-shadow: 0 4px 15px rgba(94, 141, 90, 0.25) !important;
 }
 
 .nav-pills .nav-link:hover:not(.active) {
-    background-color: rgba(94, 141, 90, 0.1) !important;
+    background-color: var(--surface-soft) !important;
     color: var(--bloom-green) !important;
 }
 
 #profileTabs {
-    background-color: white;
-    border: 1px solid rgba(94, 141, 90, 0.1);
+    background-color: var(--surface);
+    border: 1px solid var(--border-soft);
     display: inline-flex;
 }
 
@@ -223,16 +319,21 @@ body {
 
 .list-group-item {
     background-color: transparent !important;
+    color: var(--text-main);
 }
 
 .text-muted,
 .form-text {
-    color: #4f5963 !important;
+    color: var(--text-muted) !important;
 }
 
 .text-warning {
     color: #8a5200 !important;
     font-weight: 600;
+}
+
+body[data-theme="dark"] .text-warning {
+    color: #ffbf75 !important;
 }
 
 .touch-link {
@@ -253,9 +354,23 @@ body {
     text-decoration-thickness: 2px;
 }
 
+body[data-theme="dark"] .model-meta-link {
+    color: #b8dfb3 !important;
+}
+
 .model-meta-link:hover,
 .model-meta-link:focus-visible {
     color: #16361d !important;
+}
+
+body[data-theme="dark"] .model-meta-link:hover,
+body[data-theme="dark"] .model-meta-link:focus-visible {
+    color: #e0f2dd !important;
+}
+
+/* Класс для новой кнопки переключения темы */
+.theme-toggle {
+    min-width: 150px;
 }
 
 :focus-visible {
@@ -288,5 +403,9 @@ body {
     #searchForm .btn {
         width: 100%;
         border-radius: 16px !important;
+    }
+
+    .theme-toggle {
+        width: 100%;
     }
 }
