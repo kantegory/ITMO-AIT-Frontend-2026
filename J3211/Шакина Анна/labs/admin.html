@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Администратор</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body class="profile-page">
+<header class="header">
+    <nav class="navbar navbar-expand-lg fixed-top navigation" aria-label="Навигация панели администратора">
+        <div class="container">
+            <a class="navbar-brand me-auto" href="index.html">Мероприятия</a>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                 aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Мероприятия</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 active" href="#adminEventsSection">Все мероприятия</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="#" data-proposal-link target="_blank" rel="noopener noreferrer">Заявки</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="#teachersSection">Учителя</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="#studentsSection">Ученики</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <a href="login.html" class="login-button">Войти</a>
+
+            <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+</header>
+
+<main class="main pt-5">
+    <section class="events-explorer py-5">
+        <div class="container pt-4 pt-lg-5">
+            <div class="events-shell">
+                <section class="dashboard-panel-section" id="adminEventsSection">
+                    <h1 class="events-title mb-4" id="adminUserTitle">Список мероприятий</h1>
+
+                    <div class="row g-4 mb-4" id="adminEventsGrid"></div>
+
+                    <article class="dashboard-panel">
+                        <div class="dashboard-panel-head">
+                            <div>
+                                <h3 class="dashboard-panel-title" id="eventFormTitle">Добавить мероприятие</h3>
+                                <p class="dashboard-panel-text mb-0">Заполните данные нового мероприятия.</p>
+                            </div>
+                        </div>
+
+                        <form id="eventForm" class="row g-3">
+                            <div class="col-12 col-lg-6">
+                                <label class="form-label filter-label" for="eventTitleInput">Название</label>
+                                <input class="form-control search-input" id="eventTitleInput" type="text" placeholder="Например: Турнир по шахматам">
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <label class="form-label filter-label" for="eventDateInput">Дата</label>
+                                <input class="form-control search-input" id="eventDateInput" type="text" inputmode="numeric" placeholder="ДД.ММ.ГГГГ">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label filter-label" for="eventDescriptionInput">Описание</label>
+                                <textarea class="form-control search-input dashboard-textarea" id="eventDescriptionInput" placeholder="Коротко опишите мероприятие"></textarea>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <label class="form-label filter-label" for="eventImageInput">Фото мероприятия</label>
+                                <input class="form-control search-input" id="eventImageInput" type="file" accept="image/*">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label class="form-label filter-label" for="eventGoalDropdownButton">Категория</label>
+                                <input type="hidden" id="eventGoalInput" value="fun">
+                                <div class="dropdown custom-filter-dropdown">
+                                    <button
+                                        class="btn custom-filter-toggle dropdown-toggle w-100 text-start"
+                                        type="button"
+                                        id="eventGoalDropdownButton"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        Развлекательные
+                                    </button>
+                                    <ul class="dropdown-menu custom-filter-menu w-100" aria-labelledby="eventGoalDropdownButton">
+                                        <li><button class="dropdown-item custom-filter-item event-goal-option" type="button" data-value="fun">Развлекательные</button></li>
+                                        <li><button class="dropdown-item custom-filter-item event-goal-option" type="button" data-value="sport">Спортивные</button></li>
+                                        <li><button class="dropdown-item custom-filter-item event-goal-option" type="button" data-value="study">Учебные</button></li>
+                                        <li><button class="dropdown-item custom-filter-item event-goal-option" type="button" data-value="ceremony">Торжественные</button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label class="form-label filter-label" for="eventPlaceDropdownButton">Место</label>
+                                <input type="hidden" id="eventPlaceInput" value="assembly">
+                                <div class="dropdown custom-filter-dropdown">
+                                    <button
+                                        class="btn custom-filter-toggle dropdown-toggle w-100 text-start"
+                                        type="button"
+                                        id="eventPlaceDropdownButton"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        Актовый зал
+                                    </button>
+                                    <ul class="dropdown-menu custom-filter-menu w-100" aria-labelledby="eventPlaceDropdownButton">
+                                        <li><button class="dropdown-item custom-filter-item event-place-option" type="button" data-value="assembly">Актовый зал</button></li>
+                                        <li><button class="dropdown-item custom-filter-item event-place-option" type="button" data-value="yard">Школьный двор</button></li>
+                                        <li><button class="dropdown-item custom-filter-item event-place-option" type="button" data-value="classroom">Школьный класс</button></li>
+                                        <li><button class="dropdown-item custom-filter-item event-place-option" type="button" data-value="outside">Вне школы</button></li>
+                                        <li><button class="dropdown-item custom-filter-item event-place-option" type="button" data-value="stadium">Стадион</button></li>
+                                        <li><button class="dropdown-item custom-filter-item event-place-option" type="button" data-value="gym1">Спортивный зал №1</button></li>
+                                        <li><button class="dropdown-item custom-filter-item event-place-option" type="button" data-value="gym2">Спортивный зал №2</button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label class="form-label filter-label" for="eventAudienceInput">Для кого</label>
+                                <input class="form-control search-input" id="eventAudienceInput" type="text" placeholder="5-11 классы">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label class="form-label filter-label" for="eventCapacityInput">Лимит мест</label>
+                                <input class="form-control search-input" id="eventCapacityInput" type="number" min="1" value="30">
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <label class="form-label filter-label" for="eventTeacherDropdownButton">Ответственный учитель</label>
+                                <input type="hidden" id="eventTeacherInput" value="">
+                                <div class="dropdown custom-filter-dropdown">
+                                    <button
+                                        class="btn custom-filter-toggle dropdown-toggle w-100 text-start"
+                                        type="button"
+                                        id="eventTeacherDropdownButton"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        Выберите учителя
+                                    </button>
+                                    <ul class="dropdown-menu custom-filter-menu w-100" id="eventTeacherMenu" aria-labelledby="eventTeacherDropdownButton"></ul>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 d-flex align-items-end">
+                                <button type="submit" class="site-button">Добавить мероприятие</button>
+                            </div>
+                            <div class="col-12">
+                                <p class="auth-form-msg small mb-0 d-none" id="eventMessage"></p>
+                            </div>
+                        </form>
+                    </article>
+                </section>
+
+                <section class="dashboard-panel-section" id="teachersSection">
+                    <div class="dashboard-panel-head">
+                        <div>
+                            <h2 class="events-title h3 mb-1">Управление учителями</h2>
+                            <p class="events-counter mb-0">Здесь можно добавлять учителей, редактировать данные и выдавать логин с паролем.</p>
+                        </div>
+                    </div>
+
+                    <article class="dashboard-panel mb-4">
+                        <div class="dashboard-panel-head">
+                            <div>
+                                <h3 class="dashboard-panel-title">Список учителей</h3>
+                                <p class="dashboard-panel-text mb-0">Все учителя с доступом к сайту.</p>
+                            </div>
+                        </div>
+                        <div class="dashboard-list" id="teachersList"></div>
+                    </article>
+
+                    <article class="dashboard-panel">
+                        <div class="dashboard-panel-head">
+                            <div>
+                                <h3 class="dashboard-panel-title" id="teacherFormTitle">Добавить учителя</h3>
+                                <p class="dashboard-panel-text mb-0">Заполните данные нового учителя или обновите существующие.</p>
+                            </div>
+                        </div>
+
+                        <form id="teacherForm" class="row g-3">
+                            <input type="hidden" id="teacherEditingId" value="">
+                            <div class="col-12 col-md-6">
+                                <label class="form-label filter-label" for="teacherFirstName">Имя</label>
+                                <input class="form-control search-input" id="teacherFirstName" type="text" placeholder="Имя">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label filter-label" for="teacherLastName">Фамилия</label>
+                                <input class="form-control search-input" id="teacherLastName" type="text" placeholder="Фамилия">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label filter-label" for="teacherEmail">Почта</label>
+                                <input class="form-control search-input" id="teacherEmail" type="email" placeholder="teacher@example.com">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label filter-label" for="teacherPassword">Пароль</label>
+                                <input class="form-control search-input" id="teacherPassword" type="text" placeholder="Оставьте пустым для автогенерации">
+                            </div>
+                            <div class="col-12 d-flex flex-wrap gap-2">
+                                <button type="submit" class="site-button" id="teacherSubmitText">Добавить учителя</button>
+                                <button type="button" class="subtle-button" id="teacherFormReset">Очистить</button>
+                            </div>
+                            <div class="col-12">
+                                <p class="auth-form-msg small mb-0 d-none" id="teacherMessage"></p>
+                            </div>
+                        </form>
+                    </article>
+                </section>
+
+                <section class="dashboard-panel-section" id="studentsSection">
+                    <div class="dashboard-panel-head">
+                        <div>
+                            <h2 class="events-title h3 mb-1">Список учеников</h2>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 align-items-end filter-row">
+                        <div class="col-12 col-lg-5">
+                            <label for="studentSearch" class="form-label filter-label">Поиск по имени или классу</label>
+                            <input type="text" class="form-control search-input" id="studentSearch" placeholder="Например: тестовый, 9 а">
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <label class="form-label filter-label" for="classDropdownButton">Класс</label>
+                            <div class="dropdown custom-filter-dropdown">
+                                <button
+                                    class="btn custom-filter-toggle dropdown-toggle w-100 text-start"
+                                    type="button"
+                                    id="classDropdownButton"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    Все классы
+                                </button>
+                                <ul class="dropdown-menu custom-filter-menu w-100" aria-labelledby="classDropdownButton">
+                                    <li><button class="dropdown-item custom-filter-item class-option" type="button" data-value="all">Все классы</button></li>
+                                    <li><button class="dropdown-item custom-filter-item class-option" type="button" data-value="1">1 класс</button></li>
+                                    <li><button class="dropdown-item custom-filter-item class-option" type="button" data-value="2">2 класс</button></li>
+                                    <li><button class="dropdown-item custom-filter-item class-option" type="button" data-value="3">3 класс</button></li>
+                                    <li><button class="dropdown-item custom-filter-item class-option" type="button" data-value="4">4 класс</button></li>
+                                    <li><button class="dropdown-item custom-filter-item class-option" type="button" data-value="5">5 класс</button></li>
+                                    <li><button class="dropdown-item custom-filter-item class-option" type="button" data-value="6">6 класс</button></li>
+                                    <li><button class="dropdown-item custom-filter-item class-option" type="button" data-value="7">7 класс</button></li>
+                                    <li><button class="dropdown-item custom-filter-item class-option" type="button" data-value="8">8 класс</button></li>
+                                    <li><button class="dropdown-item custom-filter-item class-option" type="button" data-value="9">9 класс</button></li>
+                                    <li><button class="dropdown-item custom-filter-item class-option" type="button" data-value="10">10 класс</button></li>
+                                    <li><button class="dropdown-item custom-filter-item class-option" type="button" data-value="11">11 класс</button></li>
+                                    <li><button class="dropdown-item custom-filter-item class-option" type="button" data-value="external">Не ученики</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-3 d-grid">
+                            <button type="button" class="btn reset-filters" id="resetStudentFilters">Сброс</button>
+                        </div>
+                    </div>
+
+                    <div class="events-meta-row">
+                        <p class="events-counter mb-0" id="studentsCounter">Найдено учеников: 0</p>
+                    </div>
+
+                    <article class="dashboard-panel mb-4">
+                        <div class="dashboard-list" id="studentsList"></div>
+                    </article>
+
+                    <article class="dashboard-panel">
+                        <div class="dashboard-panel-head">
+                            <div>
+                                <h3 class="dashboard-panel-title" id="studentFormTitle">Добавить ученика</h3>
+                                <p class="dashboard-panel-text mb-0">Заполните данные нового ученика или обновите существующие.</p>
+                            </div>
+                        </div>
+
+                        <form id="studentForm" class="row g-3">
+                            <input type="hidden" id="studentEditingId" value="">
+                            <div class="col-12 col-md-6">
+                                <label class="form-label filter-label" for="studentFirstName">Имя</label>
+                                <input class="form-control search-input" id="studentFirstName" type="text" placeholder="Имя">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label filter-label" for="studentLastName">Фамилия</label>
+                                <input class="form-control search-input" id="studentLastName" type="text" placeholder="Фамилия">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label filter-label" for="studentEmail">Почта</label>
+                                <input class="form-control search-input" id="studentEmail" type="email" placeholder="student@example.com">
+                            </div>
+                            <div class="col-12 col-md-6 d-flex align-items-end">
+                                <div class="form-check small mb-3">
+                                    <input class="form-check-input" type="checkbox" id="studentIsExternal">
+                                    <label class="form-check-label" for="studentIsExternal">Не является учеником школы</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="form-label filter-label" for="studentClassInput">Класс</label>
+                                <input class="form-control search-input" id="studentClassInput" type="number" min="1" max="11" placeholder="9">
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="form-label filter-label" for="studentLetterInput">Буква</label>
+                                <input class="form-control search-input" id="studentLetterInput" type="text" maxlength="1" placeholder="А">
+                            </div>
+                            <div class="col-12 d-flex flex-wrap gap-2">
+                                <button type="submit" class="site-button" id="studentSubmitText">Добавить ученика</button>
+                                <button type="button" class="subtle-button" id="studentFormReset">Очистить</button>
+                            </div>
+                            <div class="col-12">
+                                <p class="auth-form-msg small mb-0 d-none" id="studentMessage"></p>
+                            </div>
+                        </form>
+                    </article>
+                </section>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container footer-row">
+        <p class="footer-text mb-0">Мероприятия</p>
+        <button type="button" class="footer-logout subtle-button" data-auth-logout>Выйти</button>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth-core.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/session.js"></script>
+</body>
+</html>

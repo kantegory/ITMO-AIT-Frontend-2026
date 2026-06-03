@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Модели | MLPipelines</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="app-layout">
+
+        <aside class="sidebar">
+            <div class="sidebar__logo">MLPipelines</div>
+
+            <div class="sidebar__scroll-wrapper">
+
+                <nav class="sidebar__nav">
+                    <a href="index.html" class="sidebar__link">
+                        Личный кабинет
+                    </a>
+                    <a href="search_page.html" class="sidebar__link">
+                        Эксперименты
+                    </a>
+                    <a href="models.html" class="sidebar__link sidebar__link--active">
+                        Модели
+                    </a>
+                </nav>
+
+                <footer class="sidebar__footer dropdown">
+                    <a href="#" class="sidebar__link dropdown-toggle text-decoration-none text-truncate" id="userName" data-bs-toggle="dropdown" aria-expanded="false">
+                        Иван Иванов
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="userName">
+                        <li>
+                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                                Настройки
+                            </a>
+                        </li>
+                        <li><a class="dropdown-item text-danger" href="login.html">Выйти</a></li>
+                    </ul>
+                </footer>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-content__header">
+                <h1>Реестр моделей</h1>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModelModal">
+                    Зарегистрировать модель
+                </button>
+            </header>
+
+            <p class="text-muted mb-4">
+                Управление версиями моделей и их статусами.
+            </p>
+
+            <div class="card mb-3 shadow-sm border-0">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-0 text-primary">ResNet_18</h5>
+                        <small class="text-muted">Последнее обновление: 27.02.2026</small>
+                    </div>
+
+                    <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#model1">
+                        Показать версии
+                    </button>
+                </div>
+
+                <div class="collapse show" id="model1">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped align-middle mb-0">
+                                <thead class="table-light">
+                                <tr>
+                                    <th class="col-version ps-4">Версия</th>
+                                    <th class="col-stage">Стадия</th>
+                                    <th class="col-metrics">Метрики</th>
+                                    <th class="col-action">Действия</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td class="ps-4">
+                                        <div class="table-truncate" title="v2">
+                                            v2
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-success">Production</span></td>
+                                    <td>Acc: 0.95</td>
+                                    <td><a href="#" class="text-decoration-none">Скачать</a></td>
+                                </tr>
+
+                                <tr>
+                                    <td class="ps-4">
+                                        <div class="table-truncate" title="v1">
+                                            v1
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-warning text-dark">Staging</span></td>
+                                    <td>Acc: 0.92</td>
+                                    <td><a href="#" class="text-decoration-none">Детали</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3 shadow-sm border-0">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-0 text-primary">YOLOv8_Detection</h5>
+                        <small class="text-muted">Последнее обновление: 15.02.2026</small>
+                    </div>
+                    <button class="btn btn-outline-secondary btn-sm collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#model2" aria-expanded="false">
+                        Показать версии
+                    </button>
+                </div>
+
+                <div class="collapse" id="model2">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped align-middle mb-0">
+                                <thead class="table-light">
+                                <tr>
+                                    <th class="col-version ps-4">Версия</th>
+                                    <th class="col-stage">Стадия</th>
+                                    <th class="col-metrics">Метрики</th>
+                                    <th class="col-action">Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="ps-4">
+                                        <div class="table-truncate" title="very_very_long_version_name_of_the_yolo_model">
+                                            very_very_long_version_name_of_the_yolo_model
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-secondary">None</span></td>
+                                    <td>RocAuc: 0.831</td>
+                                    <td><a href="#" class="text-decoration-none">Развернуть</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <div class="modal fade" id="registerModelModal" tabindex="-1" aria-labelledby="registerModelModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModelModalLabel">Регистрация новой модели</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="modelName" class="form-label">Название модели</label>
+                            <input type="text" class="form-control" id="modelName" placeholder="Например, CV_model" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="modelFramework" class="form-label">Библиотека / Фреймворк</label>
+                            <select class="form-select" id="modelFramework" required>
+                                <option value="" disabled selected>Выберите библиотеку...</option>
+                                <option value="pytorch">PyTorch</option>
+                                <option value="tensorflow">TensorFlow</option>
+                                <option value="sklearn">Scikit-learn</option>
+                                <option value="onnx">ONNX</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="artifactPath" class="form-label">Путь к артефактам</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="artifactPath" placeholder="">
+                            </div>
+                            <div class="form-text">Укажите путь к хранилищу весов модели.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Начальная стадия</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="stageOptions" id="stageNone" value="none" checked>
+                                    <label class="form-check-label" for="stageNone">None</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="stageOptions" id="stageStaging" value="staging">
+                                    <label class="form-check-label" for="stageStaging">Staging</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="modelDesc" class="form-label">Описание</label>
+                            <textarea class="form-control" id="modelDesc" rows="2"></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Зарегистрировать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Настройки профиля</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Внешний вид</label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="darkModeSwitch" role="switch">
+                                <label class="form-check-label" for="darkModeSwitch">Темная тема</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="interfaceLanguage" class="form-label fw-bold">Язык интерфейса</label>
+                            <select id="interfaceLanguage" class="form-select">
+                                <option selected>Русский</option>
+                                <option>English</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

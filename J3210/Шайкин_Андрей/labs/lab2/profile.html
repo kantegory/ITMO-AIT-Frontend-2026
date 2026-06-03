@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет | NexusEdu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-blob-1"></div>
+    <div class="bg-blob-2"></div>
+
+    <header>
+        <nav class="navbar navbar-expand-lg glass m-3 px-4 py-3" aria-label="Главная навигация">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold text-white fs-4" href="index.html"><svg width="24" height="24" class="me-2"><use href="img/sprite.svg#icon-logo"></use></svg>NexusEdu</a>
+                <div class="d-flex gap-3 align-items-center">
+                    <button id="themeToggle" class="btn btn-sm btn-outline-secondary rounded-pill" aria-label="Переключить тему"><svg width="18" height="18"><use href="img/sprite.svg#icon-theme"></use></svg><span>Тема</span></button>
+                    <span class="text-white d-none d-md-inline">Привет, <span class="user-name-display">Студент</span>!</span>
+                    <button onclick="logout()" class="btn btn-sm btn-outline-light rounded-pill" aria-label="Выйти из аккаунта">Выйти</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-5 mb-5">
+        <div class="row g-4">
+            <aside class="col-lg-4" aria-label="Информация о пользователе">
+                <div class="glass p-4 text-center">
+                    <div class="rounded-circle mx-auto mb-3 default-avatar" style="width:120px; height:120px; font-size: 3rem;" aria-hidden="true"><svg width="50%" height="50%"><use href="img/sprite.svg#icon-user"></use></svg></div>
+                    <h1 class="fw-bold fs-4 user-name-display">Загрузка...</h1>
+                    <p class="text-white-50 mb-4 user-email-display"></p>
+                    <div class="d-flex justify-content-center gap-4 text-start border-top border-secondary border-opacity-25 pt-4">
+                        <div class="text-center">
+                            <span class="d-block text-white-50 small">Курсов</span>
+                            <span class="fw-bold fs-4 text-info">3</span>
+                        </div>
+                        <div class="text-center">
+                            <span class="d-block text-white-50 small">Сертификатов</span>
+                            <span class="fw-bold fs-4 text-warning">1</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="col-lg-8" aria-label="Панель обучения">
+                <div id="externalApiContainer" aria-live="polite"></div>
+
+                <div class="glass p-4">
+                    <ul class="nav nav-pills mb-4 border-bottom border-secondary border-opacity-25 pb-3" id="roleTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="tab-student" data-bs-toggle="pill" data-bs-target="#studentPanel" role="tab" aria-controls="studentPanel" aria-selected="true">Кабинет Студента</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab-teacher" data-bs-toggle="pill" data-bs-target="#teacherPanel" role="tab" aria-controls="teacherPanel" aria-selected="false">Кабинет Преподавателя</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="studentPanel" role="tabpanel" aria-labelledby="tab-student">
+                            <h2 class="fs-5 fw-bold mb-4">Моё обучение</h2>
+                            <article class="d-flex flex-column flex-md-row gap-3 align-items-md-center p-3 rounded-4 mb-4" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);">
+                                <img src="img/course1.png" class="rounded-3" style="width:100px; height:70px; object-fit:cover;" alt="Обложка курса Vue.js">
+                                <div class="flex-grow-1">
+                                    <h3 class="fs-6 fw-bold mb-1">Vue.js 3 с нуля</h3>
+                                    <div class="d-flex justify-content-between text-white-50 small mb-1">
+                                        <span>Прогресс</span>
+                                        <span>75%</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px;" 
+                                         role="progressbar" 
+                                         aria-label="Прогресс курса Vue.js" 
+                                         aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar bg-info" style="width: 75%;"></div>
+                                    </div>
+                                </div>
+                                <a href="course.html" class="btn glass-btn btn-sm px-4 py-2 mt-2 mt-md-0" aria-label="Продолжить изучение Vue.js">Продолжить</a>
+                            </article>
+
+                            <h2 class="fs-5 fw-bold mb-3 mt-5">Сертификаты</h2>
+                            <article class="d-flex align-items-center gap-3 p-3 rounded-4" style="background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.2);">
+                                <span class="fs-2" aria-hidden="true"><svg width="40" height="40" class="text-success"><use href="img/sprite.svg#icon-trophy"></use></svg></span>
+                                <div class="flex-grow-1">
+                                    <h3 class="fs-6 fw-bold text-success mb-0">Основы HTML и CSS</h3>
+                                    <span class="text-white-50 small">Выдан: 10 Марта 2026</span>
+                                </div>
+                                <button class="btn btn-outline-success btn-sm rounded-pill px-3" aria-label="Скачать сертификат Основы HTML и CSS">Скачать</button>
+                            </article>
+                        </div>
+
+                        <div class="tab-pane fade" id="teacherPanel" role="tabpanel" aria-labelledby="tab-teacher">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h2 class="fs-5 fw-bold mb-0">Авторские курсы</h2>
+                                <button class="btn glass-btn btn-sm" aria-label="Создать новый курс">+ Создать</button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-borderless text-white-50 align-middle">
+                                    <thead class="border-bottom border-secondary border-opacity-25">
+                                        <tr>
+                                            <th scope="col" class="text-white">Курс</th>
+                                            <th scope="col" class="text-white">Студенты</th>
+                                            <th scope="col" class="text-white">Статус</th>
+                                            <th scope="col" class="text-white">Действие</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-white fw-bold">Deep Learning / AI</td>
+                                            <td>1 240</td>
+                                            <td><span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">Опубликован</span></td>
+                                            <td><button class="btn btn-sm btn-outline-light" aria-label="Управление курсом AI">Настроить</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

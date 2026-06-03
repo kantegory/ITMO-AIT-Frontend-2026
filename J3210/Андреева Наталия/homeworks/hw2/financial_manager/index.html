@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="Вход в личный кабинет финансового менеджера MyWallet. Управляйте своими доходами и расходами легко и безопасно.">
+    <title>Вход в систему — MyWallet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+<body class="bg-light d-flex align-items-center min-vh-100">
+<main class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-4 card p-4 shadow-sm border-0">
+            <h1 class="h3 mb-4 text-center">Вход в MyWallet</h1>
+
+            <div class="mb-3">
+                <label for="email" class="visually-hidden">Электронная почта</label>
+                <input type="email" id="email" class="form-control" placeholder="Email" autocomplete="email">
+            </div>
+
+            <div class="mb-3">
+                <label for="pass" class="visually-hidden">Пароль</label>
+                <input type="password" id="pass" class="form-control" placeholder="Пароль">
+            </div>
+
+            <button id="loginBtn" class="btn btn-primary w-100 py-2 fw-bold">Войти</button>
+            <a href="register.html" class="btn btn-outline-primary w-100 mt-3">Регистрация</a>
+        </div>
+    </div>
+</main>
+
+<script>
+    document.getElementById('loginBtn').addEventListener('click', async () => {
+        const emailInput = document.getElementById('email').value.trim();
+        const passInput = document.getElementById('pass').value.trim();
+
+        if (!emailInput || !passInput) return alert("Введите данные!");
+
+        try {
+            const response = await fetch(`http://localhost:3000/users`);
+            const users = await response.json();
+
+            const foundUser = users.find(u => u.email === emailInput && u.pass === passInput);
+
+            if (foundUser) {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('currentUser', JSON.stringify(foundUser));
+                localStorage.setItem('currentUserId', foundUser.id.toString());
+                localStorage.setItem('currentUserEmail', foundUser.email);
+                localStorage.setItem('userFullName', foundUser.name + " " + foundUser.surname);
+
+                alert("Вход выполнен успешно!");
+                window.location.href = 'dashboard.html';
+            } else {
+                alert("Неверный Email или пароль! Проверьте данные или зарегистрируйтесь.");
+                console.log("Введено:", emailInput, passInput);
+                console.log("В базе данных сейчас:", users);
+            }
+        } catch (error) {
+            alert("Нет связи с сервером! Проверьте, что в терминале написано 'JSON Server started'");
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Мероприятие</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body class="event-page">
+<header class="header">
+    <nav class="navbar navbar-expand-lg fixed-top navigation" aria-label="Навигация страницы мероприятия">
+        <div class="container">
+            <a class="navbar-brand me-auto" href="index.html">Мероприятия</a>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                 aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Мероприятия</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="index.html">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="index.html#eventsExplorer">Мероприятия</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="profile.html">Личный кабинет</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="#" data-proposal-link target="_blank" rel="noopener noreferrer">Предложить мероприятие</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <a href="login.html" class="login-button">Войти</a>
+
+            <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+</header>
+
+<main class="main pt-5">
+    <div class="container pt-4 pt-lg-5 event-page-container">
+        <section class="mb-4 mb-lg-5">
+            <div class="row g-4 align-items-stretch">
+                <div class="col-12 col-lg-7">
+                    <article class="rounded-4 overflow-hidden shadow-sm bg-white">
+                        <div class="event-media-ratio">
+                            <img id="eventImage"
+                                 src="img/carousel1.png"
+                                 alt="Афиша мероприятия"
+                                 class="w-100 h-100 d-block"
+                                 style="object-fit: cover;">
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-12 col-lg-5">
+                    <article class="rounded-4 shadow-sm bg-white p-4 event-side-main-card">
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge rounded-pill text-bg-light border event-meta-badge goal-badge" id="eventGoalBadge">Развлекательное</span>
+                            <span class="badge rounded-pill text-bg-light border text-truncate-1 event-meta-badge"
+                                  id="eventPlaceBadge">Актовый зал</span>
+                            <span class="badge rounded-pill text-bg-light border event-meta-badge" id="eventDateBadge">15.10.2025</span>
+                        </div>
+
+                        <h1 class="h3 mb-3 text-break-safe text-clamp-2" id="eventTitle">Название мероприятия</h1>
+
+                        <p class="text-secondary mb-4 text-break-safe text-clamp-3" id="eventShort">
+                            Короткое описание в одну-две строки.
+                        </p>
+
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-lg site-button event-action-button" id="btnRegister">
+                                Записаться
+                            </button>
+
+                            <button type="button" class="btn btn-lg d-none subtle-button event-action-button" id="btnCancel">
+                                Отменить запись
+                            </button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="pb-5">
+            <div class="row g-4 event-content-grid align-items-start">
+                <div class="col-12 col-lg-8">
+                    <article class="rounded-4 shadow-sm bg-white p-4 p-lg-4 event-description-card">
+                        <h2 class="h5 mb-3">Описание</h2>
+                        <div class="content-scroll-x">
+                            <p class="text-secondary mb-0 text-break-safe" id="eventDescription">
+                                Полное описание мероприятия: что будет, как всё проходит, сколько длится, нужны ли
+                                материалы/форма и т.д. Здесь можно писать текст длиннее, и он должен нормально
+                                переноситься.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-12 col-lg-4">
+                    <aside class="event-sidebar" aria-label="Дополнительная информация">
+                        <article class="rounded-4 shadow-sm bg-white p-4 event-sidebar-card">
+                            <h2 class="h5 mb-3">Информация</h2>
+
+                            <div class="d-flex flex-column gap-3">
+                                <div>
+                                    <div class="small text-secondary">Количество участников</div>
+                                    <div class="fw-semibold text-break-safe" id="eventParticipants">12 / 30</div>
+                                </div>
+
+                                <div>
+                                    <div class="small text-secondary">Для кого</div>
+                                    <div class="fw-semibold text-break-safe" id="eventAudience">5–11 классы</div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="rounded-4 shadow-sm bg-white p-4 event-sidebar-card">
+                            <h2 class="h5 mb-3">Статус записи</h2>
+
+                            <div class="d-flex align-items-center justify-content-between gap-3 event-status-row">
+                                <div class="min-w-0">
+                                    <div class="small text-secondary">Текущий статус</div>
+                                    <div class="fw-semibold text-truncate-1" id="registrationStatusText">Вы не записаны</div>
+                                </div>
+
+                                <span class="badge rounded-pill registration-status-badge registration-status-badge--inactive" id="registrationStatusBadge">
+                                    Вы не записаны
+                                </span>
+                            </div>
+
+                            <p class="mt-3 small text-secondary mb-0 text-break-safe" id="registrationHint">
+                                Нажмите «Записаться», чтобы добавить мероприятие в текущие записи.
+                            </p>
+                        </article>
+                    </aside>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container footer-row">
+        <p class="footer-text mb-0">Мероприятия</p>
+        <button type="button" class="footer-logout subtle-button" data-auth-logout>Выйти</button>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth-core.js"></script>
+<script src="js/event.js"></script>
+<script src="js/session.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+

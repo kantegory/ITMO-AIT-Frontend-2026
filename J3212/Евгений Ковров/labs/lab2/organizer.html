@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ru" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Контрамарка — Кабинет организатора</title>
+  <script src="assets/js/theme.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" href="index.html">
+      <span class="badge brand-badge text-white">КМ</span>
+      Контрамарка
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNav" aria-label="Открыть навигацию">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="topNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="index.html">События</a></li>
+        <li class="nav-item"><a class="nav-link active" href="organizer.html">Организатору</a></li>
+      </ul>
+
+      <div class="d-flex gap-2 align-items-center">
+        <div data-theme-switcher></div>
+        <div class="d-flex gap-2 align-items-center" data-auth-nav></div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="py-4">
+  <div class="container">
+    <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-2 mb-3">
+      <div>
+        <h1 class="h4 fw-semibold mb-1">Кабинет организатора</h1>
+        <div class="text-secondary">События, продажи, статусы и быстрые действия в одном месте.</div>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#payoutModal">
+          Выплаты
+        </button>
+        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#createEventModal">
+          Создать событие
+        </button>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="border rounded-4 p-3 p-lg-4">
+          <h2 class="h6 mb-3">Сводка</h2>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="text-secondary">Активных событий</div>
+            <div class="fw-semibold" id="organizerActiveEvents">—</div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <div class="text-secondary">Билетов продано (неделя)</div>
+            <div class="fw-semibold" id="organizerSoldTickets">—</div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <div class="text-secondary">Возвраты (неделя)</div>
+            <div class="fw-semibold" id="organizerRefunds">0</div>
+          </div>
+
+          <hr>
+
+          <div class="text-secondary small mb-2">Текущий баланс</div>
+          <div class="h4 fw-semibold mb-1" id="organizerCurrentBalance">—</div>
+          <div class="text-secondary small" id="organizerPendingPayout">Ожидает выплаты: —</div>
+
+          <button class="btn btn-outline-primary w-100 mt-3" type="button" data-bs-toggle="modal" data-bs-target="#payoutModal">
+            Запросить выплату
+          </button>
+        </div>
+
+        <div class="border rounded-4 p-3 p-lg-4 mt-4">
+          <h2 class="h6 mb-3">Быстрые настройки</h2>
+          <form id="organizerSettingsForm">
+            <label class="form-label" for="organizerNameInput">Имя организатора</label>
+            <input class="form-control mb-3" id="organizerNameInput" value="Северная Сцена">
+
+            <label class="form-label" for="organizerEmailInput">Эл. почта для уведомлений</label>
+            <input class="form-control mb-3" id="organizerEmailInput" value="team@severscene.ru">
+
+            <label class="form-label" for="organizerPhoneInput">Телефон поддержки</label>
+            <input class="form-control mb-3" id="organizerPhoneInput" value="+7 812 600-12-12">
+
+            <div class="alert d-none mb-3" id="organizerSettingsMessage" role="alert"></div>
+            <button class="btn btn-primary w-100" type="submit" id="organizerSettingsSaveButton">Сохранить</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="border rounded-4 p-3 p-lg-4">
+          <div class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-md-center mb-3">
+            <h2 class="h6 mb-0">Мои события</h2>
+
+            <div class="d-flex gap-2">
+              <label class="visually-hidden" for="organizerSearchInput">Поиск событий организатора</label>
+              <input class="form-control form-control-sm" id="organizerSearchInput" placeholder="Поиск по названию">
+              <label class="visually-hidden" for="organizerStatusFilter">Фильтр статуса событий</label>
+              <select class="form-select form-select-sm w-auto" id="organizerStatusFilter">
+                <option selected>Все статусы</option>
+                <option>Опубликовано</option>
+                <option>Черновик</option>
+                <option>Завершено</option>
+                <option>Приостановлено</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table align-middle">
+              <thead>
+                <tr>
+                  <th>Событие</th>
+                  <th class="text-nowrap">Дата</th>
+                  <th class="text-nowrap">Продажи</th>
+                  <th class="text-nowrap">Статус</th>
+                  <th class="text-end">Действия</th>
+                </tr>
+              </thead>
+              <tbody id="organizerEventsTableBody">
+                <tr>
+                  <td colspan="5" class="text-center text-secondary py-4">Загрузка событий...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<div class="modal fade" id="createEventModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4">
+      <div class="modal-header">
+        <h5 class="modal-title">Создать событие</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть окно события"></button>
+      </div>
+
+      <div class="modal-body">
+        <form id="createEventForm">
+          <div class="row g-3">
+            <div class="col-md-8">
+              <label class="form-label" for="createEventTitle">Название</label>
+              <input class="form-control" id="createEventTitle" placeholder="Например, Джаз в Полуторке: весенний вечер" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="createEventCategory">Тип</label>
+              <select class="form-select" id="createEventCategory">
+                <option selected>Концерт</option>
+                <option>Стендап</option>
+                <option>Спорт</option>
+                <option>Выставка</option>
+                <option>Театр</option>
+                <option>Фестиваль</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label" for="createEventCity">Город</label>
+              <input class="form-control" id="createEventCity" placeholder="Санкт-Петербург" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="createEventVenue">Площадка</label>
+              <input class="form-control" id="createEventVenue" placeholder="Новая Голландия, сцена «Полуторка»" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label" for="createEventDate">Дата</label>
+              <input type="date" class="form-control" id="createEventDate" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="createEventTime">Время</label>
+              <input type="time" class="form-control" id="createEventTime" required>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label" for="createEventCapacity">Вместимость</label>
+              <input type="number" class="form-control" id="createEventCapacity" value="120" min="1">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="createEventPrice">Цена от</label>
+              <input type="number" class="form-control" id="createEventPrice" value="1200" min="0">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="createEventAge">Возраст</label>
+              <select class="form-select" id="createEventAge">
+                <option selected>18+</option>
+                <option>16+</option>
+                <option>12+</option>
+                <option>0+</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label" for="createEventDescription">Описание</label>
+              <textarea class="form-control" rows="4" id="createEventDescription" placeholder="Коротко: что это, почему стоит прийти, что важно знать."></textarea>
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="createEventImage">Изображение</label>
+              <input class="form-control" id="createEventImage" placeholder="https://placehold.co/800x500/1f2633/e6edf6?text=Событие">
+            </div>
+            <div class="col-12">
+              <div class="alert d-none mb-0" id="createEventMessage" role="alert"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button class="btn btn-primary" type="submit" form="createEventForm" id="createEventSaveButton">Сохранить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="manageModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header">
+        <h5 class="modal-title">Управление событием</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть окно управления событием"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="text-secondary">Событие:</div>
+        <div class="fw-semibold" id="manageEventTitle">—</div>
+        <div class="alert d-none mt-3 mb-0" id="manageEventMessage" role="alert"></div>
+
+        <hr>
+
+        <div class="d-grid gap-2">
+          <button class="btn btn-outline-secondary" type="button" id="manageEditButton">Редактировать</button>
+          <button class="btn btn-outline-secondary" type="button" id="manageSalesButton">Посмотреть список продаж</button>
+          <button class="btn btn-outline-secondary" type="button" id="managePauseButton">Остановить продажи</button>
+          <button class="btn btn-outline-danger" type="button" id="manageUnpublishButton">Снять с публикации</button>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="payoutModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header">
+        <h5 class="modal-title">Выплаты</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть окно выплат"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="text-secondary mb-2">Доступно к выплате</div>
+        <div class="h4 fw-semibold mb-3" id="payoutAvailableAmount">—</div>
+
+        <label class="form-label" for="payoutAmountInput">Сумма</label>
+        <input class="form-control mb-3" type="number" id="payoutAmountInput" value="56000" min="0">
+
+        <label class="form-label" for="payoutAccountInput">Счёт</label>
+        <input class="form-control mb-1" id="payoutAccountInput" placeholder="40817 810 0 0000 0000000">
+        <div class="alert d-none mt-3 mb-0" id="payoutMessage" role="alert"></div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button class="btn btn-primary" type="button" id="payoutSubmitButton">Запросить выплату</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/auth-service.js"></script>
+<script src="assets/js/auth-ui.js"></script>
+<script src="assets/js/events-service.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/organizer-page.js"></script>
+
+</body>
+</html>

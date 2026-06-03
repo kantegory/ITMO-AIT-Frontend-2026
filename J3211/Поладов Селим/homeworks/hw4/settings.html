@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Настройки — 67 Финансы</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/light.css" rel="stylesheet">
+  <link href="css/dark.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme')
+      var preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      var theme = saved || preferred
+      document.documentElement.setAttribute('data-theme', theme)
+      document.documentElement.setAttribute('data-bs-theme', theme)
+    })()
+  </script>
+  <script src="js/theme.js"></script>
+</head>
+<body>
+  <aside class="sidebar d-flex flex-column" aria-label="Боковая панель">
+    <a href="dashboard.html" class="brand text-decoration-none" aria-label="67 Финансы — на главную">67 Финансы</a>
+    <nav class="flex-grow-1 pt-2" aria-label="Основная навигация">
+      <a href="dashboard.html" class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="img/icons.svg#icon-home"/></svg>
+        <span>Главная</span>
+      </a>
+      <a href="transactions.html" class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="img/icons.svg#icon-transactions"/></svg>
+        <span>Транзакции</span>
+      </a>
+      <a href="reports.html" class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="img/icons.svg#icon-reports"/></svg>
+        <span>Отчёты</span>
+      </a>
+      <a href="integration.html" class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="img/icons.svg#icon-integration"/></svg>
+        <span>Интеграции</span>
+      </a>
+    </nav>
+    <div class="nav-bottom px-3 pb-3">
+      <a href="#" class="nav-link" onclick="logout()" aria-label="Выйти из аккаунта">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="img/icons.svg#icon-logout"/></svg>
+        <span>Выход</span>
+      </a>
+    </div>
+  </aside>
+
+  <main class="main-wrap">
+    <div class="header-row">
+      <h1>Настройки</h1>
+      <div class="header-actions">
+        <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" aria-label="Переключить тему">
+          <svg class="icon-moon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><use href="img/icons.svg#icon-moon"/></svg>
+          <svg class="icon-sun" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" style="display:none"><use href="img/icons.svg#icon-sun"/></svg>
+        </button>
+        <div class="dropdown">
+          <button type="button" class="user-menu dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false" aria-label="Меню пользователя" aria-haspopup="true">
+            <div class="user-avatar" aria-hidden="true">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="img/icons.svg#icon-user"/></svg>
+            </div>
+            <span class="d-none d-md-inline" id="user-name">—</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" role="menu">
+            <li role="none"><a class="dropdown-item active" href="settings.html" role="menuitem" aria-current="page">Настройки</a></li>
+            <li role="none"><hr class="dropdown-divider"></li>
+            <li role="none"><a class="dropdown-item text-danger" href="#" role="menuitem" onclick="logout(); return false;">Выйти</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="row g-0">
+        <div class="col-lg-4 settings-avatar-col">
+          <div class="settings-avatar-wrap">
+            <div class="settings-avatar" role="img" aria-label="Аватар пользователя">
+              <svg width="56" height="56" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="img/icons.svg#icon-user"/></svg>
+            </div>
+            <div class="fw-bold fs-5 mt-3" id="avatar-name" aria-live="polite">—</div>
+            <div class="text-muted small mt-1" id="avatar-email" aria-live="polite">—</div>
+          </div>
+        </div>
+        <div class="col-lg-8 settings-form-col">
+          <h2 class="h5 mb-4">Редактировать профиль</h2>
+          <div id="settings-success" class="alert alert-success d-none py-2 mb-3"
+            role="alert" aria-live="polite">Изменения сохранены</div>
+          <div id="settings-error" class="alert alert-danger d-none py-2 mb-3"
+            role="alert" aria-live="assertive">Ошибка при сохранении</div>
+          <form id="settings-form" novalidate aria-label="Форма редактирования профиля">
+            <div class="row g-3 mb-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="firstName">Имя</label>
+                <input type="text" class="form-control" id="firstName" name="firstName"
+                  placeholder="Иван" autocomplete="given-name">
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="lastName">Фамилия</label>
+                <input type="text" class="form-control" id="lastName" name="lastName"
+                  placeholder="Иванов" autocomplete="family-name">
+              </div>
+            </div>
+            <div class="mb-4">
+              <label class="form-label" for="email">Email</label>
+              <input type="email" class="form-control" id="email" name="email"
+                placeholder="example@gmail.com" autocomplete="email">
+            </div>
+            <button type="submit" class="btn btn-primary px-4">Сохранить изменения</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>

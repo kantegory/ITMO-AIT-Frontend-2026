@@ -1,0 +1,132 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Карточки */
+.card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #198754;
+}
+
+/* Страницы входа и регистрации */
+.auth-wrapper {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.auth-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.auth-card .card-header {
+    background: linear-gradient(135deg, #198754, #39a774);
+    color: white;
+    border-radius: 15px 15px 0 0;
+    padding: 20px;
+    border: none;
+}
+
+/* Уведомления */
+.notification-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    min-width: 300px;
+    max-width: 400px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    animation: slideIn 0.3s ease;
+    border-left: 4px solid #198754;
+}
+
+.notification-toast.error {
+    border-left-color: #dc3545;
+}
+
+.notification-toast .notification-content {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.notification-toast .notification-icon {
+    font-size: 1.25rem;
+}
+
+.notification-toast.success .notification-icon {
+    color: #198754;
+}
+
+.notification-toast.error .notification-icon {
+    color: #dc3545;
+}
+
+.notification-toast .notification-message {
+    flex: 1;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.notification-toast .notification-close {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    color: #999;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.notification-toast .notification-close:hover {
+    background: #f0f0f0;
+    color: #333;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}

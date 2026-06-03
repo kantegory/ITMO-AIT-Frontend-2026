@@ -1,0 +1,68 @@
+.course-header {
+    background: linear-gradient(135deg, #0B0F19 0%, #1a1f3a 100%);
+}
+
+[data-bs-theme="dark"] .course-progress-card {
+    background: rgba(30, 30, 40, 0.95);
+}
+
+.video-player-container {
+    background: #000;
+}
+
+.nav-tabs .nav-link {
+    color: var(--bs-body-color);
+    border: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: transparent;
+    color: var(--bs-primary);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--bs-primary);
+    border-bottom-color: var(--bs-primary);
+    background: transparent;
+}
+.list-group-item-action:hover {
+    background-color: rgba(var(--bs-primary-rgb), 0.05);
+}
+
+.discussion-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+@media (max-width: 991px) {
+    .course-header {
+        text-align: center;
+    }
+
+    .course-header .d-flex {
+        justify-content: center;
+    }
+}
+
+@keyframes pulseHighlight {
+    0%, 100% {
+        background-color: rgba(var(--bs-primary-rgb), 0.1);
+    }
+    50% {
+        background-color: rgba(var(--bs-primary-rgb), 0.2);
+    }
+}
+
+.lesson-current-row {
+    animation: pulseHighlight 2s infinite;
+}
+.instructor-img {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+}

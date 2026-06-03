@@ -1,0 +1,138 @@
+:root {
+    --header-height: 56px;
+}
+body {
+    padding-top: var(--header-height);
+    transition: background-color .4s linear, color .4s linear;
+}
+[data-app-header] {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+.catalog-page__search,
+.catalog-page__filters {
+    top: calc(var(--header-height) + .25rem);
+}
+.course-detail__info,
+.lesson-page__sidebar {
+    top: calc(var(--header-height) + .5rem);
+}
+.lesson-page__sidebar {
+    max-height: calc(100vh - var(--header-height) - 2rem);
+}
+
+.rating__star {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: -.3em;
+    fill: #0d6efd;
+    color: #0d6efd;
+}
+
+.default_svg{
+    display: inline-block;
+    width: 1.4em;
+    height: 1.4em;
+    vertical-align: -.3em;
+    fill: #ffffff;
+}
+
+.header__button {
+    width: 42px; !important;
+    height: 42px; !important;
+    padding: 0; !important;
+    display: inline-flex; !important;
+    align-items: center; !important;
+    justify-content: center; !important;
+}
+
+.btn-outline-light .header_svg {
+    display: inline-block;
+    width: 1.4em;
+    height: 1.4em;
+    vertical-align: -.3em;
+    fill: #ffffff;
+    color: #ffffff;
+}
+
+.btn-outline-light:hover .header_svg,
+.btn-outline-light:focus-visible .header_svg,
+.btn-outline-light:active .header_svg {
+    color: var(--bs-dark);
+    fill: var(--bs-dark);
+}
+
+.card__users{
+    display: inline-block;
+    width: 1.4em;
+    height: 1.4em;
+    vertical-align: -.3em;
+    fill: #ffffff;
+    color: var(--bs-emphasis-color);
+}
+
+[data-bs-theme="dark"] {
+    .link-primary {
+        color: #36d6ef !important;
+    }
+
+    .link-primary:hover,
+    .link-primary:focus {
+        color: #00fdd7 !important;
+    }
+
+
+    .btn-outline-primary {
+        --bs-btn-color: #36d6ef;
+        --bs-btn-border-color: #36d6ef;
+
+        --bs-btn-hover-color: black;
+        --bs-btn-hover-bg: #36d6ef;
+        --bs-btn-hover-border-color: #36d6ef;
+
+        --bs-btn-active-color: black;
+        --bs-btn-active-bg: #36d6ef;
+        --bs-btn-active-border-color: #36d6ef;
+    }
+
+    .btn-outline-success {
+        --bs-btn-color: #23d681;
+        --bs-btn-border-color: #23d681;
+
+        --bs-btn-hover-color: black;
+        --bs-btn-hover-bg: #23d681;
+        --bs-btn-hover-border-color: #23d681;
+
+        --bs-btn-active-color: black;
+        --bs-btn-active-bg: #23d681;
+        --bs-btn-active-border-color: #23d681;
+    }
+
+    .btn-outline-dark, .btn-outline-secondary {
+        --bs-btn-color: white;
+        --bs-btn-border-color: white;
+
+        --bs-btn-hover-color: black;
+        --bs-btn-hover-bg: white;
+        --bs-btn-hover-border-color: black;
+
+        --bs-btn-active-color: black;
+        --bs-btn-active-bg: white;
+        --bs-btn-active-border-color: black;
+    }
+    .btn-outline-danger {
+        --bs-btn-color: #f49595;
+        --bs-btn-border-color: #f49595;
+
+        --bs-btn-hover-color: white;
+        --bs-btn-hover-bg: #ff0000;
+        --bs-btn-hover-border-color: #ff0000;
+
+        --bs-btn-active-color: white;
+        --bs-btn-active-bg: #ff0000;
+        --bs-btn-active-border-color: white;
+    }
+}

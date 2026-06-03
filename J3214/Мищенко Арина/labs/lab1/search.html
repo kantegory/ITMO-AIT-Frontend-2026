@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Поиск курсов — EduPlatform</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-light">
+
+  <!-- Навбар -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-primary" href="index.html">EduPlatform</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link active" href="search.html">Каталог курсов</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-2">
+          <a href="dashboard-user.html" class="btn btn-outline-primary btn-sm">Личный кабинет</a>
+          <a href="login.html" class="btn btn-outline-secondary btn-sm">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Поиск-шапка -->
+  <div class="bg-primary py-4">
+    <div class="container">
+      <h4 class="text-white fw-bold mb-3">Найдите свой курс</h4>
+      <div class="input-group input-group-lg">
+        <span class="input-group-text bg-white border-0"><i class="bi bi-search text-muted"></i></span>
+        <input type="text" class="form-control border-0" id="searchInput" placeholder="Например: Python, веб-разработка, дизайн..." />
+        <button class="btn btn-warning fw-semibold" onclick="applyFilters()">Найти</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container py-4">
+    <div class="row g-4">
+
+      <!-- Боковые фильтры -->
+      <div class="col-12 col-md-3">
+        <div class="card border-0 shadow-sm p-3">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="fw-bold mb-0">Фильтры</h6>
+            <button class="btn btn-link btn-sm p-0 text-muted text-decoration-none" onclick="resetFilters()">Сбросить</button>
+          </div>
+
+          <!-- Предмет -->
+          <p class="text-muted small mb-2 fw-semibold">ПРЕДМЕТ</p>
+          <div class="mb-3">
+            <div class="form-check">
+              <input class="form-check-input filter-check" type="checkbox" id="catDev" value="Разработка" />
+              <label class="form-check-label small" for="catDev">Разработка</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input filter-check" type="checkbox" id="catDesign" value="Дизайн" />
+              <label class="form-check-label small" for="catDesign">Дизайн</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input filter-check" type="checkbox" id="catData" value="Данные" />
+              <label class="form-check-label small" for="catData">Данные и аналитика</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input filter-check" type="checkbox" id="catBiz" value="Бизнес" />
+              <label class="form-check-label small" for="catBiz">Бизнес</label>
+            </div>
+          </div>
+
+          <hr />
+
+          <!-- Уровень -->
+          <p class="text-muted small mb-2 fw-semibold">УРОВЕНЬ</p>
+          <div class="mb-3">
+            <div class="form-check">
+              <input class="form-check-input filter-radio" type="radio" name="level" id="lvlAll" value="" checked />
+              <label class="form-check-label small" for="lvlAll">Все уровни</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input filter-radio" type="radio" name="level" id="lvlBeg" value="Начинающий" />
+              <label class="form-check-label small" for="lvlBeg">Начинающий</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input filter-radio" type="radio" name="level" id="lvlMid" value="Средний" />
+              <label class="form-check-label small" for="lvlMid">Средний</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input filter-radio" type="radio" name="level" id="lvlAdv" value="Продвинутый" />
+              <label class="form-check-label small" for="lvlAdv">Продвинутый</label>
+            </div>
+          </div>
+
+          <hr />
+
+          <!-- Цена -->
+          <p class="text-muted small mb-2 fw-semibold">ЦЕНА</p>
+          <div class="mb-3">
+            <div class="form-check">
+              <input class="form-check-input filter-radio" type="radio" name="price" id="priceAll" value="" checked />
+              <label class="form-check-label small" for="priceAll">Любая</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input filter-radio" type="radio" name="price" id="priceFree" value="free" />
+              <label class="form-check-label small" for="priceFree">Бесплатные</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input filter-radio" type="radio" name="price" id="pricePaid" value="paid" />
+              <label class="form-check-label small" for="pricePaid">Платные</label>
+            </div>
+          </div>
+
+          <button class="btn btn-primary w-100 btn-sm" onclick="applyFilters()">Применить фильтры</button>
+        </div>
+      </div>
+
+      <!-- Список курсов -->
+      <div class="col-12 col-md-9">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <p class="text-muted mb-0 small" id="resultsCount">Найдено: 6 курсов</p>
+          <select class="form-select form-select-sm w-auto">
+            <option>По популярности</option>
+            <option>По цене (возр.)</option>
+            <option>По цене (убыв.)</option>
+            <option>Новые</option>
+          </select>
+        </div>
+
+        <div class="row g-3" id="courseList">
+
+          <!-- Карточка курса -->
+          <div class="col-12 col-sm-6 col-xl-4 course-card" data-cat="Разработка" data-level="Начинающий" data-price="free" data-title="Основы JavaScript">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-img-top bg-primary d-flex align-items-center justify-content-center" style="height:100px;">
+                <i class="bi bi-code-slash text-white" style="font-size:2rem;"></i>
+              </div>
+              <div class="card-body">
+                <div class="d-flex gap-1 mb-2">
+                  <span class="badge bg-primary-subtle text-primary">Разработка</span>
+                  <span class="badge bg-secondary-subtle text-secondary">Начинающий</span>
+                </div>
+                <h6 class="fw-bold">Основы JavaScript</h6>
+                <p class="text-muted small mb-2">А. Смирнов · 24 урока · 12 часов</p>
+                <div class="d-flex align-items-center gap-1 mb-3">
+                  <i class="bi bi-star-fill text-warning small"></i>
+                  <span class="small fw-semibold">4.8</span>
+                  <span class="text-muted small">(312)</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="fw-bold text-success">Бесплатно</span>
+                  <a href="course.html" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-4 course-card" data-cat="Дизайн" data-level="Начинающий" data-price="paid" data-title="UI/UX дизайн с нуля">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-img-top bg-danger d-flex align-items-center justify-content-center" style="height:100px;">
+                <i class="bi bi-palette text-white" style="font-size:2rem;"></i>
+              </div>
+              <div class="card-body">
+                <div class="d-flex gap-1 mb-2">
+                  <span class="badge bg-danger-subtle text-danger">Дизайн</span>
+                  <span class="badge bg-secondary-subtle text-secondary">Начинающий</span>
+                </div>
+                <h6 class="fw-bold">UI/UX дизайн с нуля</h6>
+                <p class="text-muted small mb-2">М. Петрова · 36 уроков · 18 часов</p>
+                <div class="d-flex align-items-center gap-1 mb-3">
+                  <i class="bi bi-star-fill text-warning small"></i>
+                  <span class="small fw-semibold">4.7</span>
+                  <span class="text-muted small">(198)</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="fw-bold">2 990 ₽</span>
+                  <a href="course.html" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-4 course-card" data-cat="Данные" data-level="Начинающий" data-price="free" data-title="SQL для начинающих">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-img-top bg-success d-flex align-items-center justify-content-center" style="height:100px;">
+                <i class="bi bi-database text-white" style="font-size:2rem;"></i>
+              </div>
+              <div class="card-body">
+                <div class="d-flex gap-1 mb-2">
+                  <span class="badge bg-success-subtle text-success">Данные</span>
+                  <span class="badge bg-secondary-subtle text-secondary">Начинающий</span>
+                </div>
+                <h6 class="fw-bold">SQL для начинающих</h6>
+                <p class="text-muted small mb-2">К. Волков · 20 уроков · 8 часов</p>
+                <div class="d-flex align-items-center gap-1 mb-3">
+                  <i class="bi bi-star-fill text-warning small"></i>
+                  <span class="small fw-semibold">4.9</span>
+                  <span class="text-muted small">(445)</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="fw-bold text-success">Бесплатно</span>
+                  <a href="course.html" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-4 course-card" data-cat="Разработка" data-level="Средний" data-price="paid" data-title="React: от основ до продвинутого">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-img-top bg-info d-flex align-items-center justify-content-center" style="height:100px;">
+                <i class="bi bi-lightning-charge text-white" style="font-size:2rem;"></i>
+              </div>
+              <div class="card-body">
+                <div class="d-flex gap-1 mb-2">
+                  <span class="badge bg-primary-subtle text-primary">Разработка</span>
+                  <span class="badge bg-warning-subtle text-warning">Средний</span>
+                </div>
+                <h6 class="fw-bold">React: от основ до продвинутого</h6>
+                <p class="text-muted small mb-2">Д. Козлов · 48 уроков · 24 часа</p>
+                <div class="d-flex align-items-center gap-1 mb-3">
+                  <i class="bi bi-star-fill text-warning small"></i>
+                  <span class="small fw-semibold">4.6</span>
+                  <span class="text-muted small">(271)</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="fw-bold">4 490 ₽</span>
+                  <a href="course.html" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-4 course-card" data-cat="Данные" data-level="Средний" data-price="paid" data-title="Python для анализа данных">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-img-top bg-warning d-flex align-items-center justify-content-center" style="height:100px;">
+                <i class="bi bi-bar-chart-line text-white" style="font-size:2rem;"></i>
+              </div>
+              <div class="card-body">
+                <div class="d-flex gap-1 mb-2">
+                  <span class="badge bg-success-subtle text-success">Данные</span>
+                  <span class="badge bg-warning-subtle text-warning">Средний</span>
+                </div>
+                <h6 class="fw-bold">Python для анализа данных</h6>
+                <p class="text-muted small mb-2">О. Новикова · 40 уроков · 20 часов</p>
+                <div class="d-flex align-items-center gap-1 mb-3">
+                  <i class="bi bi-star-fill text-warning small"></i>
+                  <span class="small fw-semibold">4.8</span>
+                  <span class="text-muted small">(183)</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="fw-bold">3 790 ₽</span>
+                  <a href="course.html" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-4 course-card" data-cat="Бизнес" data-level="Продвинутый" data-price="paid" data-title="Управление продуктом">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height:100px;">
+                <i class="bi bi-briefcase text-white" style="font-size:2rem;"></i>
+              </div>
+              <div class="card-body">
+                <div class="d-flex gap-1 mb-2">
+                  <span class="badge bg-secondary-subtle text-secondary">Бизнес</span>
+                  <span class="badge bg-danger-subtle text-danger">Продвинутый</span>
+                </div>
+                <h6 class="fw-bold">Управление продуктом</h6>
+                <p class="text-muted small mb-2">С. Лебедев · 30 уроков · 15 часов</p>
+                <div class="d-flex align-items-center gap-1 mb-3">
+                  <i class="bi bi-star-fill text-warning small"></i>
+                  <span class="small fw-semibold">4.5</span>
+                  <span class="text-muted small">(97)</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="fw-bold">5 990 ₽</span>
+                  <a href="course.html" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Пусто -->
+        <div id="emptyState" class="text-center py-5 d-none">
+          <i class="bi bi-search text-muted" style="font-size:3rem;"></i>
+          <p class="text-muted mt-3">Курсы не найдены. Попробуйте изменить фильтры.</p>
+          <button class="btn btn-outline-primary btn-sm" onclick="resetFilters()">Сбросить фильтры</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function applyFilters() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const checkedCats = [...document.querySelectorAll('.filter-check:checked')].map(c => c.value);
+      const level = document.querySelector('.filter-radio[name="level"]:checked').value;
+      const price = document.querySelector('.filter-radio[name="price"]:checked').value;
+
+      const cards = document.querySelectorAll('.course-card');
+      let visible = 0;
+
+      cards.forEach(card => {
+        const matchCat = checkedCats.length === 0 || checkedCats.includes(card.dataset.cat);
+        const matchLevel = !level || card.dataset.level === level;
+        const matchPrice = !price || card.dataset.price === price;
+        const matchQuery = !query || card.dataset.title.toLowerCase().includes(query);
+
+        if (matchCat && matchLevel && matchPrice && matchQuery) {
+          card.classList.remove('d-none');
+          visible++;
+        } else {
+          card.classList.add('d-none');
+        }
+      });
+
+      document.getElementById('resultsCount').textContent = `Найдено: ${visible} курсов`;
+      document.getElementById('emptyState').classList.toggle('d-none', visible > 0);
+    }
+
+    function resetFilters() {
+      document.getElementById('searchInput').value = '';
+      document.querySelectorAll('.filter-check').forEach(c => c.checked = false);
+      document.getElementById('lvlAll').checked = true;
+      document.getElementById('priceAll').checked = true;
+      applyFilters();
+    }
+
+    // Фильтры применяются при изменении
+    document.querySelectorAll('.filter-check, .filter-radio').forEach(el => {
+      el.addEventListener('change', applyFilters);
+    });
+  </script>
+</body>
+</html>
