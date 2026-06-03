@@ -1,0 +1,1 @@
+import{b as e,f as t,h as n,t as r}from"./index-AvTnXuA8.js";var i={},a={class:`text-center py-5`,role:`status`,"aria-label":`Загрузка`};function o(r,i){return e(),n(`div`,a,[...i[0]||=[t(`div`,{class:`spinner-border text-primary`},null,-1),t(`p`,{class:`mt-3 text-muted`},`Загружаем данные...`,-1)]])}var s=r(i,[[`render`,o]]);export{s as t};
