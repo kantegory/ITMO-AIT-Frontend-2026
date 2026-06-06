@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет | NovaTransit</title>
+    <!-- бутстрап -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
+    <!-- Иконки бутстрапа -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Шрифты от гугла -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Верхнее меню (навбар) -->
+    <nav class="navbar navbar-expand-lg sticky-top glass-navbar">
+        <div class="container-fluid custom-container px-4 px-md-5" style="max-width: 1400px;">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="11" stroke="white" stroke-width="1" />
+                    <path d="M12 1 C12 8 16 12 23 12 C16 12 12 16 12 23 C12 16 8 12 1 12 C8 12 12 8 12 1 Z"
+                        fill="white" />
+                </svg>
+                <span class="fw-bold ms-2">Nova</span><span class="fw-light">Transit</span>
+            </a>
+            <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-4">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><span class="fw-bold me-1 text-main">00</span> Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><span
+                                class="fw-bold me-1 text-main">01</span> Кабинет</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3 mt-4 mt-lg-0">
+                    <div class="d-flex align-items-center gap-2 text-muted-custom">
+                        <img src="https://ui-avatars.com/api/?name=J+D&background=0D8ABC&color=fff&rounded=true"
+                            alt="User" width="32" height="32" class="rounded-circle border border-secondary">
+                        <span class="fs-7 fw-medium text-main">John Doe</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Дашборд. Вёрстка по Bento Grid -->
+    <div class="container-fluid py-5" style="max-width: 1400px;">
+        <div class="row g-4">
+
+            <!-- 1. Посадочный талон -->
+            <div class="col-lg-8">
+                <div class="bento-card p-4 p-md-5 position-relative">
+                    <h5 class="text-uppercase letter-spacing-2 text-muted-custom fs-7 mb-5">Ближайший рейс</h5>
+
+                    <div class="row align-items-center">
+                        <div class="col-12 col-md-8">
+                            <div class="d-flex align-items-center gap-2 gap-sm-4 mb-4">
+                                <div class="text-center">
+                                    <div class="fs-4 fw-light text-muted-custom d-none d-sm-block">Земля</div>
+                                    <div class="fs-5 fw-light text-muted-custom d-block d-sm-none">Земля</div>
+                                    <div class="display-5 fw-bold text-main">EAR</div>
+                                </div>
+                                <div class="flex-grow-1 position-relative text-center px-2 px-sm-3">
+                                    <div
+                                        class="border-top border-secondary position-absolute w-100 top-50 start-0 translate-middle-y">
+                                    </div>
+                                    <i class="bi bi-rocket-takeoff-fill fs-4 text-main position-relative px-2"
+                                        style="background-color: var(--bg-dark); z-index: 1;"></i>
+                                </div>
+                                <div class="text-center">
+                                    <div class="fs-4 fw-light text-muted-custom d-none d-sm-block">Энцелад</div>
+                                    <div class="fs-5 fw-light text-muted-custom d-block d-sm-none">Энцелад</div>
+                                    <div class="display-5 fw-bold text-main">ENC</div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="d-flex justify-content-between mt-5 border-top border-secondary pt-4 flex-wrap gap-3">
+                                <div>
+                                    <p class="text-muted-custom fs-7 mb-1 text-uppercase letter-spacing-2">Вылет через
+                                    </p>
+                                    <p class="fs-3 fw-medium text-main mb-0">14:22:45</p>
+                                </div>
+                                <div>
+                                    <p class="text-muted-custom fs-7 mb-1 text-uppercase letter-spacing-2">Гейт</p>
+                                    <p class="fs-3 fw-medium text-main mb-0">A-12</p>
+                                </div>
+                                <div>
+                                    <p class="text-muted-custom fs-7 mb-1 text-uppercase letter-spacing-2">Место</p>
+                                    <p class="fs-3 fw-medium text-main mb-0">4F</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="col-md-4 d-none d-md-flex justify-content-end align-items-center border-start border-secondary ps-4 h-100">
+                            <i class="bi bi-qr-code fs-1 display-1 text-muted-custom"
+                                style="font-size: 8rem !important; opacity: 0.2;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Айдишник. Фотка юзера и бейджики -->
+            <div class="col-lg-4">
+                <div
+                    class="bento-card p-4 p-md-5 d-flex flex-column justify-content-center align-items-center text-center">
+                    <div class="w-100 d-flex justify-content-start mb-4">
+                        <h5 class="text-uppercase letter-spacing-2 text-muted-custom fs-7 mb-0">ID Гражданина</h5>
+                    </div>
+
+                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=rgba(255,255,255,0.1)&color=fff&size=100"
+                        alt="Avatar" class="rounded-circle mb-3 border border-secondary p-1">
+                    <h3 class="fw-bold mb-1 text-main">John Doe</h3>
+                    <p class="text-muted-custom fs-7 letter-spacing-2 text-uppercase mb-4">ID: NT-8492-X</p>
+
+                    <div class="d-flex gap-2 flex-wrap justify-content-center mt-2">
+                        <span
+                            class="badge rounded-pill bg-transparent border text-light px-3 py-2 shadow-neon-silver">Silver</span>
+                        <span
+                            class="badge rounded-pill bg-transparent border text-info px-3 py-2 shadow-neon-cyan">First
+                            Colonist</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Подготовка к полету (прогресс-бары,пока только для визуала) -->
+            <div class="col-lg-6">
+                <div class="bento-card p-4 p-md-5">
+                    <h5 class="text-uppercase letter-spacing-2 text-muted-custom fs-7 mb-4">Подготовка к полету</h5>
+
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2 fs-7">
+                            <span class="text-main">Центрифуга</span>
+                            <span class="text-info fw-bold">100%</span>
+                        </div>
+                        <div class="progress bg-secondary bg-opacity-25" style="height: 6px;">
+                            <div class="progress-bar bg-info shadow-neon-cyan" role="progressbar" style="width: 100%"
+                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2 fs-7">
+                            <span class="text-main">Инструктаж</span>
+                            <span class="text-main fw-bold">80%</span>
+                        </div>
+                        <div class="progress bg-secondary bg-opacity-25" style="height: 6px;">
+                            <div class="progress-bar bg-light shadow-neon-silver" role="progressbar" style="width: 80%"
+                                aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="d-flex justify-content-between mb-2 fs-7">
+                            <span class="text-main">Подбор скафандра</span>
+                            <span class="text-warning fw-bold">50%</span>
+                        </div>
+                        <div class="progress bg-secondary bg-opacity-25" style="height: 6px;">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 50%"
+                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Настройки - переключатели -->
+            <div class="col-lg-6">
+                <div class="bento-card p-4 p-md-5 d-flex flex-column justify-content-between">
+                    <h5 class="text-uppercase letter-spacing-2 text-muted-custom fs-7 mb-4">Системы жизнеобеспечения
+                    </h5>
+
+                    <div class="form-check form-switch d-flex justify-content-between align-items-center mb-4 px-0">
+                        <label class="form-check-label text-main fw-medium" for="gravSwitch">Гравитация (1G /
+                            0.3G)</label>
+                        <input class="form-check-input ms-0 mt-0 shadow-none" type="checkbox" role="switch"
+                            id="gravSwitch" checked>
+                    </div>
+
+                    <div class="form-check form-switch d-flex justify-content-between align-items-center mb-4 px-0">
+                        <label class="form-check-label text-main fw-medium" for="foodSwitch">Тип питания:
+                            Стандарт</label>
+                        <input class="form-check-input ms-0 mt-0 shadow-none" type="checkbox" role="switch"
+                            id="foodSwitch">
+                    </div>
+
+                    <div class="form-check form-switch d-flex justify-content-between align-items-center px-0">
+                        <label class="form-check-label text-main fw-medium" for="dimSwitch">Затемнение
+                            иллюминаторов</label>
+                        <input class="form-check-input ms-0 mt-0 shadow-none" type="checkbox" role="switch"
+                            id="dimSwitch" checked>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Бортовой журнал -->
+            <div class="col-lg-12">
+                <div class="bento-card p-4 p-md-5">
+                    <h5 class="text-uppercase letter-spacing-2 text-muted-custom fs-7 mb-4">Бортовой журнал</h5>
+                    <div class="table-responsive">
+                        <table class="table table-dark table-transparent mb-0 align-middle">
+                            <thead>
+                                <tr>
+                                    <th class="text-muted-custom fw-normal fs-7 text-uppercase letter-spacing-2 pb-3">
+                                        Направление</th>
+                                    <th class="text-muted-custom fw-normal fs-7 text-uppercase letter-spacing-2 pb-3">
+                                        Дата</th>
+                                    <th class="text-muted-custom fw-normal fs-7 text-uppercase letter-spacing-2 pb-3">
+                                        Корабль</th>
+                                    <th
+                                        class="text-muted-custom fw-normal fs-7 text-uppercase letter-spacing-2 pb-3 text-end">
+                                        Статус</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-bottom border-secondary">
+                                    <td class="py-3 text-main">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-globe-europe-africa text-info"></i>
+                                            <span>Земля <i class="bi bi-arrow-right text-muted-custom mx-1"></i>
+                                                Марс</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 text-muted-custom">12.04.2028</td>
+                                    <td class="py-3 text-main">Nova Cruiser II</td>
+                                    <td class="py-3 text-end">
+                                        <span
+                                            class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1">Успешно</span>
+                                    </td>
+                                </tr>
+                                <tr class="border-bottom border-secondary">
+                                    <td class="py-3 text-main">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-moon-stars-fill text-light"></i>
+                                            <span>Орбита <i class="bi bi-arrow-right text-muted-custom mx-1"></i>
+                                                Луна-Бэй</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 text-muted-custom">28.11.2028</td>
+                                    <td class="py-3 text-main"> Nova Astro Shuttle Mk.4</td>
+                                    <td class="py-3 text-end">
+                                        <span
+                                            class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1">Успешно</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 text-main">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-globe-europe-africa text-info"></i>
+                                            <span>Земля <i class="bi bi-arrow-right text-muted-custom mx-1"></i>
+                                                Энцелад</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 text-muted-custom">06.06.2029</td>
+                                    <td class="py-3 text-main">Nova DeepSpace Explorer VIP</td>
+                                    <td class="py-3 text-end">
+                                        <span
+                                            class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 px-2 py-1">В
+                                            полете</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Скрипты бутстрапа -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+
+    <!-- Скрипт для параллакса -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.addEventListener('scroll', () => {
+                requestAnimationFrame(() => {
+                    document.documentElement.style.setProperty('--scroll-offset', `${window.scrollY * 0.2}px`);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

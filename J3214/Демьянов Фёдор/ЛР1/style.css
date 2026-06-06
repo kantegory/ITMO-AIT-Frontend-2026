@@ -15,8 +15,8 @@ body {
     font-weight: 300;
     overflow-x: hidden;
     line-height: 1.6;
-    /* Фон с параллаксом (наложил градиент, чтобы читалось норм) */
-    background-image: 
+    /* Фон с параллаксом */
+    background-image:
         linear-gradient(rgba(11, 13, 23, 0.88), rgba(11, 13, 23, 0.95)),
         url('assets/images/background.png');
     background-size: cover;
@@ -25,23 +25,39 @@ body {
     background-attachment: fixed;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: 500;
     letter-spacing: -0.02em;
 }
 
-.text-main { color: var(--text-main) !important; }
-.text-muted-custom { color: var(--text-muted); }
-.letter-spacing-2 { letter-spacing: 2px; }
-.fs-7 { font-size: 0.8rem; }
+.text-main {
+    color: var(--text-main) !important;
+}
 
-/* Контейнер (ограничил ширину, а то на фуллхд разъезжается) */
+.text-muted-custom {
+    color: var(--text-muted);
+}
+
+.letter-spacing-2 {
+    letter-spacing: 2px;
+}
+
+.fs-7 {
+    font-size: 0.8rem;
+}
+
+/* Контейнер */
 .custom-container {
     max-width: 1600px;
     margin: 0 auto;
 }
 
-/* Стеклянный навбар (размытие топчик) */
+/* Стеклянный навбар */
 .glass-navbar {
     background: rgba(11, 13, 23, 0.7);
     backdrop-filter: var(--glass-blur);
@@ -69,7 +85,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0.5rem 1rem;
 }
 
-.glass-navbar .nav-link:hover, 
+.glass-navbar .nav-link:hover,
 .glass-navbar .nav-link.active {
     color: var(--text-main);
 }
@@ -77,14 +93,16 @@ h1, h2, h3, h4, h5, h6 {
 .navbar-toggler {
     border: none;
 }
+
 .navbar-toggler:focus {
     box-shadow: none;
 }
+
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
 }
 
-/* Кнопки (подобрал цвета, чтобы стильно) */
+/* Кнопки */
 .btn-glass {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
@@ -153,7 +171,7 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
 }
 
-/* Стеклянные панельки и инпуты (убрал стандартные уродливые рамки) */
+/* Стеклянные панельки и инпуты (убрал стандартные рамки) */
 .glass-panel {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
@@ -162,7 +180,7 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 12px;
 }
 
-/* Динамическое свечение бюджета (если вип - светится круто) */
+/* Динамическое свечение бюджета */
 #searchPanel {
     transition: box-shadow 0.4s ease, border-color 0.4s ease;
 }
@@ -245,7 +263,7 @@ input[type="date"].glass-input::-webkit-calendar-picker-indicator {
     background: rgba(255, 255, 255, 0.1) !important;
     border-color: rgba(255, 255, 255, 0.3) !important;
     color: var(--text-main) !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 /* Картинки планет и плашка безопасности */
@@ -269,7 +287,7 @@ input[type="date"].glass-input::-webkit-calendar-picker-indicator {
 
 .planet-img {
     position: absolute;
-    right: 0%; /* Сдвинул влево, а то криво стояло */
+    right: 0%;
     top: 50%;
     transform: translateY(-50%);
     width: 132%;
@@ -285,7 +303,7 @@ input[type="date"].glass-input::-webkit-calendar-picker-indicator {
 .mars-img {
     width: 163%;
     max-width: 912px;
-    right: -10%; /* Марс не трогаю, он и так норм */
+    right: -10%;
     filter: drop-shadow(0 0 50px rgba(255, 100, 50, 0.15));
 }
 
@@ -302,7 +320,7 @@ input[type="date"].glass-input::-webkit-calendar-picker-indicator {
     right: 5%;
     z-index: 2;
     min-width: 320px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 .safety-list li {
@@ -310,9 +328,17 @@ input[type="date"].glass-input::-webkit-calendar-picker-indicator {
 }
 
 @keyframes floatPlanet {
-    0% { transform: translateY(calc(-50% + var(--scroll-offset, 0px))); }
-    50% { transform: translateY(calc(-53% + var(--scroll-offset, 0px))); }
-    100% { transform: translateY(calc(-50% + var(--scroll-offset, 0px))); }
+    0% {
+        transform: translateY(calc(-50% + var(--scroll-offset, 0px)));
+    }
+
+    50% {
+        transform: translateY(calc(-53% + var(--scroll-offset, 0px)));
+    }
+
+    100% {
+        transform: translateY(calc(-50% + var(--scroll-offset, 0px)));
+    }
 }
 
 @media (max-width: 991px) {
@@ -320,12 +346,12 @@ input[type="date"].glass-input::-webkit-calendar-picker-indicator {
         min-height: 400px;
         margin-top: 2rem;
     }
-    
+
     .planet-img {
         right: -20%;
         width: 140%;
     }
-    
+
     .safety-card {
         bottom: 0;
         right: 0;
@@ -335,7 +361,7 @@ input[type="date"].glass-input::-webkit-calendar-picker-indicator {
     }
 }
 
-/* Карточки дашборда (Bento сетка, модная тема сейчас) */
+/* Карточки дашборда (Bento сетка) */
 .bento-card {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
@@ -351,28 +377,30 @@ input[type="date"].glass-input::-webkit-calendar-picker-indicator {
     border-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Неоновые тени для бейджиков (шоб светилось) */
+/* Неоновые тени для бейджиков */
 .shadow-neon-silver {
     box-shadow: 0 0 10px rgba(192, 192, 192, 0.4);
     border-color: rgba(192, 192, 192, 0.6) !important;
 }
+
 .shadow-neon-cyan {
     box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
     border-color: rgba(0, 240, 255, 0.6) !important;
 }
 
-/* Прозрачная таблица для логов (по дефолту у бутстрапа фон убогий) */
+/* Прозрачная таблица для логов */
 .table-transparent {
     --bs-table-bg: transparent;
     --bs-table-color: var(--text-main);
     --bs-table-border-color: rgba(255, 255, 255, 0.1);
 }
+
 .table-transparent th,
 .table-transparent td {
     background-color: transparent !important;
 }
 
-/* Тумблеры (сделал синими) */
+/* Тумблеры */
 .form-switch .form-check-input {
     width: 2.5em;
     height: 1.25em;
@@ -380,6 +408,7 @@ input[type="date"].glass-input::-webkit-calendar-picker-indicator {
     background-color: rgba(255, 255, 255, 0.2);
     border: none;
 }
+
 .form-switch .form-check-input:checked {
     background-color: var(--accent-blue);
 }
@@ -450,7 +479,7 @@ input[type="date"].glass-input::-webkit-calendar-picker-indicator {
     transform: rotate(0deg) scale(1.1);
 }
 
-/* Всплывающая планка снизу (с позиционированием пришлось повозиться) */
+/* Всплывающая планка снизу */
 .sun-dashboard-tooltip {
     position: absolute;
     top: 100%;
@@ -487,6 +516,7 @@ input[type="date"].glass-input::-webkit-calendar-picker-indicator {
         right: -20px;
         transform: translateY(-10px);
     }
+
     .sun-dashboard-wrapper:hover .sun-dashboard-tooltip {
         transform: translateY(0);
     }
