@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ru" data-theme="light" data-bs-theme="light">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Страница входа Makar's Event с доступной формой авторизации, сообщениями о статусе и поддержкой переключения темы.">
+    <title>Makar`s Event | Вход</title>
+    <script>
+      (function () {
+        const themeKey = "makars-event-lab2-theme";
+        let storedTheme = "";
+
+        try {
+          storedTheme = localStorage.getItem(themeKey) || "";
+        } catch (error) {}
+
+        const resolvedTheme = storedTheme === "light" || storedTheme === "dark"
+          ? storedTheme
+          : window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+
+        document.documentElement.setAttribute("data-theme", resolvedTheme);
+        document.documentElement.setAttribute("data-bs-theme", resolvedTheme);
+      }());
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3" aria-label="Основная навигация">
+        <div class="container">
+          <a class="navbar-brand" href="index.html">Makar`s Event</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Переключить навигацию">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item"><a class="nav-link" href="events.html">Поиск мероприятий</a></li>
+              <li class="nav-item"><a class="nav-link" href="user-cabinet.html">Кабинет пользователя</a></li>
+              <li class="nav-item"><a class="nav-link" href="organizer-cabinet.html">Кабинет организатора</a></li>
+            </ul>
+            <div class="d-flex gap-2 align-items-center nav-actions">
+              <div class="d-flex gap-2 align-items-center js-nav-auth" aria-label="Действия учетной записи"></div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main-content" class="main-content auth-layout d-flex align-items-center py-4" tabindex="-1">
+      <div class="container">
+        <div class="row g-4 align-items-stretch">
+          <div class="col-lg-5 d-none d-lg-block">
+            <section class="auth-side h-100 p-4 p-xl-5" aria-labelledby="authIntroTitle">
+              <h1 id="authIntroTitle" class="fw-bold mb-3">Вход в аккаунт</h1>
+              <p class="mb-4">Авторизация выполняется через mock API. После входа данные профиля и действия на страницах будут зависеть от роли пользователя.</p>
+              <div class="demo-credentials-card mb-3" aria-label="Данные покупателя">
+                <p class="fw-semibold mb-1">Покупатель</p>
+                <p class="mb-1">makary.zykov@mail.com</p>
+                <p class="mb-0">frontend123</p>
+              </div>
+              <div class="demo-credentials-card" aria-label="Данные организатора">
+                <p class="fw-semibold mb-1">Организатор</p>
+                <p class="mb-1">organizer@makarsevent.ru</p>
+                <p class="mb-0">frontend123</p>
+              </div>
+            </section>
+          </div>
+          <div class="col-lg-7">
+            <section class="auth-panel p-4 p-xl-5" aria-labelledby="loginTitle">
+              <h2 id="loginTitle" class="h3 fw-bold mb-3">Авторизация</h2>
+              <p class="text-secondary mb-4">Введите данные, чтобы получить доступ к кабинету и операциям через API.</p>
+
+              <div id="login-form-alert" class="alert d-none" role="status" aria-live="polite"></div>
+
+              <form id="login-form" class="needs-validation" novalidate aria-describedby="loginFormHelp">
+                <p id="loginFormHelp" class="visually-hidden">Все поля обязательны для входа в аккаунт.</p>
+                <fieldset class="mb-0">
+                  <legend class="form-legend">Данные для входа</legend>
+                  <div class="mb-3">
+                    <label for="loginEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="loginEmail" name="email" required placeholder="example@mail.com" autocomplete="email" aria-describedby="loginEmailHint">
+                    <div id="loginEmailHint" class="form-hint">Используйте email тестового аккаунта или ранее зарегистрированный адрес.</div>
+                    <div class="invalid-feedback">Укажите корректный email.</div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="loginPassword" class="form-label">Пароль</label>
+                    <input type="password" class="form-control" id="loginPassword" name="password" minlength="6" required placeholder="Минимум 6 символов" autocomplete="current-password" aria-describedby="loginPasswordHint">
+                    <div id="loginPasswordHint" class="form-hint">Минимальная длина пароля: 6 символов.</div>
+                    <div class="invalid-feedback">Пароль должен содержать не менее 6 символов.</div>
+                  </div>
+
+                  <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="rememberLogin" name="remember">
+                    <label class="form-check-label" for="rememberLogin">Запомнить меня</label>
+                  </div>
+                </fieldset>
+                <button type="submit" class="btn btn-primary w-100 py-2">Войти</button>
+              </form>
+
+              <p class="mt-4 mb-0">Нет аккаунта? <a href="register.html">Зарегистрироваться</a></p>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="py-4 mt-5">
+      <div class="container d-flex flex-column flex-lg-row gap-3 justify-content-between align-items-lg-center">
+        <nav class="footer-links" aria-label="Быстрые ссылки в подвале">
+          <a class="footer-link" href="index.html">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#icon-home"></use></svg>
+            <span>Главная</span>
+          </a>
+          <a class="footer-link" href="events.html">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#icon-search"></use></svg>
+            <span>Афиша</span>
+          </a>
+          <a class="footer-link" href="user-cabinet.html">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#icon-user"></use></svg>
+            <span>Кабинет</span>
+          </a>
+        </nav>
+        <div class="footer-meta text-lg-end">
+          <p class="mb-0">Makar`s Event, ЛР2 по Frontend, <span class="js-current-year"></span></p>
+          <p class="mb-0">Выполнил: Зыков Макар, J3211</p>
+        </div>
+      </div>
+    </footer>
+
+    <div class="modal fade" id="authSuccessModal" tabindex="-1" aria-labelledby="authSuccessTitle" aria-describedby="auth-success-text" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title fs-5" id="authSuccessTitle">Успешно</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <div class="modal-body" id="auth-success-text"></div>
+          <div class="modal-footer">
+            <a href="user-cabinet.html" class="btn btn-primary" id="auth-success-link">Перейти в кабинет</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>

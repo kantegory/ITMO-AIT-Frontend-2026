@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Makar`s Event | Поиск мероприятий</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+        <div class="container">
+          <a class="navbar-brand" href="index.html">Makar`s Event</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Переключить навигацию">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item"><a class="nav-link active" aria-current="page" href="events.html">Поиск мероприятий</a></li>
+              <li class="nav-item"><a class="nav-link" href="event.html">Страница мероприятия</a></li>
+              <li class="nav-item"><a class="nav-link" href="user-cabinet.html">Кабинет пользователя</a></li>
+              <li class="nav-item"><a class="nav-link" href="organizer-cabinet.html">Кабинет организатора</a></li>
+            </ul>
+            <div class="d-flex gap-2">
+              <a class="btn btn-outline-light btn-sm" href="login.html">Вход</a>
+              <a class="btn btn-warning btn-sm" href="register.html">Регистрация</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="main-content py-4 py-lg-5">
+      <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-2">
+          <div>
+            <h1 class="h2 fw-bold mb-1">Поиск мероприятий</h1>
+            <p class="text-secondary mb-0">Найдено событий: <span id="results-count" class="fw-bold">0</span></p>
+          </div>
+          <a href="event.html" class="btn btn-primary">Открыть пример страницы события</a>
+        </div>
+
+        <div class="row g-4">
+          <aside class="col-lg-3">
+            <section class="card filter-sticky" aria-labelledby="filtersTitle">
+              <div class="card-body">
+                <h2 id="filtersTitle" class="h5 fw-bold">Фильтры</h2>
+                <form id="event-filter-form" class="d-grid gap-3">
+                  <div>
+                    <label for="eventType" class="form-label">Тип</label>
+                    <select id="eventType" name="type" class="form-select">
+                      <option value="all">Все</option>
+                      <option value="concert">Концерты</option>
+                      <option value="theater">Театр</option>
+                      <option value="festival">Фестивали</option>
+                      <option value="sport">Спорт</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label for="eventDate" class="form-label">Дата</label>
+                    <select id="eventDate" name="date" class="form-select">
+                      <option value="all">Любая</option>
+                      <option value="week">Ближайшие 7 дней</option>
+                      <option value="month">Ближайший месяц</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label for="eventCity" class="form-label">Город</label>
+                    <select id="eventCity" name="city" class="form-select">
+                      <option value="all">Все города</option>
+                      <option value="moscow">Москва</option>
+                      <option value="spb">Санкт-Петербург</option>
+                      <option value="kazan">Казань</option>
+                    </select>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary">Применить</button>
+                  <button type="button" class="btn btn-outline-secondary" id="reset-filters">Сбросить</button>
+                </form>
+              </div>
+            </section>
+          </aside>
+
+          <section class="col-lg-9" aria-label="Результаты поиска">
+            <div class="row g-3 g-lg-4">
+              <div class="col-md-6 event-card" data-type="concert" data-city="moscow" data-date="2026-03-12">
+                <article class="card h-100">
+                  <img src="https://avatars.mds.yandex.net/get-mpic/12554399/2a00000199bb22af9c06a0ddfdaec5dfe604/orig" class="card-img-top" alt="Сцена с живым выступлением музыкантов">
+                  <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge text-bg-primary">Концерт</span>
+                      <span class="event-meta">12 марта 2026</span>
+                    </div>
+                    <h2 class="h5">Neon Nights Live</h2>
+                    <p class="text-secondary">Москва, VK Stadium</p>
+                    <p class="small text-secondary">От 2 500 ₽</p>
+                    <a class="btn btn-outline-primary mt-auto" href="event.html">Подробнее</a>
+                  </div>
+                </article>
+              </div>
+
+              <div class="col-md-6 event-card" data-type="theater" data-city="spb" data-date="2026-03-15">
+                <article class="card h-100">
+                  <img src="https://www.kino-teatr.ru/movie/poster/113763/77723.jpg" class="card-img-top" alt="Театральная сцена с красным занавесом">
+                  <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge text-bg-danger">Театр</span>
+                      <span class="event-meta">15 марта 2026</span>
+                    </div>
+                    <h2 class="h5">Гамлет: новая версия</h2>
+                    <p class="text-secondary">Санкт-Петербург, БДТ</p>
+                    <p class="small text-secondary">От 1 800 ₽</p>
+                    <a class="btn btn-outline-primary mt-auto" href="event.html">Подробнее</a>
+                  </div>
+                </article>
+              </div>
+
+              <div class="col-md-6 event-card" data-type="sport" data-city="moscow" data-date="2026-03-23">
+                <article class="card h-100">
+                  <img src="https://images.unsplash.com/photo-1552667466-07770ae110d0?auto=format&fit=crop&w=1200&q=80" class="card-img-top" alt="Футбольное поле во время матча">
+                  <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge text-bg-success">Спорт</span>
+                      <span class="event-meta">23 марта 2026</span>
+                    </div>
+                    <h2 class="h5">Дерби столицы</h2>
+                    <p class="text-secondary">Москва, Лужники</p>
+                    <p class="small text-secondary">От 1 200 ₽</p>
+                    <a class="btn btn-outline-primary mt-auto" href="event.html">Подробнее</a>
+                  </div>
+                </article>
+              </div>
+
+              <div class="col-md-6 event-card" data-type="festival" data-city="kazan" data-date="2026-04-03">
+                <article class="card h-100">
+                  <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1200&q=80" class="card-img-top" alt="Фестиваль на открытом воздухе">
+                  <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge text-bg-warning">Фестиваль</span>
+                      <span class="event-meta">3 апреля 2026</span>
+                    </div>
+                    <h2 class="h5">City Spring Fest</h2>
+                    <p class="text-secondary">Казань, Кремлёвская набережная</p>
+                    <p class="small text-secondary">От 900 ₽</p>
+                    <a class="btn btn-outline-primary mt-auto" href="event.html">Подробнее</a>
+                  </div>
+                </article>
+              </div>
+
+              <div class="col-md-6 event-card" data-type="concert" data-city="spb" data-date="2026-04-11">
+                <article class="card h-100">
+                  <img src="https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?auto=format&fit=crop&w=1200&q=80" class="card-img-top" alt="Гитарист на концертной площадке">
+                  <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge text-bg-primary">Концерт</span>
+                      <span class="event-meta">11 апреля 2026</span>
+                    </div>
+                    <h2 class="h5">Indie Harbor</h2>
+                    <p class="text-secondary">Санкт-Петербург, Севкабель Порт</p>
+                    <p class="small text-secondary">От 2 100 ₽</p>
+                    <a class="btn btn-outline-primary mt-auto" href="event.html">Подробнее</a>
+                  </div>
+                </article>
+              </div>
+
+              <div class="col-md-6 event-card" data-type="theater" data-city="moscow" data-date="2026-04-22">
+                <article class="card h-100">
+                  <img src="https://images.unsplash.com/photo-1516307365426-bea591f05011?auto=format&fit=crop&w=1200&q=80" class="card-img-top" alt="Театральная постановка на сцене">
+                  <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge text-bg-danger">Театр</span>
+                      <span class="event-meta">22 апреля 2026</span>
+                    </div>
+                    <h2 class="h5">Мастер и Маргарита</h2>
+                    <p class="text-secondary">Москва, Театр Наций</p>
+                    <p class="small text-secondary">От 1 700 ₽</p>
+                    <a class="btn btn-outline-primary mt-auto" href="event.html">Подробнее</a>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div id="empty-state" class="alert alert-secondary mt-4 d-none" role="status">
+              По выбранным фильтрам ничего не найдено. Измените параметры и попробуйте снова
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer class="py-4 mt-5">
+      <div class="container d-flex flex-column flex-md-row gap-2 justify-content-between align-items-md-center">
+        <p class="mb-0">Makar`s Event, ЛР1 по Frontend, <span class="js-current-year"></span></p>
+        <p class="mb-0">Выполнил: Зыков Макар, J3211</p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
