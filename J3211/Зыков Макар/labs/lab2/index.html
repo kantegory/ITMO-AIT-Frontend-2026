@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Makar's Event: главная страница учебной платформы для покупки билетов с mock API и улучшенной доступностью интерфейса.">
+    <title>Makar`s Event | Платформа билетов</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3" aria-label="Основная навигация">
+        <div class="container">
+          <a class="navbar-brand" href="index.html">Makar`s Event</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Переключить навигацию">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item"><a class="nav-link" href="events.html">Поиск мероприятий</a></li>
+              <li class="nav-item"><a class="nav-link" href="event.html?id=1">Страница мероприятия</a></li>
+              <li class="nav-item"><a class="nav-link" href="user-cabinet.html">Кабинет пользователя</a></li>
+              <li class="nav-item"><a class="nav-link" href="organizer-cabinet.html">Кабинет организатора</a></li>
+            </ul>
+            <div class="d-flex gap-2 align-items-center nav-actions">
+              <div class="d-flex gap-2 align-items-center js-nav-auth" aria-label="Действия учетной записи"></div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main-content" class="main-content py-4 py-lg-5" tabindex="-1">
+      <div class="container">
+        <section class="hero p-4 p-lg-5 mb-4 mb-lg-5" aria-labelledby="homeHeroTitle">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+              <span class="quick-chip bg-light text-primary">Лабораторная работа 2</span>
+              <h1 id="homeHeroTitle" class="display-6 fw-bold mt-3">Платформа для покупки билетов с внешним API</h1>
+              <p class="lead mb-4">К ЛР1 была прикручера mock API через fetch, авторизация, список событий, детальная страница, покупка, возврат и кабинет организатора теперь получают данные с JSON Server</p>
+              <div class="d-flex flex-wrap gap-2 mb-4">
+                <a class="btn btn-light btn-lg" href="events.html">Открыть афишу</a>
+                <a class="btn btn-outline-light btn-lg" href="login.html">Проверить вход</a>
+              </div>
+              <div class="hero-status-grid">
+                <article class="status-card">
+                  <p class="status-label">Событий в API</p>
+                  <p class="status-value" id="home-events-counter" aria-live="polite" aria-atomic="true">...</p>
+                </article>
+                <article class="status-card">
+                  <p class="status-label">API</p>
+                  <p class="status-value status-value-sm">JSON Server</p>
+                </article>
+              </div>
+              <p id="home-api-status" class="status-note mb-0 mt-3" aria-live="polite" aria-atomic="true">Проверяем доступность mock API...</p>
+            </div>
+            <div class="col-lg-5">
+              <img class="img-fluid rounded-4 shadow" src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Концертная сцена и зрители">
+            </div>
+          </div>
+        </section>
+
+        <section class="mb-4 mb-lg-5" aria-labelledby="demoAccountsTitle">
+          <div class="row g-3">
+            <div class="col-lg-6">
+              <article class="card h-100">
+                <div class="card-body p-4">
+                  <h2 id="demoAccountsTitle" class="h5 fw-bold mb-3">Демо-аккаунты</h2>
+                  <ul class="demo-credentials list-unstyled mb-0" aria-label="Тестовые аккаунты для входа">
+                    <li class="demo-credentials-card">
+                      <p class="fw-semibold mb-1">Покупатель</p>
+                      <p class="mb-1"><strong>Email:</strong> makary.zykov@mail.com</p>
+                      <p class="mb-0"><strong>Пароль:</strong> frontend123</p>
+                    </li>
+                    <li class="demo-credentials-card">
+                      <p class="fw-semibold mb-1">Организатор</p>
+                      <p class="mb-1"><strong>Email:</strong> organizer@makarsevent.ru</p>
+                      <p class="mb-0"><strong>Пароль:</strong> frontend123</p>
+                    </li>
+                  </ul>
+                </div>
+              </article>
+            </div>
+            <div class="col-lg-6">
+              <article class="card h-100">
+                <div class="card-body p-4">
+                  <h2 id="serverStartTitle" class="h5 fw-bold mb-3">Запуск сервера</h2>
+                  <pre class="command-block mb-0" aria-labelledby="serverStartTitle"><code>npm run api</code></pre>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="projectPagesTitle">
+          <h2 id="projectPagesTitle" class="section-title">Страницы проекта</h2>
+          <div class="row g-3 g-lg-4" role="list">
+            <div class="col-md-6 col-xl-4">
+              <article class="card h-100" role="listitem">
+                <div class="card-body">
+                  <h3 class="h5">Вход и регистрация</h3>
+                  <p class="mb-3 text-secondary">Авторизация и создание аккаунта через mock API с сохранением сессии в браузере.</p>
+                  <a class="btn btn-outline-primary" href="login.html">Открыть</a>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-xl-4">
+              <article class="card h-100" role="listitem">
+                <div class="card-body">
+                  <h3 class="h5">Поиск мероприятий</h3>
+                  <p class="mb-3 text-secondary">Получение списка событий с сервера и фильтрация по типу, городу и ближайшим датам.</p>
+                  <a class="btn btn-outline-primary" href="events.html">Открыть</a>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-xl-4">
+              <article class="card h-100" role="listitem">
+                <div class="card-body">
+                  <h3 class="h5">Страница мероприятия</h3>
+                  <p class="mb-3 text-secondary">Загрузка события, отзывов и схемы мест. Покупка билетов отправляется в API.</p>
+                  <a class="btn btn-outline-primary" href="event.html?id=1">Открыть</a>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-xl-4">
+              <article class="card h-100" role="listitem">
+                <div class="card-body">
+                  <h3 class="h5">Кабинет пользователя</h3>
+                  <p class="mb-3 text-secondary">История активных билетов и возвратов запрашивается из mock API после авторизации.</p>
+                  <a class="btn btn-outline-primary" href="user-cabinet.html">Открыть</a>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-xl-4">
+              <article class="card h-100" role="listitem">
+                <div class="card-body">
+                  <h3 class="h5">Кабинет организатора</h3>
+                  <p class="mb-3 text-secondary">Загрузка статистики продаж и создание нового события через POST-запрос к API.</p>
+                  <a class="btn btn-outline-primary" href="organizer-cabinet.html">Открыть</a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="py-4 mt-5">
+      <div class="container d-flex flex-column flex-md-row gap-2 justify-content-between align-items-md-center">
+        <p class="mb-0">Makar`s Event, ЛР2 по Frontend, <span class="js-current-year"></span></p>
+        <p class="mb-0">Выполнил: Зыков Макар, J3211</p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
