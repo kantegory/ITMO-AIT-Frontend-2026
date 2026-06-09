@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduPlatform — учитесь у лучших</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { font-family:'Manrope',sans-serif; color: var(--bs-body-color); }
+    .navbar { background:transparent; position:absolute; width:100%; z-index:10; }
+    .hero { background: var(--hero-bg, linear-gradient(135deg,#0f3460 0%,#1a6bb5 60%,#2196f3 100%)); min-height:80vh; display:flex; align-items:center; }
+    .hero h1 { font-size:clamp(2rem,5vw,3.2rem); font-weight:800; color:#fff; line-height:1.15; }
+    .hero p  { color:rgba(255,255,255,.8); font-size:1.05rem; }
+    /* cat-card: цвет текста через переменную, чтобы менялся в тёмной теме */
+    .cat-card { border-radius:12px; padding:20px 14px; text-align:center; text-decoration:none; display:block; transition:transform .2s,box-shadow .2s; color: var(--cat-card-text, #0f172a); }
+    .cat-card:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,.1); color: var(--cat-card-text, #0f172a); }
+    .cat-icon { width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin:0 auto 10px; font-size:1.3rem; }
+    .course-card { border-radius:12px; border:none; box-shadow:0 2px 10px rgba(0,0,0,.07); transition:transform .2s,box-shadow .2s; }
+    .course-card:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.12); }
+    .cta { background: var(--cta-bg, linear-gradient(135deg,#0f3460,#1a6bb5)); border-radius:20px; }
+    footer { background: var(--footer-bg, #0f172a); }
+    footer a { color: var(--footer-link, #94a3b8); text-decoration:none; font-size:.88rem; }
+    footer a:hover { color: var(--footer-link-hover, #fff); }
+  </style>
+  <!-- Тема: скрипт в <head> предотвращает мигание при загрузке -->
+  <script>
+    (function () {
+      var saved = localStorage.getItem('eduTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-bs-theme', theme);
+    })();
+  </script>
+  <link rel="stylesheet" href="light.css" media="(prefers-color-scheme: light)" />
+  <link rel="stylesheet" href="dark.css"  media="(prefers-color-scheme: dark)"  />
+  <link rel="stylesheet" href="light.css" />
+  <link rel="stylesheet" href="dark.css"  />
+</head>
+<body>
+
+  <!-- НАВБАР -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">EduPlatform</a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMain">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="search.html">Каталог курсов</a></li>
+        </ul>
+        <div id="navGuest" class="d-flex gap-2 align-items-center">
+          <button id="themeToggle" class="btn btn-outline-light btn-sm" onclick="toggleTheme()" aria-label="Переключить тему" title="Переключить тему">
+            <svg class="icon" width="16" height="16" aria-hidden="true">
+              <use href="sprite.svg#icon-moon"/>
+            </svg>
+          </button>
+          <a href="login.html" class="btn btn-outline-light btn-sm">Войти</a>
+          <a href="register.html" class="btn btn-warning btn-sm fw-semibold">Регистрация</a>
+        </div>
+        <div id="navUser" class="d-none d-flex gap-2 align-items-center">
+          <a href="#" id="navDashboardLink" class="btn btn-outline-light btn-sm"></a>
+          <button class="btn btn-outline-light btn-sm" onclick="logout()">Выйти</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="col-12 col-lg-7">
+        <p class="text-white-50 small fw-semibold mb-2"><i class="bi bi-lightning-charge-fill me-1 text-warning"></i>Более 1 200 курсов онлайн</p>
+        <h1 class="mb-3">Учитесь у лучших,<br>развивайтесь быстрее</h1>
+        <p class="mb-4">Платформа для онлайн-обучения с практическими заданиями и сертификатами.</p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="search.html" class="btn btn-warning btn-lg fw-bold px-4">Смотреть курсы</a>
+          <a href="register.html" class="btn btn-outline-light btn-lg px-4" id="heroGuestBtn">Регистрация</a>
+          <a href="#" class="btn btn-outline-light btn-lg px-4 d-none" id="heroDashboardBtn">Мой кабинет</a>
+        </div>
+        <div class="d-flex gap-4 mt-4">
+          <div><div class="fw-bold text-white fs-5">12 400+</div><div class="text-white-50 small">студентов</div></div>
+          <div><div class="fw-bold text-white fs-5">240+</div><div class="text-white-50 small">преподавателей</div></div>
+          <div><div class="fw-bold text-white fs-5">4.8 ★</div><div class="text-white-50 small">средний рейтинг</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- КАТЕГОРИИ -->
+  <section class="py-5 bg-body">
+    <div class="container">
+      <h2 class="fw-bold mb-4" style="font-size:1.7rem;">Направления</h2>
+      <div class="row g-3">
+        <div class="col-6 col-sm-4 col-lg-2">
+          <a href="search.html" class="cat-card" style="background:#eff6ff;">
+            <div class="cat-icon bg-primary bg-opacity-15 text-primary">
+              <svg class="icon" width="24" height="24" aria-hidden="true"><use href="sprite.svg#icon-code"/></svg>
+            </div>
+            <div class="fw-semibold small">Разработка</div>
+            <div class="text-muted" style="font-size:.78rem;">324 курса</div>
+          </a>
+        </div>
+        <div class="col-6 col-sm-4 col-lg-2">
+          <a href="search.html" class="cat-card" style="background:#fdf2f8;">
+            <div class="cat-icon text-danger" style="background:#fce7f3;">
+              <svg class="icon" width="24" height="24" aria-hidden="true"><use href="sprite.svg#icon-palette"/></svg>
+            </div>
+            <div class="fw-semibold small">Дизайн</div>
+            <div class="text-muted" style="font-size:.78rem;">187 курсов</div>
+          </a>
+        </div>
+        <div class="col-6 col-sm-4 col-lg-2">
+          <a href="search.html" class="cat-card" style="background:#f0fdf4;">
+            <div class="cat-icon text-success" style="background:#dcfce7;">
+              <svg class="icon" width="24" height="24" aria-hidden="true"><use href="sprite.svg#icon-chart"/></svg>
+            </div>
+            <div class="fw-semibold small">Аналитика</div>
+            <div class="text-muted" style="font-size:.78rem;">143 курса</div>
+          </a>
+        </div>
+        <div class="col-6 col-sm-4 col-lg-2">
+          <a href="search.html" class="cat-card" style="background:#fffbeb;">
+            <div class="cat-icon text-warning" style="background:#fef3c7;">
+              <svg class="icon" width="24" height="24" aria-hidden="true"><use href="sprite.svg#icon-briefcase"/></svg>
+            </div>
+            <div class="fw-semibold small">Бизнес</div>
+            <div class="text-muted" style="font-size:.78rem;">210 курсов</div>
+          </a>
+        </div>
+        <div class="col-6 col-sm-4 col-lg-2">
+          <a href="search.html" class="cat-card" style="background:#f0f9ff;">
+            <div class="cat-icon text-info" style="background:#e0f2fe;">
+              <svg class="icon" width="24" height="24" aria-hidden="true"><use href="sprite.svg#icon-megaphone"/></svg>
+            </div>
+            <div class="fw-semibold small">Маркетинг</div>
+            <div class="text-muted" style="font-size:.78rem;">98 курсов</div>
+          </a>
+        </div>
+        <div class="col-6 col-sm-4 col-lg-2">
+          <a href="search.html" class="cat-card" style="background:#faf5ff;">
+            <div class="cat-icon" style="background:#ede9fe;color:#7c3aed;">
+              <svg class="icon" width="24" height="24" aria-hidden="true"><use href="sprite.svg#icon-grid"/></svg>
+            </div>
+            <div class="fw-semibold small">Все курсы</div>
+            <div class="text-muted" style="font-size:.78rem;">1 200+</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ПОПУЛЯРНЫЕ КУРСЫ -->
+  <section class="py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0" style="font-size:1.7rem;">Популярные курсы</h2>
+        <a href="search.html" class="btn btn-outline-primary btn-sm">Все курсы <i class="bi bi-arrow-right ms-1"></i></a>
+      </div>
+      <div class="row g-4">
+        <div class="col-12 col-sm-6 col-lg-4">
+          <a href="course.html" class="text-decoration-none text-reset">
+            <div class="card course-card h-100">
+              <div class="bg-primary d-flex align-items-center justify-content-center" style="height:130px;">
+                <svg class="icon text-white" width="45" height="45" aria-hidden="true"><use href="sprite.svg#icon-code"/></svg>
+              </div>
+              <div class="card-body">
+                <div class="d-flex gap-1 mb-2">
+                  <span class="badge bg-primary-subtle text-primary">Разработка</span>
+                  <span class="badge bg-secondary-subtle text-secondary">Начинающий</span>
+                </div>
+                <h6 class="fw-bold">Основы JavaScript</h6>
+                <p class="text-muted small mb-2">А. Смирнов · 24 урока</p>
+                <div class="d-flex justify-content-between">
+                  <span class="small text-muted"><i class="bi bi-star-fill text-warning"></i> 4.8 (312)</span>
+                  <span class="fw-bold text-success">Бесплатно</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <a href="course.html" class="text-decoration-none text-reset">
+            <div class="card course-card h-100">
+              <div class="bg-danger d-flex align-items-center justify-content-center" style="height:130px;">
+                <svg class="icon text-white" width="45" height="45" aria-hidden="true"><use href="sprite.svg#icon-palette"/></svg>
+              </div>
+              <div class="card-body">
+                <div class="d-flex gap-1 mb-2">
+                  <span class="badge bg-danger-subtle text-danger">Дизайн</span>
+                  <span class="badge bg-secondary-subtle text-secondary">Начинающий</span>
+                </div>
+                <h6 class="fw-bold">UI/UX дизайн с нуля</h6>
+                <p class="text-muted small mb-2">М. Петрова · 36 уроков</p>
+                <div class="d-flex justify-content-between">
+                  <span class="small text-muted"><i class="bi bi-star-fill text-warning"></i> 4.7 (198)</span>
+                  <span class="fw-bold">2 990 ₽</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <a href="course.html" class="text-decoration-none text-reset">
+            <div class="card course-card h-100">
+              <div class="bg-warning d-flex align-items-center justify-content-center" style="height:130px;">
+                <svg class="icon text-white" width="45" height="45" aria-hidden="true"><use href="sprite.svg#icon-chart"/></svg>
+              </div>
+              <div class="card-body">
+                <div class="d-flex gap-1 mb-2">
+                  <span class="badge bg-success-subtle text-success">Аналитика</span>
+                  <span class="badge bg-warning-subtle text-warning">Средний</span>
+                </div>
+                <h6 class="fw-bold">Python для анализа данных</h6>
+                <p class="text-muted small mb-2">О. Новикова · 40 уроков</p>
+                <div class="d-flex justify-content-between">
+                  <span class="small text-muted"><i class="bi bi-star-fill text-warning"></i> 4.8 (183)</span>
+                  <span class="fw-bold">3 790 ₽</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-5 bg-body">
+    <div class="container">
+      <div class="cta p-5 text-center text-white">
+        <h2 class="fw-bold mb-2">Готовы сделать первый шаг?</h2>
+        <p class="mb-4" style="color:rgba(255,255,255,.75);">Зарегистрируйтесь бесплатно и начните учиться прямо сейчас.</p>
+        <div class="d-flex gap-3 justify-content-center flex-wrap" id="ctaButtons"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-4">
+    <div class="container">
+      <div class="row g-3 mb-3">
+        <div class="col-12 col-md-4">
+          <p class="text-white fw-bold mb-1">EduPlatform</p>
+          <p class="text-muted small mb-0">Платформа для онлайн-обучения.</p>
+        </div>
+        <div class="col-6 col-md-2">
+          <p class="text-white small fw-semibold mb-2">Обучение</p>
+          <a href="search.html" class="d-block">Каталог курсов</a>
+        </div>
+        <div class="col-6 col-md-2">
+          <p class="text-white small fw-semibold mb-2">Аккаунт</p>
+          <div id="footerLinks" class="d-flex flex-column gap-1"></div>
+        </div>
+      </div>
+      <hr style="border-color:#1e293b;" class="mb-2" />
+      <p class="text-muted small text-center mb-0">© 2026 EduPlatform</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Состояние авторизации хранится в sessionStorage под ключом 'role'.
+    // login.html и register.html пишут туда 'student' или 'teacher' при входе.
+    const role = sessionStorage.getItem('role');
+    const isTeacher = role === 'teacher';
+    const dashUrl   = isTeacher ? 'dashboard-teacher.html' : 'dashboard-user.html';
+    const dashLabel = isTeacher ? 'Кабинет преподавателя' : 'Личный кабинет';
+
+    if (role) {
+      // Навбар
+      document.getElementById('navGuest').classList.add('d-none');
+      const navUser = document.getElementById('navUser');
+      navUser.classList.remove('d-none');
+      const navLink = document.getElementById('navDashboardLink');
+      navLink.href = dashUrl;
+      navLink.textContent = dashLabel;
+
+      // Hero
+      document.getElementById('heroGuestBtn').classList.add('d-none');
+      const heroBtn = document.getElementById('heroDashboardBtn');
+      heroBtn.classList.remove('d-none');
+      heroBtn.href = dashUrl;
+      heroBtn.textContent = dashLabel;
+
+      // CTA
+      document.getElementById('ctaButtons').innerHTML =
+        `<a href="${dashUrl}" class="btn btn-warning btn-lg fw-bold px-4">${dashLabel}</a>
+         <a href="search.html" class="btn btn-outline-light btn-lg px-4">Смотреть курсы</a>`;
+
+      // Footer
+      document.getElementById('footerLinks').innerHTML =
+        `<a href="${dashUrl}">${dashLabel}</a>`;
+    } else {
+      // Гость
+      document.getElementById('ctaButtons').innerHTML =
+        `<a href="register.html" class="btn btn-warning btn-lg fw-bold px-4">Начать бесплатно</a>
+         <a href="login.html" class="btn btn-outline-light btn-lg px-4">Войти</a>`;
+
+      document.getElementById('footerLinks').innerHTML =
+        `<a href="login.html">Войти</a>
+         <a href="register.html">Регистрация</a>`;
+    }
+
+    function logout() {
+      sessionStorage.removeItem('role');
+      window.location.reload();
+    }
+  </script>
+  <script src="theme.js"></script>
+</body>
+</html>
