@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroTour | Космический туризм</title>
+    <!-- Бутстрап -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
+    <!-- Шрифты от гугла -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Верхнее меню (навбар) -->
+    <nav class="navbar navbar-expand-lg sticky-top glass-navbar">
+        <div class="container-fluid custom-container px-4 px-md-5">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="11" stroke="white" stroke-width="1" />
+                    <path d="M12 1 C12 8 16 12 23 12 C16 12 12 16 12 23 C12 16 8 12 1 12 C8 12 12 8 12 1 Z"
+                        fill="white" />
+                </svg>
+                <span class="fw-bold ms-2">Nova</span><span class="fw-light">Transit</span>
+            </a>
+            <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Переключатель навигации">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-4">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html"><span
+                                class="fw-bold me-1 text-main">00</span> Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><span class="fw-bold me-1 text-main">01</span> Маршруты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><span class="fw-bold me-1 text-main">02</span> Корабли</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3 mt-4 mt-lg-0">
+                    <a href="login.html" class="nav-link letter-spacing-2 text-uppercase"
+                        style="font-size: 0.75rem;">Войти</a>
+                    <a href="register.html" class="btn btn-accent"
+                        style="font-size: 0.85rem; padding: 0.4rem 1rem;">Регистрация</a>
+
+                    <div class="sun-dashboard-wrapper ms-2 me-2">
+                        <a href="dashboard.html" class="sun-dashboard-btn" aria-label="Личный кабинет">
+                            <div class="icon-container">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" class="sun-icon">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>
+                                <img src="https://ui-avatars.com/api/?name=J+D&background=111526&color=fff&size=64&rounded=true"
+                                    alt="Avatar" class="avatar-icon">
+                            </div>
+                        </a>
+                        <div class="sun-dashboard-tooltip">Личный кабинет</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Главный экран -->
+    <section class="hero-section d-flex align-items-center">
+        <div class="container-fluid custom-container position-relative z-1 px-4 px-md-5">
+            <div class="row align-items-center py-5">
+
+                <!-- Левая колонка -->
+                <div class="col-lg-6 col-xl-6 text-center text-lg-start">
+                    <span class="badge-premium">Межпланетные путешествия</span>
+                    <h1 class="hero-title display-2 mb-4">
+                        Открой для себя<br>
+                        <span class="fw-light text-muted-custom">Глубокий Космос</span>
+                    </h1>
+                    <p class="hero-subtitle mb-5 mx-auto mx-lg-0" style="max-width: 500px;">
+                        Премиальные туристические маршруты на Луну, Марс и Энцелад. Почувствуйте невесомость и взгляните
+                        на Вселенную по-новому.
+                    </p>
+
+                    <!-- Панель поиска -->
+                    <div id="searchPanel" class="search-panel glass-panel p-4 p-md-5 mt-4">
+                        <form class="row g-4 align-items-end">
+                            <div class="col-md-3">
+                                <label for="departure" class="form-label">Откуда</label>
+                                <select id="departure" class="form-select glass-input shadow-none">
+                                    <option value="earth" selected>Земля</option>
+                                    <option value="iss">МКС-2</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="destination" class="form-label">Куда</label>
+                                <select id="destination" class="form-select glass-input shadow-none">
+                                    <option value="" selected disabled>Планета</option>
+                                    <option value="moon">Луна</option>
+                                    <option value="mars">Марс</option>
+                                    <option value="enceladus">Энцелад</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="date" class="form-label">Даты</label>
+                                <input type="date" class="form-control glass-input shadow-none" id="date">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="budget" class="form-label">Бюджет</label>
+                                <select id="budget" class="form-select glass-input shadow-none">
+                                    <option value="standard" selected>Standard</option>
+                                    <option value="premium">Premium</option>
+                                    <option value="vip">VIP Explorer</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="button" id="findMissionBtn" class="btn btn-glass w-100 py-3">Подобрать
+                                    миссию</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+                <!-- Правая колонка. Сначала спрятана, потом JS  -->
+                <div class="col-lg-6 col-xl-6 mt-5 mt-lg-0 fade-effect d-none" id="rightColumn">
+                    <div class="tab-content h-100" id="destinationTabsContent">
+
+                        <!-- Вкладка с Луной -->
+                        <div class="tab-pane fade h-100" id="moon" role="tabpanel">
+                            <div class="planet-wrapper">
+                                <img src="assets/images/Moon.png" alt="Луна" class="planet-img">
+                                <div class="safety-card glass-panel p-4">
+                                    <h4 class="mb-4 text-uppercase letter-spacing-2 fs-6 text-main">Требования к миссии
+                                    </h4>
+                                    <ul class="list-unstyled mb-0 safety-list">
+                                        <li
+                                            class="d-flex justify-content-between mb-3 border-bottom border-secondary pb-2">
+                                            <span class="text-muted-custom">Скафандр:</span>
+                                            <span class="fw-medium">Класс III (Легкий)</span>
+                                        </li>
+                                        <li
+                                            class="d-flex justify-content-between mb-3 border-bottom border-secondary pb-2">
+                                            <span class="text-muted-custom">Радиация:</span>
+                                            <span class="fw-medium">0.3 Зв/год</span>
+                                        </li>
+                                        <li
+                                            class="d-flex justify-content-between mb-3 border-bottom border-secondary pb-2">
+                                            <span class="text-muted-custom">Гравитация:</span>
+                                            <span class="fw-medium">0.16 G</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between">
+                                            <span class="text-muted-custom">Подготовка:</span>
+                                            <span class="fw-medium">Базовая (2 нед.)</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Марс -->
+                        <div class="tab-pane fade h-100" id="mars" role="tabpanel">
+                            <div class="planet-wrapper">
+                                <img src="assets/images/Mars.png" alt="Марс" class="planet-img mars-img">
+                                <div class="safety-card glass-panel p-4">
+                                    <h4 class="mb-4 text-uppercase letter-spacing-2 fs-6 text-main">Требования к миссии
+                                    </h4>
+                                    <ul class="list-unstyled mb-0 safety-list">
+                                        <li
+                                            class="d-flex justify-content-between mb-3 border-bottom border-secondary pb-2">
+                                            <span class="text-muted-custom">Скафандр:</span>
+                                            <span class="fw-medium" style="color: #FFB347;">Класс IV (Средний)</span>
+                                        </li>
+                                        <li
+                                            class="d-flex justify-content-between mb-3 border-bottom border-secondary pb-2">
+                                            <span class="text-muted-custom">Радиация:</span>
+                                            <span class="fw-medium">1.2 Зв/год</span>
+                                        </li>
+                                        <li
+                                            class="d-flex justify-content-between mb-3 border-bottom border-secondary pb-2">
+                                            <span class="text-muted-custom">Гравитация:</span>
+                                            <span class="fw-medium">0.38 G</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between">
+                                            <span class="text-muted-custom">Подготовка:</span>
+                                            <span class="fw-medium">Усиленная (3 мес.)</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Энцелад -->
+                        <div class="tab-pane fade h-100" id="enceladus" role="tabpanel">
+                            <div class="planet-wrapper">
+                                <img src="assets/images/Encelade.png" alt="Энцелад" class="planet-img enceladus-img">
+                                <div class="safety-card glass-panel p-4">
+                                    <h4 class="mb-4 text-uppercase letter-spacing-2 fs-6 text-main">Требования к миссии
+                                    </h4>
+                                    <ul class="list-unstyled mb-0 safety-list">
+                                        <li
+                                            class="d-flex justify-content-between mb-3 border-bottom border-secondary pb-2">
+                                            <span class="text-muted-custom">Скафандр:</span>
+                                            <span class="fw-medium" style="color: #00F0FF;">Класс V (Тяжелый)</span>
+                                        </li>
+                                        <li
+                                            class="d-flex justify-content-between mb-3 border-bottom border-secondary pb-2">
+                                            <span class="text-muted-custom">Радиация:</span>
+                                            <span class="fw-medium">4.5 Зв/год</span>
+                                        </li>
+                                        <li
+                                            class="d-flex justify-content-between mb-3 border-bottom border-secondary pb-2">
+                                            <span class="text-muted-custom">Гравитация:</span>
+                                            <span class="fw-medium">0.011 G</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between">
+                                            <span class="text-muted-custom">Подготовка:</span>
+                                            <span class="fw-medium">Экстрим (1 год)</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Скрипты бутстрапа -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+
+    <!-- JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('findMissionBtn');
+            const destinationSelect = document.getElementById('destination');
+            const rightCol = document.getElementById('rightColumn');
+            const budgetSelect = document.getElementById('budget');
+            const searchPanel = document.getElementById('searchPanel');
+
+            // Логика свечения бюджета
+            budgetSelect.addEventListener('change', () => {
+                searchPanel.classList.remove('glow-premium', 'glow-vip');
+                if (budgetSelect.value === 'premium') {
+                    searchPanel.classList.add('glow-premium');
+                } else if (budgetSelect.value === 'vip') {
+                    searchPanel.classList.add('glow-vip');
+                }
+            });
+            // Дергаем один раз при старте, чтобы всё инитилось
+            budgetSelect.dispatchEvent(new Event('change'));
+
+            // Обработчик кнопки "Подобрать"
+            btn.addEventListener('click', () => {
+                const dest = destinationSelect.value;
+                if (!dest) {
+                    alert('Пожалуйста, выберите планету в поле "Куда".');
+                    return;
+                }
+
+                // Показываем правую колонку с анимацией (таймаут 10мс - это костыль, но пока работает)
+                rightCol.classList.remove('d-none');
+                setTimeout(() => rightCol.classList.add('show-opacity'), 10);
+
+                // Прячем всё перед показом нужной вкладки
+                document.querySelectorAll('.tab-pane').forEach(pane => {
+                    pane.classList.remove('show', 'active');
+                });
+
+                // Показываем нужную вкладку
+                const targetPane = document.getElementById(dest);
+                if (targetPane) {
+                    targetPane.classList.add('show', 'active');
+                }
+            });
+
+            // Параллакс для планет. Нашел на StackOverflow
+            window.addEventListener('scroll', () => {
+                requestAnimationFrame(() => {
+                    document.documentElement.style.setProperty('--scroll-offset', `${window.scrollY * 0.2}px`);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

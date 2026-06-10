@@ -1,0 +1,523 @@
+:root {
+    --bg-dark: #0B0D17;
+    --accent-blue: #4F6DFF;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-blur: blur(20px);
+    --text-main: #FFFFFF;
+    --text-muted: rgba(255, 255, 255, 0.6);
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    line-height: 1.6;
+    /* Фон с параллаксом */
+    background-image:
+        linear-gradient(rgba(11, 13, 23, 0.88), rgba(11, 13, 23, 0.95)),
+        url('assets/images/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 500;
+    letter-spacing: -0.02em;
+}
+
+.text-main {
+    color: var(--text-main) !important;
+}
+
+.text-muted-custom {
+    color: var(--text-muted);
+}
+
+.letter-spacing-2 {
+    letter-spacing: 2px;
+}
+
+.fs-7 {
+    font-size: 0.8rem;
+}
+
+/* Контейнер */
+.custom-container {
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* Стеклянный навбар */
+.glass-navbar {
+    background: rgba(11, 13, 23, 0.7);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.glass-navbar .navbar-brand {
+    font-size: 1.25rem;
+    color: var(--text-main);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.glass-navbar .nav-link {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    padding: 0.5rem 1rem;
+}
+
+.glass-navbar .nav-link:hover,
+.glass-navbar .nav-link.active {
+    color: var(--text-main);
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* Кнопки */
+.btn-glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    backdrop-filter: var(--glass-blur);
+    border-radius: 4px;
+    padding: 0.75rem 2rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.btn-glass:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-main);
+}
+
+.btn-accent {
+    background: var(--text-main);
+    border: 1px solid var(--text-main);
+    color: var(--bg-dark);
+    border-radius: 4px;
+    padding: 0.75rem 2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.btn-accent:hover {
+    background: transparent;
+    color: var(--text-main);
+    border-color: var(--text-main);
+}
+
+/* Главный блок */
+.hero-section {
+    min-height: calc(100vh - 100px);
+    position: relative;
+    padding: 2rem 0;
+}
+
+.hero-title {
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+.hero-subtitle {
+    color: var(--text-muted);
+    font-weight: 300;
+    font-size: 1.15rem;
+    line-height: 1.8;
+}
+
+.badge-premium {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+/* Стеклянные панельки и инпуты (убрал стандартные рамки) */
+.glass-panel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: 12px;
+}
+
+/* Динамическое свечение бюджета */
+#searchPanel {
+    transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.glow-premium {
+    box-shadow: 0 0 25px rgba(192, 192, 192, 0.15) !important;
+    border-color: rgba(192, 192, 192, 0.4) !important;
+}
+
+.glow-vip {
+    box-shadow: 0 0 35px rgba(255, 215, 0, 0.15) !important;
+    border-color: rgba(255, 215, 0, 0.4) !important;
+}
+
+.glass-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0;
+    color: var(--text-main);
+    padding: 0.75rem 0;
+    font-weight: 400;
+    transition: all 0.3s ease;
+}
+
+.glass-input:focus {
+    background: transparent;
+    border-color: var(--text-main);
+    box-shadow: none;
+    color: var(--text-main);
+}
+
+select.glass-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0 center;
+    background-size: 16px 12px;
+    cursor: pointer;
+}
+
+select.glass-input option {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+}
+
+input[type="date"].glass-input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.form-label {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+}
+
+/* Табы для переключения планет */
+.tab-planet {
+    background: var(--glass-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: var(--text-muted) !important;
+    padding: 1rem 1.5rem !important;
+    border-radius: 12px !important;
+    text-align: left;
+    min-width: 150px;
+    transition: all 0.3s ease !important;
+}
+
+.tab-planet:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    color: var(--text-main) !important;
+}
+
+.tab-planet.active {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    color: var(--text-main) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Картинки планет и плашка безопасности */
+.fade-effect {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.show-opacity {
+    opacity: 1;
+}
+
+.planet-wrapper {
+    position: relative;
+    height: 100%;
+    min-height: 550px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.planet-img {
+    position: absolute;
+    right: 0%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 132%;
+    max-width: 738px;
+    object-fit: contain;
+    z-index: -1;
+    pointer-events: none;
+    animation: floatPlanet 25s ease-in-out infinite;
+    filter: drop-shadow(0 0 50px rgba(255, 255, 255, 0.1));
+    opacity: 1;
+}
+
+.mars-img {
+    width: 163%;
+    max-width: 912px;
+    right: -10%;
+    filter: drop-shadow(0 0 50px rgba(255, 100, 50, 0.15));
+}
+
+.enceladus-img {
+    right: -5%;
+    width: 140%;
+    max-width: 750px;
+    filter: drop-shadow(0 0 50px rgba(100, 200, 255, 0.15));
+}
+
+.safety-card {
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    z-index: 2;
+    min-width: 320px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.safety-list li {
+    font-size: 0.9rem;
+}
+
+@keyframes floatPlanet {
+    0% {
+        transform: translateY(calc(-50% + var(--scroll-offset, 0px)));
+    }
+
+    50% {
+        transform: translateY(calc(-53% + var(--scroll-offset, 0px)));
+    }
+
+    100% {
+        transform: translateY(calc(-50% + var(--scroll-offset, 0px)));
+    }
+}
+
+@media (max-width: 991px) {
+    .planet-wrapper {
+        min-height: 400px;
+        margin-top: 2rem;
+    }
+
+    .planet-img {
+        right: -20%;
+        width: 140%;
+    }
+
+    .safety-card {
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        position: relative;
+        margin-top: 250px;
+    }
+}
+
+/* Карточки дашборда (Bento сетка) */
+.bento-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    height: 100%;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.bento-card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Неоновые тени для бейджиков */
+.shadow-neon-silver {
+    box-shadow: 0 0 10px rgba(192, 192, 192, 0.4);
+    border-color: rgba(192, 192, 192, 0.6) !important;
+}
+
+.shadow-neon-cyan {
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+    border-color: rgba(0, 240, 255, 0.6) !important;
+}
+
+/* Прозрачная таблица для логов */
+.table-transparent {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text-main);
+    --bs-table-border-color: rgba(255, 255, 255, 0.1);
+}
+
+.table-transparent th,
+.table-transparent td {
+    background-color: transparent !important;
+}
+
+/* Тумблеры */
+.form-switch .form-check-input {
+    width: 2.5em;
+    height: 1.25em;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+}
+
+.form-switch .form-check-input:checked {
+    background-color: var(--accent-blue);
+}
+
+/* Контейнер для солнышка и тултипа */
+.sun-dashboard-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sun-dashboard-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    transition: all 0.4s ease;
+    text-decoration: none;
+}
+
+.sun-dashboard-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.sun-dashboard-wrapper .icon-container {
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.sun-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+.avatar-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transform: rotate(-180deg) scale(0.2);
+}
+
+.sun-dashboard-wrapper:hover .sun-icon {
+    opacity: 0;
+    transform: rotate(180deg) scale(0.2);
+}
+
+.sun-dashboard-wrapper:hover .avatar-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1.1);
+}
+
+/* Всплывающая планка снизу */
+.sun-dashboard-tooltip {
+    position: absolute;
+    top: 100%;
+    right: 50%;
+    margin-top: 12px;
+    background: rgba(11, 13, 23, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    color: var(--text-main);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(50%) translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 10;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.sun-dashboard-wrapper:hover .sun-dashboard-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(50%) translateY(0);
+}
+
+@media (max-width: 1500px) {
+    .sun-dashboard-tooltip {
+        right: -20px;
+        transform: translateY(-10px);
+    }
+
+    .sun-dashboard-wrapper:hover .sun-dashboard-tooltip {
+        transform: translateY(0);
+    }
+}
