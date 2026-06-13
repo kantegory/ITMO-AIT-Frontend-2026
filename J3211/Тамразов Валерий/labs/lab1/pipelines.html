@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пайплайны — MLOps Deploy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-gear-wide-connected me-1"></i> MLOps Deploy
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Навигация">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="pipelines.html">Пайплайны</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="environments.html">Среды</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">Кабинет</a>
+                    </li>
+                </ul>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#logoutModal">Выйти</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Пайплайны CI/CD</h2>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPipelineModal">
+                <i class="bi bi-plus-lg me-1"></i> Новый пайплайн
+            </button>
+        </div>
+
+        <div class="row">
+            <!-- Фильтры -->
+            <div class="col-lg-3 mb-4">
+                <div class="sidebar-filter">
+                    <h5><i class="bi bi-funnel me-1"></i> Фильтры</h5>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Поиск</label>
+                        <input type="text" class="form-control form-control-sm" id="searchInput" placeholder="Название пайплайна...">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Статус</label>
+                        <div class="form-check">
+                            <input class="form-check-input filter-status" type="checkbox" value="success" id="statusSuccess" checked>
+                            <label class="form-check-label" for="statusSuccess">Успешно</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input filter-status" type="checkbox" value="running" id="statusRunning" checked>
+                            <label class="form-check-label" for="statusRunning">Запущен</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input filter-status" type="checkbox" value="failed" id="statusFailed" checked>
+                            <label class="form-check-label" for="statusFailed">Ошибка</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input filter-status" type="checkbox" value="pending" id="statusPending" checked>
+                            <label class="form-check-label" for="statusPending">Ожидание</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Среда</label>
+                        <select class="form-select form-select-sm" id="envFilter">
+                            <option value="all">Все среды</option>
+                            <option value="production">Production</option>
+                            <option value="staging">Staging</option>
+                            <option value="development">Development</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Владелец</label>
+                        <select class="form-select form-select-sm" id="ownerFilter">
+                            <option value="all">Все</option>
+                            <option value="tamrazov">Тамразов В.</option>
+                            <option value="ivanov">Иванов А.</option>
+                            <option value="petrov">Петров С.</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-outline-secondary btn-sm w-100" id="resetFilters">Сбросить фильтры</button>
+                </div>
+            </div>
+
+            <!-- Список пайплайнов -->
+            <div class="col-lg-9">
+                <div id="pipelinesList">
+                    <div class="pipeline-card" data-status="success" data-env="production" data-owner="tamrazov" data-name="fraud-detection-model">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">
+                                    <a href="pipeline.html" class="text-decoration-none">fraud-detection-model</a>
+                                    <span class="deploy-strategy strategy-bluegreen ms-2">Blue/Green</span>
+                                </h6>
+                                <small class="text-muted">
+                                    <i class="bi bi-person me-1"></i>Тамразов В. &middot;
+                                    <i class="bi bi-cloud me-1"></i>production &middot;
+                                    2 часа назад
+                                </small>
+                            </div>
+                            <span class="status-badge status-success">Успешно</span>
+                        </div>
+                        <div class="mt-2">
+                            <div class="progress" style="height: 4px;">
+                                <div class="progress-bar bg-success" style="width: 100%"></div>
+                            </div>
+                            <small class="text-muted">4/4 шагов завершено &middot; 12м 34с</small>
+                        </div>
+                    </div>
+
+                    <div class="pipeline-card" data-status="running" data-env="staging" data-owner="tamrazov" data-name="recommendation-engine-v2">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">
+                                    <a href="pipeline.html" class="text-decoration-none">recommendation-engine-v2</a>
+                                    <span class="deploy-strategy strategy-canary ms-2">Canary</span>
+                                </h6>
+                                <small class="text-muted">
+                                    <i class="bi bi-person me-1"></i>Тамразов В. &middot;
+                                    <i class="bi bi-cloud me-1"></i>staging &middot;
+                                    5 часов назад
+                                </small>
+                            </div>
+                            <span class="status-badge status-running">Запущен</span>
+                        </div>
+                        <div class="mt-2">
+                            <div class="progress" style="height: 4px;">
+                                <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" style="width: 60%"></div>
+                            </div>
+                            <small class="text-muted">2/4 шагов завершено &middot; идёт валидация...</small>
+                        </div>
+                    </div>
+
+                    <div class="pipeline-card" data-status="failed" data-env="development" data-owner="ivanov" data-name="text-classifier-bert">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">
+                                    <a href="pipeline.html" class="text-decoration-none">text-classifier-bert</a>
+                                    <span class="deploy-strategy strategy-rolling ms-2">Rolling</span>
+                                </h6>
+                                <small class="text-muted">
+                                    <i class="bi bi-person me-1"></i>Иванов А. &middot;
+                                    <i class="bi bi-cloud me-1"></i>development &middot;
+                                    вчера
+                                </small>
+                            </div>
+                            <span class="status-badge status-failed">Ошибка</span>
+                        </div>
+                        <div class="mt-2">
+                            <div class="progress" style="height: 4px;">
+                                <div class="progress-bar bg-danger" style="width: 50%"></div>
+                            </div>
+                            <small class="text-muted">2/4 шагов &middot; Ошибка на этапе валидации</small>
+                        </div>
+                    </div>
+
+                    <div class="pipeline-card" data-status="success" data-env="staging" data-owner="petrov" data-name="image-segmentation-unet">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">
+                                    <a href="pipeline.html" class="text-decoration-none">image-segmentation-unet</a>
+                                    <span class="deploy-strategy strategy-bluegreen ms-2">Blue/Green</span>
+                                </h6>
+                                <small class="text-muted">
+                                    <i class="bi bi-person me-1"></i>Петров С. &middot;
+                                    <i class="bi bi-cloud me-1"></i>staging &middot;
+                                    3 дня назад
+                                </small>
+                            </div>
+                            <span class="status-badge status-success">Успешно</span>
+                        </div>
+                        <div class="mt-2">
+                            <div class="progress" style="height: 4px;">
+                                <div class="progress-bar bg-success" style="width: 100%"></div>
+                            </div>
+                            <small class="text-muted">4/4 шагов завершено &middot; 8м 15с</small>
+                        </div>
+                    </div>
+
+                    <div class="pipeline-card" data-status="pending" data-env="production" data-owner="ivanov" data-name="anomaly-detector-lstm">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">
+                                    <a href="pipeline.html" class="text-decoration-none">anomaly-detector-lstm</a>
+                                    <span class="deploy-strategy strategy-canary ms-2">Canary</span>
+                                </h6>
+                                <small class="text-muted">
+                                    <i class="bi bi-person me-1"></i>Иванов А. &middot;
+                                    <i class="bi bi-cloud me-1"></i>production &middot;
+                                    ожидает одобрения
+                                </small>
+                            </div>
+                            <span class="status-badge status-pending">Ожидание</span>
+                        </div>
+                        <div class="mt-2">
+                            <div class="progress" style="height: 4px;">
+                                <div class="progress-bar bg-warning" style="width: 0%"></div>
+                            </div>
+                            <small class="text-muted">0/4 шагов &middot; Требуется одобрение ревьюера</small>
+                        </div>
+                    </div>
+
+                    <div class="pipeline-card" data-status="success" data-env="development" data-owner="petrov" data-name="speech-recognition-whisper">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">
+                                    <a href="pipeline.html" class="text-decoration-none">speech-recognition-whisper</a>
+                                    <span class="deploy-strategy strategy-rolling ms-2">Rolling</span>
+                                </h6>
+                                <small class="text-muted">
+                                    <i class="bi bi-person me-1"></i>Петров С. &middot;
+                                    <i class="bi bi-cloud me-1"></i>development &middot;
+                                    4 дня назад
+                                </small>
+                            </div>
+                            <span class="status-badge status-success">Успешно</span>
+                        </div>
+                        <div class="mt-2">
+                            <div class="progress" style="height: 4px;">
+                                <div class="progress-bar bg-success" style="width: 100%"></div>
+                            </div>
+                            <small class="text-muted">4/4 шагов завершено &middot; 15м 42с</small>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-muted text-center mt-3 d-none" id="noResults">Пайплайны не найдены по заданным фильтрам</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Модальное окно нового пайплайна -->
+    <div class="modal fade" id="newPipelineModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Новый пайплайн</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Название</label>
+                            <input type="text" class="form-control" placeholder="my-model-pipeline">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Репозиторий</label>
+                            <input type="text" class="form-control" placeholder="https://github.com/user/repo">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Целевая среда</label>
+                            <select class="form-select">
+                                <option>Development</option>
+                                <option>Staging</option>
+                                <option>Production</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Стратегия деплоя</label>
+                            <select class="form-select">
+                                <option>Blue/Green</option>
+                                <option>Canary</option>
+                                <option>Rolling</option>
+                            </select>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="autoTrigger" checked>
+                            <label class="form-check-label" for="autoTrigger">
+                                Автозапуск при push в main
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Создать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно выхода -->
+    <div class="modal fade" id="logoutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Выход</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">Вы уверены, что хотите выйти?</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <a href="login.html" class="btn btn-danger">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p class="mb-0">&copy; 2026 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="text-decoration-none" style="color: var(--text-muted);">MLOps Deploy</a>. Тамразов Валерий, J3211</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

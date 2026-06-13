@@ -1,0 +1,238 @@
+{
+  "users": [],
+  "pipelines": [
+    {
+      "id": 1,
+      "name": "fraud-detection-model",
+      "status": "success",
+      "env": "production",
+      "strategy": "bluegreen",
+      "branch": "main",
+      "commit": "a3f8b2c",
+      "stepsTotal": 4,
+      "stepsDone": 4,
+      "duration": "12м 34с",
+      "lastRun": "2 часа назад",
+      "userId": 1,
+      "ownerName": "Тамразов В."
+    },
+    {
+      "id": 2,
+      "name": "recommendation-engine-v2",
+      "status": "running",
+      "env": "staging",
+      "strategy": "canary",
+      "branch": "feature/rec-v2",
+      "commit": "b7e2d1f",
+      "stepsTotal": 4,
+      "stepsDone": 2,
+      "duration": "",
+      "lastRun": "5 часов назад",
+      "userId": 1,
+      "ownerName": "Тамразов В."
+    },
+    {
+      "id": 3,
+      "name": "text-classifier-bert",
+      "status": "failed",
+      "env": "development",
+      "strategy": "rolling",
+      "branch": "fix/bert-tokenizer",
+      "commit": "c4a9e3d",
+      "stepsTotal": 4,
+      "stepsDone": 2,
+      "duration": "",
+      "lastRun": "вчера",
+      "userId": 2,
+      "ownerName": "Иванов А."
+    },
+    {
+      "id": 4,
+      "name": "image-segmentation-unet",
+      "status": "success",
+      "env": "staging",
+      "strategy": "bluegreen",
+      "branch": "main",
+      "commit": "d8f1a2b",
+      "stepsTotal": 4,
+      "stepsDone": 4,
+      "duration": "8м 15с",
+      "lastRun": "3 дня назад",
+      "userId": 3,
+      "ownerName": "Петров С."
+    },
+    {
+      "id": 5,
+      "name": "anomaly-detector-lstm",
+      "status": "pending",
+      "env": "production",
+      "strategy": "canary",
+      "branch": "release/v2.0",
+      "commit": "e5c3b7a",
+      "stepsTotal": 4,
+      "stepsDone": 0,
+      "duration": "",
+      "lastRun": "ожидает одобрения",
+      "userId": 2,
+      "ownerName": "Иванов А."
+    },
+    {
+      "id": 6,
+      "name": "speech-recognition-whisper",
+      "status": "success",
+      "env": "development",
+      "strategy": "rolling",
+      "branch": "main",
+      "commit": "f2d4c6e",
+      "stepsTotal": 4,
+      "stepsDone": 4,
+      "duration": "15м 42с",
+      "lastRun": "4 дня назад",
+      "userId": 3,
+      "ownerName": "Петров С."
+    }
+  ],
+  "environments": [
+    {
+      "id": 1,
+      "name": "Production",
+      "strategy": "bluegreen",
+      "status": "active",
+      "models": 5,
+      "rpm": 2340,
+      "uptime": "99.97%",
+      "lastDeploy": "2ч назад"
+    },
+    {
+      "id": 2,
+      "name": "Staging",
+      "strategy": "canary",
+      "status": "active",
+      "models": 8,
+      "rpm": 156,
+      "uptime": "99.5%",
+      "lastDeploy": "5ч назад"
+    },
+    {
+      "id": 3,
+      "name": "Development",
+      "strategy": "rolling",
+      "status": "active",
+      "models": 12,
+      "rpm": 42,
+      "uptime": "98.2%",
+      "lastDeploy": "1д назад"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 1,
+      "name": "fraud_model_v3.pkl",
+      "type": "Модель",
+      "size": "245 MB",
+      "version": "v3.1.0",
+      "date": "01.04.2026",
+      "userId": 1,
+      "pipelineId": 1
+    },
+    {
+      "id": 2,
+      "name": "rec_engine_weights.pt",
+      "type": "Модель",
+      "size": "1.2 GB",
+      "version": "v2.0.4",
+      "date": "30.03.2026",
+      "userId": 1,
+      "pipelineId": 2
+    },
+    {
+      "id": 3,
+      "name": "bert_config.json",
+      "type": "Конфиг",
+      "size": "4 KB",
+      "version": "v1.0.0",
+      "date": "28.03.2026",
+      "userId": 1,
+      "pipelineId": 3
+    },
+    {
+      "id": 4,
+      "name": "test_dataset_march.csv",
+      "type": "Датасет",
+      "size": "89 MB",
+      "version": "",
+      "date": "25.03.2026",
+      "userId": 1,
+      "pipelineId": 1
+    }
+  ],
+  "policies": [
+    {
+      "id": 1,
+      "name": "Автоматический откат",
+      "description": "Откат при падении accuracy ниже 0.85 в течение 10 минут",
+      "status": "active",
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "name": "Обязательный code review",
+      "description": "Деплой в production только после одобрения 2+ ревьюеров",
+      "status": "active",
+      "userId": 1
+    },
+    {
+      "id": 3,
+      "name": "Canary-лимит",
+      "description": "Максимум 10% трафика на canary в первые 30 минут",
+      "status": "paused",
+      "userId": 1
+    }
+  ],
+  "roles": [
+    {
+      "id": 1,
+      "userId": 1,
+      "name": "Тамразов Валерий",
+      "email": "valery@mlops-deploy.ru",
+      "role": "admin",
+      "initials": "ВТ",
+      "devAccess": "full",
+      "stagingAccess": "full",
+      "prodAccess": "full"
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "name": "Иванов Алексей",
+      "email": "ivanov@mlops-deploy.ru",
+      "role": "developer",
+      "initials": "АИ",
+      "devAccess": "full",
+      "stagingAccess": "deploy",
+      "prodAccess": "view"
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "name": "Петров Сергей",
+      "email": "petrov@mlops-deploy.ru",
+      "role": "developer",
+      "initials": "СП",
+      "devAccess": "full",
+      "stagingAccess": "deploy",
+      "prodAccess": "view"
+    },
+    {
+      "id": 4,
+      "userId": 4,
+      "name": "Козлова Елена",
+      "email": "kozlova@mlops-deploy.ru",
+      "role": "viewer",
+      "initials": "ЕК",
+      "devAccess": "view",
+      "stagingAccess": "view",
+      "prodAccess": "view"
+    }
+  ]
+}
