@@ -1,0 +1,589 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "demo@n3n.local",
+      "password": "123456",
+      "name": "Demo User"
+    },
+    {
+      "name": "",
+      "email": "",
+      "password": "123",
+      "id": "DRc4gvKAmYw"
+    },
+    {
+      "name": "lol",
+      "email": "lol@mail.ru",
+      "password": "123",
+      "id": "6Qzy_qZ4eqs"
+    },
+    {
+      "name": "test",
+      "email": "test@gmail.com",
+      "password": "123",
+      "id": "g6EFa2iXPPs"
+    }
+  ],
+  "workspaces": [
+    {
+      "id": "1",
+      "name": "Demo workspace",
+      "description": "Пример рабочего пространства",
+      "type": "marketing",
+      "ownerId": 1,
+      "graph": {}
+    },
+    {
+      "name": "xD",
+      "description": "xDxDxDxDxD",
+      "type": "other",
+      "ownerId": "6Qzy_qZ4eqs",
+      "id": "RVzAa6xzCI0",
+      "graph": {
+        "drawflow": {
+          "Home": {
+            "data": {
+              "1": {
+                "id": 1,
+                "name": "start",
+                "data": {},
+                "class": "start",
+                "html": "<div class=\"p-1\">Старт</div>",
+                "typenode": false,
+                "inputs": {},
+                "outputs": {
+                  "output_1": {
+                    "connections": [
+                      {
+                        "node": "7",
+                        "output": "input_1"
+                      }
+                    ]
+                  }
+                },
+                "pos_x": 48,
+                "pos_y": 134
+              },
+              "2": {
+                "id": 2,
+                "name": "log",
+                "data": {},
+                "class": "log",
+                "html": "<div class=\"p-1\">Лог</div>",
+                "typenode": false,
+                "inputs": {
+                  "input_1": {
+                    "connections": [
+                      {
+                        "node": "6",
+                        "input": "output_1"
+                      }
+                    ]
+                  }
+                },
+                "outputs": {},
+                "pos_x": 913.8888888888889,
+                "pos_y": 341
+              },
+              "6": {
+                "id": 6,
+                "name": "llm",
+                "data": {},
+                "class": "llm",
+                "html": "\n                <div style=\"padding:4px 8px; background:undefined; border-radius:4px;\">\n                    LLM\n                </div>\n                ",
+                "typenode": false,
+                "inputs": {
+                  "input_1": {
+                    "connections": [
+                      {
+                        "node": "8",
+                        "input": "output_1"
+                      }
+                    ]
+                  }
+                },
+                "outputs": {
+                  "output_1": {
+                    "connections": [
+                      {
+                        "node": "2",
+                        "output": "input_1"
+                      }
+                    ]
+                  }
+                },
+                "pos_x": 698,
+                "pos_y": 288.8888888888889
+              },
+              "7": {
+                "id": 7,
+                "name": "api",
+                "data": {},
+                "class": "api",
+                "html": "\n                <div style=\"padding:4px 8px; background:undefined; border-radius:4px;\">\n                    API\n                </div>\n                ",
+                "typenode": false,
+                "inputs": {
+                  "input_1": {
+                    "connections": [
+                      {
+                        "node": "1",
+                        "input": "output_1"
+                      }
+                    ]
+                  }
+                },
+                "outputs": {
+                  "output_1": {
+                    "connections": [
+                      {
+                        "node": "8",
+                        "output": "input_1"
+                      }
+                    ]
+                  }
+                },
+                "pos_x": 263,
+                "pos_y": 186.11111111111111
+              },
+              "8": {
+                "id": 8,
+                "name": "telegram",
+                "data": {},
+                "class": "telegram",
+                "html": "\n                <div style=\"padding:4px 8px; background:undefined; border-radius:4px;\">\n                    Telegram\n                </div>\n                ",
+                "typenode": false,
+                "inputs": {
+                  "input_1": {
+                    "connections": [
+                      {
+                        "node": "7",
+                        "input": "output_1"
+                      }
+                    ]
+                  }
+                },
+                "outputs": {
+                  "output_1": {
+                    "connections": [
+                      {
+                        "node": "6",
+                        "output": "input_1"
+                      }
+                    ]
+                  }
+                },
+                "pos_x": 482.1111111111111,
+                "pos_y": 240
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "test",
+      "description": "",
+      "type": "other",
+      "ownerId": "6Qzy_qZ4eqs",
+      "id": "SLphyRH9uFA",
+      "graph": {
+        "drawflow": {
+          "Home": {
+            "data": {
+              "1": {
+                "id": 1,
+                "name": "start",
+                "data": {},
+                "class": "start",
+                "html": "<div class=\"p-1\">Старт</div>",
+                "typenode": false,
+                "inputs": {},
+                "outputs": {
+                  "output_1": {
+                    "connections": [
+                      {
+                        "node": "2",
+                        "output": "input_1"
+                      }
+                    ]
+                  }
+                },
+                "pos_x": 922,
+                "pos_y": 352
+              },
+              "2": {
+                "id": 2,
+                "name": "log",
+                "data": {},
+                "class": "log",
+                "html": "<div class=\"p-1\">Лог</div>",
+                "typenode": false,
+                "inputs": {
+                  "input_1": {
+                    "connections": [
+                      {
+                        "node": "1",
+                        "input": "output_1"
+                      }
+                    ]
+                  }
+                },
+                "outputs": {},
+                "pos_x": 172,
+                "pos_y": 24
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "test",
+      "description": "test",
+      "type": "marketing",
+      "ownerId": "g6EFa2iXPPs",
+      "graph": {
+        "drawflow": {
+          "Home": {
+            "data": {}
+          }
+        }
+      },
+      "id": "EiEESVQHHd4"
+    },
+    {
+      "name": "Погода",
+      "description": "Вывод данных погоды в Санкт-Петербурге",
+      "type": "other",
+      "ownerId": "g6EFa2iXPPs",
+      "graph": {
+        "drawflow": {
+          "Home": {
+            "data": {
+              "1": {
+                "id": 1,
+                "name": "weather",
+                "data": {},
+                "class": "weather",
+                "html": "<div style=\"padding:6px 10px;font-size:13px;\">Погода СПб</div>",
+                "typenode": false,
+                "inputs": {},
+                "outputs": {
+                  "output_1": {
+                    "connections": [
+                      {
+                        "node": "2",
+                        "output": "input_1"
+                      }
+                    ]
+                  }
+                },
+                "pos_x": 60,
+                "pos_y": 180
+              },
+              "2": {
+                "id": 2,
+                "name": "transform",
+                "data": {},
+                "class": "transform",
+                "html": "<div style=\"padding:6px 10px;font-size:13px;\">LLM</div>",
+                "typenode": false,
+                "inputs": {
+                  "input_1": {
+                    "connections": [
+                      {
+                        "node": "1",
+                        "input": "output_1"
+                      }
+                    ]
+                  }
+                },
+                "outputs": {
+                  "output_1": {
+                    "connections": [
+                      {
+                        "node": "3",
+                        "output": "input_1"
+                      }
+                    ]
+                  }
+                },
+                "pos_x": 320,
+                "pos_y": 180
+              },
+              "3": {
+                "id": 3,
+                "name": "log",
+                "data": {},
+                "class": "log",
+                "html": "<div style=\"padding:6px 10px;font-size:13px;\">Лог</div>",
+                "typenode": false,
+                "inputs": {
+                  "input_1": {
+                    "connections": [
+                      {
+                        "node": "2",
+                        "input": "output_1"
+                      }
+                    ]
+                  }
+                },
+                "outputs": {},
+                "pos_x": 580,
+                "pos_y": 180
+              }
+            }
+          }
+        }
+      },
+      "id": "pd5G9bXjmSM"
+    },
+    {
+      "name": "Курсы валют",
+      "description": "Доллар, тенге и йена",
+      "type": "other",
+      "ownerId": "g6EFa2iXPPs",
+      "graph": {
+        "drawflow": {
+          "Home": {
+            "data": {
+              "2": {
+                "id": 2,
+                "name": "transform",
+                "data": {},
+                "class": "transform",
+                "html": "<div style=\"padding:6px 10px;font-size:13px;\">LLM</div>",
+                "typenode": false,
+                "inputs": {
+                  "input_1": {
+                    "connections": [
+                      {
+                        "node": "4",
+                        "input": "output_1"
+                      }
+                    ]
+                  }
+                },
+                "outputs": {
+                  "output_1": {
+                    "connections": [
+                      {
+                        "node": "3",
+                        "output": "input_1"
+                      }
+                    ]
+                  }
+                },
+                "pos_x": 320,
+                "pos_y": 180
+              },
+              "3": {
+                "id": 3,
+                "name": "log",
+                "data": {},
+                "class": "log",
+                "html": "<div style=\"padding:6px 10px;font-size:13px;\">Лог</div>",
+                "typenode": false,
+                "inputs": {
+                  "input_1": {
+                    "connections": [
+                      {
+                        "node": "2",
+                        "input": "output_1"
+                      }
+                    ]
+                  }
+                },
+                "outputs": {},
+                "pos_x": 580,
+                "pos_y": 180
+              },
+              "4": {
+                "id": 4,
+                "name": "currency",
+                "data": {},
+                "class": "currency",
+                "html": "<div style=\"padding:6px 10px;font-size:13px;\">Курсы валют</div>",
+                "typenode": false,
+                "inputs": {},
+                "outputs": {
+                  "output_1": {
+                    "connections": [
+                      {
+                        "node": "2",
+                        "output": "input_1"
+                      }
+                    ]
+                  }
+                },
+                "pos_x": 60,
+                "pos_y": 178
+              }
+            }
+          }
+        }
+      },
+      "id": "lOV10HLDchU"
+    },
+    {
+      "name": "Hacker News",
+      "description": "Новости из мира IT",
+      "type": "marketing",
+      "ownerId": "g6EFa2iXPPs",
+      "graph": {
+        "drawflow": {
+          "Home": {
+            "data": {
+              "2": {
+                "id": 2,
+                "name": "transform",
+                "data": {},
+                "class": "transform",
+                "html": "<div style=\"padding:6px 10px;font-size:13px;\">LLM</div>",
+                "typenode": false,
+                "inputs": {
+                  "input_1": {
+                    "connections": [
+                      {
+                        "node": "4",
+                        "input": "output_1"
+                      }
+                    ]
+                  }
+                },
+                "outputs": {
+                  "output_1": {
+                    "connections": [
+                      {
+                        "node": "3",
+                        "output": "input_1"
+                      }
+                    ]
+                  }
+                },
+                "pos_x": 320,
+                "pos_y": 180
+              },
+              "3": {
+                "id": 3,
+                "name": "log",
+                "data": {},
+                "class": "log",
+                "html": "<div style=\"padding:6px 10px;font-size:13px;\">Лог</div>",
+                "typenode": false,
+                "inputs": {
+                  "input_1": {
+                    "connections": [
+                      {
+                        "node": "2",
+                        "input": "output_1"
+                      }
+                    ]
+                  }
+                },
+                "outputs": {},
+                "pos_x": 580,
+                "pos_y": 180
+              },
+              "4": {
+                "id": 4,
+                "name": "steam",
+                "data": {},
+                "class": "steam",
+                "html": "<div style=\"padding:6px 10px;font-size:13px;\">Hacker News</div>",
+                "typenode": false,
+                "inputs": {},
+                "outputs": {
+                  "output_1": {
+                    "connections": [
+                      {
+                        "node": "2",
+                        "output": "input_1"
+                      }
+                    ]
+                  }
+                },
+                "pos_x": 64,
+                "pos_y": 180
+              }
+            }
+          }
+        }
+      },
+      "id": "vQt-K7RYOSU"
+    },
+    {
+      "name": "test",
+      "description": "Пропущенный узел",
+      "type": "other",
+      "ownerId": "g6EFa2iXPPs",
+      "graph": {
+        "drawflow": {
+          "Home": {
+            "data": {
+              "3": {
+                "id": 3,
+                "name": "log",
+                "data": {},
+                "class": "log",
+                "html": "<div style=\"padding:6px 10px;font-size:13px;\">Лог</div>",
+                "typenode": false,
+                "inputs": {
+                  "input_1": {
+                    "connections": []
+                  }
+                },
+                "outputs": {},
+                "pos_x": 274,
+                "pos_y": 165
+              }
+            }
+          }
+        }
+      },
+      "id": "Vi51dt4dySw"
+    }
+  ],
+  "topics": [
+    {
+      "id": "1",
+      "title": "Как организовать первое рабочее пространство?",
+      "responses": 3,
+      "lastActivity": "сегодня"
+    },
+    {
+      "id": "2",
+      "title": "Идеи для автоматизации в n3n",
+      "responses": 5,
+      "lastActivity": "вчера"
+    },
+    {
+      "title": "тест",
+      "body": "я вот не понимаю",
+      "responses": 0,
+      "lastActivity": "только что",
+      "id": "IQqrGqaZ6P4"
+    },
+    {
+      "title": "test",
+      "body": "привет!",
+      "responses": 0,
+      "lastActivity": "только что",
+      "id": "Uy5NEcSnz2E"
+    }
+  ],
+  "faqs": [
+    {
+      "id": "1",
+      "question": "Что такое n3n?",
+      "answer": "n3n - учебный клон сервиса визуальной автоматизации n8n."
+    },
+    {
+      "id": "2",
+      "question": "Где настраиваются рабочие пространства?",
+      "answer": "На странице «Рабочие пространства» и на странице конкретного рабочего пространства."
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

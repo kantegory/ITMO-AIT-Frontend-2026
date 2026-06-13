@@ -1,0 +1,370 @@
+:root {
+  color-scheme: light;
+
+  --n3n-red: #f97373;
+  --n3n-red-dark: #f05252;
+
+  --n3n-bg: #f9fafb;
+  --n3n-surface: #ffffff;
+  --n3n-surface-soft: #f3f4f6;
+  --n3n-text: #111827;
+  --n3n-text-muted: #6b7280;
+  --n3n-border-soft: #e5e7eb;
+
+  --n3n-avatar-bg: rgba(249, 115, 115, 0.12);
+  --n3n-avatar-border: rgba(249, 115, 115, 0.6);
+
+  --n3n-focus-ring: rgba(249, 115, 115, 0.2);
+  --n3n-success-bg: #d1fae5;
+  --n3n-success-text: #065f46;
+}
+
+/* Ручное переключение на тёмную тему */
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --n3n-red: #fb8b8b;
+  --n3n-red-dark: #f97373;
+
+  --n3n-bg: #111827;
+  --n3n-surface: #1f2937;
+  --n3n-surface-soft: #374151;
+  --n3n-text: #f9fafb;
+  --n3n-text-muted: #d1d5db;
+  --n3n-border-soft: #4b5563;
+
+  --n3n-avatar-bg: rgba(251, 139, 139, 0.14);
+  --n3n-avatar-border: rgba(251, 139, 139, 0.65);
+
+  --n3n-focus-ring: rgba(251, 139, 139, 0.25);
+  --n3n-success-bg: #214c3b;
+  --n3n-success-text: #d1fae5;
+}
+
+/* Автоматическая тёмная тема по системным настройкам */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --n3n-red: #fb8b8b;
+    --n3n-red-dark: #f97373;
+
+    --n3n-bg: #111827;
+    --n3n-surface: #1f2937;
+    --n3n-surface-soft: #374151;
+    --n3n-text: #f9fafb;
+    --n3n-text-muted: #d1d5db;
+    --n3n-border-soft: #4b5563;
+
+    --n3n-avatar-bg: rgba(251, 139, 139, 0.14);
+    --n3n-avatar-border: rgba(251, 139, 139, 0.65);
+
+    --n3n-focus-ring: rgba(251, 139, 139, 0.25);
+    --n3n-success-bg: #214c3b;
+    --n3n-success-text: #d1fae5;
+  }
+}
+
+/* Общий фон и шрифт */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--n3n-bg);
+  color: var(--n3n-text);
+}
+
+/* Общие текстовые цвета */
+h1, h2, h3, h4, h5, h6,
+p, label, li, small {
+  color: inherit;
+}
+
+.text-muted,
+.small.text-muted,
+.page-title-badge {
+  color: var(--n3n-text-muted) !important;
+}
+
+/* Базовые фоны Bootstrap */
+.bg-light {
+  background-color: var(--n3n-bg) !important;
+}
+
+.bg-white,
+.navbar,
+.card,
+.modal-content,
+.list-group-item,
+.form-control,
+.form-select,
+textarea,
+.accordion-item,
+.accordion-button,
+.accordion-body {
+  background-color: var(--n3n-surface) !important;
+  color: var(--n3n-text) !important;
+}
+
+/* Мягкие поверхности */
+.accordion-button:not(.collapsed),
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  background-color: var(--n3n-surface-soft) !important;
+  color: var(--n3n-text) !important;
+}
+
+/* Границы */
+.border,
+.border-bottom,
+.border-end,
+.card,
+.list-group-item,
+.form-control,
+.form-select,
+textarea,
+.modal-content,
+.accordion-item,
+.accordion-button,
+#graph-area {
+  border-color: var(--n3n-border-soft) !important;
+}
+
+/* Placeholder */
+.form-control::placeholder,
+textarea::placeholder {
+  color: var(--n3n-text-muted);
+  opacity: 1;
+}
+
+/* Поля формы */
+.form-control,
+.form-select,
+textarea {
+  background-color: var(--n3n-surface) !important;
+  color: var(--n3n-text) !important;
+}
+
+.form-control:focus,
+.form-select:focus,
+textarea:focus {
+  border-color: var(--n3n-red);
+  box-shadow: 0 0 0 0.2rem var(--n3n-focus-ring);
+}
+
+/* Логотип */
+.logo-n3n {
+  font-size: 1.4rem;
+  letter-spacing: 0;
+  display: inline-flex;
+}
+
+.logo-n3n-black {
+  color: var(--n3n-text) !important;
+}
+
+.logo-n3n-red {
+  color: var(--n3n-red) !important;
+}
+
+/* Ссылки */
+a {
+  color: var(--n3n-text);
+}
+
+a:hover,
+a:focus {
+  color: var(--n3n-red-dark);
+}
+
+/* Навигация */
+.nav-link {
+  color: var(--n3n-text-muted) !important;
+}
+
+.nav-link:hover,
+.nav-link:focus,
+.nav-link.active {
+  color: var(--n3n-text) !important;
+}
+
+/* Основные кнопки */
+.btn-primary {
+  background-color: var(--n3n-red);
+  border-color: var(--n3n-red);
+  color: #ffffff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--n3n-red-dark);
+  border-color: var(--n3n-red-dark);
+  color: #ffffff;
+}
+
+/* Outline primary */
+.btn-outline-primary {
+  color: var(--n3n-red);
+  border-color: var(--n3n-red);
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  color: #ffffff;
+  background-color: var(--n3n-red);
+  border-color: var(--n3n-red);
+}
+
+/* Outline secondary */
+.btn-outline-secondary {
+  color: var(--n3n-text);
+  border-color: var(--n3n-border-soft);
+  background-color: transparent;
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  border-color: var(--n3n-border-soft);
+}
+
+/* Карточки */
+.card {
+  background-color: var(--n3n-surface);
+}
+
+.card .card-body {
+  padding: 1.1rem 1.25rem;
+}
+
+/* Бейдж OK / success-subtle */
+.badge.bg-success-subtle {
+  background-color: var(--n3n-success-bg) !important;
+  color: var(--n3n-success-text) !important;
+}
+
+/* Аватарка профиля */
+.profile-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  margin: 0 auto;
+  background: var(--n3n-avatar-bg);
+  border: 2px solid var(--n3n-avatar-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-avatar-initials {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--n3n-text);
+}
+
+/* Область графа */
+#graph-area {
+  background-color: var(--n3n-surface) !important;
+}
+
+/* Drawflow */
+.drawflow .drawflow-node {
+  background: var(--n3n-surface) !important;
+  color: var(--n3n-text) !important;
+  border: 1px solid var(--n3n-border-soft) !important;
+}
+
+/* Модалки */
+.modal-header,
+.modal-body,
+.modal-footer {
+  background-color: var(--n3n-surface);
+  color: var(--n3n-text);
+}
+
+.btn-close {
+  filter: none;
+}
+
+html[data-theme="dark"] .btn-close {
+  filter: invert(1);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .btn-close {
+    filter: invert(1);
+  }
+}
+
+/* Аккордеон */
+.accordion-button {
+  box-shadow: none !important;
+}
+
+.accordion-button:not(.collapsed) {
+  box-shadow: none !important;
+}
+
+.accordion-button::after {
+  filter: none;
+}
+
+html[data-theme="dark"] .accordion-button::after {
+  filter: invert(1);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .accordion-button::after {
+    filter: invert(1);
+  }
+}
+
+/* Navbar toggler icon для тёмной темы */
+html[data-theme="dark"] .navbar-toggler {
+  border-color: var(--n3n-border-soft);
+}
+
+html[data-theme="dark"] .navbar-toggler-icon {
+  filter: invert(1);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .navbar-toggler {
+    border-color: var(--n3n-border-soft);
+  }
+
+  html:not([data-theme="light"]) .navbar-toggler-icon {
+    filter: invert(1);
+  }
+}
+
+/* Фокус */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--n3n-red);
+  outline-offset: 2px;
+}
+
+/* Плавность переключения темы */
+body,
+.navbar,
+.card,
+.modal-content,
+.list-group-item,
+.form-control,
+.form-select,
+textarea,
+.accordion-item,
+.accordion-button,
+.accordion-body,
+#graph-area,
+.drawflow .drawflow-node,
+.btn,
+a,
+.nav-link {
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
