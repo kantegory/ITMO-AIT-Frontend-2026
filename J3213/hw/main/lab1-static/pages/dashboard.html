@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Manager — Кабинет</title>
+    <meta name="description" content="Обзор со счетами, транзакциями, бюджетами и общей сводкой.">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css">
+    <link rel="icon" href="../favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="dashboard">
+<header class="site-header">
+    <nav class="navbar navbar-expand-lg" aria-label="Основная навигация">
+        <div class="container-fluid shell-container">
+            <a class="navbar-brand" href="../index.html">
+                <svg class="icon-inline" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-wallet"></use></svg>
+                <span>Finance Manager</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Открыть меню">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto gap-lg-2">
+                    <li class="nav-item"><a class="nav-link active" href="dashboard.html">Кабинет</a></li>
+                    <li class="nav-item"><a class="nav-link" href="transactions.html">Транзакции</a></li>
+                    <li class="nav-item"><a class="nav-link" href="report.html">Отчёты</a></li>
+                    <li class="nav-item"><a class="nav-link" href="integrations.html">Интеграции</a></li>
+                    <li class="nav-item">
+                        <button class="btn btn-sm btn-outline-light theme-toggle" type="button" data-theme-toggle aria-label="Сменить тему"><span class="theme-glyph" aria-hidden="true">☾</span></button>
+                    </li>
+                    <li class="nav-item"><a class="btn btn-sm btn-outline-light" href="login.html">Вход</a></li>
+                    <li class="nav-item"><a class="btn btn-sm btn-primary" href="register.html">Регистрация</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <section class="container-fluid shell-container">
+        <div class="dashboard-shell">
+            <article class="surface-card page-copy page-copy--center page-copy--dashboard">
+                <div class="dashboard-summary-top">
+                    <h1 class="section-title">Сводка по финансам</h1>
+                    <p class="lead mt-0 mb-0">Текущие счета, движение денег по операциям, бюджеты и короткий обзор месяца собраны на одной странице.</p>
+                </div>
+                <div class="dashboard-summary-fill" aria-label="Состав сводки по финансам">
+                    <article class="dashboard-summary-glance">
+                        <strong>Счета и остатки</strong>
+                        <span>Быстрый обзор основных источников денег и текущего баланса по ним.</span>
+                    </article>
+                    <article class="dashboard-summary-glance">
+                        <strong>Операции месяца</strong>
+                        <span>Последние движения по категориям, чтобы сразу видеть общий ритм расходов.</span>
+                    </article>
+                    <article class="dashboard-summary-glance">
+                        <strong>Бюджеты и лимиты</strong>
+                        <span>Короткий контроль активных ограничений без перехода в отдельный экран.</span>
+                    </article>
+                </div>
+                <div class="dashboard-summary-cards dashboard-summary-cards--inside" aria-label="Краткая сводка по финансам">
+                    <div class="dashboard-meta-row dashboard-meta-row--free">
+                        <div class="dashboard-meta-item"><span>Счетов</span><strong id="dashboard-meta-accounts">—</strong></div>
+                        <div class="dashboard-meta-item"><span>Операций за месяц</span><strong id="dashboard-meta-transactions">—</strong></div>
+                        <div class="dashboard-meta-item"><span>Активных лимитов</span><strong id="dashboard-meta-budgets">—</strong></div>
+                    </div>
+                </div>
+            </article>
+
+            <aside class="side-rail">
+                <div class="section-head">
+                    <div>
+                        <h2>Пульс расходов за месяц</h2>
+                        <p>Главные расходные категории и их доля в общих списаниях за месяц.</p>
+                    </div>
+                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addTransactionModal">Добавить транзакцию</button>
+                </div>
+                <div class="pulse-toolbar" aria-label="Выбор месяца расходов">
+                    <div class="month-nav" id="budget-pulse-months"></div>
+                </div>
+                <div class="chart-lines" id="budget-pulse-lines"></div>
+                <div class="pulse-layout mt-2">
+                    <div>
+                        <p class="pulse-note">Переключай месяц и смотри, как меняется структура расходов по категориям и доля каждой категории в общих списаниях.</p>
+                    </div>
+                    <div class="pulse-side">
+                        <div class="ring-chart" id="budget-pulse-ring" style="--ring-progress:0"><span id="budget-pulse-ring-value">Месяц</span></div>
+                        <div class="summary-list pulse-category-list" id="budget-pulse-category-list" aria-label="Доли категорий по расходам за выбранный месяц"></div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+
+        <div class="stats-ribbon mt-4" aria-label="Ключевые показатели кабинета">
+            <article class="report-kpi">
+                <div class="kpi-label">Доходы за месяц</div>
+                <div class="metric-value" data-stat="income">—</div>
+                <div class="metric-delta positive">Все поступления</div>
+            </article>
+            <article class="report-kpi">
+                <div class="kpi-label">Расходы за месяц</div>
+                <div class="metric-value" data-stat="expense">—</div>
+                <div class="metric-delta negative">Все списания</div>
+            </article>
+            <article class="report-kpi">
+                <div class="kpi-label">Свободный остаток</div>
+                <div class="metric-value" data-stat="net">—</div>
+                <div class="metric-delta">Доходы минус расходы</div>
+            </article>
+        </div>
+
+        <div class="dashboard-main">
+            <div class="main-stack">
+                <section class="surface-card" aria-labelledby="accounts-heading">
+                    <div class="section-head">
+                        <div>
+                            <h2 id="accounts-heading">Счета</h2>
+                            <p>Текущие источники денег и накоплений в одном списке.</p>
+                        </div>
+                        <div class="page-user-chip" id="accounts-owner">Лев</div>
+                    </div>
+                    <div class="account-stack" id="accounts-list"></div>
+                </section>
+
+                <section class="surface-card" aria-labelledby="transactions-heading">
+                    <div class="section-head">
+                        <div>
+                            <h2 id="transactions-heading">Последние транзакции</h2>
+                            <p>Недавние движения по счетам и категориям.</p>
+                        </div>
+                        <a class="btn btn-outline-primary" href="transactions.html">Все операции</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle mb-0">
+                            <thead>
+                            <tr>
+                                <th scope="col">Дата</th>
+                                <th scope="col">Категория</th>
+                                <th scope="col">Описание</th>
+                                <th scope="col">Сумма</th>
+                            </tr>
+                            </thead>
+                            <tbody id="recent-transactions-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <div class="side-stack">
+                <section class="surface-card" aria-labelledby="budgets-heading">
+                    <div class="section-head">
+                        <div>
+                            <h2 id="budgets-heading">Бюджеты</h2>
+                            <p>План и факт по категориям текущего месяца.</p>
+                        </div>
+                    </div>
+                    <div class="budget-summary mb-3">
+                        <div class="budget-summary-item"><span>Активных лимитов</span><strong>4 категории</strong></div>
+                        <div class="budget-summary-item"><span>Режим контроля</span><strong>Еженедельно</strong></div>
+                        <div class="budget-summary-item"><span>Профиль</span><strong id="budget-profile-name">—</strong></div>
+                    </div>
+                    <div class="chart-list" id="budgets-list"></div>
+                </section>
+
+                <section class="surface-card" aria-labelledby="overview-heading">
+                    <div class="section-head">
+                        <div>
+                            <h2 id="overview-heading">Как читается экран</h2>
+                            <p>Главные разделы не спорят между собой: слева счёта и операции, справа бюджеты и сводка.</p>
+                        </div>
+                    </div>
+                    <div class="summary-list">
+                        <div class="summary-item"><span>Баланс по счетам</span><strong>Отдельной секцией</strong></div>
+                        <div class="summary-item"><span>Операции</span><strong>Таблица под счетами</strong></div>
+                        <div class="summary-item"><span>Бюджеты</span><strong>Правая колонка</strong></div>
+                        <div class="summary-item"><span>Новая операция</span><strong>Через модальное окно</strong></div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="addTransactionModal" tabindex="-1" aria-labelledby="addTransactionTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="quick-transaction-form">
+                    <div class="modal-header">
+                        <h2 class="modal-title h5" id="addTransactionTitle">Быстрое добавление транзакции</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label class="form-label" for="quick-description">Описание</label>
+                            <input class="form-control" id="quick-description" name="description" type="text" placeholder="Например, Обед" required>
+                        </div>
+                        <div class="row g-3 mt-1">
+                            <div class="col-md-6">
+                                <label class="form-label" for="quick-category">Категория</label>
+                                <select class="form-select" id="quick-category" name="category" required>
+                                    
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="quick-amount">Сумма</label>
+                                <input class="form-control" id="quick-amount" name="amount" type="number" min="1" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="row g-3 mt-1">
+                            <div class="col-md-6">
+                                <label class="form-label" for="quick-date">Дата операции</label>
+                                <input class="form-control" id="quick-date" name="date" type="date" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="quick-type">Тип операции</label>
+                                <select class="form-select" id="quick-type" name="type">
+                                    <option value="expense">Расход</option>
+                                    <option value="income">Доход</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Отмена</button>
+                        <button class="btn btn-primary" type="submit">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="monthPickerModal" tabindex="-1" aria-labelledby="monthPickerTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="month-picker-form">
+                    <div class="modal-header">
+                        <h2 class="modal-title h5" id="monthPickerTitle">Выбор месяца</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="month-picker-month">Месяц</label>
+                                <select class="form-select" id="month-picker-month" name="month" required></select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="month-picker-year">Год</label>
+                                <select class="form-select" id="month-picker-year" name="year" required></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Отмена</button>
+                        <button class="btn btn-primary" type="submit">Применить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container-fluid shell-container d-flex flex-column flex-md-row justify-content-between gap-2">
+        <p>Finance Manager</p>
+        <p>Обзор, поиск операций, бюджеты и аналитика.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>
