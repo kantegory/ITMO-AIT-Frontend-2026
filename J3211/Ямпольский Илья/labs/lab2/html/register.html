@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Регистрация на Яндекс Афише.">
+    <meta name="keywords" content="регистрация, создать аккаунт, новый пользователь">
+    <meta name="author" content="Ямпольский Илья">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+    <link rel="stylesheet" href="../css/themes/main.css">
+    <link rel="stylesheet" href="../css/themes/light.css" id="theme-light">
+    <link rel="stylesheet" href="../css/themes/dark.css" id="theme-dark" disabled>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>Яндекс Афиша - Регистрация</title>
+
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light'
+        document.documentElement.setAttribute('data-theme', savedTheme)
+        if (savedTheme === 'dark') {
+            document.getElementById('theme-light').disabled = true
+            document.getElementById('theme-dark').disabled = false
+        } else {
+            document.getElementById('theme-light').disabled = false
+            document.getElementById('theme-dark').disabled = true
+        }
+    </script>
+</head>
+<body>
+<a href="#main-content" class="visually-hidden-focusable">Перейти к основному контенту</a>
+
+<header>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="login.html">Яндекс Афиша</a>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <button class="nav-link" id="themeToggle" aria-label="Переключить тему" style="cursor: pointer;">Тема</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main id="main-content">
+    <section class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 56px);">
+        <article class="card shadow-sm" style="width: 400px;">
+            <section class="card-body p-4">
+                <header>
+                    <h1 class="text-center mb-4">Регистрация</h1>
+                </header>
+                <form id="registerForm">
+                    <div class="mb-3">
+                        <label class="form-label">Имя</label>
+                        <label>
+                            <input type="text" name="firstName" class="form-control" placeholder="Иван" required>
+                        </label>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Фамилия</label>
+                        <label>
+                            <input type="text" name="lastName" class="form-control" placeholder="Иванов" required>
+                        </label>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <label>
+                            <input type="email" name="email" class="form-control" placeholder="user@example.com" required>
+                        </label>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Пароль</label>
+                        <label>
+                            <input type="password" name="password" class="form-control" placeholder="********" required>
+                        </label>
+                    </div>
+                    <footer>
+                        <button type="submit" class="btn btn-primary w-100">Создать аккаунт</button>
+                    </footer>
+                </form>
+                <footer class="text-center mt-3 mb-0 small">
+                    Есть аккаунт? <a href="login.html">Войти</a>
+                </footer>
+            </section>
+        </article>
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+<script>
+    const themeToggle = document.getElementById('themeToggle')
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme')
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark'
+            setTheme(newTheme)
+        })
+    }
+
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme)
+        localStorage.setItem('theme', theme)
+        if (theme === 'dark') {
+            document.getElementById('theme-light').disabled = true
+            document.getElementById('theme-dark').disabled = false
+        } else {
+            document.getElementById('theme-light').disabled = false
+            document.getElementById('theme-dark').disabled = true
+        }
+        location.reload()
+    }
+
+    async function register(event) {
+        event.preventDefault()
+        const formData = new FormData(event.target)
+        const registerData = {}
+        formData.forEach((value, label) => registerData[label] = value)
+
+        try {
+            const response = await axios.post('http://localhost:3000/signup', registerData)
+            const { accessToken, user } = response.data
+
+            localStorage.accessToken = accessToken
+            localStorage.user = JSON.stringify(user)
+
+            window.location.href = "index.html"
+        } catch (error) {
+            alert('Ошибка: ' + (error.response?.data || error.message))
+        }
+    }
+
+    document.getElementById('registerForm')?.addEventListener('submit', register)
+</script>
+</body>
+</html>
