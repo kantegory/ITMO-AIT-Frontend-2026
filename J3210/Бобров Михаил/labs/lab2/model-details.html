@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>DataPort – Детали модели</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="d-flex dashboard">
+    <div class="sidebar">
+        <div class="brand mb-4">DataPort</div>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="dashboard.html">Dashboard</a>
+            <a class="nav-link" href="explore.html">Explore</a>
+            <a class="nav-link active" href="my-models.html">My Models</a>
+            <a class="nav-link" href="my-datasets.html">My Datasets</a>
+            <a class="nav-link" href="my-subscriptions.html">Subscriptions</a>
+            <a class="nav-link" href="settings.html">Settings</a>
+            <hr>
+            <a class="nav-link text-danger" href="#" id="logoutBtn">Выход</a>
+        </nav>
+    </div>
+
+    <div class="flex-grow-1">
+        <div class="topbar px-4 py-3 d-flex align-items-center">
+            <a href="javascript:history.back()" class="btn btn-light btn-sm me-3">← Назад</a>
+            <div class="page-title" id="modelTitle">Загрузка...</div>
+        </div>
+
+        <div class="content-area">
+            <div class="row">
+                <div class="col-md-8">
+                    <ul class="nav nav-tabs border-0 mb-3" id="modelTabs">
+                        <li class="nav-item">
+                            <button class="nav-link active border-0" data-bs-toggle="tab" data-bs-target="#desc-tab">Описание</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link border-0" data-bs-toggle="tab" data-bs-target="#discuss-tab">Обсуждения</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link border-0" data-bs-toggle="tab" data-bs-target="#repro-tab">Воспроизводимость</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="desc-tab">
+                            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                                <h5 class="fw-bold mb-3">Описание модели</h5>
+                                <p class="text-muted mb-4" id="modelDescription">-</p>
+
+                                <h6 class="fw-bold mb-2">Пример подключения (Python)</h6>
+                                <div class="bg-dark text-light p-3 rounded-3 font-monospace small mb-4">
+                                    import dataport<br>
+                                    model = dataport.load_model("<span id="modelSlug">name</span>")<br>
+                                    print(model.summary())
+                                </div>
+                                <h5 class="fw-bold mb-3">История изменений</h5>
+                                <div class="d-flex justify-content-between border-bottom py-2">
+                                    <span class="text-muted">v.1.0.0</span>
+                                    <span class="text-muted">Первоначальный релиз</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="discuss-tab">
+                            <div class="card border-0 shadow-sm rounded-4 p-4">
+                                <h5 class="fw-bold mb-3">Комментарии</h5>
+                                <div class="mb-4">
+                                    <textarea class="form-control mb-2" id="commentInput" rows="2" placeholder="Ваш вопрос или отзыв..."></textarea>
+                                    <button class="btn btn-primary btn-sm" onclick="addComment()">Отправить</button>
+                                </div>
+                                <div id="commentsList">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="repro-tab">
+                            <div class="card border-0 shadow-sm rounded-4 p-4">
+                                <h5 class="fw-bold mb-3">Результаты тестов</h5>
+                                <div class="p-3 bg-light rounded-3 mb-2 d-flex justify-content-between">
+                                    <span>Валидация на ImageNet</span>
+                                    <span class="badge bg-success">Passed (Acc: 94.2%)</span>
+                                </div>
+                                <div class="p-3 bg-light rounded-3 mb-2 d-flex justify-content-between">
+                                    <span>Тест на задержку (Latency)</span>
+                                    <span class="badge bg-success">14ms / image</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                        <div class="d-flex gap-2 mb-4">
+                            <button class="btn btn-outline-primary flex-grow-1" onclick="socialAction('like', 'model', event)">
+                                ♥ <span id="modelLikes">0</span>
+                            </button>
+                            <button class="btn btn-outline-secondary flex-grow-1" onclick="socialAction('fork', 'model', event)">
+                                ⑂ <span id="modelForks">0</span>
+                            </button>
+                        </div>
+                        <h5 class="fw-bold mb-4">Информация</h5>
+                        <div class="mb-3">
+                            <label class="small text-muted d-block">Автор</label>
+                            <span class="fw-semibold" id="modelAuthor">-</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small text-muted d-block">Фреймворк</label>
+                            <span class="fw-semibold" id="modelFramework">-</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small text-muted d-block">Размер файла</label>
+                            <span class="fw-semibold" id="modelSize">-</span>
+                        </div>
+                        <div class="mb-4">
+                            <label class="small text-muted d-block mb-1">Категория</label>
+                            <span class="tag" id="modelTag">-</span>
+                        </div>
+                        <button class="btn btn-primary w-100 py-2">Скачать веса (.bin)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

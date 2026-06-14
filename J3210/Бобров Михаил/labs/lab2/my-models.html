@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>DataPort – Список моделей</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="d-flex dashboard">
+    <div class="sidebar">
+        <div class="brand mb-4">DataPort</div>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="dashboard.html">Dashboard</a>
+            <a class="nav-link" href="explore.html">Explore</a>
+            <a class="nav-link active" href="my-models.html">My Models</a>
+            <a class="nav-link" href="my-datasets.html">My Datasets</a>
+            <a class="nav-link" href="my-subscriptions.html">Subscriptions</a>
+            <a class="nav-link" href="settings.html">Settings</a>
+            <hr>
+            <a class="nav-link text-danger" href="#" id="logoutBtn">Выход</a>
+        </nav>
+    </div>
+
+    <div class="flex-grow-1">
+        <div class="topbar px-4 py-3 d-flex justify-content-between align-items-center">
+            <div class="page-title">Мои модели</div>
+            <button class="btn btn-primary upload-btn" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                Загрузить модель
+            </button>
+        </div>
+
+        <div class="content-area">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4 py-3">Название</th>
+                            <th>Теги</th>
+                            <th>Размер</th>
+                            <th>Дата</th>
+                            <th class="text-end pe-4">Действия</th>
+                        </tr>
+                        </thead>
+                        <tbody id="models-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Назад</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Вперед</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="uploadModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-4">
+            <h5 class="mb-3">Загрузка модели</h5>
+            <input class="form-control mb-2" placeholder="Название модели">
+            <select class="form-select mb-3">
+                <option>Computer Vision</option>
+                <option>NLP</option>
+            </select>
+            <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button class="btn btn-primary">Загрузить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
