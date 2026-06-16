@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Поиск задач — ТаскерAI</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/style.css" />
+        <script>
+          (function () {
+            var t = localStorage.getItem('app-theme');
+            if (t !== 'light' && t !== 'dark') {
+              t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+            }
+            document.documentElement.setAttribute('data-theme', t);
+          })();
+        </script>
+        <style>
+            .search-bar {
+                position: relative;
+                margin-bottom: 20px;
+            }
+
+            .search-bar svg {
+                position: absolute;
+                left: 16px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--text-muted);
+                width: 18px;
+                height: 18px;
+                pointer-events: none;
+            }
+
+            .search-input {
+                width: 100%;
+                background: var(--bg-elevated);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-lg);
+                color: var(--text-primary);
+                padding: 13px 16px 13px 48px;
+                font-size: 0.95rem;
+                font-family: var(--font-sans);
+                outline: none;
+                transition: border-color var(--transition), box-shadow var(--transition);
+            }
+
+            .search-input::placeholder {
+                color: var(--text-muted);
+            }
+
+            .search-input:focus {
+                border-color: var(--violet-500);
+                box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+            }
+
+            .filters-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-bottom: 24px;
+                align-items: center;
+            }
+
+            .filter-select {
+                background: var(--bg-elevated);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-md);
+                color: var(--text-secondary);
+                padding: 8px 32px 8px 12px;
+                font-size: 0.82rem;
+                font-family: var(--font-sans);
+                outline: none;
+                cursor: pointer;
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 10px center;
+                transition: border-color var(--transition);
+            }
+
+            .filter-select option {
+                background: var(--bg-elevated);
+                color: var(--text-primary);
+            }
+
+            .filter-select:focus {
+                border-color: var(--violet-500);
+            }
+
+            .filter-tag {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                background: rgba(139, 92, 246, 0.12);
+                border: 1px solid rgba(139, 92, 246, 0.3);
+                color: var(--violet-300);
+                border-radius: var(--radius-full);
+                padding: 5px 10px;
+                font-size: 0.78rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all var(--transition);
+            }
+
+            .filter-tag:hover {
+                background: rgba(139, 92, 246, 0.2);
+            }
+
+            .filter-tag .remove {
+                width: 14px;
+                height: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                background: rgba(139, 92, 246, 0.3);
+                font-size: 0.6rem;
+                line-height: 1;
+            }
+
+            .filter-reset {
+                margin-left: auto;
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                background: none;
+                border: none;
+                cursor: pointer;
+                transition: color var(--transition);
+                padding: 0;
+            }
+
+            .filter-reset:hover {
+                color: var(--text-accent);
+            }
+
+            .results-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 12px;
+            }
+
+            .results-count {
+                font-size: 0.82rem;
+                color: var(--text-muted);
+            }
+
+            .results-count strong {
+                color: var(--text-primary);
+                font-weight: 600;
+            }
+
+            .sort-row {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 0.8rem;
+                color: var(--text-muted);
+            }
+
+            .task-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .task-card {
+                display: grid;
+                grid-template-columns: 1fr 130px 120px 130px 36px;
+                align-items: center;
+                gap: 12px;
+                padding: 14px 18px;
+                background: var(--bg-elevated);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-md);
+                text-decoration: none;
+                color: inherit;
+                transition: all var(--transition);
+            }
+
+            .task-card:hover {
+                border-color: var(--border-accent);
+                background: rgba(139, 92, 246, 0.04);
+            }
+
+            .task-card-title {
+                font-size: 0.875rem;
+                font-weight: 500;
+                color: var(--text-primary);
+                margin-bottom: 3px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .task-card-meta {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 0.75rem;
+                color: var(--text-muted);
+            }
+
+            .meta-project {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .meta-dot {
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+                background: var(--violet-500);
+                flex-shrink: 0;
+            }
+
+            .task-deadline {
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                white-space: nowrap;
+            }
+
+            .task-deadline.overdue {
+                color: #f87171;
+            }
+
+            .task-menu-btn {
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: var(--radius-sm);
+                background: none;
+                border: none;
+                color: var(--text-muted);
+                cursor: pointer;
+                opacity: 0;
+                transition: all var(--transition);
+            }
+
+            .task-card:hover .task-menu-btn {
+                opacity: 1;
+            }
+
+            .task-menu-btn:hover {
+                background: var(--bg-overlay);
+                color: var(--text-primary);
+            }
+
+            .page-btn {
+                width: 34px;
+                height: 34px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: var(--radius-md);
+                background: var(--bg-elevated);
+                border: 1px solid var(--border-subtle);
+                color: var(--text-secondary);
+                font-size: 0.82rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all var(--transition);
+                text-decoration: none;
+            }
+
+            .page-btn:hover {
+                border-color: var(--border-accent);
+                color: var(--text-accent);
+            }
+
+            .page-btn.active {
+                background: rgba(139, 92, 246, 0.15);
+                border-color: var(--violet-500);
+                color: var(--violet-300);
+            }
+
+            .page-btn:disabled {
+                opacity: 0.35;
+                cursor: default;
+            }
+
+            @media (max-width: 900px) {
+                .task-card {
+                    grid-template-columns: 1fr 120px;
+                }
+                .task-card > :nth-child(3),
+                .task-card > :nth-child(4),
+                .task-card > :nth-child(5) {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+
+    <body class="bg-grid">
+        <a href="#main" class="skip-link">Перейти к основному содержимому</a>
+        <div class="bg-glow-1" aria-hidden="true"></div>
+        <div class="bg-glow-2" aria-hidden="true"></div>
+
+        <div class="app-layout">
+            <aside class="sidebar" aria-label="Боковая навигация">
+                <a href="index.html" class="sidebar-logo" aria-label="ТаскерAI — на главную">
+                    <div class="sidebar-logo-icon" aria-hidden="true">
+                        <svg class="icon" width="17" height="17" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-logo"/></svg>
+                    </div>
+                    <span class="sidebar-logo-name text-gradient">ТаскерAI</span>
+                </a>
+
+                <div class="sidebar-section">
+                    <p class="sidebar-section-label">Основное</p>
+                    <a href="dashboard.html" class="nav-item">
+                        <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-grid"/></svg>
+                        Обзор
+                    </a>
+                    <a href="search.html" class="nav-item active" aria-current="page">
+                        <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-search"/></svg>
+                        Поиск задач
+                        <span class="nav-badge">24</span>
+                    </a>
+                    <a href="task.html" class="nav-item">
+                        <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-tasks"/></svg>
+                        Мои задачи
+                        <span class="nav-badge">7</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-section">
+                    <p class="sidebar-section-label">Проекты</p>
+                    <a href="#" class="nav-item">
+                        <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-box"/></svg>
+                        ТаскерAI — ядро
+                    </a>
+                    <a href="#" class="nav-item">
+                        <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-box"/></svg>
+                        AI-ассистент
+                    </a>
+                </div>
+
+                <div class="sidebar-footer">
+                    <a href="#" class="user-card" id="userCard">
+                        <div class="user-avatar" id="userAvatar">·</div>
+                        <div>
+                            <div class="user-info-name" id="userName">…</div>
+                            <div class="user-info-role" id="userRole">…</div>
+                        </div>
+                    </a>
+                </div>
+            </aside>
+
+            <div class="main-content">
+                <header class="topbar">
+                    <span class="topbar-title">Поиск задач</span>
+                    <div class="topbar-right">
+                        <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Переключить тему">
+                            <svg class="icon" width="16" height="16" data-icon="moon" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-moon"/></svg>
+                            <svg class="icon" width="16" height="16" data-icon="sun" style="display:none" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-sun"/></svg>
+                        </button>
+                        <button type="button"
+                            class="icon-btn btn-primary-custom"
+                            style="width: auto; padding: 0 14px; font-size: 0.8rem; border-radius: var(--radius-md);"
+                            aria-label="Создать новую задачу"
+                        >
+                            + Новая задача
+                        </button>
+                        <a href="#" class="icon-btn" title="Выйти" id="logoutBtn" role="button" aria-label="Выйти">
+                            <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-logout"/></svg>
+                        </a>
+                    </div>
+                </header>
+
+                <main class="page-body" id="main">
+                    <div class="search-bar">
+                        <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-search"/></svg>
+                        <label class="visually-hidden" for="searchInput">Поиск задач</label>
+                        <input
+                            type="text"
+                            class="search-input"
+                            id="searchInput"
+                            name="search"
+                            placeholder="Поиск по названию, описанию или исполнителю…"
+                            aria-label="Поиск задач"
+                        />
+                    </div>
+
+                    <div class="filters-row" id="filtersRow">
+                        <select class="filter-select" id="filterStatus" name="status" aria-label="Фильтр по статусу">
+                            <option value="">Статус: все</option>
+                            <option value="todo">К выполнению</option>
+                            <option value="progress">В работе</option>
+                            <option value="review">На ревью</option>
+                            <option value="done">Выполнено</option>
+                        </select>
+
+                        <select class="filter-select" id="filterPriority" name="priority" aria-label="Фильтр по приоритету">
+                            <option value="">Приоритет: все</option>
+                            <option value="high">Высокий</option>
+                            <option value="medium">Средний</option>
+                            <option value="low">Низкий</option>
+                        </select>
+
+                        <select class="filter-select" id="filterProject" name="project" aria-label="Фильтр по проекту">
+                            <option value="">Проект: все</option>
+                        </select>
+
+                        <select class="filter-select" id="filterAssignee" name="assignee" aria-label="Фильтр по исполнителю">
+                            <option value="">Исполнитель: все</option>
+                            <option value="me">Только мои</option>
+                        </select>
+
+                        <div id="activeTags" style="display: flex; gap: 6px; flex-wrap: wrap"></div>
+
+                        <button type="button" class="filter-reset" id="resetFilters" aria-label="Сбросить все фильтры">Сбросить</button>
+                    </div>
+
+                    <div class="results-header">
+                        <span class="results-count">Найдено: <strong id="countLabel">8</strong> задач</span>
+                        <div class="sort-row">
+                            Сортировка:
+                            <select class="filter-select" id="sortSelect" name="sort" aria-label="Сортировка" style="padding: 5px 28px 5px 10px">
+                                <option value="date-desc">Дата ↓</option>
+                                <option value="date-asc">Дата ↑</option>
+                                <option value="priority">Приоритет</option>
+                                <option value="name">По названию</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="task-grid" id="taskGrid" aria-live="polite"></div>
+
+                    <div id="loadingState" role="status" aria-live="polite" style="text-align:center; padding: 40px 0; color: var(--text-muted); font-size: 0.9rem;">Загружаем…</div>
+
+                    
+
+                    <div
+                        id="emptyState"
+                        style="display: none; text-align: center; padding: 60px 0; color: var(--text-muted);"
+                    >
+                        <svg class="icon" width="40" height="40" style="margin: 0 auto 16px; display: block; opacity: 0.4;" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-search"/></svg>
+                        <p style="font-size: 0.9rem">Ничего не найдено</p>
+                        <p style="font-size: 0.8rem; margin-top: 6px">Попробуйте изменить фильтры или поисковый запрос</p>
+                    </div>
+                </main>
+
+                <footer class="lab-nav-strip">
+                    <nav aria-label="Страницы лабы" style="display:contents">
+                        <span class="lab-nav-strip-label">Страницы:</span>
+                        <a href="index.html" class="lab-link">Вход</a>
+                        <a href="register.html" class="lab-link">Регистрация</a>
+                        <a href="dashboard.html" class="lab-link">Кабинет</a>
+                        <a href="search.html" class="lab-link current" aria-current="page">Поиск</a>
+                        <a href="task.html" class="lab-link">Задача</a>
+                    </nav>
+                </footer>
+            </div>
+        </div>
+
+        <script type="module" src="/src/pages/search.ts"></script>
+    </body>
+</html>

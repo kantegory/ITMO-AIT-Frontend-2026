@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Кабинет — ТаскерAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      (function () {
+        var t = localStorage.getItem('app-theme');
+        if (t !== 'light' && t !== 'dark') {
+          t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
+    <style>
+      .page-greeting { margin-bottom: 28px; }
+      .page-greeting h1 { font-size: 1.4rem; margin-bottom: 4px; }
+      .page-greeting p { color: var(--text-secondary); font-size: 0.9rem; }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-bottom: 28px;
+      }
+
+      .stat-card {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        padding: 18px 20px;
+        transition: border-color var(--transition);
+      }
+
+      .stat-card:hover { border-color: var(--border-accent); }
+      .stat-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 10px; }
+      .stat-value { font-size: 1.8rem; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+      .stat-sub { font-size: 0.75rem; color: var(--text-muted); }
+
+      .stat-value.violet { color: var(--violet-400); }
+      .stat-value.green  { color: #34d399; }
+      .stat-value.yellow { color: #fbbf24; }
+      .stat-value.red    { color: #f87171; }
+
+      .bottom-grid { display: grid; grid-template-columns: 1fr 320px; gap: 16px; }
+
+      .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+      .section-title { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); }
+      .section-link { font-size: 0.8rem; color: var(--text-accent); }
+
+      .task-table {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+      }
+
+      .task-table { overflow: hidden; }
+
+      .task-row {
+        display: grid;
+        grid-template-columns: minmax(0,1fr) 100px 120px 100px;
+        align-items: center;
+        padding: 13px 18px;
+        border-bottom: 1px solid var(--border-subtle);
+        gap: 12px;
+        transition: background var(--transition);
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .task-row:last-child { border-bottom: none; }
+      .task-row:hover { background: rgba(139,92,246,0.05); }
+
+      .task-row.header-row {
+        background: var(--bg-overlay);
+        font-size: 0.72rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--text-muted);
+        cursor: default;
+      }
+
+      .task-row.header-row:hover { background: var(--bg-overlay); }
+
+      .task-name { font-size: 0.875rem; font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .task-name .task-project { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+      .task-deadline { font-size: 0.8rem; color: var(--text-muted); }
+      .task-deadline.overdue { color: #f87171; }
+
+      .right-col { display: flex; flex-direction: column; gap: 16px; }
+
+      .project-item { margin-bottom: 14px; }
+      .project-item:last-child { margin-bottom: 0; }
+      .project-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+      .project-name { font-size: 0.82rem; font-weight: 500; color: var(--text-primary); }
+      .project-pct { font-size: 0.78rem; color: var(--text-muted); }
+
+      .progress-track { height: 5px; background: var(--bg-overlay); border-radius: 3px; overflow: hidden; }
+      .progress-fill { height: 100%; border-radius: 3px; background: var(--gradient-primary); }
+
+      .activity-list { display: flex; flex-direction: column; gap: 2px; }
+
+      .activity-item { display: flex; gap: 10px; padding: 10px 12px; border-radius: var(--radius-md); transition: background var(--transition); }
+      .activity-item:hover { background: rgba(139,92,246,0.05); }
+
+      .activity-icon {
+        width: 28px; height: 28px;
+        border-radius: 50%;
+        background: var(--bg-overlay);
+        border: 1px solid var(--border-subtle);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 0.75rem; flex-shrink: 0; margin-top: 1px;
+      }
+
+      .activity-text { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; }
+      .activity-text strong { color: var(--text-primary); font-weight: 500; }
+      .activity-time { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
+
+      @media (max-width: 1200px) {
+        .task-row { grid-template-columns: minmax(0,1fr) 110px 110px; }
+        .task-row > :nth-child(3) { display: none; }
+      }
+
+      @media (max-width: 1100px) {
+        .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        .bottom-grid { grid-template-columns: 1fr; }
+        .right-col { flex-direction: row; flex-wrap: wrap; }
+        .right-col > div { flex: 1 1 280px; min-width: 0; }
+      }
+
+      @media (max-width: 768px) {
+        .task-row { grid-template-columns: minmax(0,1fr) 90px; }
+        .task-row > :nth-child(2),
+        .task-row > :nth-child(3) { display: none; }
+      }
+    </style>
+  </head>
+
+  <body class="bg-grid">
+    <a href="#main" class="skip-link">Перейти к основному содержимому</a>
+    <div class="bg-glow-1" aria-hidden="true"></div>
+    <div class="bg-glow-2" aria-hidden="true"></div>
+
+    <div class="app-layout">
+      <aside class="sidebar" aria-label="Боковая навигация">
+        <a href="index.html" class="sidebar-logo" aria-label="ТаскерAI — на главную">
+          <div class="sidebar-logo-icon" aria-hidden="true">
+            <svg class="icon" width="17" height="17" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-logo"/></svg>
+          </div>
+          <span class="sidebar-logo-name text-gradient">ТаскерAI</span>
+        </a>
+
+        <div class="sidebar-section">
+          <p class="sidebar-section-label">Основное</p>
+          <a href="dashboard.html" class="nav-item active" aria-current="page">
+            <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-grid"/></svg>
+            Обзор
+          </a>
+          <a href="search.html" class="nav-item">
+            <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-search"/></svg>
+            Поиск задач
+            <span class="nav-badge">24</span>
+          </a>
+          <a href="task.html" class="nav-item">
+            <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-tasks"/></svg>
+            Мои задачи
+            <span class="nav-badge">7</span>
+          </a>
+        </div>
+
+        <div class="sidebar-section">
+          <p class="sidebar-section-label">Проекты</p>
+          <a href="#" class="nav-item">
+            <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-box"/></svg>
+            ТаскерAI — ядро
+          </a>
+          <a href="#" class="nav-item">
+            <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-box"/></svg>
+            AI-ассистент
+          </a>
+          <a href="#" class="nav-item">
+            <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-plus"/></svg>
+            Новый проект
+          </a>
+        </div>
+
+        <div class="sidebar-footer">
+          <a href="#" class="user-card" id="userCard">
+            <div class="user-avatar" id="userAvatar">·</div>
+            <div>
+              <div class="user-info-name" id="userName">…</div>
+              <div class="user-info-role" id="userRole">…</div>
+            </div>
+          </a>
+        </div>
+      </aside>
+
+      <div class="main-content">
+        <header class="topbar">
+          <span class="topbar-title">Личный кабинет</span>
+          <div class="topbar-right">
+            <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Переключить тему">
+              <svg class="icon" width="16" height="16" data-icon="moon" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-moon"/></svg>
+              <svg class="icon" width="16" height="16" data-icon="sun" style="display:none" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-sun"/></svg>
+            </button>
+            <button type="button" class="icon-btn" title="Уведомления" aria-label="Уведомления">
+              <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-bell"/></svg>
+              <span class="notif-dot"></span>
+            </button>
+            <button type="button" class="icon-btn" title="Настройки" aria-label="Настройки">
+              <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-cog"/></svg>
+            </button>
+            <a href="#" class="icon-btn" title="Выйти" id="logoutBtn" role="button" aria-label="Выйти">
+              <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-logout"/></svg>
+            </a>
+          </div>
+        </header>
+
+        <main class="page-body" id="main">
+          <div class="page-greeting">
+            <h1 id="greeting">Загружаем…</h1>
+            <p id="greetingSub">&nbsp;</p>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">Всего задач</div>
+              <div class="stat-value violet" id="statTotal">—</div>
+              <div class="stat-sub">У вас в работе</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">В работе</div>
+              <div class="stat-value yellow" id="statInProgress">—</div>
+              <div class="stat-sub">Активные сейчас</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Выполнено</div>
+              <div class="stat-value green" id="statDone">—</div>
+              <div class="stat-sub">Закрытые задачи</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Просрочено</div>
+              <div class="stat-value red" id="statOverdue">—</div>
+              <div class="stat-sub">Требуют внимания</div>
+            </div>
+          </div>
+
+          <div class="bottom-grid">
+            <div>
+              <div class="section-header">
+                <span class="section-title">Мои задачи</span>
+                <a href="search.html" class="section-link">Все задачи →</a>
+              </div>
+              <div class="task-table" id="taskTable">
+                <div class="task-row header-row">
+                  <span>Задача</span>
+                  <span>Приоритет</span>
+                  <span>Статус</span>
+                  <span>Дедлайн</span>
+                </div>
+                <div id="taskList" aria-live="polite" aria-busy="true">
+                  <div class="task-row" style="color: var(--text-muted); justify-content: center; display: flex;">Загружаем задачи…</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="right-col">
+              <div>
+                <div class="section-header">
+                  <span class="section-title">Прогресс проектов</span>
+                </div>
+                <div class="task-table" id="projectList" aria-live="polite" style="padding: 18px 18px 10px;">
+                  <div style="color: var(--text-muted); font-size: 0.85rem;">Загружаем проекты…</div>
+                </div>
+              </div>
+
+              <div>
+                <div class="section-header">
+                  <span class="section-title">Активность</span>
+                </div>
+                <div class="task-table" style="padding: 8px;">
+                  <div class="activity-list" id="activityList" aria-live="polite">
+                    <div style="padding: 10px 12px; color: var(--text-muted); font-size: 0.8rem;">Загружаем активность…</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <footer class="lab-nav-strip">
+          <nav aria-label="Страницы лабы" style="display:contents">
+            <span class="lab-nav-strip-label">Страницы:</span>
+            <a href="index.html"     class="lab-link">Вход</a>
+            <a href="register.html"  class="lab-link">Регистрация</a>
+            <a href="dashboard.html" class="lab-link current" aria-current="page">Кабинет</a>
+            <a href="search.html"    class="lab-link">Поиск</a>
+            <a href="task.html"      class="lab-link">Задача</a>
+          </nav>
+        </footer>
+      </div>
+    </div>
+    <script type="module" src="/src/pages/dashboard.ts"></script>
+  </body>
+</html>

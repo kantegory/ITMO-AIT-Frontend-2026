@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>API авторизации — ТаскерAI</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/style.css" />
+        <script>
+          (function () {
+            var t = localStorage.getItem('app-theme');
+            if (t !== 'light' && t !== 'dark') {
+              t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+            }
+            document.documentElement.setAttribute('data-theme', t);
+          })();
+        </script>
+        <style>
+            .breadcrumb-nav {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 0.82rem;
+                color: var(--text-muted);
+            }
+
+            .breadcrumb-nav a {
+                color: var(--text-muted);
+                text-decoration: none;
+                transition: color var(--transition);
+            }
+
+            .breadcrumb-nav a:hover {
+                color: var(--text-accent);
+            }
+
+            .breadcrumb-nav svg {
+                opacity: 0.4;
+                flex-shrink: 0;
+            }
+
+            .task-layout {
+                display: grid;
+                grid-template-columns: 1fr 280px;
+                gap: 0;
+                flex: 1;
+                min-height: 0;
+            }
+
+            .task-main {
+                padding: 32px 36px;
+                border-right: 1px solid var(--border-subtle);
+                overflow-y: auto;
+            }
+
+            .task-title-row {
+                display: flex;
+                align-items: flex-start;
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+
+            .task-done-check {
+                width: 22px;
+                height: 22px;
+                min-width: 22px;
+                border: 1.5px solid var(--border-accent);
+                border-radius: 6px;
+                margin-top: 3px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all var(--transition);
+                background: var(--bg-overlay);
+            }
+
+            .task-done-check:hover {
+                border-color: var(--violet-500);
+                background: rgba(139, 92, 246, 0.1);
+            }
+
+            .task-done-check.checked {
+                background: var(--violet-500);
+                border-color: var(--violet-500);
+            }
+
+            .task-title {
+                font-size: 1.35rem;
+                font-weight: 700;
+                line-height: 1.3;
+                color: var(--text-primary);
+                flex: 1;
+            }
+
+            .task-badges {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 24px;
+                flex-wrap: wrap;
+            }
+
+            .badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                font-size: 0.72rem;
+                font-weight: 600;
+                padding: 4px 10px;
+                border-radius: var(--radius-full);
+                white-space: nowrap;
+            }
+
+            .badge.status-progress { background: rgba(139, 92, 246, 0.12); color: #a78bfa; }
+            .badge.status-todo { background: rgba(148, 163, 184, 0.12); color: #94a3b8; }
+            .badge.status-review { background: rgba(251, 191, 36, 0.12); color: #fbbf24; }
+            .badge.status-done { background: rgba(52, 211, 153, 0.12); color: #34d399; }
+            .badge.priority-high { background: rgba(248, 113, 113, 0.12); color: #f87171; }
+            .badge.priority-medium { background: rgba(251, 191, 36, 0.12); color: #fbbf24; }
+            .badge.priority-low { background: rgba(52, 211, 153, 0.12); color: #34d399; }
+            .badge.tag { background: var(--bg-overlay); color: var(--text-secondary); border: 1px solid var(--border-subtle); }
+
+            .section-block {
+                margin-bottom: 32px;
+            }
+
+            .section-block-title {
+                font-size: 0.75rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: var(--text-muted);
+                margin-bottom: 12px;
+            }
+
+            .task-description {
+                font-size: 0.9rem;
+                color: var(--text-secondary);
+                line-height: 1.75;
+            }
+
+            .task-description p { margin-bottom: 12px; }
+            .task-description p:last-child { margin-bottom: 0; }
+
+            .task-description code {
+                background: var(--bg-overlay);
+                border: 1px solid var(--border-subtle);
+                border-radius: 4px;
+                padding: 1px 6px;
+                font-family: var(--font-mono);
+                font-size: 0.82rem;
+                color: var(--violet-300);
+            }
+
+            .subtask-list {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .subtask-item {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 12px;
+                background: var(--bg-elevated);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-md);
+                font-size: 0.85rem;
+                color: var(--text-secondary);
+                transition: border-color var(--transition);
+            }
+
+            .subtask-item:hover { border-color: var(--border-accent); }
+
+            .subtask-check {
+                width: 16px;
+                height: 16px;
+                min-width: 16px;
+                border: 1.5px solid var(--border-accent);
+                border-radius: 4px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all var(--transition);
+                background: var(--bg-overlay);
+                flex-shrink: 0;
+            }
+
+            .subtask-check.done { background: #10b981; border-color: #10b981; }
+            .subtask-item.done-item .subtask-text { text-decoration: line-through; color: var(--text-muted); }
+
+            .subtask-text { flex: 1; }
+
+            .subtask-assignee {
+                font-size: 0.72rem;
+                color: var(--text-muted);
+                white-space: nowrap;
+            }
+
+            .attachments-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 10px;
+            }
+
+            .attachment {
+                background: var(--bg-elevated);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-md);
+                overflow: hidden;
+                cursor: pointer;
+                transition: all var(--transition);
+                text-decoration: none;
+            }
+
+            .attachment:hover { border-color: var(--border-accent); }
+
+            .attachment-preview {
+                height: 80px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: var(--bg-overlay);
+                font-size: 1.8rem;
+            }
+
+            .attachment-preview.img-preview {
+                background: linear-gradient(135deg, #1a1a2e, #2d1b4e);
+                font-size: 0.7rem;
+                color: var(--text-muted);
+                letter-spacing: 0.05em;
+            }
+
+            .attachment-info { padding: 8px 10px; }
+
+            .attachment-name {
+                font-size: 0.75rem;
+                font-weight: 500;
+                color: var(--text-primary);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .attachment-size {
+                font-size: 0.68rem;
+                color: var(--text-muted);
+                margin-top: 1px;
+            }
+
+            .attach-add {
+                background: var(--bg-elevated);
+                border: 1px dashed var(--border-subtle);
+                border-radius: var(--radius-md);
+                height: 116px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                color: var(--text-muted);
+                font-size: 0.75rem;
+                gap: 6px;
+                transition: all var(--transition);
+            }
+
+            .attach-add:hover { border-color: var(--border-accent); color: var(--text-accent); }
+
+            .task-sidebar {
+                padding: 28px 24px;
+                overflow-y: auto;
+                background: var(--bg-surface);
+            }
+
+            .meta-section { margin-bottom: 24px; }
+
+            .meta-label {
+                font-size: 0.68rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                color: var(--text-muted);
+                margin-bottom: 8px;
+            }
+
+            .meta-value {
+                font-size: 0.875rem;
+                color: var(--text-primary);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .meta-value svg { color: var(--text-muted); flex-shrink: 0; }
+
+            .meta-select {
+                width: 100%;
+                background: var(--bg-overlay);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-md);
+                color: var(--text-primary);
+                padding: 8px 12px;
+                font-size: 0.82rem;
+                font-family: var(--font-sans);
+                outline: none;
+                cursor: pointer;
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 10px center;
+                transition: border-color var(--transition);
+            }
+
+            .meta-select:focus { border-color: var(--violet-500); }
+            .meta-select option { background: var(--bg-elevated); }
+
+            .assignee-row {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 8px 10px;
+                background: var(--bg-overlay);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-md);
+                font-size: 0.82rem;
+                color: var(--text-primary);
+            }
+
+            .assignee-ava {
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                background: var(--gradient-primary);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.68rem;
+                font-weight: 700;
+                color: white;
+                flex-shrink: 0;
+            }
+
+            .divider-line {
+                height: 1px;
+                background: var(--border-subtle);
+                margin: 8px 0 20px;
+            }
+
+            .meta-date-input {
+                width: 100%;
+                background: var(--bg-overlay);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-md);
+                color: var(--text-primary);
+                padding: 8px 12px;
+                font-size: 0.82rem;
+                font-family: var(--font-sans);
+                outline: none;
+                transition: border-color var(--transition);
+            }
+
+            .meta-date-input:focus { border-color: var(--violet-500); }
+            .meta-date-input::-webkit-calendar-picker-indicator { filter: invert(0.5); }
+
+            .side-activity {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .side-event {
+                display: flex;
+                gap: 8px;
+                font-size: 0.78rem;
+                color: var(--text-muted);
+                line-height: 1.4;
+            }
+
+            .side-event strong { color: var(--text-secondary); font-weight: 500; }
+
+            .side-event-dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--border-accent);
+                margin-top: 5px;
+                flex-shrink: 0;
+            }
+
+            @media (max-width: 1000px) {
+                .task-layout { grid-template-columns: 1fr; }
+                .task-sidebar { border-top: 1px solid var(--border-subtle); }
+            }
+
+            @media (max-width: 768px) {
+                .task-main { padding: 20px; }
+            }
+        </style>
+    </head>
+
+    <body class="bg-grid">
+        <a href="#main" class="skip-link">Перейти к основному содержимому</a>
+        <div class="bg-glow-1" aria-hidden="true"></div>
+        <div class="bg-glow-2" aria-hidden="true"></div>
+
+        <div class="app-layout">
+            <aside class="sidebar" aria-label="Боковая навигация">
+                <a href="index.html" class="sidebar-logo" aria-label="ТаскерAI — на главную">
+                    <div class="sidebar-logo-icon" aria-hidden="true">
+                        <svg class="icon" width="17" height="17" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-logo"/></svg>
+                    </div>
+                    <span class="sidebar-logo-name text-gradient">ТаскерAI</span>
+                </a>
+
+                <div class="sidebar-section">
+                    <p class="sidebar-section-label">Основное</p>
+                    <a href="dashboard.html" class="nav-item">
+                        <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-grid"/></svg>
+                        Обзор
+                    </a>
+                    <a href="search.html" class="nav-item">
+                        <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-search"/></svg>
+                        Поиск задач
+                        <span class="nav-badge">24</span>
+                    </a>
+                    <a href="task.html" class="nav-item active" aria-current="page">
+                        <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-tasks"/></svg>
+                        Мои задачи
+                        <span class="nav-badge">7</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-section">
+                    <p class="sidebar-section-label">Проекты</p>
+                    <a href="#" class="nav-item">
+                        <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-box"/></svg>
+                        ТаскерAI — ядро
+                    </a>
+                    <a href="#" class="nav-item">
+                        <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-box"/></svg>
+                        AI-ассистент
+                    </a>
+                </div>
+
+                <div class="sidebar-footer">
+                    <a href="#" class="user-card" id="userCard">
+                        <div class="user-avatar" id="userAvatar">·</div>
+                        <div>
+                            <div class="user-info-name" id="userName">…</div>
+                            <div class="user-info-role" id="userRole">…</div>
+                        </div>
+                    </a>
+                </div>
+            </aside>
+
+            <div class="main-content">
+                <header class="topbar">
+                    <nav class="breadcrumb-nav" aria-label="Хлебные крошки">
+                        <a href="search.html">Поиск задач</a>
+                        <svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-chevron-right"/></svg>
+                        <a href="#">ТаскерAI — ядро</a>
+                        <svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-chevron-right"/></svg>
+                        <span style="color: var(--text-secondary)">API авторизации</span>
+                    </nav>
+                    <div class="topbar-right">
+                        <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Переключить тему">
+                            <svg class="icon" width="16" height="16" data-icon="moon" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-moon"/></svg>
+                            <svg class="icon" width="15" height="15" data-icon="sun" style="display:none" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-sun"/></svg>
+                        </button>
+                        <button type="button" class="icon-btn" title="Поделиться" aria-label="Поделиться">
+                            <svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-share"/></svg>
+                        </button>
+                        <button type="button" class="icon-btn" title="Ещё" aria-label="Дополнительные действия">
+                            <svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-more"/></svg>
+                        </button>
+                        <a href="#" class="icon-btn" title="Выйти" id="logoutBtn" role="button" aria-label="Выйти">
+                            <svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-logout"/></svg>
+                        </a>
+                    </div>
+                </header>
+
+                <div class="task-layout" id="taskLayout">
+                    <main class="task-main" id="main">
+                        <div class="task-title-row">
+                            <div class="task-done-check" id="doneCheck" role="checkbox" tabindex="0" aria-checked="false" aria-label="Отметить задачу выполненной">
+                                <svg class="icon" width="12" height="12" id="checkIcon" style="display: none" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-check"/></svg>
+                            </div>
+                            <h1 class="task-title" id="taskTitle">Загружаем…</h1>
+                        </div>
+
+                        <div class="task-badges" id="taskBadges" aria-live="polite"></div>
+
+                        <div class="section-block">
+                            <div class="section-block-title">Описание</div>
+                            <div class="task-description" id="taskDescription" aria-live="polite"></div>
+                        </div>
+
+                        <div class="section-block">
+                            <div class="section-block-title" id="subtasksTitle">Подзадачи</div>
+                            <div class="subtask-list" id="subtaskList" role="list" aria-live="polite"></div>
+                        </div>
+
+                        <div class="section-block">
+                            <div class="section-block-title">Вложения</div>
+                            <div class="attachments-grid" id="attachmentList" role="list" aria-live="polite"></div>
+                        </div>
+                    </main>
+
+                    <aside class="task-sidebar" aria-label="Параметры задачи">
+                        <div class="meta-section">
+                            <div class="meta-label">Статус</div>
+                            <select class="meta-select" id="statusSelect" name="status" aria-label="Статус задачи">
+                                <option value="todo">К выполнению</option>
+                                <option value="progress">В работе</option>
+                                <option value="review">На ревью</option>
+                                <option value="done">Выполнено</option>
+                            </select>
+                        </div>
+
+                        <div class="meta-section">
+                            <div class="meta-label">Приоритет</div>
+                            <select class="meta-select" id="prioritySelect" name="priority" aria-label="Приоритет задачи">
+                                <option value="low">Низкий</option>
+                                <option value="medium">Средний</option>
+                                <option value="high">Высокий</option>
+                            </select>
+                        </div>
+
+                        <div class="meta-section">
+                            <div class="meta-label">Исполнитель</div>
+                            <div class="assignee-row" id="assigneeRow">
+                                <div class="assignee-ava" id="assigneeAvatar">·</div>
+                                <span id="assigneeName">—</span>
+                            </div>
+                        </div>
+
+                        <div class="meta-section">
+                            <div class="meta-label">Проект</div>
+                            <div class="meta-value">
+                                <svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="assets/sprite.svg#icon-box"/></svg>
+                                <span id="projectName">—</span>
+                            </div>
+                        </div>
+
+                        <div class="meta-section">
+                            <div class="meta-label">Дедлайн</div>
+                            <input type="date" class="meta-date-input" id="deadlineInput" name="deadline" aria-label="Дедлайн задачи" />
+                        </div>
+
+                        <div class="meta-section">
+                            <div class="meta-label">Создана</div>
+                            <div class="meta-value" id="createdAt" style="font-size: 0.82rem; color: var(--text-muted)">—</div>
+                        </div>
+                    </aside>
+                </div>
+
+                <div id="taskError" role="alert" aria-live="assertive" style="display:none; padding: 30px; color:#f87171; text-align:center;"></div>
+
+                <footer class="lab-nav-strip">
+                    <nav aria-label="Страницы лабы" style="display:contents">
+                        <span class="lab-nav-strip-label">Страницы:</span>
+                        <a href="index.html" class="lab-link">Вход</a>
+                        <a href="register.html" class="lab-link">Регистрация</a>
+                        <a href="dashboard.html" class="lab-link">Кабинет</a>
+                        <a href="search.html" class="lab-link">Поиск</a>
+                        <a href="task.html" class="lab-link current" aria-current="page">Задача</a>
+                    </nav>
+                </footer>
+            </div>
+        </div>
+
+        <script type="module" src="/src/pages/task.ts"></script>
+    </body>
+</html>
