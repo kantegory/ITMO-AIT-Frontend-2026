@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>search</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body class="container">
+
+<h2>Search models and datasets</h2>
+
+<div class="form-group">
+    <label>Search</label>
+    <input type="text" class="form-control" placeholder="Enter name">
+</div>
+
+<div class="form-group">
+    <label>Type</label>
+    <select class="form-control">
+        <option>All</option>
+        <option>Model</option>
+        <option>Dataset</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label>Task</label>
+    <select class="form-control">
+        <option>All</option>
+        <option>Classification</option>
+        <option>Regression</option>
+
+    </select>
+</div>
+
+<div class="form-group">
+    <label>License</label>
+    <select class="form-control">
+        <option>All</option>
+        <option>MIT</option>
+        <option>Public Domain</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label>Framework</label>
+    <select class="form-control">
+        <option>All</option>
+        <option>Scikit-learn</option>
+    </select>
+</div>
+
+<button class="btn btn-success" onclick="searchmessage()">Search</button>
+
+<h3>Results</h3>
+
+<div class="results-row">
+    <div class="search-card">
+        <h4>Linear Regression</h4>
+        <p><strong>Type:</strong> Model</p>
+        <p><strong>Task:</strong> Regression</p>
+        <p><strong>Framework:</strong> Scikit-learn</p>
+        <p><strong>License:</strong> MIT</p>
+        <a href="model.html" class="btn btn-primary btn-sm">Open</a>
+    </div>
+
+    <div class="search-card">
+        <h4>Fish Dataset</h4>
+        <p><strong>Type:</strong> Dataset</p>
+        <p><strong>Task:</strong> Classification</p>
+        <p><strong>Size:</strong> 2 MB</p>
+        <p><strong>License:</strong> Public Domain</p>
+        <a href="dataset.html" class="btn btn-success btn-sm">Open</a>
+    </div>
+</div>
+<script>
+    function searchmessage() {
+        alert("Search complete");
+    }
+</script>
+<a href="profile.html">Back to profile</a>
+
+</body>
+</html>
