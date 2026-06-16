@@ -1,43 +1,117 @@
-body {
-    background-color: #FFFDF5;
+:root {
+    --bg-color: #FFFDF5;
+    --bg-pattern: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' font-size='20' text-anchor='middle' dy='.3em' fill='rgba(0,0,0,0.1)'%3E🍍%3C/text%3E%3C/svg%3E");
 
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' font-size='20' text-anchor='middle' dy='.3em' fill='rgba(0,0,0,0.03)'%3E🍍%3C/text%3E%3C/svg%3E");
+    --text-main: #212529;
+    --text-muted: #495057;
+    --text-white-50: rgba(255, 255, 255, 0.95);
+    --text-danger: #9b1c28;
 
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --bg-success-color: #2E7D32;
+    --text-success-color: #1f6424;
+
+    --btn-success-bg: #2E7D32;
+    --btn-success-hover: #1B5E20;
+    --btn-outline-color: #2E7D32;
+    --btn-outline-hover-text: #ffffff;
+
+    --warning-color: #FBC02D;
+    --text-warning-color: #F57F17;
+
+    --navbar-bg: linear-gradient(90deg, #1B5E20 0%, #2E7D32 100%);
+
+    --card-bg: rgba(255, 255, 255, 0.95);
+
+    --table-hover-bg: #FFF9C4;
+    --table-hover-color: #000;
+
+    --accordion-active-bg: #F1F8E9;
+    --accordion-active-color: #2E7D32;
 }
 
-.bg-success { background-color: #2E7D32 !important; }
-.text-success { color: #2E7D32 !important; }
-.border-success { border-color: #2E7D32 !important; }
+body[data-theme="zombie"] {
+    --bg-color: #1e2420;
+    --bg-pattern: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' font-size='20' text-anchor='middle' dy='.3em' fill='rgba(118,255,3,0.15)'%3E🧟%3C/text%3E%3C/svg%3E");
+
+    --text-main: #e0e0e0;
+    --text-muted: #a5b0a8;
+    --text-white-50: rgba(255, 255, 255, 0.7);
+    --text-danger: #ff5252;
+
+    --bg-success-color: #4a148c;
+    --text-success-color: #76ff03;
+
+    --btn-success-bg: #4a148c;
+    --btn-success-hover: #311b92;
+    --btn-outline-color: #76ff03;
+    --btn-outline-hover-text: #1e2420;
+
+    --warning-color: #ff6d00;
+    --text-warning-color: #ff6d00;
+
+    --navbar-bg: linear-gradient(90deg, #311b92 0%, #4a148c 100%);
+
+    --card-bg: rgba(30, 36, 32, 0.95);
+
+    --table-hover-bg: #3e2723;
+    --table-hover-color: #ff6d00;
+
+    --accordion-active-bg: #311b92;
+    --accordion-active-color: #76ff03;
+}
+
+body {
+    background-color: var(--bg-color);
+    background-image: var(--bg-pattern);
+    color: var(--text-main);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.bg-success { background-color: var(--bg-success-color) !important; }
+.text-success { color: var(--text-success-color) !important; }
+.border-success { border-color: var(--bg-success-color) !important; }
+
+.bg-warning { background-color: var(--warning-color) !important; }
+.text-warning { color: var(--text-warning-color) !important; }
+
+.text-muted { color: var(--text-muted) !important; }
+.text-white-50 { color: var(--text-white-50) !important; }
+.text-danger { color: var(--text-danger) !important; }
 
 .btn-success {
-    background-color: #2E7D32;
-    border-color: #2E7D32;
+    background-color: var(--btn-success-bg);
+    border-color: var(--btn-success-bg);
+    color: #ffffff;
     transition: all 0.3s ease;
 }
 .btn-success:hover {
-    background-color: #1B5E20;
-    border-color: #1B5E20;
+    background-color: var(--btn-success-hover);
+    border-color: var(--btn-success-hover);
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(46, 125, 50, 0.4);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    color: #ffffff;
 }
 
 .btn-outline-success {
-    color: #2E7D32;
-    border-color: #2E7D32;
+    color: var(--btn-outline-color);
+    border-color: var(--btn-outline-color);
     transition: all 0.3s ease;
 }
 .btn-outline-success:hover {
-    background-color: #2E7D32;
-    color: white;
+    background-color: var(--btn-outline-color);
+    color: var(--btn-outline-hover-text);
     transform: translateY(-2px);
 }
 
-.bg-warning { background-color: #FBC02D !important; }
-.text-warning { color: #F57F17 !important; }
+.navbar-dark .nav-link,
+.navbar-text {
+    color: #ffffff !important;
+}
 
 .navbar {
-    background: linear-gradient(90deg, #1B5E20 0%, #4CAF50 100%) !important;
+    background: var(--navbar-bg) !important;
+    transition: background 0.3s ease;
 }
 
 .navbar-nav .nav-link {
@@ -51,15 +125,16 @@ body {
     left: 10%;
     width: 80%;
     height: 3px;
-    background-color: #FBC02D;
+    background-color: var(--warning-color);
     border-radius: 3px;
 }
 
 .card {
     border: none;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: var(--card-bg);
+    color: var(--text-main);
     backdrop-filter: blur(5px);
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.3s ease;
 }
 
 .card:hover {
@@ -73,20 +148,164 @@ body {
 
 .table {
     background-color: transparent;
+    color: var(--text-main);
 }
 
 .table-hover > tbody > tr:hover > * {
-    background-color: #FFF9C4 !important;
-    color: #000 !important;
+    background-color: var(--table-hover-bg) !important;
+    color: var(--table-hover-color) !important;
     transition: background-color 0.15s ease-in-out;
 }
 
-.accordion-button:focus {
-    box-shadow: none;
-    border-color: rgba(0,0,0,.125);
-}
 .accordion-button:not(.collapsed) {
-    background-color: #F1F8E9;
-    color: #2E7D32;
+    background-color: var(--accordion-active-bg);
+    color: var(--accordion-active-color);
     box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
+}
+
+:focus-visible,
+.btn:focus-visible,
+.form-control:focus-visible,
+.form-select:focus-visible,
+.form-check-input:focus-visible,
+a:focus-visible {
+    outline: 3px solid var(--warning-color) !important;
+    outline-offset: 2px !important;
+    box-shadow: none !important;
+    border-radius: 4px;
+}
+
+.accordion-button:focus,
+.accordion-button:focus-visible {
+    outline: none !important;
+    box-shadow: inset 0 0 0 3px var(--warning-color) !important;
+    border-color: var(--warning-color) !important;
+    z-index: 10;
+}
+
+.btn-link:focus-visible {
+    color: var(--warning-color) !important;
+}
+
+body[data-theme="zombie"] .bg-light,
+body[data-theme="zombie"] .bg-white {
+    color: var(--text-main) !important;
+}
+
+body[data-theme="zombie"] .table-light th,
+body[data-theme="zombie"] .table-light td {
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    color: var(--text-main) !important;
+    border-bottom-color: #444;
+}
+
+body[data-theme="zombie"] .text-dark {
+    color: #e0e0e0 !important;
+}
+
+body[data-theme="zombie"] .form-control,
+body[data-theme="zombie"] .form-select {
+    background-color: #2a332a;
+    color: #e0e0e0;
+    border-color: #495057;
+}
+
+body[data-theme="zombie"] .form-control::placeholder {
+    color: #9e9e9e;
+}
+
+body[data-theme="zombie"] .form-control:focus,
+body[data-theme="zombie"] .form-select:focus {
+    background-color: #323d32;
+    color: #ffffff;
+}
+
+body[data-theme="zombie"] .accordion-button {
+    background-color: var(--card-bg);
+    color: var(--text-main);
+}
+
+body[data-theme="zombie"] .list-group-item {
+    background-color: transparent;
+    color: var(--text-main);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body[data-theme="zombie"] .modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-main);
+}
+
+body[data-theme="zombie"] .progress {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+img[alt="Логотип Финанас"] {
+    width: 75px !important;
+    height: 75px !important;
+    object-fit: contain;
+}
+
+body[data-theme="zombie"] .nav-tabs .nav-link {
+    color: var(--text-muted) !important;
+}
+body[data-theme="zombie"] .nav-tabs .nav-link.active {
+    background-color: var(--card-bg) !important;
+    color: var(--text-success-color) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    border-bottom-color: transparent !important;
+}
+body[data-theme="zombie"] .nav-tabs {
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+body[data-theme="zombie"] .card-header.bg-white {
+    background-color: transparent !important;
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body[data-theme="zombie"] .bg-light {
+    background-color: #1a201c !important;
+}
+body[data-theme="zombie"] .bg-white {
+    background-color: #212924 !important;
+}
+
+body[data-theme="zombie"] .badge.bg-light.text-dark {
+    background-color: #2a332a !important;
+    color: #e0e0e0 !important;
+    border-color: #495057 !important;
+}
+
+body[data-theme="zombie"] #analyticsAlert {
+    background-color: #2a332a !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+body[data-theme="zombie"] #analyticsText {
+    color: #e0e0e0 !important;
+}
+
+body[data-theme="zombie"] .alert-light {
+    background-color: #2a332a !important;
+    color: var(--text-main) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body[data-theme="zombie"] .table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text-main);
+    --bs-table-hover-bg: var(--table-hover-bg);
+    --bs-table-hover-color: var(--table-hover-color);
+}
+
+body[data-theme="zombie"] .table td,
+body[data-theme="zombie"] .table th {
+    background-color: transparent !important;
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+    color: var(--text-main);
+}
+
+body[data-theme="zombie"] .table-light th {
+    background-color: #1a201c !important;
+    color: var(--text-success-color) !important;
+    border-bottom: 2px solid rgba(118, 255, 3, 0.2) !important;
 }
