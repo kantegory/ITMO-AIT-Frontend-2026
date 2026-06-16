@@ -1,0 +1,251 @@
+:root, :root[data-theme="dark"] {
+    --bg-body: #0f172a;
+    --bg-surface: #1e293b; /* карточки, модалки, сайдбар */
+    --bg-nav: rgba(15, 23, 42, 0.9);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+    --accent: #38bdf8;
+    --accent-hover: #0ea5e9;
+    --hero-gradient-start: rgba(56, 189, 248, 0.15);
+}
+
+:root[data-theme="light"] {
+    --bg-body: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-nav: rgba(255, 255, 255, 0.9);
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --accent: #0284c7;
+    --accent-hover: #0369a1;
+    --hero-gradient-start: rgba(2, 132, 199, 0.1);
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    padding-top: 80px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.bg-dark, .modal-content { 
+    background-color: var(--bg-surface) !important; 
+}
+.text-white, .text-light { 
+    color: var(--text-primary) !important; 
+}
+.text-white-50, .text-secondary { 
+    color: var(--text-secondary) !important; 
+}
+.border-secondary { 
+    border-color: var(--border-color) !important; 
+}
+.text-info { 
+    color: var(--accent) !important; 
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+a:hover {
+    color: var(--accent-hover);
+}
+
+/* =========================================
+   Навигация (Navbar)
+   ========================================= */
+.navbar {
+    background-color: var(--bg-nav) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+}
+.navbar-brand {
+    color: var(--text-primary) !important;
+}
+.nav-link {
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+}
+.nav-link:hover, .nav-link.active {
+    color: var(--accent) !important;
+}
+
+/* =========================================
+   Секции и Карточки
+   ========================================= */
+.hero-section {
+    padding: 120px 0 80px 0;
+    background: radial-gradient(circle at top right, var(--hero-gradient-start) 0%, var(--bg-body) 60%);
+}
+
+.card, .filter-sidebar, .profile-card {
+    background-color: var(--bg-surface) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 16px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.card:hover {
+    border-color: var(--accent) !important;
+}
+
+.card-title {
+    color: var(--text-primary);
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.card:hover .card-title {
+    color: var(--accent);
+}
+
+/* =========================================
+   Кнопки
+   ========================================= */
+.btn-info {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: #fff !important;
+}
+.btn-info:hover {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+}
+
+.btn-outline-info {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+.btn-outline-info:hover {
+    background-color: var(--accent);
+    color: #fff;
+}
+
+/* Крестик в модалке */
+.btn-close-white {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+:root[data-theme="light"] .btn-close-white {
+    filter: invert(0);
+}
+
+/* =========================================
+   Формы и Инпуты
+   ========================================= */
+.form-control, .form-select {
+    background-color: var(--bg-surface) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 0.25rem rgba(56, 189, 248, 0.25);
+}
+.form-control::placeholder {
+    color: var(--text-secondary) !important;
+    opacity: 0.7;
+}
+
+/* =========================================
+   Аккордеон (Сайдбар фильтров)
+   ========================================= */
+.accordion-item {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+.accordion-button {
+    background-color: transparent !important;
+    color: var(--text-primary) !important;
+    box-shadow: none !important;
+    font-weight: 600;
+}
+.accordion-button:not(.collapsed) {
+    color: var(--accent) !important;
+}
+/* Исправление цвета стрелочки аккордеона */
+.accordion-button::after {
+    filter: invert(1);
+}
+:root[data-theme="light"] .accordion-button::after {
+    filter: invert(0);
+}
+
+/* =========================================
+   Вкладки (Tabs в Profile и Model Details)
+   ========================================= */
+.nav-tabs .nav-link {
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--text-secondary) !important;
+    transition: all 0.3s ease;
+}
+.nav-tabs .nav-link:hover {
+    color: var(--accent) !important;
+}
+.nav-tabs .nav-link.active {
+    background-color: transparent !important;
+    color: var(--text-primary) !important;
+    border-bottom-color: var(--accent) !important;
+    font-weight: bold;
+}
+
+/* =========================================
+   Пагинация
+   ========================================= */
+.pagination .page-link {
+    background-color: transparent;
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+.pagination .page-link:hover {
+    background-color: var(--bg-surface);
+    color: var(--accent);
+}
+.pagination .active .page-link {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: #fff !important;
+}
+.pagination .disabled .page-link {
+    color: var(--text-secondary);
+    background-color: transparent;
+    border-color: var(--border-color);
+}
+
+/* =========================================
+   Утилиты (Бейджи, Аватары, Футер)
+   ========================================= */
+.badge-ai {
+    background-color: var(--hero-gradient-start);
+    color: var(--accent) !important;
+    border: 1px solid var(--accent);
+    font-weight: 700;
+    padding: 0.4em 0.8em;
+}
+
+.avatar-sm, .avatar-lg {
+    background: linear-gradient(45deg, var(--accent), #818cf8);
+    color: #fff !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+.avatar-sm { width: 32px; height: 32px; border-radius: 8px; font-size: 14px; }
+.avatar-lg { width: 80px; height: 80px; border-radius: 16px; font-size: 32px; }
+
+.border-dashed { border-style: dashed !important; }
+
+.footer-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+.footer-link:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}

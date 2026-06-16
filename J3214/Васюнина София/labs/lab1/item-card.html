@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BERT-base-uncased | AI Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="icon-user" viewBox="0 0 24 24">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+    </symbol>
+
+    <symbol id="icon-search" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </symbol>
+
+    <symbol id="icon-star" viewBox="0 0 24 24">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+    </symbol>
+
+    <symbol id="icon-moon" viewBox="0 0 24 24">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </symbol>
+
+    <symbol id="icon-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="5" />
+        <line x1="12" y1="1" x2="12" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" />
+        <line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+    </symbol>
+</svg>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top border-bottom border-secondary">
+            <div class="container">
+
+                <a class="navbar-brand fw-bold" href="index.html">AI <span class="text-info">HUB</span></a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="menu-button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="explore.html">Models</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Datasets</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Documentation</a>
+                        </li>
+                    </ul>
+
+                    <button id="theme-toggle" class="btn btn-outline-info ms-lg-3 mt-2 mt-lg-0" aria-label="Toggle theme">
+                        <svg class="svg-icon"><use href="#icon-moon"></use></svg>
+                        change theme
+                    </button>
+
+                    <div class="d-flex">
+                        <button type="button" 
+                                class="btn btn-outline-info me-2" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#loginModal">
+                            Log in
+                        </button>
+
+                        <button type="button" 
+                                class="btn btn-info text-white" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#regModal">
+                            Sign up
+                        </button>
+                    </div>
+                </div> 
+            </div> 
+        </nav>
+    </header>
+
+    <main class="container my-5">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start mb-4 gap-3">
+            <div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-2">
+                        <li class="breadcrumb-item"><a href="explore.html" class="text-info text-decoration-none small">Models</a></li>
+                        <li id="breadcrumb-model" class="breadcrumb-item active text-secondary small" aria-current="page">loading...</li>
+                    </ol>
+                </nav>
+                <h1 id="model-title" class="display-5 fw-bold mb-0">...</h1>
+                <div class="d-flex align-items-center mt-2 gap-3">
+                    <div class="d-flex align-items-center">
+                        <div id="author-avatar" class="avatar-sm me-2 bg-primary">...</div>
+                        <span id="model-author" class="text-secondary">...</span>
+                    </div>
+                    <span id="model-task" class="badge badge-ai">...</span>
+                    <span id="model-downloads" class="text-secondary small">...</span>
+                </div>
+            </div>
+            
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-light">Like</button>
+                <button class="btn btn-primary">Use in Transformers</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <ul class="nav nav-tabs border-secondary mb-4" id="modelTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active bg-transparent text-white border-0 border-bottom border-3 border-info" id="card-tab" data-bs-toggle="tab" data-bs-target="#card" type="button">Model Card</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link bg-transparent text-secondary border-0" id="files-tab" data-bs-toggle="tab" data-bs-target="#files" type="button">Files</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="modelTabContent">
+                    <div class="tab-pane fade show active" id="card" role="tabpanel">
+                        <div class="card bg-transparent border-0">
+                            <h3 class="h5 fw-bold mb-3 card-title">Model description</h3>
+                            <p id="model-description" class="text-white-50">...</p>
+                            <div class="bg-dark p-3 rounded-3 border border-secondary my-4">
+                                <code class="text-info">pip install transformers</code>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card bg-transparent border-secondary mt-4">
+                        <div class="card-header border-secondary text-info fw-bold d-flex align-items-center">
+                            <span class="me-2">📁</span> Files and Versions
+                        </div>
+                        <div class="card-body p-0">
+                            <div id="files-list">
+                                <div class="text-center py-4 text-muted">
+                                    Loading files...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="col-lg-4">
+                <div class="card p-4 border-secondary bg-dark shadow-sm">
+                    <h5 class="fw-bold mb-3">Metadata</h5>
+                    <div class="mb-3">
+                        <label class="small text-secondary d-block">License</label>
+                        <span class="text-white">Apache-2.0</span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="small text-secondary d-block">Language</label>
+                        <span class="text-white">English (en)</span>
+                    </div>
+                    <hr class="border-secondary">
+                    <button class="btn btn-sm btn-outline-secondary w-100">Report issue</button>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+<footer class="py-5 mt-5 border-top border-secondary">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-12 col-md-4 mb-4">
+                <a class="navbar-brand fw-bold fs-4 d-block mb-3" href="index.html">
+                    AI <span class="text-info">HUB</span>
+                </a>
+                <p class="text-secondary small">
+                    The world's largest community building the future of AI. Share models, datasets, and collaborate with researchers worldwide.
+                </p>
+            </div>
+
+            <div class="col-6 col-md-2 offset-md-2 mb-4">
+                <h6 class="fw-bold mb-3">Platform</h6>
+                <ul class="list-unstyled small">
+                    <li class="mb-2"><a href="explore.html" class="footer-link">Models</a></li>
+                    <li class="mb-2"><a href="#" class="footer-link">Datasets</a></li>
+                    <li class="mb-2"><a href="#" class="footer-link">Spaces</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pt-4 mt-4 border-top border-secondary text-center">
+            <p class="text-secondary small mb-0">
+                &copy; 2026 AI Model Hub Project. Built for Web Development Lab.
+                meowmeowmeow
+            </p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="theme.js"></script>
+
+<div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content text-white" style="background-color: #1e293b;">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title">Welcome back</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="loginForm">
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control bg-transparent text-white border-secondary" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" class="form-control bg-transparent text-white border-secondary" required>
+          </div>
+          <button type="submit" class="btn btn-info w-100">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="regModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content text-white" style="background-color: #1e293b;">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title">Create Account</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="regForm">
+          <div class="row mb-3">
+            <div class="col"><label class="form-label">First Name</label><input type="text" name="firstName" class="form-control bg-transparent text-white border-secondary" required></div>
+            <div class="col"><label class="form-label">Last Name</label><input type="text" name="lastName" class="form-control bg-transparent text-white border-secondary" required></div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control bg-transparent text-white border-secondary" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" class="form-control bg-transparent text-white border-secondary" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="item-card.js"></script>
+<script src="auth.js"></script>
+
+</body>
+</html>
