@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет — Titickets</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Titickets</a>
+            <div id="userMenu"></div>
+        </div>
+    </header>
+
+    <main class="container my-4">
+        <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tickets-tab" data-bs-toggle="tab" data-bs-target="#tickets" type="button" role="tab" aria-selected="true">
+                    <svg class="icon-svg me-2"><use xlink:href="sprite.svg#icon-ticket"></use></svg>Мои билеты
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-selected="false">
+                    <svg class="icon-svg me-2"><use xlink:href="sprite.svg#icon-person"></use></svg>Профиль
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="tickets" role="tabpanel" aria-labelledby="tickets-tab">
+                <div id="ticketsContainer"><div class="text-center"><div class="spinner-border text-rose" role="status"></div></div></div>
+                <div class="event-card p-3 mt-4" id="returnsContainer">
+                    <h5 class="mb-3"><i class="bi bi-arrow-return-left me-2 text-rose"></i>Возвраты</h5>
+                    <div id="returnsList"><p class="text-muted text-center">Загрузка...</p></div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="event-card p-4">
+                    <div class="text-center mb-4">
+                        <svg class="icon-svg" style="font-size: 4rem; color: var(--rose);"><use xlink:href="sprite.svg#icon-person"></use></svg>
+                        <h3 class="mt-2" id="profileName"></h3>
+                        <p class="text-muted" id="profileRole"></p>
+                    </div>
+                    <div id="viewProfile">
+                        <div class="row">
+                            <div class="col-md-6"><div class="profile-field"><div class="profile-label">Email</div><div id="viewEmail"></div></div></div>
+                            <div class="col-md-6"><div class="profile-field"><div class="profile-label">Имя</div><div id="viewName"></div></div></div>
+                            <div class="col-md-6"><div class="profile-field"><div class="profile-label">Фамилия</div><div id="viewSurname"></div></div></div>
+                            <div class="col-md-6"><div class="profile-field"><div class="profile-label">ID голубя</div><div id="viewPigeonId"></div></div></div>
+                        </div>
+                        <div id="organizerProfileFields" style="display: none;">
+                            <hr><h5 class="mb-3">Данные организации</h5>
+                            <div class="row">
+                                <div class="col-md-6"><div class="profile-field"><div class="profile-label">Название организации</div><div id="viewOrgName"></div></div></div>
+                                <div class="col-md-6"><div class="profile-field"><div class="profile-label">Телефон</div><div id="viewPhone"></div></div></div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <button class="btn btn-rose" onclick="showEditForm()"><i class="bi bi-pencil me-2"></i>Редактировать профиль</button>
+                        </div>
+                    </div>
+
+                    <div id="editProfile" style="display: none;">
+                        <form id="editProfileForm">
+                            <div class="mb-3"><label for="editName" class="form-label">Имя</label><input type="text" id="editName" class="form-control" autocomplete="given-name" required></div>
+                            <div class="mb-3"><label for="editSurname" class="form-label">Фамилия</label><input type="text" id="editSurname" class="form-control" autocomplete="family-name"></div>
+                            <div class="mb-3"><label for="editPigeonId" class="form-label">ID голубя</label><input type="text" id="editPigeonId" class="form-control"><small class="text-muted">Укажите ID вашего почтового голубя</small></div>
+                            
+                            <div id="organizerEditFields" style="display: none;">
+                                <div class="mb-3"><label for="editOrgName" class="form-label">Название организации</label><input type="text" id="editOrgName" class="form-control"></div>
+                                <div class="mb-3"><label for="editPhone" class="form-label">Контактный телефон</label><input type="tel" id="editPhone" class="form-control" autocomplete="tel"></div>
+                            </div>
+
+                            <hr class="my-4">
+                            <div class="mb-3">
+                                <label for="currentPassword" class="form-label fw-bold text-danger">Текущий пароль *</label>
+                                <input type="password" id="currentPassword" class="form-control border-danger-subtle" autocomplete="current-password" required placeholder="Обязательно для сохранения изменений">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="editPassword" class="form-label">Новый пароль (необязательно)</label>
+                                <input type="password" id="editPassword" class="form-control" autocomplete="new-password" placeholder="минимум 6 символов">
+                            </div>
+
+                            <div class="d-flex gap-2 mt-4">
+                                <button type="submit" class="btn btn-rose">Сохранить изменения</button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="cancelEdit()">Отмена</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="returnQuantityModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-arrow-return-left me-2 text-rose"></i>Возврат билетов</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="returnModalInfo" class="mb-3"></div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Количество билетов к возврату</label>
+                        <div class="quantity-selector">
+                            <button type="button" class="quantity-btn" id="returnDecrementBtn" aria-label="Уменьшить">−</button>
+                            <input type="number" id="returnQuantity" class="quantity-input" value="1" min="1" readonly aria-live="polite">
+                            <button type="button" class="quantity-btn" id="returnIncrementBtn" aria-label="Увеличить">+</button>
+                        </div>
+                        <div class="available-tickets mt-2" id="returnAvailableInfo"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Сумма к возврату</label>
+                        <div id="returnTotalPrice" class="total-price fs-4" style="color: var(--rose); font-weight: bold;"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-rose" id="confirmPartialReturnBtn"><i class="bi bi-check-circle me-2"></i>Вернуть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-3 mt-auto"><small class="text-muted">© 2026 Titickets</small></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    let currentUser = null;
+    let selectedGroupForReturn = null;
+    let selectedReturnQuantity = 1;
+
+    function checkAuth() {
+        const token = localStorage.getItem('accessToken');
+        const user = JSON.parse(localStorage.getItem('user') || 'null');
+        
+        if (!token || !user || !user.email || !user.id) {
+            alert('Пожалуйста, войдите в аккаунт');
+            window.location.href = 'login.html';
+            return false;
+        }
+        
+        currentUser = user;
+        
+        document.getElementById('userMenu').innerHTML = `
+            <div class="dropdown">
+                <button class="btn btn-rose dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle me-1"></i> ${user.name || user.email}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item active" href="personalAcc.html"><svg class="icon-svg me-2"><use xlink:href="sprite.svg#icon-ticket"></use></svg>Мои билеты</a></li>
+                    ${user.role === 'organizer' ? `<li><a class="dropdown-item" href="organizerAcc.html"><i class="bi bi-mic me-2"></i>Панель организатора</a></li>` : ''}
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="#" onclick="logout()"><i class="bi bi-box-arrow-right me-2"></i>Выйти</a></li>
+                </ul>
+            </div>
+        `;
+        loadProfileData();
+        return true;
+    }
+    
+    function logout() { localStorage.removeItem('accessToken'); localStorage.removeItem('user'); window.location.href = 'index.html'; }
+    
+    function loadProfileData() {
+        document.getElementById('profileName').textContent = `${currentUser.name || ''} ${currentUser.surname || ''}`.trim() || currentUser.email;
+        document.getElementById('profileRole').textContent = currentUser.role === 'organizer' ? 'Организатор' : 'Посетитель';
+        document.getElementById('viewEmail').textContent = currentUser.email;
+        document.getElementById('viewName').textContent = currentUser.name || 'Не указано';
+        document.getElementById('viewSurname').textContent = currentUser.surname || 'Не указано';
+        document.getElementById('viewPigeonId').textContent = currentUser.pigeonId || 'Не указан';
+        if (currentUser.role === 'organizer') {
+            document.getElementById('organizerProfileFields').style.display = 'block';
+            document.getElementById('organizerEditFields').style.display = 'block';
+            document.getElementById('viewOrgName').textContent = currentUser.organizationName || 'Не указано';
+            document.getElementById('viewPhone').textContent = currentUser.phone || 'Не указано';
+        }
+    }
+
+    function showEditForm() {
+        document.getElementById('viewProfile').style.display = 'none'; document.getElementById('editProfile').style.display = 'block';
+        document.getElementById('editName').value = currentUser.name || ''; 
+        document.getElementById('editSurname').value = currentUser.surname || ''; 
+        document.getElementById('editPigeonId').value = currentUser.pigeonId || '';
+        document.getElementById('currentPassword').value = '';
+        if (currentUser.role === 'organizer') { 
+            document.getElementById('editOrgName').value = currentUser.organizationName || ''; 
+            document.getElementById('editPhone').value = currentUser.phone || ''; 
+        }
+    }
+
+    function cancelEdit() { 
+        document.getElementById('viewProfile').style.display = 'block'; 
+        document.getElementById('editProfile').style.display = 'none'; 
+        document.getElementById('editPassword').value = '';
+        document.getElementById('currentPassword').value = '';
+    }
+    
+    document.getElementById('editProfileForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // ПРОВЕРКА ПАРОЛЯ
+        const currentPasswordInput = document.getElementById('currentPassword').value;
+        if (currentPasswordInput !== currentUser.password) {
+            alert('❌ Неверный текущий пароль. Изменения не сохранены.');
+            return;
+        }
+
+        const updatedUser = { ...currentUser };
+        updatedUser.name = document.getElementById('editName').value;
+        updatedUser.surname = document.getElementById('editSurname').value;
+        updatedUser.pigeonId = document.getElementById('editPigeonId').value;
+        
+        if (currentUser.role === 'organizer') { 
+            updatedUser.organizationName = document.getElementById('editOrgName').value; 
+            updatedUser.phone = document.getElementById('editPhone').value; 
+        }
+
+        const newPassword = document.getElementById('editPassword').value;
+        if (newPassword) { 
+            if (newPassword.length < 6) return alert('Пароль минимум 6 символов'); 
+            updatedUser.password = newPassword; 
+        }
+
+        try {
+            const res = await fetch(`http://localhost:3000/users/${currentUser.id}`, { 
+                method: 'PUT', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify(updatedUser) 
+            });
+            if (res.ok) { 
+                currentUser = await res.json(); 
+                localStorage.setItem('user', JSON.stringify(currentUser)); 
+                alert('✅ Профиль обновлен!'); 
+                cancelEdit(); 
+                loadProfileData(); 
+            }
+        } catch (error) { alert('❌ Ошибка при сохранении'); }
+    });
+
+    function groupTicketsByEvent(tickets) {
+        const grouped = {};
+        tickets.forEach(ticket => {
+            const key = `${ticket.eventId}_${ticket.eventTitle}`;
+            if (!grouped[key]) grouped[key] = { eventId: ticket.eventId, eventTitle: ticket.eventTitle, place: ticket.place, price: ticket.price, date: ticket.date, tickets: [], totalQuantity: 0 };
+            grouped[key].tickets.push(ticket); grouped[key].totalQuantity++;
+        });
+        return Object.values(grouped);
+    }
+    
+    async function loadUserTickets() {
+        const container = document.getElementById('ticketsContainer');
+        try {
+            const response = await fetch('http://localhost:3000/tickets');
+            const allTickets = await response.json();
+            const userTickets = allTickets.filter(ticket => String(ticket.userId) === String(currentUser.id));
+            if (userTickets.length === 0) {
+                container.innerHTML = `<div class="text-center text-muted p-5"><i class="bi bi-ticket-perforated" style="font-size: 4rem;"></i><p class="mt-3">У вас пока нет купленных билетов</p><a href="index.html" class="btn btn-rose">Купить билет</a></div>`; return;
+            }
+            const today = new Date().toISOString().split('T')[0];
+            const activeTickets = userTickets.filter(t => t.status === 'active' && t.date >= today);
+            const pastTickets = userTickets.filter(t => t.status === 'active' && t.date < today);
+            let html = '';
+            
+            const groupedActive = groupTicketsByEvent(activeTickets);
+            if (groupedActive.length > 0) {
+                html += `<h5 class="mb-3">Активные <span class="badge bg-rose-subtle text-rose">${groupedActive.reduce((sum, g) => sum + g.totalQuantity, 0)}</span></h5><div class="row g-3 mb-4">`;
+                groupedActive.forEach(group => {
+                    html += `<div class="col-md-4"><div class="event-card p-3 h-100 grouped-ticket-card"><div class="d-flex justify-content-between align-items-start mb-2"><span class="badge" style="background: var(--rose-light);">${group.totalQuantity} билет(а)</span><small>${group.date}</small></div><h6 class="fw-bold mt-2">${group.eventTitle}</h6><small class="text-muted d-block mb-2">${group.place}</small><div class="d-flex justify-content-between align-items-center mt-2"><div><span class="fw-bold" style="color: var(--rose);">${group.price} ₽</span><span class="ticket-quantity ms-2">×${group.totalQuantity}</span></div><button class="btn btn-sm btn-outline-rose" onclick="openReturnQuantityModal(${group.eventId}, '${group.eventTitle}', ${group.price}, ${group.totalQuantity})">Вернуть</button></div></div></div>`;
+                });
+                html += `</div>`;
+            }
+            
+            const groupedPast = groupTicketsByEvent(pastTickets);
+            if (groupedPast.length > 0) {
+                html += `<h5 class="mb-3 mt-4">Прошедшие <span class="badge bg-secondary">${groupedPast.reduce((sum, g) => sum + g.totalQuantity, 0)}</span></h5><div class="row g-3">`;
+                groupedPast.forEach(group => {
+                    html += `<div class="col-md-4"><div class="event-card p-3 h-100 opacity-75"><div class="d-flex justify-content-between mb-2"><span class="badge bg-secondary">${group.totalQuantity} билет(а)</span><small>${group.date}</small></div><h6 class="fw-bold mt-2">${group.eventTitle}</h6><small class="text-muted d-block">${group.place}</small><div class="d-flex justify-content-between mt-2"><div><span class="fw-bold" style="color: var(--rose);">${group.price} ₽</span></div><span class="badge bg-secondary">Использован</span></div></div></div>`;
+                });
+                html += `</div>`;
+            }
+            container.innerHTML = html || `<div class="text-center text-muted p-5"><i class="bi bi-ticket-perforated" style="font-size: 4rem;"></i><p class="mt-3">У вас нет активных билетов</p></div>`;
+            loadReturns(userTickets);
+        } catch (error) { container.innerHTML = `<div class="text-center text-danger"><p>Ошибка загрузки билетов</p></div>`; }
+    }
+    
+    function openReturnQuantityModal(eventId, eventTitle, price, maxQuantity) {
+        selectedGroupForReturn = { eventId, eventTitle, price, maxQuantity };
+        selectedReturnQuantity = 1;
+        document.getElementById('returnModalInfo').innerHTML = `<div class="text-center"><h6 class="fw-bold">${eventTitle}</h6><small class="text-muted">Цена за билет: ${price.toLocaleString()} ₽</small></div>`;
+        document.getElementById('returnQuantity').value = 1;
+        document.getElementById('returnAvailableInfo').innerHTML = `Доступно для возврата: ${maxQuantity} билет(ов)`;
+        updateReturnTotalPrice();
+        document.getElementById('returnDecrementBtn').disabled = true; document.getElementById('returnIncrementBtn').disabled = (maxQuantity <= 1);
+        new bootstrap.Modal(document.getElementById('returnQuantityModal')).show();
+    }
+    
+    function changeReturnQuantity(delta) {
+        if (!selectedGroupForReturn) return;
+        let newValue = selectedReturnQuantity + delta;
+        if (newValue >= 1 && newValue <= selectedGroupForReturn.maxQuantity) {
+            selectedReturnQuantity = newValue;
+            document.getElementById('returnQuantity').value = selectedReturnQuantity;
+            updateReturnTotalPrice();
+            document.getElementById('returnDecrementBtn').disabled = (selectedReturnQuantity <= 1);
+            document.getElementById('returnIncrementBtn').disabled = (selectedReturnQuantity >= selectedGroupForReturn.maxQuantity);
+        }
+    }
+    function updateReturnTotalPrice() { if (selectedGroupForReturn) document.getElementById('returnTotalPrice').innerHTML = `${(selectedGroupForReturn.price * selectedReturnQuantity).toLocaleString()} ₽`; }
+    
+    async function confirmPartialReturn() {
+        if (!selectedGroupForReturn) return;
+        try {
+            const response = await fetch('http://localhost:3000/tickets');
+            const allTickets = await response.json();
+            const ticketsToReturn = allTickets.filter(ticket => String(ticket.userId) === String(currentUser.id) && String(ticket.eventId) === String(selectedGroupForReturn.eventId) && ticket.status === 'active');
+            
+            if (selectedReturnQuantity > ticketsToReturn.length) return alert(`Доступно ${ticketsToReturn.length} билет(ов)`);
+            const ticketsToReturnList = ticketsToReturn.slice(0, selectedReturnQuantity);
+            
+            const updatePromises = ticketsToReturnList.map(ticket => {
+                ticket.status = 'returned'; ticket.returnStatus = 'pending'; ticket.returnDate = new Date().toISOString().split('T')[0];
+                return fetch(`http://localhost:3000/tickets/${ticket.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(ticket) });
+            });
+            await Promise.all(updatePromises);
+            
+            try {
+                const eventRes = await fetch(`http://localhost:3000/events/${selectedGroupForReturn.eventId}`);
+                if (eventRes.ok) {
+                    const eventData = await eventRes.json();
+                    eventData.soldTickets = Math.max(0, (eventData.soldTickets || 0) - selectedReturnQuantity);
+                    await fetch(`http://localhost:3000/events/${selectedGroupForReturn.eventId}`, {
+                        method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(eventData)
+                    });
+                }
+            } catch (e) { console.error("Ошибка при обновлении счетчика события:", e); }
+
+            alert(`✅ Заявка на возврат ${selectedReturnQuantity} билет(ов) оформлена.`);
+            bootstrap.Modal.getInstance(document.getElementById('returnQuantityModal')).hide();
+            loadUserTickets();
+        } catch (error) { alert('❌ Ошибка при оформлении возврата'); }
+        selectedGroupForReturn = null; selectedReturnQuantity = 1;
+    }
+    
+    async function loadReturns(allTickets = null) {
+        const container = document.getElementById('returnsList');
+        try {
+            let returns = allTickets ? allTickets.filter(t => t.status === 'returned') : await (await fetch('http://localhost:3000/tickets')).json().then(t => t.filter(x => String(x.userId) === String(currentUser.id) && x.status === 'returned'));
+            if (returns.length === 0) return container.innerHTML = '<p class="text-muted text-center">Нет возвратов</p>';
+            
+            const groupedPending = {}, groupedApproved = {};
+            returns.forEach(item => {
+                const key = `${item.eventId}_${item.eventTitle}`, isPending = item.returnStatus === 'pending' || !item.returnStatus;
+                const target = isPending ? groupedPending : groupedApproved;
+                if (!target[key]) target[key] = { eventTitle: item.eventTitle, date: item.date, price: item.price, quantity: 0, totalPrice: 0 };
+                target[key].quantity++; target[key].totalPrice += item.price;
+            });
+            let html = '';
+            if (Object.keys(groupedPending).length > 0) {
+                html += `<h6 class="mb-2">В обработке</h6>` + Object.values(groupedPending).map(i => `<div class="return-item d-flex justify-content-between align-items-center mb-2 p-2 rounded"><div><strong>${i.eventTitle}</strong><br><small class="text-muted">${i.date} • ${i.quantity} билет(а)</small></div><span class="badge status-pending status-badge">В обработке</span><span class="fw-bold" style="color: var(--rose);">${i.totalPrice.toLocaleString()} ₽</span></div>`).join('');
+            }
+            if (Object.keys(groupedApproved).length > 0) {
+                html += `<h6 class="mb-2 mt-3">Возвращено</h6>` + Object.values(groupedApproved).map(i => `<div class="return-item d-flex justify-content-between align-items-center mb-2 p-2 rounded"><div><strong>${i.eventTitle}</strong><br><small class="text-muted">${i.date} • ${i.quantity} билет(а)</small></div><span class="badge status-approved status-badge">Возвращено</span><span class="fw-bold" style="color: var(--rose);">${i.totalPrice.toLocaleString()} ₽</span></div>`).join('');
+            }
+            container.innerHTML = html;
+        } catch (error) { container.innerHTML = '<p class="text-danger text-center">Ошибка загрузки возвратов</p>'; }
+    }
+    
+    document.getElementById('returnDecrementBtn')?.addEventListener('click', () => changeReturnQuantity(-1));
+    document.getElementById('returnIncrementBtn')?.addEventListener('click', () => changeReturnQuantity(1));
+    document.getElementById('confirmPartialReturnBtn')?.addEventListener('click', confirmPartialReturn);
+    document.addEventListener('DOMContentLoaded', () => { if (checkAuth()) loadUserTickets(); });
+    </script>
+</body>
+</html>

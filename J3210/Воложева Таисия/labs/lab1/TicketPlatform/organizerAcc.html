@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель организатора — Titickets</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <a href="#main-content" class="visually-hidden-focusable btn btn-primary m-2">Перейти к списку событий</a>
+
+    <header class="navbar navbar-expand-lg border-bottom" role="banner">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html" aria-label="Titickets — На главную">Titickets</a>
+            <nav id="userMenu" aria-label="Меню пользователя"></nav>
+        </div>
+    </header>
+
+    <main class="container my-5" id="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h2 fw-bold text-rose">Управление мероприятиями</h1>
+            <button class="btn btn-rose px-4" data-bs-toggle="modal" data-bs-target="#createEventModal" aria-haspopup="dialog">
+                <i class="bi bi-plus-circle me-2" aria-hidden="true"></i>Создать новое событие
+            </button>
+        </div>
+
+        <section class="card shadow-sm border-0 rounded-4 overflow-hidden" aria-labelledby="list-heading">
+            <h2 id="list-heading" class="visually-hidden">Ваши активные мероприятия</h2>
+            <div class="list-group list-group-flush" id="eventsList" aria-live="polite">
+                <div class="p-5 text-center" role="status">
+                    <div class="spinner-border text-rose" aria-hidden="true"></div>
+                    <p class="mt-2 text-muted">Загрузка данных...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal fade" id="profileSettingsModal" tabindex="-1" aria-labelledby="profileModalTitle" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <form id="profileSettingsForm">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title fw-bold" id="profileModalTitle">Настройки профиля</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label for="profileName" class="form-label fw-semibold">Ваше имя</label>
+                            <input type="text" id="profileName" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="profileEmail" class="form-label fw-semibold">Email</label>
+                            <input type="email" id="profileEmail" class="form-control" required>
+                        </div>
+                        <hr>
+                        <div class="mb-3">
+                            <label for="oldPassword" class="form-label fw-semibold text-danger">Текущий пароль</label>
+                            <input type="password" id="oldPassword" class="form-control" required placeholder="Введите текущий пароль для подтверждения">
+                        </div>
+                        <div class="mb-0">
+                            <label for="profilePassword" class="form-label fw-semibold">Новый пароль (оставьте пустым, если не хотите менять)</label>
+                            <input type="password" id="profilePassword" class="form-control" autocomplete="new-password">
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-rose px-4">Сохранить данные</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="createEventModal" tabindex="-1" role="dialog" aria-labelledby="createTitle" aria-modal="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <form id="createEventForm">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title fw-bold" id="createTitle">Регистрация события</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label for="eventTitle" class="form-label fw-semibold">Название мероприятия</label>
+                                <input type="text" id="eventTitle" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="eventDate" class="form-label fw-semibold">Дата проведения</label>
+                                <input type="date" id="eventDate" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="eventType" class="form-label fw-semibold">Тип</label>
+                                <select id="eventType" class="form-select">
+                                    <option value="Концерт">Концерт</option>
+                                    <option value="Театр">Театр</option>
+                                    <option value="Выставка">Выставка</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="eventPrice" class="form-label fw-semibold">Цена билета (₽)</label>
+                                <input type="number" id="eventPrice" class="form-control" required min="0">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="eventTotalTickets" class="form-label fw-semibold">Количество мест</label>
+                                <input type="number" id="eventTotalTickets" class="form-control" required min="1">
+                            </div>
+                            <div class="col-12">
+                                <label for="eventPlace" class="form-label fw-semibold">Место / Адрес</label>
+                                <input type="text" id="eventPlace" class="form-control" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="eventDescription" class="form-label fw-semibold">Описание</label>
+                                <textarea id="eventDescription" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-rose px-4">Создать</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editEventModal" tabindex="-1" role="dialog" aria-labelledby="editTitleLabel" aria-modal="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <form id="editEventForm">
+                    <input type="hidden" id="editEventId">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title fw-bold" id="editTitleLabel">Редактирование события</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label for="editTitle" class="form-label fw-semibold">Название</label>
+                                <input type="text" id="editTitle" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="editDate" class="form-label fw-semibold">Дата</label>
+                                <input type="date" id="editDate" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="editPrice" class="form-label fw-semibold">Цена (₽)</label>
+                                <input type="number" id="editPrice" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="editTotalTickets" class="form-label fw-semibold">Всего билетов</label>
+                                <input type="number" id="editTotalTickets" class="form-control" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="editPlace" class="form-label fw-semibold">Место</label>
+                                <input type="text" id="editPlace" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-rose px-4">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-top text-center py-4 mt-auto">
+        <p class="text-muted small mb-0">© 2026 Titickets Organizer. Все инструменты управления доступны.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    let currentUser = null;
+
+    function checkAccess() {
+        const user = JSON.parse(localStorage.getItem('user') || 'null');
+        if (!user || user.role !== 'organizer') {
+            window.location.href = 'login.html';
+            return;
+        }
+        currentUser = user;
+        document.getElementById('userMenu').innerHTML = `
+            <div class="dropdown">
+                <button class="btn btn-rose dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-badge-fill me-1" aria-hidden="true"></i> ${user.name || user.email}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="#" onclick="openProfileModal()">
+                        <i class="bi bi-gear me-2"></i>Настройки профиля
+                    </a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="#" onclick="logout()">
+                        <i class="bi bi-door-open me-2"></i>Выйти
+                    </a></li>
+                </ul>
+            </div>`;
+    }
+
+    function openProfileModal() {
+        document.getElementById('profileName').value = currentUser.name || '';
+        document.getElementById('profileEmail').value = currentUser.email || '';
+        document.getElementById('profilePassword').value = '';
+        document.getElementById('oldPassword').value = ''; // Очищаем поле старого пароля
+        new bootstrap.Modal(document.getElementById('profileSettingsModal')).show();
+    }
+
+    document.getElementById('profileSettingsForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const oldPass = document.getElementById('oldPassword').value;
+        const newName = document.getElementById('profileName').value.trim();
+        const newEmail = document.getElementById('profileEmail').value.trim();
+        const newPass = document.getElementById('profilePassword').value;
+
+        // ПРОВЕРКА СТАРОГО ПАРОЛЯ
+        if (oldPass !== currentUser.password) {
+            alert('Неверный текущий пароль! Изменения не сохранены.');
+            return;
+        }
+
+        try {
+            const updatedFields = { name: newName, email: newEmail };
+            if (newPass.length > 0) {
+                updatedFields.password = newPass; 
+            }
+
+            const res = await fetch(`http://localhost:3000/users/${currentUser.id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedFields)
+            });
+
+            if (res.ok) {
+                const updatedUser = await res.json();
+                localStorage.setItem('user', JSON.stringify(updatedUser));
+                currentUser = updatedUser;
+                alert('Профиль успешно обновлен!');
+                location.reload(); 
+            } else {
+                throw new Error('Ошибка обновления');
+            }
+        } catch (err) {
+            alert('Не удалось обновить данные профиля.');
+        }
+    });
+
+    function logout() {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('user');
+        window.location.href = 'index.html';
+    }
+
+    async function loadEvents() {
+        const list = document.getElementById('eventsList');
+        try {
+            const res = await fetch(`http://localhost:3000/events?organizerId=${currentUser.id}`);
+            const events = await res.json();
+            if (!events.length) {
+                list.innerHTML = `<div class="p-5 text-center text-muted" role="status">Список пуст. Создайте первое мероприятие!</div>`;
+                return;
+            }
+            list.innerHTML = events.map(e => `
+                <div class="list-group-item event-item p-4 border-bottom">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="h5 fw-bold mb-1">${e.title}</h3>
+                            <p class="text-muted small mb-0"><b>Дата:</b> ${e.date} | <b>Продано:</b> ${e.soldTickets || 0} из ${e.totalTickets}</p>
+                        </div>
+                        <div class="col-auto">
+                            <button onclick="openEditModal(${e.id})" class="btn btn-sm btn-outline-primary me-2"><i class="bi bi-pencil"></i></button>
+                            <button onclick="deleteEvent(${e.id})" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        } catch (err) {
+            list.innerHTML = `<div class="alert alert-danger m-3">Ошибка подключения к серверу.</div>`;
+        }
+    }
+
+    document.getElementById('createEventForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const newEvent = {
+            title: document.getElementById('eventTitle').value.trim(),
+            date: document.getElementById('eventDate').value,
+            price: Number(document.getElementById('eventPrice').value),
+            place: document.getElementById('eventPlace').value.trim(),
+            type: document.getElementById('eventType').value,
+            totalTickets: Number(document.getElementById('eventTotalTickets').value),
+            description: document.getElementById('eventDescription').value.trim(),
+            organizerId: currentUser.id,
+            soldTickets: 0
+        };
+        await fetch('http://localhost:3000/events', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newEvent)
+        });
+        bootstrap.Modal.getInstance(document.getElementById('createEventModal')).hide();
+        loadEvents();
+    });
+
+    async function openEditModal(id) {
+        const res = await fetch(`http://localhost:3000/events/${id}`);
+        const e = await res.json();
+        document.getElementById('editEventId').value = e.id;
+        document.getElementById('editTitle').value = e.title;
+        document.getElementById('editDate').value = e.date;
+        document.getElementById('editPrice').value = e.price;
+        document.getElementById('editTotalTickets').value = e.totalTickets;
+        document.getElementById('editPlace').value = e.place;
+        new bootstrap.Modal(document.getElementById('editEventModal')).show();
+    }
+
+    document.getElementById('editEventForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('editEventId').value;
+        const resGet = await fetch(`http://localhost:3000/events/${id}`);
+        const existing = await resGet.json();
+        const updated = {
+            ...existing,
+            title: document.getElementById('editTitle').value,
+            date: document.getElementById('editDate').value,
+            price: Number(document.getElementById('editPrice').value),
+            totalTickets: Number(document.getElementById('editTotalTickets').value),
+            place: document.getElementById('editPlace').value
+        };
+        await fetch(`http://localhost:3000/events/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updated)
+        });
+        bootstrap.Modal.getInstance(document.getElementById('editEventModal')).hide();
+        loadEvents();
+    });
+
+    async function deleteEvent(id) {
+        if (!confirm('Вы уверены?')) return;
+        await fetch(`http://localhost:3000/events/${id}`, { method: 'DELETE' });
+        loadEvents();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        checkAccess();
+        loadEvents();
+    });
+    </script>
+</body>
+</html>

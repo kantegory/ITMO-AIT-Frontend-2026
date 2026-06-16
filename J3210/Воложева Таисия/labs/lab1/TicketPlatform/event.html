@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мероприятие — Titickets</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <a href="#event-content" class="visually-hidden-focusable btn btn-primary m-2">Перейти к деталям мероприятия</a>
+
+    <header class="navbar navbar-expand-lg border-bottom" role="banner">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html" aria-label="Titickets — Главная страница">Titickets</a>
+            <nav id="auth-buttons" aria-label="Пользовательское меню"></nav>
+        </div>
+    </header>
+
+    <main class="container my-5" id="event-content">
+        <div id="event-container" aria-live="polite">
+            <div class="text-center" role="status">
+                <div class="spinner-border text-rose"></div>
+                <p>Загрузка данных о мероприятии...</p>
+            </div>
+        </div>
+
+        <div class="modal fade" id="buyTicketsModal" tabindex="-1" role="dialog" aria-labelledby="buyModalTitle"
+            aria-modal="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="buyModalTitle"><svg class="icon-svg me-2 text-rose"
+                                aria-hidden="true">
+                                <use xlink:href="sprite.svg#icon-ticket"></use>
+                            </svg>Покупка билетов</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Закрыть окно покупки"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modalEventInfo" class="mb-4 text-center"></div>
+                        <div class="mb-4">
+                            <label for="ticketQuantity" class="form-label fw-semibold d-block text-center">Количество
+                                билетов</label>
+                            <div class="quantity-selector mx-auto">
+                                <button type="button" class="quantity-btn" id="decrementBtn"
+                                    aria-label="Уменьшить количество на 1">−</button>
+                                <input type="number" id="ticketQuantity" class="quantity-input" value="1" min="1"
+                                    readonly aria-live="assertive">
+                                <button type="button" class="quantity-btn" id="incrementBtn"
+                                    aria-label="Увеличить количество на 1">+</button>
+                            </div>
+                            <div id="availableInfo" class="available-tickets mt-2 text-center" role="status"></div>
+                        </div>
+                        <div class="d-flex justify-content-between border-top pt-3">
+                            <span class="text-muted">Цена за билет:</span>
+                            <span id="pricePerTicket" class="fw-bold"></span>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <span class="h5">Итого:</span>
+                            <span id="totalPrice" class="total-price fs-4"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                        <button class="btn btn-rose px-4" id="confirmPurchaseBtn"><i class="bi bi-check-circle me-2"
+                                aria-hidden="true"></i>Купить билеты</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="hallModal" tabindex="-1" role="dialog" aria-labelledby="hallModalTitle"
+            aria-modal="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="hallModalTitle">Схема зрительного зала</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Закрыть схему"></button>
+                    </div>
+                    <div class="modal-body text-center p-4">
+                        <img id="hallSchemeImage" src="images/hall_layout.jpg" class="img-fluid rounded-4"
+                            alt="Интерактивная схема зала с указанием секторов и рядов">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-rose" data-bs-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="reviews-section mt-5 pt-4" aria-labelledby="reviews-title">
+            <h3 id="reviews-title" class="text-center mb-4">Отзывы посетителей</h3>
+            <div class="row g-4" id="reviews-list" aria-live="polite"></div>
+        </section>
+    </main>
+
+    <footer class="border-top text-center py-4 mt-auto">
+        <p class="text-muted small mb-0">© 2026 Titickets. Все права защищены. Сервис продажи билетов.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentEventData = null, selectedQuantity = 1, currentUser = null;
+
+        function checkAuthAndDisplay() {
+            const token = localStorage.getItem('accessToken');
+            const user = JSON.parse(localStorage.getItem('user') || 'null');
+            const authDiv = document.getElementById('auth-buttons');
+            if (token && user && user.email && user.id) {
+                currentUser = user;
+                const myTicketsLink = user.role === 'organizer' ? '' : '<li><a class="dropdown-item" href="personalAcc.html"><i class="bi bi-ticket-perforated me-2"></i>Мои билеты</a></li>';
+                const organizerLink = user.role === 'organizer' ? '<li><a class="dropdown-item" href="organizerAcc.html"><i class="bi bi-mic me-2"></i>Панель организатора</a></li>' : '';
+                authDiv.innerHTML = `
+                <div class="dropdown">
+                    <button class="btn btn-rose dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle me-1" aria-hidden="true"></i> ${user.name || user.email}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        ${myTicketsLink}
+                        ${organizerLink}
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#" onclick="logout()"><i class="bi bi-box-arrow-right me-2"></i>Выйти</a></li>
+                    </ul>
+                </div>`;
+            } else {
+                authDiv.innerHTML = `<a href="login.html" class="btn btn-outline-primary me-2 px-4">Вход</a><a href="register.html" class="btn btn-primary px-4">Регистрация</a>`;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        function getEventIdFromUrl() { return new URLSearchParams(window.location.search).get('id'); }
+
+        function createReviewCard(r) {
+            const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+            return `
+            <article class="col-md-4">
+                <div class="review-card card h-100 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h4 class="h6 mb-0">${r.author}</h4>
+                            <span class="text-warning" role="img" aria-label="Рейтинг: ${r.rating} из 5">${stars}</span>
+                        </div>
+                        <p class="card-text small">"${r.text}"</p>
+                        <time class="text-muted small">${r.date}</time>
+                    </div>
+                </div>
+            </article>`;
+        }
+
+        function changeQuantity(delta) {
+            if (!currentEventData) return;
+            const available = currentEventData.totalTickets - (currentEventData.soldTickets || 0);
+            let newVal = selectedQuantity + delta;
+            if (newVal >= 1 && newVal <= available) {
+                selectedQuantity = newVal;
+                document.getElementById('ticketQuantity').value = selectedQuantity;
+                updateTotalPrice();
+            }
+        }
+
+        function updateTotalPrice() {
+            if (currentEventData) {
+                const total = currentEventData.price * selectedQuantity;
+                document.getElementById('totalPrice').innerHTML = `${total.toLocaleString()} ₽`;
+            }
+        }
+
+        function openPurchaseModal() {
+            if (!currentEventData) return;
+            if (!currentUser) {
+                if (confirm('Для покупки билетов необходимо войти в аккаунт. Перейти на страницу входа?')) window.location.href = 'login.html';
+                return;
+            }
+            if (currentUser.role === 'organizer') {
+                alert('Аккаунт организатора не предназначен для покупки билетов.');
+                return;
+            }
+            const available = currentEventData.totalTickets - (currentEventData.soldTickets || 0);
+            if (available <= 0) { alert('К сожалению, билеты закончились.'); return; }
+
+            selectedQuantity = 1;
+            document.getElementById('ticketQuantity').value = 1;
+            document.getElementById('modalEventInfo').innerHTML = `<h6 class="fw-bold">${currentEventData.title}</h6><p class="text-muted small mb-0">${currentEventData.date} • ${currentEventData.place}</p>`;
+            document.getElementById('pricePerTicket').innerHTML = `${currentEventData.price.toLocaleString()} ₽`;
+            document.getElementById('availableInfo').innerHTML = `Доступно: ${available} шт.`;
+            updateTotalPrice();
+            new bootstrap.Modal(document.getElementById('buyTicketsModal')).show();
+        }
+
+        async function confirmPurchase() {
+            const btn = document.getElementById('confirmPurchaseBtn');
+            btn.disabled = true;
+            try {
+                const tickets = [];
+                for (let i = 0; i < selectedQuantity; i++) {
+                    tickets.push({
+                        userId: currentUser.id,
+                        eventId: currentEventData.id,
+                        eventTitle: currentEventData.title,
+                        price: currentEventData.price,
+                        date: currentEventData.date,
+                        place: currentEventData.place,
+                        status: "active",
+                        purchaseDate: new Date().toISOString().split('T')[0]
+                    });
+                }
+                const promises = tickets.map(t => fetch('http://localhost:3000/tickets', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(t) }));
+                await Promise.all(promises);
+
+                const updatedEvent = { ...currentEventData, soldTickets: (currentEventData.soldTickets || 0) + selectedQuantity };
+                await fetch(`http://localhost:3000/events/${currentEventData.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updatedEvent) });
+
+                alert(`Успешно! Куплено билетов: ${selectedQuantity}`);
+                bootstrap.Modal.getInstance(document.getElementById('buyTicketsModal')).hide();
+                await loadEvent();
+            } catch (error) {
+                alert('Произошла ошибка при оформлении заказа.');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        function displayEvent(event) {
+            const container = document.getElementById('event-container');
+            const available = event.totalTickets - (event.soldTickets || 0);
+            const isSoldOut = available <= 0;
+            const isPast = new Date(event.date) < new Date().setHours(0, 0, 0, 0);
+            const canBuy = (!currentUser || currentUser.role !== 'organizer') && !isSoldOut && !isPast;
+
+            container.innerHTML = `
+            <div class="row g-5 align-items-start">
+                <div class="col-lg-6">
+                    <img src="${event.posterUrl || 'images/burntShugar.jpg'}" class="img-fluid rounded-4 shadow" alt="Афиша мероприятия ${event.title}">
+                </div>
+                <div class="col-lg-6">
+                    <article class="event-details-card p-4 border rounded-4">
+                        <h1 class="h2 fw-bold mb-4">${event.title}</h1>
+                        <div class="event-info mb-4">
+                            <p class="mb-2"><i class="bi bi-calendar3 me-2 text-rose" aria-hidden="true"></i> <b>Дата:</b> ${event.date}</p>
+                            <p class="mb-2"><i class="bi bi-geo-alt me-2 text-rose" aria-hidden="true"></i> <b>Место:</b> ${event.place}</p>
+                            <p class="mb-2"><i class="bi bi-wallet2 me-2 text-rose" aria-hidden="true"></i> <b>Цена:</b> ${event.price.toLocaleString()} ₽</p>
+                            <p class="mb-0"><i class="bi bi-ticket-perforated me-2 text-rose" aria-hidden="true"></i> <b>Билетов:</b> ${available} из ${event.totalTickets}</p>
+                        </div>
+                        <p class="lead text-muted mb-4">${event.description || ''}</p>
+                        <div class="d-grid gap-3 d-sm-flex">
+                            <button onclick="openPurchaseModal()" class="btn btn-rose btn-lg flex-grow-1 py-3" ${!canBuy ? 'disabled' : ''}>
+                                ${isPast ? 'Мероприятие завершено' : (isSoldOut ? 'Билетов нет' : 'Купить билеты')}
+                            </button>
+                            <button class="btn btn-outline-rose btn-lg flex-grow-1 py-3" data-bs-toggle="modal" data-bs-target="#hallModal">
+                                <i class="bi bi-map me-2" aria-hidden="true"></i>Схема зала
+                            </button>
+                        </div>
+                        ${(!isSoldOut && available <= 10 && !isPast) ? `
+                            <div class="alert alert-warning mt-4 mb-0" role="alert">
+                                <i class="bi bi-exclamation-triangle me-2"></i>Поторопитесь! Осталось всего ${available} билетов.
+                            </div>` : ''}
+                    </article>
+                </div>
+            </div>`;
+        }
+
+        async function loadEvent() {
+            checkAuthAndDisplay();
+            const id = getEventIdFromUrl();
+            if (!id) {
+                document.getElementById('event-container').innerHTML = '<div class="alert alert-danger" role="alert">Ошибка: Мероприятие не выбрано.</div>';
+                return;
+            }
+            try {
+                const eventRes = await fetch(`http://localhost:3000/events/${id}`);
+                if (!eventRes.ok) throw new Error();
+                currentEventData = await eventRes.json();
+
+                const ticketsRes = await fetch(`http://localhost:3000/tickets?eventId=${id}&status=active`);
+                if (ticketsRes.ok) {
+                    const activeTickets = await ticketsRes.json();
+                    currentEventData.soldTickets = activeTickets.length;
+                }
+
+                displayEvent(currentEventData);
+                await loadReviews(id);
+            } catch (error) {
+                document.getElementById('event-container').innerHTML = '<div class="alert alert-danger" role="alert">Мероприятие не найдено или сервер недоступен.</div>';
+            }
+        }
+
+        async function loadReviews(eventId) {
+            const container = document.getElementById('reviews-list');
+            try {
+                const reviews = await fetch(`http://localhost:3000/reviews?eventId=${eventId}`).then(res => res.json());
+                if (!reviews.length) {
+                    container.innerHTML = '<div class="col-12 text-center text-muted py-5"><p>Отзывов пока нет. Будьте первым!</p></div>';
+                    return;
+                }
+                container.innerHTML = reviews.map(r => createReviewCard(r)).join('');
+            } catch (error) {
+                container.innerHTML = '<p class="text-center text-danger">Не удалось загрузить отзывы.</p>';
+            }
+        }
+
+        document.getElementById('decrementBtn')?.addEventListener('click', () => changeQuantity(-1));
+        document.getElementById('incrementBtn')?.addEventListener('click', () => changeQuantity(1));
+        document.getElementById('confirmPurchaseBtn')?.addEventListener('click', confirmPurchase);
+        document.addEventListener('DOMContentLoaded', loadEvent);
+    </script>
+</body>
+
+</html>
