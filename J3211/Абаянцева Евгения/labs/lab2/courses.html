@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог курсов - OnlineLearning</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-custom-red">
+        <div class="container">
+            <a class="navbar-brand text-danger fw-bold" href="index.html">
+                <i class="bi bi-mortarboard-fill"></i> OnlineLearning
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-light text-primary ms-2 px-3" href="index.html">Главная</a>
+                    </li>
+                    <li class="nav-item" id="authLinks"></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <h1 class="mb-4">Каталог курсов</h1>
+        
+        <div class="row">
+            <div class="col-lg-3 mb-4">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0"><i class="bi bi-funnel"></i> Фильтры</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="filterForm">
+                            <div class="mb-3">
+                                <label class="form-label">Предмет</label>
+                                <select class="form-select" id="subjectFilter">
+								    <option value="">Все предметы</option>
+									<option value="physics">Физика</option>
+									<option value="ai">Искусственный интеллект</option>
+								</select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Уровень</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="beginner" id="level1">
+                                    <label class="form-check-label" for="level1">Начальный</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="intermediate" id="level2">
+                                    <label class="form-check-label" for="level2">Средний</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="advanced" id="level3">
+                                    <label class="form-check-label" for="level3">Продвинутый</label>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Цена до: <span id="priceValue" class="fw-bold text-danger">15000</span> ₽</label>
+                                <input type="range" class="form-range" id="priceRange" min="0" max="15000" step="500" value="15000">
+                            </div>
+                            
+                            <button type="submit" class="btn btn-danger w-100">
+                                <i class="bi bi-search"></i> Применить
+                            </button>
+                            <button type="button" class="btn btn-outline-danger w-100 mt-2" id="resetFilters">
+                                <i class="bi bi-arrow-counterclockwise"></i> Сбросить
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <p class="text-muted mb-0">Найдено курсов: <span id="coursesCount" class="fw-bold">0</span></p>
+                    <select class="form-select w-auto" id="sortCourses">
+                        <option value="popular">По популярности</option>
+                        <option value="price-asc">Цена: по возрастанию</option>
+                        <option value="price-desc">Цена: по убыванию</option>
+                        <option value="rating">По рейтингу</option>
+                    </select>
+                </div>
+                
+                <div class="row" id="coursesList">
+                </div>
+                
+                <nav class="mt-4">
+                    <ul class="pagination justify-content-center" id="pagination">
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white py-3 mt-auto border-top">
+        <div class="container text-center text-muted small">
+            &copy; 2026 OnlineLearning. Все права защищены.
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+	<script src="js/auth.js"></script>
+	<script src="js/courses.js"></script>
+</body>
+</html>
