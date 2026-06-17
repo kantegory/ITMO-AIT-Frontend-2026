@@ -1,0 +1,46 @@
+(() => {
+  function setError(fieldId, message = '') { const target = document.querySelector(`[data-error-for="${fieldId}"]`); const field = document.getElementById(fieldId); if (target) target.textContent = message; if (field) { field.classList.toggle('is-invalid', Boolean(message)); field.classList.toggle('is-valid', !message && field.value.trim() !== ''); } }
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  function togglePassword(buttonId, inputId) { const button = document.getElementById(buttonId); const input = document.getElementById(inputId); if (!button || !input) return; button.addEventListener('click', () => { const isPassword = input.type === 'password'; input.type = isPassword ? 'text' : 'password'; button.innerHTML = `<i class="bi bi-eye${isPassword ? '-slash' : ''}"></i>`; }); }
+
+  function updatePasswordStrength() {
+    const passwordInput = document.getElementById('registerPassword'); const strengthFill = document.getElementById('passwordStrengthFill'); const strengthText = document.getElementById('passwordStrengthText'); if (!passwordInput || !strengthFill || !strengthText) return;
+    const value = passwordInput.value; let score = 0; if (value.length >= 6) score += 1; if (/[A-ZА-Я]/.test(value)) score += 1; if (/[a-zа-я]/.test(value)) score += 1; if (/\d/.test(value)) score += 1; if (/[^A-Za-zА-Яа-я0-9]/.test(value)) score += 1;
+    const config = { 0: ['0%', '#c77da5', 'Сила пароля: не определена'], 1: ['20%', '#c77da5', 'Сила пароля: слабый'], 2: ['40%', '#d9a27f', 'Сила пароля: ниже среднего'], 3: ['60%', '#cf9bc2', 'Сила пароля: средний'], 4: ['80%', '#b985c9', 'Сила пароля: хороший'], 5: ['100%', '#9c5f86', 'Сила пароля: сильный'] };
+    const [width, color, label] = config[score]; strengthFill.style.width = width; strengthFill.style.background = color; strengthText.textContent = label;
+  }
+
+  function initLogin() {
+    const form = document.getElementById('loginForm'); if (!form) return; togglePassword('toggleLoginPassword', 'loginPassword');
+    const currentUser = window.TarelkaStorage.getCurrentUser(); if (currentUser) { window.location.href = 'dashboard.html'; return; }
+    form.addEventListener('submit', (event) => {
+      event.preventDefault(); const email = document.getElementById('loginEmail').value.trim(); const password = document.getElementById('loginPassword').value.trim(); const remember = document.getElementById('rememberMe').checked; let isValid = true;
+      setError('loginEmail'); setError('loginPassword');
+      if (!email) { setError('loginEmail', 'Введите email.'); isValid = false; } else if (!validateEmail(email)) { setError('loginEmail', 'Введите корректный email.'); isValid = false; }
+      if (!password) { setError('loginPassword', 'Введите пароль.'); isValid = false; }
+      if (!isValid) return;
+      try { window.TarelkaStorage.login(email, password); if (remember) localStorage.setItem('budgetFlowRememberedEmail', email); window.TarelkaUI.showToast('Вход выполнен успешно.'); window.location.href = 'dashboard.html'; } catch (error) { window.TarelkaUI.showToast(error.message, 'danger'); }
+    });
+    const remembered = localStorage.getItem('budgetFlowRememberedEmail'); if (remembered) { document.getElementById('loginEmail').value = remembered; document.getElementById('rememberMe').checked = true; }
+    const forgotPasswordLink = document.getElementById('forgotPasswordLink'); if (forgotPasswordLink) forgotPasswordLink.addEventListener('click', (event) => { event.preventDefault(); window.TarelkaUI.showToast('Это демо-режим: восстановление пароля имитируется.', 'warning'); });
+  }
+
+  function initRegister() {
+    const form = document.getElementById('registerForm'); if (!form) return; togglePassword('toggleRegisterPassword', 'registerPassword'); document.getElementById('registerPassword')?.addEventListener('input', updatePasswordStrength);
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const payload = { firstName: document.getElementById('firstName').value.trim(), lastName: document.getElementById('lastName').value.trim(), email: document.getElementById('registerEmail').value.trim(), password: document.getElementById('registerPassword').value, confirmPassword: document.getElementById('confirmPassword').value, currency: document.getElementById('currency').value, monthlyGoal: document.getElementById('monthlyGoal').value, termsAgreement: document.getElementById('termsAgreement').checked };
+      let isValid = true; ['firstName','lastName','registerEmail','registerPassword','confirmPassword','currency','termsAgreement'].forEach((field) => setError(field));
+      if (!payload.firstName) { setError('firstName', 'Введите имя.'); isValid = false; }
+      if (!payload.lastName) { setError('lastName', 'Введите фамилию.'); isValid = false; }
+      if (!payload.email) { setError('registerEmail', 'Введите email.'); isValid = false; } else if (!validateEmail(payload.email)) { setError('registerEmail', 'Введите корректный email.'); isValid = false; }
+      if (payload.password.length < 6) { setError('registerPassword', 'Пароль должен содержать минимум 6 символов.'); isValid = false; }
+      if (payload.password !== payload.confirmPassword) { setError('confirmPassword', 'Пароли не совпадают.'); isValid = false; }
+      if (!payload.termsAgreement) { setError('termsAgreement', 'Необходимо согласиться с условиями.'); isValid = false; }
+      if (!isValid) return;
+      try { window.TarelkaStorage.registerUser(payload); window.TarelkaUI.showToast('Регистрация прошла успешно. Кабинет заполнен демо-данными.'); window.location.href = 'dashboard.html'; } catch (error) { window.TarelkaUI.showToast(error.message, 'danger'); }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => { initLogin(); initRegister(); });
+})();
