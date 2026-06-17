@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог курсов - Minion Courses</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-mortarboard-fill"></i> <span class="brand-minion">Minion</span> <span class="brand-courses">Courses</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="search.html">Каталог</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="theme-toggle" onclick="toggleTheme()">
+                        <i class="bi bi-moon-fill" id="themeIcon"></i>
+                    </span>
+                    <!-- Кнопки для неавторизованных -->
+                    <div id="authButtons" class="d-flex gap-2">
+                        <a href="login.html" class="btn btn-outline-primary btn-sm">Войти</a>
+                        <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
+                    </div>
+                    <!-- Дропдаун для авторизованных -->
+                    <div id="userDropdown" class="dropdown d-none">
+                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle fs-4 me-2"></i>
+                            <span id="userDropdownName" class="d-none d-md-inline"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person me-2"></i>Мой профиль</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="bi bi-box-arrow-right me-2"></i>Выйти</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-4">
+        <div class="row mb-4">
+            <div class="col">
+                <h2>Каталог курсов</h2>
+                <p class="text-muted">Найдите курс для себя</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Фильтры -->
+            <div class="col-lg-3 mb-4">
+                <div class="card p-3">
+                    <h5 class="mb-3">Фильтры</h5>
+
+                    <!-- Поиск по названию -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Поиск</label>
+                        <input type="text" class="form-control form-control-sm" id="searchInput" placeholder="Название курса...">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Категория</label>
+                        <div class="form-check">
+                            <input class="form-check-input filter-category" type="checkbox" value="programming" id="cat1" checked>
+                            <label class="form-check-label" for="cat1">Программирование</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input filter-category" type="checkbox" value="design" id="cat2" checked>
+                            <label class="form-check-label" for="cat2">Дизайн</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input filter-category" type="checkbox" value="data" id="cat3" checked>
+                            <label class="form-check-label" for="cat3">Data Science</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Уровень</label>
+                        <div class="form-check">
+                            <input class="form-check-input filter-level" type="checkbox" value="beginner" id="lvl1" checked>
+                            <label class="form-check-label" for="lvl1">Начинающий</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input filter-level" type="checkbox" value="intermediate" id="lvl2" checked>
+                            <label class="form-check-label" for="lvl2">Средний</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input filter-level" type="checkbox" value="advanced" id="lvl3" checked>
+                            <label class="form-check-label" for="lvl3">Продвинутый</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Цена</label>
+                        <div class="form-check">
+                            <input class="form-check-input filter-price" type="checkbox" value="free" id="price1" checked>
+                            <label class="form-check-label" for="price1">Бесплатные</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input filter-price" type="checkbox" value="paid" id="price2" checked>
+                            <label class="form-check-label" for="price2">Платные</label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary w-100" onclick="applyFilters()">
+                        <i class="bi bi-funnel me-1"></i>Применить
+                    </button>
+                    <button class="btn btn-outline-secondary w-100 mt-2" onclick="resetFilters()">
+                        Сбросить
+                    </button>
+                </div>
+            </div>
+
+            <!-- Список курсов -->
+            <div class="col-lg-9">
+                <!-- Счётчик результатов -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span id="resultsCount" class="text-muted small"></span>
+                    <select class="form-select form-select-sm w-auto" id="sortSelect" onchange="sortCourses()">
+                        <option value="rating">По рейтингу</option>
+                        <option value="price_asc">Цена: по возрастанию</option>
+                        <option value="price_desc">Цена: по убыванию</option>
+                        <option value="title">По названию</option>
+                    </select>
+                </div>
+
+                <!-- Скелетон -->
+                <div id="coursesLoading" class="row">
+                    <div class="col-md-6 col-lg-4 mb-4"><div class="card h-100 skeleton-card"><div class="skeleton-img"></div><div class="card-body"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
+                    <div class="col-md-6 col-lg-4 mb-4"><div class="card h-100 skeleton-card"><div class="skeleton-img"></div><div class="card-body"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
+                    <div class="col-md-6 col-lg-4 mb-4"><div class="card h-100 skeleton-card"><div class="skeleton-img"></div><div class="card-body"><div class="skeleton-line w-75 mb-2"></div><div class="skeleton-line w-50 mb-3"></div><div class="skeleton-line w-25"></div></div></div></div>
+                </div>
+
+                <!-- Контейнер курсов -->
+                <div id="coursesContainer" class="row d-none"></div>
+
+                <!-- Пусто -->
+                <div id="coursesEmpty" class="text-center py-5 d-none">
+                    <i class="bi bi-search text-muted" style="font-size:3rem;"></i>
+                    <p class="text-muted mt-3">Курсы не найдены. Попробуйте изменить фильтры.</p>
+                </div>
+
+                <!-- Ошибка -->
+                <div id="coursesError" class="alert alert-warning d-none">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    Не удалось загрузить курсы. Убедитесь, что сервер запущен (<code>npm start</code>).
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Модалка выхода -->
+    <div class="modal fade" id="logoutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Выход</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Вы уверены, что хотите выйти из аккаунта?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" id="logoutConfirmBtn">Выйти</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Все курсы из API (кешируем для фильтрации на клиенте)
+        let allCourses = [];
+
+        // Генерация звёзд
+        function renderStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (rating >= i) stars += '<i class="bi bi-star-fill"></i>';
+                else if (rating >= i - 0.5) stars += '<i class="bi bi-star-half"></i>';
+                else stars += '<i class="bi bi-star"></i>';
+            }
+            return stars;
+        }
+
+        // Форматирование цены
+        function formatPrice(course) {
+            if (course.priceType === 'free') {
+                return '<span class="course-price text-success">Бесплатно</span>';
+            }
+            return `<span class="course-price">${course.price.toLocaleString('ru-RU')} ₽</span>`;
+        }
+
+        // Рендер карточки
+        function renderCourseCard(course) {
+            const badge = course.badge
+                ? `<span class="badge bg-${course.badgeColor} position-absolute" style="top:10px;left:10px;">${course.badge}</span>`
+                : '';
+
+            return `
+                <div class="col-md-6 col-lg-4 mb-4 course-card-wrapper"
+                     data-category="${course.category}"
+                     data-level="${course.level}"
+                     data-price="${course.priceType}"
+                     data-title="${course.title.toLowerCase()}"
+                     data-rating="${course.rating}"
+                     data-pricenum="${course.price}">
+                    <div class="card course-card h-100">
+                        <img src="${course.image}" class="card-img-top" alt="${course.title}"
+                             onerror="this.src='https://placehold.co/400x160/6610f2/white?text=Course'">
+                        ${badge}
+                        <div class="card-body">
+                            <h5 class="card-title">${course.title}</h5>
+                            <p class="card-text text-muted small">${course.description.substring(0, 70)}...</p>
+                            <div class="rating mb-2">
+                                ${renderStars(course.rating)}
+                                <span class="text-muted small ms-1">(${course.reviewsCount})</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                ${formatPrice(course)}
+                                <a href="course.html?id=${course.id}" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Загрузка курсов из API
+        async function loadCourses() {
+            const loading = document.getElementById('coursesLoading');
+            const container = document.getElementById('coursesContainer');
+            const errorEl = document.getElementById('coursesError');
+
+            try {
+                allCourses = await apiFetch('/courses');
+                loading.classList.add('d-none');
+                container.classList.remove('d-none');
+                renderCourses(allCourses);
+            } catch (err) {
+                loading.classList.add('d-none');
+                errorEl.classList.remove('d-none');
+                console.error('Ошибка загрузки курсов:', err);
+            }
+        }
+
+        // Рендер списка курсов
+        function renderCourses(courses) {
+            const container = document.getElementById('coursesContainer');
+            const emptyEl = document.getElementById('coursesEmpty');
+            const countEl = document.getElementById('resultsCount');
+
+            if (courses.length === 0) {
+                container.innerHTML = '';
+                emptyEl.classList.remove('d-none');
+                countEl.textContent = 'Ничего не найдено';
+            } else {
+                emptyEl.classList.add('d-none');
+                container.innerHTML = courses.map(renderCourseCard).join('');
+                countEl.textContent = `Найдено курсов: ${courses.length}`;
+            }
+        }
+
+        // Применение фильтров (на клиенте, без повторного запроса к API)
+        function applyFilters() {
+            const categories = Array.from(document.querySelectorAll('.filter-category:checked')).map(el => el.value);
+            const levels = Array.from(document.querySelectorAll('.filter-level:checked')).map(el => el.value);
+            const prices = Array.from(document.querySelectorAll('.filter-price:checked')).map(el => el.value);
+            const searchText = document.getElementById('searchInput').value.toLowerCase().trim();
+
+            let filtered = allCourses.filter(course => {
+                const categoryMatch = categories.length === 0 || categories.includes(course.category);
+                const levelMatch = levels.length === 0 || levels.includes(course.level);
+                const priceMatch = prices.length === 0 || prices.includes(course.priceType);
+                const searchMatch = !searchText || course.title.toLowerCase().includes(searchText) || course.description.toLowerCase().includes(searchText);
+                return categoryMatch && levelMatch && priceMatch && searchMatch;
+            });
+
+            filtered = sortArray(filtered);
+            renderCourses(filtered);
+        }
+
+        // Сортировка
+        function sortArray(courses) {
+            const sort = document.getElementById('sortSelect').value;
+            return [...courses].sort((a, b) => {
+                if (sort === 'rating') return b.rating - a.rating;
+                if (sort === 'price_asc') return a.price - b.price;
+                if (sort === 'price_desc') return b.price - a.price;
+                if (sort === 'title') return a.title.localeCompare(b.title, 'ru');
+                return 0;
+            });
+        }
+
+        function sortCourses() {
+            applyFilters();
+        }
+
+        // Сброс фильтров
+        function resetFilters() {
+            document.querySelectorAll('.filter-category, .filter-level, .filter-price').forEach(el => el.checked = true);
+            document.getElementById('searchInput').value = '';
+            document.getElementById('sortSelect').value = 'rating';
+            renderCourses(allCourses);
+        }
+
+        // Поиск по вводу (live search)
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCourses();
+            document.getElementById('searchInput').addEventListener('input', applyFilters);
+        });
+    </script>
+</body>
+</html>
