@@ -13,67 +13,83 @@
 </head>
 <body class="bg-light">
 <!-- # Верхнее меню (header) с логотипом и навигацией # -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-4">
-  <div class="container">
-    <a class="navbar-brand fw-bold d-flex align-items-center" href="dashboard.html">
-      <span class="logo-n3n">
-        <span class="logo-n3n-black">n</span>
-        <span class="logo-n3n-red">3</span>
-        <span class="logo-n3n-black">n</span>
-      </span>
-    </a>
-  </div>
-</nav>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-4" aria-label="Основная навигация">
+    <div class="container">
+      <a class="navbar-brand fw-bold d-flex align-items-center" href="dashboard.html" aria-label="n3n — перейти на главную">
+        <span class="logo-n3n">
+          <span class="logo-n3n-black">n</span>
+          <span class="logo-n3n-red">3</span>
+          <span class="logo-n3n-black">n</span>
+        </span>
+      </a>
+    </div>
+  </nav>
+</header>
 
 <!-- # Основной блок с формой входа # -->
-<main class="container my-5">
+<main class="container my-5" id="main-content">
   <div class="row justify-content-center">
-    <div class="col-md-4">
-      <h1 class="h4 mb-3 text-center">
-      Вход в
-      <span class="logo-n3n mb-3">
-        <span class="logo-n3n-black">n</span><span class="logo-n3n-red">3</span><span class="logo-n3n-black">n</span>
-      </span>
-    </h1>
-      <!-- Форма авторизации (без реальной отправки) -->
-      <form>
+    <div class="col-md-4" aria-labelledby="login-title">
+      <h1 id="login-title" class="h4 mb-3 text-center">
+        Вход в
+        <span class="logo-n3n mb-3" aria-hidden="true">
+          <span class="logo-n3n-black">n</span><span class="logo-n3n-red">3</span><span class="logo-n3n-black">n</span>
+        </span>
+      </h1>
+
+      <!-- Форма авторизации -->
+      <form id="login-form" novalidate>
         <div class="mb-3">
-          <label class="form-label">Email</label>
-          <input type="email" class="form-control" placeholder="you@example.com">
+          <label class="form-label" for="login-email">Email</label>
+          <input
+            id="login-email"
+            type="email"
+            class="form-control"
+            placeholder="you@example.com"
+            name="email"
+            autocomplete="email"
+            required
+          >
         </div>
         <div class="mb-3">
-          <label class="form-label">Пароль</label>
-          <input type="password" class="form-control" placeholder="Пароль">
+          <label class="form-label" for="login-password">Пароль</label>
+          <input
+            id="login-password"
+            type="password"
+            class="form-control"
+            placeholder="Пароль"
+            name="password"
+            autocomplete="current-password"
+            required
+            aria-describedby="login-error"
+          >
         </div>
-        <button type="button" class="btn btn-primary w-100 mb-2"
-                data-bs-toggle="modal" data-bs-target="#loginModal">
+
+        <button
+          type="submit"
+          class="btn btn-primary w-100 mb-2"
+          data-bs-toggle="modal"
+          data-bs-target="#loginModal"
+        >
           Войти
         </button>
-        <div class="text-center">
+
+        <div
+          id="login-error"
+          class="text-danger small d-none mt-1"
+          aria-live="polite"
+        >
+          Неверный email или пароль. Зарегистрируйтесь, если аккаунта ещё нет.
+        </div>
+
+        <div class="text-center mt-3">
           <a href="register.html" class="small">Создать аккаунт</a>
         </div>
       </form>
     </div>
   </div>
 </main>
-
-<!-- Простое модальное окно для демонстрации -->
-<div class="modal fade" id="loginModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Демо входа</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        Здесь мог бы быть реальный процесс авторизации.
-      </div>
-      <div class="modal-footer">
-        <a href="dashboard.html" class="btn btn-primary">Перейти в кабинет</a>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- Подключение Bootstrap JS (для модалок и др. компонентов) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
