@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Models | Pipes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/themization/light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+    <link rel="stylesheet" href="css/themization/dark.css" media="(prefers-color-scheme: dark)">
+</head>
+
+<body class="models-page">
+
+    <div class="app-layout d-flex">
+
+    <aside> 
+        <button class="btn btn-primary d-md-none d-flex align-items-center justify-content-center" 
+                type="button" 
+                data-bs-toggle="offcanvas" 
+                data-bs-target="#mobileSidebar" 
+                aria-controls="mobileSidebar"
+                aria-label="Open navigation menu"
+                style="width: 45px; height: 45px;"> 
+            <svg width="24" height="24"><use href="img/sprite.svg#icon-home"></use></svg>
+        </button>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel">
+        <div class="offcanvas-header">
+            
+            <a href="dashboard.html" class="d-flex align-items-center mb-4 text-decoration-none gap-2 text-body-emphasis" aria-label="Pipes Home">
+                <svg width="26" height="26" fill="currentColor">
+                    <use href="img/sprite.svg#icon-logo-pipes"></use>
+                </svg>
+                <span class="fs-4 fw-bold">Pipes</span> 
+            </a>
+
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close menu"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <nav class="d-flex flex-column flex-shrink-0 bg-body-tertiary h-100 p-3" aria-label="Mobile navigation">
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item mb-2">
+                        <a href="dashboard.html" class="nav-link link-body-emphasis d-flex align-items-center gap-2" aria-current="page">
+                            <svg width="18" height="18"><use href="img/sprite.svg#icon-grid"></use></svg>
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="experiments.html" class="nav-link link-body-emphasis d-flex align-items-center gap-2">
+                            <svg width="18" height="18"><use href="img/sprite.svg#icon-flask"></use></svg>
+                            Experiments
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="models.html" class="nav-link active d-flex align-items-center gap-2"
+                        aria-current="page">
+                            <svg width="18" height="18"><use href="img/sprite.svg#icon-layers"></use></svg>
+                            Model Registry
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="mt-auto">
+                    <hr>
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" width="32" height="32" class="rounded-circle me-2" alt="User profile"> <strong>User</strong>
+                        </a>
+                        <ul class="dropdown-menu text-small shadow">
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="index.html">Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <nav class="d-none d-md-flex flex-column flex-shrink-0 p-4 bg-body-tertiary border-end" 
+             style="width:260px; min-height:100vh;" 
+             aria-label="Main sidebar">
+
+            <a href="dashboard.html" class="d-flex align-items-center mb-4 text-decoration-none gap-2 text-body-emphasis" aria-label="Pipes Home">
+                <svg width="32" height="32" fill="currentColor">
+                    <use href="img/sprite.svg#icon-logo-pipes"></use>
+                </svg>
+                <span class="fs-4 fw-bold">Pipes</span> 
+            </a>
+
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item mb-2">
+                <a href="dashboard.html" class="nav-link link-body-emphasis d-flex align-items-center gap-2" >
+                    <svg width="18" height="18"><use href="img/sprite.svg#icon-grid"></use></svg>
+                    Home
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="experiments.html" class="nav-link link-body-emphasis d-flex align-items-center gap-2">
+                    <svg width="18" height="18"><use href="img/sprite.svg#icon-flask"></use></svg>
+                    Experiments
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="models.html" class="nav-link active d-flex align-items-center gap-2"
+                aria-current="page">
+                    <svg width="18" height="18"><use href="img/sprite.svg#icon-layers"></use></svg>
+                    Model Registry
+                </a>
+            </li>
+        </ul>
+
+        <div class="mt-auto">
+            <hr>
+            <div class="dropdown">
+                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/mdo.png" width="32" height="32" class="rounded-circle me-2" alt="User avatar">
+                    <strong>User</strong>
+                </a>
+                <ul class="dropdown-menu text-small shadow">
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="index.html">Sign out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    </aside>
+
+
+    <main class="flex-grow-1 p-4">
+
+        <header class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Registered Models</h1>
+
+            <div class="d-flex flex-column flex-md-row gap-2">
+                <button class="btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#createModelModal"
+                        aria-haspopup="dialog">
+                    Create Model
+                </button>
+
+                <button id="deleteModelsBtn" class="btn btn-outline-danger" disabled aria-disabled="true">
+                    Delete
+                </button>
+            </div>
+        </header>
+
+        <section class="card mb-4" aria-label="Search and Filters">
+            <div class="card-body">
+                <form class="row g-3 align-items-center" role="search">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="input-group">
+                            <label for="searchModelsInput" class="visually-hidden">Search registered models</label>
+                            <input type="search" id="searchModelsInput" class="form-control" placeholder="Search registered models">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-3">
+                        <label for="tagModelsFilter" class="visually-hidden">Filter by tag</label>
+                        <select class="form-select" id="tagModelsFilter">
+                            <option selected value="All">All</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+
+        <section class="card" aria-label="Models list">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0" aria-describedby="modelsStats">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width:40px;">
+                                <label for="selectAllModels" class="visually-hidden">Select all models</label>
+                                <input id="selectAllModels" class="form-check-input" type="checkbox">
+                            </th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Latest Version</th>
+                            <th scope="col">Aliased Versions</th>
+                            <th scope="col">Created By</th>
+                            <th scope="col">Last Modified</th>
+                            <th scope="col">Tags</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modelsTableBody" aria-live="polite"></tbody>
+                </table>
+            </div>
+        </section>
+
+
+        <nav class="mt-4 d-flex justify-content-between align-items-center" aria-label="Models pagination">
+            <span class="text-muted" id="modelsStats" aria-live="polite"></span>
+
+            <ul class="pagination mb-0">
+                <li class="page-item disabled" aria-disabled="true">
+                    <a class="page-link" tabindex="-1" aria-label="Previous page">Previous</a>
+                </li>
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="#" aria-label="Page 1">1</a>
+                </li>
+                <li class="page-item disabled" aria-disabled="true">
+                    <a class="page-link" tabindex="-1" aria-label="Next page">Next</a>
+                </li>
+            </ul>
+        </nav>
+
+    </main>
+
+
+<div class="modal fade" id="createModelModal" tabindex="-1" aria-labelledby="createModelTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-custom">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="createModelTitle">Create New Model</h2>
+                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="createModelForm">
+                    <div class="mb-3">
+                        <label for="newModelName" class="form-label">Model Name</label> <input type="text" id="newModelName" class="form-control" required aria-required="true">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newModelDescription" class="form-label">Description</label> <textarea id="newModelDescription" class="form-control" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="deleteModelsConfirmModal" tabindex="-1" aria-labelledby="deleteModelsTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header modal-header-custom border-0 pb-0">
+                <h2 class="modal-title fs-5" id="deleteModelsTitle">Confirm Deletion</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close modal"></button>
+            </div>
+            <div class="modal-body py-4">
+                <p class="mb-0 fs-5">Are you sure you want to delete <strong id="deleteModelsCount"></strong> model(s)?</p>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteModelsBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="module" src="js/app.js"></script>
+
+</body>
+</html>
