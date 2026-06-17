@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Поиск мероприятий - Билеты Петербурга</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+    crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body onload="tp.applyFilters(); tp.hideOrganizerLinks(); tp.hideUserLinks()">
+  <div class="ticket-platform">
+    <header class="ticket-platform__header navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+      <a class="navbar-brand" href="dashboard.html">Билеты Петербурга</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="search.html">Поиск</a></li>
+            <li class="nav-item"><a class="nav-link" href="dashboard.html">Мои билеты</a></li>
+            <li class="nav-item"><a class="nav-link" href="organizer.html">Организатор</a></li>
+            <li class="nav-item"><a class="nav-link" href="login.html">Выйти</a></li>
+        </ul>
+      </div>
+    </div>
+    </header>
+    <main class="container mt-4 flex-grow-1">
+      <h2 class="mb-3">Найти мероприятие</h2>
+      <form class="row g-3 mb-4" id="filterForm">
+        <div class="col-md-3">
+          <label for="filterType" class="form-label">Тип</label>
+          <select id="filterType" class="form-select" onchange="tp.applyFilters()">
+            <option value="">Все</option>
+            <option value="Концерт">Концерт</option>
+            <option value="Экскурсия">Экскурсия</option>
+            <option value="Другое">Другое</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="filterDate" class="form-label">С даты</label>
+          <input type="date" id="filterDate" class="form-control" onchange="tp.applyFilters()" />
+        </div>
+        <div class="col-md-3">
+          <label for="filterLocation" class="form-label">Место</label>
+          <input
+            type="text"
+            id="filterLocation"
+            class="form-control"
+            placeholder="Город или место"
+            oninput="tp.applyFilters()"
+          />
+        </div>
+      </form>
+      <div class="row" id="searchResults"></div>
+    </main>
+
+  </div>
+  <script src="js/script.js"></script>
+
+  <script src="js/api.js"></script>
+  <!-- Page-specific script for the search page -->
+  <script src="js/search-page.js"></script>
+</body>
+</html>

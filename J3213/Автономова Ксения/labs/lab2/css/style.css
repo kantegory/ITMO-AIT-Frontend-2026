@@ -1,0 +1,141 @@
+:root {
+  --tp-primary: #0d6efd;
+  --tp-secondary: #f8f9fa;
+  --tp-dark: #0d6efd;
+  --tp-light: #ffffff;
+  --tp-accent: #dc3545;
+}
+
+.ticket-platform {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  background-color: var(--tp-secondary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.ticket-platform__header {
+  background-color: var(--tp-primary);
+  color: var(--tp-light);
+  padding: 1rem;
+}
+.ticket-platform__header .navbar-brand {
+  font-weight: 700;
+  color: var(--tp-light);
+}
+.ticket-platform__header .nav-link {
+  color: var(--tp-light);
+}
+.ticket-platform__header .nav-link:hover,
+.ticket-platform__header .nav-link:focus {
+  color: var(--tp-accent);
+}
+
+.ticket-platform__footer {
+  background-color: var(--tp-primary);
+  color: var(--tp-light);
+  padding: 1rem;
+  margin-top: auto;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.ticket-platform__form {
+  max-width: 420px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--tp-light);
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+.ticket-platform__form-title {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.ticket-platform__card {
+  transition: transform 0.2s ease-in-out;
+}
+.ticket-platform__card:hover {
+  transform: translateY(-3px);
+}
+
+.ticket-platform__event-image {
+  height: 180px;
+  object-fit: cover;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.ticket-platform__hall {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+  max-width: 600px;
+  margin: 1rem auto;
+}
+.ticket-platform__seat {
+  background-color: var(--tp-primary);
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.ticket-platform__seat:hover {
+  background-color: var(--tp-accent);
+}
+.ticket-platform__seat--selected {
+  background-color: var(--tp-accent);
+}
+.ticket-platform__seat::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 4px;
+}
+
+.ticket-platform__seat--taken {
+
+  background-color: #6c757d;
+  cursor: not-allowed;
+  color: var(--tp-light);
+}
+
+.ticket-platform__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.ticket-platform__list-item {
+  padding: 1rem;
+  background-color: var(--tp-light);
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.ticket-platform__text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ticket-platform__text-wrap {
+  word-break: break-word;
+}
+
+@media (max-width: 576px) {
+  .ticket-platform__hall {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+@media (min-width: 768px) {
+  .ticket-platform__container {
+    max-width: 720px;
+  }
+}
