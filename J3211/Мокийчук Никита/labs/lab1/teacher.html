@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кабинет преподавателя — MokiichukKnowledge</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="style.css?v=3" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><i class="bi bi-mortarboard-fill"></i> MokiichukKnowledge</a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto ms-3">
+          <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+          <li class="nav-item"><a class="nav-link" href="search.html">Каталог</a></li>
+          <li class="nav-item"><a class="nav-link active" href="teacher.html">Преподавателям</a></li>
+        </ul>
+        <div class="dropdown">
+          <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            <i class="bi bi-person-circle me-1"></i>Мокийчук Никита
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person me-2"></i>Мой профиль</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="login.html"><i class="bi bi-box-arrow-right me-2"></i>Выйти</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mt-navbar-lg"></div>
+
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+      <div>
+        <h3 class="fw-bold mb-1">Кабинет преподавателя</h3>
+        <p class="text-muted mb-0">Управляйте своими курсами и отслеживайте статистику</p>
+      </div>
+      <button class="btn btn-accent" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+        <i class="bi bi-plus-circle me-2"></i>Создать курс
+      </button>
+    </div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-lg-3">
+        <div class="teacher-stat-card">
+          <div class="d-flex align-items-center gap-3">
+            <div class="icon-wrap icon-wrap-primary">
+              <i class="bi bi-collection-play"></i>
+            </div>
+            <div>
+              <div class="fw-bold stat-number-sm">4</div>
+              <small class="text-muted">Курсов</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="teacher-stat-card">
+          <div class="d-flex align-items-center gap-3">
+            <div class="icon-wrap icon-wrap-accent">
+              <i class="bi bi-people"></i>
+            </div>
+            <div>
+              <div class="fw-bold stat-number-sm">1 247</div>
+              <small class="text-muted">Студентов</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="teacher-stat-card">
+          <div class="d-flex align-items-center gap-3">
+            <div class="icon-wrap icon-wrap-green">
+              <i class="bi bi-currency-dollar"></i>
+            </div>
+            <div>
+              <div class="fw-bold stat-number-sm">86 400 ₽</div>
+              <small class="text-muted">Доход</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="teacher-stat-card">
+          <div class="d-flex align-items-center gap-3">
+            <div class="icon-wrap icon-wrap-teal">
+              <i class="bi bi-star"></i>
+            </div>
+            <div>
+              <div class="fw-bold stat-number-sm">4.8</div>
+              <small class="text-muted">Рейтинг</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul class="nav nav-tabs-custom mb-4" role="tablist">
+      <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tabMyCourses">Мои курсы</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabStudents">Студенты</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabAnalytics">Аналитика</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <div class="tab-pane fade show active" id="tabMyCourses">
+        <div class="row g-3">
+
+          <div class="col-12">
+            <div class="card-custom p-4">
+              <div class="row align-items-center">
+                <div class="col-auto d-none d-md-block">
+                  <div class="course-img-placeholder-teacher bg-gradient-1 rounded" class="course-thumb-lg"><i class="bi bi-code-slash"></i></div>
+                </div>
+                <div class="col">
+                  <div class="d-flex align-items-center gap-2 mb-1">
+                    <h6 class="fw-bold mb-0">Python для начинающих</h6>
+                    <span class="badge bg-success">Опубликован</span>
+                  </div>
+                  <small class="text-muted">12 уроков · 2 400 студентов · Рейтинг 4.8</small>
+                </div>
+                <div class="col-auto d-flex gap-2 mt-2 mt-md-0">
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addLessonModal"><i class="bi bi-plus me-1"></i>Урок</button>
+                  <button class="btn btn-sm btn-outline-secondary" onclick="showToast('Редактирование курса (заглушка)','info')"><i class="bi bi-pencil"></i></button>
+                  <button class="btn btn-sm btn-outline-danger" onclick="showToast('Курс скрыт','warning')"><i class="bi bi-eye-slash"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="card-custom p-4">
+              <div class="row align-items-center">
+                <div class="col-auto d-none d-md-block">
+                  <div class="course-img-placeholder-teacher bg-gradient-5 rounded" class="course-thumb-lg"><i class="bi bi-filetype-js"></i></div>
+                </div>
+                <div class="col">
+                  <div class="d-flex align-items-center gap-2 mb-1">
+                    <h6 class="fw-bold mb-0">JavaScript продвинутый</h6>
+                    <span class="badge bg-success">Опубликован</span>
+                  </div>
+                  <small class="text-muted">16 уроков · 1 200 студентов · Рейтинг 4.8</small>
+                </div>
+                <div class="col-auto d-flex gap-2 mt-2 mt-md-0">
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addLessonModal"><i class="bi bi-plus me-1"></i>Урок</button>
+                  <button class="btn btn-sm btn-outline-secondary" onclick="showToast('Редактирование курса (заглушка)','info')"><i class="bi bi-pencil"></i></button>
+                  <button class="btn btn-sm btn-outline-danger" onclick="showToast('Курс скрыт','warning')"><i class="bi bi-eye-slash"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="card-custom p-4">
+              <div class="row align-items-center">
+                <div class="col-auto d-none d-md-block">
+                  <div class="course-img-placeholder-teacher bg-gradient-7 rounded" class="course-thumb-lg"><i class="bi bi-globe2"></i></div>
+                </div>
+                <div class="col">
+                  <div class="d-flex align-items-center gap-2 mb-1">
+                    <h6 class="fw-bold mb-0">Веб-разработка с нуля</h6>
+                    <span class="badge bg-success">Опубликован</span>
+                  </div>
+                  <small class="text-muted">10 уроков · 5 600 студентов · Рейтинг 4.9</small>
+                </div>
+                <div class="col-auto d-flex gap-2 mt-2 mt-md-0">
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addLessonModal"><i class="bi bi-plus me-1"></i>Урок</button>
+                  <button class="btn btn-sm btn-outline-secondary" onclick="showToast('Редактирование курса (заглушка)','info')"><i class="bi bi-pencil"></i></button>
+                  <button class="btn btn-sm btn-outline-danger" onclick="showToast('Курс скрыт','warning')"><i class="bi bi-eye-slash"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="card-custom p-4 draft-card">
+              <div class="row align-items-center">
+                <div class="col-auto d-none d-md-block">
+                  <div class="course-img-placeholder-teacher bg-gradient-8 rounded" class="course-thumb-lg"><i class="bi bi-robot"></i></div>
+                </div>
+                <div class="col">
+                  <div class="d-flex align-items-center gap-2 mb-1">
+                    <h6 class="fw-bold mb-0">Машинное обучение</h6>
+                    <span class="badge bg-warning text-dark">Черновик</span>
+                  </div>
+                  <small class="text-muted">3 урока · В разработке</small>
+                </div>
+                <div class="col-auto d-flex gap-2 mt-2 mt-md-0">
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addLessonModal"><i class="bi bi-plus me-1"></i>Урок</button>
+                  <button class="btn btn-sm btn-outline-secondary" onclick="showToast('Редактирование курса (заглушка)','info')"><i class="bi bi-pencil"></i></button>
+                  <button class="btn btn-sm btn-primary" onclick="showToast('Курс опубликован!','success')"><i class="bi bi-send me-1"></i>Опубликовать</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="tabStudents">
+        <div class="card-custom">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr class="table-header-bg">
+                  <th class="border-0 ps-4 fw-bold">Студент</th>
+                  <th class="border-0 fw-bold">Курс</th>
+                  <th class="border-0 fw-bold">Прогресс</th>
+                  <th class="border-0 fw-bold">Последняя активность</th>
+                  <th class="border-0 pe-4 fw-bold"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="ps-4">
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="comment-avatar" class="avatar-sm">ЗК</div>
+                      <span class="fw-bold text-sm-2">Зыков Макар</span>
+                    </div>
+                  </td>
+                  <td class="text-sm-2">Python для начинающих</td>
+                  <td>
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="progress progress-custom flex-grow-1" class="progress-table">
+                        <div class="progress-bar" style="width:75%"></div>
+                      </div>
+                      <small class="fw-bold">75%</small>
+                    </div>
+                  </td>
+                  <td><small class="text-muted">Сегодня</small></td>
+                  <td class="pe-4"><button class="btn btn-sm btn-outline-primary" onclick="showToast('Сообщение студенту','info')"><i class="bi bi-chat-dots"></i></button></td>
+                </tr>
+                <tr>
+                  <td class="ps-4">
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="comment-avatar" class="avatar-sm avatar-accent">ПВ</div>
+                      <span class="fw-bold text-sm-2">Павел Кулинич</span>
+                    </div>
+                  </td>
+                  <td class="text-sm-2">JavaScript продвинутый</td>
+                  <td>
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="progress progress-custom flex-grow-1" class="progress-table">
+                        <div class="progress-bar" style="width:40%"></div>
+                      </div>
+                      <small class="fw-bold">40%</small>
+                    </div>
+                  </td>
+                  <td><small class="text-muted">Вчера</small></td>
+                  <td class="pe-4"><button class="btn btn-sm btn-outline-primary" onclick="showToast('Сообщение студенту (заглушка)','info')"><i class="bi bi-chat-dots"></i></button></td>
+                </tr>
+                <tr>
+                  <td class="ps-4">
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="comment-avatar" class="avatar-sm avatar-green">КГ</div>
+                      <span class="fw-bold text-sm-2">Кек Герман</span>
+                    </div>
+                  </td>
+                  <td class="text-sm-2">Веб-разработка с нуля</td>
+                  <td>
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="progress progress-custom flex-grow-1" class="progress-table">
+                        <div class="progress-bar bg-success" style="width:100%"></div>
+                      </div>
+                      <small class="fw-bold text-success">100%</small>
+                    </div>
+                  </td>
+                  <td><small class="text-muted">3 дня назад</small></td>
+                  <td class="pe-4"><button class="btn btn-sm btn-outline-primary" onclick="showToast('Сообщение студенту (заглушка)','info')"><i class="bi bi-chat-dots"></i></button></td>
+                </tr>
+                <tr>
+                  <td class="ps-4">
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="comment-avatar" class="avatar-sm avatar-secondary">СМ</div>
+                      <span class="fw-bold text-sm-2">София Мокийчук</span>
+                    </div>
+                  </td>
+                  <td class="text-sm-2">Python для начинающих</td>
+                  <td>
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="progress progress-custom flex-grow-1" class="progress-table">
+                        <div class="progress-bar" style="width:20%"></div>
+                      </div>
+                      <small class="fw-bold">20%</small>
+                    </div>
+                  </td>
+                  <td><small class="text-muted">Неделю назад</small></td>
+                  <td class="pe-4"><button class="btn btn-sm btn-outline-primary" onclick="showToast('Сообщение студенту (заглушка)','info')"><i class="bi bi-chat-dots"></i></button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="tabAnalytics">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="card-custom p-4">
+              <h6 class="fw-bold mb-3">Записи за месяц</h6>
+              <div class="d-flex justify-content-between align-items-end chart-container-lg">
+                <div class="text-center flex-fill"><div class="bg-primary rounded chart-bar-sm" style="height:60px"></div><small class="text-muted d-block mt-1">Нед 1</small></div>
+                <div class="text-center flex-fill"><div class="bg-primary rounded chart-bar-sm" style="height:100px"></div><small class="text-muted d-block mt-1">Нед 2</small></div>
+                <div class="text-center flex-fill"><div class="bg-primary rounded chart-bar-sm" style="height:80px"></div><small class="text-muted d-block mt-1">Нед 3</small></div>
+                <div class="text-center flex-fill"><div class="rounded chart-bar-sm progress-bar-accent" style="height:140px"></div><small class="text-muted d-block mt-1">Нед 4</small></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card-custom p-4">
+              <h6 class="fw-bold mb-3">Популярность курсов</h6>
+              <div class="mb-3">
+                <div class="d-flex justify-content-between mb-1"><small class="fw-bold">Веб-разработка</small><small>5 600</small></div>
+                <div class="progress progress-custom"><div class="progress-bar" style="width:100%"></div></div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex justify-content-between mb-1"><small class="fw-bold">Python</small><small>2 400</small></div>
+                <div class="progress progress-custom"><div class="progress-bar progress-bar-accent" style="width:43%"></div></div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex justify-content-between mb-1"><small class="fw-bold">JavaScript</small><small>1 200</small></div>
+                <div class="progress progress-custom"><div class="progress-bar progress-bar-teal" style="width:21%"></div></div>
+              </div>
+              <div>
+                <div class="d-flex justify-content-between mb-1"><small class="fw-bold">Машинное обучение</small><small>0</small></div>
+                <div class="progress progress-custom"><div class="progress-bar" style="width:0%"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card-custom p-4">
+              <h6 class="fw-bold mb-3">Последние отзывы</h6>
+              <div class="comment-item">
+                <div class="d-flex gap-3">
+                  <div class="comment-avatar avatar-teal">РП</div>
+                  <div>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                      <strong>Роман Попков</strong>
+                      <div class="rating"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+                    </div>
+                    <small class="text-muted">Python для начинающих · 2 дня назад</small>
+                    <p class="mb-0 mt-1" class="text-md">Лучший курс по Python на русском языке! Все объясняется простым языком.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="comment-item">
+                <div class="d-flex gap-3">
+                  <div class="comment-avatar avatar-accent">АР</div>
+                  <div>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                      <strong>Александр Романович</strong>
+                      <div class="rating"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i></div>
+                    </div>
+                    <small class="text-muted">Веб-разработка с нуля · 5 дней назад</small>
+                    <p class="mb-0 mt-1" class="text-md">Очень хороший курс, но хотелось бы больше практических заданий.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addCourseModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i>Создать новый курс</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="addCourseForm">
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label fw-bold">Название курса</label>
+                <input type="text" class="form-control" id="newCourseTitle" placeholder="Например: React для продвинутых" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-bold">Описание</label>
+                <textarea class="form-control" rows="3" placeholder="Опишите чему научатся студенты..."></textarea>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold">Категория</label>
+                <select class="form-select">
+                  <option>Программирование</option>
+                  <option>Дизайн</option>
+                  <option>Маркетинг</option>
+                  <option>Аналитика</option>
+                  <option>Языки</option>
+                  <option>Бизнес</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold">Уровень</label>
+                <select class="form-select">
+                  <option>Начальный</option>
+                  <option>Средний</option>
+                  <option>Продвинутый</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold">Цена (₽)</label>
+                <input type="number" class="form-control" placeholder="0 = бесплатно" min="0">
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-bold">Обложка курса</label>
+                <input type="file" class="form-control" accept="image/*">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="button" class="btn btn-outline-primary" onclick="showToast('Курс сохранен как черновик','info')">Сохранить черновик</button>
+            <button type="submit" class="btn btn-accent">Создать курс</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addLessonModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i>Добавить урок</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="addLessonForm">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label fw-bold">Название урока</label>
+              <input type="text" class="form-control" id="newLessonTitle" placeholder="Например: Введение в React Hooks" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Описание</label>
+              <textarea class="form-control" rows="2" placeholder="Краткое описание урока..."></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Видео</label>
+              <input type="file" class="form-control" accept="video/*">
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Дополнительные материалы</label>
+              <input type="file" class="form-control" multiple>
+              <small class="text-muted">PDF, ZIP или другие файлы</small>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-primary">Добавить урок</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="spacer-bottom"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="main.js?v=3"></script>
+</body>
+</html>
