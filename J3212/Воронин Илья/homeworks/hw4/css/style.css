@@ -1,0 +1,139 @@
+:root {
+  --primary: #c9b7a1;
+  --secondary: #b9bec4;
+  --success: #7bbf9b;
+  --danger: #e4a6a6;
+  --warning: #f1d08b;
+  --info: #a6d7e6;
+
+  --bs-primary: #c9b7a1;
+  --bs-primary-rgb: 201, 183, 161;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f6f2ea;
+  color: #3a3a3a;
+}
+
+main {
+  flex: 1;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.icon-lg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.btn .icon {
+  margin-right: 0.35em;
+}
+
+.icon-only .icon {
+  margin-right: 0;
+}
+
+.navbar-brand {
+  font-weight: 600;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(2px);
+}
+
+.card:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.auth-wrapper {
+  min-height: calc(100vh - 56px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-card {
+  max-width: 420px;
+}
+
+.dashboard-section {
+  margin-bottom: 2rem;
+}
+
+.task-card {
+  transition: transform 0.15s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+}
+
+.kanban-column {
+  min-height: 300px;
+  border-radius: 0.375rem;
+  background: #efe9df;
+}
+
+.kanban-card {
+  cursor: grab;
+}
+.kanban-card:hover {
+  box-shadow: 0 0.35rem 0.7rem rgba(0, 0, 0, 0.12);
+}
+
+.kanban-card:active {
+  cursor: grabbing;
+}
+
+.kanban-column-cards.drag-over {
+  outline: 2px dashed var(--primary);
+  outline-offset: 4px;
+}
+
+.task-clickable {
+  cursor: pointer;
+}
+
+#task-comments-list .comment-item {
+  border-bottom: 1px solid #ece7df;
+  padding: 0.35rem 0;
+}
+
+.badge-status-new { background-color: #a6d7e6; }
+.badge-status-progress { background-color: #c9b7a1; }
+.badge-status-review { background-color: #f1d08b; }
+.badge-status-done { background-color: #7bbf9b; }
+
+.badge-priority-low { background-color: #6c757d; }
+.badge-priority-medium { background-color: #f1d08b; color: #212529; }
+.badge-priority-high { background-color: #e4a6a6; }
+.badge-priority-critical { background-color: #dc3545; }
+
+.role-admin { border-left: 4px solid #dc3545; }
+.role-member { border-left: 4px solid #0d6efd; }
+.role-viewer { border-left: 4px solid #6c757d; }
+
+.notification-item {
+  border-left: 3px solid transparent;
+}
+.notification-item.unread {
+  border-left-color: var(--primary);
+  background-color: rgba(201, 183, 161, 0.12);
+}
+
+footer {
+  margin-top: auto;
+}
