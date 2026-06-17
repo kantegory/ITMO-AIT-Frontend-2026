@@ -1,0 +1,214 @@
+:root {
+  --bg-main: #f3f5f8;
+  --surface: #ffffff;
+  --text-main: #1f2937;
+  --text-muted: #667085;
+  --brand: #0f766e;
+  --brand-strong: #115e59;
+  --accent: #f59e0b;
+  --line: #d0d5dd;
+  --danger: #b42318;
+  --success: #027a48;
+  --hero-gradient: radial-gradient(circle at 10% 20%, #dcfce7 0, rgba(220, 252, 231, 0) 45%),
+    radial-gradient(circle at 90% 30%, #fde68a 0, rgba(253, 230, 138, 0) 40%),
+    linear-gradient(130deg, #ecfeff 0%, #f8fafc 45%, #fefce8 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  color: var(--text-main);
+  background: var(--bg-main);
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -48px;
+  z-index: 1200;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background: #111827;
+  color: #ffffff;
+  text-decoration: none;
+  transition: top 160ms ease;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+.navbar-brand {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  letter-spacing: 0.2px;
+}
+
+.app-navbar {
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.brand-dot {
+  color: var(--accent);
+}
+
+.hero {
+  background: var(--hero-gradient);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(17, 24, 39, 0.06);
+  box-shadow: 0 14px 35px rgba(2, 6, 23, 0.08);
+}
+
+.glass-card,
+.metric-card,
+.form-card,
+.task-card {
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  background: var(--surface);
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.metric-card {
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.1);
+}
+
+.badge-soft {
+  background: rgba(15, 118, 110, 0.1);
+  color: var(--brand-strong);
+}
+
+.btn-brand {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
+.btn-brand:hover,
+.btn-brand:focus {
+  background: var(--brand-strong);
+  border-color: var(--brand-strong);
+  color: #fff;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 3px solid #0b5fff;
+  outline-offset: 2px;
+}
+
+.btn-outline-brand {
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+.btn-outline-brand:hover {
+  background: var(--brand);
+  color: #fff;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: rgba(15, 118, 110, 0.45);
+  box-shadow: 0 0 0 0.25rem rgba(15, 118, 110, 0.12);
+}
+
+.auth-layout {
+  min-height: calc(100vh - 72px);
+}
+
+.side-note {
+  border-left: 3px solid var(--accent);
+  background: #fffbeb;
+}
+
+.filter-panel {
+  position: sticky;
+  top: 90px;
+}
+
+.project-card {
+  border: 1px solid var(--line);
+  border-radius: 0.85rem;
+  transition: border-color 200ms ease, transform 200ms ease;
+}
+
+.project-card:hover {
+  border-color: rgba(15, 118, 110, 0.35);
+  transform: translateY(-2px);
+}
+
+.annotation-canvas {
+  min-height: 320px;
+  border: 2px dashed rgba(15, 118, 110, 0.35);
+  border-radius: 0.85rem;
+  background-image: linear-gradient(45deg, #f8fafc 25%, transparent 25%),
+    linear-gradient(-45deg, #f8fafc 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #f8fafc 75%),
+    linear-gradient(-45deg, transparent 75%, #f8fafc 75%);
+  background-size: 18px 18px;
+  background-position: 0 0, 0 9px, 9px -9px, -9px 0;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: fadeUp 500ms ease forwards;
+}
+
+.fade-up-delay {
+  animation-delay: 160ms;
+}
+
+.fade-up-delay-2 {
+  animation-delay: 320ms;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 991px) {
+  .filter-panel {
+    position: static;
+  }
+
+  .hero {
+    border-radius: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .fade-up-delay,
+  .fade-up-delay-2,
+  .metric-card,
+  .project-card,
+  .skip-link {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
