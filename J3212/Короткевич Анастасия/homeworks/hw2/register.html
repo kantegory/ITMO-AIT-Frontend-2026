@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация — ModelHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="custom-navbar" aria-label="Главное меню">
+    <div class="nav-wrapper">
+        <a href="index.html" class="logo">ModelHub</a>
+    </div>
+</nav>
+
+<main id="main-content">
+    <section class="register-section" aria-labelledby="register-title">
+        <div class="card register-card">
+            <div class="card-body">
+                <h1 class="register-title" id="register-title">Создание аккаунта</h1>
+
+                <form onsubmit="register(event)">
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Имя пользователя</label>
+                        <input type="text" class="form-control" id="name" name="name" autocomplete="username" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" autocomplete="email" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="role">Роль</label>
+                        <select class="form-select" id="role" name="role" required>
+                            <option value="" disabled selected>Выберите роль</option>
+                            <option value="Researcher">Researcher</option>
+                            <option value="Developer">Developer</option>
+                            <option value="Data Scientist">Data Scientist</option>
+                            <option value="ML Engineer">ML Engineer</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Пароль</label>
+                        <input type="password" class="form-control" id="password" name="password" autocomplete="new-password" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="password2">Повторите пароль</label>
+                        <input type="password" class="form-control" id="password2" name="password2" autocomplete="new-password" required>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-dark register-submit-btn">Зарегистрироваться</button>
+                    </div>
+                </form>
+
+                <p class="bottom-text">Уже есть аккаунт? <a href="login.html">Войти</a></p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div class="modal fade" id="registerSuccessModal" tabindex="-1" aria-labelledby="registerSuccessModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="registerSuccessModalTitle">Регистрация завершена</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">Аккаунт успешно создан. Теперь вы можете войти в систему.</div>
+            <div class="modal-footer">
+                <a href="login.html" class="btn btn-dark">Перейти ко входу</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+<script>
+    const API_URL = 'http://localhost:3000';
+
+    function generateAvatar(name) {
+        const canvas = document.createElement('canvas');
+        const size = 150;
+        canvas.width = size;
+        canvas.height = size;
+
+        const ctx = canvas.getContext('2d');
+
+        const colors = [
+            '#6C5CE7',
+            '#00B894',
+            '#0984E3',
+            '#E17055',
+            '#D63031',
+            '#FDCB6E',
+            '#00CEC9',
+            '#8E44AD'
+        ];
+
+        const cleanName = String(name || '').trim();
+        const colorIndex = cleanName ? cleanName.charCodeAt(0) % colors.length : 0;
+
+        ctx.fillStyle = colors[colorIndex];
+        ctx.fillRect(0, 0, size, size);
+
+        const initials = cleanName
+            .split(' ')
+            .filter(Boolean)
+            .map(word => word[0])
+            .join('')
+            .substring(0, 2)
+            .toUpperCase() || '?';
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 58px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(initials, size / 2, size / 2);
+
+        return canvas.toDataURL('image/png');
+    }
+
+    async function register(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+
+        const name = String(formData.get('name') || '').trim();
+        const email = String(formData.get('email') || '').trim();
+        const role = String(formData.get('role') || '').trim();
+        const password = String(formData.get('password') || '').trim();
+        const password2 = String(formData.get('password2') || '').trim();
+
+        if (password !== password2) {
+            alert('Пароли не мэчаются');
+            return;
+        }
+
+        const payload = {
+            name,
+            email,
+            role,
+            password,
+            description: 'Описания нет',
+            avatar: generateAvatar(name)
+        };
+
+        try {
+            await axios.post(API_URL + '/register', payload);
+
+            const modal = new bootstrap.Modal(document.getElementById('registerSuccessModal'));
+            modal.show();
+            event.target.reset();
+        } catch (error) {
+            console.error(error);
+            alert('Не удалось подключиться к серверу:(');
+        }
+    }
+</script>
+</body>
+</html>
