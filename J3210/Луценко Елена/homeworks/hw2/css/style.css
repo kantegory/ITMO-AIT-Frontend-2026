@@ -1,0 +1,86 @@
+:root {
+    --primary-color: #0d6efd;
+    --bg-light: #f8f9fa;
+    --video-bg: #000000;
+    --bg-color: #0b5133;
+    --color: #ffffff
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--bg-light);
+}
+
+.card {
+    border-radius: 12px;
+}
+
+.btn-finished:disabled {
+    background-color: var(--bg-color) !important;
+    color: var(--color) !important;
+    border-color: var(--bg-color) !important;
+    opacity: 1 !important;
+    cursor: default;
+}
+
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px auto;
+}
+
+.video {
+    background-color: var(--video-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.video-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    width: 100%;
+    height: 100%;
+}
+
+.course-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: var(--primary-color);
+}
+
+#coursesContainer {
+    min-height: 400px;
+}
+
+#certsContainer {
+    min-height: 150px;
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 1.1rem;
+        margin-right: 5px;
+    }
+
+    .navbar .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
