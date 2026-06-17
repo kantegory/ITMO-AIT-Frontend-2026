@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LearnFlow — Страница курса</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div class="main-wrapper"> <div class="sidebar">
+    <div class="d-flex align-items-center gap-2 mb-4">
+      <svg width="36" height="36" viewBox="0 0 56 56">
+        <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7F77DD"/><stop offset="100%" stop-color="#3C3489"/></linearGradient></defs>
+        <rect width="56" height="56" rx="14" fill="url(#g1)"/>
+        <text x="9" y="38" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="white" letter-spacing="1">LF</text>
+      </svg>
+      <span style="font-size:16px;font-weight:500;">LearnFlow</span>
+    </div>
+    <div class="nav-section">Главное</div>
+    <a class="nav-item" href="dashboard.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Дашборд
+    </a>
+    <a class="nav-item active" href="courses.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      Каталог курсов
+    </a>
+    <a class="nav-item" href="#">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Мой прогресс
+    </a>
+    <div class="nav-section">Аккаунт</div>
+    <a class="nav-item" href="settings.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Настройки
+    </a>
+    <div style="margin-top:auto;">
+      <a class="nav-item" href="login.html" data-logout style="color:#E24B4A;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Выйти
+      </a>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <a href="courses.html" style="font-size:13px;color:#888;text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:1rem;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Назад к каталогу
+    </a>
+
+    <div class="row g-4">
+
+      <div class="col-lg-8" data-course-tabs>
+        <div class="video-player mb-3">
+          <div style="position:absolute;top:16px;left:16px;background:rgba(83,74,183,0.85);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;">
+            Урок 12 — Функции и аргументы
+          </div>
+          <div class="play-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.5);padding:10px 16px;display:flex;align-items:center;gap:12px;">
+            <span style="font-size:12px;color:#fff;white-space:nowrap;">12:45 / 28:30</span>
+            <div style="flex:1;height:3px;background:rgba(255,255,255,0.3);border-radius:2px;overflow:hidden;">
+              <div style="width:45%;height:100%;background:#7F77DD;border-radius:2px;"></div>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </div>
+        </div>
+
+        <div style="border-bottom:1px solid #e8e6f5;margin-bottom:1rem;">
+          <button class="tab-btn active" type="button" onclick="showTab('materials',this)">Материалы</button>
+          <button class="tab-btn" type="button" onclick="showTab('tasks',this)">Задания</button>
+          <button class="tab-btn" type="button" onclick="showTab('discuss',this)">Обсуждения</button>
+        </div>
+
+        <div id="tab-materials">
+          <h2 style="font-size:15px;font-weight:500;color:#222;margin-bottom:8px;">Функции и аргументы в Python</h2>
+          <p style="font-size:13px;color:#555;line-height:1.7;margin-bottom:16px;">В этом уроке вы узнаете как объявлять функции, передавать аргументы и возвращать значения.</p>
+          <div class="file-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span style="font-size:13px;color:#222;">lesson_12_functions.pdf</span>
+            <span style="font-size:12px;color:#888;margin-left:auto;">245 КБ</span>
+          </div>
+        </div>
+
+        <div id="tab-tasks" style="display:none;">
+           </div>
+
+        <div id="tab-discuss" style="display:none;">
+           </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div style="background:#fff;border:1px solid #e8e6f5;border-radius:12px;padding:16px;">
+          <div style="font-size:14px;font-weight:500;color:#222;margin-bottom:4px;">Python для начинающих</div>
+          <div style="font-size:12px;color:#888;margin-bottom:8px;">Урок 12 из 24 · 50%</div>
+          <div class="progress-bar-custom mb-3"><div class="progress-fill" style="width:50%;"></div></div>
+          
+          <div style="display:flex;flex-direction:column;gap:2px;">
+            <div class="lesson-item done">
+              <div class="lesson-num done">✓</div>
+              <div><div style="font-size:13px;color:#222;">Введение в Python</div><div style="font-size:11px;color:#aaa;">15 мин</div></div>
+            </div>
+            <div class="lesson-item active">
+              <div class="lesson-num">12</div>
+              <div><div style="font-size:13px;color:#534AB7;font-weight:500;">Функции и аргументы</div><div style="font-size:11px;color:#aaa;">28 мин</div></div>
+            </div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+  </div> </div>
+  <script src="js/main.js"></script>
+</body>
+</html>
