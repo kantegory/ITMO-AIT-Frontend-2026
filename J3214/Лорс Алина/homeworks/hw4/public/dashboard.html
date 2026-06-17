@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    (() => {
+      const savedTheme = localStorage.getItem('tarelka-theme');
+      const systemTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = savedTheme || systemTheme;
+    })();
+  </script>
+  <title>Tarelka — Личный кабинет</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="dashboard">
+  <a class="skip-link" href="#pageRoot">Перейти к основному содержимому</a>
+  <div class="app-layout">
+    <aside id="sidebarContainer" class="app-sidebar d-none d-lg-flex" aria-label="Основная навигация"></aside>
+    <div class="app-content">
+      <div id="topbarContainer"></div>
+      <main class="container-fluid py-4" id="pageRoot" tabindex="-1" aria-labelledby="dashboardTitle">
+        <section class="page-header d-flex flex-column flex-lg-row gap-3 align-items-lg-center justify-content-between mb-4" aria-labelledby="dashboardTitle">
+          <div>
+            <p class="page-kicker mb-2">Личный кабинет</p>
+            <h1 class="h2 mb-2" id="dashboardTitle">Добро пожаловать</h1>
+            <p class="text-secondary mb-0" id="dashboardDateText"></p>
+          </div>
+          <div class="d-flex flex-wrap gap-2">
+            <button class="btn btn-outline-primary" id="openAddAccountModal"><svg class="sprite-icon me-2" aria-hidden="true" focusable="false"><use href="assets/icons.svg#icon-wallet2"></use></svg>Добавить счёт</button>
+            <button class="btn btn-primary" id="openAddTransactionModal"><svg class="sprite-icon me-2" aria-hidden="true" focusable="false"><use href="assets/icons.svg#icon-plus-circle"></use></svg>Добавить транзакцию</button>
+          </div>
+        </section>
+
+        <section class="row g-3 mb-4" id="summaryCards" aria-label="Сводные финансовые показатели" aria-live="polite"></section>
+        <section class="row g-3 mb-4" id="exchangeRatesRow" aria-label="Курсы валют" aria-live="polite"></section>
+
+        <section class="row g-4">
+          <div class="col-12 col-xl-8">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                  <div>
+                    <h2 class="h5 mb-1">Счета</h2>
+                    <p class="text-secondary mb-0">Актуальные балансы по всем источникам средств</p>
+                  </div>
+                  <button class="btn btn-sm btn-outline-primary" id="openTransferModal"><svg class="sprite-icon me-1" aria-hidden="true" focusable="false"><use href="assets/icons.svg#icon-arrow-left-right"></use></svg>Перевести между счетами</button>
+                </div>
+                <div class="row g-3" id="accountsGrid" aria-live="polite"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-xl-4">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <div>
+                    <h2 class="h5 mb-1">Быстрые действия</h2>
+                    <p class="text-secondary mb-0">Частые сценарии управления финансами</p>
+                  </div>
+                </div>
+                <div class="quick-actions-grid">
+                  <button class="quick-action-btn" data-quick-action="income"><svg class="sprite-icon" aria-hidden="true" focusable="false"><use href="assets/icons.svg#icon-graph-up-arrow"></use></svg><span>Добавить доход</span></button>
+                  <button class="quick-action-btn" data-quick-action="expense"><svg class="sprite-icon" aria-hidden="true" focusable="false"><use href="assets/icons.svg#icon-cart3"></use></svg><span>Добавить расход</span></button>
+                  <button class="quick-action-btn" data-quick-action="transfer"><svg class="sprite-icon" aria-hidden="true" focusable="false"><use href="assets/icons.svg#icon-arrow-left-right"></use></svg><span>Перевести</span></button>
+                </div>
+                <div class="alert alert-primary-subtle border-0 mt-4 mb-0">Интерфейс обновляется без перезагрузки: карточки, бюджеты и последние транзакции пересчитываются сразу после действий.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="row g-4 mt-1">
+          <div class="col-12 col-xxl-7">
+            <div class="card shadow-sm border-0">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                  <div>
+                    <h2 class="h5 mb-1">Последние транзакции</h2>
+                    <p class="text-secondary mb-0">Последние операции по всем счетам</p>
+                  </div>
+                  <a class="btn btn-sm btn-outline-secondary" href="transactions.html">Открыть все</a>
+                </div>
+                <div class="table-responsive">
+                  <table class="table align-middle mb-0">
+                    <caption class="visually-hidden">Последние транзакции: дата, описание, категория, сумма и статус</caption>
+                    <thead>
+                      <tr><th scope="col">Дата</th><th scope="col">Описание</th><th scope="col">Категория</th><th scope="col">Сумма</th><th scope="col">Статус</th></tr>
+                    </thead>
+                    <tbody id="recentTransactionsTable"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-xxl-5">
+            <div class="card shadow-sm border-0">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                  <div>
+                    <h2 class="h5 mb-1">Бюджеты</h2>
+                    <p class="text-secondary mb-0">Контроль лимитов по категориям</p>
+                  </div>
+                  <span class="badge text-bg-light">Редактируемо</span>
+                </div>
+                <div id="budgetsList" class="d-flex flex-column gap-3" aria-live="polite"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer id="footerContainer"></footer>
+    </div>
+  </div>
+
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarTitle">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="mobileSidebarTitle">Tarelka</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть меню"></button>
+    </div>
+    <div class="offcanvas-body p-0" id="mobileSidebarContainer"></div>
+  </div>
+
+  <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalTitle"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content border-0 shadow"><div class="modal-header"><h2 class="modal-title fs-5" id="transactionModalTitle">Новая транзакция</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть окно"></button></div><form id="transactionForm"><div class="modal-body"><div class="row g-3"><div class="col-md-6"><label class="form-label" for="transactionType">Тип операции</label><select class="form-select" id="transactionType" required><option value="income">Доход</option><option value="expense">Расход</option></select></div><div class="col-md-6"><label class="form-label" for="transactionStatus">Статус</label><select class="form-select" id="transactionStatus" required><option value="completed">Завершена</option><option value="pending">В обработке</option></select></div><div class="col-md-6"><label class="form-label" for="transactionAccount">Счёт</label><select class="form-select" id="transactionAccount" required></select></div><div class="col-md-6"><label class="form-label" for="transactionCategory">Категория</label><select class="form-select" id="transactionCategory" required></select></div><div class="col-md-6"><label class="form-label" for="transactionAmount">Сумма</label><input class="form-control" id="transactionAmount" type="number" min="0" step="0.01" required></div><div class="col-md-6"><label class="form-label" for="transactionDate">Дата</label><input class="form-control" id="transactionDate" type="date" required></div><div class="col-12"><label class="form-label" for="transactionDescription">Описание</label><input class="form-control" id="transactionDescription" type="text" required></div></div></div><div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button><button type="submit" class="btn btn-primary">Сохранить</button></div></form></div></div></div>
+
+  <div class="modal fade" id="accountModal" tabindex="-1" aria-labelledby="accountModalTitle"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 shadow"><div class="modal-header"><h2 class="modal-title fs-5" id="accountModalTitle">Новый счёт</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть окно"></button></div><form id="accountForm"><div class="modal-body"><div class="row g-3"><div class="col-12"><label class="form-label" for="accountName">Название счёта</label><input class="form-control" id="accountName" type="text" required></div><div class="col-md-6"><label class="form-label" for="accountType">Тип счёта</label><select class="form-select" id="accountType" required><option value="card">Банковская карта</option><option value="savings">Накопительный счёт</option><option value="cash">Наличные</option><option value="investment">Инвестиции</option></select></div><div class="col-md-6"><label class="form-label" for="accountBalance">Стартовый баланс</label><input class="form-control" id="accountBalance" type="number" step="0.01" min="0" required></div><div class="col-12"><label class="form-label" for="accountCurrency">Валюта</label><select class="form-select" id="accountCurrency" required><option value="EUR">EUR</option><option value="RUB">RUB</option></select></div></div></div><div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button><button type="submit" class="btn btn-primary">Добавить счёт</button></div></form></div></div></div>
+
+  <div class="modal fade" id="budgetModal" tabindex="-1" aria-labelledby="budgetModalTitle"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 shadow"><div class="modal-header"><h2 class="modal-title fs-5" id="budgetModalTitle">Редактировать бюджет</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть окно"></button></div><form id="budgetForm"><div class="modal-body"><input type="hidden" id="budgetId"><div class="mb-3"><label class="form-label" for="budgetCategoryName">Категория</label><input class="form-control" id="budgetCategoryName" type="text" readonly></div><div class="mb-3"><label class="form-label" for="budgetLimit">Лимит</label><input class="form-control" id="budgetLimit" type="number" min="0" step="0.01" required></div></div><div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button><button type="submit" class="btn btn-primary">Сохранить лимит</button></div></form></div></div></div>
+
+  <div class="modal fade" id="transferModal" tabindex="-1" aria-labelledby="transferModalTitle"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 shadow"><div class="modal-header"><h2 class="modal-title fs-5" id="transferModalTitle">Перевод между счетами</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть окно"></button></div><form id="transferForm"><div class="modal-body"><div class="row g-3"><div class="col-md-6"><label class="form-label" for="transferFrom">Со счёта</label><select class="form-select" id="transferFrom" required></select></div><div class="col-md-6"><label class="form-label" for="transferTo">На счёт</label><select class="form-select" id="transferTo" required></select></div><div class="col-md-6"><label class="form-label" for="transferAmount">Сумма</label><input class="form-control" id="transferAmount" type="number" min="0" step="0.01" required></div><div class="col-md-6"><label class="form-label" for="transferDate">Дата</label><input class="form-control" id="transferDate" type="date" required></div><div class="col-12"><label class="form-label" for="transferDescription">Комментарий</label><input class="form-control" id="transferDescription" type="text" required></div></div></div><div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button><button type="submit" class="btn btn-primary">Выполнить перевод</button></div></form></div></div></div>
+
+  <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3" role="region" aria-live="polite" aria-label="Уведомления"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
