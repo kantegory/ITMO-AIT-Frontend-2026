@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debug users — ProjectHub</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="container py-4">
+    <h1 class="h3 mb-3">Debug: пользователи</h1>
+    <p class="text-muted small mb-3">
+      Эндпоинт: <code>GET http://localhost:3000/debug/users</code>
+    </p>
+
+    <div class="d-flex gap-2 mb-3">
+      <button type="button" id="load-users" class="btn btn-primary btn-sm">Загрузить</button>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <pre id="users-output" class="mb-0" style="white-space: pre-wrap; word-break: break-word;"></pre>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var btn = document.getElementById('load-users');
+      var out = document.getElementById('users-output');
+      var API_BASE = 'http://localhost:3000';
+
+      function render(data) {
+        out.textContent = JSON.stringify(data, null, 2);
+      }
+
+      btn.addEventListener('click', function () {
+        out.textContent = 'Загрузка...';
+        fetch(API_BASE + '/debug/users').then(function (res) {
+          return res.text().then(function (t) {
+            return { ok: res.ok, status: res.status, text: t };
+          });
+        }).then(function (r) {
+          if (!r.ok) {
+            out.textContent = 'Ошибка HTTP ' + r.status + '\\n' + r.text;
+            return;
+          }
+          try {
+            render(JSON.parse(r.text));
+          } catch (e) {
+            out.textContent = r.text;
+          }
+        }).catch(function (err) {
+          out.textContent = 'Сетевая ошибка: ' + (err && err.message ? err.message : String(err));
+        });
+      });
+
+      btn.click();
+    })();
+  </script>
+</body>
+</html>
+
