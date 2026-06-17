@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Главная страница платформы TopCourses с поиском курсов">
+
+    <title>Каталог</title>
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="navbar navbar-dark bg-dark py-3">
+    <div class="container-fluid">
+        <h1 class="h5 mb-0"><a class="navbar-brand fw-bold" href="index.html">TopCourses</a></h1>
+
+        <div class="d-flex align-items-center gap-2">
+            <div id="navAuth" class="d-flex align-items-center gap-2"></div>
+            <button onclick="toggleTheme()" class="theme-toggle-nav" title="Сменить тему">☀️</button>
+        </div>
+    </div>
+</header>
+
+<main class="container-fluid py-4">
+    <div class="row">
+        <aside class="col-lg-3 mb-4">
+            <div class="card border-0 p-4">
+                <h2 class="fw-bold mb-4 h5">Фильтры</h2>
+
+                <div class="mb-3">
+                    <label for="search" class="form-label small fw-bold">Поиск</label>
+                    <input type="text" class="form-control" id="search" placeholder="Название курса" oninput="getCatalog()">
+                </div>
+
+                <div class="mb-3">
+                    <label for="filter" class="form-label small fw-bold">Предмет</label>
+                    <select class="form-select" id="filter" onchange="getCatalog()">
+                        <option value="all">Все предметы</option>
+                        <option value="Программирование">Программирование</option>
+                        <option value="Дизайн">Дизайн</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="levelFilter" class="form-label small fw-bold">Уровень</label>
+                    <select class="form-select" id="levelFilter" onchange="getCatalog()">
+                        <option value="all">Любой уровень</option>
+                        <option value="Новичок">Новичок</option>
+                        <option value="Средний">Средний</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <label id="priceLabel" for="priceFilter" class="form-label small fw-bold mb-0">Цена до:</label>
+                        <span id="priceValue" class="small fw-bold" aria-live="polite">20000 ₽</span>
+                    </div>
+                    <input type="range" class="form-range" id="priceFilter" min="0" max="20000" step="1000" value="20000" oninput="updatePrice()" aria-valuemin="0" aria-valuemax="20000" aria-valuenow="20000">
+                </div>
+
+                <button class="btn btn-outline-secondary w-100" onclick="resetFilters()">Сбросить всё</button>
+            </div>
+        </aside>
+
+        <section class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold mb-0">Каталог курсов</h2>
+                <span class="badge bg-secondary" id="resultsCount">Найдено: 0</span>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4" id="catalog"></div>
+        </section>
+
+        <div class="modal fade" id="courseInfoModal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow">
+                    <div class="modal-header bg-dark text-white">
+                        <h3 class="modal-title fw-bold h5" id="modalCourseTitle"></h3>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="badge bg-primary-subtle text-primary border border-primary-subtle" id="modalCourseLevel"></span>
+                            <span class="text-muted small" id="modalCourseCategory"></span>
+                        </div>
+                        <p id="modalCourseDescription" class="mb-4"></p>
+                        <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                            <h4 class="fw-bold text-primary mb-0" id="modalCoursePrice"></h4>
+                            <div id="modalActionButtons"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" defer></script>
+<script src="js/api.js" defer></script>
+
+<script>
+    function updatePrice() {
+        const slider = document.getElementById('priceFilter');
+        const value = slider.value;
+
+        document.getElementById('priceValue').innerText = value + " ₽";
+        slider.setAttribute('aria-valuenow', value);
+
+        getCatalog();
+    }
+
+    function resetFilters() {
+        document.getElementById('search').value = "";
+        document.getElementById('filter').value = "all";
+        document.getElementById('levelFilter').value = "all";
+
+        const slider = document.getElementById('priceFilter');
+        slider.value = 20000;
+
+        slider.setAttribute('aria-valuenow', 20000);
+
+        updatePrice();
+    }
+
+    async function enrollCourse(courseId) {
+        const userLocal = getCurrentUser();
+
+        if (!userLocal) {
+            alert("Чтобы записаться на курс, необходимо войти в систему");
+            window.location.href = "login.html";
+            return;
+        }
+
+        const user = await apiRequest(`/600/users/${userLocal.id}`);
+        const course = await apiRequest(`/courses/${courseId}`);
+
+        if (user.role === 'teacher') {
+            alert("Вы вошли как преподаватель. Запись на курсы доступна только для учеников");
+            return;
+        }
+
+        if (!user) {
+            alert("Ошибка при получении данных пользователя");
+            return;
+        }
+
+        if (user.courses.includes(courseId)) {
+            alert("Вы уже записаны на этот курс! Перейдите в личный кабинет");
+            window.location.href = "profile.html";
+            return;
+        }
+
+        const updatedCourses = [...user.courses, courseId];
+        const updatedProgress = {...user.progress, [courseId]: "0%"};
+
+        const response = await apiRequest(`/600/users/${user.id}`, {
+            method: "PATCH",
+            body: JSON.stringify({
+                courses: updatedCourses,
+                progress: updatedProgress
+            })
+        });
+
+        const newStudentsCount = course.studentsCount + 1;
+        await apiRequest(`/courses/${courseId}`, {
+            method: "PATCH",
+            body: JSON.stringify({
+                studentsCount: newStudentsCount
+            })
+        });
+
+        if (response) {
+            alert("Поздравляем! Вы успешно записаны на курс");
+            window.location.href = "profile.html";
+        } else {
+            alert("Произошла ошибка при записи на курс");
+        }
+    }
+
+    async function showCourseInfo(courseId) {
+        const course = await apiRequest(`/courses/${courseId}`);
+        if (!course) {
+            return;
+        }
+
+        document.getElementById('modalCourseTitle').innerText = course.title;
+        document.getElementById('modalCourseLevel').innerText = course.level;
+        document.getElementById('modalCourseCategory').innerText = course.category;
+        document.getElementById('modalCoursePrice').innerText = course.price + " ₽";
+        document.getElementById('modalCourseDescription').innerText = course.description;
+
+        const actionButtons = document.getElementById('modalActionButtons');
+        const user = getCurrentUser();
+
+        if (user) {
+            const freshUser = await apiRequest(`/600/users/${user.id}`);
+
+            if (freshUser.role === 'teacher') {
+                actionButtons.innerHTML = `
+                    <div class="d-flex flex-column align-items-end">
+                        <a href="course.html?id=${course.id}" class="btn btn-outline-primary">Просмотр материалов</a>
+                    </div>
+                `;
+            } else if (freshUser.courses.includes(course.id)) {
+                actionButtons.innerHTML = `
+                    <a href="course.html?id=${course.id}&lesson=0" class="btn btn-success">Перейти к урокам</a>
+                `;
+            } else {
+                actionButtons.innerHTML = `
+                    <button onclick="enrollCourse(${course.id})" class="btn btn-primary">Записаться на курс</button>
+                `;
+            }
+        } else {
+            actionButtons.innerHTML = `
+                <button onclick="enrollCourse(${course.id})" class="btn btn-primary">Записаться на курс</button>
+            `;
+        }
+
+        const myModal = new bootstrap.Modal(document.getElementById('courseInfoModal'));
+        myModal.show();
+    }
+
+    async function getCatalog() {
+        const catalog = document.getElementById('catalog');
+        const search = document.getElementById('search').value.toLowerCase();
+        const category = document.getElementById('filter').value;
+        const level = document.getElementById('levelFilter').value;
+        const maxPrice = document.getElementById('priceFilter').value;
+
+        let query = `/courses?price_lte=${maxPrice}`;
+        if (category !== 'all') {
+            query += `&category=${category}`;
+        }
+        if (level !== 'all') {
+            query += `&level=${level}`;
+        }
+        if (search) {
+            query += `&title_like=${encodeURIComponent(search)}`;
+        }
+
+        const filtered = await apiRequest(query);
+
+        document.getElementById('resultsCount').innerText = "Найдено: " + (filtered ? filtered.length : 0);
+
+        if (!filtered || filtered.length === 0) {
+            catalog.innerHTML = '<div class="col-12 text-muted">Курсы не найдены :(</div>';
+            return;
+        }
+
+        catalog.innerHTML = filtered.map(course => `
+            <div class="col">
+                <div class="card h-100 border-0 course-card">
+                    <div class="card-body d-flex flex-column p-4">
+                        <div class="d-flex justify-content-between mb-4">
+                            <span class="badge bg-light text-dark border">${course.level}</span>
+                            <small class="text-muted">${course.category}</small>
+                        </div>
+
+                        <h3 class="fw-bold h5 my-auto py-3">${course.title}</h3>
+
+                        <div class="mt-auto pt-4 border-top d-flex justify-content-between align-items-center">
+                            <span class="fw-bold text-primary">${course.price} ₽</span>
+                            <button onclick="showCourseInfo(${course.id})" class="btn btn-dark btn-sm">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function updateNav() {
+        const user = getCurrentUser();
+        const nav = document.getElementById('navAuth');
+
+        if (user) {
+            nav.innerHTML = `
+                <a href="${user.role === 'teacher' ? 'teacher.html' : 'profile.html'}" class="btn btn-link text-white text-decoration-none fw-bold me-2">${user.name}</a>
+                <button onclick="logout()" class="btn btn-outline-light">Выйти</button>
+            `;
+        } else {
+            nav.innerHTML = `
+                <a href="login.html" class="btn btn-outline-light">Вход</a>
+                <a href="register.html" class="btn btn-primary">Регистрация</a>
+            `;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        updateNav();
+        getCatalog();
+    });
+</script>
+
+</body>
+</html>

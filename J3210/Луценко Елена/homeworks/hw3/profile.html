@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Личный кабинет ученика платформы TopCourses">
+
+    <title>Профиль ученика</title>
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="navbar navbar-dark bg-dark py-3">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="index.html">TopCourses</a>
+        <div class="d-flex gap-2">
+            <a href="index.html" class="btn btn-outline-light">В каталог</a>
+            <button onclick="logout()" class="btn btn-outline-light">Выйти</button>
+            <button onclick="toggleTheme()" class="btn btn-outline-light border-0 me-2" title="Сменить тему">☀️</button>
+        </div>
+    </div>
+</header>
+
+<main class="container py-5">
+    <div class="row">
+        <aside class="col-lg-4 mb-4">
+            <div class="card p-4 text-center">
+                <div class="user-avatar" id="userAvatar"></div>
+                <h1 class="fw-bold mb-1 h4" id="userName"></h1>
+                <p class="text-muted small mb-0" id="userEmail"></p>
+            </div>
+        </aside>
+
+        <section class="col-lg-8">
+            <div class="mb-5">
+                <h2 class="fw-bold mb-4 h3">Моё обучение</h2>
+                <div class="row g-3" id="coursesContainer"></div>
+            </div>
+
+            <div>
+                <h2 class="fw-bold mb-4 h3">Мои сертификаты</h2>
+                <div class="row g-3" id="certsContainer"></div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" defer></script>
+<script src="js/api.js" defer></script>
+
+<script>
+    function showDownload(certName) {
+        alert("Файл 'сертификат_" + certName + ".pdf' успешно загружен");
+    }
+
+    document.addEventListener("DOMContentLoaded", async function () {
+        const userLocal = getCurrentUser();
+        if (!userLocal || userLocal.role !== 'student') {
+            window.location.href = "login.html";
+            return;
+        }
+
+        const user = await apiRequest(`/600/users/${userLocal.id}`);
+        const allCourses = await apiRequest('/courses');
+
+        document.getElementById('userName').innerText = user.name;
+        document.getElementById('userEmail').innerText = user.email;
+        document.getElementById('userAvatar').innerText = user.name[0];
+
+        const courseContainer = document.getElementById('coursesContainer');
+        const userCourses = allCourses.filter(course => user.courses.includes(course.id));
+
+        if (userCourses.length === 0) {
+            courseContainer.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">Вы еще не записались ни на один курс.</p>
+                    <a href="index.html" class="btn btn-primary">Перейти в каталог</a>
+                </div>
+            `;
+        } else {
+            courseContainer.innerHTML = userCourses.map(course => {
+                const progress = user.progress[course.id] || "0%";
+
+                const progressVal = parseInt(progress);
+
+                let certButton = "";
+                const hasCert = user.certificates && user.certificates.includes(course.title);
+
+                if (progressVal >= 80 && !hasCert) {
+                    certButton = `<button onclick="getCertificate('${course.title}')" class="btn btn-sm btn-success mt-2">Получить сертификат</button>`;
+                }
+
+                return `
+                    <div class="col-12">
+                        <div class="card p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h3 class="fw-bold mt-2 h5" id="courseTitle-${course.id}">${course.title}</h3>
+                                <span class="badge bg-primary">${progress}</span>
+                            </div>
+
+
+                            <div class="progress" role="progressbar" aria-labelledby="courseTitle-${course.id}" aria-valuenow="${progressVal}" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" style="width: ${progress}"></div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                ${certButton}
+                                <a href="course.html?id=${course.id}" class="btn btn-sm btn-outline-primary ms-auto" aria-label="Продолжить обучение по курсу: ${course.title}">Продолжить обучение</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        const certContainer = document.getElementById('certsContainer');
+
+        if (!user.certificates || user.certificates.length === 0) {
+            certContainer.innerHTML = '<p class="text-muted ps-3">У вас пока нет сертификатов(</p>';
+        } else {
+            certContainer.innerHTML = user.certificates.map(cert => `
+                <div class="col-md-6">
+                    <div class="card p-3 d-flex flex-row align-items-center justify-content-between">
+                        <div>
+                            <h3 class="mb-0 fw-bold h6">${cert}</h3>
+                            <small class="text-muted">Курс пройден</small>
+                        </div>
+
+                        <button class="btn btn-sm border" onclick="showDownload('${cert}')">PDF</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+    });
+
+    async function getCertificate(courseTitle) {
+        const userLocal = getCurrentUser();
+        const user = await apiRequest(`/600/users/${userLocal.id}`);
+
+        if (!user.certificates.includes(courseTitle)) {
+            const updatedCerts = [...user.certificates, courseTitle];
+
+            const response = await apiRequest(`/600/users/${user.id}`, {
+                method: "PATCH",
+                body: JSON.stringify({certificates: updatedCerts})
+            });
+
+            if (response) {
+                alert("Поздравляем! Сертификат по курсу '" + courseTitle + "' добавлен в ваш профиль");
+                location.reload();
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
