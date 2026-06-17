@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Профиль ученика</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="navbar navbar-dark bg-dark py-3">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="index.html">TopCourses</a>
+        <button onclick="logout()" class="btn btn-outline-light">Выйти</button>
+    </div>
+</header>
+
+<main class="container py-5">
+    <div class="row">
+        <aside class="col-lg-4 mb-4">
+            <div class="card p-4 text-center">
+                <div class="user-avatar" id="userAvatar"></div>
+                <h4 class="fw-bold mb-1" id="userName"></h4>
+                <p class="text-muted small mb-0" id="userEmail"></p>
+            </div>
+        </aside>
+
+        <section class="col-lg-8">
+            <div class="mb-5">
+                <h3 class="fw-bold mb-4">Моё обучение</h3>
+                <div class="row g-3" id="coursesContainer"></div>
+            </div>
+
+            <div>
+                <h3 class="fw-bold mb-4">Мои сертификаты</h3>
+                <div class="row g-3" id="certsContainer"></div>
+            </div>
+        </section>
+    </div>
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/data.js"></script>
+
+<script>
+    function showDownload(certName) {
+        alert("Файл 'сертификат_" + certName + ".pdf' успешно загружен");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const user = getCurrentUser();
+        if (!user || user.role !== 'student') {
+            window.location.href = "login.html";
+            return;
+        }
+
+        document.getElementById('userName').innerText = user.name;
+        document.getElementById('userEmail').innerText = user.email;
+        document.getElementById('userAvatar').innerText = user.name[0];
+
+        const courseContainer = document.getElementById('coursesContainer');
+        const userCourses = data.courses.filter(course => user.courses.includes(course.id));
+
+        courseContainer.innerHTML = userCourses.map(course => {
+            const progress = user.progress[course.id];
+            return `
+                <div class="col-12">
+                    <div class="card p-3">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="fw-bold mt-2">${course.title}</h5>
+                            <span class="badge bg-primary">${progress}</span>
+                        </div>
+
+
+                        <div class="progress">
+                            <div class="progress-bar" style="width: ${progress}"></div>
+                        </div>
+
+                        <div class="text-end mt-3">
+                            <a href="course.html?id=${course.id}&lesson=0" class="btn btn-sm btn-outline-primary">Продолжить</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+
+        const certContainer = document.getElementById('certsContainer');
+
+        if (!user.certificates || user.certificates.length === 0) {
+            certContainer.innerHTML = '<p class="text-muted ps-3">У вас пока нет сертификатов(</p>';
+        } else {
+            certContainer.innerHTML = user.certificates.map(cert => `
+                <div class="col-md-6">
+                    <div class="card p-3 d-flex flex-row align-items-center justify-content-between">
+                        <div>
+                            <h6 class="mb-0 fw-bold">${cert}</h6>
+                            <small class="text-muted">Курс пройден</small>
+                        </div>
+
+                        <button class="btn btn-sm border" onclick="showDownload('${cert}')">PDF</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+    });
+</script>
+
+</body>
+</html>
