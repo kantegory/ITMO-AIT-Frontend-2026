@@ -1,0 +1,24 @@
+.auth-body { background: radial-gradient(circle at top left, rgba(var(--bf-primary-rgb), .18), transparent 38%), radial-gradient(circle at bottom right, rgba(var(--bf-accent-rgb), .16), transparent 34%), linear-gradient(145deg, var(--bf-bg) 0%, var(--bf-bg-soft) 100%); }
+.auth-layout { min-height: 100vh; display: grid; grid-template-columns: 1.1fr .9fr; }
+.auth-layout--register { grid-template-columns: .95fr 1.05fr; }
+.auth-hero { background: linear-gradient(160deg, var(--bf-sidebar-start) 0%, var(--bf-primary) 48%, var(--bf-accent) 100%); color: #fff; padding: clamp(2rem, 4vw, 4rem); display: flex; align-items: center; }
+.auth-hero--compact { align-items: flex-start; }
+.auth-hero__content { max-width: 560px; }
+.hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.hero-stat, .hero-note-card { background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.18); border-radius: 1.25rem; padding: 1rem; backdrop-filter: blur(8px); }
+.hero-stat strong { display: block; font-size: 1.35rem; margin-bottom: .35rem; }
+.hero-stat span { color: rgba(255,255,255,.86); font-size: .92rem; }
+.hero-notes { display: grid; gap: 1rem; }
+.hero-note-card { display: flex; gap: 1rem; align-items: flex-start; }
+.hero-note-card i { font-size: 1.5rem; }
+.hero-note-card h2 { font-size: 1rem; margin-bottom: .35rem; }
+.hero-note-card p { margin-bottom: 0; color: rgba(255,255,255,.86); }
+.auth-checklist { list-style: none; padding: 0; margin: 0; display: grid; gap: .9rem; }
+.auth-checklist li { display: flex; gap: .85rem; align-items: center; color: rgba(255,255,255,.94); }
+.auth-panel { padding: 2rem; display: flex; align-items: center; justify-content: center; }
+.auth-card { width: min(100%, 620px); border-radius: 1.75rem; }
+.password-strength__bar { width: 100%; height: 8px; background: var(--bf-border); border-radius: 999px; overflow: hidden; margin-bottom: .5rem; }
+.password-strength__bar span { display: block; height: 100%; width: 0; background: var(--bf-primary); border-radius: inherit; transition: width .2s ease; }
+.demo-tip { background: var(--bf-bg-soft); border: 1px solid rgba(var(--bf-primary-rgb), .18); }
+@media (max-width: 991.98px) { .auth-layout, .auth-layout--register { grid-template-columns: 1fr; } .auth-panel { padding: 1rem; } .auth-hero { min-height: auto; } }
+@media (max-width: 575.98px) { .hero-stats { grid-template-columns: 1fr; } }
