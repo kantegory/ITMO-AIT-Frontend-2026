@@ -1,0 +1,51 @@
+(() => {
+    const emptyState = document.getElementById("emptyState");
+    let learningCourses = [];
+
+    const getCourseRating = (course) => {
+        if (!course.comments.length) {
+            return 0;
+        }
+        const total = course.comments.reduce((sum, comment) => sum + comment.rating, 0);
+        return total / course.comments.length;
+    };
+
+    const render = () => {
+        const filteredCourses = learningCourses.filter((course) => course.title.toLowerCase().includes(document.getElementById("searchInput").value.trim().toLowerCase()));
+
+        emptyState.classList.toggle("d-none", filteredCourses.length > 0);
+        document.getElementById("learningCoursesContainer").innerHTML = filteredCourses.map((course) => `
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="card h-100">
+                    <img src="${course.image}" class="card-img-top" alt="${course.title}">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">${course.title}</h5>
+                        <p class="card-text text-muted small">${course.description}</p>
+                        <p class="card-text mb-2"><i class="bi bi-star-fill text-warning"></i> ${getCourseRating(course).toFixed(1)} / 5</p>
+                        <div class="mt-auto">
+                            <a href="lesson.html?id=${course.id}" class="btn btn-success btn-sm">Продолжить</a>
+                            <a href="course.html?id=${course.id}" class="btn btn-outline-primary btn-sm ms-1">О курсе</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join("");
+    };
+
+    const init = async () => {
+        const user = await window.auth.requireAuth();
+        if (!user) {return;}
+        const courses = await window.api.getCourses();
+        learningCourses = courses.filter((course) => user.learningCourseIds.includes(course.id));
+        render();
+    };
+
+    document.getElementById("searchForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        render();
+    });
+    init().catch(() => {
+        emptyState.className = "alert alert-danger";
+        emptyState.textContent = "Не удалось загрузить информацию.";
+    });
+})();
