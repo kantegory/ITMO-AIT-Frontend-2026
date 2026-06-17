@@ -1,0 +1,91 @@
+input, select, textarea {
+    text-transform: uppercase;
+    color: var(--border-color);
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.input-prefix {
+    padding-right: 12px;
+    padding-bottom: 8px;
+    font-weight: 700;
+    color: var(--border-color);
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.terminal-input, select {
+    flex: 1;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--border-color);
+    padding: 8px 0;
+    outline: none;
+    min-height: 40px;
+    color: var(--border-color);
+}
+
+.terminal-input:focus, select:focus {
+    background-color: var(--input-focus-bg);
+    border-bottom-color: var(--accent-color);
+}
+
+.terminal-input::placeholder {
+    color: var(--border-color);
+    opacity: 0.5;
+}
+
+.terminal-input::-moz-placeholder {
+    color: var(--border-color);
+    opacity: 0.5;
+}
+
+.terminal-btn {
+    display: block;
+    width: 100%;
+    background: var(--surface-color);
+    color: var(--border-color);
+    border: var(--border);
+    padding: 12px 20px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    margin-top: 10px;
+    transition: all 0.1s;
+}
+
+.terminal-btn:hover:not(:disabled) {
+    background: var(--border-color);
+    color: var(--surface-color);
+}
+
+.terminal-btn:disabled {
+    color: var(--accent-color);
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: var(--accent-color);
+}
+
+.input-income {
+    border-bottom-color: var(--income-color) !important;
+}
+
+.input-expense {
+    border-bottom-color: var(--expense-color) !important;
+}
