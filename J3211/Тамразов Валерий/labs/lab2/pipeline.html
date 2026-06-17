@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fraud-detection-model — MLOps Deploy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-gear-wide-connected me-1"></i> MLOps Deploy
+            </a>
+            <button class="theme-toggle me-2" type="button" id="themeToggle" aria-label="Переключить тему"><i class="bi bi-sun-fill" aria-hidden="true"></i></button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Навигация">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="pipelines.html">Пайплайны</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="environments.html">Среды</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">Кабинет</a>
+                    </li>
+                </ul>
+                <div class="d-flex gap-2" id="authButtons"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="pipelines.html">Пайплайны</a></li>
+                <li class="breadcrumb-item active" id="breadcrumbName">Загрузка...</li>
+            </ol>
+        </nav>
+
+        <div class="d-flex justify-content-between align-items-start mb-4">
+            <div>
+                <h2 class="mb-1" id="pipelineName">Загрузка...</h2>
+                <p class="text-muted mb-0" id="pipelineMeta"></p>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#rerunModal">
+                    <i class="bi bi-arrow-clockwise me-1"></i> Перезапуск
+                </button>
+                <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rollbackModal">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i> Откат
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <h5 class="mb-3">Шаги пайплайна</h5>
+                <div id="stepsContainer"><p class="text-muted">Загрузка...</p></div>
+
+                <div class="mt-4">
+                    <h5 class="mb-3">Логи</h5>
+                    <div id="logsContainer" style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 4px; padding: 16px; font-family: var(--font-mono); font-size: 0.78rem; max-height: 300px; overflow-y: auto; color: var(--text-secondary);">
+                        <div>Загрузка...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="env-card" id="infoCard"><h5>Информация</h5><p class="text-muted">Загрузка...</p></div>
+                <div class="env-card" id="artifactsCard"><h5>Артефакты</h5><p class="text-muted">Загрузка...</p></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Модальное окно перезапуска -->
+    <div class="modal fade" id="rerunModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Перезапуск пайплайна</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Перезапустить пайплайн <strong>fraud-detection-model</strong> с последнего коммита?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="skipTests">
+                        <label class="form-check-label" for="skipTests">Пропустить тестирование (не рекомендуется)</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Запустить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно отката -->
+    <div class="modal fade" id="rollbackModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Откат деплоя</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Откатить <strong>fraud-detection-model</strong> к предыдущей стабильной версии?</p>
+                    <div class="mb-3">
+                        <label class="form-label">Откатить до версии:</label>
+                        <select class="form-select">
+                            <option>v3.0.2 (запуск #46, 31.03.2026)</option>
+                            <option>v3.0.1 (запуск #44, 28.03.2026)</option>
+                            <option>v2.9.0 (запуск #40, 20.03.2026)</option>
+                        </select>
+                    </div>
+                    <div class="alert alert-warning small mb-0">
+                        <i class="bi bi-exclamation-triangle me-1"></i>
+                        Откат переключит трафик на выбранную версию. Текущая версия останется в артефакт-сторе.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Откатить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно выхода -->
+    <div class="modal fade" id="logoutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Выход</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">Вы уверены, что хотите выйти?</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <a href="login.html" class="btn btn-danger">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p class="mb-0">&copy; 2026 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="text-decoration-none" style="color: var(--text-muted);">MLOps Deploy</a>. Тамразов Валерий, J3211</p>
+        </div>
+    </footer>
+
+    <script src="js/theme.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        checkAuth();
+        updateNavbar();
+
+        var statusLabels = { success: 'Успешно', running: 'Запущен', failed: 'Ошибка', pending: 'Ожидание' };
+        var strategyLabels = { bluegreen: 'Blue/Green', canary: 'Canary', rolling: 'Rolling' };
+
+        var steps = [
+            { name: 'Тестирование', desc: 'Юнит-тесты, проверка зависимостей, линтинг кода', time: '3м 12с', badges: ['pytest: 142 passed', 'flake8: 0 errors'] },
+            { name: 'Валидация модели', desc: 'Проверка метрик на тестовом датасете', time: '5м 48с', badges: ['accuracy: 0.934', 'F1: 0.912', 'latency: 45ms'] },
+            { name: 'Упаковка', desc: 'Сборка Docker-образа, сохранение артефактов', time: '2м 15с', badges: [] },
+            { name: 'Деплой', desc: 'Развертывание в целевую среду', time: '1м 19с', badges: [] }
+        ];
+
+        var params = new URLSearchParams(window.location.search);
+        var pipelineId = params.get('id') || '1';
+
+        fetch(API_URL + '/pipelines/' + pipelineId, { headers: authHeaders() })
+            .then(function(res) {
+                if (res.status === 401) {
+                    localStorage.removeItem('accessToken');
+                    window.location.href = 'login.html';
+                    throw new Error('Сессия истекла');
+                }
+                if (!res.ok) throw new Error('Пайплайн не найден');
+                return res.json();
+            })
+            .then(function(p) {
+                document.title = p.name + ' — MLOps Deploy';
+                document.getElementById('breadcrumbName').textContent = p.name;
+                document.getElementById('pipelineName').textContent = p.name;
+
+                // Мета-информация
+                var metaEl = document.getElementById('pipelineMeta');
+                metaEl.textContent = '';
+
+                var statusBadge = document.createElement('span');
+                statusBadge.className = 'status-badge status-' + p.status + ' me-2';
+                statusBadge.textContent = statusLabels[p.status];
+                metaEl.appendChild(statusBadge);
+
+                var stratBadge = document.createElement('span');
+                stratBadge.className = 'deploy-strategy strategy-' + p.strategy + ' me-2';
+                stratBadge.textContent = strategyLabels[p.strategy] || p.strategy;
+                metaEl.appendChild(stratBadge);
+
+                var metaText = document.createTextNode(p.ownerName + ' \u00b7 ' + p.env + ' \u00b7 ветка: ' + p.branch);
+                metaEl.appendChild(metaText);
+
+                // Шаги
+                var stepsEl = document.getElementById('stepsContainer');
+                stepsEl.textContent = '';
+
+                for (var i = 0; i < steps.length; i++) {
+                    if (i > 0) {
+                        var conn = document.createElement('div');
+                        conn.className = 'step-connector';
+                        stepsEl.appendChild(conn);
+                    }
+
+                    var isDone = i < p.stepsDone;
+                    var isFail = !isDone && p.status === 'failed' && i === p.stepsDone;
+
+                    var item = document.createElement('div');
+                    item.className = 'step-item';
+
+                    var num = document.createElement('div');
+                    num.className = 'step-number' + (isDone ? ' done' : (isFail ? ' fail' : ' wait'));
+                    if (isDone) {
+                        var icon = document.createElement('i');
+                        icon.className = 'bi bi-check';
+                        num.appendChild(icon);
+                    } else if (isFail) {
+                        var iconX = document.createElement('i');
+                        iconX.className = 'bi bi-x';
+                        num.appendChild(iconX);
+                    } else {
+                        num.textContent = (i + 1);
+                    }
+                    item.appendChild(num);
+
+                    var content = document.createElement('div');
+                    content.className = 'flex-grow-1';
+
+                    var topRow = document.createElement('div');
+                    topRow.className = 'd-flex justify-content-between';
+                    var strong = document.createElement('strong');
+                    strong.textContent = (i + 1) + '. ' + steps[i].name;
+                    topRow.appendChild(strong);
+                    if (isDone) {
+                        var timeSpan = document.createElement('small');
+                        timeSpan.className = 'text-muted';
+                        timeSpan.textContent = steps[i].time;
+                        topRow.appendChild(timeSpan);
+                    }
+                    content.appendChild(topRow);
+
+                    var desc = document.createElement('small');
+                    desc.className = 'text-muted';
+                    desc.textContent = steps[i].desc;
+                    content.appendChild(desc);
+
+                    if (isDone && steps[i].badges.length > 0) {
+                        var badgesDiv = document.createElement('div');
+                        badgesDiv.className = 'mt-1';
+                        steps[i].badges.forEach(function(b) {
+                            var badge = document.createElement('span');
+                            badge.className = 'badge bg-light text-dark me-1';
+                            badge.textContent = b;
+                            badgesDiv.appendChild(badge);
+                        });
+                        content.appendChild(badgesDiv);
+                    }
+
+                    item.appendChild(content);
+                    stepsEl.appendChild(item);
+                }
+
+                // Информация (сайдбар)
+                var infoCard = document.getElementById('infoCard');
+                infoCard.textContent = '';
+                var infoH5 = document.createElement('h5');
+                infoH5.textContent = 'Информация';
+                infoCard.appendChild(infoH5);
+
+                var table = document.createElement('table');
+                table.className = 'table table-sm table-borderless mb-0';
+                var rows = [
+                    ['Статус', statusLabels[p.status]],
+                    ['Среда', p.env],
+                    ['Стратегия', strategyLabels[p.strategy] || p.strategy],
+                    ['Ветка', p.branch],
+                    ['Коммит', p.commit],
+                    ['Время', p.duration || '\u2014'],
+                    ['Шаги', p.stepsDone + '/' + p.stepsTotal]
+                ];
+                rows.forEach(function(r) {
+                    var tr = document.createElement('tr');
+                    var td1 = document.createElement('td');
+                    td1.className = 'text-muted';
+                    td1.textContent = r[0];
+                    var td2 = document.createElement('td');
+                    td2.textContent = r[1];
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    table.appendChild(tr);
+                });
+                infoCard.appendChild(table);
+
+                // Артефакты
+                return fetch(API_URL + '/artifacts?pipelineId=' + p.id, { headers: authHeaders() });
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(artifacts) {
+                if (!Array.isArray(artifacts)) artifacts = [];
+
+                var card = document.getElementById('artifactsCard');
+                card.textContent = '';
+                var h5 = document.createElement('h5');
+                h5.textContent = 'Артефакты';
+                card.appendChild(h5);
+
+                if (artifacts.length === 0) {
+                    var empty = document.createElement('p');
+                    empty.className = 'text-muted small';
+                    empty.textContent = 'Нет артефактов';
+                    card.appendChild(empty);
+                    return;
+                }
+
+                var ul = document.createElement('ul');
+                ul.className = 'list-unstyled mb-0';
+                artifacts.forEach(function(a) {
+                    var li = document.createElement('li');
+                    li.className = 'mb-2';
+                    var nameSpan = document.createElement('span');
+                    nameSpan.textContent = a.name;
+                    nameSpan.style.color = 'var(--accent)';
+                    li.appendChild(nameSpan);
+                    var sizeSmall = document.createElement('small');
+                    sizeSmall.className = 'text-muted d-block';
+                    sizeSmall.textContent = a.size + (a.version ? ' \u00b7 ' + a.version : '');
+                    li.appendChild(sizeSmall);
+                    ul.appendChild(li);
+                });
+                card.appendChild(ul);
+            })
+            .catch(function(err) {
+                document.getElementById('pipelineName').textContent = 'Ошибка';
+                document.getElementById('stepsContainer').textContent = err.message;
+            });
+
+        // Логи (генерируем на клиенте, т.к. json-server не хранит логи)
+        var logsEl = document.getElementById('logsContainer');
+        logsEl.textContent = '';
+        var logLines = [
+            '[10:14:01] Starting pipeline...',
+            '[10:14:02] Step 1/4: Running tests...',
+            '[10:14:03] Collecting tests from /tests/...',
+            '[10:17:14] PASSED 142 tests in 3m 12s',
+            '[10:17:15] Step 2/4: Validating model...',
+            '[10:20:22] Model metrics: acc=0.934 f1=0.912 lat=45ms',
+            '[10:23:03] PASSED All thresholds met',
+            '[10:23:04] Step 3/4: Building package...',
+            '[10:25:19] DONE Image pushed to registry',
+            '[10:25:20] Step 4/4: Deploying...',
+            '[10:26:02] Health check passed',
+            '[10:26:39] SUCCESS Pipeline completed'
+        ];
+        logLines.forEach(function(line) {
+            var div = document.createElement('div');
+            div.textContent = line;
+            logsEl.appendChild(div);
+        });
+    </script>
+</body>
+</html>
