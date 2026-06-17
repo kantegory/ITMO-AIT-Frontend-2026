@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Личный кабинет пользователя AI Hub — управление моделями и датасетами.">
+  <title>Личный кабинет — AI Hub</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="../../assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Перейти к основному содержимому</a>
+
+  <nav class="navbar navbar-expand-lg sticky-top" aria-label="Основная навигация">
+    <div class="container">
+      <a class="navbar-brand" href="../../index.html"><i class="bi bi-cpu" aria-hidden="true"></i> AI Hub</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-expanded="false" aria-label="Открыть меню навигации">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="../../index.html">Главная</a></li>
+          <li class="nav-item"><a class="nav-link" href="../data/search.html#models">Модели</a></li>
+          <li class="nav-item"><a class="nav-link" href="../data/search.html#datasets">Датасеты</a></li>
+        </ul>
+        <div id="navbarActions"></div>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content" class="py-4">
+    <div class="container">
+      <!-- Профиль -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="d-flex align-items-center gap-4 flex-wrap">
+            <div class="avatar avatar-lg" id="profileAvatar"></div>
+            <div>
+              <h1 class="h4 mb-1" id="profileName">Пользователь</h1>
+              <p class="text-muted mb-0" id="profileSubtitle"></p>
+            </div>
+            <div class="ms-auto">
+              <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#editProfileModal"><i class="bi bi-pencil" aria-hidden="true"></i> Редактировать</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h5 mb-0">Ваш контент</h2>
+        <button class="btn btn-accent btn-sm" data-bs-toggle="modal" data-bs-target="#uploadModal">
+          <i class="bi bi-plus-lg" aria-hidden="true"></i> Загрузить
+        </button>
+      </div>
+
+      <ul class="nav nav-tabs mb-4" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="tab-models-btn" data-bs-toggle="tab" data-bs-target="#tab-models" type="button" role="tab" aria-selected="true" aria-controls="tab-models">Мои модели</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab-datasets-btn" data-bs-toggle="tab" data-bs-target="#tab-datasets" type="button" role="tab" aria-selected="false" aria-controls="tab-datasets">Мои датасеты</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab-starred-btn" data-bs-toggle="tab" data-bs-target="#tab-starred" type="button" role="tab" aria-selected="false" aria-controls="tab-starred">Подписки</button>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="tab-models" role="tabpanel" aria-labelledby="tab-models-btn">
+          <p class="text-muted">У вас пока нет загруженных моделей.</p>
+        </div>
+        <div class="tab-pane fade" id="tab-datasets" role="tabpanel" aria-labelledby="tab-datasets-btn">
+          <p class="text-muted">У вас пока нет загруженных датасетов.</p>
+        </div>
+        <div class="tab-pane fade" id="tab-starred" role="tabpanel" aria-labelledby="tab-starred-btn">
+          <p class="text-muted">Вы пока ни на что не подписаны.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Модальное окно загрузки -->
+  <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="uploadModalLabel">Загрузить модель или датасет</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="uploadName" class="form-label">Название</label>
+              <input type="text" class="form-control" id="uploadName" placeholder="my-model" required>
+            </div>
+            <div class="mb-3">
+              <label for="uploadType" class="form-label">Тип</label>
+              <select class="form-select" id="uploadType">
+                <option value="model">Модель</option>
+                <option value="dataset">Датасет</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="uploadDesc" class="form-label">Описание</label>
+              <textarea class="form-control" id="uploadDesc" rows="2" placeholder="Краткое описание..."></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="uploadFramework" class="form-label">Фреймворк</label>
+              <select class="form-select" id="uploadFramework">
+                <option value="">Выберите...</option>
+                <option>PyTorch</option>
+                <option>TensorFlow</option>
+                <option>JAX</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="uploadFiles" class="form-label">Файлы</label>
+              <input class="form-control" type="file" id="uploadFiles" multiple>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-light btn-sm" data-bs-dismiss="modal">Отмена</button>
+          <button type="button" class="btn btn-accent btn-sm">Загрузить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно редактирования профиля -->
+  <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProfileModalLabel">Редактировать профиль</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="editName" class="form-label">Имя</label>
+              <input type="text" class="form-control" id="editName">
+            </div>
+            <div class="mb-3">
+              <label for="editBio" class="form-label">О себе</label>
+              <input type="text" class="form-control" id="editBio">
+            </div>
+            <div class="mb-3">
+              <label for="editLocation" class="form-label">Город</label>
+              <input type="text" class="form-control" id="editLocation">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-light btn-sm" data-bs-dismiss="modal">Отмена</button>
+          <button type="button" class="btn btn-accent btn-sm" id="saveProfileBtn">Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="py-4 mt-4">
+    <div class="container text-center">
+      <small class="text-muted">&copy; 2026 AI Hub</small>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/api.js"></script>
+  <script>window.APP_PATHS = { home: '../../index.html', login: '../auth/login.html', register: '../auth/register.html', dashboard: 'dashboard.html' };</script>
+  <script src="../../assets/js/ui.js"></script>
+  <script>AppUI.requireAuth();</script>
+  <script src="../../assets/js/dashboard.js"></script>
+</body>
+</html>
