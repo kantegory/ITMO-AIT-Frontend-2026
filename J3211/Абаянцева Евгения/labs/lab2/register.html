@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - OnlineLearning</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+	<script src="js/api.js"></script>
+	<script src="js/auth.js"></script>
+	<link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<a href="#main-content" class="skip-link">
+        Перейти к основному контенту
+    </a>
+	
+    <nav class="navbar navbar-expand-lg navbar-dark bg-custom-red">
+        <div class="container">
+            <a class="navbar-brand text-danger fw-bold" href="index.html">
+                <svg class="icon icon-sm"><use href="images/icons.svg#icon-logo"></use></svg> OnlineLearning
+            </a>
+            <div class="ms-auto">
+                <span class="text-muted">Уже есть аккаунт?</span>
+                <a href="login.html" class="btn btn-outline-primary ms-2 btn-sm">Вход</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="auth-container">
+        <div class="card auth-card">
+            <div class="auth-header">
+                <h3>Создать аккаунт</h3>
+                <p class="mb-0 opacity-75">Начните обучение бесплатно</p>
+            </div>
+            <div class="card-body p-4">
+                <form id="registerForm" novalidate>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="firstName" class="form-label">Имя</label>
+                            <input type="text" class="form-control" id="firstName" required>
+                            <div class="invalid-feedback">Введите имя.</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="lastName" class="form-label">Фамилия</label>
+                            <input type="text" class="form-control" id="lastName" required>
+                            <div class="invalid-feedback">Введите фамилию.</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="regEmail" class="form-label">Email адрес</label>
+                        <input type="email" 
+							   class="form-control" 
+							   id="email" 
+							   name="email"
+							   placeholder="name@example.com"
+							   aria-label="Email адрес"
+							   aria-required="true"
+							   aria-describedby="emailHelp emailError"
+							   autocomplete="email"
+							   required>
+                        <div id="emailHelp" class="form-text">
+							Мы не передаём ваш email третьим лицам
+						</div>
+                        <div class="invalid-feedback" role="alert" aria-live="polite">
+							Введите корректный email.
+						</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="regPassword" class="form-label">Пароль</label>
+                        <input type="password" class="form-control" id="regPassword" minlength="6" required>
+                        <div class="form-text">Минимум 6 символов.</div>
+                        <div class="invalid-feedback">Пароль должен содержать минимум 6 символов.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Подтвердите пароль</label>
+                        <input type="password" class="form-control" id="confirmPassword" required>
+                        <div class="invalid-feedback">Пароли не совпадают.</div>
+                    </div>
+
+                    <div class="mb-4 form-check">
+                        <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+                        <label class="form-check-label small" for="agreeTerms">
+                            Я согласен с <a href="#" class="text-primary">условиями использования</a> и <a href="#" class="text-primary">политикой конфиденциальности</a>
+                        </label>
+                        <div class="invalid-feedback">Необходимо согласие с условиями.</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2">
+                        Зарегистрироваться
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white py-3 mt-auto border-top">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <p class="text-muted small mb-0">&copy; 2026 OnlineLearning. Все права защищены.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <button id="themeToggle" class="btn btn-outline-secondary btn-sm" aria-label="Переключить тему" title="Переключить тему">
+                        <svg class="icon icon-sm me-2"><use href="images/icons.svg#icon-moon"></use></svg>
+                        <span id="themeText">Тёмная тема</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+	<script src="js/theme.js"></script>
+</body>
+</html>
