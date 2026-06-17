@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Wanderlust — Мальдивы 2025</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="css/styles.css" rel="stylesheet"/>
+</head>
+<body data-page="collab">
+<nav class="app-nav">
+  <a href="login.html" class="nav-brand">Wanderlust</a>
+  <div class="nav-links ms-auto me-3">
+    <a href="dashboard.html" class="nav-link">Кабинет</a>
+    <a href="search.html"    class="nav-link">Поиск</a>
+    <a href="collab.html"    class="nav-link active">Совместно</a>
+  </div>
+  <button class="btn-outline-custom me-3 d-none d-md-inline-flex" style="font-size:.82rem;padding:.4rem 1rem;" data-bs-toggle="modal" data-bs-target="#inviteModal">
+    <i class="bi bi-person-plus me-1"></i>Пригласить
+  </button>
+  <div class="nav-avatar" data-bs-toggle="dropdown">АИ</div>
+  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-light">
+    <li><a class="dropdown-item" href="dashboard.html"><i class="bi bi-person me-2"></i>Кабинет</a></li>
+    <li><hr class="dropdown-divider"/></li>
+    <li><a class="dropdown-item" href="#" data-action="logout" style="color:#dc2626;"><i class="bi bi-box-arrow-right me-2"></i>Выйти</a></li>
+  </ul>
+</nav>
+<header class="collab-hero">
+  <div class="d-flex align-items-start justify-content-between flex-wrap gap-3 mb-3">
+    <div>
+      <p style="font-size:.8rem;color:var(--text-muted);margin-bottom:.4rem;"><a href="dashboard.html" style="color:var(--accent);">← Мои поездки</a></p>
+      <h1 class="serif mb-2" style="font-size:1.7rem;">🌊 Мальдивы 2025</h1>
+      <div class="d-flex gap-2 flex-wrap">
+        <span class="tag tag-warm">15–25 мая 2025</span>
+        <span class="tag tag-green">5 участников</span>
+        <span class="tag">~280 000 ₽/чел.</span>
+      </div>
+    </div>
+    <button class="btn-primary-custom" onclick="navigator.clipboard?.writeText('wanderlust.app/trip/maldives-2025-x7k')">
+      <i class="bi bi-share me-1"></i>Поделиться
+    </button>
+  </div>
+  <div class="d-flex gap-2 flex-wrap mb-3">
+    <div class="member-chip"><div class="member-dot" style="background:#22c55e;"></div>Алексей (вы)</div>
+    <div class="member-chip"><div class="member-dot" style="background:#22c55e;"></div>Мария</div>
+    <div class="member-chip"><div class="member-dot" style="background:#f59e0b;"></div>Дмитрий</div>
+    <div class="member-chip"><div class="member-dot" style="background:#94a3b8;"></div>Виктория</div>
+    <div class="member-chip"><div class="member-dot" style="background:#94a3b8;"></div>Николай</div>
+  </div>
+  <div style="max-width:480px;">
+    <div class="d-flex justify-content-between mb-1" style="font-size:.8rem;">
+      <span style="color:var(--text-muted);">Готовность поездки</span>
+      <span style="color:var(--accent);font-weight:500;">68%</span>
+    </div>
+    <div class="progress-bar-wrap" style="height:6px;"><div class="progress-bar-fill" style="width:68%;height:6px;"></div></div>
+  </div>
+</header>
+<main class="container-fluid py-4 px-3 px-md-4" style="max-width:1200px;">
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <section class="mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="serif mb-0" style="font-size:1.1rem;">Маршрут</h2>
+          <button class="btn-outline-custom" style="font-size:.8rem;padding:.35rem .8rem;" data-bs-toggle="modal" data-bs-target="#addStopModal">
+            <i class="bi bi-plus me-1"></i>Добавить
+          </button>
+        </div>
+        <div class="card p-3">
+          <div id="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot-wrap"><div class="timeline-dot filled"></div><div class="timeline-line"></div></div>
+              <div>
+                <div style="font-size:.75rem;color:var(--text-light);">День 1 · 15 мая</div>
+                <strong style="font-size:.875rem;">✈ Вылет Москва → Мале</strong>
+                <p style="font-size:.8rem;color:var(--text-muted);margin:.1rem 0 .3rem;">SU1742 · 09:40 · 8 ч. 20 мин.</p>
+                <span class="tag tag-green" style="font-size:.7rem;">Подтверждено ✓</span>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot-wrap"><div class="timeline-dot filled"></div><div class="timeline-line"></div></div>
+              <div>
+                <div style="font-size:.75rem;color:var(--text-light);">День 1 · Вечер</div>
+                <strong style="font-size:.875rem;">🛥 Трансфер на атолл</strong>
+                <p style="font-size:.8rem;color:var(--text-muted);margin:.1rem 0 .3rem;">Speedboat 45 мин → Baros Island</p>
+                <span class="tag tag-warm" style="font-size:.7rem;">Ожидает оплаты</span>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot-wrap"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+              <div>
+                <div style="font-size:.75rem;color:var(--text-light);">Дни 2–9 · 16–23 мая</div>
+                <strong style="font-size:.875rem;">🏝 Baros Maldives Resort</strong>
+                <p style="font-size:.8rem;color:var(--text-muted);margin:.1rem 0 .3rem;">Overwater bungalow · Завтрак включён</p>
+                <span class="tag" style="font-size:.7rem;">Нужно забронировать</span>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot-wrap"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+              <div>
+                <div style="font-size:.75rem;color:var(--text-light);">День 6 · 20 мая</div>
+                <strong style="font-size:.875rem;">🤿 Дайвинг-тур</strong>
+                <p style="font-size:.8rem;color:var(--text-muted);margin:.1rem 0 .3rem;">Manta Ray Point · 3 погружения</p>
+                <span class="tag" style="font-size:.7rem;">Обсуждается</span>
+              </div>
+            </div>
+            <div class="timeline-item" style="margin-bottom:0;">
+              <div class="timeline-dot-wrap"><div class="timeline-dot filled"></div></div>
+              <div>
+                <div style="font-size:.75rem;color:var(--text-light);">День 10 · 25 мая</div>
+                <strong style="font-size:.875rem;">✈ Обратный рейс</strong>
+                <p style="font-size:.8rem;color:var(--text-muted);margin:.1rem 0 .3rem;">Мале → Москва · 15:30</p>
+                <span class="tag tag-green" style="font-size:.7rem;">Подтверждено ✓</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2 class="serif mb-3" style="font-size:1.1rem;">Бюджет</h2>
+        <div class="card p-3">
+          <div style="font-size:.875rem;display:flex;flex-direction:column;gap:.55rem;margin-bottom:1rem;">
+            <div class="d-flex justify-content-between"><span style="color:var(--text-muted);">✈ Перелёты</span><span style="color:var(--accent);font-weight:500;">80 000 ₽</span></div>
+            <div class="d-flex justify-content-between"><span style="color:var(--text-muted);">🏝 Отель (8 ночей)</span><span style="color:var(--text-light);">— не решено</span></div>
+            <div class="d-flex justify-content-between"><span style="color:var(--text-muted);">🛥 Трансферы</span><span style="color:var(--accent);font-weight:500;">15 000 ₽</span></div>
+            <div class="d-flex justify-content-between"><span style="color:var(--text-muted);">🤿 Дайвинг</span><span style="color:var(--text-muted);">~ 25 000 ₽</span></div>
+            <div class="d-flex justify-content-between"><span style="color:var(--text-muted);">🍽 Питание</span><span style="color:var(--text-muted);">~ 30 000 ₽</span></div>
+            <div class="divider my-1"></div>
+            <div class="d-flex justify-content-between"><strong>Итого</strong><strong style="color:var(--accent);">~ 280 000 ₽/чел.</strong></div>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn-outline-custom flex-1" style="justify-content:center;font-size:.82rem;"><i class="bi bi-calculator me-1"></i>Разделить</button>
+            <button class="btn-primary-custom flex-1" style="justify-content:center;font-size:.82rem;"><i class="bi bi-plus me-1"></i>Расход</button>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="col-lg-7">
+      <section class="mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="serif mb-0" style="font-size:1.1rem;">Обсуждение</h2>
+          <span class="tag tag-green" style="font-size:.72rem;">
+            <div class="member-dot" style="background:#22c55e;width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:3px;"></div>2 онлайн
+          </span>
+        </div>
+        <div class="card">
+          <div class="chat-area" id="chatMessages">
+            <div style="font-size:.75rem;color:var(--text-light);text-align:center;margin-bottom:.75rem;">Сегодня, 14:30</div>
+            <div class="d-flex flex-column gap-1"><div style="font-size:.72rem;color:var(--text-light);">Мария О.</div><div class="chat-msg chat-msg-in">Привет! Нашла отель на Baros Island — overwater bungalow с выходом к рифу 🐠</div></div>
+            <div class="d-flex flex-column gap-1 mt-2" style="align-items:flex-end;"><div style="font-size:.72rem;color:var(--text-light);">Вы</div><div class="chat-msg chat-msg-out">Отлично! На 5 человек лучше взять 3 бунгало 🌊</div></div>
+            <div class="d-flex flex-column gap-1 mt-2"><div style="font-size:.72rem;color:var(--text-light);">Дмитрий К.</div><div class="chat-msg chat-msg-in">За дайвинг голосую обеими руками! Manta Ray Point — обязательно 🤿</div></div>
+            <div class="d-flex flex-column gap-1 mt-2"><div style="font-size:.72rem;color:var(--text-light);">Николай М.</div><div class="chat-msg chat-msg-in">Кстати — для Мальдив виза on-arrival, бесплатно. Паспорт должен быть действителен 6 месяцев.</div></div>
+          </div>
+          <div class="chat-input-row">
+            <input type="text" id="chatInput" class="form-input flex-1" placeholder="Написать сообщение... (Enter)" style="height:40px;"/>
+            <button id="sendChatBtn" class="btn-primary-custom" style="padding:.4rem .9rem;"><i class="bi bi-send"></i></button>
+          </div>
+        </div>
+      </section>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card p-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <strong style="font-size:.875rem;">✅ Задачи</strong>
+              <button class="btn-outline-custom" style="font-size:.75rem;padding:.25rem .65rem;" data-bs-toggle="modal" data-bs-target="#addTaskModal">+ Задача</button>
+            </div>
+            <div style="font-size:.78rem;color:var(--text-light);margin-bottom:.5rem;" id="taskProgressLabel">2 / 5 выполнено</div>
+            <div class="progress-bar-wrap mb-3" style="height:4px;"><div class="progress-bar-fill" id="taskProgressBar" style="width:40%;height:4px;"></div></div>
+            <div id="taskList" class="d-flex flex-column"></div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <strong style="font-size:.875rem;">🧳 Что взять</strong>
+              <button class="btn-ghost-custom" style="font-size:.75rem;padding:.25rem .65rem;">Ред.</button>
+            </div>
+            <ul style="font-size:.82rem;color:var(--text-muted);padding-left:1.2rem;margin:0;line-height:2.1;">
+              <li>Водонепроницаемый чехол ✓</li>
+              <li>Крем SPF 50+ (не аэрозоль!) ✓</li>
+              <li>Маска для снорклинга</li>
+              <li>Дайверская карточка (Дима) ✓</li>
+              <li>Универсальный адаптер</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card p-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <strong style="font-size:.875rem;">🗺 Активности</strong>
+              <a href="destination.html" class="btn-ghost-custom" style="font-size:.75rem;padding:.25rem .65rem;"><i class="bi bi-map me-1"></i>Карта</a>
+            </div>
+            <div class="row g-2">
+              <div class="col-4">
+                <div class="card p-2" style="text-align:center;">
+                  <div style="font-size:1.3rem;margin-bottom:.3rem;">🐠</div>
+                  <div style="font-size:.78rem;font-weight:500;">Коралловый риф</div>
+                  <div style="font-size:.72rem;color:var(--text-light);">Дмитрий</div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="card p-2" style="text-align:center;">
+                  <div style="font-size:1.3rem;margin-bottom:.3rem;">🌅</div>
+                  <div style="font-size:.78rem;font-weight:500;">Закат на пляже</div>
+                  <div style="font-size:.72rem;color:var(--text-light);">Мария</div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="card p-2" style="text-align:center;">
+                  <div style="font-size:1.3rem;margin-bottom:.3rem;">🦈</div>
+                  <div style="font-size:.78rem;font-weight:500;">Ночной снорклинг</div>
+                  <div style="font-size:.72rem;color:var(--text-light);">Алексей</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<div class="modal fade" id="inviteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-light">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Пригласить участников</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Email участника</label>
+          <div class="d-flex gap-2"><input type="email" class="form-input flex-1" placeholder="friend@email.com"/><button class="btn-primary-custom"><i class="bi bi-send"></i></button></div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Или скопируйте ссылку</label>
+          <div class="d-flex gap-2">
+            <input type="text" class="form-input flex-1" value="wanderlust.app/trip/maldives-2025-x7k" readonly/>
+            <button id="copyLinkBtn" class="btn-ghost-custom"><i class="bi bi-copy"></i></button>
+          </div>
+        </div>
+        <label class="form-label mb-1">Доступ</label>
+        <div class="d-flex flex-column gap-2">
+          <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.85rem;"><input type="radio" name="perm" checked/> Просмотр и редактирование</label>
+          <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.85rem;"><input type="radio" name="perm"/> Только просмотр</label>
+        </div>
+      </div>
+      <div class="modal-footer"><button class="btn-primary-custom w-100" style="justify-content:center;" data-bs-dismiss="modal">Готово</button></div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="addStopModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-light">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Добавить точку маршрута</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Тип</label>
+          <div data-chips-group="single">
+            <button type="button" class="filter-chip active selected">✈ Перелёт</button>
+            <button type="button" class="filter-chip">🏨 Отель</button>
+            <button type="button" class="filter-chip">🗺 Активность</button>
+            <button type="button" class="filter-chip">🚌 Транспорт</button>
+          </div>
+        </div>
+        <div class="mb-3"><label class="form-label" for="stopName">Название</label><input type="text" id="stopName" class="form-input" placeholder="Например: Экскурсия на закате"/></div>
+        <div class="row g-3 mb-3">
+          <div class="col-6"><label class="form-label">Дата</label><input type="date" id="stopDate" class="form-input" style="color-scheme:light;"/></div>
+          <div class="col-6"><label class="form-label">Время</label><input type="time" class="form-input" style="color-scheme:light;"/></div>
+        </div>
+        <div><label class="form-label" for="stopNote">Заметка</label><textarea id="stopNote" class="form-input" rows="2" placeholder="Детали, адрес..."></textarea></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost-custom" data-bs-dismiss="modal">Отмена</button>
+        <button id="saveStopBtn" class="btn-primary-custom"><i class="bi bi-plus-lg me-1"></i>Добавить</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="addTaskModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-light">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Добавить задачу</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">
+        <div class="mb-3"><label class="form-label" for="newTaskInput">Название задачи</label><input type="text" id="newTaskInput" class="form-input" placeholder="Например: Забронировать ресторан"/></div>
+        <div><label class="form-label">Ответственный</label>
+          <select class="form-select-custom">
+            <option>Алексей (вы)</option><option>Мария О.</option><option>Дмитрий К.</option><option>Виктория С.</option><option>Николай М.</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost-custom" data-bs-dismiss="modal">Отмена</button>
+        <button id="addTaskBtn" class="btn-primary-custom" data-bs-dismiss="modal">Добавить</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
