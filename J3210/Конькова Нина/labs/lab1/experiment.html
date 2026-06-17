@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Experiment Details - MLOps Flow</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <!-- Использование Flexbox-контейнера (d-flex) для разделения экрана на навигацию и контент -->
+    <div class="d-flex" id="wrapper">
+        <!-- Левая панель: Сайдбар остается статичным для быстрого переключения между разделами -->
+        <div class="bg-white border-end" id="sidebar-wrapper">
+            <div class="sidebar-heading text-primary fw-bold p-4 fs-4">MLOps Flow</div>
+            <div class="list-group list-group-flush px-3">
+                <a href="dashboard.html" class="list-group-item list-group-item-action rounded mb-1"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+                <a href="experiments.html" class="list-group-item list-group-item-action active rounded mb-1"><i class="bi bi-bar-chart-line me-2"></i> Experiments</a>
+                <a href="models.html" class="list-group-item list-group-item-action rounded mb-1"><i class="bi bi-box-seam me-2"></i> Models</a>
+                <a href="artifacts.html" class="list-group-item list-group-item-action rounded mb-1"><i class="bi bi-archive me-2"></i> Artifacts</a>
+            </div>
+        </div>
+         <!-- Основной блок: flex-grow-1 позволяет контенту занимать всё свободное пространство справа -->
+        <div id="page-content-wrapper" class="flex-grow-1">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom px-4 py-3">
+                <h4 class="mb-0">Experiment: ResNet50_V2</h4>
+            </nav>
+
+            <div class="container-fluid p-4">
+      <!-- Статус эксперимента и основные кнопки управления (загрузка/логи) -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>Experiment: ResNet50_V2 <span class="badge bg-success fs-6">Finished</span></h3>
+        <div>
+            <button class="btn btn-outline-primary me-2"><i class="bi bi-download"></i> Download Model</button>
+            <!-- Кнопка вызывает модальное окно с логами через атрибуты data-bs -->
+            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#logModal">View Logs</button>
+        </div>
+    </div>
+    <!-- Делим страницу на основную часть (графики) и боковую (метаданные) -->
+    <div class="row">
+        <!-- Левая колонка (8/12): Основные визуализации процесса обучения -->
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm p-4 mb-4">
+                <h5>Training Metrics (Visualizations)</h5>
+                <div style="height: 350px;">
+                    <canvas id="metricChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm p-4">
+                <h5>Visualizations: Confusion Matrix</h5>
+                <div class="text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/25/Multi_Category_Confusion_Matrix.png" class="img-fluid rounded border" style="max-height: 300px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Правая колонка (4/12): Сводные данные, артефакты и гиперпараметры -->
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm p-4 mb-4">
+                <h5>Metrics Summary</h5>
+                <div class="d-flex justify-content-around text-center py-2">
+                    <div><small class="text-muted">Accuracy</small><div class="h4 mb-0">0.982</div></div>
+                    <div><small class="text-muted">Loss</small><div class="h4 mb-0">0.015</div></div>
+                    <div><small class="text-muted">F1-Score</small><div class="h4 mb-0">0.979</div></div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm p-4 mb-4">
+                <h5>Artifact Store</h5>
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                        <span><i class="bi bi-file-earmark-code"></i> model.pth</span>
+                        <a href="#" class="btn btn-sm btn-link">Download</a>
+                    </div>
+                    <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                        <span><i class="bi bi-file-earmark-image"></i> train_plots.png</span>
+                        <a href="#" class="btn btn-sm btn-link">View</a>
+                    </div>
+                    <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                        <span><i class="bi bi-file-earmark-spreadsheet"></i> validation_results.csv</span>
+                        <a href="#" class="btn btn-sm btn-link">Open</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm p-4">
+                <h5>Parameters</h5>
+                <table class="table table-sm table-borderless mb-0">
+                    <tr><td class="text-muted px-0">Batch Size</td><td class="text-end fw-bold">32</td></tr>
+                    <tr><td class="text-muted px-0">Optimizer</td><td class="text-end fw-bold">Adam</td></tr>
+                    <tr><td class="text-muted px-0">Learning Rate</td><td class="text-end fw-bold">0.001</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Используется для вывода системных логов без перезагрузки страницы -->
+    <div class="modal fade" id="logModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title">System Logs</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <pre class="mb-0"><code>[INFO] Loading weights...
+                        [INFO] Training started on GPU:0
+                        [INFO] Epoch 1: Loss 0.45, Acc 0.61
+                        [INFO] Epoch 2: Loss 0.32, Acc 0.75</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/actions.js"></script>
+    <script src="js/metrics.js"></script>
+</body>
+</html>
