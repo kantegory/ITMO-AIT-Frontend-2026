@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление средами — MLOps Deploy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <a class="visually-hidden-focusable" href="#main-content">Перейти к основному содержанию</a>
+
+    <nav class="navbar navbar-expand-lg navbar-dark" aria-label="Основная навигация">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-gear-wide-connected me-1" aria-hidden="true"></i> MLOps Deploy
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Навигация">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="pipelines.html">Пайплайны</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="environments.html">Среды</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">Кабинет</a>
+                    </li>
+                </ul>
+                <div class="d-flex gap-2" id="authButtons"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-4" id="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Среды и роли</h2>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newEnvModal">
+                <i class="bi bi-plus-lg me-1"></i> Новая среда
+            </button>
+        </div>
+
+        <!-- Среды (загружаются из API) -->
+        <div class="row g-4 mb-5" id="envsContainer" aria-live="polite">
+            <p class="text-muted">Загрузка сред...</p>
+        </div>
+
+        <!-- Роли и разрешения -->
+        <h3 class="mb-3">Роли и разрешения</h3>
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th scope="col">Пользователь</th>
+                        <th scope="col">Роль</th>
+                        <th scope="col">Development</th>
+                        <th scope="col">Staging</th>
+                        <th scope="col">Production</th>
+                    </tr>
+                </thead>
+                <tbody id="rolesBody">
+                    <tr><td colspan="5" class="text-muted">Загрузка...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#inviteModal">
+            <i class="bi bi-person-plus me-1"></i> Пригласить участника
+        </button>
+    </main>
+
+    <!-- Модальное окно новой среды -->
+    <div class="modal fade" id="newEnvModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Создать среду</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Название среды</label>
+                            <input type="text" class="form-control" placeholder="например, qa-testing">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Стратегия деплоя</label>
+                            <select class="form-select">
+                                <option>Blue/Green</option>
+                                <option>Canary</option>
+                                <option>Rolling</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Кластер</label>
+                            <select class="form-select">
+                                <option>k8s-cluster-main</option>
+                                <option>k8s-cluster-gpu</option>
+                            </select>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="requireApproval">
+                            <label class="form-check-label" for="requireApproval">
+                                Требовать одобрение перед деплоем
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Создать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно заморозки -->
+    <div class="modal fade" id="freezeModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Заморозить деплой</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Заморозить все деплои в среду <strong>Production</strong>?</p>
+                    <div class="alert alert-info small">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Во время заморозки никто не сможет развернуть новые версии. Текущие модели продолжат работать.
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Причина</label>
+                        <input type="text" class="form-control" placeholder="Например: плановое обслуживание">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Заморозить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно промоута -->
+    <div class="modal fade" id="promoteModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Промоут в Production</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Перенести текущую конфигурацию из <strong>Staging</strong> в <strong>Production</strong>?</p>
+                    <div class="alert alert-warning small">
+                        <i class="bi bi-exclamation-triangle me-1"></i>
+                        Все модели из staging будут развернуты в production с текущими настройками.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Промоут</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно редактирования роли -->
+    <div class="modal fade" id="editRoleModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Изменить роль</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Роль</label>
+                        <select class="form-select">
+                            <option>Админ</option>
+                            <option selected>Разработчик</option>
+                            <option>Наблюдатель</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Разрешения по средам:</label>
+                        <div class="mb-2">
+                            <label class="form-label small">Development</label>
+                            <select class="form-select form-select-sm">
+                                <option>Полный доступ</option>
+                                <option>Только деплой</option>
+                                <option>Только просмотр</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small">Staging</label>
+                            <select class="form-select form-select-sm">
+                                <option>Полный доступ</option>
+                                <option selected>Только деплой</option>
+                                <option>Только просмотр</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label small">Production</label>
+                            <select class="form-select form-select-sm">
+                                <option>Полный доступ</option>
+                                <option>Только деплой</option>
+                                <option selected>Только просмотр</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно приглашения -->
+    <div class="modal fade" id="inviteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Пригласить участника</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" placeholder="email@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Роль</label>
+                        <select class="form-select">
+                            <option>Разработчик</option>
+                            <option>Наблюдатель</option>
+                            <option>Админ</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Отправить приглашение</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно выхода -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Выход</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">Вы уверены, что хотите выйти?</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <a href="login.html" class="btn btn-danger">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p class="mb-0">&copy; 2026 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="text-decoration-none" style="color: var(--text-muted);">MLOps Deploy</a>. Тамразов Валерий, J3211</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        checkAuth();
+        updateNavbar();
+
+        var strategyLabels = { bluegreen: 'Blue/Green', canary: 'Canary', rolling: 'Rolling' };
+        var envColors = { Production: 'success', Staging: 'warning', Development: 'info' };
+        var roleLabels = { admin: 'Админ', developer: 'Разработчик', viewer: 'Наблюдатель' };
+        var roleBadgeClass = { admin: 'bg-primary', developer: 'bg-info', viewer: 'bg-secondary' };
+        var accessLabels = { full: 'Полный', deploy: 'Деплой', view: 'Просмотр' };
+
+        function renderAccessCell(access) {
+            var td = document.createElement('td');
+            if (access === 'full' || access === 'deploy') {
+                var icon = document.createElement('i');
+                icon.className = 'bi bi-check-circle-fill text-success me-1';
+                td.appendChild(icon);
+            } else {
+                var icon = document.createElement('i');
+                icon.className = 'bi bi-eye-fill text-muted me-1';
+                td.appendChild(icon);
+            }
+            td.appendChild(document.createTextNode(accessLabels[access] || access));
+            return td;
+        }
+
+        // Загрузка сред
+        fetch(API_URL + '/600/environments', { headers: authHeaders() })
+            .then(function(res) { return res.json(); })
+            .then(function(envs) {
+                var container = document.getElementById('envsContainer');
+                container.textContent = '';
+
+                envs.forEach(function(env) {
+                    var col = document.createElement('div');
+                    col.className = 'col-md-4';
+
+                    var card = document.createElement('div');
+                    card.className = 'env-card';
+
+                    // Заголовок
+                    var header = document.createElement('div');
+                    header.className = 'd-flex justify-content-between align-items-center mb-3';
+                    var h5 = document.createElement('h5');
+                    h5.className = 'mb-0';
+                    var dot = document.createElement('i');
+                    dot.className = 'bi bi-circle-fill text-' + (envColors[env.name] || 'secondary') + ' me-1';
+                    dot.style.fontSize = '0.6rem';
+                    h5.appendChild(dot);
+                    h5.appendChild(document.createTextNode(' ' + env.name));
+                    header.appendChild(h5);
+                    var stratSpan = document.createElement('span');
+                    stratSpan.className = 'deploy-strategy strategy-' + env.strategy;
+                    stratSpan.textContent = strategyLabels[env.strategy] || env.strategy;
+                    header.appendChild(stratSpan);
+                    card.appendChild(header);
+
+                    // Метрики
+                    var metrics = document.createElement('div');
+                    metrics.className = 'small mb-2';
+                    var rows = [
+                        ['Активные модели:', env.models],
+                        ['Запросов/мин:', env.rpm],
+                        ['Uptime:', env.uptime],
+                        ['Последний деплой:', env.lastDeploy]
+                    ];
+                    rows.forEach(function(r) {
+                        var row = document.createElement('div');
+                        row.className = 'd-flex justify-content-between mb-1';
+                        var label = document.createElement('span');
+                        label.className = 'text-muted';
+                        label.textContent = r[0];
+                        var val = document.createElement('span');
+                        val.textContent = r[1];
+                        row.appendChild(label);
+                        row.appendChild(val);
+                        metrics.appendChild(row);
+                    });
+                    card.appendChild(metrics);
+
+                    var hr = document.createElement('hr');
+                    card.appendChild(hr);
+
+                    var btns = document.createElement('div');
+                    btns.className = 'd-flex gap-2';
+                    var settingsBtn = document.createElement('button');
+                    settingsBtn.className = 'btn btn-outline-secondary btn-sm flex-grow-1';
+                    settingsBtn.textContent = 'Настроить';
+                    btns.appendChild(settingsBtn);
+                    card.appendChild(btns);
+
+                    col.appendChild(card);
+                    container.appendChild(col);
+                });
+            });
+
+        // Загрузка ролей
+        fetch(API_URL + '/600/roles', { headers: authHeaders() })
+            .then(function(res) { return res.json(); })
+            .then(function(roles) {
+                var tbody = document.getElementById('rolesBody');
+                tbody.textContent = '';
+
+                roles.forEach(function(r) {
+                    var tr = document.createElement('tr');
+
+                    // Пользователь
+                    var tdUser = document.createElement('td');
+                    var userDiv = document.createElement('div');
+                    userDiv.className = 'd-flex align-items-center';
+
+                    var avatar = document.createElement('div');
+                    avatar.style.cssText = 'width:32px;height:32px;background:var(--accent-dim);border:1px solid var(--border-accent);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-family:var(--font-mono);font-size:0.75rem;font-weight:600;margin-right:10px;';
+                    avatar.textContent = r.initials;
+                    userDiv.appendChild(avatar);
+
+                    var nameDiv = document.createElement('div');
+                    var nameText = document.createElement('div');
+                    nameText.textContent = r.name;
+                    nameDiv.appendChild(nameText);
+                    var emailText = document.createElement('small');
+                    emailText.className = 'text-muted';
+                    emailText.textContent = r.email;
+                    nameDiv.appendChild(emailText);
+                    userDiv.appendChild(nameDiv);
+                    tdUser.appendChild(userDiv);
+                    tr.appendChild(tdUser);
+
+                    // Роль
+                    var tdRole = document.createElement('td');
+                    var roleBadge = document.createElement('span');
+                    roleBadge.className = 'role-badge ' + (roleBadgeClass[r.role] || 'bg-secondary') + ' text-white';
+                    roleBadge.textContent = roleLabels[r.role] || r.role;
+                    tdRole.appendChild(roleBadge);
+                    tr.appendChild(tdRole);
+
+                    // Доступы
+                    tr.appendChild(renderAccessCell(r.devAccess));
+                    tr.appendChild(renderAccessCell(r.stagingAccess));
+                    tr.appendChild(renderAccessCell(r.prodAccess));
+
+                    tbody.appendChild(tr);
+                });
+            });
+    </script>
+</body>
+</html>
