@@ -1,0 +1,422 @@
+/* Темы */
+:root {
+    --bg-body: #f8f9f5;
+    --bg-card: rgba(255, 255, 255, 0.9);
+    --text-color: #212529;
+    --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    --green: #8bc34a;
+    --green-dark: #7cb342;
+}
+
+[data-theme="dark"] {
+    --bg-body: #121212;
+    --bg-card: rgba(30, 30, 35, 0.95);
+    --text-color: #e0e0e0;
+    --card-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    --green: #6a9c3e;
+    --green-dark: #5a8c2e;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-color);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.card {
+    background-color: var(--bg-card);
+    backdrop-filter: blur(4px);
+    border: none;
+    box-shadow: var(--card-shadow);
+    transition: background-color 0.2s;
+}
+
+.navbar {
+    background-color: var(--bg-card) !important;
+}
+
+footer {
+    background-color: #1a1a1a !important;
+}
+
+[data-theme="dark"] footer {
+    background-color: #0a0a0a !important;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-color);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.card {
+    background-color: var(--bg-card);
+    backdrop-filter: blur(4px);
+    border: none;
+    box-shadow: var(--card-shadow);
+    transition: background-color 0.2s;
+}
+
+.hero-section {
+    background-image: url('images/mountain.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-top: 20px;
+    padding-bottom: 80px;
+    position: relative;
+    z-index: 1;
+}
+
+
+/* Затемнение */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+/* Чтобы текст был поверх затемнения */
+.hero-section .container {
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+
+:root {
+    --green: #3e6b1f;      
+    --green-dark: #2d4f14;
+}
+
+/* Фон страницы */
+body {
+    background-color: #f8f9f5;
+}
+
+/* Надпись Travel Planner в меню на всех страницах */
+.navbar-brand {
+    color: var(--green) !important;
+    font-weight: bold;
+}
+
+.navbar-brand:hover {
+    color: var(--green-dark) !important;
+}
+
+/* Все кнопки с классом btn-primary */
+.btn-primary {
+    background-color: var(--green) !important;
+    border-color: var(--green) !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--green-dark) !important;
+    border-color: var(--green-dark) !important;
+}
+
+/* Все заголовки карточек с классом bg-primary */
+.bg-primary,
+.card-header.bg-primary,
+div.bg-primary {
+    background-color: var(--green) !important;
+}
+
+/* Ссылки */
+a {
+    color: var(--green);
+}
+
+a:hover {
+    color: var(--green-dark);
+}
+
+/*чтобы кнопки попробовать на главной странице были на одном уровне*/
+.card .btn {
+    margin-top: auto;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/*чтобы карточки стали прозрачными*/
+.card {
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(4px);
+    border: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Горизонтальная прокрутка для карточек */
+#resultsContainer {
+    scrollbar-width: thin;
+    scrollbar-color: var(--green) #e0e0e0;
+}
+
+#resultsContainer::-webkit-scrollbar {
+    height: 8px;
+}
+
+#resultsContainer::-webkit-scrollbar-track {
+    background: #e0e0e0;
+    border-radius: 10px;
+}
+
+#resultsContainer::-webkit-scrollbar-thumb {
+    background: var(--green);
+    border-radius: 10px;
+}
+
+#resultsContainer::-webkit-scrollbar-thumb:hover {
+    background: var(--green-dark);
+}
+
+/* Фокус для доступности */
+a:focus, button:focus, input:focus, select:focus, textarea:focus {
+    outline: 2px solid var(--green);
+    outline-offset: 2px;
+}
+
+/* Скрыть элементы только для читалок */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+}
+
+.hero-section {
+    background-image: url('images/mountain.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    min-height: 90vh;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+.hero-section {
+    background-image: url('images/mountain.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 0;
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+
+
+/* Темная тема */
+[data-theme="dark"] body {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] .navbar {
+    background-color: #1e1e1e !important;
+}
+
+[data-theme="dark"] .navbar .nav-link {
+    color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] .navbar .nav-link:hover {
+    color: var(--green) !important;
+}
+
+[data-theme="dark"] .navbar-brand {
+    color: var(--green) !important;
+}
+
+[data-theme="dark"] .card {
+    background-color: #1e1e1e !important;
+    color: #e0e0e0;
+    box-shadow: 0 4px 6px rgba(255,255,255,0.05);
+}
+
+[data-theme="dark"] .card-header {
+    background-color: #2a2a2a !important;
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] .card-body {
+    background-color: #1e1e1e;
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    border-color: #444;
+}
+
+[data-theme="dark"] .form-control::placeholder {
+    color: #aaa;
+}
+
+[data-theme="dark"] .form-label {
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] .input-group-text {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    border-color: #444;
+}
+
+[data-theme="dark"] .btn-outline-light {
+    color: #fff;
+    border-color: #fff;
+}
+
+[data-theme="dark"] .btn-outline-light:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+[data-theme="dark"] .text-muted {
+    color: #aaa !important;
+}
+
+[data-theme="dark"] footer {
+    background-color: #0a0a0a !important;
+}
+
+[data-theme="dark"] footer h4,
+[data-theme="dark"] footer p,
+[data-theme="dark"] footer a {
+    color: #ccc !important;
+}
+
+[data-theme="dark"] .bg-white {
+    background-color: #1e1e1e !important;
+}
+
+[data-theme="dark"] .bg-opacity-75 {
+    background-color: rgba(30, 30, 35, 0.95) !important;
+}
+
+[data-theme="dark"] .btn-outline-success {
+    color: var(--green);
+    border-color: var(--green);
+}
+
+[data-theme="dark"] .btn-outline-success:hover {
+    background-color: var(--green);
+    color: #fff;
+}
+
+/* Фильтры на странице поиска */
+[data-theme="dark"] .card .card-header {
+    background-color: #2a2a2a !important;
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] .form-check-label {
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] .form-check-input {
+    background-color: #2a2a2a;
+    border-color: #555;
+}
+
+[data-theme="dark"] .form-check-input:checked {
+    background-color: var(--green);
+    border-color: var(--green);
+}
+
+/* Общий фон главной страницы внутри hero-section */
+[data-theme="dark"] .hero-section {
+    background-image: url('images/mountain.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+[data-theme="dark"] .hero-section .container {
+    color: white;
+}
+
+
+[data-theme="dark"] .hero-section .card {
+    background-color: #1e1e1e !important;
+    color: #e0e0e0;
+    border: 1px solid #333;
+}
+
+[data-theme="dark"] .hero-section .card-title,
+[data-theme="dark"] .hero-section .card-text {
+    color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] .hero-section .btn-outline-success {
+    color: var(--green);
+    border-color: var(--green);
+}
+
+[data-theme="dark"] .hero-section .btn-outline-success:hover {
+    background-color: var(--green);
+    color: #fff;
+}
+
+/* Тёмная тема для страницы карты */
+[data-theme="dark"] #map {
+    filter: brightness(0.8);
+}
+
+[data-theme="dark"] .leaflet-popup-content-wrapper,
+[data-theme="dark"] .leaflet-popup-tip {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] .leaflet-popup-content a {
+    color: var(--green);
+}
