@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    (() => {
+      const savedTheme = localStorage.getItem('tarelka-theme');
+      const systemTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = savedTheme || systemTheme;
+    })();
+  </script>
+  <title>Tarelka — Вход</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body data-page="login" class="auth-body">
+  <a class="skip-link" href="#loginMain">Перейти к форме входа</a>
+  <main class="auth-layout" id="loginMain" tabindex="-1" aria-labelledby="loginPageTitle">
+    <section class="auth-hero" aria-labelledby="loginHeroTitle">
+      <div class="auth-hero__content">
+        <span class="badge rounded-pill text-bg-light mb-3 px-3 py-2">mors and co</span>
+        <h1 class="display-5 fw-bold mb-3" id="loginHeroTitle">Tarelka</h1>
+        <p class="lead mb-4">Управляйте доходами, расходами, бюджетами и подключёнными сервисами в одном месте.</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><strong>6</strong><span>связанных страниц</span></div>
+          <div class="hero-stat"><strong>Финансово</strong><span>неуровновешинным людям подходит</span></div>
+          <div class="hero-stat"><strong>Надежность</strong><span>хранение данных весьма забавное</span></div>
+        </div>
+        <div class="hero-notes mt-4">
+          <div class="hero-note-card">
+            <i class="bi bi-pie-chart" aria-hidden="true"></i>
+            <div>
+              <h2>Аналитика</h2>
+              <p>Отчёты строятся по тем же транзакциям, что и кабинет.</p>
+            </div>
+          </div>
+          <div class="hero-note-card">
+            <i class="bi bi-shield-check" aria-hidden="true"></i>
+            <div>
+              <h2>Красочность</h2>
+              <p>как же я устала,зато все вайбово м ,ага на канал зайди ко мне</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="auth-panel" aria-labelledby="loginPageTitle">
+      <div class="auth-card card border-0 shadow-lg">
+        <div class="card-body p-4 p-lg-5">
+          <div class="mb-4">
+            <h2 class="h3 mb-2" id="loginPageTitle">Вход в аккаунт</h2>
+            <p class="text-secondary mb-0" id="loginFormHelp">Войдите в существующий аккаунт или создайте новый.</p>
+          </div>
+
+          <form id="loginForm" novalidate aria-describedby="loginFormHelp">
+            <div class="mb-3">
+              <label class="form-label" for="loginEmail">Email</label>
+              <div class="input-group">
+                <span class="input-group-text" aria-hidden="true"><i class="bi bi-envelope" aria-hidden="true"></i></span>
+                <input class="form-control" id="loginEmail" type="email" placeholder="name@example.com" autocomplete="email" required>
+              </div>
+              <div class="invalid-feedback d-block" data-error-for="loginEmail"></div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="loginPassword">Пароль</label>
+              <div class="input-group">
+                <span class="input-group-text" aria-hidden="true"><i class="bi bi-lock" aria-hidden="true"></i></span>
+                <input class="form-control" id="loginPassword" type="password" placeholder="Введите пароль" autocomplete="current-password" required>
+                <button class="btn btn-outline-secondary" type="button" id="toggleLoginPassword" aria-controls="loginPassword" aria-label="Показать пароль"><i
+                    class="bi bi-eye" aria-hidden="true"></i></button>
+              </div>
+              <div class="invalid-feedback d-block" data-error-for="loginPassword"></div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">Запомнить меня</label>
+              </div>
+              <a class="link-primary fw-medium small" href="#" id="forgotPasswordLink" role="button">Забыли пароль?</a>
+            </div>
+
+            <button class="btn btn-primary w-100 btn-lg mb-3" type="submit">Войти</button>
+
+            <div class="demo-tip p-3 rounded-4 mb-3">
+              <div class="d-flex gap-3">
+                <i class="bi bi-lightbulb fs-4" aria-hidden="true"></i>
+                <div>
+                  <strong>Совет:</strong>
+                  <div class="small text-secondary">Сначала зарегистрируйтесь — после этого автоматически создадутся
+                    демо‑счета, транзакции и бюджеты.</div>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-center mb-0 text-secondary">Нет аккаунта?
+              <a class="fw-semibold text-decoration-none" href="register.html">Зарегистрироваться</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3" role="region" aria-live="polite" aria-label="Уведомления"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+
+</html>
