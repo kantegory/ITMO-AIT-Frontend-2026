@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Wanderlust — Вход</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="css/styles.css" rel="stylesheet"/>
+</head>
+<body data-page="login">
+<a href="#main-content" class="skip-link">Перейти к содержимому</a>
+<div class="auth-wrap">
+  <aside class="auth-aside" aria-hidden="true">
+    <div class="auth-aside-grid"></div>
+    <div class="auth-aside-content">
+      <div class="auth-logo">Wanderlust</div>
+      <p class="auth-tagline" style="margin-top:.75rem;">Планируйте путешествия,<br/>которые вы запомните навсегда</p>
+      <div style="display:flex;gap:2.5rem;justify-content:center;margin-top:3rem;">
+        <div><div class="auth-stat-num">10</div><div class="auth-stat-label">Направлений</div></div>
+        <div><div class="auth-stat-num">50K</div><div class="auth-stat-label">Путешественников</div></div>
+        <div><div class="auth-stat-num">4.9★</div><div class="auth-stat-label">Рейтинг</div></div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:3rem;max-width:320px;margin-left:auto;margin-right:auto;">
+        <span style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);font-size:.75rem;padding:.2rem .65rem;border-radius:20px;">🗼 Париж</span>
+        <span style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);font-size:.75rem;padding:.2rem .65rem;border-radius:20px;">🌊 Мальдивы</span>
+        <span style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);font-size:.75rem;padding:.2rem .65rem;border-radius:20px;">🏔 Патагония</span>
+        <span style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);font-size:.75rem;padding:.2rem .65rem;border-radius:20px;">🎈 Каппадокия</span>
+        <span style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);font-size:.75rem;padding:.2rem .65rem;border-radius:20px;">🦁 Кения</span>
+        <span style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);font-size:.75rem;padding:.2rem .65rem;border-radius:20px;">🌋 Исландия</span>
+      </div>
+      <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:1.1rem 1.25rem;margin-top:3rem;text-align:left;max-width:320px;margin-left:auto;margin-right:auto;">
+        <div style="color:#f59e0b;font-size:.85rem;margin-bottom:.5rem;">★★★★★</div>
+        <p style="font-size:.82rem;opacity:.85;font-style:italic;margin:0 0 .6rem;">"Wanderlust сделал планирование путешествий простым удовольствием. Рекомендую всем!"</p>
+        <div style="font-size:.75rem;opacity:.6;">— Елена К., 28 стран</div>
+      </div>
+    </div>
+  </aside>
+  <main class="auth-form-panel" id="main-content">
+    <div class="auth-form-inner">
+      <h2 class="serif" style="font-size:1.8rem;margin-bottom:.4rem;">С возвращением</h2>
+      <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:2rem;">Войдите, чтобы продолжить</p>
+      <form id="loginForm" novalidate aria-label="Форма входа">
+        <div class="mb-3">
+          <label class="form-label" for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" class="form-input" placeholder="your@email.com" value="alex@example.com" autocomplete="email" required/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="loginPassword">Пароль</label>
+          <div class="password-wrap">
+            <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" value="password123" autocomplete="current-password" required aria-describedby="loginPassDesc"/>
+            <button type="button" class="password-toggle" data-target="loginPassword" aria-label="Показать пароль" aria-pressed="false"><i class="bi bi-eye" aria-hidden="true"></i></button>
+          </div>
+          <span id="loginPassDesc" class="visually-hidden">Минимум 8 символов</span>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <label style="display:flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--text-muted);cursor:pointer;">
+              <input type="checkbox" checked/> Запомнить меня
+            </label>
+            <a href="#" style="font-size:.82rem;color:var(--accent);">Забыли пароль?</a>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary-custom w-100 mb-3" style="justify-content:center;padding:.7rem;">
+          Войти
+        </button>
+        <div class="auth-divider" role="separator" aria-label="или">или</div>
+        <div class="row g-2 mb-4" role="group" aria-label="Войти через социальные сети">
+          <div class="col-6"><button type="button" class="social-btn w-100"><i class="bi bi-google" aria-hidden="true"></i> Google</button></div>
+          <div class="col-6"><button type="button" class="social-btn w-100"><i class="bi bi-apple" aria-hidden="true"></i> Apple</button></div>
+        </div>
+        <p style="text-align:center;font-size:.875rem;color:var(--text-muted);">
+          Нет аккаунта? <a href="register.html" style="color:var(--accent);font-weight:500;">Регистрация</a>
+        </p>
+      </form>
+    </div>
+  </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
