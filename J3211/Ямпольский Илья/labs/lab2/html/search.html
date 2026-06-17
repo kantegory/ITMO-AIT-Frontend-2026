@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Поиск мероприятий на Яндекс Афише. Найдите концерты, театры и выставки по названию, городу и типу события.">
+    <meta name="keywords" content="поиск, афиша, мероприятия, фильтры, концерты, театр">
+    <meta name="author" content="Ямпольский Илья">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <title>Яндекс Афиша - Поиск</title>
+</head>
+<body>
+<a href="#main-content" class="visually-hidden-focusable">Перейти к основному контенту</a>
+
+<header role="banner">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">Яндекс Афиша</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="search.html">Поиск</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Мои билеты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="returns.html">Возвраты</a>
+                    </li>
+                    <li class="nav-item organizer-only">
+                        <a class="nav-link" href="organizer.html">Организатор</a>
+                    </li>
+                </ul>
+                <form class="d-flex mx-auto my-2 my-lg-0" role="search" id="searchForm">
+                    <label for="searchInput" class="visually-hidden">Поиск мероприятий</label>
+                    <input class="form-control me-2" type="search" name="q" id="searchInput" placeholder="Поиск..." aria-label="Поиск мероприятий">
+                    <button class="btn btn-outline-success" type="submit">Поиск</button>
+                </form>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link logout-link" href="#" onclick="logout()">Выход</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main id="main-content" style="padding-top: 1rem;">
+    <section class="container-fluid py-4">
+        <button class="btn btn-outline-primary w-100 mb-3 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse">Фильтры</button>
+        <article class="row">
+            <aside class="col-12 col-lg-3 mb-4">
+                <section class="filter-box p-4 collapse d-lg-block" id="filtersCollapse">
+                    <header><h2 class="h6 mb-3">Фильтры</h2></header>
+                    <fieldset class="mb-3">
+                        <legend class="form-label small">Тип</legend>
+                        <label for="filterType" class="visually-hidden">Тип мероприятия</label>
+                        <select class="form-select form-select-sm" id="filterType">
+                            <option value="">Все</option>
+                            <option value="Концерт">Концерт</option>
+                            <option value="Театр">Театр</option>
+                            <option value="Выставка">Выставка</option>
+                        </select>
+                    </fieldset>
+                    <fieldset class="mb-3">
+                        <legend class="form-label small">Город</legend>
+                        <label for="filterCity" class="visually-hidden">Город</label>
+                        <select class="form-select form-select-sm" id="filterCity">
+                            <option value="">Все</option>
+                            <option value="Москва">Москва</option>
+                            <option value="СПб">СПб</option>
+                        </select>
+                    </fieldset>
+                    <footer>
+                        <button class="btn btn-primary btn-sm w-100 mb-2" onclick="applyFilters()">Применить</button>
+                        <button class="btn btn-secondary btn-sm w-100" onclick="resetFilters()">Сброс</button>
+                    </footer>
+                </section>
+            </aside>
+            <section class="col-12 col-lg-9">
+                <header><h1 class="h4 mb-3">Результаты поиска</h1></header>
+                <article class="row g-4" id="eventsContainer"></article>
+            </section>
+        </article>
+    </section>
+</main>
+
+<div id="dynamicModalsContainer"></div>
+
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="reviewModalLabel">Оставить отзыв</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label" id="ratingLabel">Ваша оценка</label>
+                    <div class="rating-select" id="ratingSelect">
+                        <button type="button" data-value="1">1</button>
+                        <button type="button" data-value="2">2</button>
+                        <button type="button" data-value="3">3</button>
+                        <button type="button" data-value="4">4</button>
+                        <button type="button" data-value="5">5</button>
+                    </div>
+                    <input type="hidden" id="selectedRating" value="0">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="reviewText">Ваш отзыв</label>
+                    <textarea class="form-control" id="reviewText" rows="4" placeholder="Напишите ваш отзыв..."></textarea>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="reviewAnon">
+                    <label class="form-check-label" for="reviewAnon">Опубликовать анонимно</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-primary" onclick="submitReview()">Отправить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+<script>
+    axios.defaults.baseURL = 'http://localhost:3000'
+
+    axios.interceptors.request.use(function(config) {
+        const token = localStorage.accessToken
+        if (token) {
+            config.headers.Authorization = 'Bearer ' + token
+        }
+        return config
+    })
+
+    function formatDate(dateString) {
+        if (!dateString) return ''
+        if (dateString.includes('-')) {
+            const parts = dateString.split('-')
+            if (parts[0].length === 4) {
+                return parts[2] + '-' + parts[1] + '-' + parts[0]
+            }
+            return dateString
+        }
+        return dateString
+    }
+
+    let eventsData = []
+    let selectedSeats = {}
+    let currentEventId = null
+
+    function checkAuth() {
+        if (!localStorage.accessToken) {
+            window.location.href = "login.html"
+        }
+    }
+
+    function checkOrganizerAccess() {
+        const user = JSON.parse(localStorage.getItem('user'))
+        const organizerLinks = document.querySelectorAll('.organizer-only')
+        if (user && user.email !== 'sergo0_1337228007zzz@mail.ru') {
+            organizerLinks.forEach(function(link) {
+                link.style.display = 'none'
+            })
+        }
+    }
+
+    function getFilterParams() {
+        const params = {}
+        const searchTerm = document.getElementById('searchInput').value
+        const typeFilter = document.getElementById('filterType').value
+        const cityFilter = document.getElementById('filterCity').value
+
+        if (searchTerm && searchTerm.trim() !== '') params.q = String(searchTerm.trim())
+        if (typeFilter && typeFilter !== '') params.type = String(typeFilter)
+        if (cityFilter && cityFilter !== '') params.city = String(cityFilter)
+
+        return params
+    }
+
+    function buildQueryUrl(params) {
+        if (Object.keys(params).length === 0) return '/events'
+
+        const queryString = Object.entries(params)
+            .map(function(entry) { return entry[0] + '=' + encodeURIComponent(String(entry[1])) })
+            .join('&')
+
+        return '/events?' + queryString
+    }
+
+    async function loadEvents(params) {
+        params = params || {}
+        try {
+            const url = buildQueryUrl(params)
+            const response = await axios.get(url)
+            eventsData = response.data
+            renderEvents(response.data)
+            createDynamicModals(response.data)
+        } catch (error) {
+            console.error('Ошибка:', error)
+        }
+    }
+
+    function renderEvents(events) {
+        const container = document.getElementById('eventsContainer')
+        if (!events || events.length === 0) {
+            container.innerHTML = '<p class="text-muted">Ничего не найдено</p>'
+            return
+        }
+        container.innerHTML = events.map(function(event) {
+            return `
+                <div class="col-12 col-md-6 col-xl-4">
+                    <article class="card h-100 event-card" onclick="openEventModal(${event.id})" style="cursor: pointer;">
+                        <section class="card-body d-flex flex-column">
+                            <header class="flex-grow-1">
+                                <h2 class="card-title h5 mb-1">${event.title}</h2>
+                                <p class="card-text text-muted">${formatDate(event.date)} - ${event.city}${event.venue ? ', ' + event.venue : ''}</p>
+                            </header>
+                            <footer class="mt-auto">
+                                <span class="badge bg-success">от ${event.price.toLocaleString()} ₽</span>
+                            </footer>
+                        </section>
+                    </article>
+                </div>
+            `
+        }).join('')
+    }
+
+    function createDynamicModals(events) {
+        const container = document.getElementById('dynamicModalsContainer')
+        container.innerHTML = ''
+
+        events.forEach(function(event) {
+            const modalHtml = `
+                <div class="modal fade" id="eventModal${event.id}" tabindex="-1" aria-labelledby="eventModal${event.id}Label" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title" id="eventModal${event.id}Label">${event.title}</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="${event.imageUrl || 'https://placebear.com/800/400'}" class="img-fluid rounded mb-3 w-100" alt="${event.title}" style="max-height: 400px; object-fit: cover;">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <p class="text-muted">${event.type || 'Мероприятие'}</p>
+                                        <p class="text-muted">Место: ${event.city}${event.venue ? ', ' + event.venue : ''}</p>
+                                        <p class="text-muted">${event.description || ''}</p>
+                                        <h3 class="mt-4">Схема зала</h3>
+                                        <div class="seat-map" id="seatMap${event.id}"></div>
+                                        <div class="mt-2 d-flex gap-3 small flex-wrap">
+                                            <span><span class="legend-seat available"></span>Свободно</span>
+                                            <span><span class="legend-seat selected"></span>Выбрано</span>
+                                            <span><span class="legend-seat sold"></span>Продано</span>
+                                        </div>
+                                        <h3 class="mt-4">Отзывы</h3>
+                                        <div id="reviewsContainer${event.id}"></div>
+                                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="openReviewModal(${event.id})">Оставить отзыв</button>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="card bg-light text-center">
+                                            <div class="card-body">
+                                                <h3 class="text-muted">Цена</h3>
+                                                <p class="text-primary" id="priceDisplay${event.id}">${event.price.toLocaleString()} ₽</p>
+                                                <div class="mb-2"><small>Выбрано мест:</small><strong id="selectedCount${event.id}">0</strong></div>
+                                                <div class="mb-3"><small>Итого:</small><strong class="text-success" id="totalPrice${event.id}">0 ₽</strong></div>
+                                                <button type="button" class="btn btn-success w-100" onclick="buyTickets(${event.id})">Купить билеты</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+            container.innerHTML += modalHtml
+        })
+    }
+
+    function openEventModal(eventId) {
+        const modal = new bootstrap.Modal(document.getElementById('eventModal' + eventId))
+        modal.show()
+
+        const event = eventsData.find(function(e) { return e.id === eventId })
+        if (event) {
+            generateSeatMap(eventId, event)
+            loadReviews(eventId)
+        }
+    }
+
+    function searchEvents() {
+        const params = getFilterParams()
+        loadEvents(params)
+    }
+
+    function applyFilters() {
+        const params = getFilterParams()
+        loadEvents(params)
+    }
+
+    function resetFilters() {
+        document.getElementById('searchInput').value = ''
+        document.getElementById('filterType').value = ''
+        document.getElementById('filterCity').value = ''
+        loadEvents()
+    }
+
+    async function loadSoldSeats(eventId) {
+        try {
+            const response = await axios.get('/tickets?eventId=' + eventId)
+            const tickets = response.data
+            const soldSeats = []
+            tickets.forEach(function(ticket) {
+                if (ticket.seats) {
+                    const seatNumbers = ticket.seats.split(',').map(function(s) { return parseInt(s.trim()) })
+                    soldSeats.push.apply(soldSeats, seatNumbers)
+                }
+            })
+            return soldSeats
+        } catch (error) {
+            console.error('Ошибка загрузки мест:', error)
+            return []
+        }
+    }
+
+    async function generateSeatMap(eventId, event) {
+        const container = document.getElementById('seatMap' + eventId)
+        if (!container) return
+
+        const capacity = event.capacity || 50
+        const price = event.price
+        selectedSeats[eventId] = []
+        const soldSeats = await loadSoldSeats(eventId)
+
+        let html = ''
+        for (let i = 1; i <= capacity; i++) {
+            let className = 'seat available';
+            if (soldSeats.includes(i)) {
+                className = 'seat sold'
+            }
+            html += '<button type="button" class="' + className + '" data-seat="' + i + '" data-event-id="' + eventId + '" onclick="toggleSeat(' + i + ', ' + eventId + ', ' + price + ')"></button>'
+        }
+        container.innerHTML = html
+        updatePriceCounter(eventId, price)
+    }
+
+    function toggleSeat(seatNumber, eventId, price) {
+        const button = document.querySelector('#seatMap' + eventId + ' button[data-seat="' + seatNumber + '"]')
+        if (!button || button.classList.contains('sold')) return
+
+        const index = selectedSeats[eventId].indexOf(seatNumber)
+        if (index > -1) {
+            selectedSeats[eventId].splice(index, 1)
+            button.classList.remove('selected')
+            button.classList.add('available')
+        } else {
+            selectedSeats[eventId].push(seatNumber)
+            button.classList.remove('available')
+            button.classList.add('selected')
+        }
+        updatePriceCounter(eventId, price)
+    }
+
+    function updatePriceCounter(eventId, price) {
+        const countElement = document.getElementById('selectedCount' + eventId)
+        const totalElement = document.getElementById('totalPrice' + eventId)
+        if (countElement && totalElement) {
+            const count = selectedSeats[eventId] ? selectedSeats[eventId].length : 0
+            const total = count * price
+            countElement.textContent = count
+            totalElement.textContent = total.toLocaleString() + ' ₽'
+        }
+    }
+
+    async function buyTickets(eventId) {
+        if (!selectedSeats[eventId] || selectedSeats[eventId].length === 0) {
+            alert('Выберите хотя бы одно место!')
+            return
+        }
+        try {
+            const user = JSON.parse(localStorage.getItem('user'))
+            const event = eventsData.find(function(e) { return e.id === eventId })
+            const totalPrice = selectedSeats[eventId].length * event.price
+
+            const ticketData = {
+                eventId: event.id,
+                eventName: event.title,
+                userId: user.id,
+                seats: selectedSeats[eventId].join(', '),
+                totalPrice: totalPrice,
+                status: 'active',
+                purchaseDate: new Date().toISOString().split('T')[0]
+            }
+
+            await axios.post('/tickets', ticketData)
+            alert('Билеты куплены!\nМеста: ' + selectedSeats[eventId].join(', ') + '\nСумма: ' + totalPrice.toLocaleString() + ' ₽')
+
+            const modal = bootstrap.Modal.getInstance(document.getElementById('eventModal' + eventId))
+            if (modal) modal.hide()
+
+            selectedSeats[eventId] = []
+            updatePriceCounter(eventId, event.price)
+            await loadEvents(getFilterParams())
+        } catch (error) {
+            console.error('Ошибка покупки:', error)
+            alert('Ошибка покупки билетов')
+        }
+    }
+
+    async function loadReviews(eventId) {
+        try {
+            const response = await axios.get('/reviews?eventId=' + eventId)
+            renderReviews(eventId, response.data)
+        } catch (error) {
+            console.error('Ошибка загрузки отзывов:', error)
+        }
+    }
+
+    function renderReviews(eventId, reviews) {
+        const container = document.getElementById('reviewsContainer' + eventId)
+        if (!container) return
+        if (!reviews || reviews.length === 0) {
+            container.innerHTML = '<p class="text-muted small">Пока нет отзывов</p>'
+            return
+        }
+        container.innerHTML = reviews.map(function(review) {
+            const userName = review.anonymous ? 'Аноним' : review.userName
+            return `
+                <div class="card bg-light border-0 mb-2">
+                    <div class="card-body p-2">
+                        <small><strong>${userName}</strong> [${review.rating}/5]</small>
+                        <p class="mb-0 small">${review.text}</p>
+                    </div>
+                </div>
+            `
+        }).join('')
+    }
+
+    function openReviewModal(eventId) {
+        currentEventId = eventId
+        const modal = new bootstrap.Modal(document.getElementById('reviewModal'))
+        modal.show()
+    }
+
+    async function submitReview() {
+        const rating = document.getElementById('selectedRating').value
+        const text = document.getElementById('reviewText').value
+        const anonymous = document.getElementById('reviewAnon').checked
+
+        if (!rating || rating === '0') {
+            alert('Выберите оценку!')
+            return
+        }
+        if (!text.trim()) {
+            alert('Напишите текст отзыва!')
+            return
+        }
+
+        try {
+            const user = JSON.parse(localStorage.getItem('user'))
+            const reviewData = {
+                eventId: currentEventId,
+                userId: user.id,
+                userName: anonymous ? 'Аноним' : user.firstName + ' ' + user.lastName,
+                rating: parseInt(rating),
+                text: text,
+                anonymous: anonymous,
+                date: new Date().toISOString().split('T')[0]
+            }
+
+            await axios.post('/reviews', reviewData)
+            alert('Спасибо за отзыв!')
+
+            const modal = bootstrap.Modal.getInstance(document.getElementById('reviewModal'))
+            if (modal) modal.hide()
+
+            document.getElementById('selectedRating').value = '0'
+            document.getElementById('reviewText').value = ''
+            document.getElementById('reviewAnon').checked = false
+            document.querySelectorAll('.rating-select button').forEach(function(b) { b.classList.remove('active') })
+            await loadReviews(currentEventId)
+        } catch (error) {
+            console.error('Ошибка отправки отзыва:', error)
+            alert('Ошибка отправки отзыва: ' + (error.response?.data || error.message))
+        }
+    }
+
+    document.querySelectorAll('.rating-select button').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.rating-select button').forEach(function(b) { b.classList.remove('active') })
+            this.classList.add('active')
+            document.getElementById('selectedRating').value = this.getAttribute('data-value')
+        })
+    })
+
+    async function logout() {
+        localStorage.clear()
+        window.location.href = "login.html"
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        checkAuth()
+        checkOrganizerAccess()
+
+        const searchForm = document.getElementById('searchForm')
+        if (searchForm) {
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault()
+                searchEvents()
+            })
+        }
+
+        const params = new URLSearchParams(window.location.search)
+        const query = params.get('q')
+        if (query) {
+            document.getElementById('searchInput').value = query
+        }
+        loadEvents(getFilterParams())
+    })
+</script>
+</body>
+</html>

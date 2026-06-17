@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Возвраты билетов - статус заявок на возврат средств. Отслеживайте обработку возвратов на Яндекс Афише.">
+    <meta name="keywords" content="возврат билетов, возврат средств, статус заявки">
+    <meta name="author" content="Ямпольский Илья">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <title>Яндекс Афиша - Возвраты</title>
+</head>
+<body>
+<a href="#main-content" class="visually-hidden-focusable">Перейти к основному контенту</a>
+
+<header role="banner">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">Яндекс Афиша</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search.html">Поиск</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Мои билеты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="returns.html">Возвраты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="organizer.html">Организатор</a>
+                    </li>
+                </ul>
+                <form class="d-flex mx-auto my-2 my-lg-0" role="search" action="search.html">
+                    <label for="returnsSearch" class="visually-hidden">Поиск мероприятий</label>
+                    <input class="form-control me-2" type="search" name="q" id="returnsSearch" placeholder="Поиск..." aria-label="Поиск мероприятий">
+                    <button class="btn btn-outline-success" type="submit">Поиск</button>
+                </form>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link logout-link" href="#" onclick="logout()">Выход</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main id="main-content" style="padding-top: 1rem;">
+    <section class="returns-content container py-4">
+        <header>
+            <h1 class="h4 mb-4">Возвраты билетов</h1>
+        </header>
+        <aside class="alert alert-info mb-4">
+            Полный возврат возможен не позднее чем за 24 часа до начала мероприятия.
+            Средства возвращаются в течение 3-5 рабочих дней.
+        </aside>
+        <article class="row g-4" id="returnsContainer"></article>
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js" ></script>
+<script>
+    axios.defaults.baseURL = 'http://localhost:3000'
+
+    axios.interceptors.request.use(config => {
+        const token = localStorage.accessToken
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`
+        }
+        return config
+    })
+
+    function formatDate(dateString) {
+        if (!dateString) return ''
+        if (dateString.includes('-')) {
+            const parts = dateString.split('-')
+            if (parts[0].length === 4) {
+                return `${parts[2]}-${parts[1]}-${parts[0]}`
+            }
+            return dateString
+        }
+        return dateString
+    }
+
+    function checkAuth() {
+        if (!localStorage.accessToken) {
+            window.location.href = "login.html"
+        }
+    }
+
+    function getUser() {
+        try {
+            return JSON.parse(localStorage.getItem('user'))
+        } catch (e) {
+            return null
+        }
+    }
+
+    async function loadReturns() {
+        try {
+            const user = getUser()
+            const response = await axios.get('/returns', { params: { userId: user.id } })
+            renderReturns(response.data)
+        } catch (error) {
+            console.error('Error:', error)
+        }
+    }
+
+    async function loadTicketsForReturns(returns) {
+        const ticketsMap = {}
+        for (const returnItem of returns) {
+            try {
+                const response = await axios.get(`/tickets/${returnItem.ticketId}`)
+                ticketsMap[returnItem.ticketId] = response.data
+            } catch (error) {
+                ticketsMap[returnItem.ticketId] = null
+            }
+        }
+        return ticketsMap
+    }
+
+    function renderReturns(returns) {
+        const container = document.getElementById('returnsContainer')
+        if (!returns || returns.length === 0) {
+            container.innerHTML = '<p class="text-muted">У вас пока нет заявок на возврат</p>'
+            return
+        }
+
+        loadTicketsForReturns(returns).then(ticketsMap => {
+            container.innerHTML = returns.map(ret => {
+                const ticket = ticketsMap[ret.ticketId]
+                const eventName = ticket ? ticket.eventName : 'Билет #' + ret.ticketId
+                const seats = ticket ? ticket.seats : ''
+
+                let statusBadge = ''
+                let statusText = ''
+                if (ret.status === 'processing') {
+                    statusBadge = 'bg-warning text-dark'
+                    statusText = 'В обработке'
+                } else if (ret.status === 'completed') {
+                    statusBadge = 'bg-success'
+                    statusText = 'Возвращено'
+                } else if (ret.status === 'rejected') {
+                    statusBadge = 'bg-danger'
+                    statusText = 'Отклонено'
+                }
+
+                return `
+                    <div class="col-12 col-lg-6">
+                        <article class="card shadow-sm h-100">
+                            <section class="card-body">
+                                <header class="d-flex justify-content-between align-items-start">
+                                    <section>
+                                        <h2 class="h6 mb-1">${eventName}</h2>
+                                        <p class="text-muted small mb-1">Места: ${seats}</p>
+                                        <p class="text-muted small mb-1">Сумма: ${ret.amount.toLocaleString()} ₽</p>
+                                        <p class="text-muted small mb-0">Заказ #${ret.ticketId}</p>
+                                    </section>
+                                    <footer class="text-end">
+                                        <span class="badge ${statusBadge} mb-2">${statusText}</span>
+                                        <p class="text-muted small mb-0">Запрос от: ${formatDate(ret.requestDate)}</p>
+                                        ${ret.returnDate ? '<p class="text-muted small mb-0">Возврат: ' + formatDate(ret.returnDate) + '</p>' : ''}
+                                    </footer>
+                                </header>
+                            </section>
+                        </article>
+                    </div>
+                `
+            }).join('')
+        })
+    }
+
+    async function logout() {
+        localStorage.clear()
+        window.location.href = "login.html"
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        checkAuth()
+        const user = JSON.parse(localStorage.getItem('user'))
+        const organizerLink = document.querySelector('a[href="organizer.html"]')
+        if (organizerLink && user && user.email !== 'sergo0_1337228007zzz@mail.ru') {
+            organizerLink.parentElement.style.display = 'none'
+        }
+        loadReturns()
+    })
+</script>
+</body>
+</html>
