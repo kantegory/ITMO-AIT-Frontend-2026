@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>API авторизации — ТаскерAI</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/style.css" />
+        <style>
+            .breadcrumb-nav {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 0.82rem;
+                color: var(--text-muted);
+            }
+
+            .breadcrumb-nav a {
+                color: var(--text-muted);
+                text-decoration: none;
+                transition: color var(--transition);
+            }
+
+            .breadcrumb-nav a:hover {
+                color: var(--text-accent);
+            }
+
+            .breadcrumb-nav svg {
+                opacity: 0.4;
+                flex-shrink: 0;
+            }
+
+            .task-layout {
+                display: grid;
+                grid-template-columns: 1fr 280px;
+                gap: 0;
+                flex: 1;
+                min-height: 0;
+            }
+
+            .task-main {
+                padding: 32px 36px;
+                border-right: 1px solid var(--border-subtle);
+                overflow-y: auto;
+            }
+
+            .task-title-row {
+                display: flex;
+                align-items: flex-start;
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+
+            .task-done-check {
+                width: 22px;
+                height: 22px;
+                min-width: 22px;
+                border: 1.5px solid var(--border-accent);
+                border-radius: 6px;
+                margin-top: 3px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all var(--transition);
+                background: var(--bg-overlay);
+            }
+
+            .task-done-check:hover {
+                border-color: var(--violet-500);
+                background: rgba(139, 92, 246, 0.1);
+            }
+
+            .task-done-check.checked {
+                background: var(--violet-500);
+                border-color: var(--violet-500);
+            }
+
+            .task-title {
+                font-size: 1.35rem;
+                font-weight: 700;
+                line-height: 1.3;
+                color: var(--text-primary);
+                flex: 1;
+            }
+
+            .task-badges {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 24px;
+                flex-wrap: wrap;
+            }
+
+            .badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                font-size: 0.72rem;
+                font-weight: 600;
+                padding: 4px 10px;
+                border-radius: var(--radius-full);
+                white-space: nowrap;
+            }
+
+            .badge.status-progress { background: rgba(139, 92, 246, 0.12); color: #a78bfa; }
+            .badge.status-todo { background: rgba(148, 163, 184, 0.12); color: #94a3b8; }
+            .badge.status-review { background: rgba(251, 191, 36, 0.12); color: #fbbf24; }
+            .badge.status-done { background: rgba(52, 211, 153, 0.12); color: #34d399; }
+            .badge.priority-high { background: rgba(248, 113, 113, 0.12); color: #f87171; }
+            .badge.priority-medium { background: rgba(251, 191, 36, 0.12); color: #fbbf24; }
+            .badge.priority-low { background: rgba(52, 211, 153, 0.12); color: #34d399; }
+            .badge.tag { background: var(--bg-overlay); color: var(--text-secondary); border: 1px solid var(--border-subtle); }
+
+            .section-block {
+                margin-bottom: 32px;
+            }
+
+            .section-block-title {
+                font-size: 0.75rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: var(--text-muted);
+                margin-bottom: 12px;
+            }
+
+            .task-description {
+                font-size: 0.9rem;
+                color: var(--text-secondary);
+                line-height: 1.75;
+            }
+
+            .task-description p { margin-bottom: 12px; }
+            .task-description p:last-child { margin-bottom: 0; }
+
+            .task-description code {
+                background: var(--bg-overlay);
+                border: 1px solid var(--border-subtle);
+                border-radius: 4px;
+                padding: 1px 6px;
+                font-family: var(--font-mono);
+                font-size: 0.82rem;
+                color: var(--violet-300);
+            }
+
+            .subtask-list {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .subtask-item {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 12px;
+                background: var(--bg-elevated);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-md);
+                font-size: 0.85rem;
+                color: var(--text-secondary);
+                transition: border-color var(--transition);
+            }
+
+            .subtask-item:hover { border-color: var(--border-accent); }
+
+            .subtask-check {
+                width: 16px;
+                height: 16px;
+                min-width: 16px;
+                border: 1.5px solid var(--border-accent);
+                border-radius: 4px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all var(--transition);
+                background: var(--bg-overlay);
+                flex-shrink: 0;
+            }
+
+            .subtask-check.done { background: #10b981; border-color: #10b981; }
+            .subtask-item.done-item .subtask-text { text-decoration: line-through; color: var(--text-muted); }
+
+            .subtask-text { flex: 1; }
+
+            .subtask-assignee {
+                font-size: 0.72rem;
+                color: var(--text-muted);
+                white-space: nowrap;
+            }
+
+            .attachments-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 10px;
+            }
+
+            .attachment {
+                background: var(--bg-elevated);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-md);
+                overflow: hidden;
+                cursor: pointer;
+                transition: all var(--transition);
+                text-decoration: none;
+            }
+
+            .attachment:hover { border-color: var(--border-accent); }
+
+            .attachment-preview {
+                height: 80px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: var(--bg-overlay);
+                font-size: 1.8rem;
+            }
+
+            .attachment-preview.img-preview {
+                background: linear-gradient(135deg, #1a1a2e, #2d1b4e);
+                font-size: 0.7rem;
+                color: var(--text-muted);
+                letter-spacing: 0.05em;
+            }
+
+            .attachment-info { padding: 8px 10px; }
+
+            .attachment-name {
+                font-size: 0.75rem;
+                font-weight: 500;
+                color: var(--text-primary);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .attachment-size {
+                font-size: 0.68rem;
+                color: var(--text-muted);
+                margin-top: 1px;
+            }
+
+            .attach-add {
+                background: var(--bg-elevated);
+                border: 1px dashed var(--border-subtle);
+                border-radius: var(--radius-md);
+                height: 116px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                color: var(--text-muted);
+                font-size: 0.75rem;
+                gap: 6px;
+                transition: all var(--transition);
+            }
+
+            .attach-add:hover { border-color: var(--border-accent); color: var(--text-accent); }
+
+            .task-sidebar {
+                padding: 28px 24px;
+                overflow-y: auto;
+                background: var(--bg-surface);
+            }
+
+            .meta-section { margin-bottom: 24px; }
+
+            .meta-label {
+                font-size: 0.68rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                color: var(--text-muted);
+                margin-bottom: 8px;
+            }
+
+            .meta-value {
+                font-size: 0.875rem;
+                color: var(--text-primary);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .meta-value svg { color: var(--text-muted); flex-shrink: 0; }
+
+            .meta-select {
+                width: 100%;
+                background: var(--bg-overlay);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-md);
+                color: var(--text-primary);
+                padding: 8px 12px;
+                font-size: 0.82rem;
+                font-family: var(--font-sans);
+                outline: none;
+                cursor: pointer;
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 10px center;
+                transition: border-color var(--transition);
+            }
+
+            .meta-select:focus { border-color: var(--violet-500); }
+            .meta-select option { background: var(--bg-elevated); }
+
+            .assignee-row {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 8px 10px;
+                background: var(--bg-overlay);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-md);
+                font-size: 0.82rem;
+                color: var(--text-primary);
+            }
+
+            .assignee-ava {
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                background: var(--gradient-primary);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.68rem;
+                font-weight: 700;
+                color: white;
+                flex-shrink: 0;
+            }
+
+            .divider-line {
+                height: 1px;
+                background: var(--border-subtle);
+                margin: 8px 0 20px;
+            }
+
+            .meta-date-input {
+                width: 100%;
+                background: var(--bg-overlay);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-md);
+                color: var(--text-primary);
+                padding: 8px 12px;
+                font-size: 0.82rem;
+                font-family: var(--font-sans);
+                outline: none;
+                transition: border-color var(--transition);
+            }
+
+            .meta-date-input:focus { border-color: var(--violet-500); }
+            .meta-date-input::-webkit-calendar-picker-indicator { filter: invert(0.5); }
+
+            .side-activity {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .side-event {
+                display: flex;
+                gap: 8px;
+                font-size: 0.78rem;
+                color: var(--text-muted);
+                line-height: 1.4;
+            }
+
+            .side-event strong { color: var(--text-secondary); font-weight: 500; }
+
+            .side-event-dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--border-accent);
+                margin-top: 5px;
+                flex-shrink: 0;
+            }
+
+            @media (max-width: 1000px) {
+                .task-layout { grid-template-columns: 1fr; }
+                .task-sidebar { border-top: 1px solid var(--border-subtle); }
+            }
+
+            @media (max-width: 768px) {
+                .task-main { padding: 20px; }
+            }
+        </style>
+    </head>
+
+    <body class="bg-grid">
+        <div class="bg-glow-1"></div>
+        <div class="bg-glow-2"></div>
+
+        <div class="app-layout">
+            <aside class="sidebar">
+                <a href="index.html" class="sidebar-logo">
+                    <div class="sidebar-logo-icon">
+                        <svg
+                            width="17"
+                            height="17"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="white"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <polygon
+                                points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+                            />
+                        </svg>
+                    </div>
+                    <span class="sidebar-logo-name text-gradient">ТаскерAI</span>
+                </a>
+
+                <div class="sidebar-section">
+                    <p class="sidebar-section-label">Основное</p>
+                    <a href="dashboard.html" class="nav-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="7" height="9" x="3" y="3" rx="1" />
+                            <rect width="7" height="5" x="14" y="3" rx="1" />
+                            <rect width="7" height="9" x="14" y="12" rx="1" />
+                            <rect width="7" height="5" x="3" y="16" rx="1" />
+                        </svg>
+                        Обзор
+                    </a>
+                    <a href="search.html" class="nav-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.3-4.3" />
+                        </svg>
+                        Поиск задач
+                        <span class="nav-badge">24</span>
+                    </a>
+                    <a href="task.html" class="nav-item active">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 11l3 3L22 4" />
+                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                        </svg>
+                        Мои задачи
+                        <span class="nav-badge">7</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-section">
+                    <p class="sidebar-section-label">Проекты</p>
+                    <a href="#" class="nav-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
+                        </svg>
+                        ТаскерAI — ядро
+                    </a>
+                    <a href="#" class="nav-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
+                        </svg>
+                        AI-ассистент
+                    </a>
+                </div>
+
+                <div class="sidebar-footer">
+                    <a href="#" class="user-card">
+                        <div class="user-avatar">Д</div>
+                        <div>
+                            <div class="user-info-name">Дмитрий Ежов</div>
+                            <div class="user-info-role">Менеджер</div>
+                        </div>
+                    </a>
+                </div>
+            </aside>
+
+            <div class="main-content">
+                <header class="topbar">
+                    <nav class="breadcrumb-nav">
+                        <a href="search.html">Поиск задач</a>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6" />
+                        </svg>
+                        <a href="#">ТаскерAI — ядро</a>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6" />
+                        </svg>
+                        <span style="color: var(--text-secondary)">API авторизации</span>
+                    </nav>
+                    <div class="topbar-right">
+                        <button class="icon-btn" title="Поделиться">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                            </svg>
+                        </button>
+                        <button class="icon-btn" title="Ещё">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
+                            </svg>
+                        </button>
+                        <a href="index.html" class="icon-btn" title="Выйти">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16 17 21 12 16 7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
+                            </svg>
+                        </a>
+                    </div>
+                </header>
+
+                <div class="task-layout">
+                    <div class="task-main">
+                        <div class="task-title-row">
+                            <div class="task-done-check" id="doneCheck">
+                                <svg
+                                    width="12"
+                                    height="12"
+                                    viewBox="0 0 12 12"
+                                    fill="none"
+                                    stroke="white"
+                                    stroke-width="2.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    style="display: none"
+                                    id="checkIcon"
+                                >
+                                    <polyline points="2 6 5 9 10 3" />
+                                </svg>
+                            </div>
+                            <h1 class="task-title">Разработать API авторизации</h1>
+                        </div>
+
+                        <div class="task-badges">
+                            <span class="badge status-progress">В работе</span>
+                            <span class="badge priority-high">🔴 Высокий приоритет</span>
+                            <span class="badge tag">#backend</span>
+                            <span class="badge tag">#auth</span>
+                            <span class="badge tag">#api</span>
+                        </div>
+
+                        <div class="section-block">
+                            <div class="section-block-title">Описание</div>
+                            <div class="task-description">
+                                <p>
+                                    Необходимо реализовать REST API для авторизации пользователей. Эндпоинт
+                                    <code>POST /auth/login</code> принимает <code>email</code> и <code>password</code>,
+                                    возвращает JWT-токен с временем жизни 24 часа.
+                                </p>
+                                <p>
+                                    Токен должен содержать <code>user_id</code>, <code>role</code> и <code>exp</code>.
+                                    Реализовать middleware для проверки токена на защищённых маршрутах.
+                                    Также нужен эндпоинт <code>POST /auth/refresh</code> для обновления токена.
+                                </p>
+                                <p>
+                                    Покрыть unit-тестами: успешный вход, неверный пароль, истёкший токен, невалидный токен.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="section-block">
+                            <div class="section-block-title">Подзадачи — 2 из 4 выполнено</div>
+                            <div class="subtask-list">
+                                <div class="subtask-item done-item">
+                                    <div class="subtask-check done" onclick="toggleSubtask(this)">
+                                        <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="2 6 5 9 10 3" />
+                                        </svg>
+                                    </div>
+                                    <span class="subtask-text">Спроектировать схему БД для пользователей</span>
+                                    <span class="subtask-assignee">Дмитрий</span>
+                                </div>
+
+                                <div class="subtask-item done-item">
+                                    <div class="subtask-check done" onclick="toggleSubtask(this)">
+                                        <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="2 6 5 9 10 3" />
+                                        </svg>
+                                    </div>
+                                    <span class="subtask-text">Реализовать эндпоинт POST /auth/login</span>
+                                    <span class="subtask-assignee">Дмитрий</span>
+                                </div>
+
+                                <div class="subtask-item">
+                                    <div class="subtask-check" onclick="toggleSubtask(this)"></div>
+                                    <span class="subtask-text">Реализовать middleware проверки JWT</span>
+                                    <span class="subtask-assignee">Никита</span>
+                                </div>
+
+                                <div class="subtask-item">
+                                    <div class="subtask-check" onclick="toggleSubtask(this)"></div>
+                                    <span class="subtask-text">Написать unit-тесты</span>
+                                    <span class="subtask-assignee">Дмитрий</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-block">
+                            <div class="section-block-title">Вложения</div>
+                            <div class="attachments-grid">
+                                <a href="#" class="attachment">
+                                    <div class="attachment-preview">📄</div>
+                                    <div class="attachment-info">
+                                        <div class="attachment-name">auth-spec.pdf</div>
+                                        <div class="attachment-size">128 КБ</div>
+                                    </div>
+                                </a>
+
+                                <a href="#" class="attachment">
+                                    <div class="attachment-preview">📊</div>
+                                    <div class="attachment-info">
+                                        <div class="attachment-name">db-schema.png</div>
+                                        <div class="attachment-size">84 КБ</div>
+                                    </div>
+                                </a>
+
+                                <a href="#" class="attachment">
+                                    <div class="attachment-preview img-preview">JWT FLOW</div>
+                                    <div class="attachment-info">
+                                        <div class="attachment-name">jwt-flow.svg</div>
+                                        <div class="attachment-size">12 КБ</div>
+                                    </div>
+                                </a>
+
+                                <a href="#" class="attachment">
+                                    <div class="attachment-preview">🎬</div>
+                                    <div class="attachment-info">
+                                        <div class="attachment-name">demo.mp4</div>
+                                        <div class="attachment-size">14 МБ</div>
+                                    </div>
+                                </a>
+
+                                <div class="attach-add" onclick="document.getElementById('fileInput').click()">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14" /><path d="M12 5v14" />
+                                    </svg>
+                                    Добавить файл
+                                </div>
+                                <input type="file" id="fileInput" style="display: none" multiple />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-sidebar">
+                        <div class="meta-section">
+                            <div class="meta-label">Статус</div>
+                            <select class="meta-select">
+                                <option value="todo">К выполнению</option>
+                                <option value="progress" selected>В работе</option>
+                                <option value="review">На ревью</option>
+                                <option value="done">Выполнено</option>
+                            </select>
+                        </div>
+
+                        <div class="meta-section">
+                            <div class="meta-label">Приоритет</div>
+                            <select class="meta-select">
+                                <option value="low">Низкий</option>
+                                <option value="medium">Средний</option>
+                                <option value="high" selected>Высокий</option>
+                            </select>
+                        </div>
+
+                        <div class="meta-section">
+                            <div class="meta-label">Исполнитель</div>
+                            <div class="assignee-row">
+                                <div class="assignee-ava">Д</div>
+                                Дмитрий Ежов
+                            </div>
+                        </div>
+
+                        <div class="meta-section">
+                            <div class="meta-label">Проект</div>
+                            <div class="meta-value">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
+                                </svg>
+                                ТаскерAI — ядро
+                            </div>
+                        </div>
+
+                        <div class="meta-section">
+                            <div class="meta-label">Дедлайн</div>
+                            <input type="date" class="meta-date-input" value="2026-04-28" />
+                        </div>
+
+                        <div class="meta-section">
+                            <div class="meta-label">Создана</div>
+                            <div class="meta-value" style="font-size: 0.82rem; color: var(--text-muted)">
+                                20 апреля 2026
+                            </div>
+                        </div>
+
+                        <div class="divider-line"></div>
+
+                        <div class="meta-section">
+                            <div class="meta-label">История изменений</div>
+                            <div class="side-activity">
+                                <div class="side-event">
+                                    <div class="side-event-dot"></div>
+                                    <div><strong>Никита</strong> взял подзадачу · 28 апр</div>
+                                </div>
+                                <div class="side-event">
+                                    <div class="side-event-dot"></div>
+                                    <div><strong>Дмитрий</strong> прикрепил demo.mp4 · 27 апр</div>
+                                </div>
+                                <div class="side-event">
+                                    <div class="side-event-dot"></div>
+                                    <div>Статус изменён на «В работе» · 22 апр</div>
+                                </div>
+                                <div class="side-event">
+                                    <div class="side-event-dot"></div>
+                                    <div><strong>Дмитрий</strong> создал задачу · 20 апр</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="lab-nav-strip">
+                    <span class="lab-nav-strip-label">Страницы:</span>
+                    <a href="index.html" class="lab-link">Вход</a>
+                    <a href="register.html" class="lab-link">Регистрация</a>
+                    <a href="dashboard.html" class="lab-link">Кабинет</a>
+                    <a href="search.html" class="lab-link">Поиск</a>
+                    <a href="task.html" class="lab-link current">Задача</a>
+                </footer>
+            </div>
+        </div>
+
+        <script>
+            const doneCheck = document.getElementById("doneCheck");
+            const checkIcon = document.getElementById("checkIcon");
+
+            doneCheck.addEventListener("click", () => {
+                doneCheck.classList.toggle("checked");
+                checkIcon.style.display = doneCheck.classList.contains("checked") ? "block" : "none";
+            });
+
+            function toggleSubtask(el) {
+                const item = el.closest(".subtask-item");
+                const isDone = el.classList.toggle("done");
+                item.classList.toggle("done-item", isDone);
+                el.innerHTML = isDone
+                    ? `<svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg>`
+                    : "";
+            }
+        </script>
+    </body>
+</html>

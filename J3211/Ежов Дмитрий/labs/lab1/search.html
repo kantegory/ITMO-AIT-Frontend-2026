@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Поиск задач — ТаскерAI</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/style.css" />
+        <style>
+            .search-bar {
+                position: relative;
+                margin-bottom: 20px;
+            }
+
+            .search-bar svg {
+                position: absolute;
+                left: 16px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--text-muted);
+                width: 18px;
+                height: 18px;
+                pointer-events: none;
+            }
+
+            .search-input {
+                width: 100%;
+                background: var(--bg-elevated);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-lg);
+                color: var(--text-primary);
+                padding: 13px 16px 13px 48px;
+                font-size: 0.95rem;
+                font-family: var(--font-sans);
+                outline: none;
+                transition: border-color var(--transition), box-shadow var(--transition);
+            }
+
+            .search-input::placeholder {
+                color: var(--text-muted);
+            }
+
+            .search-input:focus {
+                border-color: var(--violet-500);
+                box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+            }
+
+            .filters-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-bottom: 24px;
+                align-items: center;
+            }
+
+            .filter-select {
+                background: var(--bg-elevated);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-md);
+                color: var(--text-secondary);
+                padding: 8px 32px 8px 12px;
+                font-size: 0.82rem;
+                font-family: var(--font-sans);
+                outline: none;
+                cursor: pointer;
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 10px center;
+                transition: border-color var(--transition);
+            }
+
+            .filter-select option {
+                background: var(--bg-elevated);
+                color: var(--text-primary);
+            }
+
+            .filter-select:focus {
+                border-color: var(--violet-500);
+            }
+
+            .filter-tag {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                background: rgba(139, 92, 246, 0.12);
+                border: 1px solid rgba(139, 92, 246, 0.3);
+                color: var(--violet-300);
+                border-radius: var(--radius-full);
+                padding: 5px 10px;
+                font-size: 0.78rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all var(--transition);
+            }
+
+            .filter-tag:hover {
+                background: rgba(139, 92, 246, 0.2);
+            }
+
+            .filter-tag .remove {
+                width: 14px;
+                height: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                background: rgba(139, 92, 246, 0.3);
+                font-size: 0.6rem;
+                line-height: 1;
+            }
+
+            .filter-reset {
+                margin-left: auto;
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                background: none;
+                border: none;
+                cursor: pointer;
+                transition: color var(--transition);
+                padding: 0;
+            }
+
+            .filter-reset:hover {
+                color: var(--text-accent);
+            }
+
+            .results-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 12px;
+            }
+
+            .results-count {
+                font-size: 0.82rem;
+                color: var(--text-muted);
+            }
+
+            .results-count strong {
+                color: var(--text-primary);
+                font-weight: 600;
+            }
+
+            .sort-row {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 0.8rem;
+                color: var(--text-muted);
+            }
+
+            .task-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .task-card {
+                display: grid;
+                grid-template-columns: 1fr 130px 120px 130px 36px;
+                align-items: center;
+                gap: 12px;
+                padding: 14px 18px;
+                background: var(--bg-elevated);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-md);
+                text-decoration: none;
+                color: inherit;
+                transition: all var(--transition);
+            }
+
+            .task-card:hover {
+                border-color: var(--border-accent);
+                background: rgba(139, 92, 246, 0.04);
+            }
+
+            .task-card-title {
+                font-size: 0.875rem;
+                font-weight: 500;
+                color: var(--text-primary);
+                margin-bottom: 3px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .task-card-meta {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 0.75rem;
+                color: var(--text-muted);
+            }
+
+            .meta-project {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .meta-dot {
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+                background: var(--violet-500);
+                flex-shrink: 0;
+            }
+
+            .task-deadline {
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                white-space: nowrap;
+            }
+
+            .task-deadline.overdue {
+                color: #f87171;
+            }
+
+            .task-menu-btn {
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: var(--radius-sm);
+                background: none;
+                border: none;
+                color: var(--text-muted);
+                cursor: pointer;
+                opacity: 0;
+                transition: all var(--transition);
+            }
+
+            .task-card:hover .task-menu-btn {
+                opacity: 1;
+            }
+
+            .task-menu-btn:hover {
+                background: var(--bg-overlay);
+                color: var(--text-primary);
+            }
+
+            .page-btn {
+                width: 34px;
+                height: 34px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: var(--radius-md);
+                background: var(--bg-elevated);
+                border: 1px solid var(--border-subtle);
+                color: var(--text-secondary);
+                font-size: 0.82rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all var(--transition);
+                text-decoration: none;
+            }
+
+            .page-btn:hover {
+                border-color: var(--border-accent);
+                color: var(--text-accent);
+            }
+
+            .page-btn.active {
+                background: rgba(139, 92, 246, 0.15);
+                border-color: var(--violet-500);
+                color: var(--violet-300);
+            }
+
+            .page-btn:disabled {
+                opacity: 0.35;
+                cursor: default;
+            }
+
+            @media (max-width: 900px) {
+                .task-card {
+                    grid-template-columns: 1fr 120px;
+                }
+                .task-card > :nth-child(3),
+                .task-card > :nth-child(4),
+                .task-card > :nth-child(5) {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+
+    <body class="bg-grid">
+        <div class="bg-glow-1"></div>
+        <div class="bg-glow-2"></div>
+
+        <div class="app-layout">
+            <aside class="sidebar">
+                <a href="index.html" class="sidebar-logo">
+                    <div class="sidebar-logo-icon">
+                        <svg
+                            width="17"
+                            height="17"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="white"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <polygon
+                                points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+                            />
+                        </svg>
+                    </div>
+                    <span class="sidebar-logo-name text-gradient">ТаскерAI</span>
+                </a>
+
+                <div class="sidebar-section">
+                    <p class="sidebar-section-label">Основное</p>
+                    <a href="dashboard.html" class="nav-item">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <rect width="7" height="9" x="3" y="3" rx="1" />
+                            <rect width="7" height="5" x="14" y="3" rx="1" />
+                            <rect width="7" height="9" x="14" y="12" rx="1" />
+                            <rect width="7" height="5" x="3" y="16" rx="1" />
+                        </svg>
+                        Обзор
+                    </a>
+                    <a href="search.html" class="nav-item active">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.3-4.3" />
+                        </svg>
+                        Поиск задач
+                        <span class="nav-badge">24</span>
+                    </a>
+                    <a href="task.html" class="nav-item">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M9 11l3 3L22 4" />
+                            <path
+                                d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
+                            />
+                        </svg>
+                        Мои задачи
+                        <span class="nav-badge">7</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-section">
+                    <p class="sidebar-section-label">Проекты</p>
+                    <a href="#" class="nav-item">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path
+                                d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"
+                            />
+                        </svg>
+                        ТаскерAI — ядро
+                    </a>
+                    <a href="#" class="nav-item">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path
+                                d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"
+                            />
+                        </svg>
+                        AI-ассистент
+                    </a>
+                </div>
+
+                <div class="sidebar-footer">
+                    <a href="#" class="user-card">
+                        <div class="user-avatar">Д</div>
+                        <div>
+                            <div class="user-info-name">Дмитрий Ежов</div>
+                            <div class="user-info-role">Менеджер</div>
+                        </div>
+                    </a>
+                </div>
+            </aside>
+
+            <div class="main-content">
+                <header class="topbar">
+                    <span class="topbar-title">Поиск задач</span>
+                    <div class="topbar-right">
+                        <button
+                            class="icon-btn btn-primary-custom"
+                            style="width: auto; padding: 0 14px; font-size: 0.8rem; border-radius: var(--radius-md);"
+                        >
+                            + Новая задача
+                        </button>
+                        <a href="index.html" class="icon-btn" title="Выйти">
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16 17 21 12 16 7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
+                            </svg>
+                        </a>
+                    </div>
+                </header>
+
+                <main class="page-body">
+                    <div class="search-bar">
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.3-4.3" />
+                        </svg>
+                        <input
+                            type="text"
+                            class="search-input"
+                            id="searchInput"
+                            placeholder="Поиск по названию, описанию или исполнителю…"
+                        />
+                    </div>
+
+                    <div class="filters-row" id="filtersRow">
+                        <select class="filter-select" id="filterStatus">
+                            <option value="">Статус: все</option>
+                            <option value="todo">К выполнению</option>
+                            <option value="progress">В работе</option>
+                            <option value="review">На ревью</option>
+                            <option value="done">Выполнено</option>
+                        </select>
+
+                        <select class="filter-select" id="filterPriority">
+                            <option value="">Приоритет: все</option>
+                            <option value="high">Высокий</option>
+                            <option value="medium">Средний</option>
+                            <option value="low">Низкий</option>
+                        </select>
+
+                        <select class="filter-select" id="filterProject">
+                            <option value="">Проект: все</option>
+                            <option value="core">ТаскерAI — ядро</option>
+                            <option value="ai">AI-ассистент</option>
+                            <option value="docs">Документация</option>
+                        </select>
+
+                        <select class="filter-select" id="filterAssignee">
+                            <option value="">Исполнитель: все</option>
+                            <option value="me">Я</option>
+                            <option value="alex">Алексей</option>
+                            <option value="maria">Мария</option>
+                            <option value="nikita">Никита</option>
+                        </select>
+
+                        <div id="activeTags" style="display: flex; gap: 6px; flex-wrap: wrap"></div>
+
+                        <button class="filter-reset" id="resetFilters">Сбросить</button>
+                    </div>
+
+                    <div class="results-header">
+                        <span class="results-count">Найдено: <strong id="countLabel">8</strong> задач</span>
+                        <div class="sort-row">
+                            Сортировка:
+                            <select class="filter-select" id="sortSelect" style="padding: 5px 28px 5px 10px">
+                                <option value="date-desc">Дата ↓</option>
+                                <option value="date-asc">Дата ↑</option>
+                                <option value="priority">Приоритет</option>
+                                <option value="name">По названию</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="task-grid" id="taskGrid">
+                        <a href="task.html" class="task-card" data-status="progress" data-priority="high" data-project="core" data-assignee="me">
+                            <div>
+                                <div class="task-card-title">Разработать API авторизации</div>
+                                <div class="task-card-meta">
+                                    <span class="meta-project"><span class="meta-dot"></span>ТаскерAI — ядро</span>
+                                    <span>Дмитрий Ежов</span>
+                                </div>
+                            </div>
+                            <span class="priority high"><span class="priority-dot"></span>Высокий</span>
+                            <span class="status-badge progress">В работе</span>
+                            <span class="task-deadline overdue">28 апр 2026</span>
+                            <button class="task-menu-btn" onclick="event.preventDefault()">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
+                                </svg>
+                            </button>
+                        </a>
+
+                        <a href="task.html" class="task-card" data-status="todo" data-priority="medium" data-project="core" data-assignee="me">
+                            <div>
+                                <div class="task-card-title">Написать тесты для модуля задач</div>
+                                <div class="task-card-meta">
+                                    <span class="meta-project"><span class="meta-dot"></span>ТаскерAI — ядро</span>
+                                    <span>Дмитрий Ежов</span>
+                                </div>
+                            </div>
+                            <span class="priority medium"><span class="priority-dot"></span>Средний</span>
+                            <span class="status-badge todo">К выполнению</span>
+                            <span class="task-deadline">2 мая 2026</span>
+                            <button class="task-menu-btn" onclick="event.preventDefault()">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
+                                </svg>
+                            </button>
+                        </a>
+
+                        <a href="task.html" class="task-card" data-status="review" data-priority="high" data-project="ai" data-assignee="me">
+                            <div>
+                                <div class="task-card-title">Интеграция AI-подсказок в интерфейс задач</div>
+                                <div class="task-card-meta">
+                                    <span class="meta-project"><span class="meta-dot"></span>AI-ассистент</span>
+                                    <span>Дмитрий Ежов</span>
+                                </div>
+                            </div>
+                            <span class="priority high"><span class="priority-dot"></span>Высокий</span>
+                            <span class="status-badge review">На ревью</span>
+                            <span class="task-deadline">3 мая 2026</span>
+                            <button class="task-menu-btn" onclick="event.preventDefault()">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
+                                </svg>
+                            </button>
+                        </a>
+
+                        <a href="task.html" class="task-card" data-status="done" data-priority="low" data-project="core" data-assignee="alex">
+                            <div>
+                                <div class="task-card-title">Дизайн страницы задачи</div>
+                                <div class="task-card-meta">
+                                    <span class="meta-project"><span class="meta-dot"></span>ТаскерAI — ядро</span>
+                                    <span>Алексей</span>
+                                </div>
+                            </div>
+                            <span class="priority low"><span class="priority-dot"></span>Низкий</span>
+                            <span class="status-badge done">Выполнено</span>
+                            <span class="task-deadline">25 апр 2026</span>
+                            <button class="task-menu-btn" onclick="event.preventDefault()">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
+                                </svg>
+                            </button>
+                        </a>
+
+                        <a href="task.html" class="task-card" data-status="progress" data-priority="medium" data-project="ai" data-assignee="nikita">
+                            <div>
+                                <div class="task-card-title">Настроить CI/CD pipeline</div>
+                                <div class="task-card-meta">
+                                    <span class="meta-project"><span class="meta-dot"></span>AI-ассистент</span>
+                                    <span>Никита</span>
+                                </div>
+                            </div>
+                            <span class="priority medium"><span class="priority-dot"></span>Средний</span>
+                            <span class="status-badge progress">В работе</span>
+                            <span class="task-deadline">7 мая 2026</span>
+                            <button class="task-menu-btn" onclick="event.preventDefault()">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
+                                </svg>
+                            </button>
+                        </a>
+
+                        <a href="task.html" class="task-card" data-status="todo" data-priority="low" data-project="core" data-assignee="me">
+                            <div>
+                                <div class="task-card-title">Оптимизация запросов к базе данных</div>
+                                <div class="task-card-meta">
+                                    <span class="meta-project"><span class="meta-dot"></span>ТаскерAI — ядро</span>
+                                    <span>Дмитрий Ежов</span>
+                                </div>
+                            </div>
+                            <span class="priority low"><span class="priority-dot"></span>Низкий</span>
+                            <span class="status-badge todo">К выполнению</span>
+                            <span class="task-deadline overdue">26 апр 2026</span>
+                            <button class="task-menu-btn" onclick="event.preventDefault()">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
+                                </svg>
+                            </button>
+                        </a>
+
+                        <a href="task.html" class="task-card" data-status="review" data-priority="high" data-project="docs" data-assignee="maria">
+                            <div>
+                                <div class="task-card-title">Документация REST API</div>
+                                <div class="task-card-meta">
+                                    <span class="meta-project"><span class="meta-dot"></span>Документация</span>
+                                    <span>Мария</span>
+                                </div>
+                            </div>
+                            <span class="priority high"><span class="priority-dot"></span>Высокий</span>
+                            <span class="status-badge review">На ревью</span>
+                            <span class="task-deadline">5 мая 2026</span>
+                            <button class="task-menu-btn" onclick="event.preventDefault()">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
+                                </svg>
+                            </button>
+                        </a>
+
+                        <a href="task.html" class="task-card" data-status="done" data-priority="medium" data-project="docs" data-assignee="maria">
+                            <div>
+                                <div class="task-card-title">Написать README для AI-модуля</div>
+                                <div class="task-card-meta">
+                                    <span class="meta-project"><span class="meta-dot"></span>Документация</span>
+                                    <span>Мария</span>
+                                </div>
+                            </div>
+                            <span class="priority medium"><span class="priority-dot"></span>Средний</span>
+                            <span class="status-badge done">Выполнено</span>
+                            <span class="task-deadline">22 апр 2026</span>
+                            <button class="task-menu-btn" onclick="event.preventDefault()">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
+                                </svg>
+                            </button>
+                        </a>
+                    </div>
+
+                    <div
+                        id="emptyState"
+                        style="display: none; text-align: center; padding: 60px 0; color: var(--text-muted);"
+                    >
+                        <svg
+                            width="40"
+                            height="40"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            style="margin: 0 auto 16px; display: block; opacity: 0.4;"
+                        >
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.3-4.3" />
+                        </svg>
+                        <p style="font-size: 0.9rem">Ничего не найдено</p>
+                        <p style="font-size: 0.8rem; margin-top: 6px">Попробуйте изменить фильтры или поисковый запрос</p>
+                    </div>
+                </main>
+
+                <footer class="lab-nav-strip">
+                    <span class="lab-nav-strip-label">Страницы:</span>
+                    <a href="index.html" class="lab-link">Вход</a>
+                    <a href="register.html" class="lab-link">Регистрация</a>
+                    <a href="dashboard.html" class="lab-link">Кабинет</a>
+                    <a href="search.html" class="lab-link current">Поиск</a>
+                    <a href="task.html" class="lab-link">Задача</a>
+                </footer>
+            </div>
+        </div>
+
+        <script>
+            const cards = Array.from(document.querySelectorAll(".task-card"));
+            const searchInput = document.getElementById("searchInput");
+            const countLabel = document.getElementById("countLabel");
+            const emptyState = document.getElementById("emptyState");
+
+            const filters = { status: "", priority: "", project: "", assignee: "", query: "" };
+
+            function applyFilters() {
+                let visible = 0;
+                cards.forEach((card) => {
+                    const title = card.querySelector(".task-card-title").textContent.toLowerCase();
+                    const meta = card.querySelector(".task-card-meta").textContent.toLowerCase();
+
+                    const show =
+                        (!filters.query || title.includes(filters.query) || meta.includes(filters.query)) &&
+                        (!filters.status || card.dataset.status === filters.status) &&
+                        (!filters.priority || card.dataset.priority === filters.priority) &&
+                        (!filters.project || card.dataset.project === filters.project) &&
+                        (!filters.assignee || card.dataset.assignee === filters.assignee);
+
+                    card.style.display = show ? "" : "none";
+                    if (show) visible++;
+                });
+
+                countLabel.textContent = visible;
+                emptyState.style.display = visible === 0 ? "block" : "none";
+            }
+
+            searchInput.addEventListener("input", () => {
+                filters.query = searchInput.value.toLowerCase().trim();
+                applyFilters();
+            });
+
+            [
+                ["filterStatus", "status"],
+                ["filterPriority", "priority"],
+                ["filterProject", "project"],
+                ["filterAssignee", "assignee"],
+            ].forEach(([id, key]) => {
+                document.getElementById(id).addEventListener("change", function () {
+                    filters[key] = this.value;
+                    applyFilters();
+                });
+            });
+
+            document.getElementById("resetFilters").addEventListener("click", () => {
+                Object.keys(filters).forEach((k) => (filters[k] = ""));
+                searchInput.value = "";
+                ["filterStatus", "filterPriority", "filterProject", "filterAssignee"].forEach(
+                    (id) => (document.getElementById(id).value = "")
+                );
+                applyFilters();
+            });
+        </script>
+    </body>
+</html>
