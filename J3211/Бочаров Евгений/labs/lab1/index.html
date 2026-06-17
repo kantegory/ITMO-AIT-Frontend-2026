@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная - Билетопоиск</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">MAX афиша</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link active" href="index.html">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.html">Вход</a></li>
+                <li class="nav-item"><a class="nav-link" href="register.html">Регистрация</a></li>
+                <li class="nav-item"><a class="nav-link" href="profile.html">Личный кабинет</a></li>
+                <li class="nav-item"><a class="nav-link" href="organizer.html">Организатору</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container my-5">
+    <section class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm border-0 p-4">
+                <h2 class="mb-4">Поиск мероприятий</h2>
+                <div class="row g-3">
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" placeholder="Название события или место" value="Театр">
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select">
+                            <option selected>Тип</option>
+                            <option>Театр</option>
+                            <option>Концерт</option>
+                            <option>Стендап</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="date" class="form-control" value="2026-03-20">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" placeholder="Город" value="Москва">
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-primary w-100">Найти</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="row">
+        <h3 class="mb-3">Ближайшие события</h3>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="https://avatars.mds.yandex.net/get-afishanew/31447/e663b2de9075ef8301892fe9d0d47e7f/orig" class="card-img-top" alt="Афиша">
+                <div class="card-body">
+                    <h5 class="card-title">Номер 13</h5>
+                    <p class="card-text text-muted">📍 Дворец искусств Ленинградской области</p>
+                    <p class="card-text"><small class="text-muted">📅 19 марта 2026, 19:00</small></p>
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#hallModal">
+                        Схема зала
+                    </button>
+                    <a href="event.html" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="https://aurora.fm/images/artists/28/1729259997.jpg" class="card-img-top" alt="Афиша">
+                <div class="card-body">
+                    <h5 class="card-title">STIGMATA</h5>
+                    <p class="card-text text-muted">📍 Base SPB</p>
+                    <p class="card-text"><small class="text-muted">📅 22 марта 2026, 19:00</small></p>
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#hallModal">
+                        Схема зала
+                    </button>
+                    <a href="event.html" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="https://the-flow.ru/uploads/images/resize/830x0/adaptiveResize/11/49/82/06/35/fef811140cd7.jpg" class="card-img-top" alt="Афиша">
+                <div class="card-body">
+                    <h5 class="card-title">ivanzolo2004</h5>
+                    <p class="card-text text-muted">📍 Base SPB</p>
+                    <p class="card-text"><small class="text-muted">📅 23 марта 2026, 19:00</small></p>
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#hallModal">
+                        Схема зала
+                    </button>
+                    <a href="event.html" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div class="modal fade" id="hallModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Схема зала: Вишневый сад</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="hall-scheme-placeholder">
+                    <div class="stage-scheme bg-dark text-white p-2 text-center rounded mb-3">СЦЕНА</div>
+                    <div class="text-center">
+                        <div class="seat free"></div><div class="seat free"></div><div class="seat free"></div><div class="seat taken"></div><div class="seat free"></div><br>
+                        <div class="seat free"></div><div class="seat taken"></div><div class="seat free"></div><div class="seat free"></div><div class="seat free"></div><br>
+                        <div class="seat free"></div><div class="seat free"></div><div class="seat taken"></div><div class="seat free"></div><div class="seat taken"></div><br>
+                        <div class="seat free"></div><div class="seat taken"></div><div class="seat free"></div><div class="seat free"></div><div class="seat free"></div>
+                    </div>
+                    <div class="d-flex justify-content-center gap-3 mt-3">
+                        <span><span class="seat" style="display: inline-block; width: 20px; height: 20px;"></span> Свободно</span>
+                        <span><span class="seat taken" style="display: inline-block; width: 20px; height: 20px;"></span> Занято</span>
+                    </div>
+                    <p class="text-muted mt-3 mb-0 small text-center">Интерактивный выбор мест - заглушка</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" disabled>Подтвердить выбор (заглушка)</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <div class="container">
+        <span>&copy; 2026 eugeron52</span>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
