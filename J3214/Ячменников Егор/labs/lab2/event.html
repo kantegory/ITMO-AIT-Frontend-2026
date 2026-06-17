@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/style.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-dark bg-dark sticky-top">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand fw-bold" href="index.html">Билеты.ру</a>
+            <div class="d-flex" id="auth-btn">
+                <a href="auth.html" class="btn btn-outline-light">Вход</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Главная</a></li>
+                <li class="breadcrumb-item"><a href="#" id="type-page-link"></a></li>
+                <li class="breadcrumb-item active" id="current-page"></li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <img src="" class="img-fluid w-100 event-header shadow-sm mb-4" id="event-image">
+                
+                <h1 class="fw-bold mb-3" id="event-title"></h1>
+                
+                <div class="mb-5">
+                    <h3>О мероприятии</h3>
+                    <p id="event-description"></p>
+                </div>
+
+                <div class="mb-5">
+                    <h3 class="mb-4">Выберите место</h3>
+                    <div class="hall-scheme text-center shadow-sm">
+                        <div class="stage w-75 mx-auto">СЦЕНА</div>
+                        
+                        <div class="row-seats mb-2">
+                            <div class="seat" title="Ряд 1, Место 1"></div>
+                            <div class="seat" title="Ряд 1, Место 2"></div>
+                            <div class="seat" title="Ряд 1, Место 3"></div>
+                            <div class="seat" title="Ряд 1, Место 4"></div>
+                            <div class="seat" title="Ряд 1, Место 5"></div>
+                            <div class="seat" title="Ряд 1, Место 6"></div>
+                            <div class="seat" title="Ряд 1, Место 7"></div>
+                            <div class="seat" title="Ряд 1, Место 8"></div>
+                            <div class="seat" title="Ряд 1, Место 9"></div>
+                            <div class="seat" title="Ряд 1, Место 10"></div>
+                            <div class="seat" title="Ряд 1, Место 11"></div>
+                            <div class="seat" title="Ряд 1, Место 12"></div>
+                        </div>
+                        <div class="row-seats mb-2">
+                            <div class="seat" title="Ряд 2, Место 1"></div>
+                            <div class="seat" title="Ряд 2, Место 2"></div>
+                            <div class="seat" title="Ряд 2, Место 3"></div>
+                            <div class="seat" title="Ряд 2, Место 4"></div>
+                            <div class="seat" title="Ряд 2, Место 5"></div>
+                            <div class="seat occupied"></div>
+                            <div class="seat occupied"></div>
+                            <div class="seat" title="Ряд 2, Место 8"></div>
+                            <div class="seat" title="Ряд 2, Место 9"></div>
+                            <div class="seat" title="Ряд 2, Место 10"></div>
+                            <div class="seat" title="Ряд 2, Место 11"></div>
+                            <div class="seat" title="Ряд 2, Место 12"></div>
+                        </div>
+                        <div class="row-seats mb-2">
+                            <div class="seat" title="Ряд 3, Место 1"></div>
+                            <div class="seat" title="Ряд 3, Место 2"></div>
+                            <div class="seat" title="Ряд 3, Место 3"></div>
+                            <div class="seat" title="Ряд 3, Место 4"></div>
+                            <div class="seat" title="Ряд 3, Место 5"></div>
+                            <div class="seat" title="Ряд 3, Место 6"></div>
+                            <div class="seat" title="Ряд 3, Место 7"></div>
+                            <div class="seat" title="Ряд 3, Место 8"></div>
+                            <div class="seat" title="Ряд 3, Место 9"></div>
+                            <div class="seat" title="Ряд 3, Место 10"></div>
+                            <div class="seat" title="Ряд 3, Место 11"></div>
+                            <div class="seat" title="Ряд 3, Место 12"></div>
+                        </div>
+                        <div class="row-seats">
+                            <div class="seat" title="Ряд 4, Место 1"></div>
+                            <div class="seat" title="Ряд 4, Место 2"></div>
+                            <div class="seat" title="Ряд 4, Место 3"></div>
+                            <div class="seat" title="Ряд 4, Место 4"></div>
+                            <div class="seat" title="Ряд 4, Место 5"></div>
+                            <div class="seat" title="Ряд 4, Место 6"></div>
+                            <div class="seat" title="Ряд 4, Место 7"></div>
+                            <div class="seat" title="Ряд 4, Место 8"></div>
+                            <div class="seat" title="Ряд 4, Место 9"></div>
+                            <div class="seat" title="Ряд 4, Место 10"></div>
+                            <div class="seat" title="Ряд 4, Место 11"></div>
+                            <div class="seat" title="Ряд 4, Место 12"></div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <span class="badge bg-secondary me-2">Занято</span>
+                            <span class="badge bg-light text-dark border me-2">Свободно</span>
+                            <span class="badge bg-primary">Ваш выбор</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <h3>Отзывы</h3>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-primary">Алексей Иванов ★★★★★</h6>
+                            <p class="card-text">Был в прошлом году, это было нереально! Жду не дождусь повторения.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow-sm sticky-top" style="top: 80px;">
+                    <div class="card-body">
+                        <h4 class="mb-4 text-center">Билеты</h4>
+                        <ul class="list-group list-group-flush mb-4">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Дата:</span>
+                                <strong id="sidebar-date"></strong>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Место:</span>
+                                <strong id="sidebar-place"></strong>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Цена:</span>
+                                <strong class="text-success" id="sidebar-price"></strong>
+                            </li>
+                        </ul>
+                        <button class="btn btn-primary w-100 btn-lg" data-bs-toggle="modal" data-bs-target="#orderModal">
+                            Купить билет
+                        </button>
+                        <p class="text-center small text-muted mt-3">Гарантия возврата билета за 24 часа до события</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light py-4 mt-auto">
+        <div class="container text-center">
+            <p>© 2026 Билеты.ру</p>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="order-form">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold" id="orderModalLabel">Оформление заказа</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <div class="p-3 bg-light rounded-3 mb-4">
+                            <h6 class="fw-bold mb-1 text-primary" id="modal-event-title"></h6>
+                            <p class="small text-muted mb-0">
+                                <i class="bi bi-geo-alt" id="modal-event-place"></i><br>
+                                <strong>Выбрано:</strong> <span id="modal-selected-seat">Место не выбрано</span>
+                            </p>
+                            <hr class="my-2">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="small text-muted">К оплате:</span>
+                                <span class="fw-bold fs-5 text-success" id="modal-total-price"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Способ оплаты</label>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="payCard" checked>
+                                <label class="form-check-label small" for="payCard">
+                                    Банковская карта (Мир, Visa, MasterCard)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="paySbp">
+                                <label class="form-check-label small" for="paySbp">
+                                    Система быстрых платежей (СБП)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-primary px-4">Оплатить заказ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="scripts/events.js"></script>
+    <script src="scripts/check_auth.js"></script>
+</body>
+</html>
