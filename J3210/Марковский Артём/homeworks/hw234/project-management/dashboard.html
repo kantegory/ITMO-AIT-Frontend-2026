@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaskHub — Личный кабинет</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (() => {
+        const savedTheme = localStorage.getItem("taskhub-theme");
+        const theme = savedTheme === "light" || savedTheme === "dark"
+          ? savedTheme
+          : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <body data-page="dashboard">
+    <a class="skip-link" href="#mainContent">Перейти к содержимому</a>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-lg app-navbar" aria-label="Навигация по приложению">
+        <div class="container">
+          <div class="app-navbar-start">
+          <a class="navbar-brand app-brand" href="dashboard.html">TaskHub</a>
+          <button
+            class="btn btn-light btn-sm theme-toggle"
+            type="button"
+            id="themeToggle"
+            aria-label="Переключить тему"
+            aria-pressed="false"
+          >
+            <svg class="app-icon" aria-hidden="true"><use href="assets/icons.svg#icon-moon"></use></svg>
+            <span class="button-text">Тёмная тема</span>
+          </button>
+        </div>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#userNav"
+            aria-controls="userNav"
+            aria-expanded="false"
+            aria-label="Меню"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="userNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+              <li class="nav-item">
+                <a class="nav-link" href="dashboard.html">Личный кабинет</a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="dashboard.html#projectsSection"
+                  data-nav-group="projects"
+                  >Проекты</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="search.html">Поиск</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="faq.html">Справка</a>
+              </li>
+              <li class="nav-item user-chip" aria-label="Текущий пользователь">
+                <span id="headerUserName">Марковский Артём</span>
+              </li>
+              <li class="nav-item">
+                <a class="btn btn-light btn-sm logout-link" href="index.html" aria-label="Выйти из аккаунта"
+                  ><svg class="app-icon" aria-hidden="true"><use href="assets/icons.svg#icon-log-out"></use></svg><span>Выйти</span></a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="mainContent" class="page-section">
+      <div class="container layout-stack">
+        <section class="panel-card panel-header" aria-labelledby="dashboardTitle">
+          <div class="row g-4 align-items-stretch">
+            <div class="col-lg-8">
+              <div class="eyebrow">Личный кабинет</div>
+              <h1 class="page-title" id="dashboardTitle">Рабочее пространство</h1>
+              <p class="page-subtitle" id="appUserName">Марковский Артём</p>
+              <p class="page-text">
+                Здесь собраны ваши проекты, задачи и последние изменения по ним.
+              </p>
+            </div>
+            <div class="col-lg-4">
+              <div class="stats-card" id="workspaceSummaryCard" role="status" aria-live="polite" aria-label="Сводка по рабочему пространству"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="projectsSection">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Проекты</div>
+              <h2 class="section-title">Мои проекты</h2>
+            </div>
+            <div class="section-actions">
+              <button
+                class="btn btn-primary"
+                type="button"
+                id="createProjectButton"
+              >
+                <svg class="app-icon" aria-hidden="true"><use href="assets/icons.svg#icon-plus"></use></svg><span>Новый проект</span></button
+              ><a class="btn btn-light" href="search.html">Открыть поиск</a>
+            </div>
+          </div>
+          <div class="row g-4" id="dashboardProjects" role="list" aria-label="Список проектов"></div>
+        </section>
+
+        <section>
+          <div class="row g-4">
+            <div class="col-lg-7">
+              <article class="panel-card h-100">
+                <div class="section-head mb-3">
+                  <div>
+                    <div class="eyebrow">Задачи</div>
+                    <h2 class="section-title">Текущие задачи</h2>
+                  </div>
+                  <span class="soft-badge" id="taskCountBadge" role="status" aria-live="polite"></span>
+                </div>
+                <div id="dashboardTasks" role="list" aria-label="Список текущих задач"></div>
+              </article>
+            </div>
+            <div class="col-lg-5">
+              <article class="panel-card h-100">
+                <div class="eyebrow">Уведомления</div>
+                <h2 class="section-title mb-3">Что изменилось</h2>
+                <div class="stack-list" id="dashboardNotifications" role="list" aria-label="Последние изменения"></div>
+              </article>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-row">
+        <div>
+          <div class="footer-brand">TaskHub</div>
+          <div class="footer-text">Сервис для работы с проектами и задачами</div>
+        </div>
+        <div class="footer-text">Рабочий кабинет</div>
+      </div>
+    </footer>
+
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalTitle" aria-modal="true" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content app-modal">
+          <div class="modal-header">
+            <h2 class="modal-title h5 mb-0" id="detailsModalTitle"></h2>
+            <button
+              class="btn-close"
+              type="button"
+              data-bs-dismiss="modal"
+              aria-label="Закрыть"
+            ></button>
+          </div>
+          <div class="modal-body" id="detailsModalBody"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+      <script src="js/api.js"></script>
+    <script src="js/app-core.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/init.js"></script>
+  </body>
+</html>
