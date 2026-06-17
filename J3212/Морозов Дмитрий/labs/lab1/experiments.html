@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Pipeline — Эксперименты</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">ML Pipeline</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Платформа управления ML-экспериментами</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html" onclick="logout()">Выйти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="dashboard.html">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="experiments.html">Эксперименты</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="models.html">Модели</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="col-md-10 ms-sm-auto px-md-4 py-4">
+                <h1>Эксперименты</h1>
+                <p class="text-muted">Поиск и фильтрация ML-экспериментов</p>
+
+                <section class="card mb-4">
+                    <header class="card-header">Фильтры</header>
+                    <div class="card-body">
+                        <form id="filters-form" class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label">Название</label>
+                                <input type="text" class="form-control" id="search-name" placeholder="Поиск...">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Дата (с)</label>
+                                <input type="date" class="form-control" id="date-from">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Дата (по)</label>
+                                <input type="date" class="form-control" id="date-to">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Статус</label>
+                                <select class="form-select" id="filter-status">
+                                    <option value="">Все статусы</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Running">Running</option>
+                                    <option value="Failed">Failed</option>
+                                    <option value="Pending">Pending</option>
+                                </select>
+                            </div>
+                            <div class="col-md-1">
+                                <label class="form-label">Метрика (min)</label>
+                                <input type="number" step="0.01" class="form-control" id="metric-min" placeholder="0.00">
+                            </div>
+                            <div class="col-md-1">
+                                <label class="form-label">Метрика (max)</label>
+                                <input type="number" step="0.01" class="form-control" id="metric-max" placeholder="1.00">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Теги</label>
+                                <input type="text" class="form-control" id="filter-tags" placeholder="tag1,tag2">
+                            </div>
+                            <div class="col-12 d-flex gap-2">
+                                <button type="button" class="btn btn-primary" id="apply-filters">Применить</button>
+                                <button type="reset" class="btn btn-secondary">Сбросить</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="h5">Результаты</h2>
+                        <span class="text-muted">Найдено: <span id="result-count">24</span> эксперимента</span>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="experiments-table">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Дата</th>
+                                    <th>Метрика</th>
+                                    <th>Теги</th>
+                                    <th>Статус</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-date="2026-01-15" data-metric="0.95" data-status="Completed" data-tags="production,v1">
+                                    <td><a href="experiment-detail.html">model_v1_training</a></td>
+                                    <td>2026-01-15</td>
+                                    <td>0.95</td>
+                                    <td><span class="badge bg-secondary">production</span> <span class="badge bg-secondary">v1</span></td>
+                                    <td><span class="badge bg-success">Completed</span></td>
+                                    <td><a href="experiment-detail.html" class="btn btn-sm btn-outline-primary">Просмотр</a></td>
+                                </tr>
+                                <tr data-date="2026-01-14" data-metric="0.92" data-status="Completed" data-tags="testing,v2">
+                                    <td><a href="experiment-detail.html">model_v2_hyperparam</a></td>
+                                    <td>2026-01-14</td>
+                                    <td>0.92</td>
+                                    <td><span class="badge bg-secondary">testing</span> <span class="badge bg-secondary">v2</span></td>
+                                    <td><span class="badge bg-success">Completed</span></td>
+                                    <td><a href="experiment-detail.html" class="btn btn-sm btn-outline-primary">Просмотр</a></td>
+                                </tr>
+                                <tr data-date="2026-01-13" data-metric="" data-status="Running" data-tags="development">
+                                    <td><a href="experiment-detail.html">model_v3_test</a></td>
+                                    <td>2026-01-13</td>
+                                    <td>—</td>
+                                    <td><span class="badge bg-secondary">development</span></td>
+                                    <td><span class="badge bg-warning text-dark">Running</span></td>
+                                    <td><a href="experiment-detail.html" class="btn btn-sm btn-outline-primary">Просмотр</a></td>
+                                </tr>
+                                <tr data-date="2026-01-10" data-metric="0.87" data-status="Failed" data-tags="baseline">
+                                    <td><a href="experiment-detail.html">baseline_model</a></td>
+                                    <td>2026-01-10</td>
+                                    <td>0.87</td>
+                                    <td><span class="badge bg-secondary">baseline</span></td>
+                                    <td><span class="badge bg-danger">Failed</span></td>
+                                    <td><a href="experiment-detail.html" class="btn btn-sm btn-outline-primary">Просмотр</a></td>
+                                </tr>
+                                <tr data-date="2026-01-08" data-metric="0.91" data-status="Completed" data-tags="nn,pytorch">
+                                    <td><a href="experiment-detail.html">neural_net_exp</a></td>
+                                    <td>2026-01-08</td>
+                                    <td>0.91</td>
+                                    <td><span class="badge bg-secondary">nn</span> <span class="badge bg-secondary">pytorch</span></td>
+                                    <td><span class="badge bg-success">Completed</span></td>
+                                    <td><a href="experiment-detail.html" class="btn btn-sm btn-outline-primary">Просмотр</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <nav aria-label="Пагинация">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Предыдущая">
+                                    <span>ПредЫдущая</span>
+                                </a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Следующая">
+                                    <span>Следующая</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container text-center text-muted">
+            <p>&copy; 2026 ML Pipeline. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Подтверждение удаления</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Вы уверены, что хотите удалить этот эксперимент?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-danger">Удалить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cloneModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Клонировать эксперимент</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Новое название</label>
+                        <input type="text" class="form-control" id="clone-name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary">Клонировать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
