@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Касса.ру — покупка билетов на мероприятия</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+<header>
+    <nav class="navbar navbar-dark bg-dark" aria-label="Основная навигация">
+        <div class="container">
+            <a class="navbar-brand" href="index.html" aria-label="Касса.ру — перейти на главную страницу">Касса.ру</a>
+            <div id="authButtons" aria-label="Авторизация и профиль"></div>
+        </div>
+    </nav>
+</header>
+
+<main id="main-content" class="container mt-5" tabindex="-1">
+    <h1 class="mb-4">Купить билет на мероприятие</h1>
+
+    <section aria-labelledby="filters-title" class="mb-4">
+        <h2 id="filters-title" class="visually-hidden">Фильтры поиска мероприятий</h2>
+        <form class="row g-3 mb-0" role="search" aria-label="Поиск мероприятий" onsubmit="event.preventDefault(); filterEvents();">
+            <div class="col-md-4">
+                <label for="searchInput" class="form-label">Поиск по названию</label>
+                <input type="text" id="searchInput" class="form-control" placeholder="Например: концерт" autocomplete="off">
+            </div>
+            <div class="col-md-3">
+                <label for="typeFilter" class="form-label">Тип мероприятия</label>
+                <select id="typeFilter" class="form-select">
+                    <option value="all">Все типы</option>
+                    <option value="concert">Концерт</option>
+                    <option value="theatre">Театр</option>
+                    <option value="exhibition">Выставка</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="cityFilter" class="form-label">Город</label>
+                <input type="text" id="cityFilter" class="form-control" placeholder="Введите город" autocomplete="address-level2">
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">Найти</button>
+            </div>
+        </form>
+        <p id="filterResultsStatus" class="visually-hidden" aria-live="polite">Список мероприятий загружается.</p>
+    </section>
+
+    <section aria-labelledby="events-title">
+        <h2 id="events-title" class="mb-4">Мероприятия</h2>
+        <div class="row g-4" id="eventsContainer" aria-live="polite" aria-busy="true"></div>
+    </section>
+</main>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="mainToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto" id="mainToastTitle">Уведомление</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Закрыть уведомление"></button>
+        </div>
+        <div class="toast-body" id="mainToastBody">Сообщение</div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
