@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarelka — Интеграции</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/integrations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="integrations">
+  <div class="app-layout">
+    <aside id="sidebarContainer" class="app-sidebar d-none d-lg-flex"></aside>
+    <div class="app-content">
+      <div id="topbarContainer"></div>
+      <main class="container-fluid py-4" id="pageRoot">
+        <section class="page-header d-flex flex-column flex-lg-row gap-3 align-items-lg-center justify-content-between mb-4">
+          <div>
+            <p class="page-kicker mb-2">Интеграции</p>
+            <h1 class="h2 mb-2">Подключение сервисов и правила импорта</h1>
+            <p class="text-secondary mb-0">Управляйте статусом интеграций, импортом CSV и правилами автокатегоризации.</p>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <button class="btn btn-outline-primary" id="openImportRuleModal"><i class="bi bi-sliders me-2"></i>Новое правило</button>
+            <button class="btn btn-primary" id="openConnectModal"><i class="bi bi-plug me-2"></i>Подключить сервис</button>
+          </div>
+        </section>
+
+        <section class="row g-4">
+          <div class="col-12"><div class="card shadow-sm border-0"><div class="card-body"><div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2"><div><h2 class="h5 mb-1">Подключённые сервисы</h2><p class="text-secondary mb-0">Имитация подключения банковских и платёжных аккаунтов</p></div><span class="badge text-bg-light">Сохраняется в localStorage</span></div><div class="row g-3" id="integrationsGrid"></div></div></div></div>
+          <div class="col-12 col-xl-6"><div class="card shadow-sm border-0 h-100"><div class="card-body"><div class="mb-3"><h2 class="h5 mb-1">Импорт транзакций</h2><p class="text-secondary mb-0">Загрузите CSV‑файл или используйте тестовый пример.</p></div><form id="importForm" class="row g-3"><div class="col-md-6"><label class="form-label" for="importFormat">Формат</label><select class="form-select" id="importFormat"><option value="csv">CSV</option><option value="bank_csv">Банковская выгрузка CSV</option></select></div><div class="col-md-6"><label class="form-label" for="importAccount">Счёт для импорта</label><select class="form-select" id="importAccount"></select></div><div class="col-12"><label class="form-label" for="importFile">Файл</label><input class="form-control" id="importFile" type="file" accept=".csv,text/csv"><div class="form-text">Ожидаемые колонки: date, description, amount, type, category, status.</div></div><div class="col-12 d-flex flex-wrap gap-2"><button class="btn btn-primary" type="submit">Импортировать</button><button class="btn btn-outline-secondary" type="button" id="useSampleImportBtn">Использовать тестовый CSV</button></div></form><div class="alert alert-info border-0 mt-4 mb-0">При импорте правила автоматически подставляют категории или метки по описанию и сумме.</div></div></div></div>
+          <div class="col-12 col-xl-6"><div class="card shadow-sm border-0 h-100"><div class="card-body"><div class="mb-3"><h2 class="h5 mb-1">История импортов</h2><p class="text-secondary mb-0">Список последних загрузок и количество обработанных записей</p></div><div id="importsHistory" class="d-flex flex-column gap-3"></div></div></div></div>
+          <div class="col-12"><div class="card shadow-sm border-0"><div class="card-body"><div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2"><div><h2 class="h5 mb-1">Правила импорта</h2><p class="text-secondary mb-0">Условия для автокатегоризации и маркировки транзакций</p></div><span class="badge text-bg-light"><span id="rulesCount">0</span> правил</span></div><div class="table-responsive"><table class="table align-middle mb-0"><thead><tr><th>Условие</th><th>Действие</th><th>Тип</th><th></th></tr></thead><tbody id="rulesTableBody"></tbody></table></div></div></div></div>
+        </section>
+      </main>
+      <footer id="footerContainer"></footer>
+    </div>
+  </div>
+
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebar"><div class="offcanvas-header"><h5 class="offcanvas-title">Tarelka</h5><button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button></div><div class="offcanvas-body p-0" id="mobileSidebarContainer"></div></div>
+  <div class="modal fade" id="integrationModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 shadow"><div class="modal-header"><h2 class="modal-title fs-5">Подключение сервиса</h2><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><form id="integrationForm"><div class="modal-body"><div class="mb-3"><label class="form-label" for="integrationService">Сервис</label><select class="form-select" id="integrationService"></select></div><div class="mb-3"><label class="form-label" for="integrationToken">API key / токен (имитация)</label><input class="form-control" id="integrationToken" type="text" placeholder="Введите произвольную строку"></div><div class="mb-0"><label class="form-label" for="integrationSync">Последняя синхронизация</label><input class="form-control" id="integrationSync" type="datetime-local"></div></div><div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button><button type="submit" class="btn btn-primary">Сохранить подключение</button></div></form></div></div></div>
+  <div class="modal fade" id="ruleModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 shadow"><div class="modal-header"><h2 class="modal-title fs-5">Новое правило импорта</h2><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><form id="ruleForm"><div class="modal-body"><div class="mb-3"><label class="form-label" for="ruleConditionType">Тип условия</label><select class="form-select" id="ruleConditionType"><option value="keyword">Описание содержит</option><option value="amount">Сумма больше</option></select></div><div class="mb-3" id="ruleKeywordGroup"><label class="form-label" for="ruleKeyword">Ключевое слово</label><input class="form-control" id="ruleKeyword" type="text" placeholder="Например, Uber"></div><div class="mb-3 d-none" id="ruleAmountGroup"><label class="form-label" for="ruleAmount">Порог суммы</label><input class="form-control" id="ruleAmount" type="number" min="0" step="0.01"></div><div class="mb-3"><label class="form-label" for="ruleActionType">Действие</label><select class="form-select" id="ruleActionType"><option value="category">Присвоить категорию</option><option value="label">Добавить метку</option></select></div><div class="mb-0"><label class="form-label" for="ruleActionValue">Значение</label><input class="form-control" id="ruleActionValue" type="text" placeholder="Например, Транспорт"></div></div><div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button><button type="submit" class="btn btn-primary">Добавить правило</button></div></form></div></div></div>
+
+  <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/integrations.js"></script>
+</body>
+</html>
