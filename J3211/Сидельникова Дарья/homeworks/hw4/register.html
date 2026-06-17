@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime | Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/auth.css">
+</head>
+<body class="auth-page">
+    <a href="#main-content" class="visually-hidden-focusable">Skip to main content</a>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" aria-label="Main navigation">
+            <div class="container">
+                <a class="navbar-brand fw-bold logo" href="../default.html" aria-label="Prime homepage">PRIME</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <section class="auth-section" aria-labelledby="register-title">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="auth-card">
+                            <h1 id="register-title" class="text-center mb-4 text-white">Create Prime Account</h1>
+
+                            <form id="registerForm" novalidate>
+                                <div class="floating-input">
+                                    <input type="text" id="name" name="name" required aria-describedby="nameError">
+                                    <label for="name">Name</label>
+                                    <small class="error-text" id="nameError" aria-live="polite"></small>
+                                </div>
+
+                                <div class="floating-input">
+                                    <input type="email" id="email" name="email" required aria-describedby="emailError">
+                                    <label for="email">Email</label>
+                                    <small class="error-text" id="emailError" aria-live="polite"></small>
+                                </div>
+
+                                <div class="floating-input password-container">
+                                    <input type="password" id="password" name="password" required aria-describedby="passwordRules passwordError">
+                                    <label for="password">Password</label>
+
+                                    <button class="toggle-password" type="button" onclick="togglePassword('password')" aria-label="Show password">
+                                        <svg class="icon"><use href="../../images/sprite.svg#icon-eye"></use></svg>
+                                    </button>
+
+                                    <div class="password-strength" aria-hidden="true">
+                                        <div id="strengthBar"></div>
+                                    </div>
+
+                                    <div class="password-rules" id="passwordRules">
+                                        <p id="ruleLength">Minimum 8 characters</p>
+                                        <p id="ruleNumber">At least 1 number</p>
+                                    </div>
+
+                                    <small class="error-text" id="passwordError" aria-live="polite"></small>
+                                </div>
+
+                                <div class="floating-input password-container">
+                                    <input type="password" id="confirmPassword" name="confirmPassword" required aria-describedby="confirmError">
+                                    <label for="confirmPassword">Confirm Password</label>
+
+                                    <button class="toggle-password" type="button" onclick="togglePassword('confirmPassword')" aria-label="Show confirm password">
+                                        <svg class="icon"><use href="../../images/sprite.svg#icon-eye"></use></svg>
+                                    </button>
+
+                                    <small class="error-text" id="confirmError" aria-live="polite"></small>
+                                </div>
+
+                                <button type="submit" class="btn btn-light w-100 mt-4">Create Account</button>
+
+                                <p class="text-center mt-3 mb-0 auth-note">
+                                    Already have an account?
+                                    <a href="login.html">Login</a>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="../../js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

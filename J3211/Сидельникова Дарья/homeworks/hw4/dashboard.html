@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime | Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link rel="stylesheet" href="../../css/light.css" id="theme-style">
+</head>
+
+<body class="dashboard-page">
+    <div class="d-flex">
+        <aside class="sidebar p-3">
+            <nav aria-label="Sidebar navigation">
+                <h2 class="logo text-white mb-4">
+                    <a href="dashboard.html" class="text-white text-decoration-none" aria-label="Prime dashboard homepage">
+                        PRIME
+                    </a>
+                </h2>
+
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="dashboard.html" aria-current="page">
+                            <svg class="icon nav-icon"><use href="/prime/images/sprite.svg#icon-dashboard"></use></svg>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="add_task.html">
+                            <svg class="icon nav-icon"><use href="/prime/images/sprite.svg#icon-task"></use></svg>
+                            Create new task
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="create_project.html">
+                            <svg class="icon nav-icon"><use href="/prime/images/sprite.svg#icon-project"></use></svg>
+                            Create new project
+                        </a>
+                    </li>
+                    <li class="nav-item mt-4">
+                        <a class="nav-link text-white" href="../default.html">
+                            <svg class="icon nav-icon"><use href="/prime/images/sprite.svg#icon-logout"></use></svg>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main id="main-content" class="main-content flex-grow-1 p-4">
+            <div class="d-flex justify-content-end mb-3">
+                <button id="theme-toggle" class="btn btn-outline-secondary" type="button">
+                    <svg class="icon nav-icon"><use href="/prime/images/sprite.svg#icon-theme"></use></svg>
+                    Theme
+                </button>
+            </div>
+
+            <h1 class="mb-4">
+                <svg class="icon icon-lg nav-icon"><use href="/prime/images/sprite.svg#icon-dashboard"></use></svg>
+                Dashboard
+            </h1>
+
+            <section aria-labelledby="profile-heading">
+                <h2 id="profile-heading" class="visually-hidden">Profile information</h2>
+
+                <div class="card mb-4">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 id="userName" class="mb-1"></h3>
+                            <p id="userEmail" class="text-muted mb-0"></p>
+                        </div>
+
+                        <button class="btn btn-outline-dark btn-sm" type="button" onclick="editProfile()">
+                            <svg class="icon nav-icon"><use href="/prime/images/sprite.svg#icon-edit"></use></svg>
+                            Edit profile
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section aria-labelledby="tasks-heading">
+                <h2 id="tasks-heading" class="mb-3">My Tasks</h2>
+
+                <div class="row g-4 kanban-board">
+                    <div class="col-md-4">
+                        <div class="kanban-column kanban-todo">
+                            <h3 class="kanban-title">To Do</h3>
+                            <div id="todoTasks" aria-label="To Do tasks"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="kanban-column kanban-progress">
+                            <h3 class="kanban-title">In Progress</h3>
+                            <div id="progressTasks" aria-label="In Progress tasks"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="kanban-column kanban-done">
+                            <h3 class="kanban-title">Done</h3>
+                            <div id="doneTasks" aria-label="Done tasks"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4 mt-3">
+                    <a href="add_task.html" class="btn btn-dark btn-sm">
+                        <svg class="icon nav-icon"><use href="/prime/images/sprite.svg#icon-plus"></use></svg>
+                        Add task
+                    </a>
+                </div>
+            </section>
+
+            <section aria-labelledby="projects-heading">
+                <h2 id="projects-heading" class="mb-3">My Projects</h2>
+
+                <div id="userProjects" class="row g-3" aria-label="My projects list"></div>
+
+                <div class="d-flex gap-2 mt-4">
+                    <a href="create_project.html" class="btn btn-dark">
+                        <svg class="icon nav-icon"><use href="/prime/images/sprite.svg#icon-plus"></use></svg>
+                        Add project
+                    </a>
+                    <button class="btn btn-outline-dark" type="button" onclick="joinProject()">
+                        <svg class="icon nav-icon"><use href="/prime/images/sprite.svg#icon-team"></use></svg>
+                        Join project
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="../../js/theme.js"></script>
+    <script type="module" src="../../js/main.js"></script>
+</body>
+</html>
