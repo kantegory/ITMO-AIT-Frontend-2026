@@ -1,0 +1,132 @@
+:root,
+[data-theme="light"] {
+    --bg-body: #e3e3e9;
+    --bg-card: #fff;
+    --bg-card-hover: #f8f9fa;
+    --bg-input: #fff;
+    --bg-filter: #f8f9fa;
+    --bg-footer: transparent;
+
+    --text-primary: #212529;
+    --text-secondary: #555;
+    --text-muted: #495057;
+    --text-on-card: #212529;
+
+    --border-color: #dee2e6;
+    --shadow-card: 0 1px 4px rgba(0, 0, 0, .06);
+    --shadow-card-hover: 0 6px 18px rgba(0, 0, 0, .08);
+
+    --header-bg: #212529;
+    --header-text: #fff;
+
+    --sidebar-bg: #212529;
+    --sidebar-text: rgba(255, 255, 255, .75);
+    --sidebar-active: #0d6efd;
+    --sidebar-user-bg: rgba(255, 255, 255, .05);
+
+    --accent: #0d6efd;
+    --accent-hover: #0b5ed7;
+
+    --review-avatar-bg: #dee2e6;
+    --review-avatar-color: #495057;
+
+    --buy-card-bg: #fff;
+    --buy-card-shadow: 0 4px 20px rgba(0, 0, 0, .1);
+
+    --lesson-item-color: #495057;
+
+    --hero-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+
+    --auth-bg: #121212;
+    --auth-card-bg: #1e1e1e;
+    --auth-input-bg: #2b2b2b;
+    --auth-input-border: #444;
+    --auth-text: #fff;
+    --auth-btn-bg: #712cf9;
+    --auth-tab-bg: #2b2b2b;
+
+    color-scheme: light;
+}
+
+[data-theme="dark"] {
+    --bg-body: #1a1a2e;
+    --bg-card: #16213e;
+    --bg-card-hover: #1a2744;
+    --bg-input: #0f3460;
+    --bg-filter: #16213e;
+    --bg-footer: transparent;
+
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0b0;
+    --text-muted: #8888a0;
+    --text-on-card: #e0e0e0;
+
+    --border-color: #2a2a4a;
+    --shadow-card: 0 2px 8px rgba(0, 0, 0, .3);
+    --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, .4);
+
+    --header-bg: #0f0f23;
+    --header-text: #e0e0e0;
+
+    --sidebar-bg: #0f0f23;
+    --sidebar-text: rgba(255, 255, 255, .65);
+    --sidebar-active: #4a6cf7;
+    --sidebar-user-bg: rgba(255, 255, 255, .05);
+
+    --accent: #4a6cf7;
+    --accent-hover: #3b5de0;
+
+    --review-avatar-bg: #2a2a4a;
+    --review-avatar-color: #a0a0b0;
+
+    --buy-card-bg: #16213e;
+    --buy-card-shadow: 0 4px 20px rgba(0, 0, 0, .4);
+
+    --lesson-item-color: #a0a0b0;
+
+    --hero-gradient: linear-gradient(135deg, #0a0a1a 0%, #0f1a30 50%, #0a2040 100%);
+
+    --auth-bg: #0a0a1a;
+    --auth-card-bg: #12122a;
+    --auth-input-bg: #1a1a3a;
+    --auth-input-border: #2a2a4a;
+    --auth-text: #e0e0e0;
+    --auth-btn-bg: #4a6cf7;
+    --auth-tab-bg: #1a1a3a;
+
+    color-scheme: dark;
+}
+
+.theme-toggle {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, .3);
+    color: var(--header-text);
+    border-radius: .375rem;
+    padding: .25rem .5rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+    line-height: 1;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, .1);
+    border-color: rgba(255, 255, 255, .5);
+}
+
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: inline; }
+
+[data-theme="dark"] .theme-toggle .icon-sun { display: inline; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+.icon {
+    width: 1.2em;
+    height: 1.2em;
+    fill: currentColor;
+    display: inline-block;
+    vertical-align: -0.125em;
+}

@@ -1,0 +1,259 @@
+body {
+    background: var(--bg-body);
+}
+
+.d-flex:has(.course-sidebar) {
+    background: var(--sidebar-bg);
+}
+
+.course-sidebar {
+    width: 320px;
+    min-height: calc(100vh - 62px);
+    background: var(--sidebar-bg);
+    color: #fff;
+    flex-shrink: 0;
+    overflow-y: auto;
+    position: sticky;
+    top: 62px;
+    align-self: flex-start;
+    transition: background .3s;
+}
+
+.course-sidebar .sidebar-header {
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+
+.course-sidebar .sidebar-header h6 {
+    margin: 0;
+    font-weight: 700;
+    font-size: .95rem;
+}
+
+.course-sidebar .sidebar-header .small {
+    opacity: .6;
+}
+
+.btn-toggle {
+    padding: .65rem 1rem;
+    background: rgba(255, 255, 255, .05);
+    font-weight: 600;
+    font-size: .82rem;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    color: rgba(255, 255, 255, .5);
+    border-top: 1px solid rgba(255, 255, 255, .07);
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: background .15s, color .15s;
+}
+
+.btn-toggle:hover {
+    background: rgba(255, 255, 255, .08);
+    color: rgba(255, 255, 255, .75);
+}
+
+.btn-toggle::before {
+    content: '';
+    display: inline-block;
+    width: .4em;
+    height: .4em;
+    border-right: 2px solid;
+    border-bottom: 2px solid;
+    transform: rotate(-45deg);
+    margin-right: .6rem;
+    transition: transform .2s ease;
+    vertical-align: middle;
+}
+
+.btn-toggle[aria-expanded="true"]::before {
+    transform: rotate(45deg);
+}
+
+.btn-toggle-nav {
+    padding-left: 0;
+}
+
+.lesson-link {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .55rem 1rem .55rem 1.5rem;
+    color: rgba(255, 255, 255, .7);
+    text-decoration: none;
+    font-size: .85rem;
+    border-left: 3px solid transparent;
+    transition: background .15s, color .15s, border-color .15s;
+}
+
+.lesson-link:hover {
+    background: rgba(255, 255, 255, .07);
+    color: #fff;
+}
+
+.lesson-link.active {
+    background: rgba(13, 110, 253, .2);
+    color: #fff;
+    border-left-color: var(--sidebar-active);
+}
+
+.lesson-link svg.type-icon {
+    flex-shrink: 0;
+    font-size: .75rem;
+    opacity: .6;
+}
+
+.player-main {
+    flex: 1;
+    min-width: 0;
+    background: var(--bg-body);
+    transition: background .3s;
+}
+
+.video-wrapper {
+    background: #000;
+    border-radius: 0 0 .75rem .75rem;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.video-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: .6;
+}
+
+.play-overlay {
+    position: absolute;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(13, 110, 253, .9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: #fff;
+    cursor: pointer;
+    transition: transform .2s;
+}
+
+.play-overlay:hover {
+    transform: scale(1.1);
+}
+
+.lesson-content {
+    padding: 2rem 2.5rem;
+    color: var(--text-primary);
+}
+
+.lesson-content .card {
+    background: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+.lesson-content .card-body {
+    color: var(--text-primary);
+}
+
+.lesson-content h3 {
+    color: var(--text-primary);
+}
+
+.lesson-content p {
+    color: var(--text-primary);
+}
+
+.lesson-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2.5rem 2rem;
+}
+
+.tab-material .nav-link {
+    color: var(--text-secondary);
+}
+
+.tab-material .nav-link.active {
+    color: var(--sidebar-active);
+    font-weight: 600;
+}
+
+.text-muted {
+    color: var(--text-secondary) !important;
+}
+
+.p-3.text-bg-dark {
+    background-color: var(--header-bg) !important;
+}
+
+@media (max-width: 991.98px) {
+    .course-sidebar {
+        width: 320px !important;
+        min-height: auto !important;
+        position: fixed !important;
+    }
+
+    .lesson-content {
+        padding: 1.25rem;
+    }
+
+    .lesson-nav {
+        padding: 1rem 1.25rem;
+    }
+}
+
+.nav-link {
+    color: #212529 !important;
+}
+
+.nav-link.active {
+    color: #084298 !important;
+    font-weight: 600;
+}
+
+.btn-outline-secondary {
+    color: #212529;
+    border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.player-main {
+    color: #212529;
+}
+
+header .btn {
+    height: 38px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    vertical-align: -0.125em;
+}
+
+.icon-lg {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.play-overlay .icon {
+    width: 3em;
+    height: 3em;
+}
