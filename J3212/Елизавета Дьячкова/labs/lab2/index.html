@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="TicketHub — поиск концертов, фестивалей и лекций по городу и дате.">
+  <title>TicketHub | Поиск мероприятий</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <script src="theme.js"></script>
+  <a class="visually-hidden-focusable position-absolute top-0 start-0 p-2 m-2 z-3 rounded skip-link-theme" href="#main-content">К основному содержимому</a>
+  <div class="app-layout d-flex flex-column min-vh-100">
+    <header class="navbar navbar-expand-lg bg-white border-bottom">
+      <div class="container">
+        <a class="navbar-brand fw-semibold d-inline-flex align-items-center gap-2" href="index.html" aria-label="TicketHub — на главную"><svg class="sprite-icon sprite-icon--brand" width="22" height="22" aria-hidden="true" focusable="false"><use href="icons.svg#icon-ticket"></use></svg><span>TicketHub</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Переключить меню">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <nav class="collapse navbar-collapse" id="mainNav" aria-label="Основная навигация">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active d-inline-flex align-items-center gap-2" href="index.html"><svg class="sprite-icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="icons.svg#icon-calendar"></use></svg><span>Мероприятия</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link d-inline-flex align-items-center gap-2" href="organizer.html"><svg class="sprite-icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="icons.svg#icon-building"></use></svg><span>Кабинет организатора</span></a>
+            </li>
+          </ul>
+          <div class="d-flex align-items-center me-2 me-lg-3 theme-select-wrap">
+            <label for="themeSelect" class="visually-hidden">Тема оформления</label>
+            <select id="themeSelect" class="form-select form-select-sm" aria-label="Тема оформления">
+              <option value="auto">Авто</option>
+              <option value="light">Светлая</option>
+              <option value="dark">Тёмная</option>
+            </select>
+          </div>
+          <div class="d-flex gap-2">
+            <a class="btn btn-outline-primary btn-sm d-inline-flex align-items-center gap-1" href="login.html" data-auth="guest"><svg class="sprite-icon sprite-icon--btn" width="16" height="16" aria-hidden="true" focusable="false"><use href="icons.svg#icon-user"></use></svg>Вход</a>
+            <a class="btn btn-primary btn-sm d-inline-flex align-items-center gap-1" href="register.html" data-auth="guest"><svg class="sprite-icon sprite-icon--btn" width="16" height="16" aria-hidden="true" focusable="false"><use href="icons.svg#icon-ticket"></use></svg>Регистрация</a>
+            <a class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center gap-1 d-none" href="profile.html" data-auth="user"><svg class="sprite-icon sprite-icon--btn" width="16" height="16" aria-hidden="true" focusable="false"><use href="icons.svg#icon-user"></use></svg>Личный кабинет</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="flex-grow-1" tabindex="-1">
+      <section class="page container py-4">
+        <p id="apiStatus" class="alert d-none mb-3 small" role="status" aria-live="assertive"></p>
+        <header class="mb-4">
+          <h1 class="h4 mb-2 d-inline-flex align-items-center gap-2 flex-wrap" id="searchPageHeading"><svg class="sprite-icon text-secondary" width="22" height="22" aria-hidden="true" focusable="false"><use href="icons.svg#icon-search"></use></svg><span>Поиск мероприятий</span></h1>
+          <p class="text-secondary mb-0">Найдите концерты, фестивали и лекции. Фильтруйте по типу, дате и месту.</p>
+        </header>
+
+        <form class="row g-3 mb-4" id="searchForm" aria-label="Фильтры поиска мероприятий">
+          <div class="col-12 col-md-3">
+            <label for="searchQuery" class="form-label">Название или артист</label>
+            <input type="search" class="form-control" id="searchQuery" name="q" placeholder="Например, концерт" autocomplete="off" aria-describedby="searchQueryHint">
+          </div>
+          <div class="col-6 col-md-2">
+            <label for="filterType" class="form-label">Тип</label>
+            <select id="filterType" class="form-select">
+              <option value="">Любой</option>
+              <option value="concert">Концерт</option>
+              <option value="theatre">Театр</option>
+              <option value="festival">Фестиваль</option>
+            </select>
+          </div>
+          <div class="col-6 col-md-3">
+            <label for="filterDate" class="form-label">Дата (необязательно)</label>
+            <div class="d-flex gap-1">
+              <input type="text" class="form-control flex-grow-1" id="filterDate" name="filterDate" inputmode="text" autocomplete="off" placeholder="2026-03-29" maxlength="10" aria-describedby="filterDateHint" title="Формат: ГГГГ-ММ-ДД">
+              <button type="button" class="btn btn-outline-secondary btn-sm align-self-end" id="clearDateButton" title="Очистить дату" aria-label="Очистить дату">×</button>
+            </div>
+            <p id="filterDateHint" class="form-text small mb-0">Введите дату в формате <strong>ГГГГ-ММ-ДД</strong> (как в данных событий).</p>
+          </div>
+          <div class="col-6 col-md-2">
+            <label for="filterCity" class="form-label">Город</label>
+            <select id="filterCity" class="form-select">
+              <option value="">Любой</option>
+              <option value="spb">Санкт‑Петербург</option>
+              <option value="msk">Москва</option>
+              <option value="nsk">Новосибирск</option>
+              <option value="ptz">Петрозаводск</option>
+            </select>
+          </div>
+          <div class="col-12 col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">Найти</button>
+          </div>
+        </form>
+        <p id="searchQueryHint" class="visually-hidden">Поиск по названию, описанию или артисту.</p>
+
+        <section aria-label="Список мероприятий">
+          <div class="row g-3" id="eventsList" aria-live="polite" aria-relevant="additions text"></div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="border-top theme-footer mt-4">
+      <div class="container py-3">
+        <p class="mb-0 small text-secondary">2026 TicketHub</p>
+      </div>
+    </footer>
+  </div>
+
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080;">
+    <div id="actionToast" class="toast align-items-center text-bg-primary border-0" role="status" aria-live="polite" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body" id="toastBody">Готово</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Закрыть"></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
