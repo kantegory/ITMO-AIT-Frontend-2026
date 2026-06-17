@@ -1,0 +1,511 @@
+:root {
+  color-scheme: light;
+  --bg: #f8f9fa;
+  --surface: #ffffff;
+  --surface-2: #f8f9fa;
+  --text: #212529;
+  --muted: #495057;
+  --border: #dee2e6;
+  --brand: #0d6efd;
+  --brand-2: #0b5ed7;
+  --focus: rgba(13, 110, 253, 0.35);
+  --link: #0a58ca;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b0f19;
+  --surface: #111827;
+  --surface-2: #0f172a;
+  --text: rgba(255, 255, 255, 0.94);
+  --muted: rgba(238, 242, 255, 0.86);
+  --border: rgba(255, 255, 255, 0.10);
+  --brand: #8b5cf6;
+  --brand-2: #7c3aed;
+  --focus: rgba(139, 92, 246, 0.40);
+  --link: rgba(255, 255, 255, 0.92);
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+html[data-theme="dark"] body {
+  background-image: radial-gradient(900px 420px at 20% 0%, rgba(139, 92, 246, 0.14), transparent 60%),
+    radial-gradient(700px 360px at 80% 10%, rgba(56, 189, 248, 0.10), transparent 55%);
+  background-attachment: fixed;
+}
+
+.navbar-main {
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar-main .nav-link,
+.navbar-main .navbar-brand {
+  color: var(--text) !important;
+}
+
+.navbar-main .nav-link:hover {
+  text-decoration: underline;
+}
+
+.navbar-main .nav-link.active,
+.navbar-main .nav-link[aria-current="page"] {
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.navbar-brand-mark {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--brand);
+  display: inline-block;
+}
+
+.glass-card,
+.tab-card,
+.course-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+html[data-theme="dark"] .glass-card,
+html[data-theme="dark"] .tab-card,
+html[data-theme="dark"] .course-card {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.section-label {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.hero-title {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.hero-subtitle {
+  color: var(--muted);
+  max-width: 52ch;
+  line-height: 1.55;
+}
+
+.hero-title span {
+  display: inline-block;
+  background: linear-gradient(120deg, rgba(139, 92, 246, 0.95), rgba(56, 189, 248, 0.9));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+html[data-theme="dark"] .text-muted {
+  color: var(--muted) !important;
+}
+
+html[data-theme="dark"] .text-dark,
+html[data-theme="dark"] .text-body,
+html[data-theme="dark"] .text-secondary,
+html[data-theme="dark"] .text-black,
+html[data-theme="dark"] .text-black-50,
+html[data-theme="dark"] .link-dark {
+  color: var(--text) !important;
+}
+
+html[data-theme="dark"] .nav-link,
+html[data-theme="dark"] .navbar,
+html[data-theme="dark"] .navbar .navbar-brand,
+html[data-theme="dark"] .navbar .navbar-text,
+html[data-theme="dark"] .dropdown-item,
+html[data-theme="dark"] .form-label,
+html[data-theme="dark"] .form-text,
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .card-title,
+html[data-theme="dark"] .card-text,
+html[data-theme="dark"] .list-group-item,
+html[data-theme="dark"] .breadcrumb,
+html[data-theme="dark"] .modal-content {
+  color: var(--text);
+}
+
+html[data-theme="dark"] a:not(.btn) {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+html[data-theme="dark"] a:not(.btn):hover {
+  color: rgba(255, 255, 255, 0.98);
+}
+
+html[data-theme="dark"] .badge-soft {
+  color: var(--text);
+}
+
+.text-primary,
+a.text-primary {
+  color: var(--link) !important;
+}
+
+a.text-primary:hover {
+  color: var(--text) !important;
+}
+
+.pill {
+  border-radius: 50rem;
+}
+
+.btn-outline-soft {
+  border-radius: 50rem;
+}
+
+.btn-gradient {
+  background-color: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
+.btn-gradient:hover {
+  background-color: var(--brand-2);
+  border-color: var(--brand-2);
+  color: #fff;
+}
+
+html[data-theme="dark"] .btn-outline-soft,
+html[data-theme="dark"] .btn-outline-primary {
+  color: var(--text);
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] .btn-outline-soft:hover,
+html[data-theme="dark"] .btn-outline-primary:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+html[data-theme="dark"] .btn:active,
+html[data-theme="dark"] .btn.active,
+html[data-theme="dark"] .list-group-item.active,
+html[data-theme="dark"] .nav-pills .nav-link.active {
+  background-color: transparent !important;
+  color: var(--text) !important;
+  border-color: rgba(255, 255, 255, 0.55) !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.18) !important;
+}
+
+html[data-theme="dark"] .list-group-item {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.10);
+  color: var(--text);
+}
+
+html[data-theme="dark"] .list-group-item:hover {
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+html[data-theme="dark"] .btn-close {
+  filter: invert(1);
+}
+
+html[data-theme="dark"] .form-control,
+html[data-theme="dark"] .form-select {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--text);
+}
+
+html[data-theme="dark"] .form-control::placeholder {
+  color: rgba(238, 242, 255, 0.55);
+}
+
+html[data-theme="dark"] .form-control:focus,
+html[data-theme="dark"] .form-select:focus {
+  border-color: rgba(139, 92, 246, 0.55);
+  box-shadow: 0 0 0 0.2rem rgba(139, 92, 246, 0.25);
+}
+
+.filter-chip {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50rem;
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+  background-color: var(--surface);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.filter-chip.active {
+  background-color: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+  box-shadow: 0 8px 18px rgba(2, 6, 23, 0.08);
+}
+
+.filter-chip:hover {
+  transform: translateY(-1px);
+}
+
+#search.tab-card {
+  position: relative;
+  overflow: hidden;
+}
+
+#search.tab-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.8), rgba(56, 189, 248, 0.8), transparent);
+}
+
+[data-courses="grid"] .course-card {
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+[data-courses="grid"] .course-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
+}
+
+[data-courses="grid"] .btn-outline-soft {
+  font-weight: 500;
+}
+
+html[data-theme="dark"] .hero-title span {
+  background: linear-gradient(120deg, rgba(196, 181, 253, 0.98), rgba(103, 232, 249, 0.94));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+html[data-theme="dark"] #search.tab-card::before {
+  background: linear-gradient(90deg, transparent, rgba(196, 181, 253, 0.95), rgba(103, 232, 249, 0.95), transparent);
+}
+
+html[data-theme="dark"] [data-courses="grid"] .course-card:hover {
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.42);
+}
+
+.badge-soft {
+  border-radius: 50rem;
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.6rem;
+  font-size: 0.8rem;
+  background-color: var(--surface-2);
+}
+
+.price-tag {
+  font-weight: 600;
+}
+
+.dashboard-chip {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--surface);
+}
+
+.fake-video {
+  aspect-ratio: 16/9;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background-color: var(--surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 0.75rem;
+}
+
+.course-card .card-text {
+  min-height: 3.5rem;
+}
+
+body[data-course-style="powerlifting"] {
+  background-image:
+    radial-gradient(840px 320px at 8% 0%, rgba(239, 68, 68, 0.14), transparent 64%),
+    radial-gradient(780px 340px at 95% 6%, rgba(148, 163, 184, 0.16), transparent 60%),
+    linear-gradient(180deg, #0e1117 0%, #0b0f15 100%);
+}
+
+body[data-course-style="powerlifting"] .glass-card,
+body[data-course-style="powerlifting"] .tab-card {
+  border-color: rgba(148, 163, 184, 0.28);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.52), inset 0 0 0 1px rgba(239, 68, 68, 0.16);
+}
+
+body[data-course-style="powerlifting"] .section-title,
+body[data-course-style="powerlifting"] h1[data-course="title"] {
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+body[data-course-style="powerlifting"] .badge-soft {
+  border-color: rgba(239, 68, 68, 0.30);
+  background: linear-gradient(180deg, rgba(51, 65, 85, 0.58), rgba(30, 41, 59, 0.62));
+  color: rgba(241, 245, 249, 0.95);
+}
+
+body[data-course-style="powerlifting"] #enrollBtn.btn-gradient {
+  background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 55%, #b91c1c 100%);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+body[data-course-style="powerlifting"] #enrollBtn.btn-gradient:hover {
+  filter: brightness(1.06);
+}
+
+body[data-course-style="powerlifting"] .fake-video {
+  border-color: rgba(239, 68, 68, 0.28);
+  background:
+    linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.98)),
+    repeating-linear-gradient(
+      135deg,
+      rgba(239, 68, 68, 0.05) 0px,
+      rgba(239, 68, 68, 0.05) 9px,
+      rgba(148, 163, 184, 0.05) 9px,
+      rgba(148, 163, 184, 0.05) 18px
+    );
+}
+
+body[data-course-style="fitness"] {
+  background-image:
+    radial-gradient(880px 320px at 10% 0%, rgba(20, 184, 166, 0.10), transparent 64%),
+    radial-gradient(760px 300px at 90% 8%, rgba(56, 189, 248, 0.10), transparent 60%),
+    linear-gradient(180deg, #f8fafc 0%, #f0fdfa 100%);
+}
+
+body[data-course-style="fitness"] .glass-card,
+body[data-course-style="fitness"] .tab-card {
+  border-color: rgba(148, 163, 184, 0.24);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12), inset 0 0 0 1px rgba(20, 184, 166, 0.10);
+}
+
+body[data-course-style="fitness"] .badge-soft {
+  border-color: rgba(148, 163, 184, 0.30);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(240, 253, 250, 0.9));
+}
+
+body[data-course-style="fitness"] #enrollBtn.btn-gradient {
+  background: linear-gradient(135deg, #0d9488 0%, #14b8a6 52%, #0ea5e9 100%);
+  border-color: rgba(15, 23, 42, 0.12);
+}
+
+body[data-course-style="fitness"] .fake-video {
+  border-color: rgba(148, 163, 184, 0.24);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(240, 253, 250, 0.94)),
+    repeating-linear-gradient(
+      135deg,
+      rgba(20, 184, 166, 0.035) 0px,
+      rgba(20, 184, 166, 0.035) 10px,
+      rgba(56, 189, 248, 0.035) 10px,
+      rgba(56, 189, 248, 0.035) 20px
+    );
+}
+
+body[data-course-style="crossfit"] {
+  background-image:
+    radial-gradient(820px 300px at 8% 0%, rgba(217, 70, 239, 0.30), transparent 60%),
+    radial-gradient(760px 320px at 92% 9%, rgba(34, 211, 238, 0.26), transparent 58%),
+    linear-gradient(180deg, #030712 0%, #0b1020 100%);
+}
+
+body[data-course-style="crossfit"] .glass-card,
+body[data-course-style="crossfit"] .tab-card {
+  border-color: rgba(34, 211, 238, 0.48);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(217, 70, 239, 0.24), 0 0 26px rgba(34, 211, 238, 0.16);
+}
+
+body[data-course-style="crossfit"] .section-title,
+body[data-course-style="crossfit"] h1[data-course="title"] {
+  letter-spacing: 0.02em;
+}
+
+body[data-course-style="crossfit"] .badge-soft {
+  border-color: rgba(34, 211, 238, 0.54);
+  background: linear-gradient(180deg, rgba(76, 29, 149, 0.46), rgba(8, 47, 73, 0.5));
+  color: rgba(224, 242, 254, 0.98);
+}
+
+body[data-course-style="crossfit"] #enrollBtn.btn-gradient {
+  background: linear-gradient(135deg, #a21caf 0%, #d946ef 52%, #22d3ee 100%);
+  border-color: rgba(34, 211, 238, 0.55);
+  box-shadow: 0 0 24px rgba(217, 70, 239, 0.32);
+}
+
+body[data-course-style="crossfit"] .fake-video {
+  border-color: rgba(34, 211, 238, 0.52);
+  background:
+    linear-gradient(180deg, rgba(7, 10, 23, 0.96), rgba(2, 6, 23, 0.98)),
+    repeating-linear-gradient(
+      145deg,
+      rgba(217, 70, 239, 0.08) 0px,
+      rgba(217, 70, 239, 0.08) 8px,
+      rgba(34, 211, 238, 0.08) 8px,
+      rgba(34, 211, 238, 0.08) 16px
+    );
+}
+
+main > .glass-card:first-child {
+  backdrop-filter: blur(1.5px);
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+  appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0.5rem;
+  z-index: 2000;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: 0.75rem;
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+*:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: -0.125em;
+}
