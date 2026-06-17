@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Страница объекта — ModelHub</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/light.css">
+  <link rel="stylesheet" href="css/dark.css">
+  <link rel="stylesheet" href="css/violet.css">
+</head>
+
+<body data-theme="light">
+
+<nav class="custom-navbar model-page-navbar fixed-top" aria-label="Главное меню">
+  <div class="nav-wrapper">
+
+    <div class="nav-left">
+      <a href="index.html" class="logo">ModelHub</a>
+    </div>
+
+    <form class="search-box" action="search.html" method="GET" role="search">
+      <svg class="icon" aria-hidden="true">
+        <use href="sprite.svg#icon-search"></use>
+      </svg>
+      <input id="model-search" type="text" name="query" placeholder="Поиск моделей и датасетов">
+    </form>
+
+    <div class="nav-right" id="navActions"></div>
+
+  </div>
+</nav>
+
+<main id="main-content">
+  <section class="kaggle-layout" aria-labelledby="itemTitle">
+    <div id="pageError" aria-live="polite"></div>
+
+    <div id="pageContent" style="display:none;">
+
+      <div class="dataset-hero">
+        <div class="dataset-hero-top">
+
+          <div class="author-box">
+            <img id="authorAvatar" src="https://i.pravatar.cc/60" class="author-avatar" alt="Автор">
+            <div class="author-info">
+              <span class="author-label">АВТОР</span>
+              <strong id="itemAuthor">User</strong>
+            </div>
+          </div>
+
+          <div class="dataset-actions">
+            <button class="mini-action star-btn" type="button" onclick="incrementField('stars')">
+              <svg class="stat-icon">
+                <use href="sprite.svg#icon-star-outline"></use>
+              </svg>
+              <span id="itemStars">0</span>
+            </button>
+
+            <button id="downloadButton" class="download-btn login-style-btn" type="button" onclick="incrementField('downloads')">
+              <svg class="stat-icon">
+                <use href="sprite.svg#icon-download"></use>
+              </svg>
+              Download
+            </button>
+
+            <button class="icon-action fork-btn" type="button" onclick="incrementField('forks')">
+              <svg class="stat-icon">
+                <use href="sprite.svg#icon-fork"></use>
+              </svg>
+              Fork
+            </button>
+          </div>
+
+        </div>
+
+        <h1 class="dataset-title" id="itemTitle">Загрузка</h1>
+        <p class="dataset-subtitle" id="itemDescription"></p>
+      </div>
+
+      <div class="dataset-tabs nav" role="tablist">
+        <button class="active" data-bs-toggle="pill" data-bs-target="#overview" type="button">Описание</button>
+        <button data-bs-toggle="pill" data-bs-target="#usage" type="button">Код</button>
+        <button data-bs-toggle="pill" data-bs-target="#discussions" type="button">Обсуждение</button>
+        <button data-bs-toggle="pill" data-bs-target="#stats" type="button">Статистика</button>
+        <button data-bs-toggle="pill" data-bs-target="#repro" type="button">Воспроизводимость</button>
+      </div>
+
+      <div class="row g-4 mt-4 align-items-start">
+
+        <div class="col-lg-9">
+          <div class="tab-content">
+
+            <div class="tab-pane fade show active" id="overview">
+              <div class="dataset-main-card">
+                <div class="content-block mt-3">
+                  <div class="file-header">
+                    <div>
+                      <h3 id="fileName">object.csv</h3>
+                      <span id="fileSize">—</span>
+                    </div>
+                  </div>
+
+                  <div class="table-responsive mt-3">
+                    <table class="table data-table mb-0">
+                      <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Параметр</th>
+                        <th>Значение</th>
+                        <th>Описание</th>
+                      </tr>
+                      </thead>
+                      <tbody id="infoTableBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="usage">
+              <div class="dataset-main-card">
+                <h2>Пример кода</h2>
+                <pre class="bg-dark text-white p-4 rounded"><code id="usageCode"></code></pre>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="discussions">
+              <div class="dataset-main-card">
+                <h2>Обсуждение</h2>
+
+                <div id="discussionsList"></div>
+
+                <form class="mt-4" onsubmit="addDiscussion(event)">
+                  <label class="form-label fw-semibold" for="discussionText">
+                    Добавить комментарий
+                  </label>
+
+                  <textarea
+                          class="form-control mb-3"
+                          rows="3"
+                          id="discussionText"
+                          placeholder="Напишите комментарий"
+                  ></textarea>
+
+                  <button type="submit" class="download-btn">
+                    Отправить
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="stats">
+              <div class="dataset-main-card">
+                <h2>Статистика объекта</h2>
+
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th>Параметр</th>
+                    <th>Значение</th>
+                  </tr>
+                  </thead>
+                  <tbody id="statsBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="repro">
+              <div class="dataset-main-card">
+                <h2>Воспроизводимость</h2>
+                <ul class="list-group" id="reproList"></ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <aside class="dataset-sidebar">
+
+            <div class="sidebar-block">
+              <h3>Информация</h3>
+              <p>Тип: <strong id="sidebarType"></strong></p>
+              <p>Лицензия: <strong id="sidebarLicense"></strong></p>
+              <p>Версия: <strong id="sidebarVersion"></strong></p>
+              <p>Размер: <strong id="sidebarSize"></strong></p>
+            </div>
+
+            <div class="sidebar-block">
+              <h3>Теги</h3>
+              <div class="sidebar-tags">
+                <span id="sidebarTask"></span>
+                <span id="sidebarTechnology"></span>
+              </div>
+            </div>
+
+            <div class="sidebar-block">
+              <h3>Статистика</h3>
+
+              <p>
+                <svg class="stat-icon">
+                  <use href="sprite.svg#icon-download"></use>
+                </svg>
+                <strong id="itemDownloads">0</strong>
+              </p>
+
+              <p>
+                <svg class="stat-icon">
+                  <use href="sprite.svg#icon-star-outline"></use>
+                </svg>
+                <strong id="sidebarStars">0</strong>
+              </p>
+
+              <p>
+                <svg class="stat-icon">
+                  <use href="sprite.svg#icon-fork"></use>
+                </svg>
+                <strong id="itemForks">0</strong>
+              </p>
+            </div>
+
+          </aside>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<div class="theme-switcher-fixed">
+  <button class="theme-btn" data-theme="light" onclick="setTheme('light')" aria-label="Светлая тема">
+    <svg class="icon">
+      <use href="sprite.svg#theme-light"></use>
+    </svg>
+  </button>
+
+  <button class="theme-btn" data-theme="dark" onclick="setTheme('dark')" aria-label="Тёмная тема">
+    <svg class="icon">
+      <use href="sprite.svg#theme-dark"></use>
+    </svg>
+  </button>
+
+  <button class="theme-btn" data-theme="violet" onclick="setTheme('violet')" aria-label="Фиолетовая тема">
+    <svg class="icon">
+      <use href="sprite.svg#theme-violet"></use>
+    </svg>
+  </button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+<script src="js/theme.js"></script>
+
+<script>
+  const API_URL = 'http://localhost:3000';
+
+  let currentItem = null;
+  let currentType = 'model';
+  let currentCollection = 'models';
+
+  function updateNav() {
+    const token = localStorage.getItem('accessToken');
+    const userAvatar = localStorage.getItem('userAvatar') || 'https://i.pravatar.cc/100';
+    const nav = document.getElementById('navActions');
+
+    if (!nav) return;
+
+    if (token) {
+      nav.innerHTML = `
+        <a href="profile.html" class="avatar-link" title="Профиль">
+          <img src="${userAvatar}" class="nav-avatar-img" alt="Профиль">
+        </a>
+      `;
+    } else {
+      nav.innerHTML = `<a href="login.html" class="btn-login">Войти</a>`;
+    }
+  }
+
+  function getQueryParam(name) {
+    const query = new URLSearchParams(window.location.search);
+    return query.get(name);
+  }
+
+  function setText(id, value) {
+    const element = document.getElementById(id);
+    if (element) {
+      element.textContent = value || '—';
+    }
+  }
+
+  function setError(text) {
+    document.getElementById('pageError').innerHTML = `
+      <div class="alert alert-danger mt-5">${text}</div>
+    `;
+    document.getElementById('pageContent').style.display = 'none';
+  }
+
+  function showContent() {
+    document.getElementById('pageError').innerHTML = '';
+    document.getElementById('pageContent').style.display = 'block';
+  }
+
+  function getSourcesByUrlType() {
+    const urlType = getQueryParam('type');
+
+    if (urlType === 'dataset') {
+      return [{ type: 'dataset', collection: 'datasets' }];
+    }
+
+    if (urlType === 'model') {
+      return [{ type: 'model', collection: 'models' }];
+    }
+
+    return [
+      { type: 'model', collection: 'models' },
+      { type: 'dataset', collection: 'datasets' }
+    ];
+  }
+
+  async function findItemById(id) {
+    const sources = getSourcesByUrlType();
+
+    for (const source of sources) {
+      try {
+        const response = await axios.get(`${API_URL}/${source.collection}/${id}`);
+
+        return {
+          item: response.data,
+          type: source.type,
+          collection: source.collection
+        };
+      } catch (error) {
+        console.warn(`Объект не найден в ${source.collection}`);
+      }
+    }
+
+    return null;
+  }
+
+  async function loadAuthor(authorId) {
+    if (!authorId) {
+      setText('itemAuthor', currentItem.author || 'User');
+      document.getElementById('authorAvatar').src = 'https://i.pravatar.cc/60';
+      return;
+    }
+
+    try {
+      const response = await axios.get(`${API_URL}/users/${authorId}`);
+      const user = response.data;
+
+      setText('itemAuthor', user.name || currentItem.author || 'User');
+      document.getElementById('authorAvatar').src = user.avatar || 'https://i.pravatar.cc/60';
+    } catch (error) {
+      setText('itemAuthor', currentItem.author || 'User');
+      document.getElementById('authorAvatar').src = 'https://i.pravatar.cc/60';
+    }
+  }
+
+  async function loadDiscussions(id, type) {
+    try {
+      const response = await axios.get(`${API_URL}/discussions`, {
+        params: {
+          itemType: type,
+          itemId: id
+        }
+      });
+
+      return Array.isArray(response.data) ? response.data : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function getItemTitle(item) {
+    return item.title || item.name || 'Без названия';
+  }
+
+  function getItemTechnology(item, type) {
+    if (type === 'dataset') {
+      return item.format || item.framework || 'Data';
+    }
+
+    return item.framework || 'AI Model';
+  }
+
+  function getFileExtension(type) {
+    return type === 'dataset' ? 'csv' : 'py';
+  }
+
+  function renderItem(item, type, collection, discussions) {
+    currentItem = item;
+    currentType = type;
+    currentCollection = collection;
+
+    const title = getItemTitle(item);
+    const description = item.description || 'Описание отсутствует.';
+    const typeLabel = type === 'dataset' ? 'Dataset' : 'Model';
+    const technology = getItemTechnology(item, type);
+    const fileName = `${title.replaceAll(' ', '_').toLowerCase()}.${getFileExtension(type)}`;
+
+    document.title = `${title} — ModelHub`;
+    showContent();
+
+    setText('itemTitle', title);
+    setText('itemDescription', description);
+
+    setText('itemStars', item.stars || 0);
+    setText('sidebarStars', item.stars || 0);
+    setText('itemDownloads', item.downloads || 0);
+    setText('itemForks', item.forks || 0);
+
+    setText('sidebarType', typeLabel);
+    setText('sidebarTask', item.task || '—');
+    setText('sidebarTechnology', technology);
+    setText('sidebarLicense', item.license || '—');
+    setText('sidebarVersion', item.version || '1.0');
+    setText('sidebarSize', item.size || '—');
+
+    setText('fileName', fileName);
+    setText('fileSize', item.size || '—');
+
+    renderInfoTable(item, type, technology);
+    renderUsageCode(item, type, title, fileName);
+    renderStats(item);
+    renderReproducibility(item);
+    renderDiscussions(discussions);
+    loadAuthor(item.authorId);
+  }
+
+  function renderInfoTable(item, type, technology) {
+    const title = getItemTitle(item);
+    const typeLabel = type === 'dataset' ? 'Dataset' : 'Model';
+    const technologyLabel = type === 'dataset' ? 'Формат' : 'Фреймворк';
+    const technologyDescription = type === 'dataset'
+            ? 'Формат хранения данных'
+            : 'Библиотека или технология модели';
+
+    document.getElementById('infoTableBody').innerHTML = `
+      <tr>
+        <td>1</td>
+        <td>Название</td>
+        <td>${title}</td>
+        <td>Название объекта на платформе ModelHub</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Тип</td>
+        <td>${typeLabel}</td>
+        <td>Тип опубликованного объекта</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Задача</td>
+        <td>${item.task || '—'}</td>
+        <td>Область применения объекта</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>${technologyLabel}</td>
+        <td>${technology}</td>
+        <td>${technologyDescription}</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Лицензия</td>
+        <td>${item.license || '—'}</td>
+        <td>Правила использования объекта</td>
+      </tr>
+    `;
+  }
+
+  function renderUsageCode(item, type, title, fileName) {
+    const usageCode = document.getElementById('usageCode');
+
+    if (item.usageExample) {
+      usageCode.textContent = item.usageExample;
+      return;
+    }
+
+    if (type === 'dataset') {
+      usageCode.textContent =
+              `import pandas as pd
+
+df = pd.read_csv("${fileName}")
+print(df.head())`;
+      return;
+    }
+
+    usageCode.textContent =
+            `from modelhub import load_model
+
+model = load_model("${title}")
+result = model.predict(data)`;
+  }
+
+  function renderStats(item) {
+    document.getElementById('statsBody').innerHTML = `
+      <tr>
+        <td>Downloads</td>
+        <td>${item.downloads || 0}</td>
+      </tr>
+      <tr>
+        <td>Stars</td>
+        <td>${item.stars || 0}</td>
+      </tr>
+      <tr>
+        <td>Forks</td>
+        <td>${item.forks || 0}</td>
+      </tr>
+    `;
+  }
+
+  function renderReproducibility(item) {
+    const reproList = document.getElementById('reproList');
+    const repro = item.reproducibility || {};
+
+    if (!Object.keys(repro).length) {
+      reproList.innerHTML = `
+        <li class="list-group-item">Данные для воспроизводимости не указаны.</li>
+      `;
+      return;
+    }
+
+    reproList.innerHTML = Object.entries(repro)
+            .map(([key, value]) => `
+              <li class="list-group-item">
+                <strong>${key}:</strong> ${value}
+              </li>
+            `)
+            .join('');
+  }
+
+  function renderDiscussions(discussions) {
+    const list = document.getElementById('discussionsList');
+
+    if (!discussions.length) {
+      list.innerHTML = '<div class="text-muted">Комментариев пока нет</div>';
+      return;
+    }
+
+    list.innerHTML = discussions.map(comment => `
+      <div class="comment-box mb-3">
+        <strong>${comment.author || 'guest_user'}</strong>
+        <p class="mb-0 mt-2">${comment.text}</p>
+      </div>
+    `).join('');
+  }
+
+  async function loadItem() {
+    const id = getQueryParam('id');
+
+    if (!id) {
+      setError('Не передан id объекта.');
+      return;
+    }
+
+    const result = await findItemById(id);
+
+    if (!result) {
+      setError('Объект не найден.');
+      return;
+    }
+
+    const discussions = await loadDiscussions(id, result.type);
+    renderItem(result.item, result.type, result.collection, discussions);
+  }
+
+  async function incrementField(field) {
+    if (!currentItem) return;
+
+    const newValue = (Number(currentItem[field]) || 0) + 1;
+
+    try {
+      await axios.patch(`${API_URL}/${currentCollection}/${currentItem.id}`, {
+        [field]: newValue
+      });
+
+      currentItem[field] = newValue;
+
+      if (field === 'downloads') {
+        setText('itemDownloads', newValue);
+      }
+
+      if (field === 'stars') {
+        setText('itemStars', newValue);
+        setText('sidebarStars', newValue);
+      }
+
+      if (field === 'forks') {
+        setText('itemForks', newValue);
+      }
+
+      renderStats(currentItem);
+    } catch (error) {
+      console.error(error);
+      alert('Ошибка обновления');
+    }
+  }
+
+  async function addDiscussion(event) {
+    event.preventDefault();
+
+    const textarea = document.getElementById('discussionText');
+    const text = textarea.value.trim();
+
+    if (!text || !currentItem) return;
+
+    const userName = localStorage.getItem('userName') || 'guest_user';
+
+    try {
+      await axios.post(`${API_URL}/discussions`, {
+        itemType: currentType,
+        itemId: currentItem.id,
+        author: userName,
+        text
+      });
+
+      textarea.value = '';
+      loadItem();
+    } catch (error) {
+      console.error(error);
+      alert('Ошибка отправки комментария');
+    }
+  }
+
+  updateNav();
+  loadItem();
+</script>
+
+</body>
+</html>
