@@ -1,0 +1,268 @@
+:root {
+    --bg-main: #f0f2f5;
+    --bg-container: white;
+    --bg-scheme: #f8f9fa;
+    --text-main: #212529;
+    --text-muted: #6c757d;
+    --border-color: #dee2e6;
+    --link-color: #0a58ca;       
+    --link-hover: #003285;
+    --seat-bg: #e9ecef;
+    --seat-occupied-bg: #6c757d;
+    --stage-bg: #343a40;
+    --stage-text: #ffffff;
+}
+
+html[data-theme="dark"] {
+    --bg-main: #121212;
+    --bg-container: #1e1e1e;
+    --bg-scheme: #252525;
+    --text-main: #f8f9fa;
+    --text-muted: #a0aab2;
+    --border-color: #333333;
+    --link-color: #6ea8fe;   
+    --link-hover: #9ec5fe;
+    --seat-bg: #2d3238;
+    --seat-occupied-bg: #495057;
+    --stage-bg: #f8f9fa;
+    --stage-text: #212529;
+}
+
+body {
+    background-color: var(--bg-main) !important;
+    color: var(--text-main) !important;
+}
+
+.card {
+    background-color: var(--bg-container) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-main) !important;
+}
+
+.card-header {
+    background-color: var(--bg-container) !important;
+    border-bottom-color: var(--border-color) !important;
+}
+
+.form-control, .form-select {
+    background-color: var(--bg-container) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-color) !important;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted) !important;
+}
+
+.sidebar-link:not(.active) {
+    background-color: var(--bg-container) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-color) !important;
+}
+
+.sidebar-link:not(.active):hover {
+    background-color: var(--bg-main) !important;
+    color: var(--link-color) !important;
+}
+
+.sidebar-link.active {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: #ffffff !important;
+}
+
+.nav-tabs {
+    border-bottom-color: var(--border-color) !important;
+}
+
+.nav-link.user-profile-toggler:not(.active) {
+    color: var(--text-muted) !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+.nav-link.user-profile-toggler:not(.active):hover {
+    color: var(--link-color) !important;
+    border-color: var(--border-color) var(--border-color) transparent !important;
+    background-color: var(--bg-main) !important;
+}
+
+.nav-link.user-profile-toggler.active {
+    color: var(--link-color) !important;
+    background-color: var(--bg-container) !important;
+    border-color: var(--border-color) var(--border-color) var(--bg-container) !important; 
+}
+
+.stats-card {
+    border: none !important;
+    border-left: 4px solid #0d6efd !important;
+}
+.stats-card.border-success {
+    border-left: 4px solid #198754 !important;
+}
+.stats-card.border-warning {
+    border-left: 4px solid #ffc107 !important;
+}
+.table, 
+.table th, 
+.table td {
+    background-color: var(--bg-container) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-color) !important;
+}
+.table thead {
+    background-color: var(--bg-scheme) !important;
+    color: var(--text-main) !important;
+}
+.table-hover tbody tr:hover {
+    background-color: var(--bg-scheme) !important;
+    color: var(--text-main) !important;
+}
+.table td small.text-muted {
+    color: var(--text-muted) !important;
+}
+.form-label {
+    color: var(--text-main) !important;
+}
+
+/* index.html */
+.event-card img {
+    height: 200px;
+    object-fit: cover;
+}
+.hero-section {
+    background-size: cover;
+    color: white;
+    padding: 100px 0;
+}
+
+/* event.html */
+.event-header {
+    height: 400px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-top: 20px;
+}
+.seat {
+    width: 30px;
+    height: 30px;
+    background-color: var(--seat-bg);
+    border: 1px solid var(--border-color);
+    margin: 2px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+}
+.seat:hover { 
+    background-color: #0d6efd; 
+    color: white; 
+}
+.seat.occupied { 
+    background-color: var(--seat-occupied-bg); 
+    cursor: not-allowed; 
+}
+.seat.selected {
+    background-color: #0d6efd !important;
+    border-color: #0a58ca !important;
+    color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(13, 110, 253, 0.5);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.hall-scheme {
+    background: var(--bg-scheme) !important;
+    border: 1px solid var(--border-color);
+    padding: 40px;
+    border-radius: 10px;
+    overflow-x: auto;
+}
+.stage {
+    background: var(--stage-bg) !important;
+    color: var(--stage-text) !important;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 50px;
+    border-radius: 0 0 50% 50%;
+}
+.event_page_link {
+    color: var(--link-color) !important;
+}
+.free-label {
+    background-color: var(--seat-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-main) !important;
+}
+#current-page {
+    color: var(--text-muted) !important;
+}
+.breadcrumb-item::before {
+    color: var(--text-muted) !important;
+}
+.card-body h4 {
+    color: var(--text-main) !important;
+}
+
+.card-body .list-group-item {
+    background-color: transparent !important;
+    color: var(--text-main) !important;
+    border-bottom-color: var(--border-color) !important;
+}
+.card-body .list-group-item strong:not(.text-success) {
+    color: var(--text-main) !important;
+}
+.card-body p.text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* auth.html */
+body {
+    background: var(--bg-main) !important;
+}
+.auth-card {
+    max-width: 450px;
+    width: 100%;
+    border-radius: 15px;
+}
+.nav-pills .nav-link.active {
+    background-color: #0d6efd;
+}
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* user_profile.html */
+.profile-header {
+    background-color: var(--bg-container) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    padding: 40px 0;
+    margin-bottom: 30px;
+}
+.ticket-card {
+    transition: transform 0.2s;
+    border-left: 5px solid #0d6efd;
+}
+.ticket-card.returned {
+    border-left: 5px solid #dc3545;
+    opacity: 0.7;
+}
+.sidebar-link.active {
+    background-color: #0d6efd;
+    color: white;
+}
+.user-profile-toggler {
+    color: var(--link-color) !important;
+}
+
+/* org_profile.html */
+.stats-card {
+    border-left: 4px solid #0d6efd;
+}
+.table-v-align td {
+    vertical-align: middle;
+    color: var(--text-main) !important;
+}
+
+.table th {
+    color: var(--text-main) !important;
+    border-bottom-color: var(--border-color) !important;
+}
