@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DataMark - аннотация данных для ML</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="border-bottom sticky-top app-header">
+    <nav class="navbar navbar-expand-lg container">
+        <a class="navbar-brand fw-semibold" href="#" data-page-link="home">DataMark</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainMenu">
+            <ul class="navbar-nav ms-auto gap-lg-2">
+                <li class="nav-item"><a class="nav-link" href="#" data-page-link="projects">Проекты</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" data-page-link="task">Задача</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" data-page-link="workers">Рабочие</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" data-page-link="dashboard">Кабинет</a></li>
+            </ul>
+
+            <div class="d-flex gap-2 ms-lg-3">
+                <a class="btn btn-link login-link" href="#" data-page-link="login">Войти</a>
+                <a class="btn btn-primary" href="#" data-page-link="register">Регистрация</a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <section class="page is-active" data-page="home">
+        <div class="hero">
+            <div class="container py-5">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg-7">
+                        <p class="section-label mb-2">Платформа для ML-разметки</p>
+                        <h1 class="display-5 fw-bold">Подготовка данных, аннотация и контроль качества в одном интерфейсе</h1>
+                        <p class="lead muted-text mt-3">
+                            DataMark помогает создавать проекты разметки, назначать задания исполнителям и отслеживать качество датасетов.
+                        </p>
+                        <div class="d-flex flex-wrap gap-2 mt-4">
+                            <a class="btn btn-primary btn-lg" href="#" data-page-link="projects">Смотреть проекты</a>
+                            <a class="btn btn-outline-primary btn-lg" href="#" data-page-link="login">Войти в кабинет</a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5">
+                        <article class="status-panel p-4">
+                            <h2 class="h5 mb-3">Сводка проекта</h2>
+                            <ul class="list-unstyled m-0">
+                                <li class="d-flex justify-content-between py-2 border-bottom"><span>Изображения</span><strong>12 480</strong></li>
+                                <li class="d-flex justify-content-between py-2 border-bottom"><span>Размечено</span><strong>78%</strong></li>
+                                <li class="d-flex justify-content-between py-2 border-bottom"><span>Точность проверки</span><strong>96%</strong></li>
+                                <li class="d-flex justify-content-between py-2"><span>Активные рабочие</span><strong>34</strong></li>
+                            </ul>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page" data-page="login">
+        <div class="container narrow py-5">
+            <h1 class="h3 mb-4">Вход</h1>
+
+            <form class="card card-body shadow-sm">
+                <label class="form-label" for="loginEmail">Почта</label>
+                <input class="form-control mb-3" id="loginEmail" type="email" placeholder="user@datamark.ru">
+
+                <label class="form-label" for="loginPassword">Пароль</label>
+                <input class="form-control mb-3" id="loginPassword" type="password" placeholder="Введите пароль">
+
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">Войти</button>
+            </form>
+
+            <p class="mt-3 mb-0 muted-text">
+                Нет аккаунта?
+                <a href="#" data-page-link="register">Зарегистрироваться</a>
+            </p>
+        </div>
+    </section>
+
+    <section class="page" data-page="register">
+        <div class="container narrow py-5">
+            <h1 class="h3 mb-4">Регистрация</h1>
+
+            <form class="card card-body shadow-sm">
+                <label class="form-label" for="name">Имя</label>
+                <input class="form-control mb-3" id="name" type="text" placeholder="Владимир Быков">
+
+                <label class="form-label" for="email">Почта</label>
+                <input class="form-control mb-3" id="email" type="email" placeholder="name@example.com">
+
+                <label class="form-label" for="role">Роль</label>
+                <select class="form-select mb-3" id="role">
+                    <option>Менеджер проекта</option>
+                    <option>Аннотатор</option>
+                    <option>Валидатор</option>
+                </select>
+
+                <button class="btn btn-primary" type="button">Зарегистрироваться</button>
+            </form>
+
+            <p class="mt-3 mb-0 muted-text">
+                Уже есть аккаунт?
+                <a href="#" data-page-link="login">Войти</a>
+            </p>
+        </div>
+    </section>
+
+    <section class="page" data-page="dashboard">
+        <div class="container py-5">
+            <h1 class="h3 mb-4">Личный кабинет пользователя</h1>
+
+            <div class="row g-3">
+                <article class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h2 class="h5">Проекты аннотации</h2>
+                            <p class="display-6 mb-0">8</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h2 class="h5">Среднее качество</h2>
+                            <p class="display-6 mb-0">94%</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h2 class="h5">Задания в работе</h2>
+                            <p class="display-6 mb-0">126</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="page" data-page="projects">
+        <div class="container py-5">
+            <div class="d-flex flex-wrap justify-content-between gap-3 mb-4">
+                <div>
+                    <h1 class="h3 mb-1">Поиск проектов и заданий</h1>
+                    <p class="muted-text mb-0">Фильтрация по статусу, типу аннотации и исполнителю.</p>
+                </div>
+                <button class="btn btn-outline-primary" type="button" id="resetFilters">Сбросить фильтры</button>
+            </div>
+
+            <form class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <label class="form-label" for="statusFilter">Статус</label>
+                    <select class="form-select" id="statusFilter">
+                        <option value="all">Все</option>
+                        <option value="active">Активен</option>
+                        <option value="review">Проверка</option>
+                        <option value="done">Готов</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label" for="typeFilter">Тип аннотации</label>
+                    <select class="form-select" id="typeFilter">
+                        <option value="all">Все</option>
+                        <option value="image">Изображения</option>
+                        <option value="text">Текст</option>
+                        <option value="audio">Аудио</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label" for="workerFilter">Исполнитель</label>
+                    <select class="form-select" id="workerFilter">
+                        <option value="all">Все</option>
+                        <option value="anna">Анна</option>
+                        <option value="igor">Игорь</option>
+                        <option value="team">Команда</option>
+                    </select>
+                </div>
+            </form>
+
+            <div class="row g-3" id="projectList">
+                <article class="col-md-6 col-xl-4 project-card" data-status="active" data-type="image" data-worker="anna">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <span class="badge mb-2">Активен</span>
+                            <h2 class="h5">Разметка дорожных сцен</h2>
+                            <p class="muted-text">Bounding boxes для автомобилей, пешеходов и знаков.</p>
+                            <a class="btn btn-sm btn-outline-primary" href="#" data-page-link="task">Открыть задачу</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="col-md-6 col-xl-4 project-card" data-status="review" data-type="text" data-worker="igor">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <span class="badge mb-2">Проверка</span>
+                            <h2 class="h5">Классификация отзывов</h2>
+                            <p class="muted-text">Определение тональности и тематики пользовательских сообщений.</p>
+                            <a class="btn btn-sm btn-outline-primary" href="#" data-page-link="task">Открыть задачу</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="col-md-6 col-xl-4 project-card" data-status="done" data-type="audio" data-worker="team">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <span class="badge mb-2">Готов</span>
+                            <h2 class="h5">Транскрибация звонков</h2>
+                            <p class="muted-text">Сегментация аудио и проверка текстовых расшифровок.</p>
+                            <a class="btn btn-sm btn-outline-primary" href="#" data-page-link="task">Открыть задачу</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="page" data-page="task">
+        <div class="container py-5">
+            <h1 class="h3 mb-4">Страница задачи аннотации</h1>
+
+            <div class="row g-4">
+                <article class="col-lg-8">
+                    <div class="card card-body h-100">
+                        <h2 class="h5">Просмотрщик файла</h2>
+                        <div class="annotation-viewer my-3">
+                            <div class="annotation-box">car</div>
+                            <div class="annotation-box annotation-box-small">sign</div>
+                        </div>
+                        <button class="btn btn-primary align-self-start" type="button" data-bs-toggle="modal" data-bs-target="#instructionModal">
+                            Открыть инструкцию
+                        </button>
+                    </div>
+                </article>
+
+                <aside class="col-lg-4">
+                    <div class="card card-body h-100">
+                        <h2 class="h5">Инструменты</h2>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item px-0">Прямоугольная область</li>
+                            <li class="list-group-item px-0">Класс объекта</li>
+                            <li class="list-group-item px-0">Комментарий валидатора</li>
+                            <li class="list-group-item px-0">Статус проверки</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <section class="page" data-page="workers">
+        <div class="container py-5">
+            <h1 class="h3 mb-4">Управление рабочими</h1>
+
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                    <tr>
+                        <th scope="col">Исполнитель</th>
+                        <th scope="col">Роль</th>
+                        <th scope="col">Заданий</th>
+                        <th scope="col">Качество</th>
+                        <th scope="col">Действие</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Анна Смирнова</td>
+                        <td>Аннотатор</td>
+                        <td>42</td>
+                        <td>95%</td>
+                        <td><button class="btn btn-sm btn-outline-primary" type="button">Назначить</button></td>
+                    </tr>
+                    <tr>
+                        <td>Игорь Павлов</td>
+                        <td>Валидатор</td>
+                        <td>31</td>
+                        <td>97%</td>
+                        <td><button class="btn btn-sm btn-outline-primary" type="button">Назначить</button></td>
+                    </tr>
+                    <tr>
+                        <td>Команда OCR</td>
+                        <td>Группа</td>
+                        <td>118</td>
+                        <td>91%</td>
+                        <td><button class="btn btn-sm btn-outline-primary" type="button">Назначить</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="py-4 border-top">
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+        <span>DataMark, 2026</span>
+        <span class="muted-text">для любого использования</span>
+    </div>
+</footer>
+
+<div class="modal fade" id="instructionModal" tabindex="-1" aria-labelledby="instructionTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <article class="modal-content">
+            <header class="modal-header">
+                <h2 class="modal-title h5" id="instructionTitle">Инструкция к задаче</h2>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </header>
+            <div class="modal-body">
+                Выделите все видимые объекты нужного класса. Если объект перекрыт, отметьте только видимую часть.
+            </div>
+        </article>
+    </div>
+</div>
+
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <article class="modal-content">
+            <header class="modal-header">
+                <h2 class="modal-title h5" id="loginTitle">Вход выполнен</h2>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </header>
+            <div class="modal-body">
+                Это демонстрационное окно для ЛР1. Реальная авторизация появится в следующей лабораторной.
+            </div>
+        </article>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
