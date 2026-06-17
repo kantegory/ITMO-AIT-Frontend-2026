@@ -1,0 +1,135 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventPass - Личный кабинет</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  >
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">EventPass</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#profileNav" aria-controls="profileNav" aria-expanded="false" aria-label="Переключить навигацию">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="profileNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="profile.html">Личный кабинет</a></li>
+          </ul>
+          <a class="btn btn-outline-primary" href="auth.html" id="logoutBtn">Выйти</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="cabinet-page py-4 py-lg-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4 col-xl-3">
+          <aside class="cabinet-card p-4 h-100">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="avatar-circle" id="profileAvatar">--</div>
+              <div>
+                <h1 class="h5 m-0" id="profileName">Пользователь</h1>
+                <p class="text-secondary small m-0" id="profileEmail">example@mail.com</p>
+              </div>
+            </div>
+            <hr>
+            <ul class="list-unstyled m-0 small">
+              <li class="d-flex justify-content-between py-2"><span>Активные билеты</span><strong id="activeTicketsCount">0</strong></li>
+              <li class="d-flex justify-content-between py-2"><span>Заявки на возврат</span><strong id="refundRequestsCount">0</strong></li>
+              <li class="d-flex justify-content-between py-2"><span>Успешные покупки</span><strong id="successfulPurchasesCount">0</strong></li>
+            </ul>
+          </aside>
+        </div>
+
+        <div class="col-lg-8 col-xl-9">
+          <section class="cabinet-card p-3 p-sm-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+              <h2 class="h4 m-0">Личный кабинет пользователя</h2>
+              <span class="text-secondary small">Данные аккаунта загружены</span>
+            </div>
+
+            <ul class="nav nav-pills mb-4" id="cabinetTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tickets-tab" data-bs-toggle="pill" data-bs-target="#tickets-pane" type="button" role="tab" aria-controls="tickets-pane" aria-selected="true">
+                  Купленные билеты
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="returns-tab" data-bs-toggle="pill" data-bs-target="#returns-pane" type="button" role="tab" aria-controls="returns-pane" aria-selected="false">
+                  Возвраты
+                </button>
+              </li>
+            </ul>
+
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="tickets-pane" role="tabpanel" aria-labelledby="tickets-tab" tabindex="0">
+                <div class="row g-3" id="ticketsList"></div>
+              </div>
+
+              <div class="tab-pane fade" id="returns-pane" role="tabpanel" aria-labelledby="returns-tab" tabindex="0">
+                <div class="table-responsive">
+                  <table class="table align-middle">
+                    <thead>
+                      <tr>
+                        <th>Заказ</th>
+                        <th>Событие</th>
+                        <th>Дата заявки</th>
+                        <th>Сумма</th>
+                        <th>Статус</th>
+                      </tr>
+                    </thead>
+                    <tbody id="returnsTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal fade" id="refundModal" tabindex="-1" aria-labelledby="refundModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="refundForm" novalidate>
+          <div class="modal-header">
+            <h2 class="modal-title fs-5" id="refundModalLabel">Оформление возврата</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <div class="modal-body">
+            <p class="mb-2">Событие: <strong id="refundEventName">-</strong></p>
+            <p class="mb-3">Заказ: <strong id="refundTicketId">-</strong></p>
+            <label for="refundReason" class="form-label">Причина возврата</label>
+            <textarea class="form-control" id="refundReason" rows="3" required placeholder="Укажите причину"></textarea>
+            <div class="invalid-feedback">Пожалуйста, укажите причину возврата.</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-danger">Подтвердить возврат</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+  ></script>
+  <script src="JS/common.js"></script>
+  <script src="JS/profile.js"></script>
+</body>
+</html>
