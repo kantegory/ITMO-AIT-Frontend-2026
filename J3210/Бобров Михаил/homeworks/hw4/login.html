@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataPort – Вход</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header class="navbar bg-white border-bottom px-4 py-3">
+    <div class="brand">DataPort</div>
+
+    <nav class="ms-auto" aria-label="Навигация авторизации">
+        <a href="login.html" class="btn btn-outline-primary btn-sm me-2" aria-current="page">Вход</a>
+        <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
+    </nav>
+</header>
+
+<main class="container auth-wrapper d-flex align-items-center">
+    <div class="row w-100">
+
+        <div class="col-md-6 d-flex align-items-center">
+            <div class="left-panel">
+
+                <div class="left-title">
+                    AI Model & Dataset Hub
+                </div>
+
+                <div class="left-text">
+                    Платформа для обмена и публикации моделей машинного обучения и датасетов.
+                    Загружай, находи, обсуждай и переиспользуй AI-решения.
+                </div>
+
+                <div class="left-badges">
+                    <div class="badge-soft">Models</div>
+                    <div class="badge-soft">Datasets</div>
+                    <div class="badge-soft">Reproducibility</div>
+                    <div class="badge-soft">Community</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-6 d-flex justify-content-center">
+            <div class="card auth-card glass p-4">
+
+                <form aria-labelledby="loginTitle">
+                    <h4 class="mb-3 fw-semibold" id="loginTitle">Вход</h4>
+                    <div class="mb-3">
+                        <label class="form-label" for="loginEmail">Email</label>
+                        <input type="email" class="form-control" id="loginEmail" autocomplete="email" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="loginPassword">Пароль</label>
+                        <input type="password" class="form-control" id="loginPassword" autocomplete="current-password" required>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Запомнить</label>
+                        </div>
+
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#forgotModal">
+                            Забыли пароль?
+                        </a>
+                    </div>
+
+                    <button class="btn btn-primary w-100" type="submit">Войти</button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<div class="modal fade" id="forgotModal" tabindex="-1" aria-labelledby="forgotTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-3">
+
+            <h5 id="forgotTitle">Восстановление пароля</h5>
+            <label class="form-label visually-hidden" for="forgotEmail">Email для восстановления пароля</label>
+            <input class="form-control mt-2" id="forgotEmail" type="email" placeholder="Email" autocomplete="email">
+
+            <div class="mt-3 d-flex justify-content-end gap-2">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Отмена</button>
+                <button class="btn btn-primary" type="button">Отправить</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="./src/main.js"></script>
+
+</body>
+</html>
