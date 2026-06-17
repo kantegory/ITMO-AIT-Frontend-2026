@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог курсов — MokiichukKnowledge</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="style.css?v=3" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><i class="bi bi-mortarboard-fill"></i> MokiichukKnowledge</a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto ms-3">
+          <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+          <li class="nav-item"><a class="nav-link active" href="search.html">Каталог</a></li>
+          <li class="nav-item"><a class="nav-link" href="teacher.html">Преподавателям</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <a href="login.html" class="btn btn-outline-primary btn-sm">Войти</a>
+          <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mt-navbar-lg"></div>
+
+  <section class="py-4 bg-white">
+    <div class="container">
+      <h2 class="section-title mb-3">Каталог курсов</h2>
+      <div class="row g-3 align-items-center">
+        <div class="col-lg-8">
+          <div class="search-bar">
+            <i class="bi bi-search"></i>
+            <input type="text" class="form-control" id="courseSearch" placeholder="Поиск по названию курса...">
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="d-flex gap-2 align-items-center justify-content-lg-end">
+            <span class="text-muted" class="search-count">Найдено: <strong id="courseCount">8</strong> курсов</span>
+            <div class="dropdown">
+              <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown">
+                Сортировка
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item sort-option" href="#" data-sort="popular">По популярности</a></li>
+                <li><a class="dropdown-item sort-option" href="#" data-sort="rating">По рейтингу</a></li>
+                <li><a class="dropdown-item sort-option" href="#" data-sort="price-asc">Сначала дешевые</a></li>
+                <li><a class="dropdown-item sort-option" href="#" data-sort="price-desc">Сначала дорогие</a></li>
+                <li><a class="dropdown-item sort-option" href="#" data-sort="new">Новинки</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-reduced">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-3">
+          <div class="filter-panel">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-bold mb-0">Фильтры</h5>
+              <button class="btn btn-sm btn-link text-decoration-none p-0" id="resetFilters">Сбросить</button>
+            </div>
+
+            <h6><i class="bi bi-bookmark me-2"></i>Предмет</h6>
+            <div class="form-check mb-1">
+              <input class="form-check-input filter-check filter-subject" type="checkbox" value="programming" id="fProg">
+              <label class="form-check-label" for="fProg">Программирование</label>
+            </div>
+            <div class="form-check mb-1">
+              <input class="form-check-input filter-check filter-subject" type="checkbox" value="design" id="fDesign">
+              <label class="form-check-label" for="fDesign">Дизайн</label>
+            </div>
+            <div class="form-check mb-1">
+              <input class="form-check-input filter-check filter-subject" type="checkbox" value="marketing" id="fMark">
+              <label class="form-check-label" for="fMark">Маркетинг</label>
+            </div>
+            <div class="form-check mb-1">
+              <input class="form-check-input filter-check filter-subject" type="checkbox" value="analytics" id="fAnal">
+              <label class="form-check-label" for="fAnal">Аналитика</label>
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input filter-check filter-subject" type="checkbox" value="languages" id="fLang">
+              <label class="form-check-label" for="fLang">Языки</label>
+            </div>
+
+            <h6><i class="bi bi-bar-chart-steps me-2"></i>Уровень</h6>
+            <div class="form-check mb-1">
+              <input class="form-check-input filter-check filter-level" type="checkbox" value="beginner" id="fBeg">
+              <label class="form-check-label" for="fBeg">Начальный</label>
+            </div>
+            <div class="form-check mb-1">
+              <input class="form-check-input filter-check filter-level" type="checkbox" value="intermediate" id="fInt">
+              <label class="form-check-label" for="fInt">Средний</label>
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input filter-check filter-level" type="checkbox" value="advanced" id="fAdv">
+              <label class="form-check-label" for="fAdv">Продвинутый</label>
+            </div>
+
+            <h6><i class="bi bi-currency-dollar me-2"></i>Цена до: <span id="priceValue">10 000+</span> ₽</h6>
+            <input type="range" class="form-range" id="priceRange" min="0" max="10000" step="500" value="10000">
+            <div class="d-flex justify-content-between" class="text-filter-hint">
+              <span>Бесплатно</span>
+              <span>10 000+ ₽</span>
+            </div>
+          </div>
+
+          <button class="btn btn-outline-primary w-100 d-lg-none mt-3" data-bs-toggle="collapse" data-bs-target="#mobileFilters">
+            <i class="bi bi-funnel me-2"></i>Показать фильтры
+          </button>
+        </div>
+
+        <div class="col-lg-9">
+          <div class="row g-4">
+
+            <div class="col-sm-6 col-xl-4 course-card-item" data-title="Python для начинающих" data-subject="programming" data-level="beginner" data-price="0">
+              <a href="course.html" class="text-decoration-none">
+                <div class="card card-custom h-100">
+                  <div class="course-img-placeholder bg-gradient-1"><i class="bi bi-code-slash"></i></div>
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge-level badge-beginner">Начальный</span>
+                      <div class="rating"><i class="bi bi-star-fill"></i> 4.8</div>
+                    </div>
+                    <h6 class="card-title">Python для начинающих</h6>
+                    <p class="card-text">Основы программирования на Python с нуля</p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                      <span class="price-free">Бесплатно</span>
+                      <small class="text-muted"><i class="bi bi-people me-1"></i>2.4K</small>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-sm-6 col-xl-4 course-card-item" data-title="UX/UI Дизайн в Figma" data-subject="design" data-level="intermediate" data-price="2990">
+              <a href="course.html" class="text-decoration-none">
+                <div class="card card-custom h-100">
+                  <div class="course-img-placeholder bg-gradient-2"><i class="bi bi-palette"></i></div>
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge-level badge-intermediate">Средний</span>
+                      <div class="rating"><i class="bi bi-star-fill"></i> 4.9</div>
+                    </div>
+                    <h6 class="card-title">UX/UI Дизайн в Figma</h6>
+                    <p class="card-text">Проектирование интерфейсов от идеи до прототипа</p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                      <span class="price-tag">2 990 ₽</span>
+                      <small class="text-muted"><i class="bi bi-people me-1"></i>1.8K</small>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-sm-6 col-xl-4 course-card-item" data-title="Аналитика данных SQL" data-subject="analytics" data-level="beginner" data-price="1490">
+              <a href="course.html" class="text-decoration-none">
+                <div class="card card-custom h-100">
+                  <div class="course-img-placeholder bg-gradient-3"><i class="bi bi-bar-chart-line"></i></div>
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge-level badge-beginner">Начальный</span>
+                      <div class="rating"><i class="bi bi-star-fill"></i> 4.7</div>
+                    </div>
+                    <h6 class="card-title">Аналитика данных SQL</h6>
+                    <p class="card-text">SQL, Excel и визуализация для начинающих аналитиков</p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                      <span class="price-tag">1 490 ₽</span>
+                      <small class="text-muted"><i class="bi bi-people me-1"></i>980</small>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-sm-6 col-xl-4 course-card-item" data-title="Digital-маркетинг PRO" data-subject="marketing" data-level="advanced" data-price="4990">
+              <a href="course.html" class="text-decoration-none">
+                <div class="card card-custom h-100">
+                  <div class="course-img-placeholder bg-gradient-4"><i class="bi bi-megaphone"></i></div>
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge-level badge-advanced">Продвинутый</span>
+                      <div class="rating"><i class="bi bi-star-fill"></i> 4.6</div>
+                    </div>
+                    <h6 class="card-title">Digital-маркетинг PRO</h6>
+                    <p class="card-text">Стратегии продвижения и таргетированная реклама</p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                      <span class="price-tag">4 990 ₽</span>
+                      <small class="text-muted"><i class="bi bi-people me-1"></i>650</small>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-sm-6 col-xl-4 course-card-item" data-title="JavaScript продвинутый" data-subject="programming" data-level="intermediate" data-price="3490">
+              <a href="course.html" class="text-decoration-none">
+                <div class="card card-custom h-100">
+                  <div class="course-img-placeholder bg-gradient-5"><i class="bi bi-filetype-js"></i></div>
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge-level badge-intermediate">Средний</span>
+                      <div class="rating"><i class="bi bi-star-fill"></i> 4.8</div>
+                    </div>
+                    <h6 class="card-title">JavaScript продвинутый</h6>
+                    <p class="card-text">ES6+, асинхронность, паттерны и фреймворки</p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                      <span class="price-tag">3 490 ₽</span>
+                      <small class="text-muted"><i class="bi bi-people me-1"></i>1.2K</small>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-sm-6 col-xl-4 course-card-item" data-title="Английский B2" data-subject="languages" data-level="intermediate" data-price="1990">
+              <a href="course.html" class="text-decoration-none">
+                <div class="card card-custom h-100">
+                  <div class="course-img-placeholder bg-gradient-6"><i class="bi bi-translate"></i></div>
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge-level badge-intermediate">Средний</span>
+                      <div class="rating"><i class="bi bi-star-fill"></i> 4.5</div>
+                    </div>
+                    <h6 class="card-title">Английский B2</h6>
+                    <p class="card-text">Подготовка к уровню Upper-Intermediate</p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                      <span class="price-tag">1 990 ₽</span>
+                      <small class="text-muted"><i class="bi bi-people me-1"></i>3.1K</small>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-sm-6 col-xl-4 course-card-item" data-title="Веб-разработка с нуля" data-subject="programming" data-level="beginner" data-price="0">
+              <a href="course.html" class="text-decoration-none">
+                <div class="card card-custom h-100">
+                  <div class="course-img-placeholder bg-gradient-7"><i class="bi bi-globe2"></i></div>
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge-level badge-beginner">Начальный</span>
+                      <div class="rating"><i class="bi bi-star-fill"></i> 4.9</div>
+                    </div>
+                    <h6 class="card-title">Веб-разработка с нуля</h6>
+                    <p class="card-text">HTML, CSS и JavaScript — ваш первый сайт</p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                      <span class="price-free">Бесплатно</span>
+                      <small class="text-muted"><i class="bi bi-people me-1"></i>5.6K</small>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-sm-6 col-xl-4 course-card-item" data-title="Графический дизайн" data-subject="design" data-level="advanced" data-price="5990">
+              <a href="course.html" class="text-decoration-none">
+                <div class="card card-custom h-100">
+                  <div class="course-img-placeholder bg-gradient-8"><i class="bi bi-vector-pen"></i></div>
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge-level badge-advanced">Продвинутый</span>
+                      <div class="rating"><i class="bi bi-star-fill"></i> 4.7</div>
+                    </div>
+                    <h6 class="card-title">Графический дизайн</h6>
+                    <p class="card-text">Photoshop, Illustrator и брендинг</p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                      <span class="price-tag">5 990 ₽</span>
+                      <small class="text-muted"><i class="bi bi-people me-1"></i>420</small>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <h5 class="fw-bold mb-3"><i class="bi bi-mortarboard-fill me-2"></i>MokiichukKnowledge</h5>
+          <p class="footer-description">Современная платформа для онлайн-обучения.</p>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h6>Платформа</h6>
+          <div class="d-flex flex-column gap-2">
+            <a href="search.html">Каталог</a>
+            <a href="teacher.html">Преподавателям</a>
+          </div>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h6>Аккаунт</h6>
+          <div class="d-flex flex-column gap-2">
+            <a href="login.html">Войти</a>
+            <a href="register.html">Регистрация</a>
+            <a href="profile.html">Профиль</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="main.js?v=3"></script>
+</body>
+</html>
