@@ -1,0 +1,189 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "admin@ml.pipe",
+      "password": "admin123",
+      "name": "admin",
+      "role": "Admin"
+    },
+    {
+      "id": "2",
+      "email": "user@ml.pipe",
+      "password": "user123",
+      "name": "ml_engineer",
+      "role": "ML Engineer"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "1",
+      "name": "fraud-detection",
+      "date": "2025-03-01",
+      "tags": "xgboost,prod",
+      "runs": 42,
+      "best": "acc=0.947",
+      "status": "active",
+      "owner": "admin"
+    },
+    {
+      "id": "2",
+      "name": "churn-model",
+      "date": "2025-02-14",
+      "tags": "pytorch,classification",
+      "runs": 31,
+      "best": "f1=0.881",
+      "status": "active",
+      "owner": "admin"
+    },
+    {
+      "id": "3",
+      "name": "recommender",
+      "date": "2025-01-20",
+      "tags": "tensorflow,embedding",
+      "runs": 19,
+      "best": "ndcg=0.732",
+      "status": "active",
+      "owner": "ml_engineer"
+    },
+    {
+      "id": "4",
+      "name": "nlp-classifier",
+      "date": "2024-12-05",
+      "tags": "bert,nlp",
+      "runs": 8,
+      "best": "loss=0.214",
+      "status": "archived",
+      "owner": "ml_engineer"
+    }
+  ],
+  "models": [
+    {
+      "id": "1",
+      "name": "fraud-detector",
+      "ver": "v3.1",
+      "fw": "XGBoost",
+      "metrics": "acc=0.947,f1=0.931",
+      "stage": "prod",
+      "deployed": true,
+      "expId": 1,
+      "owner": "admin"
+    },
+    {
+      "id": "2",
+      "name": "churn-predictor",
+      "ver": "v1.4",
+      "fw": "PyTorch",
+      "metrics": "f1=0.881,roc=0.903",
+      "stage": "staging",
+      "deployed": false,
+      "expId": 2,
+      "owner": "admin"
+    },
+    {
+      "id": "3",
+      "name": "nlp-intent",
+      "ver": "v2.0",
+      "fw": "HuggingFace",
+      "metrics": "acc=0.923,f1=0.911",
+      "stage": "prod",
+      "deployed": true,
+      "expId": 4,
+      "owner": "ml_engineer"
+    },
+    {
+      "id": "4",
+      "name": "recommender-cf",
+      "ver": "v0.9",
+      "fw": "TensorFlow",
+      "metrics": "ndcg=0.732,hr=0.61",
+      "stage": "dev",
+      "deployed": false,
+      "expId": 3,
+      "owner": "ml_engineer"
+    },
+    {
+      "name": "12",
+      "ver": "v1.0",
+      "fw": "123",
+      "stage": "dev",
+      "metrics": "",
+      "deployed": false,
+      "owner": "admin",
+      "id": "RMFO_Q5"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "1",
+      "name": "model.pkl",
+      "type": "model",
+      "size": "4.2 MB",
+      "expId": 1,
+      "date": "2025-03-02",
+      "owner": "admin"
+    },
+    {
+      "id": "2",
+      "name": "confusion_matrix.png",
+      "type": "plot",
+      "size": "128 KB",
+      "expId": 1,
+      "date": "2025-03-02",
+      "owner": "admin"
+    },
+    {
+      "id": "3",
+      "name": "feature_importance.json",
+      "type": "config",
+      "size": "12 KB",
+      "expId": 1,
+      "date": "2025-03-02",
+      "owner": "admin"
+    },
+    {
+      "id": "4",
+      "name": "train_dataset.csv",
+      "type": "dataset",
+      "size": "82 MB",
+      "expId": 2,
+      "date": "2025-02-15",
+      "owner": "admin"
+    },
+    {
+      "id": "5",
+      "name": "checkpoint.pt",
+      "type": "model",
+      "size": "312 MB",
+      "expId": 2,
+      "date": "2025-02-18",
+      "owner": "admin"
+    },
+    {
+      "id": "6",
+      "name": "emb_weights.npy",
+      "type": "model",
+      "size": "56 MB",
+      "expId": 3,
+      "date": "2025-01-22",
+      "owner": "ml_engineer"
+    },
+    {
+      "id": "7",
+      "name": "bert_config.json",
+      "type": "config",
+      "size": "4 KB",
+      "expId": 4,
+      "date": "2024-12-06",
+      "owner": "ml_engineer"
+    }
+  ],
+  "sessions": [
+    {
+      "token": "mlp_nyxcsp9xwsmp77goku",
+      "userId": "2",
+      "createdAt": "2026-05-15T17:42:47.406Z"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
