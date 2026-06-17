@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>LabelFlow – Дашборд</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-4">
+    <div class="container">
+
+        <a class="brand-logo d-flex align-items-center gap-2 text-decoration-none text-dark fs-5 fw-bold" href="dashboard.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lf-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3h18v18H3z"></path>
+                <path d="M8 8h8v8H8z"></path>
+            </svg>
+            LabelFlow
+        </a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center fw-medium">
+
+                <li class="nav-item"><a class="nav-link px-3 active" href="dashboard.html">Проекты</a></li>
+                <li class="nav-item"><a class="nav-link px-3" href="search.html">Поиск</a></li>
+                <li class="nav-item"><a class="nav-link px-3" href="workers.html">Команда</a></li>
+
+                <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+                    <a href="profile.html" class="d-flex align-items-center text-decoration-none">
+                        <div class="rounded-circle text-white d-flex align-items-center justify-content-center shadow-sm"
+                             style="width: 38px; height: 38px; background-color: var(--lf-primary); font-size: 0.95rem;">
+                            ИИ
+                        </div>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container my-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 fw-bold mb-1">Обзор рабочего пространства</h1>
+            <p class="text-muted mb-0">Управляйте вашими датасетами и задачами разметки.</p>
+        </div>
+        <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#newProjectModal">
+            + Создать проект
+        </button>
+    </div>
+
+    <div class="row mb-5 g-3">
+        <div class="col-md-4">
+            <div class="card h-100 border-0">
+                <div class="card-body">
+                    <p class="text-muted small fw-medium mb-1 text-uppercase">Активные проекты</p>
+                    <h2 class="display-6 fw-bold mb-0">3</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0">
+                <div class="card-body">
+                    <p class="text-muted small fw-medium mb-1 text-uppercase">Размечено файлов</p>
+                    <h2 class="display-6 fw-bold mb-0">1,248</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0">
+                <div class="card-body">
+                    <p class="text-muted small fw-medium mb-1 text-uppercase">Среднее качество</p>
+                    <div class="d-flex align-items-center gap-2">
+                        <h2 class="display-6 fw-bold mb-0">96.4%</h2>
+                        <span class="badge" style="background-color: var(--lf-accent);">Отлично</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="fw-bold mb-3">Ваши проекты</h4>
+    <div class="row g-4" id="projectsContainer">
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title fw-bold mb-0">Autonomous Driving</h5>
+                        <span class="badge bg-primary text-white">Bounding Box</span>
+                    </div>
+                    <p class="text-muted small mb-3">850 изображений • Последняя активность 2ч назад</p>
+                    <div class="progress mb-3" style="height: 6px;">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 75%"></div>
+                    </div>
+                    <a href="annotation.html" class="btn btn-outline-primary btn-sm w-100">Продолжить разметку</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title fw-bold mb-0">Medical MRI Scans</h5>
+                        <span class="badge" style="background-color: #8b5cf6;">Segmentation</span>
+                    </div>
+                    <p class="text-muted small mb-3">320 изображений • Последняя активность вчера</p>
+                    <div class="progress mb-3" style="height: 6px;">
+                        <div class="progress-bar" role="progressbar" style="width: 40%; background-color: #8b5cf6;"></div>
+                    </div>
+                    <a href="annotation.html" class="btn btn-outline-primary btn-sm w-100">Продолжить разметку</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<div class="modal fade" id="newProjectModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: var(--lf-radius-lg);">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Новый проект разметки</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="newProjectForm">
+                    <div class="mb-3">
+                        <label for="projectName" class="form-label">Название проекта</label>
+                        <input type="text" class="form-control" id="projectName" placeholder="Например: Дефекты на производстве" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="projectType" class="form-label">Тип аннотации</label>
+                        <select class="form-select" id="projectType" required>
+                            <option value="bbox">Bounding Box (Рамки)</option>
+                            <option value="polygon">Polygon (Сегментация)</option>
+                            <option value="classification">Classification (Классификация)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Создать проект</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

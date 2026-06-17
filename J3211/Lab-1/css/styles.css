@@ -1,0 +1,97 @@
+body {
+    font-family: var(--lf-font-family), serif;
+    background-color: var(--lf-bg);
+    color: var(--lf-text-main);
+    -webkit-font-smoothing: antialiased;
+    overflow-y: scroll;
+}
+
+.navbar {
+    background-color: var(--lf-surface) !important;
+    border-bottom: 1px solid var(--lf-border);
+    box-shadow: var(--lf-shadow-sm);
+}
+
+.brand-logo {
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+    color: var(--lf-text-main);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.brand-logo .brand-icon {
+    color: var(--lf-primary);
+}
+.brand-logo:hover {
+    color: var(--lf-text-main);
+}
+
+.card {
+    background-color: var(--lf-surface);
+    border: 1px solid var(--lf-border);
+    border-radius: var(--lf-radius-lg);
+    box-shadow: var(--lf-shadow-md);
+}
+
+.card.border-0 {
+    border: 1px solid transparent !important;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.card.border-0:hover {
+    border-color: var(--lf-border) !important;
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background-color: var(--lf-primary);
+    border-color: var(--lf-primary);
+    border-radius: var(--lf-radius-md);
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--lf-primary-hover);
+    border-color: var(--lf-primary-hover);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.btn-outline-primary {
+    color: var(--lf-primary);
+    border: 1px solid var(--lf-primary);
+    border-radius: var(--lf-radius-md);
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--lf-primary);
+    color: #fff;
+}
+
+.form-control {
+    border-radius: var(--lf-radius-md);
+    border-color: var(--lf-border);
+    padding: 0.6rem 1rem;
+}
+.form-control:focus {
+    border-color: var(--lf-primary);
+    box-shadow: 0 0 0 0.25rem rgba(79, 70, 229, 0.25);
+}
+.form-label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--lf-text-main);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+main {
+    animation: fadeIn 0.6s ease-out forwards;
+}
