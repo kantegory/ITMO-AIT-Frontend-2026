@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI Hub — платформа для поиска, обмена и обсуждения ML-моделей и датасетов.">
+  <title>AI Hub — Модели и датасеты</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+  <script src="assets/js/theme.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Перейти к основному содержимому</a>
+
+  <nav class="navbar navbar-expand-lg sticky-top" aria-label="Основная навигация">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#cpu"></use></svg> AI Hub</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-expanded="false" aria-label="Открыть меню навигации">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Главная</a></li>
+          <li class="nav-item"><a class="nav-link" href="pages/data/search.html#models">Модели</a></li>
+          <li class="nav-item"><a class="nav-link" href="pages/data/search.html#datasets">Датасеты</a></li>
+        </ul>
+        <div id="navbarActions"></div>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <section class="hero text-center">
+      <div class="container">
+        <h1>Платформа для ML-моделей и датасетов</h1>
+        <p class="lead col-lg-8 mx-auto">Находите, делитесь и обсуждайте модели машинного обучения и наборы данных.</p>
+        <div class="d-flex justify-content-center gap-3 mt-4">
+          <a href="pages/data/search.html#models" class="btn btn-accent">Смотреть модели</a>
+          <a href="pages/data/search.html#datasets" class="btn btn-outline-themed">Смотреть датасеты</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Популярные модели -->
+    <section class="py-5">
+      <div class="container">
+        <h2 class="h4 mb-4">Популярные модели</h2>
+        <div class="row g-4" id="popularModelsGrid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- Популярные датасеты -->
+    <section class="py-5" style="background-color: var(--bg-secondary);">
+      <div class="container">
+        <h2 class="h4 mb-4">Популярные датасеты</h2>
+        <div class="row g-4" id="popularDatasetsGrid" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="h6"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#cpu"></use></svg> AI Hub</p>
+          <p class="small text-muted">Платформа для обмена ML-моделями и датасетами.</p>
+        </div>
+        <div class="col-md-3">
+          <p class="h6">Разделы</p>
+          <ul class="list-unstyled small">
+            <li><a href="pages/data/search.html#models" class="text-muted">Модели</a></li>
+            <li><a href="pages/data/search.html#datasets" class="text-muted">Датасеты</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 text-md-end">
+          <small class="text-muted">&copy; 2026 AI Hub</small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/index.js"></script>
+  <script>window.APP_PATHS = { home: 'index.html', login: 'pages/auth/login.html', register: 'pages/auth/register.html', dashboard: 'pages/dashboard/dashboard.html' }; window.SPRITE_PATH = 'assets/icons/sprite.svg';</script>
+  <script src="assets/js/ui.js"></script>
+</body>
+</html>

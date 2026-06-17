@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Датасет squad/squad-v2 — описание, примеры использования и файлы на AI Hub.">
+  <title>squad/squad-v2 — AI Hub</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/css/style.css" rel="stylesheet">
+  <script src="../../assets/js/theme.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Перейти к основному содержимому</a>
+
+  <nav class="navbar navbar-expand-lg sticky-top" aria-label="Основная навигация">
+    <div class="container">
+      <a class="navbar-brand" href="../../index.html"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#cpu"></use></svg> AI Hub</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-expanded="false" aria-label="Открыть меню навигации">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="../../index.html">Главная</a></li>
+          <li class="nav-item"><a class="nav-link" href="search.html#models">Модели</a></li>
+          <li class="nav-item"><a class="nav-link" href="search.html#datasets">Датасеты</a></li>
+        </ul>
+        <div id="navbarActions"></div>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content" class="py-4">
+    <div class="container">
+      <header class="mb-4">
+        <div class="d-flex align-items-start justify-content-between flex-wrap gap-3">
+          <div>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb small mb-2">
+                <li class="breadcrumb-item"><a href="search.html#datasets">Датасеты</a></li>
+                <li class="breadcrumb-item active">squad/squad-v2</li>
+              </ol>
+            </nav>
+            <h1 class="h3 mb-1">squad/squad-v2</h1>
+            <p class="text-muted mb-2">Автор: <a href="#">squad</a></p>
+            <div class="d-flex flex-wrap gap-1">
+              <span class="badge badge-task">вопрос-ответ</span>
+              <span class="badge badge-license">CC BY-SA 4.0</span>
+            </div>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="stat-btn" id="starBtn" aria-label="Поставить звезду, сейчас 2,814">
+              <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#star"></use></svg> <span class="visually-hidden">Звёзды:</span> <span class="star-count">2,814</span>
+            </button>
+            <button class="stat-btn" id="forkBtn" aria-label="Форкнуть, сейчас 387">
+              <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#diagram-2"></use></svg> <span class="visually-hidden">Форки:</span> <span class="fork-count">387</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <ul class="nav nav-tabs mb-4" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="tab-description-btn" data-bs-toggle="tab" data-bs-target="#tab-description" type="button" role="tab" aria-selected="true" aria-controls="tab-description">Описание</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab-usage-btn" data-bs-toggle="tab" data-bs-target="#tab-usage" type="button" role="tab" aria-selected="false" aria-controls="tab-usage">Примеры</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab-files-btn" data-bs-toggle="tab" data-bs-target="#tab-files" type="button" role="tab" aria-selected="false" aria-controls="tab-files">Файлы</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab-discussions-btn" data-bs-toggle="tab" data-bs-target="#tab-discussions" type="button" role="tab" aria-selected="false" aria-controls="tab-discussions">Обсуждения</button>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="tab-description" role="tabpanel" aria-labelledby="tab-description-btn">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="h5">SQuAD v2.0</h2>
+              <p>Stanford Question Answering Dataset — набор данных для задачи извлечения ответов из текста. Содержит более 100 000 пар вопрос-ответ на основе статей из Википедии. Версия 2.0 также включает вопросы без ответа.</p>
+              <h3 class="h6 mt-3">Структура</h3>
+              <ul>
+                <li>Контекст — абзац из Википедии</li>
+                <li>Вопрос по содержимому абзаца</li>
+                <li>Ответ — фрагмент текста или пустой (нет ответа)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="tab-usage" role="tabpanel" aria-labelledby="tab-usage-btn">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="h5 mb-3">Пример загрузки</h2>
+              <div class="code-block">
+<pre>from datasets import load_dataset
+
+dataset = load_dataset("squad_v2")
+print(dataset["train"][0])</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="tab-files" role="tabpanel" aria-labelledby="tab-files-btn">
+          <div class="card">
+            <div class="card-body p-0">
+              <div class="file-item">
+                <div>
+                  <svg class="icon text-muted me-2" aria-hidden="true"><use href="../../assets/icons/sprite.svg#file-text"></use></svg>
+                  <span>README.md</span>
+                  <span class="text-muted small ms-2">2.4 KB</span>
+                </div>
+                <a href="#" class="btn btn-sm btn-outline-themed" aria-label="Скачать README.md"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#download"></use></svg></a>
+              </div>
+              <div class="file-item">
+                <div>
+                  <svg class="icon text-muted me-2" aria-hidden="true"><use href="../../assets/icons/sprite.svg#file-earmark"></use></svg>
+                  <span>train-v2.0.json</span>
+                  <span class="text-muted small ms-2">42 MB</span>
+                </div>
+                <a href="#" class="btn btn-sm btn-outline-themed" aria-label="Скачать train-v2.0.json"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#download"></use></svg></a>
+              </div>
+              <div class="file-item">
+                <div>
+                  <svg class="icon text-muted me-2" aria-hidden="true"><use href="../../assets/icons/sprite.svg#file-earmark"></use></svg>
+                  <span>dev-v2.0.json</span>
+                  <span class="text-muted small ms-2">4.3 MB</span>
+                </div>
+                <a href="#" class="btn btn-sm btn-outline-themed" aria-label="Скачать dev-v2.0.json"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#download"></use></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="tab-discussions" role="tabpanel" aria-labelledby="tab-discussions-btn">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="h5 mb-3">Обсуждения</h2>
+
+              <div class="comment">
+                <div class="d-flex gap-3">
+                  <div class="avatar">Д</div>
+                  <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between">
+                      <span class="comment-author">dmitry_nlp</span>
+                      <span class="comment-date">5 часов назад</span>
+                    </div>
+                    <p class="comment-body mt-1 mb-0">Есть ли планы добавить русскоязычную версию датасета?</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4 pt-3 border-top" style="border-color: var(--border) !important;">
+                <h3 class="h6">Написать комментарий</h3>
+                <form>
+                  <div class="mb-3">
+                    <label for="commentText" class="visually-hidden">Текст комментария</label>
+                    <textarea class="form-control" id="commentText" rows="3" placeholder="Ваш комментарий..."></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-accent btn-sm">Отправить</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 mt-4">
+    <div class="container text-center">
+      <small class="text-muted">&copy; 2026 AI Hub</small>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/main.js"></script>
+  <script>window.APP_PATHS = { home: '../../index.html', login: '../auth/login.html', register: '../auth/register.html', dashboard: '../dashboard/dashboard.html' }; window.SPRITE_PATH = '../../assets/icons/sprite.svg';</script>
+  <script src="../../assets/js/ui.js"></script>
+</body>
+</html>
