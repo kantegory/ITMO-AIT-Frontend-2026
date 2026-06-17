@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Курсы</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="navbar navbar-dark bg-dark py-3">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="index.html">TopCourses</a>
+        <button onclick="goToProfile()" class="btn btn-outline-light">В кабинет</button>
+    </div>
+</header>
+
+<main class="container py-4">
+    <nav class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none">Каталог</a></li>
+            <li class="breadcrumb-item active" id="courseName"></li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="ratio ratio-16x9 video mb-4" id="video-container">
+                <div class="video-content" id="video-placeholder">
+                    <div class="text-center">
+                        <div class="display-4">▶</div>
+                        <div class="spinner-border text-light" role="status"></div>
+                        <h4 id="videoTitle" class="fw-bold mt-2"></h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 p-4 mb-4">
+                <h3 class="fw-bold mb-3" id="lessonHeader"></h3>
+                <p class="text-muted mb-0" id="lessonDesc"></p>
+
+                <hr>
+
+                <h6 class="fw-bold mb-3">Материалы к уроку:</h6>
+                <div class="d-flex flex-wrap gap-2 mb-4" id="materials"></div>
+
+                <div class="p-3 bg-light border-start border-4 border-danger rounded">
+                    <h6 class="fw-bold text-danger">Практическое задание:</h6>
+                    <small id="lessonTask"></small>
+                </div>
+            </div>
+
+            <div class="card border-0 p-4 mb-4">
+                <h5 class="fw-bold mb-4">Обсуждение</h5>
+                <small class="mb-4 text-muted" id="comments">Вопросов пока нет. Будьте первым!</small>
+
+                <div class="input-group">
+                    <input type="text" class="form-control" id="comment" placeholder="Ваш вопрос">
+                    <button class="btn btn-primary" onclick="addComment()">Отправить</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0">
+                <div class="card-header bg-white fw-bold py-3">Программа курса</div>
+
+                <div class="list-group list-group-flush" id="lessons"></div>
+
+                <div class="card-footer bg-white p-3">
+                    <button class="btn btn-success w-100 fw-bold" onclick="finishLesson()">
+                        Завершить урок
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/api.js"></script>
+
+<script>
+    function goToProfile() {
+        const user = getCurrentUser();
+
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        if (user.role === 'teacher') {
+            window.location.href = "teacher.html";
+        } else {
+            window.location.href = "profile.html";
+        }
+    }
+
+    async function loadComments(courseId, lessonIndex) {
+        const list = document.getElementById('comments');
+
+        const comments = await apiRequest(`/comments?courseId=${courseId}&lessonIndex=${lessonIndex}`);
+
+        if (!comments || comments.length === 0) {
+            list.innerHTML = '<small class="text-muted">Вопросов пока нет. Будьте первым!</small>';
+            return;
+        }
+
+        list.innerHTML = comments.map(comment => `
+        <div class="mb-3 border-bottom pb-2">
+            <div class="d-flex justify-content-between align-items-center">
+                <strong class="small">${comment.userName}</strong>
+            </div>
+            <div class="small mt-1">${comment.text}</div>
+        </div>
+    `).join('');
+    }
+
+    document.addEventListener("DOMContentLoaded", async function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const courseId = parseInt(urlParams.get('id')) || 101;
+
+        const course = await apiRequest(`/courses/${courseId}`);
+        const userLocal = getCurrentUser();
+        const user = await apiRequest(`/600/users/${userLocal.id}`);
+
+        if (!course || !user) {
+            return;
+        }
+
+        const totalLessons = course.lessons.length;
+        const currentProgressVal = parseInt(user.progress[courseId] || "0");
+        const finishedCount = Math.round((currentProgressVal / 100) * totalLessons);
+
+        if (!urlParams.has('lesson')) {
+            const nextLesson = finishedCount < totalLessons ? finishedCount : totalLessons - 1;
+            window.location.href = `course.html?id=${courseId}&lesson=${nextLesson}`;
+            return;
+        }
+
+        const lessonIndex = parseInt(urlParams.get('lesson'));
+
+        if (user.role !== 'teacher' && lessonIndex > finishedCount) {
+            alert("Этот урок пока недоступен. Пройдите предыдущие темы!");
+            window.location.href = `course.html?id=${courseId}&lesson=${finishedCount}`;
+            return;
+        }
+
+        const lesson = course.lessons[lessonIndex];
+
+        document.getElementById('courseName').innerText = course.title;
+        document.getElementById('videoTitle').innerText = lesson.title;
+        document.getElementById('lessonHeader').innerText = lesson.title;
+        document.getElementById('lessonDesc').innerText = lesson.description;
+        document.getElementById('lessonTask').innerText = lesson.task;
+
+        await loadExternalVideo(lesson.title, lessonIndex, course.title);
+
+        const finishBtn = document.querySelector('.btn-success.w-100');
+        if (user.role === 'teacher') {
+            if (finishBtn) {
+                finishBtn.style.display = 'none';
+            }
+        }
+
+        if (lessonIndex < finishedCount) {
+            finishBtn.disabled = true;
+            finishBtn.innerText = "Урок уже пройден";
+            finishBtn.classList.replace('btn-success', 'btn-secondary');
+        }
+
+        const materials = document.getElementById('materials');
+        materials.innerHTML = lesson.materials.map(material => `
+            <button class="btn btn-light border" onclick="alert('Скачивание: ${material}')">${material}</button>
+        `).join('');
+
+        const menu = document.getElementById('lessons');
+        menu.innerHTML = course.lessons.map((lesson, index) => {
+            const isActive = (index === lessonIndex) ? 'active' : '';
+            return `
+                <a href="course.html?id=${courseId}&lesson=${index}" class="list-group-item list-group-item-action ${isActive}">
+                    <small class="fw-bold text-muted">${lesson.title}</small>
+                </a>
+            `;
+        }).join('');
+
+        await loadComments(courseId, lessonIndex);
+    });
+
+
+    async function addComment() {
+        const input = document.getElementById('comment');
+        const text = input.value.trim();
+        const user = getCurrentUser();
+
+        if (!text) {
+            return;
+        }
+
+        if (!user) {
+            alert("Войдите в систему, чтобы оставить вопрос");
+            return;
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const courseId = parseInt(urlParams.get('id')) || 101;
+        const lessonIndex = parseInt(urlParams.get('lesson')) || 0;
+
+        const newComment = {
+            courseId: courseId,
+            lessonIndex: lessonIndex,
+            userId: user.id,
+            userName: user.name,
+            text: text,
+        };
+
+        const response = await apiRequest('/comments', {
+            method: 'POST',
+            body: JSON.stringify(newComment)
+        });
+
+        if (response) {
+            input.value = "";
+            await loadComments(courseId, lessonIndex);
+        }
+    }
+
+    async function finishLesson() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const courseId = urlParams.get('id') || 101;
+        const lessonIndex = parseInt(urlParams.get('lesson')) || 0;
+
+        const userLocal = getCurrentUser();
+        if (!userLocal) {
+            alert("Войдите в систему, чтобы сохранить прогресс");
+            return;
+        }
+
+        const course = await apiRequest(`/courses/${courseId}`);
+        const user = await apiRequest(`/600/users/${userLocal.id}`);
+
+        if (!course || !user) {
+            return;
+        }
+
+        const totalLessons = course.lessons.length;
+
+        const newProgressValue = Math.round(((lessonIndex + 1) / totalLessons) * 100);
+
+        const oldProgressValue = parseInt(user.progress[courseId] || "0");
+
+        if (newProgressValue <= oldProgressValue) {
+            alert("Урок завершен!");
+            if (lessonIndex + 1 < totalLessons) {
+                window.location.href = `course.html?id=${courseId}&lesson=${lessonIndex + 1}`;
+            } else {
+                alert("Поздравляем! Вы завершили весь курс!");
+                window.location.href = "profile.html";
+            }
+            return;
+        }
+
+        const updatedProgress = {...user.progress, [courseId]: newProgressValue + "%"};
+
+        const response = await apiRequest(`/600/users/${user.id}`, {
+            method: "PATCH",
+            body: JSON.stringify({progress: updatedProgress})
+        });
+
+        if (response) {
+            alert("Урок пройден!");
+            if (lessonIndex + 1 < totalLessons) {
+                window.location.href = `course.html?id=${courseId}&lesson=${lessonIndex + 1}`;
+            } else {
+                alert("Поздравляем! Вы завершили весь курс!");
+                window.location.href = "profile.html";
+            }
+        }
+    }
+
+    async function loadExternalVideo(lessonTitle, lessonIndex, courseTitle) {
+        const container = document.getElementById('video-container');
+        const API_KEY = 'oIPivGII5t0bLqhIo6RKy3KdLCCtGygx5GlIBLAJ1kh5YjTbTtYDER4M';
+
+        const lowerCourse = courseTitle.toLowerCase();
+        const lowerLesson = lessonTitle.toLowerCase();
+
+        let query = "coding technology";
+
+        if (lowerCourse.includes("java")) {
+            query = "java programming";
+        } else if (lowerCourse.includes("c++") || lowerCourse.includes("cpp")) {
+            query = "cpp programming";
+        } else if (lowerCourse.includes("python")) {
+            query = "python code";
+        } else if (lowerCourse.includes("дизайн") || lowerCourse.includes("design")) {
+            query = "web design";
+        }
+
+        const smartQuery = lowerLesson.replace(/урок \d+:/i, '').trim() + " " + query;
+
+        const url = `https://api.pexels.com/videos/search?query=${encodeURIComponent(smartQuery)}&per_page=1`;
+
+        try {
+            const response = await fetch(url, {headers: {'Authorization': API_KEY}});
+            const data = await response.json();
+
+            if (data.videos && data.videos.length > 0) {
+                const videoData = data.videos[0];
+                const videoUrl = videoData.video_files[0].link;
+
+                container.innerHTML = `
+                    <video controls autoplay muted loop class="w-100 h-100 rounded" style="object-fit: cover;">
+                        <source src="${videoUrl}" type="video/mp4">
+                    </video>`;
+            }
+        } catch (err) {
+            console.error("Ошибка API:", err);
+            container.innerHTML = `<div class="bg-dark text-white d-flex align-items-center justify-content-center h-100">Видео временно недоступно (</div>`;
+        }
+    }
+</script>
+
+</body>
+</html>
