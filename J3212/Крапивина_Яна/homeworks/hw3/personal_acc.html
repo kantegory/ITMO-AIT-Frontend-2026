@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет - MyFinance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-deep-blue">
+    <div class="menu-btn-container">
+        <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#mySidebar" aria-controls="mySidebar" aria-expanded="false">☰ Меню</button>
+    </div>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mySidebar" aria-labelledby="offcanvasTitle">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasTitle">MyFinance</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Закрыть меню"></button>
+        </div>
+        <div class="offcanvas-body">
+            <nav class="nav flex-column">
+                <a class="nav-link" href="personal_acc.html">Личный кабинет</a>
+                <a class="nav-link" href="transactions.html">Транзакции</a>
+                <a class="nav-link" href="integrations.html">Интеграции</a>
+                <a class="nav-link" href="reports.html">Отчёт</a>
+                <button id="themeToggle" class="nav-link border-0 bg-transparent mt-3"  style="outline: none;" aria-label="Переключить тему">
+                    <i class="bi bi-sun-fill me-2" id="themeIcon"></i> 
+                    <span id="themeText">Светлая тема</span>
+                </button>
+                <a class="nav-link text-danger fw-bold mt-3" href="#" id="logoutBtn" role="button">Выход</a>
+            </nav>
+        </div>
+    </div>
+
+    <main class="container py-5 mt-5">
+        <h2 id="welcomeText" class="text-cold-beige mb-4 fw-bold text-center">Личный кабинет</h2>
+
+        <div class="row g-4 mb-4" aria-live="polite">
+            <div class="col-md-4" role="region" aria-label="Текущий баланс"><div class="widget-card border-blue"><h3 class="h5 text-cold-beige">Баланс</h3><h3 id="totalBalance">0 ₽</h3></div></div>
+            <div class="col-md-4" role="region" aria-label="Общая сумма доходов"><div class="widget-card border-teal"><h3 class="h5 text-cold-beige">Доходы</h3><h3 id="totalIncome" class="text-success">+0 ₽</h3></div></div>
+            <div class="col-md-4" role="region" aria-label="Общая сумма расходов"><div class="widget-card border-orange"><h3 class="h5 text-cold-beige">Расходы</h3><h3 id="totalExpenses" class="text-danger">-0 ₽</h3></div></div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="widget-card border-gold">
+                    <h3 class="text-cold-beige mb-3" role="region" aria-label="Актуальные курсы валют">Курсы валют (ЦБ РФ)</h3>
+                    <div id="currencyRates" class="d-flex gap-5" aria-live="polite">
+                        <div class="text-muted">Загрузка актуальных курсов...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-card mb-4">
+            <h3 class="h5 text-cold-beige mb-3">Последние операции</h3>
+            <table class="table table-custom m-0">
+                <caption class="visually-hidden">Последние финансовые операции</caption> 
+                 <thead>
+                    <tr class="text-secondary small">
+                        <th scope="col">Дата</th>
+                        <th scope="col">Описание</th>
+                        <th scope="col">Сумма</th>
+                    </tr>
+                </thead>
+                <tbody id="recentTransactionsBody" aria-live="polite"></tbody>
+            </table>
+            <a href="transactions.html" class="btn-widget d-block text-center mt-3">Все транзакции</a>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="widget-card border-indigo">
+                    <h3 class="text-cold-beige mb-3">Динамика расходов</h3>
+                    
+                    <label class="text-cold-beige small" id="label-food">Продукты</label>
+                    <div id="cont-food" class="progress-container" role="progressbar" aria-labelledby="label-food" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        <div id="prog-food" class="progress-fill food" style="width: 0%;"></div>
+                    </div>
+                    
+                    <label class="text-cold-beige small" id="label-transport">Такси и каршеринг</label>
+                    <div id="cont-transport" class="progress-container" role="progressbar" aria-labelledby="label-transport" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        <div id="prog-transport" class="progress-fill transport" style="width: 0%;"></div>
+                    </div>
+                    
+                    <label class="text-cold-beige small" id="label-cafe">Кафе, рестораны</label>
+                    <div id="cont-cafe" class="progress-container" role="progressbar" aria-labelledby="label-cafe" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        <div id="prog-cafe" class="progress-fill cafe" style="width: 0%;"></div>
+                    </div>
+                    
+                    <label class="text-cold-beige small" id="label-transfers">Переводы людям</label>
+                    <div id="cont-transfers" class="progress-container" role="progressbar" aria-labelledby="label-transfers" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        <div id="prog-transfers" class="progress-fill transfers" style="width: 0%;"></div>
+                    </div>
+                    
+                    <label class="text-cold-beige small" id="label-subs">Подписки</label>
+                    <div id="cont-subs" class="progress-container" role="progressbar" aria-labelledby="label-subs" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        <div id="prog-subs" class="progress-fill subs" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="widget-card border-gold">
+                    <h3 class="text-cold-beige mb-3">Быстрый перевод</h3>
+                    <form>
+                        <label for="transferCard" class="visually-hidden">Номер карты получателя</label>
+                        <input type="text" id="transferCard" class="custom-input mb-3" placeholder="Номер карты">
+                        
+                        <label for="transferAmount" class="visually-hidden">Сумма перевода в рублях</label>
+                        <input type="text" id="transferAmount" class="custom-input mb-3" placeholder="Сумма">
+                        
+                        <button type="button" class="btn-custom w-100" data-bs-toggle="modal" data-bs-target="#successModal" aria-haspopup="dialog">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="successModalLabel">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content text-center border-success">
+                    <div class="modal-body p-4">
+                        <h5 id="successModalLabel" class="visually-hidden">Уведомление об успешном переводе</h5>
+                        <div class="text-success mb-3" style="font-size: 3rem;">✔</div>
+                        <h5>Перевод выполнен</h5>
+                        <button type="button" class="btn btn-custom btn-sm mt-2" data-bs-dismiss="modal">Отлично</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center py-4 text-secondary mt-5 border-top border-secondary">
+            <small>© 2026 MyFinance — Твой личный финансовый помощник</small>
+        </footer>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="dashboard.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

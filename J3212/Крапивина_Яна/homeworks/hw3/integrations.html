@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интеграции - MyFinance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-deep-blue">
+
+    <div class="menu-btn-container">
+        <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#mySidebar" aria-controls="mySidebar" aria-expanded="false">☰ Меню</button>
+    </div>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mySidebar" aria-labelledby="offcanvasTitle">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasTitle">MyFinance</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Закрыть меню"></button>
+        </div>
+        <div class="offcanvas-body">
+            <nav class="nav flex-column">
+                <a class="nav-link text-white" href="personal_acc.html">Личный кабинет</a>
+                <a class="nav-link text-white" href="transactions.html">Транзакции</a>
+                <a class="nav-link text-white" href="integrations.html">Интеграции</a>
+                <a class="nav-link text-white" href="reports.html">Отчёт</a>
+                <button id="themeToggle" class="nav-link border-0 bg-transparent mt-3"  style="outline: none;" aria-label="Переключить тему">
+                    <i class="bi bi-sun-fill me-2" id="themeIcon"></i> 
+                    <span id="themeText">Светлая тема</span>
+                </button>
+                <a class="nav-link text-danger fw-bold mt-3" href="#" id="logoutBtn" role="button">Выход</a>
+            </nav>
+        </div>
+    </div>
+
+    <main class="container py-4">
+        <h2 class="text-cold-beige mb-4 fw-bold">Платежные аккаунты</h2>
+
+        <div class="row g-4">
+            <div class="col-lg-7">
+                <div class="widget-card border-blue" role="region" aria-label="Список подключенных банковских счетов">
+                    <h3 class="text-cold-beige mb-3">Активные интеграции</h3>
+                    <div id="accountsList" aria-live="polite"><p class="text-muted text-center">Загрузка счетов...</p></div>
+                    <button class="btn-widget mt-3 w-auto px-4" data-bs-toggle="modal" data-bs-target="#addBankModal">+ Добавить банк</button>
+                </div>
+
+                <div class="widget-card border-indigo mt-4" role="region" aria-label="Правила автоматического присвоения категорий">
+                    <h3 class="text-cold-beige mb-3">Автоматические правила</h3>
+                    <p class="small text-muted">Система сама назначит категории по описанию</p>
+                    <div class="table-responsive">
+                        <table class="table table-custom table-sm m-0"><caption class="visually-hidden">Список правил для автоматического распределения категорий</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Если содержит</th>
+                                    <th scope="col">Категория</th>
+                                </tr>
+                            </thead>
+                            <tbody aria-live="polite">
+                                <tr><td>Yandex Go / Uber</td><td>Транспорт</td></tr>
+                                <tr><td>VkusVill</td><td>Продукты</td></tr>
+                                <tr><td>Netflix</td><td>Подписки</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn-widget mt-3 w-auto px-4" data-bs-toggle="modal" data-bs-target="#addRuleModal">Добавить правило</button>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="widget-card border-gold h-100" role="region" aria-label="Секция импорта транзакций">
+                    <h3 class="text-cold-beige mb-3">Импорт транзакций</h3>
+                    <p class="small text-muted">Загрузите выписку</p>
+                    
+                    <div class="border border-dashed border-secondary rounded p-5 text-center mb-4 mt-4" style="border-style: dashed !important;" role="button" tabindex="0" aria-label="Зона загрузки файла. Нажмите, чтобы выбрать файл или перетащите его сюда">
+                        <p class="m-0 text-secondary">Перетащите файл сюда или</p>
+                        <button class="btn btn-link text-cold-beige p-0 text-decoration-none">выберите на компьютере</button>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label small text-cold-beige" for="importAccountSelect">Выберите счет для импорта</label>
+                        <select id="importAccountSelect" class="custom-input m-0">
+                            <option>Основная карта (Т-Банк)</option>
+                            <option>Наличные</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn-custom" data-bs-toggle="modal" data-bs-target="#importSuccessModal" aria-label="Начать процесс импорта">Начать импорт</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="addBankModal" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="addBankModalLabel">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-secondary">
+                    <div class="modal-header border-secondary">
+                        <h5 class="modal-title" aria-labelledby="addBankModalLabel">Выберите банк</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Закрыть окно выбора банка"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="list-group">
+                            <button type="button" class="list-group-item list-group-item-action bg-transparent border-secondary py-3 btn-select-bank" data-bs-dismiss="modal">
+                            Альфа-Банк
+                            </button>
+                            <button type="button" class="list-group-item list-group-item-action bg-transparent border-secondary py-3 btn-select-bank" data-bs-dismiss="modal">
+                            ВТБ
+                            </button>
+                            <button type="button" class="list-group-item list-group-item-action bg-transparent border-secondary py-3 btn-select-bank" data-bs-dismiss="modal">
+                            Газпромбанк
+                            </button>
+                            <button type="button" class="list-group-item list-group-item-action bg-transparent border-secondary py-3 btn-select-bank" data-bs-dismiss="modal">
+                            Сбербанк
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="deleteConfirmModalLabel">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content border-danger">
+                    <div class="modal-body p-4 text-center">
+                        <h6 class="mb-3" id="deleteConfirmModalLabel">Отключить интеграцию с банком?</h6>
+                        <p class="small text-muted">Ваши транзакции перестанут загружаться автоматически</p>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-secondary btn-sm w-100" data-bs-dismiss="modal">Отмена</button>
+                            <button class="btn btn-danger btn-sm w-100" data-bs-dismiss="modal">Да, отключить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="updateSuccessModal" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="updateSuccessModalLabel">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content border-warning">
+                    <div class="modal-body p-4 text-center">
+                        <div class="text-warning mb-2" style="font-size: 2rem;" aria-hidden="true"></div>
+                        <h6 id="updateSuccessModalLabel">Синхронизация выполнена</h6>
+                        <p class="small text-muted">Данные обновлены 16.03.2026</p>
+                        <button class="btn btn-custom btn-sm w-100" data-bs-dismiss="modal">Понятно</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="addRuleModal" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="addRuleModalLabel">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-secondary">
+                    <div class="modal-header border-secondary">
+                        <h5 class="modal-title" id="addRuleModalLabel">Новое автоматическое правило</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Закрыть создание правила"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label small" for="ruleKeyword">Ключевое слово</label>
+                                <input type="text" id="ruleKeyword" class="custom-input m-0" required aria-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small" for="ruleCategory">Категория для назначения</label>
+                                <select id="ruleCategory" class="custom-input m-0">
+                                    <option>Подписки</option>
+                                    <option>Транспорт</option>
+                                    <option>Здоровье</option>
+                                    <option>Подарки</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer border-secondary">
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                        <button type="button" id="saveRuleBtn" class="btn btn-sm btn-custom px-4" style="width: auto;" data-bs-dismiss="modal">Сохранить правило</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="importSuccessModal" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="importSuccessModalLabel">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content text-center border-success">
+                    <div class="modal-body p-4">
+                        <div class="text-success mb-3" style="font-size: 3rem;" aria-hidden="true"></div>
+                        <h5 id="importSuccessModalLabel">Импорт завершен</h5>
+                        <p class="small text-muted">Мы успешно обработали файл. Найдено и добавлено 24 новые транзакции</p>
+                        <a href="transactions.html" class="btn btn-custom btn-sm mt-2 text-decoration-none">Посмотреть операции</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center py-5 text-secondary mt-5 border-top border-secondary">
+            <small>© 2026 MyFinance — Твой личный финансовый помощник</small>
+        </footer>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="integrations.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>
