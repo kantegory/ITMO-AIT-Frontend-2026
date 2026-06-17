@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель организатора — Билеты.ру</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="styles/style.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">Билеты.ру <span class="badge bg-primary ms-2">ORG</span></a>
+            <div class="d-flex align-items-center text-light">
+                <span class="me-3">Организатор: SomeOrganization</span>
+                <a href="auth.html" class="btn btn-outline-danger btn-sm">Выйти</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row mb-5">
+            <div class="col-md-4">
+                <div class="card stats-card shadow-sm mb-3">
+                    <div class="card-body">
+                        <h6 class="text-muted text-uppercase small">Общий доход</h6>
+                        <h2 class="fw-bold mb-0">1 240 500 ₽</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stats-card shadow-sm mb-3" style="border-left-color: #198754;">
+                    <div class="card-body">
+                        <h6 class="text-muted text-uppercase small">Билетов продано</h6>
+                        <h2 class="fw-bold mb-0">842 шт.</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stats-card shadow-sm mb-3" style="border-left-color: #ffc107;">
+                    <div class="card-body">
+                        <h6 class="text-muted text-uppercase small">Активных событий</h6>
+                        <h2 class="fw-bold mb-0">1</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-5">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">Мои мероприятия</h5>
+                <button class="btn btn-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#createEventForm">
+                    <i class="bi bi-plus-lg"></i> Создать событие
+                </button>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0 table-v-align">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="ps-4">Название</th>
+                                <th>Дата</th>
+                                <th>Продажи</th>
+                                <th>Статус</th>
+                                <th class="text-end pe-4">Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="ps-4">
+                                    <strong>Summer Music Fest</strong><br>
+                                    <small class="text-muted">Москва, Лужники</small>
+                                </td>
+                                <td>15.07.2026</td>
+                                <td>
+                                    <div class="progress" style="height: 5px; width: 100px;">
+                                        <div class="progress-bar bg-success" style="width: 75%"></div>
+                                    </div>
+                                    <small>450/600</small>
+                                </td>
+                                <td><span class="badge bg-success">Активно</span></td>
+                                <td class="text-end pe-4">
+                                    <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="ps-4">
+                                    <strong>Вечер джаза в филармонии</strong><br>
+                                    <small class="text-muted">СПб, Филармония</small>
+                                </td>
+                                <td>10.04.2026</td>
+                                <td>
+                                    <div class="progress" style="height: 5px; width: 100px;">
+                                        <div class="progress-bar bg-warning" style="width: 20%"></div>
+                                    </div>
+                                    <small>40/200</small>
+                                </td>
+                                <td><span class="badge bg-danger">Прошло</span></td>
+                                <td class="text-end pe-4">
+                                    <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapse" id="createEventForm">
+            <div class="card shadow-sm mb-5 border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Новое мероприятие</h5>
+                </div>
+                <div class="card-body p-4">
+                    <form class="row g-3">
+                        <div class="col-md-8">
+                            <label class="form-label">Название события</label>
+                            <input type="text" class="form-control" placeholder="Например: Рок-концерт в парке">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Тип</label>
+                            <select class="form-select">
+                                <option>Концерт</option>
+                                <option>Театр</option>
+                                <option>Спорт</option>
+                                <option>Другое</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Дата проведения</label>
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label">Место проведения</label>
+                            <input type="text" class="form-control" placeholder="Адрес или название площадки">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Описание</label>
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Количество билетов</label>
+                            <input type="number" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Базовая цена (₽)</label>
+                            <input type="number" class="form-control">
+                        </div>
+                        <div class="col-12 mt-4 text-end">
+                            <button type="button" class="btn btn-secondary me-2" data-bs-toggle="collapse" data-bs-target="#createEventForm">Отмена</button>
+                            <button type="submit" class="btn btn-primary px-4">Опубликовать событие</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light py-4 mt-auto">
+        <div class="container text-center">
+            <p>© 2026 Билеты.ру</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет — Билеты.ру</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/style.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">Билеты.ру</a>
+            <div class="d-flex align-items-center">
+                <span class="text-light me-3 small">Привет, Егор!</span>
+                <a href="index.html" class="btn btn-outline-danger btn-sm">Выйти</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="profile-header shadow-sm">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                    <img src="https://ui-avatars.com/api/?name=Egor+Iachmennikov&background=0D6EFD&color=fff&size=80" alt="Avatar" class="rounded-circle">
+                </div>
+                <div class="flex-grow-1 ms-4">
+                    <h2 class="mb-0">Егор Ячменников</h2>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="list-group shadow-sm border-0">
+                    <a href="#" class="list-group-item list-group-item-action sidebar-link active">Мои билеты</a>
+                    <a href="#" class="list-group-item list-group-item-action sidebar-link">Мои возвраты</a>
+                    <a href="#" class="list-group-item list-group-item-action sidebar-link">Настройки профиля</a>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="mb-0">Мои мероприятия</h4>
+                    <span class="badge bg-primary rounded-pill">3 билета</span>
+                </div>
+                
+                <ul class="nav nav-tabs mb-4" id="ticketTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="upcoming-tab" data-bs-toggle="tab" data-bs-target="#upcoming" type="button" role="tab">Предстоящие</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="past-tab" data-bs-toggle="tab" data-bs-target="#past" type="button" role="tab">Истекшие</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="ticketTabsContent">
+                    <div class="tab-pane fade show active" id="upcoming" role="tabpanel">
+                        <div class="card ticket-card shadow-sm mb-3">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-2 text-center border-end">
+                                        <div class="h3 mb-0 fw-bold text-primary">15</div>
+                                        <div class="small text-uppercase text-muted">июля</div>
+                                    </div>
+                                    <div class="col-md-6 ps-4">
+                                        <h5 class="mb-1">Summer Music Fest 2026</h5>
+                                        <p class="text-muted mb-0 small">Лужники, Сектор A</p>
+                                    </div>
+                                    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                                        <button class="btn btn-sm btn-light border">Билет №4412</button>
+                                        <button class="btn btn-sm btn-outline-danger">Вернуть</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card ticket-card shadow-sm mb-3">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-2 text-center border-end">
+                                        <div class="h3 mb-0 fw-bold text-primary">23</div>
+                                        <div class="small text-uppercase text-muted">июня</div>
+                                    </div>
+                                    <div class="col-md-6 ps-4">
+                                        <h5 class="mb-1">Братья Карамазовы</h5>
+                                        <p class="text-muted mb-0 small">Музей-театр «Булгаковский дом»</p>
+                                    </div>
+                                    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                                        <button class="btn btn-sm btn-light border">Билет №5098</button>
+                                        <button class="btn btn-sm btn-outline-danger">Вернуть</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="past" role="tabpanel">
+                        <div class="card shadow-sm mb-3 border-0 bg-light opacity-75">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-2 text-center border-end">
+                                        <div class="h3 mb-0 text-secondary">10</div>
+                                        <div class="small text-uppercase text-muted">апреля</div>
+                                    </div>
+                                    <div class="col-md-6 ps-4 text-secondary">
+                                        <h5 class="mb-1">Вечер джаза в филармонии</h5>
+                                        <p class="mb-0 small">Событие завершено</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light py-4 mt-auto">
+        <div class="container text-center">
+            <p>© 2026 Билеты.ру</p>
+        </div>
+    </footer>
+
+</body>
+</html>
