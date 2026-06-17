@@ -1,0 +1,204 @@
+:root {
+  --bs-primary: #d63384;
+  --bs-primary-rgb: 214, 51, 132;
+  --ticket-pink: #d63384;
+  --ticket-pink-light: #f8b4d4;
+  --ticket-pink-dark: #b82a6e;
+  --btn-focus-gray: #6c757d;
+}
+
+body {
+  background-color: #fdf2f8;
+}
+
+/* Серая подсветка при нажатии/фокусе для всех кнопок */
+.btn:focus,
+.btn:focus-visible,
+a.btn:focus,
+a.btn:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 0.25rem var(--btn-focus-gray) !important;
+}
+/* При нажатии (active) — кнопка подсвечивается серым */
+.btn:active,
+a.btn:active {
+  outline: none !important;
+  box-shadow: 0 0 0 0.3rem var(--btn-focus-gray) !important;
+  background-color: #adb5bd !important;
+  border-color: #6c757d !important;
+  color: #212529 !important;
+}
+/* Розовые кнопки при нажатии — серый поверх розового */
+.btn-primary:active,
+a.btn-primary:active {
+  background-color: #adb5bd !important;
+  border-color: #6c757d !important;
+  color: #212529 !important;
+}
+.btn-outline-primary:active,
+a.btn-outline-primary:active {
+  background-color: #adb5bd !important;
+  border-color: #6c757d !important;
+  color: #212529 !important;
+}
+.btn-outline-secondary:active,
+a.btn-outline-secondary:active {
+  background-color: #adb5bd !important;
+  border-color: #6c757d !important;
+  color: #212529 !important;
+}
+.btn-success:active {
+  background-color: #adb5bd !important;
+  border-color: #6c757d !important;
+  color: #212529 !important;
+}
+
+/* Все кнопки и акценты в розовом стиле */
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: var(--ticket-pink);
+  border-color: var(--ticket-pink);
+}
+.btn-primary:hover { background-color: var(--ticket-pink-dark); border-color: var(--ticket-pink-dark); }
+.btn-primary:focus,
+.btn-primary:focus-visible,
+.btn-primary:active {
+  box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.4);
+}
+
+.btn-outline-primary {
+  color: var(--ticket-pink);
+  border-color: var(--ticket-pink);
+}
+.btn-outline-primary:hover {
+  background-color: var(--ticket-pink);
+  border-color: var(--ticket-pink);
+  color: #fff;
+}
+.btn-outline-primary:focus,
+.btn-outline-primary:focus-visible,
+.btn-outline-primary:active {
+  box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.4);
+}
+
+.btn-outline-secondary {
+  color: var(--ticket-pink-dark);
+  border-color: var(--ticket-pink-light);
+}
+.btn-outline-secondary:hover,
+.btn-outline-secondary.active {
+  background-color: var(--ticket-pink-light);
+  border-color: var(--ticket-pink);
+  color: var(--ticket-pink-dark);
+}
+/* Текущая вкладка (Регистрация, Личный кабинет, Вход) — светится розовым */
+a.btn-primary.active,
+.btn-primary.active {
+  background-color: var(--ticket-pink) !important;
+  border-color: var(--ticket-pink) !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 0.25rem rgba(214, 51, 132, 0.4) !important;
+}
+a.btn-outline-primary.active,
+.btn-outline-primary.active {
+  background-color: var(--ticket-pink) !important;
+  border-color: var(--ticket-pink) !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 0.25rem rgba(214, 51, 132, 0.4) !important;
+}
+a.btn-outline-secondary.active,
+.btn-outline-secondary.active {
+  background-color: var(--ticket-pink-light) !important;
+  border-color: var(--ticket-pink) !important;
+  color: var(--ticket-pink-dark) !important;
+  box-shadow: 0 0 0 0.25rem rgba(214, 51, 132, 0.35) !important;
+}
+.btn-outline-secondary:focus,
+.btn-outline-secondary:focus-visible,
+.btn-outline-secondary:active {
+  box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.4);
+}
+
+.btn-success,
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active {
+  background-color: var(--ticket-pink-dark);
+  border-color: var(--ticket-pink-dark);
+}
+.btn-success:hover { filter: brightness(1.05); }
+.btn-success:focus,
+.btn-success:focus-visible,
+.btn-success:active {
+  box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.4);
+}
+
+.nav-link.active {
+  background-color: rgba(214, 51, 132, 0.15);
+  color: var(--ticket-pink-dark);
+}
+.nav-link:hover { color: var(--ticket-pink); }
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--ticket-pink-light);
+  box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);
+}
+
+.toast.text-bg-primary {
+  background-color: var(--ticket-pink) !important;
+}
+
+.navbar-brand {
+  letter-spacing: 0.03em;
+}
+
+.page {
+  max-width: 960px;
+}
+
+.card-event {
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.card-event:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(214, 51, 132, 0.15);
+}
+
+.seat-map {
+  border: 1px dashed #ced4da;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.seat-map__row {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.seat-map__seat {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background-color: #e9ecef;
+}
+
+.seat-map__seat:nth-child(odd) {
+  background-color: #fbcfe8;
+}
+
+.seat-map__legend {
+  margin-top: 4px;
+}
+
+@media (max-width: 575.98px) {
+  .page {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
