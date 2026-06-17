@@ -1,0 +1,310 @@
+:root {
+    color-scheme: light dark;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    background: var(--page-bg);
+    color: var(--text-color);
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+[data-bs-theme="light"] {
+    --page-bg: #f4f7fb;
+    --text-color: #1f2937;
+    --muted-color: #5f6b7a;
+    --card-bg: #ffffff;
+    --card-border: rgba(15, 23, 42, 0.08);
+    --card-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    --hover-shadow: 0 14px 30px rgba(15, 23, 42, 0.14);
+    --navbar-bg: #111827;
+    --navbar-text: #f9fafb;
+    --navbar-border: rgba(255, 255, 255, 0.08);
+    --hero-overlay: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(244,247,251,0.18) 100%);
+    --skip-bg: #ffffff;
+    --skip-text: #111827;
+    --focus-color: #0d6efd;
+    --placeholder-bg: #eef2f7;
+    --placeholder-text: #6b7280;
+}
+
+[data-bs-theme="dark"] {
+    --page-bg: #0f172a;
+    --text-color: #e5edf8;
+    --muted-color: #b3c0d4;
+    --card-bg: #162033;
+    --card-border: rgba(148, 163, 184, 0.16);
+    --card-shadow: 0 10px 28px rgba(2, 6, 23, 0.42);
+    --hover-shadow: 0 18px 34px rgba(2, 6, 23, 0.55);
+    --navbar-bg: #020617;
+    --navbar-text: #e5edf8;
+    --navbar-border: rgba(148, 163, 184, 0.14);
+    --hero-overlay: linear-gradient(180deg, rgba(15,23,42,0) 0%, rgba(15,23,42,0.26) 100%);
+    --skip-bg: #e5edf8;
+    --skip-text: #020617;
+    --focus-color: #7cb4ff;
+    --placeholder-bg: #1e293b;
+    --placeholder-text: #94a3b8;
+}
+
+.navbar-brand {
+    font-weight: 700;
+}
+
+.site-navbar {
+    background: var(--navbar-bg) !important;
+    border-bottom: 1px solid var(--navbar-border);
+}
+
+.site-navbar .navbar-brand,
+.site-navbar .navbar-brand:hover,
+.site-navbar .navbar-brand:focus {
+    color: var(--navbar-text);
+}
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.theme-switcher {
+    min-width: 200px;
+}
+
+.theme-switcher-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.75rem;
+    border: 1px solid var(--card-border);
+    border-radius: 999px;
+    background: var(--card-bg);
+    min-height: 38px;
+    color: var(--text-color);
+}
+
+.theme-switcher .form-select {
+    border: 0;
+    padding-left: 0;
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--text-color);
+}
+
+.theme-switcher .form-select:focus {
+    box-shadow: none;
+}
+
+.ui-icon {
+    width: 1em;
+    height: 1em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    vertical-align: -0.125em;
+    flex-shrink: 0;
+}
+
+.btn-icon,
+.inline-icon-text,
+.meta-with-icon,
+.section-title-with-icon,
+.profile-card-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.meta-with-icon {
+    color: var(--muted-color);
+}
+
+.card-img-top {
+    height: 250px;
+    object-fit: cover;
+}
+
+.card {
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    overflow: hidden;
+    transition: background-color 0.25s ease, border-color 0.25s ease,
+                box-shadow 0.25s ease, color 0.25s ease;
+}
+
+.event-list-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.event-list-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--hover-shadow);
+}
+
+.hero-card {
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--hero-overlay);
+    pointer-events: none;
+}
+
+.event-hero-image {
+    width: 100%;
+    height: 42vh;
+    min-height: 260px;
+    object-fit: cover;
+    display: block;
+}
+
+.event-content-card {
+    margin-top: -24px;
+    position: relative;
+    z-index: 2;
+}
+
+.auth-card {
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.organizer-event-thumb {
+    width: 160px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.organizer-event-info {
+    flex: 1 1 60%;
+    min-width: 240px;
+}
+
+.organizer-event-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.event-image-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--placeholder-bg);
+    color: var(--placeholder-text);
+
+    border-radius: 0;
+}
+
+.event-image-placeholder.card-img-top {
+    height: 250px;
+    width: 100%;
+}
+
+.event-image-placeholder.event-hero-image {
+    height: 42vh;
+    min-height: 260px;
+    width: 100%;
+}
+
+.event-image-placeholder.organizer-event-thumb {
+    height: 110px;
+    width: 160px;
+    border-radius: 12px;
+}
+
+.event-image-placeholder .ui-icon {
+    width: 2.5em;
+    height: 2.5em;
+    stroke-width: 1.5;
+    opacity: 0.7;
+}
+
+.event-image-placeholder .placeholder-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.event-image-placeholder.organizer-event-thumb .placeholder-text {
+    font-size: 0.78rem;
+}
+
+.skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -3rem;
+    z-index: 2000;
+    background: var(--skip-bg);
+    color: var(--skip-text);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.skip-link:focus {
+    top: 1rem;
+}
+
+:focus-visible {
+    outline: 3px solid var(--focus-color);
+    outline-offset: 2px;
+}
+
+.text-muted {
+    color: var(--muted-color) !important;
+}
+
+.badge.text-bg-light {
+    background-color: rgba(148, 163, 184, 0.18) !important;
+    color: var(--text-color) !important;
+}
+
+.alert {
+    border-radius: 16px;
+}
+
+.form-control,
+.form-select,
+.modal-content,
+.toast,
+.btn {
+    transition: background-color 0.25s ease, color 0.25s ease,
+                border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+@media (max-width: 767.98px) {
+    .navbar-actions {
+        width: 100%;
+        margin-top: 0.75rem;
+        justify-content: stretch;
+    }
+
+    .navbar-actions > * {
+        flex: 1 1 100%;
+    }
+
+    .theme-switcher {
+        min-width: 100%;
+    }
+}
