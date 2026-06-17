@@ -1,0 +1,118 @@
+:root {
+    --bg-color: #f8f9fa;
+    --text-color: #212529;
+    --nav-bg: #212529;
+    --nav-text: #ffffff;
+    --card-bg: #ffffff;
+    --border-color: #dcdcdc;
+    --muted-color: hsl(208, 7%, 46%);
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --info-bg: #cff4fc;
+    --info-text: #055160;
+}
+
+body[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #f1f1f1;
+    --nav-bg: #1b1b1b;
+    --nav-text: #ffffff;
+    --card-bg: #1f1f1f;
+    --border-color: #444444;
+    --muted-color: #b0b0b0;
+    --primary-color: #0d6efd;
+    --secondary-color: #aaaaaa;
+    --success-color: #198754;
+    --danger-color: #ff6b6b;
+    --info-bg: #16313a;
+    --info-text: #cfeef7;
+}
+
+body {
+    background-color: var(--bg-color) !important;
+    color: var(--text-color);
+}
+
+.navbar {
+    background-color: var(--nav-bg) !important;
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+    color: var(--nav-text) !important;
+}
+
+.navbar .router-link-active {
+    font-weight: 600;
+}
+
+.card,
+.table,
+.form-control,
+.form-select,
+.alert,
+.border.rounded,
+.input-group .btn,
+.btn-outline-secondary,
+.btn-outline-light {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--border-color) !important;
+}
+
+.table {
+    --bs-table-bg: var(--card-bg);
+    --bs-table-color: var(--text-color);
+    --bs-table-striped-bg: color-mix(in srgb, var(--card-bg) 92%, var(--text-color) 8%);
+    --bs-table-striped-color: var(--text-color);
+}
+
+.text-muted {
+    color: var(--muted-color) !important;
+}
+
+.alert-info {
+    background-color: var(--info-bg) !important;
+    color: var(--info-text) !important;
+    border-color: var(--border-color) !important;
+}
+
+.text-success {
+    color: var(--success-color) !important;
+}
+
+.text-danger {
+    color: var(--danger-color) !important;
+}
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+}
+
+.icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.form-control,
+.form-select {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+}
+
+.form-control::placeholder {
+    color: var(--muted-color) !important;
+    opacity: 1;
+}
