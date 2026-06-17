@@ -1,0 +1,75 @@
+:root {
+    --primary-color: #4361ee;
+    --sidebar-bg: #1e1e2d;
+    --sidebar-width: 260px;
+    --sidebar-collapsed-width: 70px;
+    --bg-light: #f4f7fe;
+}
+
+body {
+    background-color: var(--bg-light);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    transition: all 0.3s ease;
+    margin: 0;
+}
+
+#sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: var(--sidebar-bg);
+    color: #fff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1050;
+    overflow-x: hidden;
+}
+
+body.sidebar-collapsed #sidebar { width: var(--sidebar-collapsed-width); }
+body.sidebar-collapsed #sidebar .nav-link span,
+body.sidebar-collapsed #sidebar h4 span { display: none; }
+
+#content {
+    margin-left: var(--sidebar-width);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 100vh;
+    padding-top: 70px;
+}
+
+body.sidebar-collapsed #content { margin-left: var(--sidebar-collapsed-width); }
+
+body.no-sidebar #sidebar { left: calc(var(--sidebar-width) * -1); }
+body.no-sidebar #content { margin-left: 0 !important; padding-top: 0; }
+
+.top-navbar {
+    height: 70px; background: #fff; border-bottom: 1px solid #e0e0e0;
+    position: fixed; top: 0; right: 0; left: var(--sidebar-width);
+    z-index: 1000; transition: all 0.3s ease;
+    display: flex; align-items: center; padding: 0 25px;
+}
+
+body.sidebar-collapsed .top-navbar { left: var(--sidebar-collapsed-width); }
+body.no-sidebar .top-navbar { display: none !important; }
+
+.nav-link {
+    color: #a2a3b7; padding: 12px 20px; margin: 4px 10px;
+    border-radius: 8px; display: flex; align-items: center;
+    text-decoration: none; white-space: nowrap; cursor: pointer;
+}
+
+.nav-link:hover, .nav-link.active { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.nav-link i { min-width: 30px; font-size: 1.1rem; }
+
+.card { border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border-radius: 12px; }
+.auth-card { max-width: 400px; margin: 100px auto; border-top: 4px solid var(--primary-color); }
+
+.log-view {
+    background: #1e1e1e;
+    color: #00ff41;
+    font-family: 'Courier New', monospace;
+    padding: 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
