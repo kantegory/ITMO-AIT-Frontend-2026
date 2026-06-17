@@ -1,0 +1,387 @@
+<template>
+  <div v-if="modelValue" class="modal-backdrop" @click="closeModal">
+    <div class="modal-content-wrapper" @click.stop>
+      <div class="modal-header">
+        <h2 class="modal-title">{{ event?.title }}</h2>
+        <button type="button" class="btn-close" @click="closeModal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+        <div class="image-section mb-3">
+          <img
+            :src="event?.imageUrl || 'https://placebear.com/800/400'"
+            class="img-fluid rounded"
+            :alt="event?.title"
+            style="max-height: 500px; object-fit: contain; width: auto; max-width: 100%; height: auto;"
+          >
+        </div>
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="info-section mb-3">
+              <p class="text-muted mb-2">{{ event?.type || 'Мероприятие' }}</p>
+              <p class="text-muted mb-2">
+                <strong>Место:</strong> {{ event?.city }}{{ event?.venue ? `, ${event?.venue}` : '' }}
+              </p>
+              <p class="text-muted mb-0">
+                <strong>Описание:</strong> {{ event?.description || 'Нет описания' }}
+              </p>
+            </div>
+            <div class="seat-section mb-3">
+              <h3 class="mt-4 mb-2">Схема зала</h3>
+              <div class="seat-map" ref="seatMapRef"></div>
+              <div class="mt-2 d-flex gap-3 small flex-wrap">
+                <span><span class="legend-seat available"></span>Свободно</span>
+                <span><span class="legend-seat selected"></span>Выбрано</span>
+                <span><span class="legend-seat sold"></span>Продано</span>
+              </div>
+            </div>
+            <div class="reviews-section">
+              <h3 class="mt-4 mb-2">Отзывы</h3>
+              <div id="reviewsContainer">
+                <p v-if="reviews.length === 0" class="text-muted small">Пока нет отзывов</p>
+                <div v-for="review in reviews" :key="review.id" class="review-item mb-2">
+                  <small><strong>{{ review.anonymous ? 'Аноним' : review.userName }}</strong> [{{ review.rating }}/5]</small>
+                  <p class="mb-0 small">{{ review.text }}</p>
+                </div>
+              </div>
+              <button type="button" class="btn btn-outline-primary btn-sm mt-2" @click="$emit('open-review', event?.id)">Оставить отзыв</button>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="price-section">
+              <h3 class="text-muted">Цена</h3>
+              <p class="text-primary">{{ formatPrice(event?.price || 0) }} ₽</p>
+              <div class="mb-2"><small>Выбрано мест: </small><strong>{{ selectedSeats.length }}</strong></div>
+              <div class="mb-3"><small>Итого: </small><strong class="text-success">{{ formatPrice(totalPrice) }} ₽</strong></div>
+              <button type="button" class="btn btn-success w-100" @click="buyTickets">Купить билеты</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { ref, computed, watch, nextTick, onMounted } from 'vue'
+import { useFormat } from '@/composables/useFormat'
+import { useAuthStore } from '@/stores/auth'
+
+export default {
+  name: 'EventModal',
+  props: {
+    event: { type: Object, required: true },
+    modelValue: { type: Boolean, default: false }
+  },
+  emits: ['update:modelValue', 'buy-tickets', 'open-review'],
+  setup(props, { emit }) {
+    const { formatPrice } = useFormat()
+    const auth = useAuthStore()
+    const seatMapRef = ref(null)
+    const selectedSeats = ref([])
+    const soldSeats = ref([])
+    const reviews = ref([])
+
+    const totalPrice = computed(() => selectedSeats.value.length * (props.event?.price || 0))
+
+    const loadReviews = async () => {
+      if (!props.event?.id) {
+        reviews.value = []
+        return
+      }
+      try {
+        const response = await fetch(`http://localhost:3000/reviews?eventId=${props.event.id}`)
+        const data = await response.json()
+        reviews.value = data || []
+      } catch (error) {
+        reviews.value = []
+      }
+    }
+
+    const loadSoldSeats = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/tickets?eventId=${props.event.id}`)
+        const tickets = await response.json()
+        const sold = []
+        tickets.forEach(ticket => {
+          if (ticket.seats) {
+            const seatNumbers = ticket.seats.split(',').map(s => parseInt(s.trim()))
+            sold.push(...seatNumbers)
+          }
+        })
+        soldSeats.value = sold
+      } catch (error) {
+        soldSeats.value = []
+      }
+    }
+
+    const generateSeatMap = async () => {
+      await nextTick()
+
+      if (!seatMapRef.value || !props.event?.id) return
+
+      const capacity = props.event.capacity || 50
+      selectedSeats.value = []
+
+      await loadSoldSeats()
+
+      seatMapRef.value.innerHTML = ''
+
+      for (let i = 1; i <= capacity; i++) {
+        const button = document.createElement('button')
+        button.type = 'button'
+        button.className = `seat ${soldSeats.value.includes(i) ? 'sold' : 'available'}`
+        button.dataset.seat = i
+        button.textContent = i
+
+        if (soldSeats.value.includes(i)) {
+          button.style.background = 'var(--seat-sold)'
+          button.style.cursor = 'not-allowed'
+          button.style.opacity = '0.6'
+        } else {
+          button.style.background = 'var(--seat-available)'
+          button.style.cursor = 'pointer'
+          button.onclick = () => toggleSeat(i)
+        }
+
+        seatMapRef.value.appendChild(button)
+      }
+    }
+
+    const toggleSeat = (seatNumber) => {
+      const button = seatMapRef.value?.querySelector(`button[data-seat="${seatNumber}"]`)
+      if (!button || button.classList.contains('sold')) return
+
+      const index = selectedSeats.value.indexOf(seatNumber)
+      if (index > -1) {
+        selectedSeats.value.splice(index, 1)
+        button.classList.remove('selected')
+        button.classList.add('available')
+        button.style.background = 'var(--seat-available)'
+      } else {
+        selectedSeats.value.push(seatNumber)
+        button.classList.remove('available')
+        button.classList.add('selected')
+        button.style.background = 'var(--seat-selected)'
+      }
+    }
+
+    const buyTickets = async () => {
+      if (!auth.isAuthenticated) {
+        alert('Для покупки билетов необходимо войти в аккаунт!')
+        return
+      }
+      if (selectedSeats.value.length === 0) {
+        alert('Выберите хотя бы одно место!')
+        return
+      }
+
+      try {
+        const user = JSON.parse(localStorage.getItem('user'))
+        const ticketData = {
+          eventId: props.event.id,
+          eventName: props.event.title,
+          userId: user.id,
+          seats: selectedSeats.value.join(', '),
+          totalPrice: selectedSeats.value.length * props.event.price,
+          status: 'active',
+          purchaseDate: new Date().toISOString().split('T')[0]
+        }
+
+        await fetch('http://localhost:3000/tickets', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(ticketData)
+        })
+
+        alert(`Билеты куплены!\nМеста: ${selectedSeats.value.join(', ')}\nСумма: ${formatPrice(ticketData.totalPrice)} ₽`)
+        emit('buy-tickets', ticketData)
+        closeModal()
+      } catch (error) {
+        alert('Ошибка покупки билетов')
+      }
+    }
+
+    const closeModal = () => {
+      emit('update:modelValue', false)
+      selectedSeats.value = []
+    }
+
+    onMounted(() => {
+      if (props.modelValue && props.event?.id) {
+        loadReviews()
+        generateSeatMap()
+      }
+    })
+
+    watch(() => props.modelValue, (newVal) => {
+      if (newVal && props.event?.id) {
+        loadReviews()
+        generateSeatMap()
+      }
+    })
+
+    watch(() => props.event?.id, (newId) => {
+      if (newId && props.modelValue) {
+        loadReviews()
+        generateSeatMap()
+      }
+    })
+
+    return {
+      seatMapRef,
+      selectedSeats,
+      reviews,
+      totalPrice,
+      formatPrice,
+      closeModal,
+      buyTickets
+    }
+  }
+}
+</script>
+
+<style scoped>
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.modal-content-wrapper {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  max-width: 1200px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+.modal-body {
+  padding: 1rem;
+}
+
+.image-section {
+  text-align: center !important;
+  margin-bottom: 1rem !important;
+}
+
+.image-section img {
+  display: inline-block !important;
+  max-height: 500px !important;
+  object-fit: contain !important;
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+  border: 3px solid var(--border-color) !important;
+  border-radius: 10px !important;
+}
+
+.info-section {
+  border: 3px solid var(--border-color) !important;
+  border-radius: 10px !important;
+  padding: 1rem !important;
+  background: var(--bg-secondary) !important;
+  margin-bottom: 1rem !important;
+}
+
+.info-section p {
+  margin-bottom: 0.5rem !important;
+}
+
+.seat-section {
+  border: 3px solid var(--border-color) !important;
+  border-radius: 10px !important;
+  padding: 1rem !important;
+  background: var(--bg-secondary) !important;
+  margin-bottom: 1rem !important;
+}
+
+.seat-map {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 20px;
+  background: transparent !important;
+  border-radius: 10px;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 200px;
+  border: 2px solid var(--border-color) !important;
+}
+
+.legend-seat {
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-right: 4px;
+  vertical-align: middle;
+  border: 1px solid var(--legend-border);
+}
+
+.legend-seat.available {
+  background: var(--seat-available) !important;
+}
+
+.legend-seat.selected {
+  background: var(--seat-selected) !important;
+}
+
+.legend-seat.sold {
+  background: var(--seat-sold) !important;
+}
+
+.reviews-section {
+  border: 3px solid var(--border-color) !important;
+  border-radius: 10px !important;
+  padding: 1rem !important;
+  background: var(--bg-secondary) !important;
+}
+
+.review-item {
+  border: 2px solid var(--border-light) !important;
+  border-radius: 8px !important;
+  padding: 0.75rem !important;
+  background: var(--bg-secondary) !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.price-section {
+  border: 3px solid var(--border-color) !important;
+  border-radius: 10px !important;
+  padding: 1.5rem !important;
+  background: var(--bg-secondary) !important;
+  text-align: center !important;
+}
+
+</style>
