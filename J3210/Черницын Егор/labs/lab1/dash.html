@@ -6,119 +6,148 @@
     <title>Главная - MFF</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/dark.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/theme_quickcheck.js"></script>
 </head>
-<body class="bg-light">
+<body>
 
-<nav class="navbar navbar-expand-lg shadow-sm bg-white">
-    <div class="container">
-        <a class="navbar-brand text-custom fw-bold d-flex align-items-center gap-2" href="dash.html">
-            <img class="nav-logo" src="imgs/1.png" alt="Логотип MFF" width="35">
-            <span class="fs-3 fw-bolder">MFF</span>
-            <img class="nav-logo" src="imgs/2.png" alt="Логотип MFF" width="35">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link active" href="dash.html">Главная</a></li>
-                <li class="nav-item"><a class="nav-link" href="transact.html">Транзакции</a></li>
-                <li class="nav-item"><a class="nav-link" href="accounts.html">Счета</a></li>
-            </ul>
-            <div class="d-flex">
-                <a href="login.html" class="btn btn-outline-custom btn-sm">Выйти</a>
+<header>
+    <nav class="navbar navbar-expand-lg shadow-sm">
+        <div class="container">
+            <a class="navbar-brand text-custom fw-bold d-flex align-items-center gap-2" href="dash.html">
+                <img class="nav-logo" src="imgs/1.png" alt="Логотип MFF" width="35">
+                <span class="fs-3 fw-bolder">MFF</span>
+                <img class="nav-logo" src="imgs/2.png" alt="Логотип MFF" width="35">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link active" href="dash.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="transact.html">Транзакции</a></li>
+                    <li class="nav-item"><a class="nav-link" href="accounts.html">Счета</a></li>
+                </ul>
+
+                <div class="d-flex align-items-center gap-3">
+                    <button id="themeToggle" class="theme-switch" aria-label="Переключить тему" title="Переключить тему">
+                        <span class="theme-switch__thumb"></span>
+                        <span class="theme-switch__icon theme-switch__icon--sun">
+                            <svg><use href="sprites/sprite.svg#icon-sun"></use></svg>
+                        </span>
+
+                        <span class="theme-switch__icon theme-switch__icon--moon">
+                            <svg><use href="sprites/sprite.svg#icon-moon"></use></svg>
+                        </span>
+                    </button>
+
+                    <a href="login.html" class="btn btn-outline-custom btn-sm">Выйти</a>
+                </div>
             </div>
         </div>
+    </nav>
+</header>
+
+<main>
+    <div class="container mt-4">
+        <section class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 mb-0">Обзор финансов</h1>
+
+            <div class="d-flex gap-3">
+                <span class="badge shadow-sm px-3 py-2 rounded-pill d-flex align-items-center gap-2 currency-badge" style="color: var(--text-main);">
+                    <img src="https://flagcdn.com/us.svg" width="22" class="rounded-1 shadow-sm" alt="US">
+
+                    <span class="d-flex align-items-center gap-1">
+                        <span id="usdRateDisplay" class="fw-bold">...</span>
+                        ₽
+                        <span id="usdTrend"></span>
+                    </span>
+                </span>
+
+                <span class="badge shadow-sm px-3 py-2 rounded-pill d-flex align-items-center gap-2 currency-badge" style="color: var(--text-main);">
+                    <img src="https://flagcdn.com/eu.svg" width="22" class="rounded-1 shadow-sm" alt="EU">
+
+                    <span class="d-flex align-items-center gap-1">
+                        <span id="eurRateDisplay" class="fw-bold">...</span>
+                        ₽
+                        <span id="eurTrend"></span>
+                    </span>
+                </span>
+            </div>
+        </section>
+
+        <section class="row mb-4">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="card text-white shadow-sm h-100 border-0 rounded-4 d-flex flex-column justify-content-center align-items-center p-4 bg-custom">
+                    <h2 class="h5 opacity-75 mb-2 fw-normal">Общий баланс</h2>
+                    <h1 id="totalBalance" class="display-6 fw-bold mb-0">0 ₽</h1>
+                    <span id="monthDiff" class="badge bg-white mt-3 rounded-pill px-3 py-2 fs-6 shadow-sm text-custom">
+                + 0 ₽ за этот месяц
+            </span>
+                </div>
+            </div>
+
+            <figure class="col-lg-4 mb-4 mb-lg-0">
+                <div class="card shadow-sm border-0 rounded-4 h-100 p-4">
+                    <div class="text-center mb-3">
+                        <figcaption class="text-muted small fw-bold text-uppercase mb-1 letter-spacing-1">Доходы</figcaption>
+                        <h2 id="totalIncome" class="fw-bolder mb-0">0 ₽</h2>
+                    </div>
+
+                    <div class="d-flex justify-content-center align-items-center chart-container">
+                        <canvas role="img" aria-label="График распределения доходов по категориям" id="incomeChart"></canvas>
+                    </div>
+                </div>
+            </figure>
+
+            <figure class="col-lg-4">
+                <div class="card shadow-sm border-0 rounded-4 h-100 p-4">
+                    <div class="text-center mb-3">
+                        <figcaption class="text-muted small fw-bold text-uppercase mb-1 letter-spacing-1">Расходы</figcaption>
+                        <h2 id="totalExpense" class="fw-bolder mb-0">0 ₽</h2>
+                    </div>
+
+                    <div class="d-flex justify-content-center align-items-center chart-container">
+                        <canvas role="img" aria-label="График распределения расходов по категориям" id="expensesChart"></canvas>
+                    </div>
+                </div>
+            </figure>
+        </section>
+
+        <section class="row">
+            <div class="col-lg-8 mb-4">
+                <div class="card shadow-sm border-0 rounded-4 h-100">
+                    <div class="card-header border-0 pt-4 pb-2 d-flex justify-content-between align-items-center">
+                        <h2 class="h5 mb-0">Последние операции</h2>
+                        <a href="transact.html" class="btn btn-sm btn-outline-secondary rounded-pill px-3">Смотреть все</a>
+                    </div>
+                    <div id="recentOps" class="card-body">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 mb-4">
+                <div class="card shadow-sm border-0 rounded-4 h-100 d-flex flex-column justify-content-center align-items-center p-4 text-center">
+                    <h2 class="h5 mb-2 fw-bold">Авто-импорт операций</h2>
+                    <p class="small text-muted mb-4">Подключите свой банк для автоматической загрузки транзакций и аналитики.</p>
+
+                    <button class="btn btn-custom w-100 rounded-pill py-2" data-bs-toggle="modal" data-bs-target="#addBankModal">
+                        Настроить интеграцию
+                    </button>
+                </div>
+            </div>
+        </section>
     </div>
-</nav>
-
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="mb-0">Обзор финансов</h3>
-
-        <div class="d-flex gap-3">
-        <span class="badge bg-white text-dark shadow-sm px-3 py-2 border border-light rounded-pill d-flex align-items-center gap-2 currency-badge">
-            <img src="https://flagcdn.com/us.svg" width="22" class="rounded-1 shadow-sm" alt="US">
-            <span>$ <span id="usdRateDisplay" class="fw-bold">...</span> ₽ <span id="usdTrend"></span></span>
-        </span>
-            <span class="badge bg-white text-dark shadow-sm px-3 py-2 border border-light rounded-pill d-flex align-items-center gap-2 currency-badge">
-            <img src="https://flagcdn.com/eu.svg" width="22" class="rounded-1 shadow-sm" alt="EU">
-            <span>€ <span id="eurRateDisplay" class="fw-bold">...</span> ₽ <span id="eurTrend"></span></span>
-        </span>
-        </div>
-    </div>
-
-    <div class="row mb-4">
-        <div class="col-lg-4 mb-4 mb-lg-0">
-            <div class="card text-white shadow-sm h-100 border-0 rounded-4 d-flex flex-column justify-content-center align-items-center p-4 bg-custom">
-                <h5 class="opacity-75 mb-2 fw-normal">Общий баланс</h5>
-                <h1 id="totalBalance" class="display-6 fw-bold mb-0">0 ₽</h1>
-                <span id="monthDiff" class="badge bg-white mt-3 rounded-pill px-3 py-2 fs-6 shadow-sm text-custom">
-            + 0 ₽ за этот месяц
-        </span>
-            </div>
-        </div>
-
-        <div class="col-lg-4 mb-4 mb-lg-0">
-            <div class="card shadow-sm border-0 rounded-4 h-100 p-4">
-                <div class="text-center mb-3">
-                    <div class="text-muted small fw-bold text-uppercase mb-1 letter-spacing-1">Доходы</div>
-                    <h2 id="totalIncome" class="fw-bolder mb-0 text-dark-custom">0 ₽</h2>
-                </div>
-
-                <div class="d-flex justify-content-center align-items-center chart-container">
-                    <canvas id="incomeChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4">
-            <div class="card shadow-sm border-0 rounded-4 h-100 p-4">
-                <div class="text-center mb-3">
-                    <div class="text-muted small fw-bold text-uppercase mb-1 letter-spacing-1">Расходы</div>
-                    <h2 id="totalExpense" class="fw-bolder mb-0 text-dark-custom">0 ₽</h2>
-                </div>
-
-                <div class="d-flex justify-content-center align-items-center chart-container">
-                    <canvas id="expensesChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-8 mb-4">
-            <div class="card shadow-sm border-0 rounded-4 h-100">
-                <div class="card-header bg-white border-0 pt-4 pb-2 d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Последние операции</h5>
-                    <a href="transact.html" class="btn btn-sm btn-outline-secondary rounded-pill px-3">Смотреть все</a>
-                </div>
-                <div id="recentOps" class="card-body">
-
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 mb-4">
-            <div class="card shadow-sm border-0 rounded-4 bg-white h-100 d-flex flex-column justify-content-center align-items-center p-4 text-center">
-                <h5 class="mb-2 fw-bold text-dark-custom">Авто-импорт операций</h5>
-                <p class="small text-muted mb-4">Подключите свой банк для автоматической загрузки транзакций и аналитики.</p>
-
-                <button class="btn btn-custom w-100 rounded-pill py-2" data-bs-toggle="modal" data-bs-target="#addBankModal">
-                    Настроить интеграцию
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+</main>
 
 <div class="modal fade" id="addBankModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content rounded-4 border-0 shadow-lg">
 
             <div class="modal-header border-bottom-0 pb-0 pt-4 px-4">
-                <h5 class="modal-title fw-bold text-dark-custom">Импорт операций</h5>
+                <h5 class="modal-title fw-bold">Импорт операций</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
 
@@ -128,7 +157,7 @@
 
                     <div class="mb-4">
                         <label class="form-label text-muted small fw-bold text-uppercase mb-1 letter-spacing-1">Выберите банк</label>
-                        <select class="form-select bg-light border-0">
+                        <select class="form-select border-0">
                             <option>Тинькофф</option>
                             <option>Сбербанк</option>
                             <option>Альфа-Банк</option>
@@ -138,7 +167,7 @@
 
                     <div class="mb-2">
                         <label class="form-label text-muted small fw-bold text-uppercase mb-1 letter-spacing-1">API Токен (Автоматически)</label>
-                        <input type="password" class="form-control bg-light border-0" placeholder="Вставьте ваш токен">
+                        <input type="password" class="form-control border-0" placeholder="Вставьте ваш токен">
                     </div>
 
                     <div class="d-flex align-items-center my-4">
@@ -149,8 +178,8 @@
 
                     <div class="mb-4">
                         <label class="form-label text-muted small fw-bold text-uppercase mb-1 letter-spacing-1">Загрузить выписку (Вручную)</label>
-                        <input class="form-control bg-light border-0 text-muted" type="file" id="statementFile" accept=".csv, .xls, .xlsx">
-                        <div class="form-text small mt-2">Поддерживаемые форматы: CSV или Excel.</div>
+                        <input class="form-control border-0 text-muted" type="file" id="statementFile" accept=".csv, .xls, .xlsx">
+                        <span class="form-text text-muted small mt-2">Поддерживаемые форматы: CSV или Excel.</span>
                     </div>
 
                     <button type="button" class="btn btn-custom w-100 py-3 rounded-pill fw-bold mt-2" data-bs-dismiss="modal">
@@ -162,8 +191,11 @@
         </div>
     </div>
 </div>
+
+<script src="js/theme.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="js/dash.js"></script>
+
 </body>
 </html>

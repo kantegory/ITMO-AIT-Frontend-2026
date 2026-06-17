@@ -27,9 +27,9 @@ async function loadDashboardData() {
                 if (!el) return;
 
                 if (current > prev) {
-                    el.innerHTML = '<span class="text-success ms-1 trend-icon">▲</span>';
+                    el.innerHTML = '<svg width="16" height="16" class="text-success"><use href="sprites/sprite.svg#icon-arrow-up"></use></svg>';
                 } else if (current < prev) {
-                    el.innerHTML = '<span class="text-danger ms-1 trend-icon">▼</span>';
+                    el.innerHTML = '<svg width="16" height="16" class="text-danger"><use href="sprites/sprite.svg#icon-arrow-down"></use></svg>';
                 }
             };
 
@@ -96,7 +96,7 @@ async function loadDashboardData() {
         <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
             <div class="d-flex align-items-center gap-3">
                 <div>
-                    <h6 class="mb-0 fw-bold">${t.description || t.type}</h6>
+                    <h2 class="h6 mb-0 fw-bold">${t.description || t.type}</h2>
                     <small class="text-muted">${t.date || 'Сегодня'} • ${t.category}</small>
                 </div>
             </div>
@@ -140,7 +140,7 @@ function drawChart(canvasId, dataObject, colors) {
             data.push(othersSum);
         }
     }
-
+    const clr = getComputedStyle(document.documentElement).getPropertyValue('--text-main').trim() === "#212529" ? "#212529" : "#f8f9fa"
     const commonChartOptions = {
         maintainAspectRatio: false,
         cutout: '65%',
@@ -150,7 +150,7 @@ function drawChart(canvasId, dataObject, colors) {
                 labels: {
                     usePointStyle: true,
                     padding: 20,
-                    color: '#4a4a4a',
+                    color: clr,
                     font: { size: 13, weight: 'bold' }
                 }
             }
