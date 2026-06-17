@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Обзор курса</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../UserCourses/AU-styles.css" />
+    <link rel="stylesheet" href="../theme.css" />
+    <link rel="stylesheet" href="preview.css" />
+    <script src="../theme-toggle.js"></script>
+</head>
+
+<body>
+
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <a href="../index.html" class="btn btn-outline-light me-3">
+                    <i class="bi bi-arrow-left me-1"></i>Назад
+                </a>
+                <a href="../index.html" class="d-flex text-white text-decoration-none me-auto">
+                    <img src="../images/logo.png" alt="Логотип" width="40" height="40" class="me-2">
+                </a>
+                <form class="d-none d-md-block me-3" role="search" style="width:260px">
+                    <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
+                        aria-label="Search">
+                </form>
+                <div class="text-end" id="authButtons">
+                    <a href="../signIn.html" class="btn btn-outline-light me-2">Login</a>
+                    <a href="../registration.html" class="btn btn-warning">Sign-up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="course-hero">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-7">
+                    <nav aria-label="breadcrumb" class="mb-2">
+                        <ol class="breadcrumb mb-0" style="--bs-breadcrumb-divider-color:rgba(255,255,255,.5)">
+                            <li class="breadcrumb-item"><a href="../index.html"
+                                    class="text-white-50 text-decoration-none">Главная</a></li>
+                            <li class="breadcrumb-item"><a href="../index.html"
+                                    class="text-white-50 text-decoration-none" id="heroCategoryLink">Программирование</a></li>
+                            <li class="breadcrumb-item active text-white" aria-current="page" id="heroTitle">Загрузка...</li>
+                        </ol>
+                    </nav>
+                    <h1 class="fw-bold mb-3" id="courseTitle">Загрузка...</h1>
+                    <p class="lead mb-3" style="opacity:.85" id="courseDesc"></p>
+                    <div class="d-flex flex-wrap gap-2 mb-3" id="courseInfo"></div>
+                    <div class="instructor-card" id="instructorCard"></div>
+                </div>
+                <div class="col-lg-5">
+                    <img src="" alt="" id="courseImage" style="display:none">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-8">
+
+                <div class="mb-5" id="learnSection" style="display:none">
+                    <h3 class="fw-bold mb-3">Чему вы научитесь</h3>
+                    <div class="row g-2" id="learnItems"></div>
+                </div>
+
+                <div class="mb-5">
+                    <h3 class="fw-bold mb-3">Содержание курса</h3>
+                    <p class="text-muted small mb-3" id="modulesInfo"></p>
+                    <div class="accordion module-accordion" id="courseModules"></div>
+                </div>
+
+                <div class="mb-5">
+                    <h3 class="fw-bold mb-3">Отзывы студентов</h3>
+                    <div class="row g-3" id="reviewsList">
+                        <div class="text-center py-3"><div class="spinner-border spinner-border-sm text-primary"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4" id="buyCardCol">
+                <div class="sticky-buy">
+                    <div class="buy-card">
+                        <div class="price mb-1" id="coursePrice">Загрузка...</div>
+                        <p class="small text-muted mb-3">Полный доступ ко всем материалам</p>
+                        <button class="btn btn-primary w-100 py-2 mb-3" id="enrollBtn" onclick="enrollCourse()" disabled>
+                            <i class="bi bi-cart-plus me-1"></i>Записаться на курс
+                        </button>
+                        <div id="enrollAlert" class="d-none"></div>
+                        <ul class="list-unstyled small mb-0" id="courseFeatures"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <footer class="py-3 my-4">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+            </ul>
+            <p class="text-center text-body-secondary">&copy; 2025 Company, Inc</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
+    <script src="../auth.js"></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const courseId = parseInt(params.get('id'));
+        let currentCourse = null;
+
+        function updateHeader() {
+            if (isLoggedIn()) {
+                const user = getUser();
+                const cabinetUrl = user && user.role === 'teacher'
+                    ? '../TeacherCourses/TeacherCourses.html'
+                    : '../UserCourses/View.html';
+                document.getElementById('authButtons').innerHTML = `
+                    <div class="d-flex align-items-center gap-2">
+                        <a href="${cabinetUrl}" class="btn btn-outline-light">
+                            <i class="bi bi-person-circle me-1"></i>Кабинет
+                        </a>
+                        <button class="btn btn-warning" onclick="logout()">Sign out</button>
+                    </div>
+                `;
+            }
+        }
+
+        function getLessonIcon(type) {
+            if (type === 'video') return '<i class="bi bi-play-circle text-primary"></i>';
+            if (type === 'quiz') return '<i class="bi bi-pencil-square text-info"></i>';
+            return '<i class="bi bi-file-text text-success"></i>';
+        }
+
+        function getStars(rating) {
+            let html = '';
+            for (let i = 1; i <= 5; i++) {
+                html += i <= rating
+                    ? '<i class="bi bi-star-fill"></i>'
+                    : '<i class="bi bi-star"></i>';
+            }
+            return html;
+        }
+
+        async function loadCourse() {
+            if (!courseId) {
+                document.getElementById('courseTitle').textContent = 'Курс не найден';
+                return;
+            }
+
+            try {
+                const response = await axios.get(`${API_URL}/courses/${courseId}`);
+                currentCourse = response.data;
+                renderCourse(currentCourse);
+                loadReviews();
+
+                const user = getUser();
+                if (user && user.role === 'teacher') {
+                    document.getElementById('buyCardCol').style.display = 'none';
+                } else {
+                    checkEnrollment();
+                }
+            } catch (err) {
+                console.error('Error:', err);
+                document.getElementById('courseTitle').textContent = 'Курс не найден';
+            }
+        }
+
+        function renderCourse(c) {
+            document.title = c.title + ' — Обзор курса';
+            document.getElementById('heroTitle').textContent = c.title;
+            document.getElementById('heroCategoryLink').textContent = c.category;
+            document.getElementById('courseTitle').textContent = c.title;
+            document.getElementById('courseDesc').textContent = c.fullDescription || c.shortDescription;
+
+            const img = document.getElementById('courseImage');
+            img.src = c.image;
+            img.alt = c.title;
+            img.style.display = 'block';
+            img.className = 'rounded';
+            img.style.width = '100%';
+            img.style.maxHeight = '320px';
+            img.style.objectFit = 'cover';
+            img.style.boxShadow = '0 8px 32px rgba(0,0,0,.35)';
+
+            document.getElementById('courseInfo').innerHTML = `
+                <span class="info-badge"><i class="bi bi-star-fill text-warning"></i> ${c.rating} (${c.reviewsCount} отзывов)</span>
+                <span class="info-badge"><i class="bi bi-people"></i> ${c.studentsCount} студентов</span>
+                <span class="info-badge"><i class="bi bi-clock"></i> ${c.duration}</span>
+                <span class="info-badge"><i class="bi bi-translate"></i> ${c.language}</span>
+            `;
+
+            document.getElementById('instructorCard').innerHTML = `
+                <img src="../images/jinx.png" alt="Преподаватель">
+                <div>
+                    <div class="fw-semibold">${c.teacherName}</div>
+                    <div class="small" style="opacity:.7">${c.category}</div>
+                </div>
+            `;
+
+            document.getElementById('coursePrice').textContent = c.price === 0 ? 'Бесплатно' : c.price + ' ₽';
+
+            const totalLessons = c.modules ? c.modules.reduce((sum, m) => sum + m.lessons.length, 0) : c.lessonsTotal;
+            document.getElementById('courseFeatures').innerHTML = `
+                <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>${totalLessons} уроков</li>
+                <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>${c.duration} видео</li>
+                ${c.hasCertificate ? '<li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>Сертификат по окончании</li>' : ''}
+                <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>Пожизненный доступ</li>
+                <li><i class="bi bi-check2 text-success me-2"></i>Поддержка преподавателя</li>
+            `;
+
+            if (c.modules && c.modules.length > 0) {
+                const totalModules = c.modules.length;
+                const totalModuleLessons = c.modules.reduce((sum, m) => sum + m.lessons.length, 0);
+                document.getElementById('modulesInfo').textContent =
+                    `${totalModules} модулей • ${totalModuleLessons} уроков • ${c.duration}`;
+
+                document.getElementById('courseModules').innerHTML = c.modules.map((mod, idx) => `
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button ${idx > 0 ? 'collapsed' : ''}" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#mod${mod.id}">
+                                Модуль ${idx + 1}: ${mod.title}
+                                <span class="badge bg-secondary ms-auto me-2">${mod.lessons.length} уроков</span>
+                            </button>
+                        </h2>
+                        <div id="mod${mod.id}" class="accordion-collapse collapse ${idx === 0 ? 'show' : ''}"
+                            data-bs-parent="#courseModules">
+                            <div class="accordion-body p-0">
+                                ${mod.lessons.map(lesson => `
+                                    <div class="lesson-item border-bottom">
+                                        ${getLessonIcon(lesson.type)} ${lesson.title}
+                                        <span class="ms-auto small text-muted">${lesson.duration}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('modulesInfo').textContent = 'Содержание пока не заполнено';
+            }
+
+            document.getElementById('enrollBtn').disabled = false;
+        }
+
+        async function loadReviews() {
+            try {
+                const response = await axios.get(`${API_URL}/reviews`, { params: { courseId } });
+                const reviews = response.data;
+
+                if (reviews.length === 0) {
+                    document.getElementById('reviewsList').innerHTML = '<p class="text-muted">Пока нет отзывов</p>';
+                    return;
+                }
+
+                document.getElementById('reviewsList').innerHTML = reviews.map(r => `
+                    <div class="col-md-6">
+                        <div class="review-card">
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <div class="review-avatar">${r.userName.charAt(0)}</div>
+                                <div>
+                                    <div class="fw-semibold small">${r.userName}</div>
+                                    <div class="rating-stars small">${getStars(r.rating)}</div>
+                                </div>
+                            </div>
+                            <p class="small mb-0">${r.text}</p>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error('Reviews error:', err);
+            }
+        }
+
+        async function checkEnrollment() {
+            if (!isLoggedIn()) return;
+
+            const user = getUser();
+            try {
+                const resp = await axios.get(`${API_URL}/users/${user.id}`);
+                const userData = resp.data;
+                const enrolled = userData.enrolledCourses || [];
+
+                if (enrolled.includes(courseId)) {
+                    const btn = document.getElementById('enrollBtn');
+                    btn.innerHTML = '<i class="bi bi-play-fill me-1"></i>Перейти к обучению';
+                    btn.classList.remove('btn-primary');
+                    btn.classList.add('btn-success');
+                    btn.disabled = false;
+                    btn.onclick = function () {
+                        window.location.href = 'CourseView.html?id=' + courseId;
+                    };
+
+                    const alertDiv = document.getElementById('enrollAlert');
+                    alertDiv.className = 'small text-success mt-2';
+                    alertDiv.innerHTML = '<i class="bi bi-check-circle me-1"></i>Вы записаны на этот курс';
+                }
+            } catch (err) {
+                console.error('Check enrollment error:', err);
+            }
+        }
+
+        async function enrollCourse() {
+            if (!isLoggedIn()) {
+                window.location.href = '../signIn.html';
+                return;
+            }
+
+            const user = getUser();
+            const btn = document.getElementById('enrollBtn');
+            const alertDiv = document.getElementById('enrollAlert');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Записываем...';
+
+            try {
+                const userResp = await axios.get(`${API_URL}/users/${user.id}`);
+                const userData = userResp.data;
+                const enrolled = userData.enrolledCourses || [];
+
+                if (enrolled.includes(courseId)) {
+                    btn.textContent = 'Вы уже записаны';
+                    btn.classList.remove('btn-primary');
+                    btn.classList.add('btn-success');
+                    return;
+                }
+
+                enrolled.push(courseId);
+                await axios.patch(`${API_URL}/users/${user.id}`, {
+                    enrolledCourses: enrolled
+                });
+
+                if (currentCourse) {
+                    await axios.patch(`${API_URL}/courses/${courseId}`, {
+                        studentsCount: (currentCourse.studentsCount || 0) + 1
+                    });
+                }
+
+                btn.innerHTML = '<i class="bi bi-check-lg me-1"></i>Вы записаны!';
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-success');
+
+                alertDiv.className = 'alert alert-success mt-2';
+                alertDiv.innerHTML = 'Курс добавлен! <a href="CourseView.html?id=' + courseId + '" class="alert-link fw-bold">Начать обучение →</a>';
+
+            } catch (err) {
+                console.error('Enroll error:', err);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bi bi-cart-plus me-1"></i>Записаться на курс';
+
+                alertDiv.className = 'alert alert-danger mt-2';
+                alertDiv.textContent = 'Ошибка записи. Попробуйте ещё раз.';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateHeader();
+            loadCourse();
+        });
+    </script>
+</body>
+
+</html>
