@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Красная нить | Кабинет администрации</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-role="admin">
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="container py-3">
+        <nav class="navbar navbar-expand-lg p-0">
+          <a class="navbar-brand" href="index.html">
+            <span class="brand-lockup">
+              <img class="brand-mark" src="assets/img/logo_header.svg" alt="Логотип Красной нити">
+              <span class="brand-text">
+                <span class="brand-title">Красная нить</span>
+                <span class="brand-caption">кабинет администрации</span>
+              </span>
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNav" aria-controls="siteNav" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse mt-3 mt-lg-0" id="siteNav">
+            <ul class="navbar-nav ms-auto gap-lg-2 align-items-lg-center">
+              <li class="nav-item"><a class="nav-link active" href="admin.html">Кабинет</a></li>
+              <li class="nav-item"><a class="nav-link" href="archive.html">Архив</a></li>
+              <li class="nav-item"><a class="nav-link" href="search.html">Помещения</a></li>
+              <li class="nav-item"><a class="nav-link" href="index.html" data-logout>Выход</a></li>
+              <li class="nav-item">
+                <button class="btn btn-soft notification-trigger" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminAlerts" aria-controls="adminAlerts">
+                  Уведомления
+                  <span class="notification-badge-dot" aria-hidden="true"></span>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container py-4 py-lg-5">
+      <section class="hero-card mb-4">
+        <div class="row g-4 align-items-end">
+          <div class="col-lg-7">
+            <span class="eyebrow">Администрация</span>
+            <h1>Работа с арендаторами и документами</h1>
+            <p class="section-text">Здесь только базовые действия: проверить показания, обработать входящие документы и отправить новый файл в кабинет арендатора.</p>
+          </div>
+          <div class="col-lg-5">
+            <div class="stat-grid">
+              <div class="stat-card">
+                <strong>12</strong>
+                <span>показаний на проверке</span>
+              </div>
+              <div class="stat-card">
+                <strong>8</strong>
+                <span>новых файлов сегодня</span>
+              </div>
+              <div class="stat-card">
+                <strong>3</strong>
+                <span>помещения в резерве</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="row g-4">
+        <div class="col-xl-8">
+          <section class="page-card mb-4">
+            <span class="eyebrow text-dark">Показания</span>
+            <h2 class="section-title">Проверка счетчиков</h2>
+            <div class="table-responsive mt-3">
+              <table class="table data-table align-middle">
+                <thead>
+                  <tr>
+                    <th>Помещение</th>
+                    <th>Арендатор</th>
+                    <th>Показания</th>
+                    <th>Статус</th>
+                    <th>Действие</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>3.18</td>
+                    <td>ООО «Северная линия»</td>
+                    <td>1540 кВт·ч / 36 м³ / 4.2 Гкал</td>
+                    <td><span class="badge app-badge status-pending" data-reading-status>Нужно проверить</span></td>
+                    <td><button class="btn btn-brand btn-sm" type="button" data-review-reading="для помещения 3.18">Проверить</button></td>
+                  </tr>
+                  <tr>
+                    <td>2.11</td>
+                    <td>ИП Волкова</td>
+                    <td>982 кВт·ч / 18 м³ / 2.1 Гкал</td>
+                    <td><span class="badge app-badge status-pending" data-reading-status>Нужно проверить</span></td>
+                    <td><button class="btn btn-outline-brand btn-sm" type="button" data-review-reading="для помещения 2.11">Проверить</button></td>
+                  </tr>
+                  <tr>
+                    <td>4.07</td>
+                    <td>ООО «Сфера»</td>
+                    <td>1278 кВт·ч / 24 м³ / 3.6 Гкал</td>
+                    <td><span class="badge app-badge status-accepted" data-reading-status>Проверено</span></td>
+                    <td><button class="btn btn-outline-brand btn-sm" type="button" disabled>Готово</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="page-card mb-4">
+            <span class="eyebrow text-dark">Входящие</span>
+            <h2 class="section-title">Документы от арендаторов</h2>
+            <div class="table-responsive mt-3">
+              <table class="table data-table align-middle">
+                <thead>
+                  <tr>
+                    <th>Документ</th>
+                    <th>Арендатор</th>
+                    <th>Статус</th>
+                    <th>Комментарий</th>
+                    <th>Действие</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-current-status="review">
+                    <td>Заявка на пропуск подрядчика.pdf</td>
+                    <td>ООО «Северная линия»</td>
+                    <td><span class="badge app-badge status-pending" data-status-badge>На проверке</span></td>
+                    <td class="text-body-secondary small" data-status-note>Проверка службы эксплуатации.</td>
+                    <td>
+                      <button class="btn btn-brand btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#processModal" data-process-document="Заявка на пропуск подрядчика.pdf">Обработать</button>
+                    </td>
+                  </tr>
+                  <tr data-current-status="received">
+                    <td>Письмо по перепланировке.docx</td>
+                    <td>ООО «Сфера»</td>
+                    <td><span class="badge app-badge status-received" data-status-badge>Получено</span></td>
+                    <td class="text-body-secondary small" data-status-note>Нужно согласование юриста.</td>
+                    <td>
+                      <button class="btn btn-outline-brand btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#processModal" data-process-document="Письмо по перепланировке.docx">Обработать</button>
+                    </td>
+                  </tr>
+                  <tr data-current-status="accepted">
+                    <td>Акт оказанных услуг за февраль.pdf</td>
+                    <td>ИП Волкова</td>
+                    <td><span class="badge app-badge status-accepted" data-status-badge>Принято</span></td>
+                    <td class="text-body-secondary small" data-status-note>Передано в бухгалтерию.</td>
+                    <td>
+                      <button class="btn btn-outline-brand btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#processModal" data-process-document="Акт оказанных услуг за февраль.pdf">Обработать</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="page-card">
+            <span class="eyebrow text-dark">Исходящие</span>
+            <h2 class="section-title">Отправить документ арендатору</h2>
+            <form class="row g-3 mt-1" id="publishForm">
+              <div class="col-md-4">
+                <label class="form-label" for="publishTenant">Арендатор</label>
+                <select class="form-select" id="publishTenant" required>
+                  <option value="">Выберите арендатора</option>
+                  <option>ООО «Северная линия»</option>
+                  <option>ООО «Сфера»</option>
+                  <option>ИП Волкова</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="publishType">Тип документа</label>
+                <select class="form-select" id="publishType" required>
+                  <option value="">Выберите тип</option>
+                  <option>Счет</option>
+                  <option>Договор</option>
+                  <option>Допсоглашение</option>
+                  <option>Акт</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="publishDeadline">Срок подписи</label>
+                <input class="form-control" id="publishDeadline" type="date">
+              </div>
+              <div class="col-md-8">
+                <label class="form-label" for="publishFile">Файл</label>
+                <input class="form-control" id="publishFile" type="file" required>
+              </div>
+              <div class="col-md-4 d-flex align-items-end">
+                <button class="btn btn-brand w-100" type="submit">Отправить</button>
+              </div>
+            </form>
+
+            <div class="page-card compact mt-4">
+              <span class="eyebrow text-dark">Последние отправки</span>
+              <ul class="outbox-list mb-0" id="adminOutbox">
+                <li>
+                  <strong>Счет за март.pdf</strong>
+                  <span>Отправлено для ООО «Северная линия» 12.03.2026.</span>
+                </li>
+                <li>
+                  <strong>Допсоглашение № 3.pdf</strong>
+                  <span>Ожидает подписи арендатора до 18.03.2026.</span>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </div>
+
+        <div class="col-xl-4">
+          <section class="page-card mb-4">
+            <span class="eyebrow text-dark">Сводка</span>
+            <h2 class="section-title">Коротко по дню</h2>
+            <ul class="info-list mt-3">
+              <li>5 документов ждут подписи.</li>
+              <li>4 помещения есть в публичном каталоге.</li>
+              <li>3 новых заявки на просмотр за неделю.</li>
+            </ul>
+            <a class="btn btn-outline-brand mt-3" href="search.html">Открыть витрину помещений</a>
+          </section>
+
+          <section class="page-card">
+            <span class="eyebrow text-dark">Контакты</span>
+            <h2 class="section-title">Отделы</h2>
+            <ul class="info-list mt-3">
+              <li>Юристы: legal@krnit.ru</li>
+              <li>Бухгалтерия: finance@krnit.ru</li>
+              <li>Приемная: +7 (812) 612-87-34</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container py-4">
+        <div class="footer-grid">
+          <div>
+            <div class="brand-lockup">
+              <img class="brand-mark" src="assets/img/logo_header.svg" alt="Логотип Красной нити">
+              <span class="brand-text">
+                <span class="brand-title">Красная нить</span>
+                <span class="brand-caption text-white-50">портал арендаторов</span>
+              </span>
+            </div>
+          </div>
+          <div>
+            <div class="footer-title">Контакты</div>
+            <p class="mb-1">Санкт-Петербург, Гельсингфорссская, 3</p>
+            <p class="mb-1"><a href="tel:+78126128734">+7 (812) 612-87-34</a></p>
+            <p class="mb-0"><a href="mailto:arenda@krnit.ru">arenda@krnit.ru</a></p>
+          </div>
+          <div>
+            <div class="footer-title">Разделы</div>
+            <ul class="footer-links">
+              <li><a href="archive.html">Архив</a></li>
+              <li><a href="search.html">Помещения</a></li>
+              <li><a href="index.html" data-logout>Выход</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-note">© <span data-current-year></span> Красная нить</div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="adminAlerts" aria-labelledby="adminAlertsLabel">
+    <div class="offcanvas-header">
+      <h2 class="offcanvas-title fs-4" id="adminAlertsLabel">Уведомления</h2>
+      <button class="btn-close" type="button" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="list-group status-feed">
+        <div class="list-group-item">
+          <div class="notification-entry">
+            <span class="notification-dot" aria-hidden="true"></span>
+            <div>
+              <div class="fw-semibold">15 марта</div>
+              <div class="text-body-secondary small">Поступили новые показания по помещениям 3.18 и 2.11.</div>
+            </div>
+          </div>
+        </div>
+        <div class="list-group-item">
+          <div class="notification-entry">
+            <span class="notification-dot" aria-hidden="true"></span>
+            <div>
+              <div class="fw-semibold">14 марта</div>
+              <div class="text-body-secondary small">Письмо по перепланировке ждет согласования.</div>
+            </div>
+          </div>
+        </div>
+        <div class="list-group-item">
+          <div class="notification-entry is-read">
+            <span class="notification-dot" aria-hidden="true"></span>
+            <div>
+              <div class="fw-semibold">12 марта</div>
+              <div class="text-body-secondary small">Счета за март размещены в кабинетах арендаторов.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="processModal" tabindex="-1" aria-labelledby="processModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-4" id="processModalLabel">Обработка документа</h2>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <form id="processForm">
+          <div class="modal-body">
+            <p class="mb-3">Документ: <strong id="processDocumentName">Документ</strong></p>
+            <div class="mb-3">
+              <label class="form-label" for="processStatus">Статус</label>
+              <select class="form-select" id="processStatus">
+                <option value="received">Получено</option>
+                <option value="review">На проверке</option>
+                <option value="accepted">Принято</option>
+                <option value="rejected">Отклонено</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" for="processComment">Комментарий</label>
+              <textarea class="form-control" id="processComment" rows="3" placeholder="Например: приложите подписанную версию"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-outline-brand" type="button" data-bs-dismiss="modal">Отмена</button>
+            <button class="btn btn-brand" type="submit">Сохранить</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div class="toast app-toast border-0" id="actionToast" role="status" aria-live="polite" aria-atomic="true">
+      <div class="toast-body" id="actionToastMessage">Действие выполнено.</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
