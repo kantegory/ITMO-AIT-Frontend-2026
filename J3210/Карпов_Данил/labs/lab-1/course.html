@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Страница курса на платформе Minion Courses. Подробная информация, программа и запись на курс.">
+    <title>Курс - Minion Courses</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <a href="#main-content" class="visually-hidden-focusable btn btn-primary position-absolute top-0 start-0 m-2">
+        Перейти к основному содержимому
+    </a>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" role="navigation" aria-label="Основная навигация">
+        <div class="container">
+            <a class="navbar-brand" href="index.html" aria-label="Minion Courses — на главную">
+                <i class="bi bi-mortarboard-fill" aria-hidden="true"></i> <span class="brand-minion">Minion</span> <span class="brand-courses">Courses</span>
+            </a>
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Открыть меню навигации">
+                <span class="navbar-toggler-icon" aria-hidden="true"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto" role="list">
+                    <li class="nav-item" role="listitem">
+                        <a class="nav-link" href="search.html">Каталог</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <button class="theme-toggle btn btn-link p-0 border-0"
+                            onclick="toggleTheme()"
+                            aria-label="Переключить тему оформления"
+                            title="Переключить тему">
+                        <i class="bi bi-moon-fill" id="themeIcon" aria-hidden="true"></i>
+                    </button>
+                    <!-- Кнопки для неавторизованных -->
+                    <div id="authButtons" class="d-flex gap-2" role="group" aria-label="Действия авторизации">
+                        <a href="login.html" class="btn btn-outline-primary btn-sm">Войти</a>
+                        <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
+                    </div>
+                    <!-- Дропдаун для авторизованных -->
+                    <div id="userDropdown" class="dropdown d-none">
+                        <button type="button" class="btn btn-link d-flex align-items-center text-decoration-none dropdown-toggle p-0 border-0"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false"
+                           aria-label="Меню пользователя">
+                            <i class="bi bi-person-circle fs-4 me-2" aria-hidden="true"></i>
+                            <span id="userDropdownName" class="d-none d-md-inline"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" role="menu">
+                            <li role="none"><a class="dropdown-item" href="profile.html" role="menuitem"><i class="bi bi-person me-2" aria-hidden="true"></i>Мой профиль</a></li>
+                            <li role="none"><hr class="dropdown-divider" aria-hidden="true"></li>
+                            <li role="none"><a class="dropdown-item text-danger" href="#" role="menuitem" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="bi bi-box-arrow-right me-2" aria-hidden="true"></i>Выйти</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-4" id="main-content">
+
+        <!-- Ошибка загрузки -->
+        <div id="courseError" class="alert alert-warning d-none" role="alert">
+            <i class="bi bi-exclamation-triangle me-2" aria-hidden="true"></i>
+            Не удалось загрузить данные курса. <a href="search.html">Вернуться в каталог</a>
+        </div>
+
+        <!-- Скелетон -->
+        <div id="courseLoading" class="row" role="status" aria-label="Загрузка данных курса">
+            <div class="col-lg-8">
+                <div class="skeleton-line w-25 mb-3" style="height:12px;" aria-hidden="true"></div>
+                <div class="skeleton-line w-75 mb-2" style="height:32px;" aria-hidden="true"></div>
+                <div class="skeleton-line w-50 mb-4" style="height:16px;" aria-hidden="true"></div>
+                <div class="skeleton-img mb-4" style="height:360px; border-radius:0.5rem;" aria-hidden="true"></div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card p-4">
+                    <div class="skeleton-img mb-3" style="height:180px;" aria-hidden="true"></div>
+                    <div class="skeleton-line w-50 mb-3" style="height:28px;" aria-hidden="true"></div>
+                    <div class="skeleton-line mb-2" aria-hidden="true"></div>
+                    <div class="skeleton-line mb-4" aria-hidden="true"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Основной контент курса -->
+        <div id="courseContent" class="row d-none">
+            <div class="col-lg-8">
+                <nav aria-label="Хлебные крошки" class="mb-3">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="search.html">Каталог</a></li>
+                        <li class="breadcrumb-item active" id="breadcrumbTitle" aria-current="page">—</li>
+                    </ol>
+                </nav>
+
+                <h1 class="mb-3" id="courseTitle">—</h1>
+
+                <div class="d-flex align-items-center gap-3 mb-4 flex-wrap">
+                    <div class="rating" id="courseStars" role="img" aria-label="Рейтинг курса"></div>
+                    <span class="text-muted" id="courseRatingText"></span>
+                    <span class="text-muted" aria-hidden="true">|</span>
+                    <span class="text-muted"><i class="bi bi-people me-1" aria-hidden="true"></i><span id="courseStudents"></span> студентов</span>
+                    <span class="text-muted" aria-hidden="true">|</span>
+                    <span class="badge bg-secondary" id="courseLevelBadge"></span>
+                </div>
+
+                <div class="video-container mb-4">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                            title="Видео курса"
+                            allowfullscreen
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            loading="lazy"></iframe>
+                </div>
+
+                <ul class="nav nav-tabs mb-4" role="tablist" aria-label="Разделы курса">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active"
+                                id="tab-overview"
+                                data-bs-toggle="tab"
+                                data-bs-target="#overview"
+                                type="button"
+                                role="tab"
+                                aria-controls="overview"
+                                aria-selected="true">Обзор</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link"
+                                id="tab-content"
+                                data-bs-toggle="tab"
+                                data-bs-target="#content"
+                                type="button"
+                                role="tab"
+                                aria-controls="content"
+                                aria-selected="false">Содержание</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link"
+                                id="tab-discussion"
+                                data-bs-toggle="tab"
+                                data-bs-target="#discussion"
+                                type="button"
+                                role="tab"
+                                aria-controls="discussion"
+                                aria-selected="false">Обсуждение</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane fade show active"
+                         id="overview"
+                         role="tabpanel"
+                         aria-labelledby="tab-overview">
+                        <h2 class="h4">О курсе</h2>
+                        <p id="courseDescription" class="lead"></p>
+
+                        <h3 class="h5 mt-4">Чему вы научитесь:</h3>
+                        <ul>
+                            <li>Основы синтаксиса и структуры программ</li>
+                            <li>Работа с переменными и типами данных</li>
+                            <li>Условия, циклы и функции</li>
+                            <li>Практические проекты и задания</li>
+                            <li>Получение сертификата по окончании</li>
+                        </ul>
+
+                        <h3 class="h5 mt-4">Преподаватель</h3>
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-person-circle text-primary" style="font-size:3rem;" aria-hidden="true"></i>
+                            <div>
+                                <h4 class="h6 mb-0" id="courseTeacher">—</h4>
+                                <small class="text-muted">Преподаватель курса</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade"
+                         id="content"
+                         role="tabpanel"
+                         aria-labelledby="tab-content">
+                        <div class="accordion" id="courseContentAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-module1">
+                                    <button class="accordion-button" type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#module1"
+                                            aria-expanded="true"
+                                            aria-controls="module1">
+                                        Модуль 1: Введение
+                                    </button>
+                                </h2>
+                                <div id="module1"
+                                     class="accordion-collapse collapse show"
+                                     data-bs-parent="#courseContentAccordion"
+                                     aria-labelledby="heading-module1">
+                                    <div class="accordion-body">
+                                        <ul class="list-unstyled">
+                                            <li class="py-2 border-bottom"><i class="bi bi-play-circle me-2 text-primary" aria-hidden="true"></i>Урок 1: Знакомство с курсом</li>
+                                            <li class="py-2 border-bottom"><i class="bi bi-play-circle me-2 text-primary" aria-hidden="true"></i>Урок 2: Установка инструментов</li>
+                                            <li class="py-2"><i class="bi bi-file-text me-2 text-success" aria-hidden="true"></i>Задание: Первые шаги</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-module2">
+                                    <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#module2"
+                                            aria-expanded="false"
+                                            aria-controls="module2">
+                                        Модуль 2: Основные концепции
+                                    </button>
+                                </h2>
+                                <div id="module2"
+                                     class="accordion-collapse collapse"
+                                     data-bs-parent="#courseContentAccordion"
+                                     aria-labelledby="heading-module2">
+                                    <div class="accordion-body">
+                                        <ul class="list-unstyled">
+                                            <li class="py-2 border-bottom"><i class="bi bi-play-circle me-2 text-primary" aria-hidden="true"></i>Урок 3: Переменные и типы</li>
+                                            <li class="py-2 border-bottom"><i class="bi bi-play-circle me-2 text-primary" aria-hidden="true"></i>Урок 4: Управляющие конструкции</li>
+                                            <li class="py-2"><i class="bi bi-file-text me-2 text-success" aria-hidden="true"></i>Задание: Практика</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-module3">
+                                    <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#module3"
+                                            aria-expanded="false"
+                                            aria-controls="module3">
+                                        Модуль 3: Продвинутые темы
+                                    </button>
+                                </h2>
+                                <div id="module3"
+                                     class="accordion-collapse collapse"
+                                     data-bs-parent="#courseContentAccordion"
+                                     aria-labelledby="heading-module3">
+                                    <div class="accordion-body">
+                                        <ul class="list-unstyled">
+                                            <li class="py-2 border-bottom"><i class="bi bi-play-circle me-2 text-primary" aria-hidden="true"></i>Урок 5: Функции и модули</li>
+                                            <li class="py-2 border-bottom"><i class="bi bi-play-circle me-2 text-primary" aria-hidden="true"></i>Урок 6: Финальный проект</li>
+                                            <li class="py-2"><i class="bi bi-award me-2 text-warning" aria-hidden="true"></i>Получение сертификата</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade"
+                         id="discussion"
+                         role="tabpanel"
+                         aria-labelledby="tab-discussion">
+                        <section aria-labelledby="comment-form-heading">
+                            <h2 class="h5 visually-hidden" id="comment-form-heading">Написать комментарий</h2>
+                            <div class="mb-4">
+                                <label for="commentText" class="visually-hidden">Текст комментария</label>
+                                <textarea class="form-control mb-2" rows="3"
+                                          placeholder="Напишите комментарий..."
+                                          id="commentText"
+                                          aria-label="Текст комментария"
+                                          aria-describedby="comment-hint"></textarea>
+                                <p id="comment-hint" class="visually-hidden">Введите текст и нажмите «Отправить»</p>
+                                <button class="btn btn-primary btn-sm" onclick="postComment()" aria-label="Отправить комментарий">
+                                    <i class="bi bi-send me-1" aria-hidden="true"></i>Отправить
+                                </button>
+                            </div>
+                        </section>
+
+                        <section aria-labelledby="comments-heading">
+                            <h2 class="h5 visually-hidden" id="comments-heading">Комментарии</h2>
+
+                            <article class="card p-3 mb-3">
+                                <div class="d-flex gap-3">
+                                    <i class="bi bi-person-circle text-primary" style="font-size:2rem;" aria-hidden="true"></i>
+                                    <div>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <strong>Мария С.</strong>
+                                            <small class="text-muted"><time datetime="2026-03-31">2 дня назад</time></small>
+                                        </div>
+                                        <p class="mb-0 mt-1">Отличный курс! Всё понятно объясняется.</p>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article class="card p-3">
+                                <div class="d-flex gap-3">
+                                    <i class="bi bi-person-circle text-primary" style="font-size:2rem;" aria-hidden="true"></i>
+                                    <div>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <strong>Дмитрий К.</strong>
+                                            <small class="text-muted"><time datetime="2026-03-28">5 дней назад</time></small>
+                                        </div>
+                                        <p class="mb-0 mt-1">Очень полезный материал, рекомендую!</p>
+                                    </div>
+                                </div>
+                            </article>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Боковая панель -->
+            <aside class="col-lg-4" aria-label="Информация о курсе и запись">
+                <div class="card p-4 sticky-top" style="top: 1rem;">
+                    <img id="courseSideImage" src="" class="rounded mb-3" alt=""
+                         onerror="this.src='https://placehold.co/400x200/6610f2/white?text=Course'">
+
+                    <div id="coursePriceBlock" class="mb-3" aria-live="polite"></div>
+
+                    <!-- Кнопка записи -->
+                    <div id="enrollBlock">
+                        <button id="enrollBtn" class="btn btn-primary w-100 mb-2" onclick="handleEnroll()" aria-live="polite">
+                            <span id="enrollBtnText">Записаться на курс</span>
+                            <span id="enrollBtnSpinner" class="spinner-border spinner-border-sm d-none ms-2"
+                                  role="status"
+                                  aria-label="Выполняется запись на курс..."></span>
+                        </button>
+                    </div>
+
+                    <button class="btn btn-outline-primary w-100 mb-3"
+                            data-bs-toggle="modal"
+                            data-bs-target="#previewModal"
+                            aria-haspopup="dialog">
+                        <i class="bi bi-play-circle me-1" aria-hidden="true"></i>Предпросмотр
+                    </button>
+
+                    <hr aria-hidden="true">
+
+                    <ul class="list-unstyled" aria-label="Характеристики курса">
+                        <li class="mb-2"><i class="bi bi-clock me-2 text-primary" aria-hidden="true"></i><span id="courseDuration">—</span></li>
+                        <li class="mb-2"><i class="bi bi-file-text me-2 text-primary" aria-hidden="true"></i><span id="courseLessons">—</span> уроков</li>
+                        <li class="mb-2"><i class="bi bi-infinity me-2 text-primary" aria-hidden="true"></i>Бессрочный доступ</li>
+                        <li class="mb-2"><i class="bi bi-phone me-2 text-primary" aria-hidden="true"></i>Доступ с мобильных</li>
+                        <li><i class="bi bi-award me-2 text-primary" aria-hidden="true"></i>Сертификат по окончании</li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Модалка предпросмотра -->
+    <div class="modal fade" id="previewModal" tabindex="-1"
+         role="dialog"
+         aria-labelledby="previewModalLabel"
+         aria-modal="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="previewModalLabel">Предпросмотр курса</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть предпросмотр"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                                title="Предпросмотр курса"
+                                allowfullscreen
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модалка выхода -->
+    <div class="modal fade" id="logoutModal" tabindex="-1"
+         role="dialog"
+         aria-labelledby="logoutModalLabel"
+         aria-describedby="logoutModalDesc"
+         aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Выход</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть диалог выхода"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="logoutModalDesc">Вы уверены, что хотите выйти из аккаунта?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" id="logoutConfirmBtn">Выйти</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        let currentCourse = null;
+
+        // Генерация звёзд
+        function renderStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (rating >= i) stars += '<i class="bi bi-star-fill" aria-hidden="true"></i>';
+                else if (rating >= i - 0.5) stars += '<i class="bi bi-star-half" aria-hidden="true"></i>';
+                else stars += '<i class="bi bi-star" aria-hidden="true"></i>';
+            }
+            return stars;
+        }
+
+        // Уровень курса
+        function levelLabel(level) {
+            const map = { beginner: 'Начинающий', intermediate: 'Средний', advanced: 'Продвинутый' };
+            return map[level] || level;
+        }
+
+        // Загрузка курса из API
+        async function loadCourse() {
+            const params = new URLSearchParams(window.location.search);
+            const courseId = params.get('id') || 1;
+
+            const loadingEl = document.getElementById('courseLoading');
+            const contentEl = document.getElementById('courseContent');
+            const errorEl = document.getElementById('courseError');
+
+            try {
+                const course = await apiFetch(`/courses/${courseId}`);
+                currentCourse = course;
+
+                // Заполняем данные
+                document.title = `${course.title} - Minion Courses`;
+                document.getElementById('breadcrumbTitle').textContent = course.title;
+                document.getElementById('courseTitle').textContent = course.title;
+                document.getElementById('courseDescription').textContent = course.description;
+
+                const starsEl = document.getElementById('courseStars');
+                starsEl.innerHTML = renderStars(course.rating);
+                starsEl.setAttribute('aria-label', `Рейтинг: ${course.rating} из 5`);
+
+                document.getElementById('courseRatingText').textContent = `${course.rating} (${course.reviewsCount} отзывов)`;
+                document.getElementById('courseStudents').textContent = course.studentsCount.toLocaleString('ru-RU');
+                document.getElementById('courseLevelBadge').textContent = levelLabel(course.level);
+                document.getElementById('courseTeacher').textContent = course.teacherName;
+
+                const sideImg = document.getElementById('courseSideImage');
+                sideImg.src = course.image;
+                sideImg.alt = `${course.title} — обложка курса`;
+
+                document.getElementById('courseDuration').textContent = course.duration;
+                document.getElementById('courseLessons').textContent = course.lessonsCount;
+
+                // Цена
+                const priceBlock = document.getElementById('coursePriceBlock');
+                if (course.priceType === 'free') {
+                    priceBlock.innerHTML = '<h2 class="h3 course-price text-success mb-0">Бесплатно</h2>';
+                } else {
+                    priceBlock.innerHTML = `<h2 class="h3 course-price mb-0">${course.price.toLocaleString('ru-RU')} ₽</h2>`;
+                }
+
+                // Кнопка записи
+                updateEnrollButton(course);
+
+                loadingEl.classList.add('d-none');
+                contentEl.classList.remove('d-none');
+
+            } catch (err) {
+                loadingEl.classList.add('d-none');
+                errorEl.classList.remove('d-none');
+                console.error('Ошибка загрузки курса:', err);
+            }
+        }
+
+        // Обновление кнопки записи
+        async function updateEnrollButton(course) {
+            const enrollBtn = document.getElementById('enrollBtn');
+            const enrollBtnText = document.getElementById('enrollBtnText');
+
+            if (!isLoggedIn()) {
+                enrollBtnText.textContent = course.priceType === 'free' ? 'Войти и записаться' : 'Войти для покупки';
+                enrollBtn.onclick = () => { window.location.href = 'login.html'; };
+                return;
+            }
+
+            // Проверяем, записан ли уже
+            try {
+                const enrollments = await apiFetch('/my-enrollments');
+                const alreadyEnrolled = enrollments.some(e => e.courseId === course.id);
+
+                if (alreadyEnrolled) {
+                    enrollBtnText.textContent = '✓ Вы уже записаны';
+                    enrollBtn.classList.remove('btn-primary');
+                    enrollBtn.classList.add('btn-success');
+                    enrollBtn.disabled = true;
+                    enrollBtn.setAttribute('aria-disabled', 'true');
+                } else {
+                    enrollBtnText.textContent = course.priceType === 'free' ? 'Записаться бесплатно' : 'Купить курс';
+                }
+            } catch {
+                // Если не удалось проверить — оставляем кнопку как есть
+            }
+        }
+
+        // Обработчик записи на курс
+        async function handleEnroll() {
+            if (!isLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const enrollBtn = document.getElementById('enrollBtn');
+            const enrollBtnText = document.getElementById('enrollBtnText');
+            const enrollBtnSpinner = document.getElementById('enrollBtnSpinner');
+
+            enrollBtn.disabled = true;
+            enrollBtnSpinner.classList.remove('d-none');
+
+            try {
+                await apiFetch('/enroll', {
+                    method: 'POST',
+                    body: JSON.stringify({ courseId: currentCourse.id })
+                });
+
+                enrollBtnText.textContent = '✓ Вы записаны!';
+                enrollBtn.classList.remove('btn-primary');
+                enrollBtn.classList.add('btn-success');
+
+                // Через 2 секунды предлагаем перейти в профиль
+                setTimeout(() => {
+                    enrollBtnText.textContent = 'Перейти к обучению';
+                    enrollBtn.classList.remove('btn-success');
+                    enrollBtn.classList.add('btn-primary');
+                    enrollBtn.disabled = false;
+                    enrollBtn.removeAttribute('aria-disabled');
+                    enrollBtn.onclick = () => { window.location.href = 'profile.html'; };
+                    enrollBtnSpinner.classList.add('d-none');
+                }, 2000);
+
+            } catch (err) {
+                enrollBtnText.textContent = err.message.includes('уже') ? '✓ Уже записаны' : 'Ошибка записи';
+                enrollBtn.classList.add('btn-warning');
+                enrollBtn.classList.remove('btn-primary');
+                enrollBtnSpinner.classList.add('d-none');
+                setTimeout(() => {
+                    enrollBtn.disabled = false;
+                    enrollBtn.removeAttribute('aria-disabled');
+                    enrollBtn.classList.remove('btn-warning');
+                    enrollBtn.classList.add('btn-primary');
+                    enrollBtnText.textContent = 'Записаться на курс';
+                }, 3000);
+            }
+        }
+
+        // Отправка комментария (заглушка)
+        function postComment() {
+            const text = document.getElementById('commentText').value.trim();
+            if (!text) return;
+            if (!isLoggedIn()) {
+                alert('Для отправки комментария необходимо войти в аккаунт');
+                return;
+            }
+            alert('Комментарий отправлен! (демо-режим)');
+            document.getElementById('commentText').value = '';
+        }
+
+        document.addEventListener('DOMContentLoaded', loadCourse);
+    </script>
+</body>
+</html>
