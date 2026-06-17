@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@400;500;600&display=swap');
+
+:root {
+    --bg-light: #F5F5F5;
+    --text-dark: #1F2933;
+    --primary-green: #2F4F3E;
+    --secondary-brown: #6B4F3A;
+    --gray: #6B7280;
+    --accent-red: #C53030;
+    --accent-blue: #2B6CB0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+}
+
+.navbar {
+    background-color: var(--bg-light) !important;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.navbar-brand {
+    color: var(--text-dark) !important;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+.nav-link {
+    color: var(--gray) !important;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-right: 1.5rem;
+    transition: color 0.3s ease;
+}
+.nav-link:hover, .nav-link.active {
+    color: var(--text-dark) !important;
+}
+
+.btn-primary-ca {
+    background-color: var(--primary-green);
+    color: white;
+    border: none;
+    border-radius: 0;
+    padding: 12px 28px;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    transition: background-color 0.3s ease;
+}
+.btn-primary-ca:hover {
+    background-color: var(--secondary-brown);
+    color: white;
+}
+
+.btn-outline-ca {
+    background-color: transparent;
+    color: var(--primary-green);
+    border: 1px solid var(--primary-green);
+    border-radius: 0;
+    padding: 10px 24px;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    background: white;
+}
+.btn-outline-ca:hover {
+    background-color: var(--primary-green);
+    color: white;
+}
+
+.hero {
+    height: 75vh;
+    background-color: #e0e0e0; 
+    background-image: url('https://girleatworld.net/wp-content/uploads/2024/01/sapporo-travel-guide-10.jpg?auto=format&fit=crop&q=80&w=1600');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+}
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(31, 41, 51, 0.3);
+}
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+.hero-content h2 {
+    font-size: 1.2rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+.hero-content h1 {
+    font-size: 4rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+.philosophy-section {
+    padding: 8rem 0;
+}
+.philosophy-card {
+    padding: 3rem 2rem;
+    background: transparent;
+    text-align: center;
+    height: 100%;
+}
+.philosophy-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-green);
+}
+.philosophy-card p {
+    color: var(--gray);
+    font-size: 0.95rem;
+}
+
+.product-card {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 4rem;
+}
+.img-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+.product-card .card-img-top {
+    border-radius: 0;
+    object-fit: cover;
+    aspect-ratio: 3/4;
+    background-color: #eaeaea;
+    transition: transform 0.5s ease;
+}
+.product-card:hover .card-img-top {
+    transform: scale(1.03);
+}
+.quick-view-btn {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+.product-card:hover .quick-view-btn {
+    opacity: 1;
+}
+.product-card .card-body {
+    padding: 1.5rem 0 0 0;
+    text-align: left;
+}
+.product-card .product-code {
+    font-size: 0.75rem;
+    color: var(--gray);
+    margin-bottom: 0.2rem;
+    font-family: 'Inter', sans-serif;
+}
+.product-card .card-title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+}
+.product-card .card-text {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+}
+
+.filter-title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+.form-control, .form-select {
+    border-radius: 0;
+    border: 1px solid #ddd;
+    padding: 0.75rem 1rem;
+    background-color: transparent;
+}
+.form-control:focus, .form-select:focus {
+    box-shadow: none;
+    border-color: var(--primary-green);
+}
+
+.auth-card {
+    border: none;
+    border-radius: 0;
+    background: white;
+    padding: 2rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+}
+
+@media (min-width: 768px) {
+    .auth-card {
+        padding: 4rem;
+    }
+}
