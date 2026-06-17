@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Курсы - SpeakEasy</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="index.html">SpeakEasy</a>
+
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">Главная</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="courses.html">Курсы</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="dashboard.html">Личный кабинет</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="login.html">Вход</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-5">
+
+  <h2 class="mb-4">Поиск курсов</h2>
+
+  <!--  ФИЛЬТР -->
+
+  <div class="row mb-4">
+
+    <div class="col-md-4">
+      <label>Язык</label>
+      <select id="languageFilter" class="form-select">
+        <option value="">Все языки</option>
+        <option value="English">English</option>
+        <option value="French">French</option>
+        <option value="Spanish">Spanish</option>
+        <option value="German">German</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label>Уровень</label>
+      <select id="levelFilter" class="form-select">
+        <option value="">Любой уровень</option>
+        <option value="Beginner">Beginner</option>
+        <option value="Intermediate">Intermediate</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label>Макс. цена</label>
+      <input type="number" id="priceFilter" class="form-control" placeholder="Например 2000">
+    </div>
+
+  </div>
+
+  <!--  КУРСЫ -->
+
+  <div id="coursesContainer" class="row g-4"></div>
+
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/courses.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Личный кабинет - SpeakEasy</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    body {
+      background-color: #f7f7fb;
+    }
+
+    .profile-card,
+    .courses-card {
+      border: none;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      padding: 24px;
+      background: #fff;
+    }
+
+    .dashboard-title {
+      color: #4f58d8;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .profile-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #5b5bd6, #8d8df1);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .profile-info p {
+      margin-bottom: 10px;
+      font-size: 17px;
+    }
+
+    .section-subtitle {
+      color: #4f58d8;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding: 20px 0;
+      background: linear-gradient(135deg, #5b5bd6, #8d8df1);
+      color: white;
+    }
+
+    .navbar .btn-login {
+      margin-left: 10px;
+      border-radius: 12px;
+      padding: 8px 16px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light py-3">
+    <div class="container">
+      <a class="navbar-brand fw-bold fs-2" href="index.html">SpeakEasy</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Главная</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="courses.html">Курсы</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="dashboard.html">Кабинет</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-primary btn-login" href="login.html">Вход</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5 mb-5">
+    <h1 class="dashboard-title">Личный кабинет</h1>
+
+    <div class="profile-card mb-4">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="profile-avatar" id="profileAvatar">U</div>
+
+          <div class="profile-info">
+            <p><strong>Имя:</strong> <span id="userName"></span></p>
+            <p><strong>Email:</strong> <span id="userEmail"></span></p>
+          </div>
+        </div>
+
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+          <button id="logoutBtn" class="btn btn-danger px-4">Выйти</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="courses-card">
+      <h2 class="section-subtitle">Мои курсы</h2>
+      <div id="myCoursesContainer"></div>
+    </div>
+  </div>
+
+  <footer class="text-center">
+    <p class="mb-0">© 2026 SpeakEasy</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const user = localStorage.getItem("currentUser");
+
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        const avatar = document.querySelector("#profileAvatar");
+
+        if (avatar && parsedUser.name) {
+          avatar.textContent = parsedUser.name.trim().charAt(0).toUpperCase();
+        }
+      }
+    });
+  </script>
+
+</body>
+
+</html>
