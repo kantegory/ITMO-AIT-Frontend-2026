@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет — MLOps Deploy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-gear-wide-connected me-1"></i> MLOps Deploy
+            </a>
+            <button class="theme-toggle me-2" type="button" id="themeToggle" aria-label="Переключить тему"><i class="bi bi-sun-fill" aria-hidden="true"></i></button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Навигация">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="pipelines.html">Пайплайны</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="environments.html">Среды</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="profile.html">Кабинет</a>
+                    </li>
+                </ul>
+                <div class="d-flex gap-2" id="authButtons"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+    <div class="profile-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <div style="width: 64px; height: 64px; background: var(--accent-dim); border: 1px solid var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-person-fill" style="font-size: 1.8rem; color: var(--accent);"></i>
+                    </div>
+                </div>
+                <div class="col">
+                    <h3 class="mb-1" id="profileName">Загрузка...</h3>
+                    <p class="mb-0" style="color: var(--text-secondary);" id="profileInfo"></p>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        <i class="bi bi-pencil me-1"></i> Редактировать
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row g-3 mb-4">
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="number" id="statPipelines">-</div>
+                    <div class="label">Пайплайнов</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="number" id="statRuns">-</div>
+                    <div class="label">Запусков</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="number" id="statArtifacts">-</div>
+                    <div class="label">Артефактов</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="number" id="statPolicies">-</div>
+                    <div class="label">Политики</div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs mb-4" id="profileTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabPipelines" role="tab" aria-selected="true" aria-controls="tabPipelines">Мои пайплайны</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabArtifacts" role="tab" aria-selected="false" aria-controls="tabArtifacts">Артефакты</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabPolicies" role="tab" aria-selected="false" aria-controls="tabPolicies">Политики</button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="tabPipelines" role="tabpanel">
+                <p class="text-muted">Загрузка...</p>
+            </div>
+
+            <div class="tab-pane fade" id="tabArtifacts" role="tabpanel">
+                <p class="text-muted">Загрузка...</p>
+            </div>
+
+            <div class="tab-pane fade" id="tabPolicies" role="tabpanel">
+                <p class="text-muted">Загрузка...</p>
+            </div>
+        </div>
+    </div>
+
+    </main>
+
+    <!-- Модальное окно выхода -->
+    <div class="modal fade" id="logoutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Выход из аккаунта</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Вы уверены, что хотите выйти?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <a href="login.html" class="btn btn-danger">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно редактирования профиля -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Редактировать профиль</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Имя</label>
+                            <input type="text" class="form-control" value="Валерий">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Фамилия</label>
+                            <input type="text" class="form-control" value="Тамразов">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Команда</label>
+                            <input type="text" class="form-control" value="Alpha">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Роль</label>
+                            <select class="form-select">
+                                <option selected>ML-инженер</option>
+                                <option>DevOps-инженер</option>
+                                <option>Data Scientist</option>
+                                <option>Менеджер</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p class="mb-0">&copy; 2026 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="text-decoration-none" style="color: var(--text-muted);">MLOps Deploy</a>. Тамразов Валерий, J3211</p>
+        </div>
+    </footer>
+
+    <script src="js/theme.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        checkAuth();
+        updateNavbar();
+
+        var user = getUser();
+        var statusLabels = { success: 'Успешно', running: 'Запущен', failed: 'Ошибка', pending: 'Ожидание' };
+
+        // Заполнить шапку профиля
+        if (user) {
+            document.getElementById('profileName').textContent = (user.firstName || '') + ' ' + (user.lastName || '');
+            document.getElementById('profileInfo').textContent = (user.role || '') + ' \u00b7 ' + (user.company || '') + ' \u00b7 ' + user.email;
+        }
+
+        // Загрузить пайплайны пользователя
+        fetch(API_URL + '/pipelines?userId=' + user.id, { headers: authHeaders() })
+            .then(function(res) { return res.json(); })
+            .then(function(pipelines) {
+                if (!Array.isArray(pipelines)) pipelines = [];
+                document.getElementById('statPipelines').textContent = pipelines.length;
+                var total = 0;
+                pipelines.forEach(function(p) { total += p.stepsDone; });
+                document.getElementById('statRuns').textContent = total;
+
+                var container = document.getElementById('tabPipelines');
+                container.textContent = '';
+
+                if (pipelines.length === 0) {
+                    var empty = document.createElement('p');
+                    empty.className = 'text-muted';
+                    empty.textContent = 'У вас пока нет пайплайнов';
+                    container.appendChild(empty);
+                    return;
+                }
+
+                pipelines.forEach(function(p) {
+                    var card = document.createElement('div');
+                    card.className = 'pipeline-card';
+
+                    var row = document.createElement('div');
+                    row.className = 'd-flex justify-content-between align-items-center';
+
+                    var info = document.createElement('div');
+                    var h6 = document.createElement('h6');
+                    h6.className = 'mb-1';
+                    var link = document.createElement('a');
+                    link.href = 'pipeline.html?id=' + p.id;
+                    link.className = 'text-decoration-none';
+                    link.textContent = p.name;
+                    h6.appendChild(link);
+                    info.appendChild(h6);
+
+                    var meta = document.createElement('small');
+                    meta.className = 'text-muted';
+                    meta.textContent = 'Последний запуск: ' + p.lastRun + ' \u00b7 ' + p.env;
+                    info.appendChild(meta);
+
+                    var badge = document.createElement('span');
+                    badge.className = 'status-badge status-' + p.status;
+                    badge.textContent = statusLabels[p.status] || p.status;
+
+                    row.appendChild(info);
+                    row.appendChild(badge);
+                    card.appendChild(row);
+                    container.appendChild(card);
+                });
+            });
+
+        // Загрузить артефакты
+        fetch(API_URL + '/artifacts?userId=' + user.id, { headers: authHeaders() })
+            .then(function(res) { return res.json(); })
+            .then(function(artifacts) {
+                if (!Array.isArray(artifacts)) artifacts = [];
+                document.getElementById('statArtifacts').textContent = artifacts.length;
+
+                var container = document.getElementById('tabArtifacts');
+                container.textContent = '';
+
+                if (artifacts.length === 0) {
+                    var empty = document.createElement('p');
+                    empty.className = 'text-muted';
+                    empty.textContent = 'Нет артефактов';
+                    container.appendChild(empty);
+                    return;
+                }
+
+                var wrapper = document.createElement('div');
+                wrapper.className = 'table-responsive';
+                var table = document.createElement('table');
+                table.className = 'table';
+
+                var thead = document.createElement('thead');
+                var headRow = document.createElement('tr');
+                ['Название', 'Тип', 'Размер', 'Версия', 'Дата'].forEach(function(t) {
+                    var th = document.createElement('th');
+                    th.textContent = t;
+                    headRow.appendChild(th);
+                });
+                thead.appendChild(headRow);
+                table.appendChild(thead);
+
+                var tbody = document.createElement('tbody');
+                artifacts.forEach(function(a) {
+                    var tr = document.createElement('tr');
+                    var cols = [a.name, a.type, a.size, a.version || '\u2014', a.date];
+                    cols.forEach(function(val) {
+                        var td = document.createElement('td');
+                        td.textContent = val;
+                        tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+                table.appendChild(tbody);
+                wrapper.appendChild(table);
+                container.appendChild(wrapper);
+            });
+
+        // Загрузить политики
+        fetch(API_URL + '/policies?userId=' + user.id, { headers: authHeaders() })
+            .then(function(res) { return res.json(); })
+            .then(function(policies) {
+                if (!Array.isArray(policies)) policies = [];
+                document.getElementById('statPolicies').textContent = policies.length;
+
+                var container = document.getElementById('tabPolicies');
+                container.textContent = '';
+
+                if (policies.length === 0) {
+                    var empty = document.createElement('p');
+                    empty.className = 'text-muted';
+                    empty.textContent = 'Нет политик';
+                    container.appendChild(empty);
+                    return;
+                }
+
+                policies.forEach(function(pol) {
+                    var card = document.createElement('div');
+                    card.className = 'pipeline-card';
+
+                    var row = document.createElement('div');
+                    row.className = 'd-flex justify-content-between align-items-center';
+
+                    var info = document.createElement('div');
+                    var h6 = document.createElement('h6');
+                    h6.className = 'mb-1';
+                    h6.textContent = pol.name;
+                    info.appendChild(h6);
+                    var desc = document.createElement('small');
+                    desc.className = 'text-muted';
+                    desc.textContent = pol.description;
+                    info.appendChild(desc);
+
+                    var badge = document.createElement('span');
+                    badge.className = 'badge ' + (pol.status === 'active' ? 'bg-success' : 'bg-warning');
+                    badge.textContent = pol.status === 'active' ? 'Активна' : 'На паузе';
+
+                    row.appendChild(info);
+                    row.appendChild(badge);
+                    card.appendChild(row);
+                    container.appendChild(card);
+                });
+            });
+    </script>
+</body>
+</html>

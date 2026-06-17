@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fraud-detection-model — MLOps Deploy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-gear-wide-connected me-1"></i> MLOps Deploy
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Навигация">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="pipelines.html">Пайплайны</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="environments.html">Среды</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">Кабинет</a>
+                    </li>
+                </ul>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#logoutModal">Выйти</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="pipelines.html">Пайплайны</a></li>
+                <li class="breadcrumb-item active">fraud-detection-model</li>
+            </ol>
+        </nav>
+
+        <div class="d-flex justify-content-between align-items-start mb-4">
+            <div>
+                <h2 class="mb-1">fraud-detection-model</h2>
+                <p class="text-muted mb-0">
+                    <span class="status-badge status-success me-2">Успешно</span>
+                    <span class="deploy-strategy strategy-bluegreen me-2">Blue/Green</span>
+                    <i class="bi bi-person me-1"></i>Тамразов В. &middot;
+                    <i class="bi bi-cloud me-1"></i>production &middot;
+                    Запуск #47
+                </p>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#rerunModal">
+                    <i class="bi bi-arrow-clockwise me-1"></i> Перезапуск
+                </button>
+                <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rollbackModal">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i> Откат
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <h5 class="mb-3">Шаги пайплайна</h5>
+
+                <div class="step-item">
+                    <div class="step-number done"><i class="bi bi-check"></i></div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between">
+                            <strong>1. Тестирование</strong>
+                            <small class="text-muted">3м 12с</small>
+                        </div>
+                        <small class="text-muted">Юнит-тесты, проверка зависимостей, линтинг кода</small>
+                        <div class="mt-1">
+                            <span class="badge bg-light text-dark me-1">pytest: 142 passed</span>
+                            <span class="badge bg-light text-dark me-1">flake8: 0 errors</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-connector"></div>
+
+                <div class="step-item">
+                    <div class="step-number done"><i class="bi bi-check"></i></div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between">
+                            <strong>2. Валидация модели</strong>
+                            <small class="text-muted">5м 48с</small>
+                        </div>
+                        <small class="text-muted">Проверка метрик на тестовом датасете</small>
+                        <div class="mt-1">
+                            <span class="badge bg-light text-dark me-1">accuracy: 0.934</span>
+                            <span class="badge bg-light text-dark me-1">F1: 0.912</span>
+                            <span class="badge bg-light text-dark me-1">latency: 45ms</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-connector"></div>
+
+                <div class="step-item">
+                    <div class="step-number done"><i class="bi bi-check"></i></div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between">
+                            <strong>3. Упаковка</strong>
+                            <small class="text-muted">2м 15с</small>
+                        </div>
+                        <small class="text-muted">Сборка Docker-образа, сохранение артефактов</small>
+                        <div class="mt-1">
+                            <span class="badge bg-light text-dark me-1">image: fraud-model:v3.1.0</span>
+                            <span class="badge bg-light text-dark me-1">size: 245 MB</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-connector"></div>
+
+                <div class="step-item">
+                    <div class="step-number done"><i class="bi bi-check"></i></div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between">
+                            <strong>4. Деплой</strong>
+                            <small class="text-muted">1м 19с</small>
+                        </div>
+                        <small class="text-muted">Blue/Green развертывание в production</small>
+                        <div class="mt-1">
+                            <span class="badge bg-success me-1">production — активен</span>
+                            <span class="badge bg-light text-dark me-1">endpoint: /api/v3/predict</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h5 class="mb-3">Логи</h5>
+                    <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 4px; padding: 16px; font-family: var(--font-mono); font-size: 0.78rem; max-height: 300px; overflow-y: auto; color: var(--text-secondary);">
+                        <div><span style="color: var(--text-muted);">[10:14:01]</span> Starting pipeline fraud-detection-model #47</div>
+                        <div><span style="color: var(--text-muted);">[10:14:02]</span> Step 1/4: Running tests...</div>
+                        <div><span style="color: var(--text-muted);">[10:14:03]</span> Collecting tests from /tests/...</div>
+                        <div><span style="color: var(--text-muted);">[10:17:14]</span> <span style="color: var(--accent);">PASSED</span> 142 tests in 3m 12s</div>
+                        <div><span style="color: var(--text-muted);">[10:17:15]</span> Step 2/4: Validating model...</div>
+                        <div><span style="color: var(--text-muted);">[10:17:16]</span> Loading test dataset (50k samples)...</div>
+                        <div><span style="color: var(--text-muted);">[10:20:22]</span> Model metrics: acc=0.934 f1=0.912 lat=45ms</div>
+                        <div><span style="color: var(--text-muted);">[10:23:03]</span> <span style="color: var(--accent);">PASSED</span> All thresholds met</div>
+                        <div><span style="color: var(--text-muted);">[10:23:04]</span> Step 3/4: Building package...</div>
+                        <div><span style="color: var(--text-muted);">[10:23:05]</span> Building Docker image fraud-model:v3.1.0...</div>
+                        <div><span style="color: var(--text-muted);">[10:25:19]</span> <span style="color: var(--accent);">DONE</span> Image pushed to registry</div>
+                        <div><span style="color: var(--text-muted);">[10:25:20]</span> Step 4/4: Deploying to production...</div>
+                        <div><span style="color: var(--text-muted);">[10:25:21]</span> Strategy: Blue/Green deployment</div>
+                        <div><span style="color: var(--text-muted);">[10:26:02]</span> Health check passed on green instance</div>
+                        <div><span style="color: var(--text-muted);">[10:26:39]</span> <span style="color: var(--accent);">SUCCESS</span> Traffic switched to green</div>
+                        <div><span style="color: var(--text-muted);">[10:26:39]</span> Pipeline completed in 12m 34s</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="env-card">
+                    <h5>Информация</h5>
+                    <table class="table table-sm table-borderless mb-0">
+                        <tr>
+                            <td class="text-muted">Статус</td>
+                            <td><span class="status-badge status-success">Успешно</span></td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Среда</td>
+                            <td>production</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Стратегия</td>
+                            <td>Blue/Green</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Ветка</td>
+                            <td><code>main</code></td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Коммит</td>
+                            <td><code>a3f8b2c</code></td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Время</td>
+                            <td>12м 34с</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Запуск</td>
+                            <td>01.04.2026, 10:14</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="env-card">
+                    <h5>Артефакты</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <i class="bi bi-file-earmark-zip text-primary me-1"></i>
+                            <a href="#" class="text-decoration-none">fraud_model_v3.1.0.pkl</a>
+                            <small class="text-muted d-block ms-4">245 MB</small>
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-filetype-json text-warning me-1"></i>
+                            <a href="#" class="text-decoration-none">metrics_report.json</a>
+                            <small class="text-muted d-block ms-4">12 KB</small>
+                        </li>
+                        <li>
+                            <i class="bi bi-file-earmark-text text-secondary me-1"></i>
+                            <a href="#" class="text-decoration-none">test_results.log</a>
+                            <small class="text-muted d-block ms-4">48 KB</small>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="env-card">
+                    <h5>История запусков</h5>
+                    <ul class="list-unstyled mb-0 small">
+                        <li class="d-flex justify-content-between mb-2">
+                            <span>#47 <span class="status-badge status-success">OK</span></span>
+                            <span class="text-muted">01.04, 10:14</span>
+                        </li>
+                        <li class="d-flex justify-content-between mb-2">
+                            <span>#46 <span class="status-badge status-success">OK</span></span>
+                            <span class="text-muted">31.03, 15:22</span>
+                        </li>
+                        <li class="d-flex justify-content-between mb-2">
+                            <span>#45 <span class="status-badge status-failed">Fail</span></span>
+                            <span class="text-muted">30.03, 09:05</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <span>#44 <span class="status-badge status-success">OK</span></span>
+                            <span class="text-muted">28.03, 18:41</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Модальное окно перезапуска -->
+    <div class="modal fade" id="rerunModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Перезапуск пайплайна</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Перезапустить пайплайн <strong>fraud-detection-model</strong> с последнего коммита?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="skipTests">
+                        <label class="form-check-label" for="skipTests">Пропустить тестирование (не рекомендуется)</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Запустить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно отката -->
+    <div class="modal fade" id="rollbackModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Откат деплоя</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Откатить <strong>fraud-detection-model</strong> к предыдущей стабильной версии?</p>
+                    <div class="mb-3">
+                        <label class="form-label">Откатить до версии:</label>
+                        <select class="form-select">
+                            <option>v3.0.2 (запуск #46, 31.03.2026)</option>
+                            <option>v3.0.1 (запуск #44, 28.03.2026)</option>
+                            <option>v2.9.0 (запуск #40, 20.03.2026)</option>
+                        </select>
+                    </div>
+                    <div class="alert alert-warning small mb-0">
+                        <i class="bi bi-exclamation-triangle me-1"></i>
+                        Откат переключит трафик на выбранную версию. Текущая версия останется в артефакт-сторе.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Откатить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно выхода -->
+    <div class="modal fade" id="logoutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Выход</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">Вы уверены, что хотите выйти?</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <a href="login.html" class="btn btn-danger">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p class="mb-0">&copy; 2026 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="text-decoration-none" style="color: var(--text-muted);">MLOps Deploy</a>. Тамразов Валерий, J3211</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
