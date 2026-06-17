@@ -1,0 +1,216 @@
+:root {
+    --bg-main: #0d1b2a;
+    --bg-card: #132337;
+    --bg-nav: #0a1520;
+    --bg-hero: #081424;
+    --text-main: #e0e6ed;
+    --text-muted: #8ea5bc;
+    --border-color: #1e3a5f;
+    --link-color: #5a9fd4;
+    --link-hover: #7db8e8;
+    --input-bg: #0d1b2a;
+    --btn-close-filter: invert(1);
+    --table-odd: rgba(255, 255, 255, 0.04);
+    --table-even: rgba(255, 255, 255, 0.02);
+}
+
+[data-theme="light"] {
+    --bg-main: #f4f6f9;
+    --bg-card: #ffffff;
+    --bg-nav: #002855;
+    --bg-hero: #003f7f;
+    --text-main: #212529;
+    --text-muted: #6c757d;
+    --border-color: #dee2e6;
+    --link-color: #0056b3;
+    --link-hover: #003f7f;
+    --input-bg: #ffffff;
+    --btn-close-filter: invert(0);
+    --table-odd: rgba(0, 0, 0, 0.03);
+    --table-even: rgba(0, 0, 0, 0.01);
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar {
+    background-color: var(--bg-nav) !important;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s;
+}
+
+.card {
+    border-radius: 10px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.hero {
+    background-color: var(--bg-hero);
+    color: #fff;
+    padding: 60px 0;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+a {
+    color: var(--link-color);
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--link-hover);
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.form-control,
+.form-select {
+    background-color: var(--input-bg);
+    border-color: var(--border-color);
+    color: var(--text-main);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--input-bg);
+    border-color: var(--link-color);
+    color: var(--text-main);
+    box-shadow: 0 0 0 0.25rem rgba(58, 123, 213, 0.25);
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.form-label {
+    color: var(--text-muted);
+}
+
+.nav-tabs {
+    border-color: var(--border-color);
+}
+
+.nav-tabs .nav-link {
+    color: var(--text-muted);
+}
+
+.nav-tabs .nav-link.active {
+    background-color: var(--bg-card);
+    border-color: var(--border-color) var(--border-color) var(--bg-card);
+    color: var(--text-main);
+}
+
+.modal-content {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+
+.modal-header,
+.modal-footer {
+    border-color: var(--border-color);
+}
+
+.btn-close {
+    filter: var(--btn-close-filter);
+}
+
+.table {
+    color: var(--text-main);
+}
+
+.table td, .table th {
+    border-color: var(--border-color);
+}
+
+.table thead th {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: var(--table-odd);
+    color: var(--text-main);
+}
+
+.table-striped > tbody > tr:nth-of-type(even) > * {
+    background-color: var(--table-even);
+    color: var(--text-main);
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+}
+
+.result-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 12px 16px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.result-score {
+    font-size: 1.2rem;
+    font-weight: 700;
+    background: rgba(0, 0, 0, 0.35);
+    padding: 4px 14px;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+
+.club-left,
+.club-right {
+    font-size: 0.9rem;
+    font-weight: 600;
+    flex: 1;
+    text-align: center;
+}
+
+.ticket-card {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: border-color 0.3s;
+}
+
+.ticket-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 14px;
+    background-color: var(--bg-card);
+    font-size: 0.88rem;
+    color: var(--text-main);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    fill: currentColor;
+    vertical-align: middle;
+    margin-right: 5px;
+}
