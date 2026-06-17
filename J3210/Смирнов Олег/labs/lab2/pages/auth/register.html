@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация — AI Hub</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="../../assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="../../index.html"><i class="bi bi-cpu"></i> AI Hub</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="../../index.html">Главная</a></li>
+          <li class="nav-item"><a class="nav-link" href="../data/search.html#models">Модели</a></li>
+          <li class="nav-item"><a class="nav-link" href="../data/search.html#datasets">Датасеты</a></li>
+        </ul>
+        <div id="navbarActions"></div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="d-flex align-items-center py-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-5 col-lg-4">
+          <div class="text-center mb-4">
+            <h1 class="h3">Регистрация</h1>
+            <p class="text-muted">Создайте аккаунт на AI Hub</p>
+          </div>
+          <div id="registerError" class="alert alert-danger d-none" role="alert"></div>
+          <form id="registerForm">
+            <div class="mb-3">
+              <label for="name" class="form-label">Имя</label>
+              <input type="text" class="form-control" id="name" placeholder="Иван Иванов" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+            </div>
+            <div class="mb-3">
+              <label for="bio" class="form-label">О себе</label>
+              <input type="text" class="form-control" id="bio" placeholder="ML-инженер, студент...">
+            </div>
+            <div class="mb-3">
+              <label for="location" class="form-label">Город</label>
+              <input type="text" class="form-control" id="location" placeholder="Москва">
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Пароль</label>
+              <input type="password" class="form-control" id="password" placeholder="Минимум 8 символов" required minlength="8">
+            </div>
+            <div class="mb-3">
+              <label for="password-confirm" class="form-label">Повторите пароль</label>
+              <input type="password" class="form-control" id="password-confirm" placeholder="Ещё раз" required minlength="8">
+            </div>
+            <button type="submit" class="btn btn-accent w-100">Зарегистрироваться</button>
+          </form>
+          <p class="text-center text-muted small mt-4">
+            Уже есть аккаунт? <a href="login.html">Войти</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4">
+    <div class="container text-center">
+      <small class="text-muted">&copy; 2026 AI Hub</small>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/api.js"></script>
+  <script src="../../assets/js/auth.js"></script>
+  <script>window.APP_PATHS = { home: '../../index.html', login: 'login.html', register: 'register.html', dashboard: '../dashboard/dashboard.html' };</script>
+  <script src="../../assets/js/ui.js"></script>
+</body>
+</html>
