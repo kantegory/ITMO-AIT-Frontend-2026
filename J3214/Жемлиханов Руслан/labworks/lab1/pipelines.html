@@ -1,0 +1,145 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FlowOrchestrator | Pipelines</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-layout d-flex">
+    
+    <aside class="app-sidebar d-none d-lg-flex flex-column p-3 border-end bg-white" aria-label="Основная навигация">
+      <a href="dashboard.html" class="app-sidebar__brand d-flex align-items-center mb-4 text-decoration-none">
+        <span class="brand-mark me-2" aria-hidden="true">FO</span>
+        <span class="fw-bold text-dark">FlowOrchestrator</span>
+      </a>
+      <nav class="app-sidebar__nav nav nav-pills flex-column gap-1">
+        <a class="nav-link" href="dashboard.html">Dashboard</a>
+        <a class="nav-link active" href="pipelines.html" aria-current="page">Pipelines</a>
+        <a class="nav-link" href="monitoring.html">Monitoring</a>
+        <a class="nav-link" href="#">Connections</a>
+        <a class="nav-link" href="#">Variables</a>
+        <a class="nav-link" href="#">Settings</a>
+        <a class="nav-link text-danger" href="index.html" data-logout>Выйти</a>
+      </nav>
+    </aside>
+
+    <div class="app-main flex-grow-1">
+      
+      <header class="app-topbar navbar navbar-expand-lg bg-white border-bottom px-3">
+        <button class="btn btn-outline-primary d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-label="Открыть меню">☰</button>
+        <h1 class="navbar-brand fw-semibold mb-0">Pipelines</h1>
+        <div class="ms-auto"></div>
+      </header>
+
+      
+      <main class="app-page p-3 p-md-4">
+        <div class="row g-3">
+          
+          <aside class="col-12 col-xl-3" aria-label="Фильтры пайплайнов">
+            <section class="card pipeline-filters">
+              <header class="card-header bg-white">
+                <h2 class="h6 mb-0">Фильтры</h2>
+              </header>
+              <div class="card-body">
+                <form id="pipelineFilters" class="pipeline-filters__form d-grid gap-3" aria-label="Форма фильтров">
+                  <div class="pipeline-filters__group">
+                    <label class="form-label" for="searchName">Поиск по имени</label>
+                    <input type="text" class="form-control" id="searchName" placeholder="daily_sales_etl">
+                  </div>
+                  <div class="pipeline-filters__group">
+                    <label class="form-label" for="statusFilter">Статус</label>
+                    <select id="statusFilter" class="form-select">
+                      <option value="">Все</option>
+                      <option>Success</option>
+                      <option>Failed</option>
+                      <option>Running</option>
+                      <option>Queued</option>
+                      <option>Paused</option>
+                    </select>
+                  </div>
+                  <div class="pipeline-filters__group">
+                    <label class="form-label" for="ownerFilter">Владелец</label>
+                    <select id="ownerFilter" class="form-select">
+                      <option value="">Все</option>
+                      <option>Data Team</option>
+                      <option>Analytics Team</option>
+                      <option>Platform Team</option>
+                      <option>Ivan Petrov</option>
+                    </select>
+                  </div>
+                  <div class="pipeline-filters__group">
+                    <label class="form-label" for="lastRunFilter">Последний запуск</label>
+                    <input type="date" id="lastRunFilter" class="form-control">
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="onlyActive">
+                    <label class="form-check-label" for="onlyActive">Only active</label>
+                  </div>
+                  <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary flex-fill">Применить</button>
+                    <button type="button" id="resetFilters" class="btn btn-outline-primary flex-fill">Сбросить</button>
+                  </div>
+                </form>
+              </div>
+            </section>
+          </aside>
+
+          
+          <section class="col-12 col-xl-9" aria-labelledby="pipelineListHeading">
+            <article class="card pipeline-table">
+              <header class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h2 id="pipelineListHeading" class="h6 mb-0">Список пайплайнов</h2>
+                <button class="btn btn-sm btn-outline-primary" id="sortLastRun" type="button">Сортировать по Last run</button>
+              </header>
+              <div class="table-responsive">
+                <table class="table align-middle mb-0" id="pipelinesTable">
+                  <thead class="table-light">
+                    <tr>
+                      <th scope="col">Название DAG</th>
+                      <th scope="col">Описание</th>
+                      <th scope="col">Owner</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Last run</th>
+                      <th scope="col">Next run</th>
+                      <th scope="col">Open</th>
+                    </tr>
+                  </thead>
+                  <tbody id="pipelinesTableBody"></tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  
+  <aside class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu" aria-label="Мобильная навигация">
+    <header class="offcanvas-header">
+      <h2 class="offcanvas-title h5 mb-0">FlowOrchestrator</h2>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть меню"></button>
+    </header>
+    <div class="offcanvas-body">
+      <nav class="nav nav-pills flex-column gap-1">
+        <a class="nav-link" href="dashboard.html">Dashboard</a>
+        <a class="nav-link active" href="pipelines.html" aria-current="page">Pipelines</a>
+        <a class="nav-link" href="monitoring.html">Monitoring</a>
+        <a class="nav-link text-danger" href="index.html" data-logout>Выйти</a>
+      </nav>
+    </div>
+  </aside>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+

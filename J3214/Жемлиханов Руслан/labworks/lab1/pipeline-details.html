@@ -1,0 +1,194 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FlowOrchestrator | Pipeline details</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-layout d-flex">
+    
+    <aside class="app-sidebar d-none d-lg-flex flex-column p-3 border-end bg-white" aria-label="Основная навигация">
+      <a href="dashboard.html" class="app-sidebar__brand d-flex align-items-center mb-4 text-decoration-none">
+        <span class="brand-mark me-2" aria-hidden="true">FO</span>
+        <span class="fw-bold text-dark">FlowOrchestrator</span>
+      </a>
+      <nav class="app-sidebar__nav nav nav-pills flex-column gap-1">
+        <a class="nav-link" href="dashboard.html">Dashboard</a>
+        <a class="nav-link active" href="pipelines.html" aria-current="page">Pipelines</a>
+        <a class="nav-link" href="monitoring.html">Monitoring</a>
+        <a class="nav-link text-danger" href="index.html" data-logout>Выйти</a>
+      </nav>
+    </aside>
+
+    <div class="app-main flex-grow-1">
+      
+      <header class="app-topbar navbar navbar-expand-lg bg-white border-bottom px-3">
+        <button class="btn btn-outline-primary d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-label="Открыть меню">☰</button>
+        <h1 class="navbar-brand fw-semibold mb-0">Pipeline details</h1>
+        <div class="ms-auto"></div>
+      </header>
+
+      
+      <main class="app-page p-3 p-md-4">
+        
+        <section class="page-section card mb-4" aria-labelledby="pipelineTitle">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+              <header>
+                <h2 id="pipelineTitle" class="h4 mb-2">daily_sales_etl</h2>
+                <p class="text-secondary mb-2">ETL пайплайн для ежедневной загрузки продаж, валидации и агрегации метрик в ClickHouse.</p>
+                <p class="small text-secondary mb-0">Owner: <strong>Data Team</strong> | Schedule: <strong>0 8 * * *</strong> | Last run: <strong>2026-03-14 08:00</strong> | Status: <span class="badge text-bg-primary">Running</span></p>
+              </header>
+              <div class="d-flex gap-2 flex-wrap" aria-label="Действия с пайплайном">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#runNowModal">Run now</button>
+                <button class="btn btn-outline-primary">Pause DAG</button>
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#retryModal">Retry failed tasks</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        
+        <section class="pipeline-details" aria-label="Детали пайплайна">
+          <ul class="nav nav-tabs" id="pipelineTabs" role="tablist">
+            <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#graphPane" type="button" role="tab">Graph</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#logsPane" type="button" role="tab">Logs</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#historyPane" type="button" role="tab">Run history</button></li>
+          </ul>
+
+          <div class="tab-content border border-top-0 rounded-bottom p-3 bg-white">
+            
+            <section class="tab-pane fade show active" id="graphPane" role="tabpanel">
+              <div class="pipeline-graph" aria-label="Граф задач DAG">
+                <div class="dag-flow">
+                  <article class="task-card pipeline-graph__task" data-task-card><h3>extract_orders</h3><span class="badge text-bg-success">Success</span></article>
+                  <span class="flow-arrow" aria-hidden="true">→</span>
+                  <article class="task-card pipeline-graph__task" data-task-card><h3>transform_orders</h3><span class="badge text-bg-primary">Running</span></article>
+                  <span class="flow-arrow" aria-hidden="true">↘</span>
+                  <article class="task-card pipeline-graph__task" data-task-card><h3>build_metrics</h3><span class="badge text-bg-secondary">queued</span></article>
+                  <span class="flow-arrow" aria-hidden="true">→</span>
+                  <article class="task-card pipeline-graph__task" data-task-card><h3>load_to_clickhouse</h3><span class="badge text-bg-secondary">queued</span></article>
+                </div>
+                <div class="dag-flow mt-3">
+                  <article class="task-card pipeline-graph__task" data-task-card><h3>extract_customers</h3><span class="badge text-bg-success">Success</span></article>
+                  <span class="flow-arrow" aria-hidden="true">→</span>
+                  <article class="task-card pipeline-graph__task" data-task-card><h3>validate_data</h3><span class="badge text-bg-danger">Failed</span></article>
+                  <span class="flow-arrow" aria-hidden="true">↗</span>
+                </div>
+              </div>
+            </section>
+
+            
+            <section class="tab-pane fade" id="logsPane" role="tabpanel">
+              <article class="pipeline-logs" aria-label="Логи запуска">
+                <p>[2026-03-14 08:00:01] INFO Starting DAG daily_sales_etl</p>
+                <p>[2026-03-14 08:00:09] INFO Task extract_orders completed in 7.2s</p>
+                <p>[2026-03-14 08:00:16] INFO Task extract_customers completed in 6.8s</p>
+                <p class="text-body">[2026-03-14 08:00:32] ERROR validate_data: null values exceed threshold</p>
+                <p>[2026-03-14 08:00:33] INFO transform_orders started with 1,342,871 rows</p>
+                <p>[2026-03-14 08:00:41] WARN SLA for customer_sync is close to deadline</p>
+              </article>
+            </section>
+
+            
+            <section class="tab-pane fade" id="historyPane" role="tabpanel">
+              <article class="pipeline-history table-responsive">
+                <table class="table align-middle mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th scope="col">Run ID</th>
+                      <th scope="col">Start time</th>
+                      <th scope="col">End time</th>
+                      <th scope="col">Duration</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Triggered by</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>run_2841</td><td>2026-03-14 08:00</td><td>2026-03-14 08:04</td><td>4m 12s</td><td><span class="badge text-bg-primary">Running</span></td><td>Scheduler</td></tr>
+                    <tr><td>run_2840</td><td>2026-03-13 08:00</td><td>2026-03-13 08:03</td><td>3m 58s</td><td><span class="badge text-bg-success">Success</span></td><td>Scheduler</td></tr>
+                    <tr><td>run_2839</td><td>2026-03-12 08:00</td><td>2026-03-12 08:05</td><td>5m 22s</td><td><span class="badge text-bg-danger">Failed</span></td><td>Ivan Petrov</td></tr>
+                  </tbody>
+                </table>
+              </article>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  
+  <aside class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu" aria-label="Мобильная навигация">
+    <header class="offcanvas-header">
+      <h2 class="offcanvas-title h5 mb-0">FlowOrchestrator</h2>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть меню"></button>
+    </header>
+    <div class="offcanvas-body">
+      <nav class="nav nav-pills flex-column gap-1">
+        <a class="nav-link" href="dashboard.html">Dashboard</a>
+        <a class="nav-link active" href="pipelines.html" aria-current="page">Pipelines</a>
+        <a class="nav-link" href="monitoring.html">Monitoring</a>
+        <a class="nav-link text-danger" href="index.html" data-logout>Выйти</a>
+      </nav>
+    </div>
+  </aside>
+
+  
+  <div class="modal fade" id="runNowModal" tabindex="-1" aria-labelledby="runNowTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <header class="modal-header">
+          <h2 class="modal-title h5" id="runNowTitle">Подтвердите запуск</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </header>
+        <div class="modal-body">Запустить DAG <strong>daily_sales_etl</strong> прямо сейчас?</div>
+        <footer class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Отмена</button>
+          <button type="button" class="btn btn-primary" id="confirmRunNow">Run now</button>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="retryModal" tabindex="-1" aria-labelledby="retryTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <header class="modal-header">
+          <h2 class="modal-title h5" id="retryTitle">Подтвердите retry</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </header>
+        <div class="modal-body">Повторить только failed задачи текущего запуска?</div>
+        <footer class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Отмена</button>
+          <button type="button" class="btn btn-danger" id="confirmRetry">Retry failed tasks</button>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="actionToast" class="toast" role="status" aria-live="polite" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="me-auto">FlowOrchestrator</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Закрыть"></button>
+      </div>
+      <div class="toast-body" id="toastBody">Действие выполнено.</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
