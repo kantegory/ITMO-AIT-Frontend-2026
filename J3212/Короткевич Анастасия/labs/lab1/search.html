@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Поиск — ModelHub</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="custom-navbar">
+  <div class="nav-wrapper">
+    <div class="nav-left">
+      <a href="index.html" class="logo">ModelHub</a>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="profile.html">Профиль</a></li>
+      </ul>
+
+      <form class="search-box" action="search.html" method="GET">
+        <i class="bi bi-search"></i>
+        <input type="text" name="query" placeholder="Введите запрос">
+      </form>
+    </div>
+
+    <div class="nav-right">
+      <a href="login.html" class="login-btn">Вход</a>
+    </div>
+  </div>
+</nav>
+
+<section class="search-page-section">
+  <div class="search-page-container">
+    <div class="row g-4">
+
+      <div class="col-lg-3">
+        <div class="card search-filters-card">
+          <div class="card-body">
+            <h4 class="search-section-title">Фильтры</h4>
+
+            <div class="mb-3">
+              <label class="form-label">Поиск</label>
+              <input type="text" class="form-control" placeholder="Название модели или датасета">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Тип</label>
+              <select class="form-select">
+                <option selected>Все</option>
+                <option>Модели</option>
+                <option>Датасеты</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Задача</label>
+              <select class="form-select">
+                <option selected>Все</option>
+                <option>NLP</option>
+                <option>Computer Vision</option>
+                <option>Audio</option>
+                <option>Tabular</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Лицензия</label>
+              <select class="form-select">
+                <option selected>Все</option>
+                <option>MIT</option>
+                <option>Apache 2.0</option>
+                <option>GPL</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Фреймворк</label>
+              <select class="form-select">
+                <option selected>Все</option>
+                <option>PyTorch</option>
+                <option>TensorFlow</option>
+                <option>Scikit-learn</option>
+              </select>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Размер</label>
+              <select class="form-select">
+                <option selected>Все</option>
+                <option>До 100 MB</option>
+                <option>100 MB – 1 GB</option>
+                <option>Более 1 GB</option>
+              </select>
+            </div>
+
+            <div class="d-grid">
+              <button type="button" class="btn btn-dark search-action-btn">Применить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-9">
+        <div class="card search-results-card">
+          <div class="card-body">
+            <div class="search-results-header">
+              <h3 class="search-results-title">Результаты поиска</h3>
+            </div>
+
+            <div class="row g-4">
+
+              <div class="col-md-6">
+                <div class="card result-item-card h-100">
+                  <div class="card-body">
+                    <span class="result-badge">Модель</span>
+                    <h5 class="result-title">BERT Sentiment</h5>
+                    <p class="result-text">Модель для анализа тональности текстов на базе BERT.</p>
+                    <p class="mb-1">Task: NLP</p>
+                    <p class="mb-1">Framework: PyTorch</p>
+                    <p class="mb-3">License: MIT</p>
+                    <a href="model.html" class="btn btn-outline-dark result-link-btn">Открыть</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card result-item-card h-100">
+                  <div class="card-body">
+                    <span class="result-badge">Датасет</span>
+                    <h5 class="result-title">COCO Dataset</h5>
+                    <p class="result-text">Популярный датасет для задач компьютерного зрения и детекции объектов.</p>
+                    <p class="mb-1">Task: Computer Vision</p>
+                    <p class="mb-1">Size: 25 GB</p>
+                    <p class="mb-3">License: Custom</p>
+                    <a href="model.html" class="btn btn-outline-dark result-link-btn">Открыть</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card result-item-card h-100">
+                  <div class="card-body">
+                    <span class="result-badge">Модель</span>
+                    <h5 class="result-title">Image Classifier</h5>
+                    <p class="result-text">Классификация изображений для базовых CV-задач.</p>
+                    <p class="mb-1">Task: Computer Vision</p>
+                    <p class="mb-1">Framework: TensorFlow</p>
+                    <p class="mb-3">License: Apache 2.0</p>
+                    <a href="model.html" class="btn btn-outline-dark result-link-btn">Открыть</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card result-item-card h-100">
+                  <div class="card-body">
+                    <span class="result-badge">Датасет</span>
+                    <h5 class="result-title">LibriSpeech</h5>
+                    <p class="result-text">Датасет для обучения и тестирования speech-моделей.</p>
+                    <p class="mb-1">Task: Audio</p>
+                    <p class="mb-1">Size: 60 GB</p>
+                    <p class="mb-3">License: Apache 2.0</p>
+                    <a href="model.html" class="btn btn-outline-dark result-link-btn">Открыть</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
