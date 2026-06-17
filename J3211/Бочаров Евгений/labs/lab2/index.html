@@ -1,0 +1,369 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная - MAX афиша</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<svg style="display: none;">
+    <use href="images/sprite.svg#icon-moon"></use>
+</svg>
+
+<!-- Навигация -->
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark" aria-label="Главная навигация">
+    <div class="container">
+        <a class="navbar-brand" href="index.html" aria-label="MAX афиша - на главную">MAX афиша</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Открыть меню навигации">
+            <span class="navbar-toggler-icon" aria-hidden="true"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Главная</a></li>
+                <li class="nav-item" data-auth-guest><a class="nav-link" href="login.html">Вход</a></li>
+                <li class="nav-item" data-auth-guest><a class="nav-link" href="register.html">Регистрация</a></li>
+                <li class="nav-item" data-auth-user><a class="nav-link" href="profile.html">Личный кабинет</a></li>
+                <li class="nav-item" data-auth-user data-role-organizer><a class="nav-link" href="organizer.html">Организатору</a></li>
+                <li class="nav-item" data-auth-user>
+                    <button class="nav-link btn btn-link text-decoration-none" id="logout-btn">Выйти</button>
+                </li>
+                <div class="d-flex">
+                    <button class="btn btn-outline-light theme-switch" type="button" aria-label="Переключить тему">
+                        <svg class="icon" aria-hidden="true"><use href="images/sprite.svg#icon-moon"></use></svg> Тёмная тема
+                    </button>
+                </div>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Основной контент -->
+<main class="container my-5" id="main-content">
+
+    <!-- Секция поиска -->
+    <section class="row mb-4" aria-labelledby="search-heading">
+        <div class="col-12">
+            <div class="card shadow-sm border-0 p-4">
+                <h1 id="search-heading" class="mb-4 fs-2">Поиск мероприятий</h1>
+                <form id="search-form" role="search" aria-label="Поиск событий">
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            <label for="search-event" class="visually-hidden">Название события или место</label>
+                            <input type="text" class="form-control" id="search-event" placeholder="Название события или место">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="event-type" class="visually-hidden">Тип мероприятия</label>
+                            <select class="form-select" id="event-type">
+                                <option value="">Все типы</option>
+                                <option value="theater">Театр</option>
+                                <option value="concert">Концерт</option>
+                                <option value="standup">Стендап</option>
+                                <option value="festival">Фестиваль</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="event-date" class="visually-hidden">Дата мероприятия</label>
+                            <input type="date" class="form-control" id="event-date">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="event-city" class="visually-hidden">Город</label>
+                            <input type="text" class="form-control" id="event-city" placeholder="Город" value="Санкт-Петербург">
+                        </div>
+                        <div class="col-md-1">
+                            <button type="submit" class="btn btn-primary w-100">
+                                Найти
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция событий -->
+    <section aria-labelledby="events-heading">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 id="events-heading">Ближайшие события</h2>
+            <div class="d-flex gap-2">
+                <select class="form-select form-select-sm" id="events-sort" style="width: auto;">
+                    <option value="date_asc">По дате ↑</option>
+                    <option value="date_desc" selected>По дате ↓</option>
+                    <option value="price_asc">По цене ↑</option>
+                    <option value="price_desc">По цене ↓</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Загрузка -->
+        <div id="events-loading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Загрузка...</span>
+            </div>
+            <p class="mt-3 text-muted">Загрузка мероприятий...</p>
+        </div>
+
+        <!-- Ошибка -->
+        <div id="events-error" class="alert alert-danger d-none" role="alert"></div>
+
+        <!-- Пусто -->
+        <div id="events-empty" class="text-center py-5 d-none">
+            <svg class="icon icon-xxl text-muted mb-3" aria-hidden="true">
+                <use href="images/sprite.svg#icon-calendar"></use>
+            </svg>
+            <p class="text-muted">По вашему запросу ничего не найдено</p>
+            <button class="btn btn-outline-primary" id="reset-search-btn">Сбросить фильтры</button>
+        </div>
+
+        <!-- Список событий -->
+        <div id="events-list" class="row">
+            <!-- Карточки загрузятся здесь через JS -->
+        </div>
+
+        <!-- Пагинация (заглушка) -->
+        <nav class="mt-4" aria-label="Пагинация событий">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled"><a class="page-link" href="#">← Назад</a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Вперёд →</a></li>
+            </ul>
+        </nav>
+    </section>
+
+    <!-- Секция категорий -->
+    <section class="mt-5" aria-labelledby="categories-heading">
+        <h2 id="categories-heading" class="mb-3">Категории мероприятий</h2>
+        <div class="row g-3">
+            <div class="col-6 col-md-3">
+                <a href="?type=theater" class="card text-center text-decoration-none h-100 category-card" data-category="theater">
+                    <div class="card-body">
+                        <svg class="icon icon-xl mb-2" aria-hidden="true"><use href="images/sprite.svg#icon-theater"></use></svg>
+                        <h3 class="card-title fs-6">Театр</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="?type=concert" class="card text-center text-decoration-none h-100 category-card" data-category="concert">
+                    <div class="card-body">
+                        <svg class="icon icon-xl mb-2" aria-hidden="true"><use href="images/sprite.svg#icon-music"></use></svg>
+                        <h3 class="card-title fs-6">Концерты</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="?type=standup" class="card text-center text-decoration-none h-100 category-card" data-category="standup">
+                    <div class="card-body">
+                        <svg class="icon icon-xl mb-2" aria-hidden="true"><use href="images/sprite.svg#icon-microphone"></use></svg>
+                        <h3 class="card-title fs-6">Стендап</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="?type=festival" class="card text-center text-decoration-none h-100 category-card" data-category="festival">
+                    <div class="card-body">
+                        <svg class="icon icon-xl mb-2" aria-hidden="true"><use href="images/sprite.svg#icon-party"></use></svg>
+                        <h3 class="card-title fs-6">Фестивали</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- Модальное окно: схема зала (заглушка) -->
+<div class="modal fade" id="hallModal" tabindex="-1" aria-labelledby="hallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="hallModalLabel">Схема зала</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div class="hall-scheme-placeholder" role="img" aria-label="Схема зала">
+                    <div class="stage-scheme bg-dark text-white p-2 text-center rounded mb-3">СЦЕНА</div>
+                    <div class="text-center" aria-hidden="true">
+                        <div class="seat free"></div><div class="seat free"></div><div class="seat free"></div><div class="seat taken"></div><div class="seat free"></div><br>
+                        <div class="seat free"></div><div class="seat taken"></div><div class="seat free"></div><div class="seat free"></div><div class="seat free"></div><br>
+                        <div class="seat free"></div><div class="seat free"></div><div class="seat taken"></div><div class="seat free"></div><div class="seat taken"></div><br>
+                        <div class="seat free"></div><div class="seat taken"></div><div class="seat free"></div><div class="seat free"></div><div class="seat free"></div>
+                    </div>
+                    <div class="d-flex justify-content-center gap-3 mt-3">
+                        <span><span class="seat" style="display: inline-block; width: 20px; height: 20px;" aria-hidden="true"></span> Свободно</span>
+                        <span><span class="seat taken" style="display: inline-block; width: 20px; height: 20px;" aria-hidden="true"></span> Занято</span>
+                    </div>
+                    <p class="text-muted mt-3 mb-0 small text-center">Интерактивный выбор мест - заглушка</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" disabled>Подтвердить выбор (заглушка)</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <div class="container">
+        <span>&copy; 2026 eugeron52</span>
+    </div>
+</footer>
+
+<!-- Скрипты -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/api.js" type="module"></script>
+<script src="js/auth.js" type="module"></script>
+<script type="module">
+    import { EventsAPI } from './js/api.js';
+    import { Auth } from './js/auth.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Инициализация поиска из URL параметров
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('q')) document.getElementById('search-event').value = params.get('q');
+        if (params.get('type')) document.getElementById('event-type').value = params.get('type');
+        if (params.get('date')) document.getElementById('event-date').value = params.get('date');
+        if (params.get('city')) document.getElementById('event-city').value = params.get('city');
+
+        // Загрузка событий
+        loadEvents();
+
+        // Обработчик поиска
+        document.getElementById('search-form')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = document.getElementById('search-event').value;
+            const type = document.getElementById('event-type').value;
+            const date = document.getElementById('event-date').value;
+            const city = document.getElementById('event-city').value;
+
+            const newParams = new URLSearchParams();
+            if (query) newParams.set('q', query);
+            if (type) newParams.set('type', type);
+            if (date) newParams.set('date', date);
+            if (city) newParams.set('city', city);
+
+            window.location.search = newParams.toString();
+        });
+
+        // Сброс фильтров
+        document.getElementById('reset-search-btn')?.addEventListener('click', () => {
+            window.location.search = '';
+        });
+
+        // Сортировка
+        document.getElementById('events-sort')?.addEventListener('change', (e) => {
+            loadEvents({ _sort: 'dates.0.datetime', _order: e.target.value.includes('desc') ? 'desc' : 'asc' });
+        });
+
+        // Кнопка выхода
+        document.getElementById('logout-btn')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            Auth.logout();
+            window.location.reload();
+        });
+    });
+
+    async function loadEvents(filters = {}) {
+        const listEl = document.getElementById('events-list');
+        const loadingEl = document.getElementById('events-loading');
+        const errorEl = document.getElementById('events-error');
+        const emptyEl = document.getElementById('events-empty');
+
+        loadingEl.classList.remove('d-none');
+        errorEl.classList.add('d-none');
+        emptyEl.classList.add('d-none');
+        listEl.innerHTML = '';
+
+        try {
+            // Получаем параметры из URL
+            const params = new URLSearchParams(window.location.search);
+            const queryParams = {
+                _expand: 'organizer',
+                _sort: 'createdAt',
+                _order: 'desc',
+                ...filters
+            };
+
+            if (params.get('q')) queryParams._q = params.get('q');
+            if (params.get('type')) queryParams.type = params.get('type');
+            if (params.get('city')) queryParams.city = params.get('city');
+
+            const events = await EventsAPI.getAll(queryParams);
+            loadingEl.classList.add('d-none');
+
+            if (!events || events.length === 0) {
+                emptyEl.classList.remove('d-none');
+                return;
+            }
+
+            listEl.innerHTML = events.map(event => createEventCard(event)).join('');
+
+        } catch (error) {
+            loadingEl.classList.add('d-none');
+            errorEl.classList.remove('d-none');
+            errorEl.textContent = 'Ошибка загрузки: ' + error.message;
+            console.error('Events load error:', error);
+        }
+    }
+
+    function createEventCard(event) {
+        const firstDate = event.dates?.[0]?.datetime ? new Date(event.dates[0].datetime) : null;
+        const typeLabel = event.type === 'theater' ? 'Театр' :
+            event.type === 'concert' ? 'Концерт' :
+                event.type === 'standup' ? 'Стендап' : event.type;
+
+        return `
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-img-container">
+                        <img src="${event.poster || 'https://via.placeholder.com/400x220?text=No+Image'}"
+                             class="card-img-top"
+                             alt="Афиша ${event.title}"
+                             onerror="this.src='https://via.placeholder.com/400x220?text=No+Image'">
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-2">
+                            <span class="badge bg-secondary">${typeLabel}</span>
+                            ${event.ageRestriction ? `<span class="badge bg-dark ms-1">${event.ageRestriction}</span>` : ''}
+                        </div>
+                        <h3 class="card-title h5">
+                            <a href="event.html?id=${event.id}" class="text-decoration-none text-dark">${event.title}</a>
+                        </h3>
+                        <p class="card-text text-muted small flex-grow-1">
+                            <svg class="icon" aria-hidden="true" width="12" height="12">
+                                <use href="images/sprite.svg#icon-map-pin"></use>
+                            </svg> ${event.venue?.name || 'Место не указано'}
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                <svg class="icon" aria-hidden="true" width="12" height="12">
+                                    <use href="images/sprite.svg#icon-calendar"></use>
+                                </svg>
+                                ${firstDate ? firstDate.toLocaleDateString('ru-RU', {
+            day: 'numeric', month: 'short'
+        }) + ', ' + firstDate.toLocaleTimeString('ru-RU', {
+            hour: '2-digit', minute: '2-digit'
+        }) : 'Дата не указана'}
+                            </small>
+                        </p>
+                        <div class="mt-auto d-flex gap-2">
+                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                    data-bs-toggle="modal" data-bs-target="#hallModal">
+                                Схема зала
+                            </button>
+                            <a href="event?id=${event.id}" class="btn btn-primary btn-sm">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,503 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Номер 13 - MAX афиша</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<svg style="display: none;">
+    <use href="images/sprite.svg#icon-moon"></use>
+</svg>
+
+<!-- Навигация -->
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark" aria-label="Главная навигация">
+    <div class="container">
+        <a class="navbar-brand" href="index.html" aria-label="MAX афиша - на главную">MAX афиша</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Открыть меню навигации">
+            <span class="navbar-toggler-icon" aria-hidden="true"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                <li class="nav-item" data-auth-guest><a class="nav-link" href="login.html">Вход</a></li>
+                <li class="nav-item" data-auth-guest><a class="nav-link" href="register.html">Регистрация</a></li>
+                <li class="nav-item" data-auth-user><a class="nav-link" href="profile.html">Личный кабинет</a></li>
+                <li class="nav-item" data-auth-user data-role-organizer><a class="nav-link" href="organizer.html">Организатору</a></li>
+                <li class="nav-item" data-auth-user>
+                    <button class="nav-link btn btn-link text-decoration-none" id="logout-btn">Выйти</button>
+                </li>
+                <div class="d-flex">
+                    <button class="btn btn-outline-light theme-switch" type="button" aria-label="Переключить тему">
+                        <svg class="icon" aria-hidden="true"><use href="images/sprite.svg#icon-moon"></use></svg> Тёмная тема
+                    </button>
+                </div>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Хлебные крошки -->
+<div class="container mt-3">
+    <nav aria-label="Хлебные крошки">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none">Главная</a></li>
+            <li class="breadcrumb-item"><a href="index.html#events" class="text-decoration-none">События</a></li>
+            <li class="breadcrumb-item active" aria-current="page" id="breadcrumb-event-title">Загрузка...</li>
+        </ol>
+    </nav>
+</div>
+
+<!-- Основной контент -->
+<main class="container my-4" id="main-content">
+    <div id="event-loading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Загрузка...</span>
+        </div>
+        <p class="mt-3 text-muted">Загрузка информации о мероприятии...</p>
+    </div>
+
+    <div id="event-error" class="alert alert-danger d-none" role="alert"></div>
+
+    <div id="event-detail" class="d-none">
+        <div class="row">
+            <!-- Левая колонка: контент события -->
+            <div class="col-lg-8">
+                <!-- Постер -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <img id="event-poster" src="" class="card-img-top rounded-3 event-poster" alt="Афиша мероприятия">
+                </div>
+
+                <!-- Заголовок и мета -->
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h1 id="event-title" class="display-5 fw-bold">Загрузка...</h1>
+                        <p id="event-description" class="lead text-muted">Загрузка описания...</p>
+                    </div>
+                    <div class="text-end">
+                        <span id="event-age" class="badge bg-primary fs-6 p-3" aria-label="Возрастное ограничение">16+</span>
+                    </div>
+                </div>
+
+                <!-- Теги -->
+                <div class="mb-4">
+                    <span id="event-type-badge" class="badge bg-secondary me-2">Театр</span>
+                    <span id="event-duration-badge" class="badge bg-secondary me-2">140 минут</span>
+                </div>
+
+                <!-- Вкладки -->
+                <div class="card shadow-sm border-0 p-4 mb-4">
+                    <div class="tab-container">
+                        <ul class="nav nav-tabs" id="eventTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">Описание</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="venue-tab" data-bs-toggle="tab" data-bs-target="#venue" type="button" role="tab" aria-controls="venue" aria-selected="false">Место проведения</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">
+                                    Отзывы <span id="reviews-count" class="badge bg-secondary">0</span>
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content p-3" id="eventTabsContent">
+                            <!-- Описание -->
+                            <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                                <h3 class="fs-5">Подробнее о мероприятии</h3>
+                                <div id="event-long-description" class="mb-3"></div>
+                                <p id="event-cast" class="mb-0"><strong>В ролях:</strong> Загрузка...</p>
+                                <p id="event-director" class="mb-0"><strong>Режиссёр:</strong> Загрузка...</p>
+                            </div>
+
+                            <!-- Место проведения -->
+                            <div class="tab-pane fade" id="venue" role="tabpanel" aria-labelledby="venue-tab">
+                                <h3 id="venue-name" class="fs-5">Загрузка...</h3>
+                                <p id="venue-address">
+                                    <svg class="icon text-danger" aria-hidden="true" width="16" height="16">
+                                        <use href="images/sprite.svg#icon-map-pin"></use>
+                                    </svg> <span id="venue-address-text">Загрузка...</span>
+                                </p>
+                                <p id="venue-metro">
+                                    <svg class="icon" aria-hidden="true" width="16" height="16">
+                                        <use href="images/sprite.svg#icon-train"></use>
+                                    </svg> <span id="venue-metro-text">Загрузка...</span>
+                                </p>
+                                <div class="bg-light p-4 text-center rounded border" aria-label="Карта проезда (заглушка)">
+                                    <svg class="icon icon-xl text-secondary mb-3" aria-hidden="true">
+                                        <use href="images/sprite.svg#icon-map"></use>
+                                    </svg>
+                                    <p class="mb-0">Здесь будет карта проезда</p>
+                                </div>
+                                <hr>
+                                <h4 class="fs-6 mt-3">Схема зала</h4>
+                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#hallModal" aria-haspopup="dialog">
+                                    <svg class="icon" aria-hidden="true" width="16" height="16">
+                                        <use href="images/sprite.svg#icon-chair"></use>
+                                    </svg> Посмотреть схему зала
+                                </button>
+                            </div>
+
+                            <!-- Отзывы -->
+                            <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h3 class="fs-5">Отзывы зрителей</h3>
+                                    <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#addReviewModal" aria-haspopup="dialog" data-requires-auth>Написать отзыв</button>
+                                </div>
+
+                                <div id="reviews-list">
+                                    <div class="text-center py-3">
+                                        <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                                        <span class="ms-2 text-muted">Загрузка отзывов...</span>
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-primary mt-3 d-none" id="reviews-auth-alert" role="alert">
+                                    <svg class="icon" aria-hidden="true" width="16" height="16">
+                                        <use href="images/sprite.svg#icon-info"></use>
+                                    </svg> Чтобы оставить отзыв, <a href="login.html" class="alert-link">войдите</a> в систему.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Правая колонка: покупка билетов -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm border-0 sticky-top" style="top: 20px; z-index: 100;">
+                    <div class="card-body">
+                        <h2 class="card-title h3 mb-4">Билеты</h2>
+
+                        <div class="mb-3">
+                            <label for="event-date-select" class="form-label fw-bold">Дата мероприятия</label>
+                            <select class="form-select" id="event-date-select">
+                                <option value="">Выберите дату</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <fieldset>
+                                <legend class="form-label fw-bold float-none fs-6">Цены на билеты</legend>
+                                <div id="prices-list" class="list-group">
+                                    <div class="list-group-item text-center text-muted">Загрузка цен...</div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="ticket-quantity" class="form-label fw-bold">Количество билетов</label>
+                            <input type="number" class="form-control" id="ticket-quantity" value="1" min="1" max="8" aria-describedby="quantity-help">
+                            <div id="quantity-help" class="form-text">Максимум 8 билетов на один заказ.</div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#hallModal" aria-haspopup="dialog" data-requires-auth>
+                                <svg class="icon" aria-hidden="true" width="16" height="16">
+                                    <use href="images/sprite.svg#icon-chair"></use>
+                                </svg> Выбрать места
+                            </button>
+                            <button class="btn btn-outline-success btn-lg" id="buy-btn" disabled title="Функция покупки временно недоступна">
+                                <svg class="icon" aria-hidden="true" width="16" height="16">
+                                    <use href="images/sprite.svg#icon-cart"></use>
+                                </svg> Купить (заглушка)
+                            </button>
+                        </div>
+
+                        <hr>
+                        <div class="small text-muted">
+                            <p class="mb-0">Возврат билетов возможен не позднее чем за 3 дня до мероприятия</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Модальное окно: схема зала -->
+<div class="modal fade" id="hallModal" tabindex="-1" aria-labelledby="hallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="hallModalLabel">Схема зала</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div class="hall-scheme-placeholder" role="img" aria-label="Схема зала">
+                    <div class="stage-scheme bg-dark text-white p-2 text-center rounded mb-3">СЦЕНА</div>
+                    <div class="text-center" aria-hidden="true">
+                        <div class="seat free"></div><div class="seat free"></div><div class="seat free"></div><div class="seat taken"></div><div class="seat free"></div><br>
+                        <div class="seat free"></div><div class="seat taken"></div><div class="seat free"></div><div class="seat free"></div><div class="seat free"></div><br>
+                        <div class="seat free"></div><div class="seat free"></div><div class="seat taken"></div><div class="seat free"></div><div class="seat taken"></div><br>
+                        <div class="seat free"></div><div class="seat taken"></div><div class="seat free"></div><div class="seat free"></div><div class="seat free"></div>
+                    </div>
+                    <div class="d-flex justify-content-center gap-3 mt-3">
+                        <span><span class="seat" style="display: inline-block; width: 20px; height: 20px;" aria-hidden="true"></span> Свободно</span>
+                        <span><span class="seat taken" style="display: inline-block; width: 20px; height: 20px;" aria-hidden="true"></span> Занято</span>
+                    </div>
+                    <p class="text-muted mt-3 mb-0 small text-center">Интерактивный выбор мест - заглушка</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" disabled title="Функция в разработке">Подтвердить выбор (заглушка)</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно: добавление отзыва -->
+<div class="modal fade" id="addReviewModal" tabindex="-1" aria-labelledby="addReviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addReviewModalLabel">Написать отзыв</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <form id="review-form">
+                <div class="modal-body">
+                    <div class="alert alert-warning d-none" id="review-auth-warning">
+                        Чтобы оставить отзыв, необходимо войти в систему.
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Оценка</label>
+                        <div class="text-warning fs-4" role="group" aria-label="Выберите рейтинг">
+                            <input type="radio" class="btn-check" name="rating" id="star5" value="5" autocomplete="off">
+                            <label class="btn btn-outline-warning" for="star5">★</label>
+                            <input type="radio" class="btn-check" name="rating" id="star4" value="4" autocomplete="off">
+                            <label class="btn btn-outline-warning" for="star4">★</label>
+                            <input type="radio" class="btn-check" name="rating" id="star3" value="3" autocomplete="off">
+                            <label class="btn btn-outline-warning" for="star3">★</label>
+                            <input type="radio" class="btn-check" name="rating" id="star2" value="2" autocomplete="off">
+                            <label class="btn btn-outline-warning" for="star2">★</label>
+                            <input type="radio" class="btn-check" name="rating" id="star1" value="1" autocomplete="off">
+                            <label class="btn btn-outline-warning" for="star1">★</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="review-text" class="form-label">Текст отзыва</label>
+                        <textarea class="form-control" id="review-text" name="text" rows="3" placeholder="Ваш отзыв..." required minlength="10" maxlength="500"></textarea>
+                        <div class="form-text">От 10 до 500 символов</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-success" id="review-submit-btn">Отправить отзыв</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <div class="container">
+        <span>&copy; 2026 eugeron52</span>
+    </div>
+</footer>
+
+<!-- Скрипты -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/api.js" type="module"></script>
+<script src="js/auth.js" type="module"></script>
+<script type="module">
+    import { EventsAPI, ReviewsAPI } from './js/api.js';
+    import { Auth } from './js/auth.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+        const finalEventId = eventId || '1';
+
+        console.log(' Загружаем событие с ID:', eventId);
+        loadEventDetail(finalEventId);
+        loadReviews(finalEventId);
+        // Обработчик формы отзыва
+        const reviewForm = document.getElementById('review-form');
+        if (reviewForm) {
+            reviewForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!Auth.isAuthenticated()) {
+                    alert('Нужно войти в систему');
+                    return;
+                }
+
+                const rating = document.querySelector('input[name="rating"]:checked')?.value;
+                const text = document.getElementById('review-text').value;
+                const user = Auth.getCurrentUser();
+
+                if (!rating) { alert('Выберите оценку'); return; }
+
+                try {
+                    await ReviewsAPI.create({
+                        eventId: finalEventId,
+                        userId: user.id,
+                        userName: `${user.firstName} ${user.lastName}`,
+                        userAvatar: 'https://placebear.com/70/50',
+                        rating: parseFloat(rating),
+                        text: text,
+                        createdAt: new Date().toISOString()
+                    });
+
+                    bootstrap.Modal.getInstance(document.getElementById('addReviewModal'))?.hide();
+                    reviewForm.reset();
+                    loadReviews(finalEventId);
+                    alert('Отзыв добавлен!');
+                } catch (err) {
+                    alert('Ошибка: ' + err.message);
+                }
+            });
+        }
+
+        document.getElementById('logout-btn')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            Auth.logout();
+            window.location.href = 'index.html';
+        });
+    });
+
+    async function loadEventDetail(id) {
+        const loadingEl = document.getElementById('event-loading');
+        const detailEl = document.getElementById('event-detail');
+        const errorEl = document.getElementById('event-error');
+
+        try {
+            loadingEl.classList.remove('d-none');
+            detailEl.classList.add('d-none');
+
+            const event = await EventsAPI.getById(id);
+            console.log('Получено событие:', event); // Отладка
+
+            // === Основная информация ===
+            document.getElementById('breadcrumb-event-title').textContent = event.title;
+            document.getElementById('event-title').textContent = event.title;
+            document.getElementById('event-description').textContent = event.description;
+            document.getElementById('event-poster').src = event.poster || 'https://via.placeholder.com/400x220';
+            document.getElementById('event-age').textContent = event.ageRestriction || '16+';
+
+            // Тип и длительность
+            const typeLabels = {
+                'theater': 'Театр',
+                'concert': 'Концерт',
+                'standup': 'Стендап',
+                'festival': 'Фестиваль'
+            };
+            document.getElementById('event-type-badge').textContent = typeLabels[event.type] || event.type || 'Мероприятие';
+            document.getElementById('event-duration-badge').textContent = event.duration ? `${event.duration} минут` : '120 минут';
+
+            // Описание и актеры
+            if (event.longDescription) {
+                document.getElementById('event-long-description').innerHTML = event.longDescription.replace(/\n/g, '<br>');
+            } else {
+                document.getElementById('event-long-description').textContent = event.description;
+            }
+
+            if (event.cast && event.cast.length > 0) {
+                document.getElementById('event-cast').innerHTML = `<strong>В ролях:</strong> ${event.cast.join(', ')}`;
+            } else {
+                document.getElementById('event-cast').innerHTML = '<strong>В ролях:</strong> Уточняется';
+            }
+
+            if (event.director) {
+                document.getElementById('event-director').innerHTML = `<strong>Режиссёр:</strong> ${event.director}`;
+            } else {
+                document.getElementById('event-director').innerHTML = '<strong>Режиссёр:</strong> Уточняется';
+            }
+
+            // === Место проведения ===
+            if (event.venue) {
+                document.getElementById('venue-name').textContent = event.venue.name || 'Место не указано';
+                document.getElementById('venue-address-text').textContent = event.venue.address || '';
+                document.getElementById('venue-metro-text').textContent = event.venue.metro || '';
+            } else {
+                document.getElementById('venue-name').textContent = 'Место не указано';
+                document.getElementById('venue-address-text').textContent = '';
+                document.getElementById('venue-metro-text').textContent = '';
+            }
+
+            // === Даты ===
+            const dateSelect = document.getElementById('event-date-select');
+            if (event.dates && event.dates.length > 0) {
+                dateSelect.innerHTML = event.dates
+                    .filter(d => d.available !== false)
+                    .map(date => {
+                        const dt = new Date(date.datetime);
+                        return `<option value="${date.id}">${dt.toLocaleDateString('ru-RU', {
+                            day: 'numeric', month: 'long', year: 'numeric'
+                        })}, ${dt.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}</option>`;
+                    }).join('');
+            } else {
+                dateSelect.innerHTML = '<option value="">Даты не назначены</option>';
+            }
+
+            // === Цены ===
+            const pricesList = document.getElementById('prices-list');
+            if (event.prices && Object.keys(event.prices).length > 0) {
+                pricesList.innerHTML = Object.values(event.prices).map(price => `
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        ${price.name}
+                        <span class="badge bg-primary rounded-pill fs-6">${price.price.toLocaleString('ru-RU')} ₽</span>
+                    </div>
+                `).join('');
+            } else {
+                pricesList.innerHTML = '<div class="list-group-item text-center text-muted">Цены не указаны</div>';
+            }
+
+            // Заголовок модального окна
+            document.getElementById('hallModalLabel').textContent = `Схема зала: ${event.title}`;
+
+            loadingEl.classList.add('d-none');
+            detailEl.classList.remove('d-none');
+
+        } catch (error) {
+            console.error('Ошибка загрузки события:', error);
+            loadingEl.classList.add('d-none');
+            errorEl.classList.remove('d-none');
+            errorEl.textContent = 'Ошибка загрузки: ' + error.message;
+        }
+    }
+
+    async function loadReviews(eventId) {
+        const container = document.getElementById('reviews-list');
+        try {
+            const reviews = await ReviewsAPI.getByEventId(eventId);
+            document.getElementById('reviews-count').textContent = reviews.length;
+
+            if (reviews.length === 0) {
+                container.innerHTML = '<p class="text-muted">Отзывов пока нет.</p>';
+                return;
+            }
+
+            container.innerHTML = reviews.map(r => {
+                const fullStars = Math.floor(r.rating);
+                const emptyStars = 5 - fullStars;
+                return `
+                    <div class="review-item mb-3">
+                        <div class="d-flex">
+                            <img src="${r.userAvatar || 'https://placebear.com/70/50'}" class="rounded-circle me-3" alt="Avatar" width="40" height="40">
+                            <div>
+                                <h4 class="fs-6 mb-0">${r.userName || 'Аноним'} <small class="text-muted">· ${new Date(r.createdAt).toLocaleDateString('ru-RU')}</small></h4>
+                                <div class="text-warning mb-2">${'★'.repeat(fullStars)}${'☆'.repeat(emptyStars)}</div>
+                                <p class="mb-0">${r.text}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        } catch (e) {
+            console.error('Ошибка загрузки отзывов:', e);
+            container.innerHTML = '<p class="text-danger">Не удалось загрузить отзывы</p>';
+        }
+    }
+</script>
+</body>
+</html>
