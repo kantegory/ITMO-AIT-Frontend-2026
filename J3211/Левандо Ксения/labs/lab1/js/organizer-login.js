@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // if a user is authorized - block 
     if (localStorage.getItem("auth") === "true") {
-        alert("You are already logged in as a user. Please logout first.");
+        showModal("Error", "You are already logged in as a user. Please logout first.","error");
         window.location.href = "dashboard.html";
         return;
     }
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const existing = await check.json();
 
                 if (existing.length > 0) {
-                    alert("Organizer with this email already exists");
+                    showModal("Error", "Organizer with this email already exists","error");
                     return;
                 }
 
@@ -46,11 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     body: JSON.stringify(newOrganizer)
                 });
         
-            alert("Organizer registered successfully! You can login now.");
+            showModal("Success", "Organizer registered successfully! You can login now.","success");
             regForm.reset();
             } catch (error){
                 console.error("Registration error:", error);
-                alert("Registration failed");
+                showModal("Error", "Registration failed","error");
             }
         };
     }
@@ -67,12 +67,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 const response = await fetch(`http://localhost:3000/organizers?email=${email}`);
                 const organizers = await response.json();
                 if (organizers.length === 0) {
-                    alert("Organizer not found");
+                    showModal("Error", "Organizer not found","error");
                     return;
                 }
                 const org = organizers[0];
                 if (org.password !== password) {
-                    alert("Wrong password");
+                    showModal("Error", "Wrong password","error");
                     return;
                 }
                 // save organizer logged-in
@@ -85,9 +85,31 @@ document.addEventListener("DOMContentLoaded", () => {
             catch (error) {
 
                 console.error("Login error:", error);
-                alert("Login failed");
+                showModal("Error", "Login failed","error");
 
             }
         };
     }
 });
+
+// function for modal
+function showModal(title, message, type = "primary") {
+    const modalEl = document.getElementById("appModal");
+
+    document.getElementById("appModalTitle").textContent = title;
+    document.getElementById("appModalBody").textContent = message;
+
+    const header = modalEl.querySelector(".modal-header");
+
+    // reset classes
+    header.className = "modal-header";
+
+    // add color
+    if (type === "error") header.classList.add("bg-danger", "text-white");
+    if (type === "success") header.classList.add("bg-success", "text-white");
+    if (type === "warning") header.classList.add("bg-warning");
+    if (type === "info") header.classList.add("bg-info", "text-white");
+
+    const modal = new bootstrap.Modal(modalEl);
+    modal.show();
+}
