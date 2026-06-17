@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Мои курсы — Преподаватель</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../theme.css" />
+    <link rel="stylesheet" href="../UserCourses/AU-styles.css" />
+    <script src="../theme-toggle.js"></script>
+</head>
+
+<body>
+
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+            <div class="d-flex align-items-center">
+
+                <button class="btn btn-outline-light d-lg-none me-2" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#mobileSidebar" aria-label="Открыть меню">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <a href="../index.html" class="d-flex text-white text-decoration-none me-auto">
+                    <img src="../images/logo.png" alt="Логотип" width="40" height="40" class="me-2">
+                </a>
+
+                <button class="btn btn-outline-light theme-toggle me-2" onclick="toggleTheme()"
+                    aria-label="Сменить тему">
+                    <span class="icon-sun"><i class="bi bi-sun-fill"></i></span>
+                    <span class="icon-moon"><i class="bi bi-moon-fill"></i></span>
+                </button>
+
+                <a href="../index.html" class="btn btn-outline-light me-2">
+                    <i class="bi bi-house-door me-1"></i>
+                    <span>На главную</span>
+                </a>
+
+                <button class="btn btn-warning" onclick="logout()" aria-label="Выйти из аккаунта">
+                    Sign out
+                </button>
+
+            </div>
+        </div>
+    </header>
+
+    <div class="offcanvas offcanvas-start text-bg-dark d-lg-none" id="mobileSidebar" style="width: 280px;">
+        <div class="offcanvas-header border-bottom border-secondary pb-3">
+            <div class="d-flex align-items-center gap-2">
+                <img src="../images/jinx.png" alt="Аватар пользователя" class="rounded-circle"
+                    style="width:40px;height:40px;object-fit:cover;">
+                <div>
+                    <div class="fw-semibold" id="mobUserName">Преподаватель</div>
+                    <div id="mobUserEmail">email</div>
+                </div>
+            </div>
+
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                aria-label="Закрыть меню"></button>
+        </div>
+
+        <div class="offcanvas-body p-0">
+            <ul class="list-unstyled mb-0">
+                <li>
+                    <a class="d-flex align-items-center gap-2 px-3 py-2 text-white text-decoration-none"
+                        style="background:rgba(13,110,253,.25);">
+                        <i class="bi bi-book"></i>
+                        <span>Мои курсы</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="AddNewCourse.html"
+                        class="d-flex align-items-center gap-2 px-3 py-2 text-white-50 text-decoration-none">
+                        <i class="bi bi-plus-lg"></i>
+                        <span>Создать новый курс</span>
+                    </a>
+                </li>
+
+                <li class="border-top border-secondary my-2"></li>
+
+                <li>
+                    <a href="#" onclick="logout()"
+                        class="d-flex align-items-center gap-2 px-3 py-2 text-white-50 text-decoration-none">
+                        <i class="bi bi-box-arrow-left"></i>
+                        <span>Выйти</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="cabinet-wrapper">
+
+        <aside class="cabinet-sidebar" id="sidebar">
+            <div class="sidebar-user">
+                <img src="../images/jinx.png" alt="Аватар пользователя">
+                <div>
+                    <div id="sideUserName">Преподаватель</div>
+                    <div id="sideUserEmail">email</div>
+                </div>
+            </div>
+
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item">
+                    <a class="nav-link active">
+                        <i class="bi bi-book"></i> <span>Мои курсы</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="AddNewCourse.html" class="nav-link">
+                        <i class="bi bi-plus-lg"></i> <span>Создать новый курс</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="cabinet-main">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold mb-0">Мои курсы</h4>
+
+                <a href="AddNewCourse.html" class="btn btn-primary">
+                    <i class="bi bi-plus-lg me-1"></i>
+                    <span>Новый курс</span>
+                </a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th></th>
+                            <th>Название</th>
+                            <th>Статус</th>
+                            <th>Студенты</th>
+                            <th>Рейтинг</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="coursesTableBody">
+                        <tr>
+                            <td colspan="6" class="text-center py-4">
+                                <div class="spinner-border text-primary" role="status" aria-label="Загрузка"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="py-3 my-4 text-center text-body-secondary">
+        © 2025 Company, Inc
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
+    <script src="../auth.js"></script>
+
+    <script>
+        if (!isLoggedIn()) window.location.href = '../signIn.html';
+
+        async function deleteCourse(id, title) {
+            if (!confirm(`Удалить курс "${title}"?`)) return;
+
+            try {
+                await axios.delete(`${API_URL}/courses/${id}`);
+                loadTeacherCourses();
+            } catch (err) {
+                alert('Ошибка удаления');
+            }
+        }
+
+        async function loadTeacherCourses() {
+            const user = getUser();
+            if (!user) return;
+
+            document.getElementById('sideUserName').textContent = user.name;
+            document.getElementById('sideUserEmail').textContent = user.email;
+            document.getElementById('mobUserName').textContent = user.name;
+            document.getElementById('mobUserEmail').textContent = user.email;
+
+            try {
+                const res = await axios.get(`${API_URL}/courses`, {
+                    params: { teacherId: user.id }
+                });
+
+                const courses = res.data;
+
+                if (!courses.length) {
+                    coursesTableBody.innerHTML =
+                        '<tr><td colspan="6" class="text-center text-muted">Нет курсов</td></tr>';
+                    return;
+                }
+
+                coursesTableBody.innerHTML = courses.map(course => {
+                    const status = course.isPublished
+                        ? '<span class="badge bg-success">Опубликован</span>'
+                        : '<span class="badge bg-warning text-dark">Черновик</span>';
+
+                    return `
+            <tr>
+                <td>
+                    <img src="${course.image}" alt="Обложка курса ${course.title}"
+                         class="rounded" style="width:48px;height:36px;object-fit:cover">
+                </td>
+
+                <td class="fw-semibold">${course.title}</td>
+
+                <td>${status}</td>
+
+                <td>${course.studentsCount || '—'}</td>
+
+                <td>${course.rating
+                            ? '<i class="bi bi-star-fill text-warning"></i> ' + course.rating
+                            : '—'}</td>
+
+                <td>
+                    <a href="EditCourse.html?id=${course.id}"
+                       class="btn btn-sm btn-outline-primary me-1"
+                       aria-label="Редактировать курс ${course.title}">
+                        <i class="bi bi-pencil"></i>
+                        <span class="visually-hidden">Редактировать</span>
+                    </a>
+
+                    <button class="btn btn-sm btn-outline-danger"
+                            onclick="deleteCourse(${course.id}, '${course.title}')"
+                            aria-label="Удалить курс ${course.title}">
+                        <i class="bi bi-trash"></i>
+                        <span class="visually-hidden">Удалить</span>
+                    </button>
+                </td>
+            </tr>
+            `;
+                }).join('');
+
+            } catch {
+                coursesTableBody.innerHTML =
+                    '<tr><td colspan="6" class="text-center text-danger">Ошибка загрузки</td></tr>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadTeacherCourses);
+    </script>
+
+</body>
+
+</html>

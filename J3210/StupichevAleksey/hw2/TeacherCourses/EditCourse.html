@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Редактирование курса</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../theme.css" />
+    <link rel="stylesheet" href="../UserCourses/AU-styles.css" />
+    <script src="../theme-toggle.js"></script>
+</head>
+
+<body>
+
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+            <div class="d-flex align-items-center">
+
+                <a href="../index.html" class="d-flex text-white text-decoration-none me-auto">
+                    <img src="../images/logo.png" alt="Логотип" width="40" height="40">
+                </a>
+
+                <button class="btn btn-outline-light me-2" onclick="toggleTheme()" aria-label="Сменить тему">
+                    <i class="bi bi-sun-fill"></i>
+                </button>
+
+                <button class="btn btn-warning" onclick="logout()" aria-label="Выйти из аккаунта">
+                    Sign out
+                </button>
+
+            </div>
+        </div>
+    </header>
+
+    <main class="cabinet-main">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold mb-0">Редактирование курса</h4>
+
+            <a href="TeacherCourses.html" class="btn btn-secondary btn-sm" aria-label="Вернуться к списку курсов">
+                <i class="bi bi-arrow-left me-1"></i>
+                Назад к списку
+            </a>
+        </div>
+
+        <div id="successAlert" class="alert alert-success d-none" role="alert" aria-live="polite"></div>
+        <div id="errorAlert" class="alert alert-danger d-none" role="alert" aria-live="assertive"></div>
+
+        <div id="loadingSpinner" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status" aria-label="Загрузка"></div>
+        </div>
+
+        <form id="editForm" class="d-none">
+
+            <div class="settings-section">
+                <h5 class="fw-semibold mb-3">Основная информация</h5>
+
+                <div class="row g-3">
+
+                    <div class="col-md-8">
+                        <label for="courseTitle" class="form-label">Название курса</label>
+                        <input id="courseTitle" type="text" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="courseCategory" class="form-label">Категория</label>
+                        <select id="courseCategory" class="form-select">
+                            <option>Программирование</option>
+                            <option>Дизайн</option>
+                            <option>Data Science</option>
+                            <option>DevOps</option>
+                            <option>Маркетинг</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="courseShortDesc" class="form-label">Краткое описание</label>
+                        <textarea id="courseShortDesc" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="courseFullDesc" class="form-label">Полное описание</label>
+                        <textarea id="courseFullDesc" class="form-control" rows="5"></textarea>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="courseLang" class="form-label">Язык курса</label>
+                        <select id="courseLang" class="form-select">
+                            <option>Русский</option>
+                            <option>Английский</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="courseLevel" class="form-label">Уровень</label>
+                        <select id="courseLevel" class="form-select">
+                            <option>Начинающий</option>
+                            <option>Средний</option>
+                            <option>Продвинутый</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="courseImage" class="form-label">URL обложки</label>
+                        <input id="courseImage" type="url" class="form-control">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h5 class="fw-semibold mb-3">Параметры публикации</h5>
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+                        <label for="coursePrice" class="form-label">Цена (₽)</label>
+                        <input id="coursePrice" type="number" class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-check form-switch mt-4">
+                            <input id="certSwitch" class="form-check-input" type="checkbox">
+                            <label for="certSwitch" class="form-check-label">
+                                Выдавать сертификат
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-check form-switch mt-4">
+                            <input id="publishSwitch" class="form-check-input" type="checkbox">
+                            <label for="publishSwitch" class="form-check-label">
+                                Опубликован
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-12 d-flex gap-2">
+
+                        <button type="submit" class="btn btn-primary" id="submitBtn"
+                            aria-label="Сохранить изменения курса">
+                            <i class="bi bi-check-lg me-1"></i>
+                            Сохранить изменения
+                        </button>
+
+                        <a href="TeacherCourses.html" class="btn btn-secondary" aria-label="Отменить редактирование">
+                            Отмена
+                        </a>
+
+                        <button type="button" class="btn btn-danger ms-auto" id="deleteBtn" aria-label="Удалить курс">
+                            <i class="bi bi-trash me-1"></i>
+                            Удалить курс
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </form>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
+    <script src="../auth.js"></script>
+
+    <script>
+        if (!isLoggedIn()) window.location.href = '../signIn.html';
+
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('id');
+
+        if (!courseId) window.location.href = 'TeacherCourses.html';
+
+        async function loadCourse() {
+            try {
+                const res = await axios.get(`${API_URL}/courses/${courseId}`);
+                const c = res.data;
+
+                courseTitle.value = c.title || '';
+                courseShortDesc.value = c.shortDescription || '';
+                courseFullDesc.value = c.fullDescription || '';
+                courseCategory.value = c.category || 'Программирование';
+                courseLang.value = c.language || 'Русский';
+                courseLevel.value = c.level || 'Начинающий';
+                courseImage.value = c.image || '';
+                coursePrice.value = c.price || 0;
+                certSwitch.checked = c.hasCertificate || false;
+                publishSwitch.checked = c.isPublished || false;
+
+                loadingSpinner.classList.add('d-none');
+                editForm.classList.remove('d-none');
+
+            } catch {
+                loadingSpinner.innerHTML = '<p class="text-danger">Курс не найден</p>';
+            }
+        }
+
+        editForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            successAlert.classList.add('d-none');
+            errorAlert.classList.add('d-none');
+
+            try {
+                await axios.patch(`${API_URL}/courses/${courseId}`, {
+                    title: courseTitle.value.trim()
+                });
+
+                successAlert.textContent = 'Изменения сохранены!';
+                successAlert.classList.remove('d-none');
+
+            } catch {
+                errorAlert.textContent = 'Ошибка сохранения';
+                errorAlert.classList.remove('d-none');
+            }
+        });
+
+        deleteBtn.addEventListener('click', async () => {
+            if (!confirm('Удалить курс?')) return;
+
+            try {
+                await axios.delete(`${API_URL}/courses/${courseId}`);
+                window.location.href = 'TeacherCourses.html';
+            } catch {
+                alert('Ошибка удаления');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', loadCourse);
+    </script>
+
+</body>
+
+</html>
