@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FinTrack Pro | Интеграции</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body class="main-shell" data-page="integrations">
+    <header>
+      <nav class="navbar navbar-expand-lg app-navbar" aria-label="Основная навигация">
+        <div class="container">
+          <a class="navbar-brand text-light" href="index.html">
+            <span class="brand-dot" aria-hidden="true"></span>FinTrack Pro
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navMenu"
+            aria-controls="navMenu"
+            aria-expanded="false"
+            aria-label="Открыть меню"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto gap-lg-2 align-items-lg-center">
+              <li class="nav-item"><a class="nav-link" href="dashboard.html">Кабинет</a></li>
+              <li class="nav-item"><a class="nav-link" href="transactions.html">Транзакции</a></li>
+              <li class="nav-item"><a class="nav-link" href="report.html">Отчёты</a></li>
+              <li class="nav-item"><a class="nav-link active" href="integrations.html">Интеграции</a></li>
+              <li class="nav-item ms-lg-2"><a class="btn btn-sm btn-outline-accent" href="login.html">Выйти</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container main-content">
+      <section class="glass-card hero-panel mb-4 reveal">
+        <h1 class="page-title">Интеграции с платёжными аккаунтами</h1>
+        <p class="page-subtitle mb-0">
+          Подключайте банковские сервисы и кошельки, чтобы автоматически импортировать операции и настраивать правила
+          категоризации.
+        </p>
+      </section>
+
+      <section class="glass-card p-3 p-md-4 mb-4 reveal delay-1" aria-labelledby="providersTitle">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+          <h2 class="section-title h5 mb-0" id="providersTitle">Доступные провайдеры</h2>
+          <button class="btn btn-accent" type="button" data-bs-toggle="modal" data-bs-target="#connectProviderModal">
+            Подключить новый
+          </button>
+        </div>
+
+        <div class="integrations-grid">
+          <article class="integration-card" data-provider-card="Tinkoff API">
+            <h3 class="h6 mb-2">Tinkoff API</h3>
+            <p class="integration-status mb-3">Статус: подключено</p>
+            <button class="btn btn-sm btn-outline-accent js-connect-btn" type="button" data-bs-toggle="modal" data-bs-target="#connectProviderModal">
+              Управлять
+            </button>
+          </article>
+
+          <article class="integration-card" data-provider-card="Alfa OpenBanking">
+            <h3 class="h6 mb-2">Alfa OpenBanking</h3>
+            <p class="integration-status mb-3">Статус: не подключено</p>
+            <button class="btn btn-sm btn-outline-accent js-connect-btn" type="button" data-bs-toggle="modal" data-bs-target="#connectProviderModal">
+              Подключить
+            </button>
+          </article>
+
+          <article class="integration-card" data-provider-card="Sber API">
+            <h3 class="h6 mb-2">Sber API</h3>
+            <p class="integration-status mb-3">Статус: не подключено</p>
+            <button class="btn btn-sm btn-outline-accent js-connect-btn" type="button" data-bs-toggle="modal" data-bs-target="#connectProviderModal">
+              Подключить
+            </button>
+          </article>
+
+          <article class="integration-card" data-provider-card="Qiwi Wallet">
+            <h3 class="h6 mb-2">Qiwi Wallet</h3>
+            <p class="integration-status mb-3">Статус: не подключено</p>
+            <button class="btn btn-sm btn-outline-accent js-connect-btn" type="button" data-bs-toggle="modal" data-bs-target="#connectProviderModal">
+              Подключить
+            </button>
+          </article>
+        </div>
+      </section>
+
+      <section class="row g-4">
+        <div class="col-lg-6 reveal delay-2">
+          <article class="glass-card p-3 p-md-4 h-100">
+            <h2 class="section-title h5 mb-3">Правила импорта</h2>
+            <ul class="mb-0 ps-3 d-grid gap-2">
+              <li>Автоматически распознавать MCC и ставить категорию операции.</li>
+              <li>Складывать похожие траты в недельные группы (для отчётов).</li>
+              <li>Маркировать переводы между своими счетами как "перевод".</li>
+            </ul>
+          </article>
+        </div>
+        <div class="col-lg-6 reveal delay-3">
+          <article class="glass-card p-3 p-md-4 h-100">
+            <h2 class="section-title h5 mb-3">Журнал синхронизации</h2>
+            <div class="soft-panel p-3 mb-2">
+              <div class="d-flex justify-content-between gap-2">
+                <span>Tinkoff API</span>
+                <span class="text-muted-custom">30.03.2026, 13:12</span>
+              </div>
+              <small class="text-muted-custom">Импортировано 18 транзакций</small>
+            </div>
+            <div class="soft-panel p-3">
+              <div class="d-flex justify-content-between gap-2">
+                <span>Alfa OpenBanking</span>
+                <span class="text-muted-custom">нет данных</span>
+              </div>
+              <small class="text-muted-custom">Ожидается подключение</small>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container page-footer">
+      <div class="d-flex flex-column flex-md-row justify-content-between gap-2">
+        <span>FinTrack Pro учебный макет для ЛР1</span>
+        <span>&copy; <span data-current-year></span> Павлов Арсений, J3210</span>
+      </div>
+    </footer>
+
+    <div class="modal fade" id="connectProviderModal" tabindex="-1" aria-labelledby="connectProviderLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5 mb-0" id="connectProviderLabel">Подключение провайдера</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <form id="connectProviderForm" novalidate>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label" for="providerName">Провайдер</label>
+                <input type="text" class="form-control" id="providerName" value="Tinkoff API" readonly required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="providerLogin">Логин</label>
+                <input type="text" class="form-control" id="providerLogin" minlength="3" required />
+                <div class="invalid-feedback">Введите логин.</div>
+              </div>
+              <div>
+                <label class="form-label" for="providerToken">API-токен</label>
+                <input type="password" class="form-control" id="providerToken" minlength="6" required />
+                <div class="invalid-feedback">Минимум 6 символов.</div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+              <button type="submit" class="btn btn-accent">Сохранить</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="assets/js/script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FinTrack Pro | Личный кабинет</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body class="main-shell" data-page="dashboard">
+    <header>
+      <nav class="navbar navbar-expand-lg app-navbar" aria-label="Основная навигация">
+        <div class="container">
+          <a class="navbar-brand text-light" href="index.html">
+            <span class="brand-dot" aria-hidden="true"></span>FinTrack Pro
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navMenu"
+            aria-controls="navMenu"
+            aria-expanded="false"
+            aria-label="Открыть меню"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto gap-lg-2 align-items-lg-center">
+              <li class="nav-item"><a class="nav-link active" href="dashboard.html">Кабинет</a></li>
+              <li class="nav-item"><a class="nav-link" href="transactions.html">Транзакции</a></li>
+              <li class="nav-item"><a class="nav-link" href="report.html">Отчёты</a></li>
+              <li class="nav-item"><a class="nav-link" href="integrations.html">Интеграции</a></li>
+              <li class="nav-item ms-lg-2"><a class="btn btn-sm btn-outline-accent" href="login.html">Выйти</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container main-content">
+      <section class="glass-card hero-panel mb-4 reveal">
+        <div class="row align-items-center g-3">
+          <div class="col-lg-8">
+            <h1 class="page-title">Личный кабинет</h1>
+            <p class="page-subtitle mb-0">
+              Сводка по счётам, последним операциям и лимитам бюджета. Добавляйте расходы и отслеживайте динамику в
+              реальном времени.
+            </p>
+          </div>
+          <div class="col-lg-4">
+            <div class="d-grid d-sm-flex justify-content-lg-end gap-2">
+              <button class="btn btn-accent" data-bs-toggle="modal" data-bs-target="#quickTransactionModal" type="button">
+                Добавить расход
+              </button>
+              <a class="btn btn-outline-accent" href="report.html">Открыть отчёт</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="row g-3 mb-4">
+        <div class="col-sm-6 col-xl-3 reveal delay-1">
+          <article class="glass-card card-stat h-100">
+            <p class="text-muted-custom mb-1">Общий баланс</p>
+            <p class="value mb-1">216 450 ₽</p>
+            <p class="delta positive mb-0">+6.2% за месяц</p>
+          </article>
+        </div>
+        <div class="col-sm-6 col-xl-3 reveal delay-1">
+          <article class="glass-card card-stat h-100">
+            <p class="text-muted-custom mb-1">Расходы марта</p>
+            <p class="value mb-1">45 690 ₽</p>
+            <p class="delta negative mb-0">+1 240 ₽ к февралю</p>
+          </article>
+        </div>
+        <div class="col-sm-6 col-xl-3 reveal delay-2">
+          <article class="glass-card card-stat h-100">
+            <p class="text-muted-custom mb-1">Доходы марта</p>
+            <p class="value mb-1">118 600 ₽</p>
+            <p class="delta positive mb-0">+4 600 ₽ за месяц</p>
+          </article>
+        </div>
+        <div class="col-sm-6 col-xl-3 reveal delay-2">
+          <article class="glass-card card-stat h-100">
+            <p class="text-muted-custom mb-1">Свободный остаток</p>
+            <p class="value mb-1">72 910 ₽</p>
+            <p class="delta neutral mb-0">38% от дохода</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="row g-4 align-items-start">
+        <div class="col-lg-4 reveal delay-2">
+          <article class="glass-card p-3 p-md-4 mb-4">
+            <h2 class="section-title h5 mb-3">Счета пользователя</h2>
+            <ul class="account-list">
+              <li>
+                <span>Карта Alfa</span>
+                <strong>48 900 ₽</strong>
+              </li>
+              <li>
+                <span>Счёт Tinkoff</span>
+                <strong>122 550 ₽</strong>
+              </li>
+              <li>
+                <span>Накопительный</span>
+                <strong>45 000 ₽</strong>
+              </li>
+            </ul>
+          </article>
+
+          <article class="glass-card p-3 p-md-4">
+            <h2 class="section-title h5 mb-3">Бюджеты по категориям</h2>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between mb-1">
+                <span>Продукты</span>
+                <span class="text-muted-custom">11 300 / 15 000 ₽</span>
+              </div>
+              <div class="progress" role="progressbar" aria-label="Прогресс бюджета на продукты" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75">
+                <div class="progress-bar" style="width: 75%"></div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between mb-1">
+                <span>Транспорт</span>
+                <span class="text-muted-custom">4 980 / 8 000 ₽</span>
+              </div>
+              <div class="progress" role="progressbar" aria-label="Прогресс бюджета на транспорт" aria-valuemin="0" aria-valuemax="100" aria-valuenow="62">
+                <div class="progress-bar" style="width: 62%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="d-flex justify-content-between mb-1">
+                <span>Подписки</span>
+                <span class="text-muted-custom">1 520 / 2 500 ₽</span>
+              </div>
+              <div class="progress" role="progressbar" aria-label="Прогресс бюджета на подписки" aria-valuemin="0" aria-valuemax="100" aria-valuenow="61">
+                <div class="progress-bar" style="width: 61%"></div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-lg-8 reveal delay-3">
+          <article class="glass-card p-3 p-md-4 mb-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+              <h2 class="section-title h5 mb-0">Последние транзакции</h2>
+              <a class="btn btn-sm btn-outline-accent" href="transactions.html">Все транзакции</a>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-middle mb-0">
+                <thead>
+                  <tr>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Описание</th>
+                    <th scope="col">Категория</th>
+                    <th scope="col" class="text-end">Сумма</th>
+                  </tr>
+                </thead>
+                <tbody id="recentTransactionsBody">
+                  <tr>
+                    <td data-label="Дата">29 мар 2026</td>
+                    <td data-label="Описание">Продукты (Перекресток)</td>
+                    <td data-label="Категория"><span class="badge-soft badge-soft-expense">Продукты</span></td>
+                    <td data-label="Сумма" class="text-end">-3 280 ₽</td>
+                  </tr>
+                  <tr>
+                    <td data-label="Дата">28 мар 2026</td>
+                    <td data-label="Описание">Зарплата за март</td>
+                    <td data-label="Категория"><span class="badge-soft badge-soft-income">Доход</span></td>
+                    <td data-label="Сумма" class="text-end">96 300 ₽</td>
+                  </tr>
+                  <tr>
+                    <td data-label="Дата">27 мар 2026</td>
+                    <td data-label="Описание">Подписка на музыку</td>
+                    <td data-label="Категория"><span class="badge-soft badge-soft-expense">Подписки</span></td>
+                    <td data-label="Сумма" class="text-end">-269 ₽</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <aside class="alert alert-custom mb-0" role="note">
+            Подключи банковский аккаунт на странице «Интеграции», чтобы импортировать операции автоматически и не
+            добавлять их вручную.
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container page-footer">
+      <div class="d-flex flex-column flex-md-row justify-content-between gap-2">
+        <span>FinTrack Pro учебный макет для ЛР1</span>
+        <span>&copy; <span data-current-year></span> Павлов Арсений, J3210</span>
+      </div>
+    </footer>
+
+    <div class="modal fade" id="quickTransactionModal" tabindex="-1" aria-labelledby="quickTransactionModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5 mb-0" id="quickTransactionModalLabel">Добавить расход</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <form id="quickTransactionForm" novalidate>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label" for="quickTitle">Описание</label>
+                <input type="text" class="form-control" id="quickTitle" placeholder="Например: Кафе" minlength="2" required />
+                <div class="invalid-feedback">Введите описание операции.</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="quickAmount">Сумма</label>
+                <input type="number" class="form-control" id="quickAmount" min="1" step="1" required />
+                <div class="invalid-feedback">Укажите сумму больше 0.</div>
+              </div>
+              <div>
+                <label class="form-label" for="quickCategory">Категория</label>
+                <select class="form-select" id="quickCategory" required>
+                  <option value="" selected disabled>Выбрать категорию</option>
+                  <option value="food">Кафе</option>
+                  <option value="groceries">Продукты</option>
+                  <option value="transport">Транспорт</option>
+                  <option value="subscription">Подписки</option>
+                  <option value="other">Прочее</option>
+                </select>
+                <div class="invalid-feedback">Выберите категорию.</div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+              <button type="submit" class="btn btn-accent">Сохранить</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="assets/js/script.js"></script>
+  </body>
+</html>
