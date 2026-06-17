@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ModelHub — AI Model &amp; Dataset Hub</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* ===== CSS ПЕРЕМЕННЫЕ — СВЕТЛАЯ ТЕМА (по умолчанию) ===== */
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --bg-card: #ffffff;
+      --bg-navbar: #212529;
+      --bg-hero: #212529;
+      --bg-code: #212529;
+      --text-primary: #212529;
+      --text-secondary: #6c757d;
+      --text-navbar: #ffffff;
+      --text-hero: #ffffff;
+      --text-code: #f8f9fa;
+      --border-color: #dee2e6;
+      --sidebar-hover: #f0f0f0;
+      --sidebar-active-bg: #0d6efd;
+      --sidebar-active-text: #ffffff;
+      --input-bg: #ffffff;
+      --input-text: #212529;
+      --input-border: #ced4da;
+      --theme-toggle-icon: "🌙";
+    }
+
+    /* ===== ТЁМНАЯ ТЕМА ===== */
+    [data-theme="dark"] {
+      --bg-primary: #121212;
+      --bg-secondary: #1e1e1e;
+      --bg-card: #2a2a2a;
+      --bg-navbar: #0a0a0a;
+      --bg-hero: #0a0a0a;
+      --bg-code: #0d1117;
+      --text-primary: #e0e0e0;
+      --text-secondary: #aaaaaa;
+      --text-navbar: #ffffff;
+      --text-hero: #ffffff;
+      --text-code: #f8f9fa;
+      --border-color: #444444;
+      --sidebar-hover: #333333;
+      --sidebar-active-bg: #0d6efd;
+      --sidebar-active-text: #ffffff;
+      --input-bg: #2a2a2a;
+      --input-text: #e0e0e0;
+      --input-border: #555555;
+      --theme-toggle-icon: "☀️";
+    }
+
+    /* ===== ПРИМЕНЕНИЕ ПЕРЕМЕННЫХ ===== */
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .card {
+      background-color: var(--bg-card);
+      border-color: var(--border-color);
+      color: var(--text-primary);
+    }
+
+    .bg-dark {
+      background-color: var(--bg-navbar) !important;
+    }
+
+    .text-muted {
+      color: var(--text-secondary) !important;
+    }
+
+    .form-control, .form-select {
+      background-color: var(--input-bg);
+      color: var(--input-text);
+      border-color: var(--input-border);
+    }
+
+    .form-control:focus, .form-select:focus {
+      background-color: var(--input-bg);
+      color: var(--input-text);
+    }
+
+    .form-check-label {
+      color: var(--text-primary);
+    }
+
+    .list-group-item {
+      background-color: var(--bg-card);
+      border-color: var(--border-color);
+      color: var(--text-primary);
+    }
+
+    .table {
+      color: var(--text-primary);
+      border-color: var(--border-color);
+    }
+
+    .table-light {
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .border-bottom {
+      border-color: var(--border-color) !important;
+    }
+
+    /* ===== ПРОЧИЕ СТИЛИ ===== */
+    .page { display: none; }
+    .page.active { display: block; }
+    .navbar-brand { font-weight: bold; }
+    .model-card { cursor: pointer; }
+    .sidebar-link { cursor: pointer; padding: 8px 16px; display: block; color: var(--text-primary); text-decoration: none; border-radius: 4px; margin-bottom: 4px; }
+    .sidebar-link:hover { background: var(--sidebar-hover); }
+    .sidebar-link.active { background: var(--sidebar-active-bg); color: var(--sidebar-active-text); }
+    .tab-pane-custom { display: none; }
+    .tab-pane-custom.active { display: block; }
+    .code-block { background: var(--bg-code); color: var(--text-code); padding: 16px; border-radius: 6px; font-family: monospace; font-size: 14px; }
+    .filter-section { margin-bottom: 16px; }
+    .filter-section legend { font-weight: 600; margin-bottom: 8px; font-size: 14px; }
+    .skip-link { position: absolute; left: -9999px; top: 0; }
+    .skip-link:focus { left: 0; z-index: 9999; background: #0d6efd; color: white; padding: 8px 16px; text-decoration: none; }
+
+    /* ===== ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ ===== */
+    #themeToggle {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 4px 12px;
+      cursor: pointer;
+      font-size: 14px;
+      color: white;
+      transition: background 0.2s;
+    }
+    #themeToggle:hover { background: rgba(255,255,255,0.1); }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Перейти к основному содержимому</a>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="mainNav" role="navigation" aria-label="Основная навигация">
+  <div class="container">
+    <a class="navbar-brand" href="#" onclick="navigate('home')" aria-label="ModelHub — перейти на главную">🧠 ModelHub</a>
+    <div class="d-flex gap-2 align-items-center">
+      <a class="nav-link text-white" href="#" onclick="navigate('search')" role="menuitem">Каталог</a>
+      <a class="nav-link text-white" href="#" id="navDashLink" style="display:none;" onclick="navigate('dashboard')" role="menuitem">Кабинет</a>
+      <button class="btn btn-outline-light btn-sm" id="navLoginBtn" onclick="navigate('login')" aria-label="Войти в аккаунт">Войти</button>
+      <span id="navUserText" style="display:none; color:white; font-size:14px;" aria-live="polite"></span>
+      <button class="btn btn-outline-light btn-sm" id="navLogoutBtn" style="display:none;" onclick="doLogout()" aria-label="Выйти из аккаунта">Выйти</button>
+      <button id="themeToggle" onclick="toggleTheme()" aria-label="Переключить тему">🌙 Тема</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ======== ГЛАВНАЯ ======== -->
+<div id="page-home" class="page">
+  <main id="main-content">
+  <section class="bg-dark text-white py-5" aria-label="Главный баннер">
+    <div class="container">
+      <h1 class="mb-3">AI Model & Dataset Hub</h1>
+      <p class="lead mb-4">Платформа для публикации и поиска моделей и датасетов машинного обучения</p>
+      <div class="row g-2 mb-4" style="max-width: 500px;" role="search">
+        <div class="col">
+          <label for="heroSearchInput" class="visually-hidden">Поиск моделей и датасетов</label>
+          <input type="text" class="form-control" placeholder="Поиск..." id="heroSearchInput" aria-label="Поиск моделей и датасетов">
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-primary" onclick="heroSearch()" aria-label="Начать поиск">Найти</button>
+        </div>
+      </div>
+      <div class="d-flex gap-4" aria-label="Статистика платформы">
+        <div><h4 class="mb-0" aria-label="47 тысяч моделей">47K+</h4><small class="text-secondary">Моделей</small></div>
+        <div><h4 class="mb-0" aria-label="12 тысяч датасетов">12K+</h4><small class="text-secondary">Датасетов</small></div>
+        <div><h4 class="mb-0" aria-label="180 тысяч пользователей">180K+</h4><small class="text-secondary">Пользователей</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container py-4" aria-label="Контент главной страницы">
+      <h2 class="h4 mb-3">Популярные модели</h2>
+    <div class="row g-3" id="homeModelsList" aria-label="Список популярных моделей"></div>
+
+    <h2 class="h4 mt-5 mb-3">Категории</h2>
+    <div class="d-flex flex-wrap gap-2" role="list" aria-label="Категории задач">
+      <button class="btn btn-outline-secondary btn-sm" onclick="goSearch('NLP')" role="listitem">NLP</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="goSearch('Computer Vision')" role="listitem">Computer Vision</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="goSearch('Tabular')" role="listitem">Tabular</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="goSearch('Audio')" role="listitem">Audio</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="goSearch('Multimodal')" role="listitem">Multimodal</button>
+    </div>
+
+    <h2 class="h4 mt-5 mb-3">Новые датасеты</h2>
+    <div class="row g-3" id="homeDatasetsL" aria-label="Список новых датасетов"></div>
+  </section>
+  </main>
+</div>
+
+<!-- ======== ВХОД ======== -->
+<div id="page-login" class="page">
+  <main id="main-content-login">
+  <div class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 56px); background: #f8f9fa;">
+    <div class="card p-4" style="width: 380px;" role="region" aria-label="Форма входа">
+      <h1 class="h4 mb-4 text-center">Вход</h1>
+      <div class="mb-3">
+        <label class="form-label" for="loginEmail">Email</label>
+        <input type="email" class="form-control" id="loginEmail" placeholder="you@example.com" autocomplete="email" aria-required="true">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="loginPass">Пароль</label>
+        <input type="password" class="form-control" id="loginPass" placeholder="Пароль" autocomplete="current-password" aria-required="true">
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="rememberMe">
+        <label class="form-check-label" for="rememberMe">Запомнить меня</label>
+      </div>
+      <div id="loginError" class="alert alert-danger d-none" role="alert" aria-live="assertive"></div>
+      <button class="btn btn-primary w-100 mb-3" onclick="doLogin()" aria-label="Войти в аккаунт">Войти</button>
+      <hr>
+      <button class="btn btn-outline-secondary w-100 mb-2" onclick="doGithubLogin()" aria-label="Войти через GitHub">
+        Войти через GitHub
+      </button>
+      <p class="text-center mt-3 mb-0" style="font-size: 14px;">
+        Нет аккаунта? <a href="#" onclick="navigate('register')">Зарегистрироваться</a>
+      </p>
+    </div>
+  </div>
+  </main>
+</div>
+
+<!-- ======== РЕГИСТРАЦИЯ ======== -->
+<div id="page-register" class="page">
+  <main id="main-content-register">
+  <div class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 56px); background: #f8f9fa;">
+    <div class="card p-4" style="width: 420px;" role="region" aria-label="Форма регистрации">
+      <h1 class="h4 mb-4 text-center">Регистрация</h1>
+      <div class="row g-2 mb-3">
+        <div class="col">
+          <label class="form-label" for="regName">Имя</label>
+          <input type="text" class="form-control" id="regName" placeholder="Иван" autocomplete="given-name" aria-required="true">
+        </div>
+        <div class="col">
+          <label class="form-label" for="regSurname">Фамилия</label>
+          <input type="text" class="form-control" id="regSurname" placeholder="Иванов" autocomplete="family-name">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="regUsername">Username</label>
+        <input type="text" class="form-control" id="regUsername" placeholder="ivan123" autocomplete="username" aria-required="true">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="regEmail">Email</label>
+        <input type="email" class="form-control" id="regEmail" placeholder="you@example.com" autocomplete="email" aria-required="true">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="regPass">Пароль</label>
+        <input type="password" class="form-control" id="regPass" placeholder="Минимум 8 символов" autocomplete="new-password" aria-required="true" aria-describedby="passHint">
+        <div id="passHint" class="form-text">Минимум 8 символов</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="regPass2">Подтвердите пароль</label>
+        <input type="password" class="form-control" id="regPass2" placeholder="Повторите пароль" autocomplete="new-password" aria-required="true">
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="agreeTerms" aria-required="true">
+        <label class="form-check-label" for="agreeTerms">Согласен с условиями использования</label>
+      </div>
+      <div id="regError" class="alert alert-danger d-none" role="alert" aria-live="assertive"></div>
+      <button class="btn btn-primary w-100" onclick="doRegister()">Создать аккаунт</button>
+      <p class="text-center mt-3 mb-0" style="font-size: 14px;">
+        Уже есть аккаунт? <a href="#" onclick="navigate('login')">Войти</a>
+      </p>
+    </div>
+  </div>
+  </main>
+</div>
+
+<!-- ======== ПОИСК ======== -->
+<div id="page-search" class="page">
+  <main id="main-content-search">
+  <div class="bg-dark text-white py-3">
+    <div class="container">
+      <h1 class="h5 mb-2">Каталог моделей и датасетов</h1>
+      <div class="row g-2" style="max-width: 600px;" role="search">
+        <div class="col">
+          <label for="searchInput" class="visually-hidden">Поиск по названию или описанию</label>
+          <input type="text" class="form-control" id="searchInput" placeholder="Поиск по названию или описанию..." oninput="doSearch()" aria-label="Поиск по каталогу">
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-primary" onclick="doSearch()" aria-label="Применить поиск">Найти</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container py-4">
+    <div class="row g-4">
+      <!-- Фильтры -->
+      <div class="col-lg-3">
+        <div class="card p-3" role="search" aria-label="Фильтры поиска">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h6 mb-0 fw-bold">Фильтры</h2>
+            <button class="btn btn-link btn-sm p-0 text-decoration-none" onclick="clearFilters()" aria-label="Сбросить все фильтры">Сбросить</button>
+          </div>
+
+          <fieldset class="filter-section">
+            <legend class="h6">Тип</legend>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="typeF" id="typeAll" value="all" checked onchange="doSearch()">
+              <label class="form-check-label" for="typeAll">Все</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="typeF" id="typeModel" value="model" onchange="doSearch()">
+              <label class="form-check-label" for="typeModel">Модели</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="typeF" id="typeDataset" value="dataset" onchange="doSearch()">
+              <label class="form-check-label" for="typeDataset">Датасеты</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="filter-section">
+            <legend class="h6">Задача</legend>
+            <div class="form-check">
+              <input class="form-check-input task-f" type="checkbox" value="NLP" id="fNLP" onchange="doSearch()">
+              <label class="form-check-label" for="fNLP">NLP</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input task-f" type="checkbox" value="Computer Vision" id="fCV" onchange="doSearch()">
+              <label class="form-check-label" for="fCV">Computer Vision</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input task-f" type="checkbox" value="Tabular" id="fTab" onchange="doSearch()">
+              <label class="form-check-label" for="fTab">Tabular</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input task-f" type="checkbox" value="Audio" id="fAud" onchange="doSearch()">
+              <label class="form-check-label" for="fAud">Audio</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input task-f" type="checkbox" value="Multimodal" id="fMul" onchange="doSearch()">
+              <label class="form-check-label" for="fMul">Multimodal</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="filter-section">
+            <legend class="h6">Фреймворк</legend>
+            <div class="form-check">
+              <input class="form-check-input fw-f" type="checkbox" value="PyTorch" id="fPT" onchange="doSearch()">
+              <label class="form-check-label" for="fPT">PyTorch</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input fw-f" type="checkbox" value="TensorFlow" id="fTF" onchange="doSearch()">
+              <label class="form-check-label" for="fTF">TensorFlow</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input fw-f" type="checkbox" value="scikit-learn" id="fSK" onchange="doSearch()">
+              <label class="form-check-label" for="fSK">scikit-learn</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input fw-f" type="checkbox" value="ONNX" id="fON" onchange="doSearch()">
+              <label class="form-check-label" for="fON">ONNX</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="filter-section">
+            <legend class="h6">Лицензия</legend>
+            <div class="form-check">
+              <input class="form-check-input lic-f" type="checkbox" value="MIT" id="fMIT" onchange="doSearch()">
+              <label class="form-check-label" for="fMIT">MIT</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input lic-f" type="checkbox" value="Apache 2.0" id="fAP" onchange="doSearch()">
+              <label class="form-check-label" for="fAP">Apache 2.0</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input lic-f" type="checkbox" value="CC BY 4.0" id="fCC" onchange="doSearch()">
+              <label class="form-check-label" for="fCC">CC BY 4.0</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input lic-f" type="checkbox" value="GPL-3.0" id="fGPL" onchange="doSearch()">
+              <label class="form-check-label" for="fGPL">GPL-3.0</label>
+            </div>
+          </fieldset>
+
+          <div class="filter-section">
+            <label for="sortF" class="h6 d-block">Сортировка</label>
+            <select class="form-select form-select-sm" id="sortF" onchange="doSearch()" aria-label="Сортировка результатов">
+              <option value="stars">По звёздам</option>
+              <option value="downloads">По загрузкам</option>
+              <option value="date">По дате</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Результаты -->
+      <div class="col-lg-9">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <small class="text-muted" id="resultsCount" aria-live="polite" aria-atomic="true"></small>
+        </div>
+        <div class="row g-3" id="searchResults" aria-label="Результаты поиска"></div>
+      </div>
+    </div>
+  </div>
+  </main>
+</div>
+
+<!-- ======== ЛИЧНЫЙ КАБИНЕТ ======== -->
+<div id="page-dashboard" class="page">
+  <main id="main-content-dashboard">
+  <!-- Шапка профиля -->
+  <div class="bg-dark text-white py-3" role="banner" aria-label="Профиль пользователя">
+    <div class="container d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-3">
+        <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white fw-bold"
+             style="width:48px;height:48px;" id="dashAvatar" role="img" aria-label="Аватар пользователя">МА</div>
+        <div>
+          <div class="fw-bold" id="dashUsername">Виктор</div>
+          <div class="text-secondary" style="font-size:13px;">@vtector · ITMO University</div>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="openUploadModal()" aria-label="Загрузить модель или датасет">+ Загрузить</button>
+    </div>
+  </div>
+
+  <div class="container-fluid py-3">
+    <div class="row g-0">
+      <!-- Боковое меню -->
+      <nav class="col-lg-2 pe-3" aria-label="Навигация личного кабинета">
+        <div onclick="showDashTab('overview')" class="sidebar-link active" id="dtab-overview" role="button" tabindex="0" aria-current="page">Обзор</div>
+        <div onclick="showDashTab('models')" class="sidebar-link" id="dtab-models" role="button" tabindex="0">Мои модели</div>
+        <div onclick="showDashTab('datasets')" class="sidebar-link" id="dtab-datasets" role="button" tabindex="0">Мои датасеты</div>
+        <div onclick="showDashTab('starred')" class="sidebar-link" id="dtab-starred" role="button" tabindex="0">Избранное</div>
+        <div onclick="showDashTab('activity')" class="sidebar-link" id="dtab-activity" role="button" tabindex="0">Активность</div>
+        <div onclick="showDashTab('settings')" class="sidebar-link" id="dtab-settings" role="button" tabindex="0">Настройки</div>
+      </nav>
+
+      <!-- Контент -->
+      <div class="col-lg-10">
+
+        <!-- Обзор -->
+        <div id="dcontent-overview" class="tab-pane-custom active">
+          <h5 class="mb-3">Обзор</h5>
+          <div class="row g-3 mb-4">
+            <div class="col-6 col-md-3">
+              <div class="card text-center p-3">
+                <h3 class="mb-0">12</h3>
+                <small class="text-muted">Моделей</small>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="card text-center p-3">
+                <h3 class="mb-0">4</h3>
+                <small class="text-muted">Датасетов</small>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="card text-center p-3">
+                <h3 class="mb-0">3.2K</h3>
+                <small class="text-muted">Загрузок</small>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="card text-center p-3">
+                <h3 class="mb-0">284</h3>
+                <small class="text-muted">Звёзд</small>
+              </div>
+            </div>
+          </div>
+          <h5 class="mb-3">Последняя активность</h5>
+          <ul class="list-group">
+            <li class="list-group-item">⭐ <strong>bert-rubert-tiny</strong> получила 12 новых звёзд <span class="text-muted float-end" style="font-size:13px;">2 часа назад</span></li>
+            <li class="list-group-item">📥 Датасет <strong>ru-news-clf</strong> скачали 48 раз <span class="text-muted float-end" style="font-size:13px;">вчера</span></li>
+            <li class="list-group-item">💬 Новый комментарий на <strong>catboost-v2</strong> <span class="text-muted float-end" style="font-size:13px;">2 дня назад</span></li>
+          </ul>
+        </div>
+
+        <!-- Мои модели -->
+        <div id="dcontent-models" class="tab-pane-custom">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">Мои модели</h5>
+            <button class="btn btn-primary btn-sm" onclick="openUploadModal()">+ Добавить</button>
+          </div>
+          <div class="row g-3" id="myModelsList"></div>
+        </div>
+
+        <!-- Мои датасеты -->
+        <div id="dcontent-datasets" class="tab-pane-custom">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">Мои датасеты</h5>
+            <button class="btn btn-primary btn-sm" onclick="openUploadModal()">+ Добавить</button>
+          </div>
+          <div class="row g-3" id="myDatasetsList"></div>
+        </div>
+
+        <!-- Избранное -->
+        <div id="dcontent-starred" class="tab-pane-custom">
+          <h5 class="mb-3">Избранное</h5>
+          <div class="row g-3" id="starredList"></div>
+        </div>
+
+        <!-- Активность -->
+        <div id="dcontent-activity" class="tab-pane-custom">
+          <h5 class="mb-3">История активности</h5>
+          <table class="table table-bordered table-hover">
+            <thead class="table-light">
+              <tr><th>Событие</th><th>Артефакт</th><th>Дата</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>⭐ Добавил в избранное</td><td>gpt2-ru</td><td>20 мая 2026</td></tr>
+              <tr><td>📥 Загрузил модель</td><td>catboost-v3</td><td>18 мая 2026</td></tr>
+              <tr><td>💬 Оставил комментарий</td><td>efficientnet-b4</td><td>15 мая 2026</td></tr>
+              <tr><td>🍴 Сделал форк</td><td>ru-bert-base</td><td>10 мая 2026</td></tr>
+              <tr><td>📦 Загрузил датасет</td><td>ru-news-clf</td><td>5 мая 2026</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Настройки -->
+        <div id="dcontent-settings" class="tab-pane-custom">
+          <h2 class="h5 mb-3">Настройки профиля</h2>
+          <div class="card p-4" style="max-width: 500px;" role="form" aria-label="Настройки профиля">
+            <div class="mb-3">
+              <label class="form-label" for="settingsName">Имя</label>
+              <input type="text" class="form-control" id="settingsName" value="Виктор" autocomplete="given-name">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="settingsUsername">Username</label>
+              <input type="text" class="form-control" id="settingsUsername" value="vtector" autocomplete="username">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="settingsBio">Биография</label>
+              <textarea class="form-control" id="settingsBio" rows="3">Студент, 19 лет</textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="settingsOrg">Организация</label>
+              <input type="text" class="form-control" id="settingsOrg" value="ITMO University" autocomplete="organization">
+            </div>
+            <button class="btn btn-primary" onclick="alert('Сохранено!')" aria-label="Сохранить настройки профиля">Сохранить</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </main>
+</div>
+
+<!-- ======== СТРАНИЦА МОДЕЛИ ======== -->
+<div id="page-model" class="page">
+  <main id="main-content-model">
+  <div class="bg-dark text-white py-4" role="region" aria-label="Информация о модели">
+    <div class="container">
+      <p class="text-secondary mb-1" id="detailOwner">@yandex-research</p>
+      <h1 class="h2" id="detailName">ru-bert-base</h1>
+      <p id="detailDesc" class="text-secondary">Описание модели</p>
+      <div class="d-flex flex-wrap gap-2 mb-3" id="detailBadges" aria-label="Теги модели"></div>
+      <div class="d-flex gap-2 flex-wrap" role="group" aria-label="Действия с моделью">
+        <button class="btn btn-outline-warning btn-sm" id="starBtn" onclick="toggleStar()" aria-pressed="false" aria-label="Добавить в избранное">⭐ <span id="starCount">0</span></button>
+        <button class="btn btn-outline-light btn-sm" onclick="openForkModal()" aria-label="Сделать форк модели">🍴 Форк</button>
+        <button class="btn btn-primary btn-sm" onclick="alert('Скачивание начато!')" aria-label="Скачать модель">📥 Скачать</button>
+      </div>
+      <div class="mt-3 d-flex gap-4" style="font-size:13px; color:#aaa;" aria-label="Статистика модели">
+        <span>📥 <span id="detailDownloads">0</span> загрузок</span>
+        <span>🍴 <span id="detailForks">0</span> форков</span>
+        <span>📅 <span id="detailDate"></span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Вкладки -->
+  <div class="border-bottom bg-white">
+    <div class="container">
+      <ul class="nav nav-tabs border-0" role="tablist" aria-label="Разделы страницы модели">
+        <li class="nav-item" role="presentation"><a class="nav-link active" href="#" role="tab" aria-selected="true" onclick="showModelTab('readme', this); return false;">README</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="#" role="tab" aria-selected="false" onclick="showModelTab('metrics', this); return false;">Метрики</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="#" role="tab" aria-selected="false" onclick="showModelTab('files', this); return false;">Файлы</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="#" role="tab" aria-selected="false" onclick="showModelTab('usage', this); return false;">Использование</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="#" role="tab" aria-selected="false" onclick="showModelTab('discuss', this); return false;">Обсуждения</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container py-4">
+    <div class="row g-4">
+      <div class="col-lg-8">
+
+        <!-- README -->
+        <div id="mtab-readme" class="tab-pane-custom active">
+          <div class="card p-4">
+            <h5 id="readmeName">Название модели</h5>
+            <p class="text-muted" id="readmeDesc">Описание</p>
+            <hr>
+            <h6>Быстрый старт</h6>
+            <div class="code-block mb-3" id="readmeCode">
+              from transformers import AutoTokenizer, AutoModel<br><br>
+              tokenizer = AutoTokenizer.from_pretrained("owner/model")<br>
+              model = AutoModel.from_pretrained("owner/model")
+            </div>
+            <h6>Описание</h6>
+            <p class="text-muted">Модель предобучена на большом корпусе текстов. Подходит для файн-тюнинга на различных downstream-задачах NLP.</p>
+            <h6>Ограничения</h6>
+            <p class="text-muted">Может воспроизводить предвзятости обучающих данных. Не предназначена для генерации.</p>
+          </div>
+        </div>
+
+        <!-- Метрики -->
+        <div id="mtab-metrics" class="tab-pane-custom">
+          <div class="card p-4">
+            <h5 class="mb-3">Метрики качества</h5>
+            <div class="row g-3 mb-4">
+              <div class="col-6 col-md-3">
+                <div class="card text-center p-3 bg-light">
+                  <h4>87.3%</h4><small class="text-muted">GLUE Score</small>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="card text-center p-3 bg-light">
+                  <h4>91.2%</h4><small class="text-muted">NER F1</small>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="card text-center p-3 bg-light">
+                  <h4>83.7%</h4><small class="text-muted">SQuAD F1</small>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="card text-center p-3 bg-light">
+                  <h4>89.0%</h4><small class="text-muted">Sentiment</small>
+                </div>
+              </div>
+            </div>
+            <table class="table table-bordered table-sm">
+              <thead class="table-light"><tr><th>Задача</th><th>Датасет</th><th>Метрика</th><th>Результат</th></tr></thead>
+              <tbody>
+                <tr><td>Классификация</td><td>RuSentiment</td><td>Accuracy</td><td class="text-success fw-bold">89.0%</td></tr>
+                <tr><td>NER</td><td>FactRuEval</td><td>F1</td><td class="text-success fw-bold">91.2%</td></tr>
+                <tr><td>QA</td><td>SberQuAD</td><td>F1</td><td class="text-warning fw-bold">83.7%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Файлы -->
+        <div id="mtab-files" class="tab-pane-custom">
+          <div class="card">
+            <div class="card-header"><strong>Файлы</strong></div>
+            <ul class="list-group list-group-flush" id="filesList"></ul>
+          </div>
+        </div>
+
+        <!-- Использование -->
+        <div id="mtab-usage" class="tab-pane-custom">
+          <div class="card p-4">
+            <h6>Установка</h6>
+            <div class="code-block mb-3">pip install transformers torch</div>
+            <h6>Классификация текста</h6>
+            <div class="code-block mb-3" id="usageCode">
+              from transformers import pipeline<br><br>
+              clf = pipeline("text-classification", model="owner/model")<br>
+              result = clf("Привет, мир!")<br>
+              # [{'label': 'POSITIVE', 'score': 0.987}]
+            </div>
+          </div>
+        </div>
+
+        <!-- Обсуждения -->
+        <div id="mtab-discuss" class="tab-pane-custom" role="tabpanel" aria-label="Обсуждения">
+          <div class="card p-3 mb-3">
+            <h2 class="h6 mb-2">Оставить комментарий</h2>
+            <label for="commentInput" class="visually-hidden">Ваш вопрос или отзыв</label>
+            <textarea class="form-control mb-2" rows="3" id="commentInput" placeholder="Ваш вопрос или отзыв..." aria-label="Текст комментария"></textarea>
+            <button class="btn btn-primary btn-sm" onclick="addComment()" aria-label="Опубликовать комментарий">Опубликовать</button>
+          </div>
+          <div id="commentsList" aria-live="polite" aria-label="Список комментариев"></div>
+        </div>
+
+      </div>
+
+      <!-- Правая панель -->
+      <div class="col-lg-4">
+        <div class="card p-3 mb-3" role="region" aria-label="Информация об артефакте">
+          <h2 class="h6 fw-bold mb-3">Информация</h2>
+          <table class="table table-sm table-borderless mb-0">
+            <tbody>
+              <tr><td class="text-muted">Тип</td><td id="infoType">Модель</td></tr>
+              <tr><td class="text-muted">Задача</td><td id="infoTask">NLP</td></tr>
+              <tr><td class="text-muted">Фреймворк</td><td id="infoFramework">PyTorch</td></tr>
+              <tr><td class="text-muted">Лицензия</td><td id="infoLicense">Apache 2.0</td></tr>
+              <tr><td class="text-muted">Размер</td><td id="infoSize">440MB</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card p-3" role="region" aria-label="Теги артефакта">
+          <h2 class="h6 fw-bold mb-2">Теги</h2>
+          <div id="detailTags"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </main>
+</div>
+
+<!-- ======== МОДАЛЬНЫЕ ОКНА ======== -->
+
+<!-- Загрузка -->
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalTitle" aria-modal="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="uploadModalTitle">Загрузить артефакт</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть модальное окно"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Тип</label>
+          <div class="d-flex gap-3">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="uploadType" id="typeModelR" value="model" checked>
+              <label class="form-check-label" for="typeModelR">🧠 Модель</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="uploadType" id="typeDatasetR" value="dataset">
+              <label class="form-check-label" for="typeDatasetR">📦 Датасет</label>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="uploadName">Название</label>
+          <input type="text" class="form-control" id="uploadName" placeholder="my-model-name">
+        </div>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label" for="uploadTask">Задача</label>
+            <select class="form-select" id="uploadTask">
+              <option>NLP</option><option>Computer Vision</option><option>Tabular</option><option>Audio</option><option>Multimodal</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="uploadFramework">Фреймворк</label>
+            <select class="form-select" id="uploadFramework">
+              <option>PyTorch</option><option>TensorFlow</option><option>scikit-learn</option><option>ONNX</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="uploadLicense">Лицензия</label>
+            <select class="form-select" id="uploadLicense">
+              <option>MIT</option><option>Apache 2.0</option><option>CC BY 4.0</option><option>GPL-3.0</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="uploadVisibility">Видимость</label>
+            <select class="form-select" id="uploadVisibility">
+              <option>Публичная</option><option>Приватная</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="uploadDesc">Описание</label>
+            <textarea class="form-control" id="uploadDesc" rows="3" placeholder="Описание модели..."></textarea>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="uploadTags">Теги (через запятую)</label>
+            <input type="text" class="form-control" id="uploadTags" placeholder="bert, nlp, russian">
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="uploadFiles">Файлы</label>
+            <input type="file" class="form-control" id="uploadFiles" multiple>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button class="btn btn-primary" onclick="doUpload()">Загрузить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Форк -->
+<div class="modal fade" id="forkModal" tabindex="-1" role="dialog" aria-labelledby="forkModalTitle" aria-modal="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="forkModalTitle">🍴 Форк репозитория</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть модальное окно"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted">Форк создаст копию в вашем аккаунте.</p>
+        <div class="mb-3">
+          <label class="form-label" for="forkName">Имя форка</label>
+          <input type="text" class="form-control" id="forkName" value="my-fork" aria-label="Название форка">
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="forkPrivate">
+          <label class="form-check-label" for="forkPrivate">Сделать приватным</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button class="btn btn-primary" onclick="doFork()">Создать форк</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+// ===== ДАННЫЕ =====
+const MODELS = [
+  { id:1, type:'model', name:'ru-bert-base', owner:'yandex-research', task:'NLP', framework:'PyTorch', license:'Apache 2.0', stars:1240, downloads:18400, size:'440MB', desc:'BERT предобученный на русскоязычном корпусе 250GB', tags:['bert','russian','nlp'], date:'2026-05-12' },
+  { id:2, type:'model', name:'efficientnet-b4-food', owner:'sber-ai', task:'Computer Vision', framework:'PyTorch', license:'MIT', stars:847, downloads:12300, size:'75MB', desc:'EfficientNet-B4 для классификации блюд (500 классов)', tags:['cv','classification','food'], date:'2026-05-08' },
+  { id:3, type:'model', name:'catboost-churn-v2', owner:'vtector', task:'Tabular', framework:'scikit-learn', license:'MIT', stars:312, downloads:4200, size:'12MB', desc:'CatBoost для предсказания оттока клиентов, ROC-AUC 0.94', tags:['catboost','tabular','churn'], date:'2026-04-30' },
+  { id:4, type:'model', name:'whisper-ru-finetune', owner:'speechlab', task:'Audio', framework:'PyTorch', license:'Apache 2.0', stars:621, downloads:9100, size:'290MB', desc:'Whisper small файн-тюненный на русской речи, WER 8.3%', tags:['asr','russian','speech'], date:'2026-05-01' },
+  { id:5, type:'model', name:'llama3-ru-instruct', owner:'open-ru-llm', task:'NLP', framework:'PyTorch', license:'GPL-3.0', stars:3420, downloads:54000, size:'14GB', desc:'LLaMA-3 8B файн-тюн на русских инструкциях', tags:['llm','russian','instruct'], date:'2026-05-15' },
+  { id:6, type:'model', name:'yolo11-custom', owner:'cv-lab', task:'Computer Vision', framework:'PyTorch', license:'MIT', stars:510, downloads:7800, size:'55MB', desc:'YOLO11 для детекции объектов на кастомном датасете', tags:['yolo','detection','cv'], date:'2026-04-20' },
+  { id:7, type:'dataset', name:'ru-news-clf', owner:'vtector', task:'NLP', framework:'', license:'CC BY 4.0', stars:198, downloads:3100, size:'2.3GB', desc:'400K русскоязычных новостных статей с метками (12 классов)', tags:['news','classification','russian'], date:'2026-05-05' },
+  { id:8, type:'dataset', name:'wildberries-reviews', owner:'ecom-data', task:'NLP', framework:'', license:'CC BY 4.0', stars:445, downloads:8200, size:'890MB', desc:'2M отзывов с Wildberries с оценками и категориями', tags:['reviews','sentiment','russian'], date:'2026-04-25' },
+  { id:9, type:'dataset', name:'road-signs-ru', owner:'autodrive-lab', task:'Computer Vision', framework:'', license:'MIT', stars:289, downloads:5600, size:'4.1GB', desc:'120K изображений дорожных знаков с разметкой YOLO/COCO', tags:['detection','signs','cv'], date:'2026-03-15' },
+  { id:10, type:'dataset', name:'tabular-credit-risk', owner:'finml', task:'Tabular', framework:'', license:'MIT', stars:167, downloads:2900, size:'340MB', desc:'Данные кредитных заявок для ML-моделей оценки риска', tags:['credit','tabular','finance'], date:'2026-04-10' },
+];
+
+let starred = new Set([5, 9]);
+let loggedIn = false;
+let currentUser = '';
+let currentModel = null;
+let comments = [
+  { user: 'alex_ml', text: 'Отличная модель, точность на моём датасете — 91%!', time: '19 мая 2026' },
+  { user: 'data_ninja', text: 'Есть ли версия без квантизации?', time: '15 мая 2026' },
+];
+
+const MY_MODEL_IDS = [1, 3];
+const MY_DATASET_IDS = [7];
+const FILES = [
+  { name: 'config.json', size: '4.2 KB' },
+  { name: 'pytorch_model.bin', size: '440 MB' },
+  { name: 'tokenizer.json', size: '256 KB' },
+  { name: 'vocab.txt', size: '789 KB' },
+  { name: 'special_tokens_map.json', size: '1.2 KB' },
+];
+
+// ===== НАВИГАЦИЯ =====
+function navigate(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo(0, 0);
+  if (page === 'home') renderHome();
+  if (page === 'search') { setTimeout(doSearch, 50); }
+  if (page === 'dashboard') renderDashboard();
+}
+
+function heroSearch() {
+  const q = document.getElementById('heroSearchInput').value;
+  navigate('search');
+  setTimeout(() => { document.getElementById('searchInput').value = q; doSearch(); }, 100);
+}
+
+function goSearch(task) {
+  navigate('search');
+  setTimeout(() => {
+    document.querySelectorAll('.task-f').forEach(cb => { cb.checked = cb.value === task; });
+    doSearch();
+  }, 100);
+}
+
+// ===== ГЛАВНАЯ =====
+function renderHome() {
+  const top = [...MODELS].filter(m => m.type === 'model').sort((a, b) => b.stars - a.stars).slice(0, 3);
+  document.getElementById('homeModelsList').innerHTML = top.map(m => makeCard(m, 'col-md-4')).join('');
+  const dsets = MODELS.filter(m => m.type === 'dataset').slice(0, 3);
+  document.getElementById('homeDatasetsL').innerHTML = dsets.map(m => makeCard(m, 'col-md-4')).join('');
+}
+
+// ===== КАРТОЧКА =====
+function makeCard(m, col) {
+  return `<div class="${col}">
+    <div class="card model-card h-100 p-3" onclick="openModel(${m.id})">
+      <div class="d-flex justify-content-between align-items-start mb-2">
+        <div>
+          <small class="text-muted">@${m.owner}</small>
+          <h6 class="mb-0 fw-bold">${m.name}</h6>
+        </div>
+        <span class="badge ${m.type === 'dataset' ? 'bg-warning text-dark' : 'bg-primary'}">${m.type === 'dataset' ? 'Dataset' : 'Model'}</span>
+      </div>
+      <p class="text-muted mb-2" style="font-size:13px; overflow:hidden; display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${m.desc}</p>
+      <div class="d-flex flex-wrap gap-1 mb-2">
+        <span class="badge bg-light text-dark border">${m.task}</span>
+        ${m.framework ? `<span class="badge bg-light text-dark border">${m.framework}</span>` : ''}
+        <span class="badge bg-light text-dark border">${m.license}</span>
+      </div>
+      <div class="d-flex gap-3 mt-auto pt-2 border-top" style="font-size:13px;">
+        <span>⭐ ${fmtNum(m.stars)}</span>
+        <span>📥 ${fmtNum(m.downloads)}</span>
+        <span class="ms-auto text-muted">${m.size}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function fmtNum(n) { return n >= 1000 ? (n / 1000).toFixed(1) + 'K' : n; }
+
+// ===== ПОИСК =====
+function doSearch() {
+  const q = (document.getElementById('searchInput')?.value || '').toLowerCase();
+  const type = document.querySelector('input[name="typeF"]:checked')?.value || 'all';
+  const tasks = [...document.querySelectorAll('.task-f:checked')].map(c => c.value);
+  const fws = [...document.querySelectorAll('.fw-f:checked')].map(c => c.value);
+  const lics = [...document.querySelectorAll('.lic-f:checked')].map(c => c.value);
+  const sort = document.getElementById('sortF')?.value || 'stars';
+
+  let results = MODELS.filter(m => {
+    if (type !== 'all' && m.type !== type) return false;
+    if (tasks.length && !tasks.includes(m.task)) return false;
+    if (fws.length && m.type === 'model' && !fws.includes(m.framework)) return false;
+    if (lics.length && !lics.includes(m.license)) return false;
+    if (q && !m.name.includes(q) && !m.desc.toLowerCase().includes(q) && !m.tags.join(' ').includes(q)) return false;
+    return true;
+  });
+
+  if (sort === 'stars') results.sort((a, b) => b.stars - a.stars);
+  else if (sort === 'downloads') results.sort((a, b) => b.downloads - a.downloads);
+  else results.sort((a, b) => b.date.localeCompare(a.date));
+
+  document.getElementById('resultsCount').textContent = `Найдено: ${results.length}`;
+  document.getElementById('searchResults').innerHTML = results.length
+    ? results.map(m => makeCard(m, 'col-md-6 col-xl-4')).join('')
+    : '<div class="col-12"><p class="text-muted">Ничего не найдено. Попробуйте изменить фильтры.</p></div>';
+}
+
+function clearFilters() {
+  document.querySelectorAll('.task-f, .fw-f, .lic-f').forEach(c => c.checked = false);
+  document.getElementById('typeAll').checked = true;
+  document.getElementById('searchInput').value = '';
+  doSearch();
+}
+
+// ===== ОТКРЫТИЕ МОДЕЛИ =====
+function openModel(id) {
+  currentModel = MODELS.find(m => m.id === id);
+  if (!currentModel) return;
+  const m = currentModel;
+
+  document.getElementById('detailName').textContent = m.name;
+  document.getElementById('detailOwner').textContent = '@' + m.owner;
+  document.getElementById('detailDesc').textContent = m.desc;
+  document.getElementById('starCount').textContent = fmtNum(m.stars);
+  document.getElementById('detailDownloads').textContent = fmtNum(m.downloads);
+  document.getElementById('detailForks').textContent = Math.floor(m.downloads / 80);
+  document.getElementById('detailDate').textContent = m.date;
+  document.getElementById('infoType').textContent = m.type === 'model' ? 'Модель' : 'Датасет';
+  document.getElementById('infoTask').textContent = m.task;
+  document.getElementById('infoFramework').textContent = m.framework || '—';
+  document.getElementById('infoLicense').textContent = m.license;
+  document.getElementById('infoSize').textContent = m.size;
+  document.getElementById('readmeName').textContent = m.name;
+  document.getElementById('readmeDesc').textContent = m.desc;
+  document.getElementById('detailBadges').innerHTML =
+    `<span class="badge bg-primary">${m.task}</span>` +
+    (m.framework ? `<span class="badge bg-secondary">${m.framework}</span>` : '') +
+    `<span class="badge bg-success">${m.license}</span>`;
+  document.getElementById('detailTags').innerHTML = m.tags.map(t =>
+    `<span class="badge bg-light text-dark border me-1 mb-1">${t}</span>`).join('');
+
+  const codeStr = `from transformers import AutoTokenizer, AutoModel\n\ntokenizer = AutoTokenizer.from_pretrained("${m.owner}/${m.name}")\nmodel = AutoModel.from_pretrained("${m.owner}/${m.name}")`;
+  document.getElementById('readmeCode').innerHTML = codeStr.replace(/\n/g, '<br>');
+  document.getElementById('usageCode').innerHTML = `from transformers import pipeline<br><br>clf = pipeline("text-classification", model="${m.owner}/${m.name}")<br>result = clf("Привет, мир!")<br># [{'label': 'POSITIVE', 'score': 0.987}]`;
+
+  document.getElementById('filesList').innerHTML = FILES.map(f =>
+    `<li class="list-group-item d-flex justify-content-between align-items-center">
+      <span>📄 ${f.name}</span>
+      <div class="d-flex align-items-center gap-3">
+        <small class="text-muted">${f.size}</small>
+        <button class="btn btn-outline-secondary btn-sm" onclick="alert('Скачивание: ${f.name}')">↓</button>
+      </div>
+    </li>`).join('');
+
+  if (document.getElementById('forkName'))
+    document.getElementById('forkName').value = 'my-' + m.name;
+
+  renderComments();
+  navigate('model');
+
+  // сбросить вкладки
+  document.querySelectorAll('.tab-pane-custom').forEach(t => t.classList.remove('active'));
+  document.getElementById('mtab-readme').classList.add('active');
+  document.querySelectorAll('.nav-tabs .nav-link').forEach((l, i) => l.classList.toggle('active', i === 0));
+}
+
+// ===== ВКЛАДКИ МОДЕЛИ =====
+function showModelTab(tab, el) {
+  document.querySelectorAll('#page-model .tab-pane-custom').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-tabs .nav-link').forEach(l => l.classList.remove('active'));
+  document.getElementById('mtab-' + tab).classList.add('active');
+  if (el) el.classList.add('active');
+}
+
+// ===== КОММЕНТАРИИ =====
+function renderComments() {
+  document.getElementById('commentsList').innerHTML = comments.map(c =>
+    `<div class="card p-3 mb-2">
+      <div class="d-flex justify-content-between mb-1">
+        <strong style="font-size:14px;">@${c.user}</strong>
+        <small class="text-muted">${c.time}</small>
+      </div>
+      <p class="mb-0 text-muted" style="font-size:14px;">${c.text}</p>
+    </div>`).join('');
+}
+
+function addComment() {
+  const inp = document.getElementById('commentInput');
+  if (!inp.value.trim()) return;
+  if (!loggedIn) { alert('Войдите, чтобы комментировать'); navigate('login'); return; }
+  comments.unshift({ user: currentUser || 'user', text: inp.value.trim(), time: 'только что' });
+  inp.value = '';
+  renderComments();
+}
+
+// ===== ЗВЕЗДА =====
+function toggleStar() {
+  if (!loggedIn) { alert('Войдите, чтобы добавлять в избранное'); navigate('login'); return; }
+  const btn = document.getElementById('starBtn');
+  const isStarred = btn.classList.toggle('btn-warning');
+  btn.classList.toggle('btn-outline-warning', !isStarred);
+  if (currentModel) {
+    if (isStarred) { starred.add(currentModel.id); currentModel.stars++; }
+    else { starred.delete(currentModel.id); currentModel.stars--; }
+    document.getElementById('starCount').textContent = fmtNum(currentModel.stars);
+  }
+}
+
+// ===== ДАШБОРД =====
+function renderDashboard() {
+  document.getElementById('myModelsList').innerHTML =
+    MODELS.filter(m => MY_MODEL_IDS.includes(m.id)).map(m => makeCard(m, 'col-md-6')).join('');
+  document.getElementById('myDatasetsList').innerHTML =
+    MODELS.filter(m => MY_DATASET_IDS.includes(m.id)).map(m => makeCard(m, 'col-md-6')).join('');
+  const starredItems = MODELS.filter(m => starred.has(m.id));
+  document.getElementById('starredList').innerHTML = starredItems.length
+    ? starredItems.map(m => makeCard(m, 'col-md-6')).join('')
+    : '<div class="col-12"><p class="text-muted">Нет избранного</p></div>';
+}
+
+function showDashTab(tab) {
+  document.querySelectorAll('#page-dashboard .tab-pane-custom').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  document.getElementById('dcontent-' + tab).classList.add('active');
+  document.getElementById('dtab-' + tab).classList.add('active');
+  if (tab === 'starred') renderDashboard();
+}
+
+// ===== АВТОРИЗАЦИЯ =====
+function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginError');
+  if (!email || !pass) {
+    errEl.textContent = 'Заполните все поля'; errEl.classList.remove('d-none'); return;
+  }
+  errEl.classList.add('d-none');
+  loggedIn = true;
+  currentUser = email.split('@')[0];
+  updateNav();
+  navigate('dashboard');
+}
+
+function doGithubLogin() {
+  loggedIn = true;
+  currentUser = 'github_user';
+  updateNav();
+  navigate('dashboard');
+}
+
+function doRegister() {
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass = document.getElementById('regPass').value;
+  const pass2 = document.getElementById('regPass2').value;
+  const agree = document.getElementById('agreeTerms').checked;
+  const errEl = document.getElementById('regError');
+
+  if (!name || !email || !pass) {
+    errEl.textContent = 'Заполните все поля'; errEl.classList.remove('d-none'); return;
+  }
+  if (pass !== pass2) {
+    errEl.textContent = 'Пароли не совпадают'; errEl.classList.remove('d-none'); return;
+  }
+  if (!agree) {
+    errEl.textContent = 'Примите условия использования'; errEl.classList.remove('d-none'); return;
+  }
+  errEl.classList.add('d-none');
+  loggedIn = true;
+  currentUser = document.getElementById('regUsername').value || name;
+  updateNav();
+  navigate('dashboard');
+}
+
+function doLogout() {
+  loggedIn = false;
+  currentUser = '';
+  updateNav();
+  navigate('home');
+}
+
+function updateNav() {
+  document.getElementById('navLoginBtn').style.display = loggedIn ? 'none' : '';
+  document.getElementById('navDashLink').style.display = loggedIn ? '' : 'none';
+  document.getElementById('navUserText').style.display = loggedIn ? '' : 'none';
+  document.getElementById('navUserText').textContent = '@' + currentUser;
+  document.getElementById('navLogoutBtn').style.display = loggedIn ? '' : 'none';
+}
+
+// ===== МОДАЛЬНЫЕ ОКНА =====
+function openUploadModal() {
+  if (!loggedIn) { alert('Войдите, чтобы загружать'); navigate('login'); return; }
+  new bootstrap.Modal(document.getElementById('uploadModal')).show();
+}
+function doUpload() {
+  bootstrap.Modal.getInstance(document.getElementById('uploadModal'))?.hide();
+  alert('Артефакт успешно загружен!');
+}
+function openForkModal() {
+  if (!loggedIn) { alert('Войдите, чтобы форкнуть'); navigate('login'); return; }
+  new bootstrap.Modal(document.getElementById('forkModal')).show();
+}
+function doFork() {
+  bootstrap.Modal.getInstance(document.getElementById('forkModal'))?.hide();
+  alert('Форк создан в вашем аккаунте!');
+}
+
+// ===== ТЕМА =====
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  document.getElementById('themeToggle').textContent = isDark ? '🌙 Тема' : '☀️ Тема';
+}
+
+function initTheme() {
+  const saved = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = saved || (prefersDark ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('themeToggle').textContent = theme === 'dark' ? '☀️ Тема' : '🌙 Тема';
+}
+
+// ===== ИНИТ =====
+initTheme();
+renderHome();
+navigate('home');
+</script>
+</body>
+</html>
