@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Транзакции — FinFlow</title>
+
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem("finflow-theme");
+      const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const theme = savedTheme || (systemDark ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-page="transactions">
+
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">FinFlow</div>
+
+      <nav class="sidebar-nav" aria-label="Боковое меню">
+        <a href="dashboard.html" class="sidebar-link"><i class="bi bi-grid" aria-hidden="true"></i> Кабинет</a>
+        <a href="transactions.html" class="sidebar-link active" aria-current="page"><i class="bi bi-arrow-left-right" aria-hidden="true"></i> Транзакции</a>
+        <a href="reports.html" class="sidebar-link"><i class="bi bi-bar-chart-line" aria-hidden="true"></i> Отчёты</a>
+        <a href="integrations.html" class="sidebar-link"><i class="bi bi-link-45deg" aria-hidden="true"></i> Интеграции</a>
+        <a href="#" class="sidebar-link" aria-disabled="true" tabindex="-1"><i class="bi bi-wallet2" aria-hidden="true"></i> Счета</a>
+        <a href="#" class="sidebar-link" aria-disabled="true" tabindex="-1"><i class="bi bi-pie-chart" aria-hidden="true"></i> Бюджеты</a>
+        <a href="#" class="sidebar-link logout-link"><i class="bi bi-box-arrow-left" aria-hidden="true"></i> Выход</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <div class="topbar-search">
+          <i class="bi bi-search" aria-hidden="true"></i>
+          <input type="text" placeholder="Поиск..." aria-label="Поиск по сайту" />
+        </div>
+        <div class="topbar-user">
+          <button class="icon-btn theme-toggle" type="button" aria-label="Переключить тему">
+            <i class="bi bi-moon-stars" aria-hidden="true"></i>
+          </button>
+
+          <button class="icon-btn" aria-label="Уведомления">
+            <i class="bi bi-bell" aria-hidden="true"></i>
+          </button>
+          <div class="user-chip">
+            <div class="avatar-circle" aria-hidden="true">A</div>
+            <span>Anna</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="content-section" aria-labelledby="transactions-title">
+        <div class="page-header">
+          <div>
+            <h1 id="transactions-title">Транзакции</h1>
+            <p>Просматривайте, ищите и фильтруйте все финансовые операции</p>
+          </div>
+          <button class="btn btn-main" data-bs-toggle="modal" data-bs-target="#transactionModal" aria-label="Добавить транзакцию">Добавить транзакцию</button>
+        </div>
+
+        <div class="dashboard-card mb-4">
+          <div class="row g-3">
+            <div class="col-md-6 col-lg-3">
+              <label class="form-label" for="searchInput">Поиск</label>
+              <input type="text" id="searchInput" class="form-control custom-input" placeholder="Описание или категория" />
+            </div>
+
+            <div class="col-md-6 col-lg-2">
+              <label class="form-label" for="categoryFilter">Категория</label>
+              <select id="categoryFilter" class="form-select custom-input">
+                <option value="">Все</option>
+                <option value="Продукты">Продукты</option>
+                <option value="Транспорт">Транспорт</option>
+                <option value="Подписки">Подписки</option>
+                <option value="Доход">Доход</option>
+                <option value="Развлечения">Развлечения</option>
+              </select>
+            </div>
+
+            <div class="col-md-6 col-lg-2">
+              <label class="form-label" for="minAmount">Сумма от</label>
+              <input type="number" id="minAmount" class="form-control custom-input" placeholder="0" />
+            </div>
+
+            <div class="col-md-6 col-lg-2">
+              <label class="form-label" for="maxAmount">Сумма до</label>
+              <input type="number" id="maxAmount" class="form-control custom-input" placeholder="100000" />
+            </div>
+
+            <div class="col-md-6 col-lg-1">
+              <label class="form-label" for="dateFrom">Дата от</label>
+              <input type="date" id="dateFrom" class="form-control custom-input" />
+            </div>
+
+            <div class="col-md-6 col-lg-1">
+              <label class="form-label" for="dateTo">Дата до</label>
+              <input type="date" id="dateTo" class="form-control custom-input" />
+            </div>
+
+            <div class="col-md-12 col-lg-1 d-flex align-items-end">
+              <button id="resetFilters" class="btn btn-outline-main w-100" type="button">Сброс</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+          <div class="col-md-4">
+            <div class="dashboard-card stat-mini">
+              <p>Найдено транзакций</p>
+              <h4 id="transactionCount">0</h4>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="dashboard-card stat-mini">
+              <p>Сумма расходов</p>
+              <h4 id="expenseSum">0 ₽</h4>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="dashboard-card stat-mini">
+              <p>Сумма доходов</p>
+              <h4 id="incomeSum">0 ₽</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <div class="table-responsive">
+            <table class="table custom-table align-middle mb-0" id="transactionsTable">
+              <caption class="visually-hidden">Таблица транзакций пользователя</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Дата</th>
+                  <th scope="col">Категория</th>
+                  <th scope="col">Описание</th>
+                  <th scope="col">Счёт</th>
+                  <th scope="col">Тип</th>
+                  <th scope="col">Сумма</th>
+                  <th scope="col">Статус</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content custom-modal">
+        <div class="modal-header border-0">
+          <h5 class="modal-title" id="transactionModalTitle">Новая транзакция</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть окно"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label class="form-label" for="modalTransactionDescription">Описание</label>
+              <input id="modalTransactionDescription" type="text" class="form-control custom-input" placeholder="Введите описание" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="modalTransactionCategory">Категория</label>
+              <select id="modalTransactionCategory" class="form-select custom-input">
+                <option>Продукты</option>
+                <option>Транспорт</option>
+                <option>Подписки</option>
+                <option>Развлечения</option>
+                <option>Доход</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="modalTransactionAmount">Сумма</label>
+              <input id="modalTransactionAmount" type="number" class="form-control custom-input" placeholder="Введите сумму" />
+            </div>
+            <button type="button" class="btn btn-main w-100" data-bs-dismiss="modal">Сохранить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+  <script src="api.js"></script>
+  <script src="auth.js"></script>
+  <script src="transactions-api.js"></script>
+</body>
+</html>
