@@ -1,0 +1,207 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "tenant@company.ru",
+      "password": "tenant123",
+      "role": "tenant",
+      "name": "ООО \"Северная линия\"",
+      "room": "3.18",
+      "phone": "+7 (812) 612-87-34",
+      "accessRole": "Основной подписант",
+      "leaseType": "Офис",
+      "companyInn": "7801234567"
+    },
+    {
+      "id": 2,
+      "email": "admin@company.ru",
+      "password": "admin123",
+      "role": "admin",
+      "name": "Администрация",
+      "department": "Эксплуатация"
+    }
+  ],
+  "spaces": [
+    {
+      "id": 1,
+      "name": "Лофт 3.12",
+      "status": "free",
+      "type": "loft",
+      "floor": 3,
+      "area": 126,
+      "tenant": "новая аренда",
+      "price": 2350,
+      "description": "open space",
+      "note": "Подходит под студию или небольшой офис",
+      "image": "space-loft"
+    },
+    {
+      "id": 2,
+      "name": "Офис 2.06",
+      "status": "reserved",
+      "type": "office",
+      "floor": 2,
+      "area": 84,
+      "tenant": "резерв",
+      "price": 2100,
+      "description": "кабинетная планировка",
+      "note": "Можно оставить заявку в лист ожидания",
+      "image": "space-suite"
+    },
+    {
+      "id": 3,
+      "name": "Шоурум 1.03",
+      "status": "free",
+      "type": "showroom",
+      "floor": 1,
+      "area": 210,
+      "tenant": "новая аренда",
+      "price": 2800,
+      "description": "отдельный вход",
+      "note": "Подойдет для витрины, презентаций или retail",
+      "image": "space-showroom"
+    },
+    {
+      "id": 4,
+      "name": "Склад 4.02",
+      "status": "rented",
+      "type": "storage",
+      "floor": 4,
+      "area": 62,
+      "tenant": "действующий арендатор",
+      "price": 1450,
+      "description": "грузовой лифт",
+      "note": "Добавлено в каталог для оценки будущей ротации",
+      "image": "space-suite"
+    }
+  ],
+  "meterReadings": [
+    {
+      "id": 1,
+      "userId": 1,
+      "tenant": "ООО \"Северная линия\"",
+      "space": "3.18",
+      "month": "Февраль 2026",
+      "electricity": 1484,
+      "water": 32,
+      "heating": 3.9,
+      "status": "accepted",
+      "date": "10.03.2026"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "tenant": "ООО \"Северная линия\"",
+      "space": "3.18",
+      "month": "Январь 2026",
+      "electricity": 1396,
+      "water": 30,
+      "heating": 4.4,
+      "status": "accepted",
+      "date": "05.03.2026"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "tenant": "ООО \"Северная линия\"",
+      "space": "3.18",
+      "month": "Март 2026",
+      "electricity": 1540,
+      "water": 36,
+      "heating": 4.2,
+      "status": "pending",
+      "date": "18.03.2026"
+    }
+  ],
+  "applications": [
+    {
+      "id": 1,
+      "space": "Лофт 3.12",
+      "person": "Анна Петрова",
+      "phone": "+7 911 123-45-67",
+      "comment": "Удобно после 15:00",
+      "date": "21.03.2026",
+      "status": "new"
+    },
+    {
+      "id": 2,
+      "space": "Шоурум 1.03",
+      "person": "Михаил Орлов",
+      "phone": "+7 921 555-01-44",
+      "comment": "Интересует срок бронирования и доступ к парковке.",
+      "date": "24.03.2026",
+      "status": "review"
+    }
+  ],
+  "documents": [
+    {
+      "id": 1,
+      "title": "Договор аренды KR-18/26",
+      "type": "contract",
+      "typeLabel": "Договор",
+      "date": "10.01.2026",
+      "status": "signed",
+      "statusLabel": "Подписан",
+      "comment": "Базовый договор по помещению 3.18."
+    },
+    {
+      "id": 2,
+      "title": "Допсоглашение № 3",
+      "type": "agreement",
+      "typeLabel": "Допсоглашение",
+      "date": "13.03.2026",
+      "status": "pending",
+      "statusLabel": "Ожидает подписи",
+      "comment": "Изменение индексации аренды."
+    },
+    {
+      "id": 3,
+      "title": "Счет за март 2026",
+      "type": "invoice",
+      "typeLabel": "Счет",
+      "date": "12.03.2026",
+      "status": "received",
+      "statusLabel": "Получен",
+      "comment": "Размещен в кабинете арендатора."
+    },
+    {
+      "id": 4,
+      "title": "Акт сверки за март",
+      "type": "act",
+      "typeLabel": "Акт",
+      "date": "15.03.2026",
+      "status": "pending",
+      "statusLabel": "Ожидает подписи",
+      "comment": "Нужно подписать до 20.03.2026."
+    }
+  ],
+  "incomingDocuments": [
+    {
+      "id": 1,
+      "title": "Заявка на пропуск подрядчика.pdf",
+      "type": "Заявка",
+      "tenant": "ООО \"Северная линия\"",
+      "status": "review",
+      "comment": "Проверка службы эксплуатации.",
+      "date": "14.03.2026"
+    },
+    {
+      "id": 2,
+      "title": "Письмо по перепланировке.docx",
+      "type": "Письмо",
+      "tenant": "ООО «Сфера»",
+      "status": "received",
+      "comment": "Нужно согласование юриста.",
+      "date": "15.03.2026"
+    },
+    {
+      "id": 3,
+      "title": "Акт оказанных услуг за февраль.pdf",
+      "type": "Закрывающий документ",
+      "tenant": "ИП Волкова",
+      "status": "accepted",
+      "comment": "Передано в бухгалтерию.",
+      "date": "12.03.2026"
+    }
+  ]
+}
