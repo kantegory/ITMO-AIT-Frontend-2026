@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пайплайны — MLOps Deploy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-gear-wide-connected me-1"></i> MLOps Deploy
+            </a>
+            <button class="theme-toggle me-2" type="button" id="themeToggle" aria-label="Переключить тему"><i class="bi bi-sun-fill" aria-hidden="true"></i></button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Навигация">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="pipelines.html">Пайплайны</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="environments.html">Среды</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">Кабинет</a>
+                    </li>
+                </ul>
+                <div class="d-flex gap-2" id="authButtons"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Пайплайны CI/CD</h2>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPipelineModal">
+                <i class="bi bi-plus-lg me-1"></i> Новый пайплайн
+            </button>
+        </div>
+
+        <div class="row">
+            <!-- Фильтры -->
+            <div class="col-lg-3 mb-4">
+                <div class="sidebar-filter">
+                    <h5><i class="bi bi-funnel me-1"></i> Фильтры</h5>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Поиск</label>
+                        <input type="text" class="form-control form-control-sm" id="searchInput" placeholder="Название пайплайна...">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Статус</label>
+                        <div class="form-check">
+                            <input class="form-check-input filter-status" type="checkbox" value="success" id="statusSuccess" checked>
+                            <label class="form-check-label" for="statusSuccess">Успешно</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input filter-status" type="checkbox" value="running" id="statusRunning" checked>
+                            <label class="form-check-label" for="statusRunning">Запущен</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input filter-status" type="checkbox" value="failed" id="statusFailed" checked>
+                            <label class="form-check-label" for="statusFailed">Ошибка</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input filter-status" type="checkbox" value="pending" id="statusPending" checked>
+                            <label class="form-check-label" for="statusPending">Ожидание</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Среда</label>
+                        <select class="form-select form-select-sm" id="envFilter">
+                            <option value="all">Все среды</option>
+                            <option value="production">Production</option>
+                            <option value="staging">Staging</option>
+                            <option value="development">Development</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Владелец</label>
+                        <select class="form-select form-select-sm" id="ownerFilter">
+                            <option value="all">Все</option>
+                            <option value="tamrazov">Тамразов В.</option>
+                            <option value="ivanov">Иванов А.</option>
+                            <option value="petrov">Петров С.</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-outline-secondary btn-sm w-100" id="resetFilters">Сбросить фильтры</button>
+                </div>
+            </div>
+
+            <!-- Список пайплайнов (загружается из API) -->
+            <div class="col-lg-9">
+                <div id="pipelinesList">
+                    <p class="text-muted text-center mt-4">Загрузка...</p>
+                </div>
+
+                <p class="text-muted text-center mt-3 d-none" id="noResults">Пайплайны не найдены по заданным фильтрам</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Модальное окно нового пайплайна -->
+    <div class="modal fade" id="newPipelineModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Новый пайплайн</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Название</label>
+                            <input type="text" class="form-control" placeholder="my-model-pipeline">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Репозиторий</label>
+                            <input type="text" class="form-control" placeholder="https://github.com/user/repo">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Целевая среда</label>
+                            <select class="form-select">
+                                <option>Development</option>
+                                <option>Staging</option>
+                                <option>Production</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Стратегия деплоя</label>
+                            <select class="form-select">
+                                <option>Blue/Green</option>
+                                <option>Canary</option>
+                                <option>Rolling</option>
+                            </select>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="autoTrigger" checked>
+                            <label class="form-check-label" for="autoTrigger">
+                                Автозапуск при push в main
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Создать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно выхода -->
+    <div class="modal fade" id="logoutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Выход</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">Вы уверены, что хотите выйти?</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <a href="login.html" class="btn btn-danger">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p class="mb-0">&copy; 2026 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="text-decoration-none" style="color: var(--text-muted);">MLOps Deploy</a>. Тамразов Валерий, J3211</p>
+        </div>
+    </footer>
+
+    <script src="js/theme.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        checkAuth();
+        updateNavbar();
+
+        const statusLabels = {
+            success: 'Успешно',
+            running: 'Запущен',
+            failed: 'Ошибка',
+            pending: 'Ожидание'
+        };
+
+        const strategyLabels = {
+            bluegreen: 'Blue/Green',
+            canary: 'Canary',
+            rolling: 'Rolling'
+        };
+
+        const statusColors = {
+            success: 'success',
+            running: 'info',
+            failed: 'danger',
+            pending: 'warning'
+        };
+
+        const ownerToUserId = { tamrazov: 1, ivanov: 2, petrov: 3 };
+
+        function renderPipeline(p) {
+            const card = document.createElement('div');
+            card.className = 'pipeline-card';
+
+            const progress = p.stepsTotal > 0 ? Math.round((p.stepsDone / p.stepsTotal) * 100) : 0;
+            const progressClass = 'bg-' + statusColors[p.status];
+            const animated = p.status === 'running' ? ' progress-bar-striped progress-bar-animated' : '';
+
+            let stepsText = p.stepsDone + '/' + p.stepsTotal + ' шагов';
+            if (p.status === 'success') stepsText += ' завершено';
+            if (p.duration) stepsText += ' \u00b7 ' + p.duration;
+
+            const topRow = document.createElement('div');
+            topRow.className = 'd-flex justify-content-between align-items-start';
+
+            const info = document.createElement('div');
+            const h6 = document.createElement('h6');
+            h6.className = 'mb-1';
+            const link = document.createElement('a');
+            link.href = 'pipeline.html?id=' + p.id;
+            link.className = 'text-decoration-none';
+            link.textContent = p.name;
+            h6.appendChild(link);
+
+            const strategySpan = document.createElement('span');
+            strategySpan.className = 'deploy-strategy strategy-' + p.strategy + ' ms-2';
+            strategySpan.textContent = strategyLabels[p.strategy] || p.strategy;
+            h6.appendChild(strategySpan);
+            info.appendChild(h6);
+
+            const meta = document.createElement('small');
+            meta.className = 'text-muted';
+            meta.textContent = p.ownerName + ' \u00b7 ' + p.env + ' \u00b7 ' + p.lastRun;
+            info.appendChild(meta);
+
+            const badge = document.createElement('span');
+            badge.className = 'status-badge status-' + p.status;
+            badge.textContent = statusLabels[p.status];
+
+            topRow.appendChild(info);
+            topRow.appendChild(badge);
+            card.appendChild(topRow);
+
+            const progressWrap = document.createElement('div');
+            progressWrap.className = 'mt-2';
+            const progressBar = document.createElement('div');
+            progressBar.className = 'progress';
+            progressBar.style.height = '4px';
+            const bar = document.createElement('div');
+            bar.className = 'progress-bar ' + progressClass + animated;
+            bar.style.width = progress + '%';
+            progressBar.appendChild(bar);
+            progressWrap.appendChild(progressBar);
+
+            const stepsSmall = document.createElement('small');
+            stepsSmall.className = 'text-muted';
+            stepsSmall.textContent = stepsText;
+            progressWrap.appendChild(stepsSmall);
+            card.appendChild(progressWrap);
+
+            return card;
+        }
+
+        function buildFilterParams() {
+            const params = new URLSearchParams();
+
+            const searchText = document.getElementById('searchInput').value.trim();
+            if (searchText) params.append('name_like', searchText);
+
+            const envVal = document.getElementById('envFilter').value;
+            if (envVal !== 'all') params.append('env', envVal);
+
+            const ownerVal = document.getElementById('ownerFilter').value;
+            if (ownerVal !== 'all' && ownerToUserId[ownerVal]) {
+                params.append('userId', ownerToUserId[ownerVal]);
+            }
+
+            const statuses = [];
+            document.querySelectorAll('.filter-status').forEach(function(cb) {
+                if (cb.checked) statuses.push(cb.value);
+            });
+            statuses.forEach(function(s) { params.append('status', s); });
+
+            return { params: params, hasStatus: statuses.length > 0 };
+        }
+
+        function renderList(pipelines) {
+            const list = document.getElementById('pipelinesList');
+            list.textContent = '';
+            pipelines.forEach(function(p) { list.appendChild(renderPipeline(p)); });
+            document.getElementById('noResults').classList.toggle('d-none', pipelines.length > 0);
+        }
+
+        function applyFilters() {
+            const { params, hasStatus } = buildFilterParams();
+
+            // Все чекбоксы статуса сняты — ни один пайплайн не подходит
+            if (!hasStatus) {
+                renderList([]);
+                return;
+            }
+
+            fetch(API_URL + '/pipelines?' + params.toString(), { headers: authHeaders() })
+                .then(function(res) {
+                    if (!res.ok) throw new Error('HTTP ' + res.status);
+                    return res.json();
+                })
+                .then(function(data) {
+                    renderList(Array.isArray(data) ? data : []);
+                })
+                .catch(function(err) {
+                    const list = document.getElementById('pipelinesList');
+                    list.textContent = '';
+                    const errP = document.createElement('p');
+                    errP.className = 'text-danger text-center mt-4';
+                    errP.textContent = 'Ошибка загрузки: ' + err.message;
+                    list.appendChild(errP);
+                });
+        }
+
+        // Поиск с дебаунсом, чтобы не бить API на каждое нажатие
+        let searchTimer = null;
+        document.getElementById('searchInput').addEventListener('input', function() {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(applyFilters, 250);
+        });
+        document.getElementById('envFilter').addEventListener('change', applyFilters);
+        document.getElementById('ownerFilter').addEventListener('change', applyFilters);
+        document.querySelectorAll('.filter-status').forEach(function(cb) {
+            cb.addEventListener('change', applyFilters);
+        });
+        document.getElementById('resetFilters').addEventListener('click', function() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('envFilter').value = 'all';
+            document.getElementById('ownerFilter').value = 'all';
+            document.querySelectorAll('.filter-status').forEach(function(cb) { cb.checked = true; });
+            applyFilters();
+        });
+
+        applyFilters();
+    </script>
+</body>
+</html>

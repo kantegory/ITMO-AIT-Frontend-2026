@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLOps Deploy — CI/CD для ML-моделей</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-gear-wide-connected me-1"></i> MLOps Deploy
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Навигация">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="pipelines.html">Пайплайны</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="environments.html">Среды</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">Кабинет</a>
+                    </li>
+                </ul>
+                <div class="d-flex gap-2" id="authButtons">
+                    <a href="login.html" class="btn btn-outline-light btn-sm">Войти</a>
+                    <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+    <section class="hero-section">
+        <div class="container">
+            <h1>Автоматизация MLOps</h1>
+            <p>Полный цикл CI/CD для машинного обучения: от тестирования модели до деплоя в продакшен за минуты</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="register.html" class="btn btn-primary btn-lg">Начать бесплатно</a>
+                <a href="pipelines.html" class="btn btn-outline-light btn-lg">Смотреть пайплайны</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="container my-5">
+        <h2 class="text-center mb-4">Возможности платформы</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="bi bi-arrow-repeat"></i>
+                    <h5>CI/CD пайплайны</h5>
+                    <p class="text-muted">Автоматическое тестирование, валидация и деплой ML-моделей при каждом коммите</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="bi bi-diagram-3"></i>
+                    <h5>Управление средами</h5>
+                    <p class="text-muted">Blue/Green и Canary деплой с автоматическим откатом при падении метрик</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="bi bi-shield-check"></i>
+                    <h5>Валидация моделей</h5>
+                    <p class="text-muted">Проверка качества модели на тестовых данных перед каждым развертыванием</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-2">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="bi bi-box-seam"></i>
+                    <h5>Артефакт-стор</h5>
+                    <p class="text-muted">Хранение и версионирование моделей, датасетов и конфигураций</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="bi bi-people"></i>
+                    <h5>Роли и доступ</h5>
+                    <p class="text-muted">Гибкая настройка прав: кто может запускать деплой, а кто только смотреть</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="bi bi-graph-up"></i>
+                    <h5>Мониторинг</h5>
+                    <p class="text-muted">Отслеживание метрик моделей в реальном времени с алертами</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--bg-secondary); padding: 50px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+        <div class="container">
+            <h2 class="text-center mb-4">Как это работает</h2>
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div>
+                            <strong>Push кода</strong>
+                            <p class="mb-0 text-muted small">Разработчик пушит изменения модели в репозиторий</p>
+                        </div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div>
+                            <strong>Автотесты</strong>
+                            <p class="mb-0 text-muted small">Запускаются юнит-тесты и проверка данных</p>
+                        </div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div>
+                            <strong>Валидация модели</strong>
+                            <p class="mb-0 text-muted small">Проверка метрик: accuracy, F1, latency</p>
+                        </div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step-item">
+                        <div class="step-number">4</div>
+                        <div>
+                            <strong>Деплой</strong>
+                            <p class="mb-0 text-muted small">Развертывание в staging или production</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center mt-4 mt-lg-0">
+                    <div class="p-4" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px;">
+                        <i class="bi bi-terminal" style="font-size: 4rem; color: var(--accent);"></i>
+                        <p class="mt-3 mb-0 text-muted">Настройте пайплайн один раз — и каждый коммит будет автоматически проходить все этапы</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container my-5 text-center">
+        <h2 class="mb-3">Готовы начать?</h2>
+        <p class="text-muted mb-4">Присоединяйтесь и автоматизируйте деплой ваших ML-моделей уже сегодня</p>
+        <a href="register.html" class="btn btn-primary btn-lg">Создать аккаунт</a>
+    </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p class="mb-0">&copy; 2026 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="text-decoration-none" style="color: var(--text-muted);">MLOps Deploy</a>. Тамразов Валерий, J3211</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script>updateNavbar();</script>
+</body>
+</html>
