@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Регистрация</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/api.js"></script>
+
+    <style>
+        /* Светлая тема (по умолчанию) */
+        body {
+            background: linear-gradient(120deg, #ffb69e, #f8b8a4);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 15px;
+            transition: background 0.3s ease;
+        }
+
+        .register-card {
+            max-width: 500px;
+            width: 100%;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: white;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .btn-main {
+            background: #ff7043;
+            color: white;
+        }
+
+        .btn-main:hover {
+            background: #f4511e;
+        }
+
+        .error-message {
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Тёмная тема */
+        [data-theme="dark"] body {
+            background: #0a0a0f !important;
+        }
+
+        [data-theme="dark"] .register-card {
+            background: #15151d !important;
+            border: 1px solid #252533;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        [data-theme="dark"] .register-card h1,
+        [data-theme="dark"] .register-card .text-muted,
+        [data-theme="dark"] .register-card label,
+        [data-theme="dark"] .register-card p,
+        [data-theme="dark"] .register-card .form-check-label {
+            color: #e2e8f0 !important;
+        }
+
+        [data-theme="dark"] .form-control {
+            background: #1c1c26 !important;
+            border-color: #2a2a3a !important;
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] .form-control:focus {
+            border-color: #f9735c !important;
+            box-shadow: 0 0 0 3px rgba(249, 115, 92, 0.15) !important;
+        }
+
+        [data-theme="dark"] .form-check-input {
+            background-color: #1c1c26;
+            border-color: #2a2a3a;
+        }
+
+        [data-theme="dark"] .btn-main {
+            background: #f9735c;
+        }
+
+        [data-theme="dark"] .btn-main:hover {
+            background: #e05a3c;
+        }
+
+        [data-theme="dark"] a {
+            color: #f9735c;
+        }
+
+        [data-theme="dark"] a:hover {
+            color: #ff8a73;
+        }
+
+        [data-theme="dark"] .alert-danger {
+            background: rgba(249, 115, 92, 0.2);
+            border-color: #f9735c;
+            color: #ffb8a8;
+        }
+
+        [data-theme="dark"] .alert-success {
+            background: rgba(80, 200, 120, 0.2);
+            border-color: #50c878;
+            color: #b0ffc0;
+        }
+
+        [data-theme="dark"] hr {
+            border-color: #252533;
+        }
+    </style>
+
+    <script>
+        // Применяем сохранённую тему до загрузки страницы
+        (function() {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        })();
+    </script>
+</head>
+
+<body>
+
+    <main>
+        <section class="card register-card">
+            <header class="card-body text-center pb-0">
+                <h1 style="font-size: 1.75rem;">Создать аккаунт</h1>
+                <p class="text-muted">Присоединяйтесь к сообществу фанфиков</p>
+            </header>
+
+            <section class="card-body">
+                <form id="registerForm">
+                    <section class="mb-3">
+                        <label class="form-label" for="username">Имя пользователя</label>
+                        <input type="text" class="form-control" id="username" placeholder="Введите ник" required>
+                        <div class="invalid-feedback" id="usernameError"></div>
+                    </section>
+
+                    <section class="mb-3">
+                        <label class="form-label" for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="example@email.com" required>
+                        <div class="invalid-feedback" id="emailError"></div>
+                    </section>
+
+                    <section class="mb-3">
+                        <label class="form-label" for="password">Пароль</label>
+                        <input type="password" class="form-control" id="password" placeholder="Введите пароль" required>
+                        <div class="invalid-feedback" id="passwordError"></div>
+                    </section>
+
+                    <section class="mb-3">
+                        <label class="form-label" for="confirmPassword">Подтверждение пароля</label>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Повторите пароль" required>
+                        <div class="invalid-feedback" id="confirmPasswordError"></div>
+                    </section>
+
+                    <section class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+                        <label class="form-check-label" for="agreeTerms">
+                            Я принимаю
+                            <a href="user_agreement.txt" target="_blank">пользовательское соглашение</a>
+                        </label>
+                        <div class="invalid-feedback" id="termsError"></div>
+                    </section>
+
+                    <div id="errorMessage" class="alert alert-danger" style="display: none;" role="alert"></div>
+                    <div id="successMessage" class="alert alert-success" style="display: none;" role="alert"></div>
+
+                    <footer>
+                        <button type="submit" class="btn btn-main w-100 mb-3" aria-label="Зарегистрировать новый аккаунт">
+                            Зарегистрироваться
+                        </button>
+                    </footer>
+
+                </form>
+
+                <hr>
+
+                <p class="text-center">
+                    Уже есть аккаунт?
+                    <a href="login.html">Войти</a>
+                </p>
+
+            </section>
+
+        </section>
+    </main>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+        
+        function validateForm(username, email, password, confirmPassword, agreeTerms) {
+            let isValid = true;
+            
+            if (!username) {
+                document.getElementById('username').classList.add('is-invalid');
+                document.getElementById('usernameError').textContent = 'Имя пользователя обязательно';
+                isValid = false;
+            } else if (username.length < 3) {
+                document.getElementById('username').classList.add('is-invalid');
+                document.getElementById('usernameError').textContent = 'Имя пользователя должно быть не менее 3 символов';
+                isValid = false;
+            } else {
+                document.getElementById('username').classList.remove('is-invalid');
+                document.getElementById('usernameError').textContent = '';
+            }
+            
+            if (!email) {
+                document.getElementById('email').classList.add('is-invalid');
+                document.getElementById('emailError').textContent = 'Email обязателен';
+                isValid = false;
+            } else if (!email.includes('@') || !email.includes('.')) {
+                document.getElementById('email').classList.add('is-invalid');
+                document.getElementById('emailError').textContent = 'Введите корректный email';
+                isValid = false;
+            } else {
+                document.getElementById('email').classList.remove('is-invalid');
+                document.getElementById('emailError').textContent = '';
+            }
+            
+            if (!password) {
+                document.getElementById('password').classList.add('is-invalid');
+                document.getElementById('passwordError').textContent = 'Пароль обязателен';
+                isValid = false;
+            } else if (password.length < 6) {
+                document.getElementById('password').classList.add('is-invalid');
+                document.getElementById('passwordError').textContent = 'Пароль должен быть не менее 6 символов';
+                isValid = false;
+            } else {
+                document.getElementById('password').classList.remove('is-invalid');
+                document.getElementById('passwordError').textContent = '';
+            }
+            
+            if (!confirmPassword) {
+                document.getElementById('confirmPassword').classList.add('is-invalid');
+                document.getElementById('confirmPasswordError').textContent = 'Подтвердите пароль';
+                isValid = false;
+            } else if (password !== confirmPassword) {
+                document.getElementById('confirmPassword').classList.add('is-invalid');
+                document.getElementById('confirmPasswordError').textContent = 'Пароли не совпадают';
+                isValid = false;
+            } else {
+                document.getElementById('confirmPassword').classList.remove('is-invalid');
+                document.getElementById('confirmPasswordError').textContent = '';
+            }
+            
+            if (!agreeTerms) {
+                document.getElementById('agreeTerms').classList.add('is-invalid');
+                document.getElementById('termsError').textContent = 'Необходимо принять пользовательское соглашение';
+                isValid = false;
+            } else {
+                document.getElementById('agreeTerms').classList.remove('is-invalid');
+                document.getElementById('termsError').textContent = '';
+            }
+            
+            return isValid;
+        }
+        
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+            
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            
+            if (!validateForm(username, email, password, confirmPassword, agreeTerms)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    
+                    document.getElementById('successMessage').textContent = 'Регистрация успешна! Перенаправление...';
+                    document.getElementById('successMessage').style.display = 'block';
+                    
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                } else {
+                    document.getElementById('errorMessage').textContent = data.error || 'Ошибка регистрации';
+                    document.getElementById('errorMessage').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                document.getElementById('errorMessage').textContent = 'Ошибка подключения к серверу. Убедитесь, что сервер запущен.';
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        });
+        
+        const inputs = ['username', 'email', 'password', 'confirmPassword'];
+        inputs.forEach(inputId => {
+            const input = document.getElementById(inputId);
+            if (input) {
+                input.addEventListener('input', () => {
+                    input.classList.remove('is-invalid');
+                    document.getElementById(`${inputId}Error`).textContent = '';
+                });
+            }
+        });
+        
+        document.getElementById('agreeTerms').addEventListener('change', () => {
+            document.getElementById('agreeTerms').classList.remove('is-invalid');
+            document.getElementById('termsError').textContent = '';
+        });
+    </script>
+</body>
+
+</html>
