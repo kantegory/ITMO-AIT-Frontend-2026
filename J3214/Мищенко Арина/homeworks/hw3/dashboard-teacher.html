@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Кабинет преподавателя — EduPlatform</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- Тема: скрипт в <head> предотвращает мигание при загрузке -->
+  <script>
+    (function () {
+      var saved = localStorage.getItem('eduTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-bs-theme', theme);
+    })();
+  </script>
+  <link rel="stylesheet" href="light.css" media="(prefers-color-scheme: light)" />
+  <link rel="stylesheet" href="dark.css"  media="(prefers-color-scheme: dark)"  />
+  <link rel="stylesheet" href="light.css" />
+  <link rel="stylesheet" href="dark.css"  />
+</head>
+<body class="bg-light">
+
+  <!-- Навбар -->
+  <nav class="navbar navbar-expand-lg bg-body border-bottom">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-primary" href="index.html">EduPlatform</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="search.html">Каталог</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-2">
+          <span class="text-muted small" id="navName"></span>
+          <span class="badge bg-primary-subtle text-primary">Преподаватель</span>
+          <button id="themeToggle" class="btn btn-outline-secondary btn-sm" onclick="toggleTheme()" aria-label="Переключить тему" title="Переключить тему"><i class="bi bi-moon" aria-hidden="true"></i></button>
+          <button class="btn btn-outline-secondary btn-sm" onclick="logout()">Выйти</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+
+    <!-- Заголовок -->
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-4 gap-2">
+      <div>
+        <h4 class="fw-bold mb-0">Кабинет преподавателя</h4>
+        <p class="text-muted mb-0">Управляйте своими курсами</p>
+      </div>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newCourseModal">
+        <i class="bi bi-plus-lg me-1"></i>Новый курс
+      </button>
+    </div>
+
+    <!-- Статистика -->
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm text-center p-3">
+          <div class="fs-3 fw-bold text-primary" id="statCourses">—</div>
+          <div class="text-muted small">Курсов</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm text-center p-3">
+          <div class="fs-3 fw-bold text-success" id="statStudents">—</div>
+          <div class="text-muted small">Студентов</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm text-center p-3">
+          <div class="fs-3 fw-bold text-warning" id="statRating">—</div>
+          <div class="text-muted small">Средний рейтинг</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm text-center p-3">
+          <div class="fs-3 fw-bold text-info" id="statPending">—</div>
+          <div class="text-muted small">На проверке</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Вкладки -->
+    <ul class="nav nav-tabs mb-4">
+      <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-courses">Мои курсы</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-reviews">Задания студентов</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-profile">Профиль</button></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <!-- Мои курсы -->
+      <div class="tab-pane fade show active" id="tab-courses">
+        <div id="coursesLoader" class="text-center py-4">
+          <div class="spinner-border text-primary" role="status"></div>
+        </div>
+        <div id="coursesList" class="d-flex flex-column gap-3"></div>
+      </div>
+
+      <!-- Задания студентов -->
+      <div class="tab-pane fade" id="tab-reviews">
+        <div id="reviewsLoader" class="text-center py-4">
+          <div class="spinner-border text-primary" role="status"></div>
+        </div>
+        <div id="reviewsList" class="d-flex flex-column gap-3"></div>
+        <p id="noReviewsMsg" class="text-muted text-center py-4 d-none">
+          Нет заданий, ожидающих проверки.
+        </p>
+      </div>
+
+      <!-- Профиль -->
+      <div class="tab-pane fade" id="tab-profile">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-6">
+            <div class="card border-0 shadow-sm p-4">
+              <div class="text-center mb-4">
+                <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center text-white mb-3"
+                     style="width:80px;height:80px;font-size:2rem;" id="avatarLetter"></div>
+                <h5 class="fw-bold mb-0" id="profileName"></h5>
+                <p class="text-muted small">Преподаватель</p>
+              </div>
+              <form class="d-flex flex-column gap-3">
+                <div>
+                  <label class="form-label">Имя</label>
+                  <input type="text" class="form-control" id="profileFirst" />
+                </div>
+                <div>
+                  <label class="form-label">Фамилия</label>
+                  <input type="text" class="form-control" id="profileLast" />
+                </div>
+                <div class="alert alert-success d-none" id="saveSuccess">Изменения сохранены!</div>
+                <button type="button" class="btn btn-primary w-100" onclick="saveProfile()">Сохранить</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Модалка: новый курс -->
+  <div class="modal fade" id="newCourseModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold">Создать новый курс</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Название курса <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="newTitle" placeholder="Например: Основы Python" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Описание</label>
+            <textarea class="form-control" rows="2" id="newDesc" placeholder="Что студент узнает и чему научится..."></textarea>
+          </div>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label">Категория</label>
+              <select class="form-select" id="newCategory">
+                <option value="Разработка">Разработка</option>
+                <option value="Дизайн">Дизайн</option>
+                <option value="Данные">Данные и аналитика</option>
+                <option value="Бизнес">Бизнес</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Уровень</label>
+              <select class="form-select" id="newLevel">
+                <option value="Начинающий">Начинающий</option>
+                <option value="Средний">Средний</option>
+                <option value="Продвинутый">Продвинутый</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Цена (₽)</label>
+              <input type="number" class="form-control" id="newPrice" placeholder="0 = бесплатно" min="0" />
+            </div>
+          </div>
+          <div class="alert alert-danger d-none mt-3" id="newCourseError">Введите название курса.</div>
+        </div>
+        <div class="modal-footer border-0">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+          <button class="btn btn-outline-primary" onclick="createCourse('draft')">Сохранить черновик</button>
+          <button class="btn btn-primary" onclick="createCourse('published')">Опубликовать</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модалка: редактирование курса -->
+  <div class="modal fade" id="editCourseModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold">Редактировать курс</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editCourseId" />
+          <div class="mb-3">
+            <label class="form-label">Название курса</label>
+            <input type="text" class="form-control" id="editTitle" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Описание</label>
+            <textarea class="form-control" rows="2" id="editDesc"></textarea>
+          </div>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label">Категория</label>
+              <select class="form-select" id="editCategory">
+                <option value="Разработка">Разработка</option>
+                <option value="Дизайн">Дизайн</option>
+                <option value="Данные">Данные и аналитика</option>
+                <option value="Бизнес">Бизнес</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Уровень</label>
+              <select class="form-select" id="editLevel">
+                <option value="Начинающий">Начинающий</option>
+                <option value="Средний">Средний</option>
+                <option value="Продвинутый">Продвинутый</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Цена (₽)</label>
+              <input type="number" class="form-control" id="editPrice" min="0" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+          <button class="btn btn-primary" onclick="saveEditCourse()">Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модалка: задания курса -->
+  <div class="modal fade" id="tasksModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold" id="tasksModalTitle">Задания курса</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Список существующих заданий -->
+          <div id="existingTasks" class="mb-4"></div>
+
+          <!-- Форма добавления задания -->
+          <hr />
+          <h6 class="fw-semibold mb-3">Добавить задание</h6>
+          <input type="hidden" id="tasksCourseId" />
+          <div class="mb-2">
+            <label class="form-label">Урок</label>
+            <input type="text" class="form-control form-control-sm" id="newTaskLesson"
+                   placeholder="Например: Урок 1: Переменные" />
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Название задания</label>
+            <input type="text" class="form-control form-control-sm" id="newTaskTitle"
+                   placeholder="Например: Задание 1" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Описание задания</label>
+            <textarea class="form-control form-control-sm" rows="3" id="newTaskDesc"
+                      placeholder="Что должен сделать студент..."></textarea>
+          </div>
+          <div class="alert alert-danger d-none" id="taskAddError">Заполните все поля.</div>
+        </div>
+        <div class="modal-footer border-0">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+          <button class="btn btn-primary" onclick="addTask()">Добавить задание</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модалка: проверка задания -->
+  <div class="modal fade" id="gradeModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold">Отзыв преподавателя</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="bg-light rounded p-3 mb-3">
+            <p class="mb-1 small text-muted fw-semibold">Ответ студента:</p>
+            <p class="mb-0 small" id="gradeStudentAnswer"></p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Комментарий студенту (необязательно)</label>
+            <textarea class="form-control" rows="3" id="gradeComment"
+                      placeholder="Что сделано хорошо или что нужно исправить..."></textarea>
+          </div>
+          <input type="hidden" id="gradeTaskId" />
+          <input type="hidden" id="gradeResult" />
+        </div>
+        <div class="modal-footer border-0">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+          <button class="btn btn-outline-danger" onclick="setGradeResult('rejected')" id="rejectBtn">
+            На доработку
+          </button>
+          <button class="btn btn-success" onclick="setGradeResult('accepted')" id="acceptBtn">
+            Принять
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const API = 'http://localhost:3000';
+
+    // Проверка авторизации
+    const role = sessionStorage.getItem('role');
+    if (!role) { window.location.href = 'login.html'; }
+    else if (role !== 'teacher') { window.location.href = 'dashboard-user.html'; }
+    else { initDashboard(); }
+
+    function initDashboard() {
+      const userId    = sessionStorage.getItem('userId');
+      const firstName = sessionStorage.getItem('firstName') || '';
+      const lastName  = sessionStorage.getItem('lastName')  || '';
+
+      // Заполняем имя
+      function applyName(first, last) {
+        const name = `${first} ${last}`.trim();
+        document.getElementById('navName').textContent      = name;
+        document.getElementById('avatarLetter').textContent = first.charAt(0).toUpperCase();
+        document.getElementById('profileName').textContent  = name;
+        document.getElementById('profileFirst').value = first;
+        document.getElementById('profileLast').value  = last;
+      }
+      applyName(firstName, lastName);
+
+      let teacherCourses = []; // курсы этого преподавателя
+
+      // ── Загрузка курсов преподавателя ──────────────────────────────
+      async function loadCourses() {
+        try {
+          const res = await fetch(`${API}/courses`);
+          const all = await res.json();
+          teacherCourses = all.filter(c => String(c.teacherId) === String(userId));
+
+          document.getElementById('coursesLoader').classList.add('d-none');
+          renderCourses(teacherCourses);
+          loadStats(teacherCourses);
+          loadSubmissions(teacherCourses);
+        } catch (err) {
+          console.error('Ошибка загрузки курсов:', err);
+          document.getElementById('coursesLoader').innerHTML =
+            '<p class="text-danger">Не удалось загрузить курсы. Запущен ли json-server?</p>';
+        }
+      }
+
+      function renderCourses(courses) {
+        const list = document.getElementById('coursesList');
+        if (courses.length === 0) {
+          list.innerHTML = '<p class="text-muted text-center py-4">У вас пока нет курсов. Создайте первый!</p>';
+          return;
+        }
+
+        list.innerHTML = courses.map(course => {
+          const isDraft = course.status === 'draft';
+          const badge   = isDraft
+            ? '<span class="badge bg-warning-subtle text-warning">Черновик</span>'
+            : '<span class="badge bg-success-subtle text-success">Опубликован</span>';
+
+          const publishBtn = isDraft
+            ? `<button class="btn btn-success btn-sm" onclick="publishCourse('${course.id}')">
+                 <i class="bi bi-globe me-1"></i>Опубликовать
+               </button>`
+            : '';
+
+          return `
+            <div class="card border-0 shadow-sm" id="courseCard-${course.id}">
+              <div class="card-body">
+                <div class="row align-items-center g-3">
+                  <div class="col-auto">
+                    <div class="bg-${course.color || 'primary'} rounded d-flex align-items-center justify-content-center text-white"
+                         style="width:56px;height:56px;">
+                      <i class="bi ${course.icon || 'bi-book'}" style="font-size:1.5rem;"></i>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="d-flex flex-wrap gap-2 align-items-center mb-1">
+                      <h6 class="fw-bold mb-0">${course.title}</h6>
+                      ${badge}
+                    </div>
+                    <div class="d-flex flex-wrap gap-3 text-muted small">
+                      <span><i class="bi bi-tag me-1"></i>${course.category}</span>
+                      <span><i class="bi bi-bar-chart me-1"></i>${course.level}</span>
+                      ${course.status === 'published'
+                        ? `<span><i class="bi bi-star me-1"></i>${course.rating || '—'}</span>`
+                        : ''}
+                    </div>
+                  </div>
+                  <div class="col-auto d-flex gap-2 flex-wrap">
+                    ${publishBtn}
+                    <button class="btn btn-outline-primary btn-sm" onclick="openEditCourse('${course.id}')">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="openTasksModal('${course.id}')">
+                      <i class="bi bi-list-check me-1"></i>Задания
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+        }).join('');
+      }
+
+      // ── Статистика ──────────────────────────────────────────────────
+      async function loadStats(courses) {
+        const publishedCourses = courses.filter(c => c.status === 'published');
+        document.getElementById('statCourses').textContent = courses.length;
+
+        // Рейтинг
+        const rated = publishedCourses.filter(c => c.rating > 0);
+        const avgRating = rated.length
+          ? (rated.reduce((s, c) => s + c.rating, 0) / rated.length).toFixed(1)
+          : '—';
+        document.getElementById('statRating').textContent = avgRating;
+
+        try {
+          const courseIds = courses.map(c => String(c.id));
+          const enrollRes = await fetch(`${API}/enrollments`);
+          const allEnrollments = await enrollRes.json();
+          const myEnrollments = allEnrollments.filter(e => courseIds.includes(String(e.courseId)));
+          const uniqueStudents = new Set(myEnrollments.map(e => e.userId)).size;
+          document.getElementById('statStudents').textContent = uniqueStudents;
+        } catch (e) {
+          document.getElementById('statStudents').textContent = '—';
+        }
+      }
+
+      // ── Задания студентов ────────────────────────────────────────────
+      async function loadSubmissions(courses) {
+        const reviewsLoader = document.getElementById('reviewsLoader');
+        const reviewsList   = document.getElementById('reviewsList');
+        const noReviewsMsg  = document.getElementById('noReviewsMsg');
+
+        try {
+          const courseIds = courses.map(c => String(c.id));
+
+          // Загружаем completedTasks, tasks и users параллельно
+          const [ctRes, tasksRes, usersRes] = await Promise.all([
+            fetch(`${API}/completedTasks`),
+            fetch(`${API}/tasks`),
+            fetch(`${API}/users`)
+          ]);
+          const allCT    = await ctRes.json();
+          const allTasks = await tasksRes.json();
+          const allUsers = await usersRes.json();
+
+          // Только непроверенные задания по курсам этого преподавателя
+          const pending = allCT.filter(
+            ct => courseIds.includes(String(ct.courseId)) && !ct.reviewed
+          );
+
+          document.getElementById('statPending').textContent = pending.length;
+          reviewsLoader.classList.add('d-none');
+
+          if (pending.length === 0) {
+            noReviewsMsg.classList.remove('d-none');
+            return;
+          }
+
+          reviewsList.innerHTML = pending.map(ct => {
+            const task    = allTasks.find(t => t.id === ct.taskId) || {};
+            const student = allUsers.find(u => String(u.id) === String(ct.userId)) || {};
+            const course  = courses.find(c => String(c.id) === String(ct.courseId)) || {};
+            const studentName = `${student.firstName || 'Студент'} ${student.lastName || ''}`.trim();
+
+            return `
+              <div class="card border-0 shadow-sm" id="submission-${ct.id}">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                    <div>
+                      <p class="fw-semibold mb-1 small">
+                        ${studentName} — ${task.title || 'Задание'}
+                      </p>
+                      <p class="text-muted small mb-1">
+                        Курс: ${course.title || '—'} · Сдано: ${ct.createdAt || 'недавно'}
+                      </p>
+                      <p class="small mb-0 text-truncate" style="max-width:400px;">
+                        <i class="bi bi-chat-quote me-1 text-muted"></i>${ct.answer || '(нет ответа)'}
+                      </p>
+                    </div>
+                    <div class="d-flex gap-2">
+                      <button class="btn btn-success btn-sm"
+                              onclick="openGradeModal('${ct.id}', '${(ct.answer||'').replace(/'/g, "\\'")}', 'accepted')">
+                        Принять
+                      </button>
+                      <button class="btn btn-outline-danger btn-sm"
+                              onclick="openGradeModal('${ct.id}', '${(ct.answer||'').replace(/'/g, "\\'")}', 'rejected')">
+                        На доработку
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>`;
+          }).join('');
+
+        } catch (err) {
+          console.error('Ошибка загрузки заданий:', err);
+          reviewsLoader.innerHTML = '<p class="text-danger">Не удалось загрузить задания.</p>';
+        }
+      }
+
+      // ── Создать новый курс ──────────────────────────────────────────
+      window.createCourse = async function(status) {
+        const title    = document.getElementById('newTitle').value.trim();
+        const desc     = document.getElementById('newDesc').value.trim();
+        const category = document.getElementById('newCategory').value;
+        const level    = document.getElementById('newLevel').value;
+        const price    = parseInt(document.getElementById('newPrice').value) || 0;
+        const errorEl  = document.getElementById('newCourseError');
+
+        if (!title) { errorEl.classList.remove('d-none'); return; }
+        errorEl.classList.add('d-none');
+
+        // Выбираем цвет и иконку по категории
+        const colorMap = {
+          'Разработка': { color: 'primary', icon: 'bi-code-slash' },
+          'Дизайн':     { color: 'danger',  icon: 'bi-palette'    },
+          'Данные':     { color: 'success', icon: 'bi-bar-chart-line' },
+          'Бизнес':     { color: 'secondary', icon: 'bi-briefcase' },
+        };
+        const { color, icon } = colorMap[category] || { color: 'primary', icon: 'bi-book' };
+
+        const teacherName = `${firstName.charAt(0)}. ${lastName}`.trim();
+
+        const newCourse = {
+          title, description: desc, category, level, price,
+          teacher: teacherName || 'Преподаватель',
+          teacherId: String(userId),
+          status,
+          lessons: 0, hours: 0,
+          rating: 0, reviews: 0,
+          color, icon
+        };
+
+        try {
+          const res = await fetch(`${API}/courses`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newCourse)
+          });
+          if (!res.ok) throw new Error('Ошибка сервера');
+          const created = await res.json();
+
+          bootstrap.Modal.getInstance(document.getElementById('newCourseModal')).hide();
+          document.getElementById('newTitle').value = '';
+          document.getElementById('newDesc').value  = '';
+          document.getElementById('newPrice').value = '';
+
+          // Добавляем в список без перезагрузки
+          teacherCourses.push(created);
+          renderCourses(teacherCourses);
+          loadStats(teacherCourses);
+        } catch (err) {
+          console.error('Ошибка создания курса:', err);
+        }
+      };
+
+      // ── Опубликовать черновик ───────────────────────────────────────
+      window.publishCourse = async function(courseId) {
+        try {
+          await fetch(`${API}/courses/${courseId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: 'published' })
+          });
+
+          const course = teacherCourses.find(c => String(c.id) === String(courseId));
+          if (course) course.status = 'published';
+          renderCourses(teacherCourses);
+        } catch (err) {
+          console.error('Ошибка публикации:', err);
+        }
+      };
+
+      // ── Редактировать курс ──────────────────────────────────────────
+      window.openEditCourse = function(courseId) {
+        const course = teacherCourses.find(c => String(c.id) === String(courseId));
+        if (!course) return;
+
+        document.getElementById('editCourseId').value = courseId;
+        document.getElementById('editTitle').value    = course.title;
+        document.getElementById('editDesc').value     = course.description || '';
+        document.getElementById('editCategory').value = course.category;
+        document.getElementById('editLevel').value    = course.level;
+        document.getElementById('editPrice').value    = course.price || 0;
+
+        new bootstrap.Modal(document.getElementById('editCourseModal')).show();
+      };
+
+      window.saveEditCourse = async function() {
+        const courseId = document.getElementById('editCourseId').value;
+        const updates  = {
+          title:       document.getElementById('editTitle').value.trim(),
+          description: document.getElementById('editDesc').value.trim(),
+          category:    document.getElementById('editCategory').value,
+          level:       document.getElementById('editLevel').value,
+          price:       parseInt(document.getElementById('editPrice').value) || 0,
+        };
+
+        try {
+          await fetch(`${API}/courses/${courseId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updates)
+          });
+
+          const course = teacherCourses.find(c => String(c.id) === String(courseId));
+          if (course) Object.assign(course, updates);
+          renderCourses(teacherCourses);
+
+          bootstrap.Modal.getInstance(document.getElementById('editCourseModal')).hide();
+        } catch (err) {
+          console.error('Ошибка сохранения:', err);
+        }
+      };
+
+      // ── Модалка заданий ─────────────────────────────────────────────
+      window.openTasksModal = async function(courseId) {
+        const course = teacherCourses.find(c => String(c.id) === String(courseId));
+        document.getElementById('tasksModalTitle').textContent =
+          `Задания: ${course ? course.title : ''}`;
+        document.getElementById('tasksCourseId').value = courseId;
+        document.getElementById('newTaskLesson').value = '';
+        document.getElementById('newTaskTitle').value  = '';
+        document.getElementById('newTaskDesc').value   = '';
+        document.getElementById('taskAddError').classList.add('d-none');
+
+        await refreshTasksList(courseId);
+        new bootstrap.Modal(document.getElementById('tasksModal')).show();
+      };
+
+      async function refreshTasksList(courseId) {
+        const container = document.getElementById('existingTasks');
+        try {
+          const res   = await fetch(`${API}/tasks`);
+          const tasks = await res.json();
+          const mine  = tasks.filter(t => String(t.courseId) === String(courseId));
+
+          if (mine.length === 0) {
+            container.innerHTML = '<p class="text-muted small">Заданий пока нет.</p>';
+            return;
+          }
+          container.innerHTML = `
+            <h6 class="fw-semibold mb-2">Текущие задания (${mine.length})</h6>
+            <ul class="list-group list-group-flush">
+              ${mine.map(t => `
+                <li class="list-group-item d-flex align-items-start gap-2 px-0">
+                  <i class="bi bi-check2-square text-primary mt-1"></i>
+                  <div>
+                    <p class="mb-0 small fw-semibold">${t.title}
+                      <span class="text-muted fw-normal">— ${t.lesson}</span>
+                    </p>
+                    <p class="mb-0 small text-muted">${t.description}</p>
+                  </div>
+                </li>`).join('')}
+            </ul>`;
+        } catch (err) {
+          container.innerHTML = '<p class="text-danger small">Не удалось загрузить задания.</p>';
+        }
+      }
+
+      window.addTask = async function() {
+        const courseId = document.getElementById('tasksCourseId').value;
+        const lesson   = document.getElementById('newTaskLesson').value.trim();
+        const title    = document.getElementById('newTaskTitle').value.trim();
+        const desc     = document.getElementById('newTaskDesc').value.trim();
+        const errorEl  = document.getElementById('taskAddError');
+
+        if (!lesson || !title || !desc) { errorEl.classList.remove('d-none'); return; }
+        errorEl.classList.add('d-none');
+
+        try {
+          // Считаем номер следующего задания
+          const res    = await fetch(`${API}/tasks`);
+          const tasks  = await res.json();
+          const mine   = tasks.filter(t => String(t.courseId) === String(courseId));
+          const number = mine.length + 1;
+
+          await fetch(`${API}/tasks`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ courseId: String(courseId), lesson, number, title, description: desc })
+          });
+
+          document.getElementById('newTaskLesson').value = '';
+          document.getElementById('newTaskTitle').value  = '';
+          document.getElementById('newTaskDesc').value   = '';
+
+          await refreshTasksList(courseId);
+        } catch (err) {
+          console.error('Ошибка добавления задания:', err);
+        }
+      };
+
+      // ── Проверка заданий ────────────────────────────────────────────
+      window.openGradeModal = function(ctId, answer, defaultResult) {
+        document.getElementById('gradeTaskId').value      = ctId;
+        document.getElementById('gradeStudentAnswer').textContent = answer || '(нет ответа)';
+        document.getElementById('gradeComment').value     = '';
+        document.getElementById('gradeResult').value      = defaultResult;
+
+        // Подсвечиваем активную кнопку
+        document.getElementById('acceptBtn').classList.toggle('btn-success', defaultResult === 'accepted');
+        document.getElementById('acceptBtn').classList.toggle('btn-outline-success', defaultResult !== 'accepted');
+        document.getElementById('rejectBtn').classList.toggle('btn-danger', defaultResult === 'rejected');
+        document.getElementById('rejectBtn').classList.toggle('btn-outline-danger', defaultResult !== 'rejected');
+
+        new bootstrap.Modal(document.getElementById('gradeModal')).show();
+      };
+
+      window.setGradeResult = async function(result) {
+        const ctId = document.getElementById('gradeTaskId').value;
+
+        try {
+          // PATCH completedTask
+          const ctPatchRes = await fetch(`${API}/completedTasks/${ctId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ reviewed: true, result })
+          });
+          const patchedCT = await ctPatchRes.json();
+
+          // Если принято — пересчитываем прогресс студента и обновляем enrollment
+          if (result === 'accepted') {
+            const [allCTRes, allTasksRes, allEnrollRes] = await Promise.all([
+              fetch(`${API}/completedTasks`),
+              fetch(`${API}/tasks`),
+              fetch(`${API}/enrollments`)
+            ]);
+            const allCT         = await allCTRes.json();
+            const allTasks      = await allTasksRes.json();
+            const allEnrollments = await allEnrollRes.json();
+
+            const courseId  = patchedCT.courseId;
+            const studentId = patchedCT.userId;
+
+            // Сколько заданий в курсе всего
+            const courseTasks = allTasks.filter(t => String(t.courseId) === String(courseId));
+
+            // Сколько принято у этого студента
+            const acceptedCount = allCT.filter(ct =>
+              String(ct.userId) === String(studentId) &&
+              String(ct.courseId) === String(courseId) &&
+              ct.result === 'accepted'
+            ).length;
+
+            const pct       = courseTasks.length > 0 ? Math.round((acceptedCount / courseTasks.length) * 100) : 0;
+            const newStatus = pct === 100 ? 'completed' : 'active';
+
+            // Находим и обновляем enrollment студента
+            const enrollment = allEnrollments.find(e =>
+              String(e.userId) === String(studentId) && String(e.courseId) === String(courseId)
+            );
+            if (enrollment) {
+              await fetch(`${API}/enrollments/${enrollment.id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ progress: pct, status: newStatus })
+              });
+            }
+          }
+
+          bootstrap.Modal.getInstance(document.getElementById('gradeModal')).hide();
+
+          // Убираем карточку из списка
+          const card = document.getElementById(`submission-${ctId}`);
+          if (card) card.remove();
+
+          const remaining = document.querySelectorAll('#reviewsList .card').length;
+          document.getElementById('statPending').textContent = remaining;
+          if (remaining === 0) {
+            document.getElementById('noReviewsMsg').classList.remove('d-none');
+          }
+
+        } catch (err) {
+          console.error('Ошибка проверки:', err);
+        }
+      };
+
+      // ── Профиль ──────────────────────────────────────────────────────
+      window.saveProfile = async function() {
+        const newFirst = document.getElementById('profileFirst').value.trim();
+        const newLast  = document.getElementById('profileLast').value.trim();
+        try {
+          await fetch(`${API}/users/${userId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ firstName: newFirst, lastName: newLast })
+          });
+          sessionStorage.setItem('firstName', newFirst);
+          sessionStorage.setItem('lastName', newLast);
+          applyName(newFirst, newLast);
+          const msg = document.getElementById('saveSuccess');
+          msg.classList.remove('d-none');
+          setTimeout(() => msg.classList.add('d-none'), 2000);
+        } catch (err) {
+          console.error('Ошибка:', err);
+        }
+      };
+
+      window.logout = function() {
+        sessionStorage.clear();
+        window.location.href = 'login.html';
+      };
+
+      loadCourses();
+    }
+  </script>
+  <script src="theme.js"></script>
+</body>
+</html>

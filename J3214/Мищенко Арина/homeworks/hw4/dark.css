@@ -1,0 +1,59 @@
+/* =============================================
+   EduPlatform — dark.css  (тёмная тема)
+   ============================================= */
+
+/* 1. По настройкам ОС */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --auth-bg:   #0f172a;
+    --hero-bg:   linear-gradient(135deg, #071025 0%, #0a2a50 60%, #0d47a1 100%);
+    --cta-bg:    linear-gradient(135deg, #071025, #0a2a50);
+    --accordion-active-bg:    #172033;
+    --accordion-active-color: #93c5fd;
+    --footer-bg:              #060e1a;
+    --footer-link:            #94a3b8;
+    --footer-link-hover:      #e2e8f0;
+    --cat-card-text:          #f1f5f9;
+  }
+}
+
+/* 2. Ручное переключение через JS */
+[data-theme="dark"] {
+  --auth-bg:   #0f172a;
+  --hero-bg:   linear-gradient(135deg, #071025 0%, #0a2a50 60%, #0d47a1 100%);
+  --cta-bg:    linear-gradient(135deg, #071025, #0a2a50);
+  --accordion-active-bg:    #172033;
+  --accordion-active-color: #93c5fd;
+  --footer-bg:              #060e1a;
+  --footer-link:            #94a3b8;
+  --footer-link-hover:      #e2e8f0;
+  --cat-card-text:          #f1f5f9;
+}
+
+/* 3. Фон и цвет текста страницы
+   bg-light форсирует светлый фон даже при data-bs-theme="dark" — переопределяем */
+[data-theme="dark"] body,
+[data-theme="dark"] body.bg-light,
+[data-theme="dark"] body.auth-page {
+  background-color: #0f172a !important;
+  color: #f1f5f9;
+}
+
+/* 4. Прочие элементы с хардкодом светлого цвета */
+[data-theme="dark"] .text-muted {
+  color: #94a3b8 !important;
+}
+
+/* 5. Внутренние блоки bg-light (описания заданий, тело модалок) */
+[data-theme="dark"] .bg-light:not(body) {
+  background-color: #1e293b !important;
+  color: #f1f5f9;
+}
+
+/* 6. Карточки категорий — пастельные inline-фоны заменяем на тёмные */
+[data-theme="dark"] .cat-card {
+  background: #1e293b !important;
+}
+[data-theme="dark"] .cat-icon {
+  background: #2d3f55 !important;
+}

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Поиск курсов — EduPlatform</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-light">
+
+  <!-- 1. Ссылка-пропуск для клавиатурных пользователей -->
+  <a href="#main-content" class="visually-hidden-focusable">Перейти к основному содержимому</a>
+
+  <!-- 2. Навигация: aria-label + toggler aria-атрибуты + aria-current на активной ссылке -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom"
+       aria-label="Основная навигация">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-primary" href="index.html">EduPlatform</a>
+      <button class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navMenu"
+              aria-controls="navMenu"
+              aria-expanded="false"
+              aria-label="Открыть навигационное меню">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav me-auto">
+          <!-- aria-current="page" — помечает текущую страницу для скринридеров -->
+          <li class="nav-item">
+            <a class="nav-link active" href="search.html" aria-current="page">Каталог курсов</a>
+          </li>
+        </ul>
+        <div class="d-flex align-items-center gap-2">
+          <a href="dashboard-user.html" class="btn btn-outline-primary btn-sm">Личный кабинет</a>
+          <a href="login.html" class="btn btn-outline-secondary btn-sm" onclick="logout()">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 3. Поисковая секция: role="search" на форме, aria-label на input, aria-hidden на иконке -->
+  <section aria-label="Поиск курсов" class="bg-primary py-4">
+    <div class="container">
+      <h1 class="text-white fw-bold mb-3 h4">Найдите свой курс</h1>
+      <form role="search" onsubmit="applyFilters(); return false;">
+        <div class="input-group input-group-lg">
+          <!-- aria-hidden: декоративная иконка не нужна скринридеру -->
+          <span class="input-group-text bg-white border-0" aria-hidden="true">
+            <i class="bi bi-search text-muted"></i>
+          </span>
+          <!-- aria-label вместо только placeholder — placeholder не читается как label -->
+          <input type="text"
+                 class="form-control border-0"
+                 id="searchInput"
+                 aria-label="Поиск курса по названию"
+                 placeholder="Например: Python, дизайн..." />
+          <button class="btn btn-warning fw-semibold" type="submit">Найти</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- 4. main — основной контент страницы -->
+  <main id="main-content" class="container py-4">
+    <div class="row g-4">
+
+      <!-- 5. Фильтры: fieldset + legend вместо p для каждой группы -->
+      <div class="col-12 col-md-3">
+        <!-- aria-label на aside помечает боковую панель -->
+        <aside aria-label="Панель фильтров">
+          <div class="card border-0 shadow-sm p-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2 class="h6 fw-bold mb-0">Фильтры</h2>
+              <!-- aria-label уточняет действие кнопки -->
+              <button class="btn btn-link btn-sm p-0 text-muted text-decoration-none"
+                      onclick="resetFilters()"
+                      aria-label="Сбросить все фильтры">Сбросить</button>
+            </div>
+
+            <!-- fieldset группирует связанные элементы управления, legend их описывает -->
+            <fieldset class="mb-3">
+              <legend class="text-muted small fw-semibold mb-2">ПРЕДМЕТ</legend>
+              <div class="form-check">
+                <!-- id + for связывают input и label явно -->
+                <input class="form-check-input filter-check" type="checkbox"
+                       id="catDev" value="Разработка" />
+                <label class="form-check-label small" for="catDev">Разработка</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input filter-check" type="checkbox"
+                       id="catDesign" value="Дизайн" />
+                <label class="form-check-label small" for="catDesign">Дизайн</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input filter-check" type="checkbox"
+                       id="catData" value="Данные" />
+                <label class="form-check-label small" for="catData">Данные и аналитика</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input filter-check" type="checkbox"
+                       id="catBiz" value="Бизнес" />
+                <label class="form-check-label small" for="catBiz">Бизнес</label>
+              </div>
+            </fieldset>
+
+            <hr />
+
+            <fieldset class="mb-3">
+              <legend class="text-muted small fw-semibold mb-2">УРОВЕНЬ</legend>
+              <div class="form-check">
+                <input class="form-check-input filter-radio" type="radio"
+                       name="level" id="lvlAll" value="" checked />
+                <label class="form-check-label small" for="lvlAll">Все уровни</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input filter-radio" type="radio"
+                       name="level" id="lvlBeg" value="Начинающий" />
+                <label class="form-check-label small" for="lvlBeg">Начинающий</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input filter-radio" type="radio"
+                       name="level" id="lvlMid" value="Средний" />
+                <label class="form-check-label small" for="lvlMid">Средний</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input filter-radio" type="radio"
+                       name="level" id="lvlAdv" value="Продвинутый" />
+                <label class="form-check-label small" for="lvlAdv">Продвинутый</label>
+              </div>
+            </fieldset>
+
+            <hr />
+
+            <fieldset class="mb-3">
+              <legend class="text-muted small fw-semibold mb-2">ЦЕНА</legend>
+              <div class="form-check">
+                <input class="form-check-input filter-radio" type="radio"
+                       name="price" id="priceAll" value="" checked />
+                <label class="form-check-label small" for="priceAll">Любая</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input filter-radio" type="radio"
+                       name="price" id="priceFree" value="free" />
+                <label class="form-check-label small" for="priceFree">Бесплатные</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input filter-radio" type="radio"
+                       name="price" id="pricePaid" value="paid" />
+                <label class="form-check-label small" for="pricePaid">Платные</label>
+              </div>
+            </fieldset>
+
+            <button class="btn btn-primary w-100 btn-sm"
+                    onclick="applyFilters()"
+                    aria-label="Применить выбранные фильтры">Применить</button>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Список курсов -->
+      <div class="col-12 col-md-9">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <!-- aria-live="polite" — скринридер объявит изменение счётчика после фильтрации -->
+          <!-- aria-atomic="true" — объявляет всю строку целиком, а не отдельные символы -->
+          <p class="text-muted mb-0 small"
+             id="resultsCount"
+             aria-live="polite"
+             aria-atomic="true">Загрузка...</p>
+        </div>
+
+        <!-- 6. Спиннер: aria-label + aria-live на контейнере -->
+        <div id="loader"
+             class="text-center py-5"
+             role="status"
+             aria-label="Загрузка курсов">
+          <div class="spinner-border text-primary" aria-hidden="true"></div>
+          <p class="text-muted mt-3">Загружаем курсы...</p>
+        </div>
+
+        <!-- aria-label описывает список карточек -->
+        <div class="row g-3"
+             id="courseList"
+             aria-label="Список курсов"></div>
+
+        <!-- 7. Пустое состояние: иконка декоративная -->
+        <div id="emptyState" class="text-center py-5 d-none" role="alert">
+          <i class="bi bi-search text-muted" style="font-size:3rem;" aria-hidden="true"></i>
+          <p class="text-muted mt-3">Курсы не найдены. Попробуйте изменить фильтры.</p>
+          <button class="btn btn-outline-primary btn-sm"
+                  onclick="resetFilters()">Сбросить фильтры</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const API = 'http://localhost:3000';
+    let allCourses = [];
+
+    async function loadCourses() {
+      try {
+        const response = await fetch(`${API}/courses`);
+        const allData = await response.json();
+        allCourses = allData.filter(c => c.status === 'published' || !c.status);
+        document.getElementById('loader').classList.add('d-none');
+        renderCourses(allCourses);
+      } catch (error) {
+        console.error('Ошибка загрузки курсов:', error);
+        document.getElementById('loader').innerHTML =
+          '<p class="text-danger" role="alert">Не удалось загрузить курсы. Запущен ли json-server?</p>';
+      }
+    }
+
+    function createCourseCard(course) {
+      const priceText = course.price === 0
+        ? '<span class="fw-bold text-success">Бесплатно</span>'
+        : `<span class="fw-bold">${course.price.toLocaleString('ru')} ₽</span>`;
+
+      return `
+        <div class="col-12 col-sm-6 col-xl-4">
+          <article class="card border-0 shadow-sm h-100">
+            <!-- 8. Декоративный баннер курса: role="img" + aria-label описывают его -->
+            <div class="card-img-top bg-${course.color} d-flex align-items-center justify-content-center"
+                 style="height:100px;"
+                 role="img"
+                 aria-label="Иконка курса по направлению ${course.category}">
+              <i class="bi ${course.icon} text-white" style="font-size:2rem;" aria-hidden="true"></i>
+            </div>
+            <div class="card-body">
+              <span class="badge bg-secondary text-white mb-2">${course.level}</span>
+              <h3 class="h6 fw-bold">${course.title}</h3>
+              <p class="text-muted small mb-2">${course.teacher} · ${course.lessons} уроков · ${course.hours} ч.</p>
+              <div class="d-flex align-items-center gap-1 mb-3">
+                <!-- 9. Скрытый текст для скринридера объясняет иконку звезды -->
+                <i class="bi bi-star-fill text-warning small" aria-hidden="true"></i>
+                <span class="visually-hidden">Рейтинг:</span>
+                <span class="small fw-semibold">${course.rating}</span>
+                <span class="text-muted small">(${course.reviews} отзывов)</span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                ${priceText}
+                <!-- 10. aria-label уточняет смысл ссылки «Подробнее» (иначе скринридер читает просто «Подробнее») -->
+                <a href="course.html?id=${course.id}"
+                   class="btn btn-outline-primary btn-sm"
+                   aria-label="Подробнее о курсе «${course.title}»">Подробнее</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      `;
+    }
+
+    function renderCourses(courses) {
+      const list  = document.getElementById('courseList');
+      const empty = document.getElementById('emptyState');
+
+      if (courses.length === 0) {
+        list.innerHTML = '';
+        empty.classList.remove('d-none');
+      } else {
+        empty.classList.add('d-none');
+        list.innerHTML = courses.map(createCourseCard).join('');
+      }
+
+      document.getElementById('resultsCount').textContent = `Найдено: ${courses.length} курсов`;
+    }
+
+    function applyFilters() {
+      const query       = document.getElementById('searchInput').value.toLowerCase();
+      const checkedCats = [...document.querySelectorAll('.filter-check:checked')].map(c => c.value);
+      const level       = document.querySelector('.filter-radio[name="level"]:checked').value;
+      const price       = document.querySelector('.filter-radio[name="price"]:checked').value;
+
+      const filtered = allCourses.filter(course => {
+        const matchCat   = checkedCats.length === 0 || checkedCats.includes(course.category);
+        const matchLevel = !level || course.level === level;
+        const matchPrice = !price
+          || (price === 'free' && course.price === 0)
+          || (price === 'paid' && course.price > 0);
+        const matchQuery = !query || course.title.toLowerCase().includes(query);
+        return matchCat && matchLevel && matchPrice && matchQuery;
+      });
+
+      renderCourses(filtered);
+    }
+
+    function resetFilters() {
+      document.getElementById('searchInput').value = '';
+      document.querySelectorAll('.filter-check').forEach(c => c.checked = false);
+      document.querySelectorAll('.filter-radio[name="level"]')[0].checked = true;
+      document.querySelectorAll('.filter-radio[name="price"]')[0].checked = true;
+      renderCourses(allCourses);
+    }
+
+    function logout() { sessionStorage.clear(); }
+
+    document.querySelectorAll('.filter-check, .filter-radio').forEach(el => {
+      el.addEventListener('change', applyFilters);
+    });
+
+    loadCourses();
+  </script>
+</body>
+</html>

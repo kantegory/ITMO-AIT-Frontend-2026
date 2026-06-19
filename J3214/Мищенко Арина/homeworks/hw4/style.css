@@ -1,0 +1,64 @@
+/* =====================
+   EduPlatform — style.css
+   ===================== */
+
+* {
+  font-family: 'Manrope', sans-serif;
+}
+
+body {
+  color: var(--bs-body-color);
+}
+
+/* Страницы входа/регистрации — используем CSS-переменную */
+.auth-page {
+  background-color: var(--auth-bg, #f1f5f9);
+}
+
+/* Карточки */
+.card {
+  border-radius: 12px;
+}
+
+/* Навбар */
+.navbar-brand {
+  font-size: 1.25rem;
+  letter-spacing: -0.3px;
+}
+
+/* Прогресс */
+.progress {
+  border-radius: 100px;
+}
+
+/* Аккордеон — цвета через переменные темы */
+.accordion-button:not(.collapsed) {
+  background-color: var(--accordion-active-bg, #eff6ff);
+  color: var(--accordion-active-color, #1d4ed8);
+  box-shadow: none;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+}
+
+/* Активный урок */
+.active-lesson span {
+  color: var(--accordion-active-color, #1d4ed8);
+  font-weight: 600;
+}
+
+/* Адаптивность */
+@media (max-width: 576px) {
+  .navbar-brand {
+    font-size: 1.1rem;
+  }
+}
+
+/* SVG-спрайт: базовые стили для иконок */
+.icon {
+  display: inline-block;
+  fill: currentColor;      /* иконка наследует цвет текста родителя */
+  vertical-align: middle;
+  flex-shrink: 0;
+}
