@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Войти в аккаунт</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body class="auth-page">
+<header class="header auth-header">
+    <nav class="navigation" aria-label="Навигация авторизации">
+        <div class="container auth-nav-wrap">
+            <h1 class="auth-site-title mb-0">Мероприятия</h1>
+            <a class="auth-home-link" href="index.html">На главную</a>
+        </div>
+    </nav>
+</header>
+
+<main class="main auth-main container min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="auth-shell mx-auto">
+        <div class="auth-card shadow-lg">
+            <input class="auth-toggle" type="radio" name="authTab" id="tabLogin" checked>
+            <input class="auth-toggle" type="radio" name="authTab" id="tabSignup">
+
+            <div class="auth-head">
+                <div class="auth-tabs">
+                    <label class="auth-tab" for="tabLogin">Вход</label>
+                    <label class="auth-tab" for="tabSignup">Регистрация</label>
+                    <span class="auth-indicator" aria-hidden="true"></span>
+                </div>
+            </div>
+
+            <div class="auth-body">
+                <div class="auth-panels">
+                    <section class="auth-panel">
+                        <form id="loginForm" action="#" method="post" class="needs-validation vstack gap-3 auth-login-form" novalidate>
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com"
+                                       required>
+                                <label for="loginEmail">Почта</label>
+                            </div>
+
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="loginPass" placeholder="Пароль"
+                                       required>
+                                <label for="loginPass">Пароль</label>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center small auth-login-meta">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                                    <label class="form-check-label" for="rememberMe">Не выходить из аккаунта</label>
+                                </div>
+                                <a class="forgot-link text-decoration-none" href="index.html">Восстановить пароль</a>
+                            </div>
+
+                            <button class="btn btn-lg w-100 auth-btn site-button" type="submit">
+                                Войти
+                            </button>
+
+                            <p class="auth-form-msg small mb-0 d-none" id="loginMessage"></p>
+                        </form>
+                    </section>
+
+                    <section class="auth-panel">
+                        <form id="signupForm" action="#" method="post" class="needs-validation vstack gap-3" novalidate>
+                            <div class="row g-2">
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="firstName" placeholder="Имя"
+                                               required>
+                                        <label for="firstName">Имя</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="lastName" placeholder="Фамилия"
+                                               required>
+                                        <label for="lastName">Фамилия</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="signupEmail" placeholder="name@example.com"
+                                       required>
+                                <label for="signupEmail">Почта</label>
+                            </div>
+
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="signupPass" placeholder="Пароль"
+                                       required minlength="6">
+                                <label for="signupPass">Пароль</label>
+                            </div>
+
+                            <div class="form-check small">
+                                <input class="form-check-input" type="checkbox" id="isExternalStudent">
+                                <label class="form-check-label" for="isExternalStudent">
+                                    Не являюсь учеником школы
+                                </label>
+                            </div>
+
+                            <div class="row g-2" id="schoolFields">
+                                <div class="col-6">
+                                    <div class="form-floating">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="studentClass"
+                                            placeholder="Класс"
+                                            min="1"
+                                            max="11"
+                                            required
+                                        >
+                                        <label for="studentClass">Класс</label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-floating">
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="studentLetter"
+                                            placeholder="Буква"
+                                            pattern="[А-ЯЁ]"
+                                            maxlength="1"
+                                            required
+                                        >
+                                        <label for="studentLetter">Буква</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-check small">
+                                <input class="form-check-input" type="checkbox" id="agree" required>
+                                <label class="form-check-label" for="agree">
+                                    В случае указания недостоверной информации несу ответственность за возможные последствия.
+                                </label>
+                            </div>
+
+                            <button class="btn btn-lg w-100 auth-btn site-button" type="submit">
+                                Зарегистрироваться
+                            </button>
+
+                            <p class="auth-form-msg small mb-0 d-none" id="signupMessage"></p>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer auth-footer">
+    <div class="container footer-row">
+        <p class="footer-text mb-0">Вход в аккаунт</p>
+        <button type="button" class="footer-logout subtle-button" data-auth-logout>Выйти</button>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth-core.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/session.js"></script>
+</body>
+</html>

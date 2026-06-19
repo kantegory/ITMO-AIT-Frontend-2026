@@ -1,0 +1,70 @@
+:root {
+    --primary-color: #6366f1;
+    --bg-main: #f8fafc;
+    --text-main: #1e293b;
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+    --nav-bg: #212529; 
+    --text-muted: #64748b;
+    --input-bg: #ffffff;
+    --input-text: #1e293b;
+}
+
+[data-theme="dark"] {
+    --bg-main: #0f172a;
+    --text-main: #f8fafc;
+    --card-bg: #1e293b;
+    --card-border: #334155;
+    --nav-bg: #020617;
+    --text-muted: #94a3b8;
+    --input-bg: #334155;
+    --input-text: #f8fafc;
+}
+
+body {
+    background-color: var(--bg-main) !important;
+    color: var(--text-main) !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    background-color: var(--nav-bg) !important;
+    transition: background-color 0.3s ease;
+}
+
+.card, .list-group-item, .tab-content {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--card-border) !important;
+    color: var(--text-main) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    border-color: var(--primary-color) !important;
+}
+
+.card-title a, .breadcrumb-item a { color: var(--text-main); font-weight: 600; }
+.text-muted { color: var(--text-muted) !important; }
+.bg-white, .bg-light { background-color: var(--card-bg) !important; }
+.text-dark { color: var(--text-main) !important; }
+.table { color: var(--text-main); --bs-table-bg: var(--card-bg); }
+
+.form-control, .form-select, .input-group-text, .modal-content {
+    background-color: var(--input-bg) !important;
+    color: var(--input-text) !important;
+    border-color: var(--card-border) !important;
+}
+
+.form-control::placeholder { color: var(--text-muted); }
+
+.badge { font-weight: 500; padding: 0.5em 0.8em; border-radius: 6px; }
+.bg-info-soft { background-color: rgba(14, 165, 233, 0.1); color: #0ea5e9; }
+.nav-tabs { border-bottom: 2px solid var(--card-border); }
+.nav-tabs .nav-link { color: var(--text-muted); border: none; }
+.nav-tabs .nav-link.active { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); background: none; }
+pre { background-color: #020617 !important; color: #f8fafc; padding: 1.5rem; border-radius: 8px; }
+.profile-img { width: 120px; height: 120px; object-fit: cover; border: 4px solid var(--card-bg); }

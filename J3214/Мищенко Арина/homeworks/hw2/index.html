@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduPlatform — учитесь у лучших</title>
+  
+  <!-- Bootstrap + Шрифты + Иконки -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  
+  <style>    
+    .navbar { 
+      background: transparent; 
+      position: absolute; 
+      width: 100%; 
+    }
+    
+    .hero { 
+      background: linear-gradient(#1c5aa6 0%, #3388d8 60%, #51affc 100%); 
+      min-height: 80vh; 
+      display: flex; 
+      align-items: center; 
+    }
+    
+    .hero h1 { 
+      font-size: clamp(2rem, 5vw, 3.2rem); 
+      font-weight: 800; 
+      color: #fff; 
+      line-height: 1.15; 
+    }
+    
+    .hero p { 
+      color: rgba(255, 255, 255, 0.8); 
+      font-size: 1.05rem; 
+    }
+    
+    footer { 
+      background: #0f172a; 
+    }
+    
+    footer a { 
+      color: #94a3b8;
+      text-decoration: none; 
+      font-size: 0.8rem; 
+    }
+    
+    footer a:hover { 
+      color: #ffffff; 
+    }
+  </style>
+</head>
+<body>
+
+  <!-- НАВБАР -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">EduPlatform</a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMain">
+        <!-- Меню (заполняется через JS) -->
+        <ul class="navbar-nav mx-auto" id="navMenu"></ul>
+        <!-- Кнопки (заполняется через JS) -->
+        <div id="navButtons" class="d-flex gap-2"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <main class="hero">
+    <div class="container">
+      <div class="col-12 col-lg-7">
+        <p class="text-white-50 small fw-semibold">
+          <i class="bi bi-lightning-charge-fill me-1 text-warning"></i>
+          Более 100 курсов онлайн
+        </p>
+        <h1 class="mb-3">
+          Учитесь у лучших,<br>развивайтесь быстрее
+        </h1>
+        <p class="mb-4">
+          Платформа для онлайн-обучения с практическими заданиями и сертификатами.
+        </p>
+        <!-- Контейнер для кнопок в Hero -->
+        <div id="heroButtons" class="d-flex gap-3 flex-wrap"></div>
+        
+        <div class="d-flex gap-4 mt-4">
+          <div>
+            <div class="fw-bold text-white fs-5">10 000+</div>
+            <div class="text-white-50 small">студентов</div>
+          </div>
+          <div>
+            <div class="fw-bold text-white fs-5">100+</div>
+            <div class="text-white-50 small">преподавателей</div>
+          </div>
+          <div>
+            <div class="fw-bold text-white fs-5">4.8 ★</div>
+            <div class="text-white-50 small">средний рейтинг</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="py-4">
+    <div class="container">
+      <div class="row g-3 mb-3">
+        <div class="col-12 col-md-4">
+          <p class="text-white fw-bold mb-1">EduPlatform</p>
+          <p class="text-secondary small mb-0">Платформа для онлайн-обучения.</p>
+        </div>
+        <div class="col-6 col-md-2">
+          <p class="text-white small fw-semibold mb-2">Обучение</p>
+          <div id="footerLearnLinks" class="d-flex flex-column gap-1"></div>
+        </div>
+        <div class="col-6 col-md-2">
+          <p class="text-white small fw-semibold mb-2">Аккаунт</p>
+          <div id="footerLinks" class="d-flex flex-column gap-1"></div>
+        </div>
+      </div>
+      <hr style="border-color: #334155;" class="mb-2" />
+      <p class="text-secondary small text-center mb-0">© 2026 EduPlatform</p>
+    </div>
+  </footer>
+
+  <!-- Скрипты -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // ========== ЛОГИКА АВТОРИЗАЦИИ ==========
+    
+    const role = sessionStorage.getItem('role');
+    const isLoggedIn = role === 'student' || role === 'teacher';
+    
+    const dashboardUrl = role === 'teacher' ? 'dashboard-teacher.html' : 'dashboard-user.html';
+    const dashboardText = role === 'teacher' ? 'Кабинет преподавателя' : 'Личный кабинет';
+    
+    // ========== 1. МЕНЮ В НАВБАРЕ ==========
+    const navMenu = document.getElementById('navMenu');
+    
+    if (isLoggedIn) {
+      navMenu.innerHTML = `
+        <li class="nav-item">
+          <a class="nav-link" href="search.html">Каталог курсов</a>
+        </li>
+      `;
+    } else {
+      navMenu.innerHTML = ''; // Пустое меню для гостей
+    }
+    
+    // ========== 2. КНОПКИ В НАВБАРЕ ==========
+    const navButtons = document.getElementById('navButtons');
+    
+    if (isLoggedIn) {
+      navButtons.innerHTML = `
+        <a href="${dashboardUrl}" class="btn btn-outline-light btn-sm">${dashboardText}</a>
+        <button class="btn btn-outline-light btn-sm" onclick="logout()">Выйти</button>
+      `;
+    } else {
+      navButtons.innerHTML = `
+        <a href="login.html" class="btn btn-warning btn-sm fw-semibold">Войти</a>
+        <a href="register.html" class="btn btn-outline-light btn-sm">Регистрация</a>
+      `;
+    }
+    
+    // ========== 3. КНОПКИ В HERO ==========
+    const heroButtons = document.getElementById('heroButtons');
+    
+    if (isLoggedIn) {
+      heroButtons.innerHTML = `
+        <a href="search.html" class="btn btn-warning btn-lg fw-bold px-4">Каталог курсов</a>
+        <a href="${dashboardUrl}" class="btn btn-outline-light btn-lg px-4">${dashboardText}</a>
+      `;
+    } else {
+      heroButtons.innerHTML = `
+        <a href="login.html" class="btn btn-warning btn-lg fw-bold px-4">Войти</a>
+        <a href="register.html" class="btn btn-outline-light btn-lg px-4">Регистрация</a>
+      `;
+    }
+    
+    // ========== 4. ССЫЛКИ В ФУТЕРЕ (Обучение) ==========
+    const footerLearnLinks = document.getElementById('footerLearnLinks');
+    
+    if (isLoggedIn) {
+      footerLearnLinks.innerHTML = `
+        <a href="search.html">Каталог курсов</a>
+      `;
+    } else {
+      footerLearnLinks.innerHTML = `
+        <span class="text-secondary small" style="font-size:0.8rem;">Требуется вход</span>
+      `;
+    }
+    
+    // ========== 5. ССЫЛКИ В ФУТЕРЕ (Аккаунт) ==========
+    const footerLinks = document.getElementById('footerLinks');
+    
+    if (isLoggedIn) {
+      footerLinks.innerHTML = `
+        <a href="${dashboardUrl}">${dashboardText}</a>
+      `;
+    } else {
+      footerLinks.innerHTML = `
+        <a href="login.html">Войти</a>
+        <a href="register.html">Регистрация</a>
+      `;
+    }
+    
+    // ========== ФУНКЦИЯ ВЫХОДА ==========
+    function logout() {
+      sessionStorage.removeItem('role');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

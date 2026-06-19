@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Транзакции — 67 Финансы</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/light.css" rel="stylesheet">
+  <link href="css/dark.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme')
+      var preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      var theme = saved || preferred
+      document.documentElement.setAttribute('data-theme', theme)
+      document.documentElement.setAttribute('data-bs-theme', theme)
+    })()
+  </script>
+  <script src="js/theme.js"></script>
+</head>
+<body>
+  <aside class="sidebar d-flex flex-column" aria-label="Боковая панель">
+    <a href="dashboard.html" class="brand text-decoration-none" aria-label="67 Финансы — на главную">67 Финансы</a>
+    <nav class="flex-grow-1 pt-2" aria-label="Основная навигация">
+      <a href="dashboard.html" class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>Главная</span>
+      </a>
+      <a href="transactions.html" class="nav-link active" aria-current="page">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+        <span>Транзакции</span>
+      </a>
+      <a href="reports.html" class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        <span>Отчёты</span>
+      </a>
+      <a href="integration.html" class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+        <span>Интеграции</span>
+      </a>
+    </nav>
+    <div class="nav-bottom px-3 pb-3">
+      <a href="#" class="nav-link" onclick="logout()" aria-label="Выйти из аккаунта">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        <span>Выход</span>
+      </a>
+    </div>
+  </aside>
+  <main class="main-wrap">
+    <div class="header-row">
+      <h1>Транзакции</h1>
+      <div class="header-actions">
+        <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" aria-label="Переключить тему">
+          <svg class="icon-moon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg class="icon-sun" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" style="display:none"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+        </button>
+        <div class="dropdown">
+          <button type="button" class="user-menu dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false" aria-label="Меню пользователя" aria-haspopup="true">
+            <div class="user-avatar" aria-hidden="true">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <span class="d-none d-md-inline" id="user-name">—</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" role="menu">
+            <li role="none"><a class="dropdown-item" href="settings.html" role="menuitem">Настройки</a></li>
+            <li role="none"><hr class="dropdown-divider"></li>
+            <li role="none"><a class="dropdown-item text-danger" href="#" role="menuitem" onclick="logout(); return false;">Выйти</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <section class="content-card mb-3" aria-label="Фильтры транзакций">
+      <div class="row g-2 filter-row">
+        <div class="col-12 col-md-4">
+          <label class="visually-hidden" for="search-input">Поиск по транзакциям</label>
+          <div class="input-group">
+            <span class="input-group-text search-icon border-end-0" aria-hidden="true">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </span>
+            <input type="search" class="form-control border-start-0" id="search-input"
+              placeholder="Поиск по транзакциям" aria-label="Поиск по транзакциям">
+          </div>
+        </div>
+        <div class="col-6 col-md-2">
+          <label class="visually-hidden" for="category-filter">Категория</label>
+          <select class="form-select" id="category-filter" aria-label="Фильтр по категории">
+            <option value="">Категория</option>
+            <option>Доход</option>
+            <option>Продукты</option>
+            <option>Транспорт</option>
+            <option>Развлечения</option>
+            <option>Жильё</option>
+            <option>Техника</option>
+            <option>Авто</option>
+            <option>Крупная покупка</option>
+            <option>Накопления</option>
+          </select>
+        </div>
+        <div class="col-6 col-md-2">
+          <label class="visually-hidden" for="amount-from">Сумма от</label>
+          <input type="number" class="form-control" id="amount-from"
+            placeholder="Сумма от" aria-label="Минимальная сумма">
+        </div>
+        <div class="col-6 col-md-2">
+          <label class="visually-hidden" for="date-from">Дата от</label>
+          <input type="text" class="form-control" id="date-from"
+            placeholder="Дата от" aria-label="Дата начала периода"
+            onfocus="this.type='date'" onblur="if(!this.value) this.type='text'">
+        </div>
+        <div class="col-6 col-md-2">
+          <label class="visually-hidden" for="date-to">Дата до</label>
+          <input type="text" class="form-control" id="date-to"
+            placeholder="Дата до" aria-label="Дата конца периода"
+            onfocus="this.type='date'" onblur="if(!this.value) this.type='text'">
+        </div>
+      </div>
+    </section>
+
+    <section class="content-card" aria-label="Список транзакций">
+      <div class="table-responsive">
+        <table class="table align-middle mb-0" aria-label="Транзакции">
+          <thead>
+            <tr>
+              <th scope="col">Название / Контрагент</th>
+              <th scope="col">Тип</th>
+              <th scope="col">Сумма</th>
+              <th scope="col">Дата</th>
+              <th scope="col">Счёт</th>
+              <th scope="col"><span class="visually-hidden">Действия</span></th>
+            </tr>
+          </thead>
+          <tbody id="transactions-tbody" aria-live="polite">
+            <tr><td colspan="6" class="text-center text-muted py-3">Загрузка...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal fade" id="transactionModal" tabindex="-1"
+    aria-labelledby="transactionModalLabel" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="transactionModalLabel">Детали транзакции</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-1"><strong>Название:</strong> <span id="modal-name"></span></p>
+          <p class="mb-1"><strong>Контрагент:</strong> <span id="modal-counterparty"></span></p>
+          <p class="mb-1"><strong>Тип:</strong> <span id="modal-category"></span></p>
+          <p class="mb-1"><strong>Сумма:</strong> <span id="modal-amount"></span></p>
+          <p class="mb-1"><strong>Дата:</strong> <span id="modal-date"></span></p>
+          <p class="mb-0"><strong>Счёт:</strong> <span id="modal-account"></span></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/transactions.js"></script>
+</body>
+</html>

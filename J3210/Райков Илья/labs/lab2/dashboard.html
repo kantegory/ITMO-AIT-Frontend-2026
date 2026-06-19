@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет | EduPlatform</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+    <!-- Набор для аторизованного пользователя -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <svg class="icon text-warning me-2"><use href="img/sprite.svg#mortarboard-fill"></use></svg>EduPlatform
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Каталог курсов</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.html">Мое обучение</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-2" id="navAuthButtons">
+                    <!-- Сюда вставит js -->
+                </div>
+                <button class="btn btn-outline-light btn-sm ms-3" id="themeToggleBtn" aria-label="Переключить тему">
+                    <svg class="icon" aria-hidden="true">
+                        <use id="themeIconUse" href="img/sprite.svg#moon-stars-fill"></use>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+
+        <!-- Шапка профиля -->
+        <div class="profile-header shadow-sm mb-4 d-flex flex-column flex-md-row align-items-center text-center text-md-start">
+            <img src="" id="profileAvatar" alt="Аватар" class="profile-avatar mb-3 mb-md-0 me-md-4">
+            <div>
+                <h2 class="fw-bold mb-1" id="profileName">Загрузка...</h2>
+                <p class="mb-2 opacity-75"><i class="bi bi-envelope"></i> <span id="profileEmail">...</span></p>
+                <div class="d-flex gap-3 justify-content-center justify-content-md-start">
+                    <span class="badge bg-light text-dark"><i class="bi bi-book"></i> <span id="courseCount">0</span> курсов</span>
+                    <span class="badge bg-light text-dark"><i class="bi bi-award"></i> <span id="certCount">0</span> сертификатов</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Навигация по вкладкам -->
+        <ul class="nav nav-tabs mb-4 custom-tabs" id="dashboardTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active fw-bold" id="courses-tab" data-bs-toggle="tab" data-bs-target="#courses-pane" type="button" role="tab" aria-controls="courses-pane" aria-selected="true">
+                    <i class="bi bi-play-circle me-1" aria-hidden="true"></i> Мои курсы
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold" id="certs-tab" data-bs-toggle="tab" data-bs-target="#certs-pane" type="button" role="tab" aria-controls="certs-pane" aria-selected="false">
+                    <i class="bi bi-patch-check me-1" aria-hidden="true"></i> Сертификаты
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings-pane" type="button" role="tab" aria-controls="settings-pane" aria-selected="false">
+                    <i class="bi bi-person-gear me-1" aria-hidden="true"></i> Настройки профиля
+                </button>
+            </li>
+        </ul>
+
+        <!-- Содержимое вкладок -->
+        <div class="tab-content" id="dashboardTabContent">
+            <!-- Вкладка курсов -->
+            <div class="tab-pane fade show active" id="courses-pane" role="tabpanel" aria-labelledby="courses-tab" tabindex="0">
+                <div class="row g-4" id="coursesContainer">
+                    <!-- Сюда карточки курсов js -->
+                </div>
+            </div>
+
+            <!-- Вкладка сертификатов -->
+            <div class="tab-pane fade" id="certs-pane" role="tabpanel" aria-labelledby="courses-tab" tabindex="0">
+                <div class="row g-4" id="certsContainer">
+                    <!-- Сюда сертификаты js -->
+                </div>
+            </div>
+
+            <!-- Вкладка настроек -->
+            <div class="tab-pane fade" id="settings-pane" role="tabpanel">
+                <div class="card border-0 shadow-sm max-w-500">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-4">Изменение пароля</h5>
+                        <form id="changePasswordForm">
+                            <div class="mb-3">
+                                <label class="form-label text-muted small">Текущий пароль</label>
+                                <input type="password" class="form-control" id="oldPassword" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-muted small">Новый пароль</label>
+                                <input type="password" class="form-control" id="newPassword" required minlength="6">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

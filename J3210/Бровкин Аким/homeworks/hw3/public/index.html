@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - EduPlatform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</head>
+<body>
+    <main class="auth-wrapper">
+        <div class="theme-toggle-wrapper-auth">
+            <button id="themeToggle" class="theme-toggle-btn" aria-label="Переключить тему">🌓</button>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="edu-card p-4">
+                        <h3 class="text-center mb-4">Вход в EduPlatform</h3>
+                        <form id="loginForm">
+                            <div class="mb-3">
+                                <label class="form-label" for="email">Email</label>
+                                <input type="email" id="email" class="form-control" placeholder="name@example.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="password">Пароль</label>
+                                <input type="password" id="password" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn-brand w-100">Войти</button>
+                        </form>
+                        <div class="text-center mt-3">
+                            <span class="text-muted">Нет аккаунта?</span> <a href="register.html">Зарегистрироваться</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch(`http://localhost:3000/users?email=${email}&password=${password}`);
+                const users = await response.json();
+
+                if (users.length > 0) {
+                    localStorage.setItem('user', JSON.stringify(users[0]));
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert('Неверный email или пароль!');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Сервер недоступен.');
+            }
+        });
+
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+        (function () {
+            const preference = localStorage.getItem('financeManagerTheme') || 'system';
+            const resolved = preference === 'system'
+                ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+                : preference;
+            document.documentElement.dataset.theme = resolved;
+            document.documentElement.dataset.themePreference = preference;
+        })();
+    </script>
+    <title>Интеграции</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="integrations">
+<nav class="navbar navbar-dark bg-dark" aria-label="Основная навигация">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <a class="navbar-brand mb-2 mb-md-0 brand-demo-link" href="index.html">FinanceManager</a>
+        <ul class="navbar-nav flex-column flex-md-row gap-2 gap-md-3 text-center">
+            <li class="nav-item"><a class="nav-link" href="dashboard.html">Личный кабинет</a></li>
+            <li class="nav-item"><a class="nav-link" href="transactions.html">Транзакции</a></li>
+            <li class="nav-item"><a class="nav-link" href="reports.html">Отчёты</a></li>
+            <li class="nav-item"><a class="nav-link active" href="integration.html">Интеграции</a></li>
+        </ul>
+        <div class="d-flex flex-column flex-md-row align-items-center gap-2 mt-2 mt-md-0">
+            <button class="btn btn-light btn-sm" data-theme-toggle></button>
+            <a href="#" class="btn btn-outline-light btn-sm logout-btn">Выйти</a>
+        </div>
+    </div>
+</nav>
+
+<main class="container main-block">
+    <div id="demoModeBanner" class="mb-4"></div>
+    <div id="integrationNotice" class="alert d-none"></div>
+    <div class="card shadow-sm mb-4"><div class="card-body"><h1>Интеграция с платёжными аккаунтами</h1></div></div>
+    <div class="row g-4">
+        <div class="col-12 col-lg-6">
+            <div class="info-box">
+                <h2>Подключённые банки</h2>
+                <div class="table-responsive"><table class="table table-bordered"><thead><tr><th>Банк</th><th>Статус</th><th>Последняя синхронизация</th><th></th></tr></thead><tbody id="bankTable"></tbody></table></div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="info-box">
+                <h2>Правила импорта</h2>
+                <form id="ruleForm" class="row g-3 mb-3">
+                    <div class="col-12"><label for="ruleField" class="form-label">Поле для проверки</label><select id="ruleField" class="form-select"><option value="Описание операции">Описание операции</option></select></div>
+                    <div class="col-12 col-md-4"><label for="ruleOperator" class="form-label">Условие</label><select id="ruleOperator" class="form-select"><option value="содержит">содержит</option><option value="равно">равно</option><option value="начинается с">начинается с</option></select></div>
+                    <div class="col-12 col-md-8"><label for="ruleValue" class="form-label">Значение</label><input id="ruleValue" class="form-control" placeholder="Например: Пятёрочка, Магнит" required></div>
+                    <div class="col-12 col-md-6"><label for="ruleActionType" class="form-label">Что сделать</label><select id="ruleActionType" class="form-select"><option value="category">Относить в категорию</option></select></div>
+                    <div class="col-12 col-md-6"><label for="ruleTargetCategory" class="form-label">Категория</label><select id="ruleTargetCategory" class="form-select"></select></div>
+                    <div class="col-12"><button class="btn btn-primary" type="submit">Добавить правило</button></div>
+                </form>
+                <ul id="rulesList" class="list-group"></ul>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="js/theme.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

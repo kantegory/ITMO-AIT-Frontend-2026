@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Мероприятия</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<header class="header">
+    <nav class="navbar navbar-expand-lg fixed-top navigation" aria-label="Главная навигация">
+        <div class="container">
+            <a class="navbar-brand me-auto" href="index.html">Мероприятия</a>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Мероприятия</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 active" aria-current="page" href="index.html">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="index.html#eventsExplorer">Мероприятия</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="profile.html">Личный кабинет</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="#" data-proposal-link target="_blank" rel="noopener noreferrer">Предложить мероприятие</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <a href="login.html" class="login-button">Войти</a>
+            <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                    aria-controls="offcanvasNavbar" aria-label="Переключить навигацию">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+</header>
+
+<main class="main">
+    <section id="slider">
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators" id="carouselIndicators"></div>
+            <div class="carousel-inner" id="carouselInner"></div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+
+    <section class="events-explorer py-5" id="eventsExplorer">
+        <div class="container">
+            <div class="events-shell">
+                <div class="events-intro">
+                    <h2 class="events-title">Найти подходящее мероприятие</h2>
+                </div>
+
+                <div class="row g-3 align-items-end filter-row">
+                    <div class="col-12 col-lg-5">
+                        <label for="eventSearch" class="form-label filter-label">Поиск по названию</label>
+                        <input
+                                type="text"
+                                class="form-control search-input"
+                                id="eventSearch"
+                                placeholder="Например: дискотека, линейка"
+                        >
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label class="form-label filter-label" for="goalDropdownButton">Категория</label>
+                        <div class="dropdown custom-filter-dropdown">
+                            <button
+                                    class="btn custom-filter-toggle dropdown-toggle w-100 text-start"
+                                    type="button"
+                                    id="goalDropdownButton"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                            >
+                                Все категории
+                            </button>
+                            <ul class="dropdown-menu custom-filter-menu w-100" aria-labelledby="goalDropdownButton">
+                                <li>
+                                    <button class="dropdown-item custom-filter-item goal-option" type="button"
+                                            data-value="all">Все категории
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item custom-filter-item goal-option" type="button"
+                                            data-value="sport">Спортивные
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item custom-filter-item goal-option" type="button"
+                                            data-value="fun">Развлекательные
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item custom-filter-item goal-option" type="button"
+                                            data-value="study">Учебные
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item custom-filter-item goal-option" type="button"
+                                            data-value="ceremony">Торжественные
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label class="form-label filter-label" for="placeDropdownButton">Место</label>
+                        <div class="dropdown custom-filter-dropdown">
+                            <button
+                                    class="btn custom-filter-toggle dropdown-toggle w-100 text-start"
+                                    type="button"
+                                    id="placeDropdownButton"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                            >
+                                Все места
+                            </button>
+                            <ul class="dropdown-menu custom-filter-menu w-100" aria-labelledby="placeDropdownButton">
+                                <li>
+                                    <button class="dropdown-item custom-filter-item place-option" type="button"
+                                            data-value="all">Все места
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item custom-filter-item place-option" type="button"
+                                            data-value="assembly">Актовый зал
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item custom-filter-item place-option" type="button"
+                                            data-value="yard">Школьный двор
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item custom-filter-item place-option" type="button"
+                                            data-value="classroom">Школьный класс
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item custom-filter-item place-option" type="button"
+                                            data-value="outside">Вне школы
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item custom-filter-item place-option" type="button"
+                                            data-value="stadium">Стадион
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item custom-filter-item place-option" type="button"
+                                            data-value="gym1">Спортивный зал №1
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item custom-filter-item place-option" type="button"
+                                            data-value="gym2">Спортивный зал №2
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-1 d-grid">
+                        <button type="button" class="btn reset-filters" id="resetFilters">
+                            Сброс
+                        </button>
+                    </div>
+                </div>
+
+                <div class="events-meta-row">
+                    <p class="events-counter mb-0" id="eventsCounter">Показано мероприятий: 0</p>
+                </div>
+
+                <div class="row g-4" id="eventsGrid"></div>
+
+                <div class="events-empty d-none" id="eventsEmpty">
+                    <h3 class="events-empty-title">Ничего не найдено</h3>
+                    <p class="events-empty-text mb-0">
+                        Попробуйте изменить запрос или сбросить фильтры.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container footer-row">
+        <p class="footer-text mb-0">Мероприятия</p>
+        <button type="button" class="footer-logout subtle-button" data-auth-logout>Выйти</button>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth-core.js"></script>
+<script src="js/main.js"></script>
+<script src="js/session.js"></script>
+</body>
+</html>
+
+
+
+
+

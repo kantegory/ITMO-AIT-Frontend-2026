@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+        (function () {
+            const preference = localStorage.getItem('financeManagerTheme') || 'system';
+            const resolved = preference === 'system'
+                ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+                : preference;
+            document.documentElement.dataset.theme = resolved;
+            document.documentElement.dataset.themePreference = preference;
+        })();
+    </script>
+    <title>Личный кабинет</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="dashboard">
+<nav class="navbar navbar-dark bg-dark" aria-label="Основная навигация">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <a class="navbar-brand mb-2 mb-md-0 brand-demo-link" href="index.html">FinanceManager</a>
+        <ul class="navbar-nav flex-column flex-md-row gap-2 gap-md-3 text-center">
+            <li class="nav-item"><a class="nav-link active" href="dashboard.html">Личный кабинет</a></li>
+            <li class="nav-item"><a class="nav-link" href="transactions.html">Транзакции</a></li>
+            <li class="nav-item"><a class="nav-link" href="reports.html">Отчёты</a></li>
+            <li class="nav-item"><a class="nav-link" href="integration.html">Интеграции</a></li>
+        </ul>
+        <div class="d-flex flex-column flex-md-row align-items-center gap-2 mt-2 mt-md-0">
+            <button class="btn btn-light btn-sm" data-theme-toggle></button>
+            <a href="#" class="btn btn-outline-light btn-sm logout-btn">Выйти</a>
+        </div>
+    </div>
+</nav>
+
+<main class="container main-block">
+    <div id="demoModeBanner" class="mb-4"></div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h1>Личный кабинет пользователя</h1>
+            <p class="mb-1"><strong>Имя:</strong> <span data-user-name></span></p>
+            <p class="mb-1"><strong>Email:</strong> <span data-user-email></span></p>
+            <p class="mb-0"><strong>Дата регистрации:</strong> <span id="joinedDate"></span></p>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-md-4"><div class="stat-box"><div id="totalBalance" class="h4 mb-0">0 ₽</div><p class="mb-0">Общий баланс</p></div></div>
+        <div class="col-12 col-md-4"><div class="stat-box"><div id="monthIncome" class="h4 mb-0">0 ₽</div><p class="mb-0">Доходы</p></div></div>
+        <div class="col-12 col-md-4"><div class="stat-box"><div id="monthExpense" class="h4 mb-0">0 ₽</div><p class="mb-0">Расходы</p></div></div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-12 col-lg-6">
+            <div class="card shadow-sm h-100"><div class="card-body"><h2 class="mb-3">Счета</h2><ul id="accountsList" class="list-group"></ul></div></div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                        <h2 class="mb-0">Запланированные расходы</h2>
+                        <small class="text-muted">Можно менять значения, добавлять и удалять категории</small>
+                    </div>
+                    <div id="budgetNotice" class="alert d-none"></div>
+                    <form id="budgetForm" class="row g-3 mb-3">
+                        <input type="hidden" id="budgetId">
+                        <div class="col-12 col-md-5"><label for="budgetCategory" class="form-label">Категория</label><select id="budgetCategory" class="form-select"></select></div>
+                        <div class="col-12 col-md-4"><label for="budgetLimit" class="form-label">Значение</label><input id="budgetLimit" type="number" class="form-control" min="1" placeholder="Например, 15000"></div>
+                        <div class="col-12 col-md-3 d-flex align-items-end"><button class="btn btn-primary w-100" type="submit">Сохранить бюджет</button></div>
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead><tr><th>Категория</th><th>Значение</th><th>Потрачено</th><th>%</th><th>Действия</th></tr></thead>
+                            <tbody id="budgetTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chart-box mt-4">
+        <h2 class="mb-3">Динамика расходов по категориям</h2>
+        <div id="expensesEmpty" class="empty-state d-none"></div>
+        <div class="chart-canvas-wrap chart-canvas-wrap-sm"><canvas id="expensesChart"></canvas></div>
+    </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

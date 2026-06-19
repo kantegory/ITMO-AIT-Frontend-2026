@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="ru" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Контрамарка — Поиск мероприятий</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" href="index.html">
+      <span class="badge brand-badge text-white">КМ</span>
+      Контрамарка
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="topNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link active" href="index.html">События</a></li>
+        <li class="nav-item"><a class="nav-link" href="organizer.html">Организатору</a></li>
+      </ul>
+      <div class="d-flex gap-2">
+        <a class="btn btn-outline-secondary" href="login.html">Вход</a>
+        <a class="btn btn-primary" href="register.html">Регистрация</a>
+        <a class="btn btn-outline-primary" href="profile.html">Профиль</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero py-4 py-lg-5 border-bottom">
+  <div class="container">
+    <div class="row align-items-center g-3">
+      <div class="col-lg-7">
+        <h1 class="display-6 fw-semibold mb-2">Билеты на события Санкт-Петербурга</h1>
+        <p class="text-secondary mb-0">Концерты, стендап, спорт и выставки — всё в одном месте.</p>
+      </div>
+      <div class="col-lg-5">
+        <div class="input-group input-group-lg">
+          <span class="input-group-text">🔎</span>
+          <input type="text" class="form-control" placeholder="Поиск по названию, артисту или площадке">
+          <button class="btn btn-outline-secondary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#filtersCanvas">
+            Фильтры
+          </button>
+        </div>
+        <div class="d-flex gap-2 mt-2 flex-wrap">
+          <span class="badge bg-body-tertiary border">Сегодня</span>
+          <span class="badge bg-body-tertiary border">Выходные</span>
+          <span class="badge bg-body-tertiary border">Скидки</span>
+          <span class="badge bg-body-tertiary border">Топ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="py-4">
+  <div class="container">
+    <div class="row g-4">
+      <aside class="col-lg-3 d-none d-lg-block">
+        <div class="border rounded-4 p-3">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <h2 class="h6 mb-0">Фильтры</h2>
+            <button class="btn btn-sm btn-outline-secondary" type="button" onclick="location.reload()">Сброс</button>
+          </div>
+
+          <label class="form-label mt-2">Тип</label>
+          <select class="form-select">
+            <option selected>Все</option>
+            <option>Концерт</option>
+            <option>Стендап</option>
+            <option>Спорт</option>
+            <option>Выставка</option>
+          </select>
+
+          <label class="form-label mt-3">Город</label>
+          <select class="form-select">
+            <option selected>Все</option>
+            <option>Санкт-Петербург</option>
+            <option>Центральный</option>
+            <option>Петроградский</option>
+          </select>
+
+          <label class="form-label mt-3">Дата</label>
+          <div class="row g-2">
+            <div class="col-6"><input type="date" class="form-control"></div>
+            <div class="col-6"><input type="date" class="form-control"></div>
+          </div>
+
+          <div class="mt-3">
+            <label class="form-label">Цена</label>
+            <input type="range" class="form-range" min="0" max="20000" value="12000">
+            <div class="d-flex justify-content-between text-secondary small">
+              <span>0 ₽</span><span>20 000 ₽</span>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="onlyAvailable" checked>
+              <label class="form-check-label" for="onlyAvailable">Только доступные</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="withReviews">
+              <label class="form-check-label" for="withReviews">С отзывами</label>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <section class="col-lg-9">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <h2 class="h5 mb-0">Мероприятия</h2>
+          <select class="form-select form-select-sm w-auto">
+            <option selected>Сначала популярные</option>
+            <option>Сначала дешёвые</option>
+            <option>Сначала ближайшие</option>
+          </select>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
+          <div class="col">
+            <div class="card card-hover h-100 rounded-4">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <h3 class="h6 mb-1">Джаз в Полуторке</h3>
+                    <div class="text-secondary small">Санкт-Петербург • Новая Голландия • 12.03 • 20:00</div>
+                  </div>
+                  <span class="badge bg-body-tertiary border">Концерт</span>
+                </div>
+                <p class="mt-3 mb-0 text-secondary text-truncate-2">
+                  Камерный сет в Новой Голландии, уютная сцена и живой звук.
+                </p>
+              </div>
+              <div class="card-footer bg-transparent border-top-0 pt-0 pb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="fw-semibold">от 1 200 ₽</div>
+                  <div class="d-flex gap-2">
+                    <a class="btn btn-sm btn-outline-secondary" href="event-jazz.html">Подробнее</a>
+                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#buyModal" data-buy="e1" data-title="Джаз в Полуторке">Купить</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card card-hover h-100 rounded-4">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <h3 class="h6 mb-1">Стендап: Пятничный микрофон</h3>
+                    <div class="text-secondary small">Санкт-Петербург • Бар на Рубинштейна • 15.03 • 19:30</div>
+                  </div>
+                  <span class="badge bg-body-tertiary border">Стендап</span>
+                </div>
+                <p class="mt-3 mb-0 text-secondary text-truncate-2">
+                  Короткие сеты, острые темы, громкие имена.
+                </p>
+              </div>
+              <div class="card-footer bg-transparent border-top-0 pt-0 pb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="fw-semibold">от 700 ₽</div>
+                  <div class="d-flex gap-2">
+                    <a class="btn btn-sm btn-outline-secondary" href="event-standup.html">Подробнее</a>
+                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#buyModal" data-buy="e2" data-title="Стендап: Пятничный микрофон">Купить</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card card-hover h-100 rounded-4">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <h3 class="h6 mb-1">Хоккей: СКА</h3>
+                    <div class="text-secondary small">Санкт-Петербург • Ледовый дворец • 20.03 • 18:00</div>
+                  </div>
+                  <span class="badge bg-body-tertiary border">Спорт</span>
+                </div>
+                <p class="mt-3 mb-0 text-secondary text-truncate-2">
+                  Ледовый дворец, классная атмосфера и сильный матч-ап.
+                </p>
+              </div>
+              <div class="card-footer bg-transparent border-top-0 pt-0 pb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="fw-semibold">от 1 500 ₽</div>
+                  <div class="d-flex gap-2">
+                    <a class="btn btn-sm btn-outline-secondary" href="event-hockey.html">Подробнее</a>
+                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#buyModal" data-buy="e3" data-title="Хоккей: СКА">Купить</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+</main>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="filtersCanvas">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Фильтры</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <label class="form-label">Тип</label>
+    <select class="form-select mb-3">
+      <option selected>Все</option>
+      <option>Концерт</option>
+      <option>Стендап</option>
+      <option>Спорт</option>
+      <option>Выставка</option>
+    </select>
+
+    <label class="form-label">Город</label>
+    <select class="form-select mb-3">
+      <option selected>Все</option>
+      <option>Санкт-Петербург</option>
+      <option>Центральный</option>
+      <option>Петроградский</option>
+    </select>
+
+    <button class="btn btn-primary w-100" data-bs-dismiss="offcanvas">Применить</button>
+  </div>
+</div>
+
+<div class="modal fade" id="buyModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header">
+        <h5 class="modal-title">Покупка билета</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-secondary">Мероприятие:</div>
+        <div class="fw-semibold" id="buyEventName">—</div>
+        <hr>
+        <label class="form-label">Количество</label>
+        <select class="form-select">
+          <option selected>1</option><option>2</option><option>3</option><option>4</option>
+        </select>
+        <div class="form-text">После подтверждения откроется выбор способа оплаты.</div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button class="btn btn-primary" id="buyConfirmButton">Подтвердить покупку</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

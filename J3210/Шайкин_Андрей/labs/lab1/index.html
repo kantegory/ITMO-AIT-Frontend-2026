@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог курсов | NexusEdu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-blob-1"></div>
+    <div class="bg-blob-2"></div>
+
+    <nav class="navbar navbar-expand-lg glass m-3 px-4 py-3">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold text-white fs-4" href="index.html">🌌 NexusEdu</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navBar">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navBar">
+                <ul class="navbar-nav me-auto ms-4 gap-3">
+                    <li class="nav-item"><a class="nav-link text-white fw-bold border-bottom" href="index.html">Каталог</a></li>
+                    <li class="nav-item"><a class="nav-link text-white-50" href="profile.html">Мой кабинет</a></li>
+                </ul>
+                <a href="auth.html" class="btn glass-btn px-4">Войти</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 mb-5">
+        <div class="row g-4">
+            
+            <aside class="col-lg-3">
+                <div class="glass p-4 sticky-top" style="top: 20px;">
+                    <h5 class="fw-bold mb-4">Фильтры</h5>
+                    <div class="mb-3">
+                        <label class="form-label text-white-50">Поиск</label>
+                        <input type="text" id="searchCourse" class="form-control glass-input" placeholder="Например: Python...">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-white-50">Направление</label>
+                        <select class="form-select glass-input text-white">
+                            <option value="">Все направления</option>
+                            <option value="1">Frontend</option>
+                            <option value="2">Backend</option>
+                            <option value="3">Data Science / AI</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label text-white-50 d-flex justify-content-between w-100">
+                            <span>Цена</span>
+                            <span id="priceValue" class="text-white fw-bold">До 100 000 ₽</span>
+                        </label>
+                        <input type="range" class="form-range" min="0" max="150000" step="5000" value="100000" id="priceRange">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label text-white-50">Уровень</label>
+                        <div class="form-check mb-2 d-flex align-items-center gap-2">
+                            <input class="form-check-input glass-input m-0" type="checkbox" id="lvl1">
+                            <label class="form-check-label" for="lvl1">Junior (С нуля)</label>
+                        </div>
+                        <div class="form-check mb-2 d-flex align-items-center gap-2">
+                            <input class="form-check-input glass-input m-0" type="checkbox" id="lvl2">
+                            <label class="form-check-label" for="lvl2">Middle</label>
+                        </div>
+                        <div class="form-check d-flex align-items-center gap-2">
+                            <input class="form-check-input glass-input m-0" type="checkbox" id="lvl3">
+                            <label class="form-check-label" for="lvl3">Senior (Продвинутый)</label>
+                        </div>
+                    </div>
+                    <button class="btn glass-btn w-100 py-2" id="applyFilterBtn">Применить</button>
+                </div>
+            </aside>
+
+            <main class="col-lg-9">
+                <div class="row g-4">
+                    <div class="col-md-6 col-xl-4 d-flex">
+                        <div class="glass glass-hover w-100 d-flex flex-column">
+                            <img src="img/course1.png" class="glass-img-top w-100" alt="Vue">
+                            <div class="p-4 d-flex flex-column flex-grow-1">
+                                <span class="badge bg-primary bg-opacity-25 text-info rounded-pill w-50 mb-3 border border-info border-opacity-25">Frontend • Junior</span>
+                                <h5 class="fw-bold">Vue.js 3 с нуля</h5>
+                                <p class="text-white-50 small flex-grow-1">Создаем SPA приложения. Composition API, Vuex, Vue Router.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top border-secondary border-opacity-25">
+                                    <span class="fw-bold fs-5">15 000 ₽</span>
+                                    <a href="course.html" class="btn btn-sm glass-btn px-3 py-2">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 d-flex">
+                        <div class="glass glass-hover w-100 d-flex flex-column">
+                            <img src="img/course2.png" class="glass-img-top w-100" alt="Python">
+                            <div class="p-4 d-flex flex-column flex-grow-1">
+                                <span class="badge bg-success bg-opacity-25 text-success rounded-pill w-50 mb-3 border border-success border-opacity-25">Backend • Middle</span>
+                                <h5 class="fw-bold">Python Django</h5>
+                                <p class="text-white-50 small flex-grow-1">Разработка надежных бекенд систем и REST API.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top border-secondary border-opacity-25">
+                                    <span class="fw-bold fs-5">35 000 ₽</span>
+                                    <a href="course.html" class="btn btn-sm glass-btn px-3 py-2">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 d-flex">
+                        <div class="glass glass-hover w-100 d-flex flex-column">
+                            <img src="img/course3.png" class="glass-img-top w-100" alt="Data Science">
+                            <div class="p-4 d-flex flex-column flex-grow-1">
+                                <span class="badge bg-warning bg-opacity-25 text-warning rounded-pill w-50 mb-3 border border-warning border-opacity-25">Data Sci • Middle</span>
+                                <h5 class="fw-bold">Machine Learning</h5>
+                                <p class="text-white-50 small flex-grow-1">Обучение моделей, нейросети, работа с Pandas и NumPy.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top border-secondary border-opacity-25">
+                                    <span class="fw-bold fs-5">50 000 ₽</span>
+                                    <a href="course.html" class="btn btn-sm glass-btn px-3 py-2">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 d-flex">
+                        <div class="glass glass-hover w-100 d-flex flex-column">
+                            <img src="img/course4.png" class="glass-img-top w-100" alt="AI">
+                            <div class="p-4 d-flex flex-column flex-grow-1">
+                                <span class="badge bg-danger bg-opacity-25 text-danger rounded-pill w-50 mb-3 border border-danger border-opacity-25">AI • Senior</span>
+                                <h5 class="fw-bold">Deep Learning / AI</h5>
+                                <p class="text-white-50 small flex-grow-1">Продвинутые нейронные сети, PyTorch, Computer Vision и NLP.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top border-secondary border-opacity-25">
+                                    <span class="fw-bold fs-5">85 000 ₽</span>
+                                    <a href="course.html" class="btn btn-sm glass-btn px-3 py-2">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 d-flex">
+                        <div class="glass glass-hover w-100 d-flex flex-column">
+                            <img src="img/course5.png" class="glass-img-top w-100" alt="React">
+                            <div class="p-4 d-flex flex-column flex-grow-1">
+                                <span class="badge bg-primary bg-opacity-25 text-info rounded-pill w-50 mb-3 border border-info border-opacity-25">Frontend • Senior</span>
+                                <h5 class="fw-bold">React Advanced</h5>
+                                <p class="text-white-50 small flex-grow-1">Архитектура крупных приложений, SSR, Next.js, оптимизация.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top border-secondary border-opacity-25">
+                                    <span class="fw-bold fs-5">65 000 ₽</span>
+                                    <a href="course.html" class="btn btn-sm glass-btn px-3 py-2">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 d-flex">
+                        <div class="glass glass-hover w-100 d-flex flex-column">
+                            <img src="img/course6.png" class="glass-img-top w-100" alt="Go">
+                            <div class="p-4 d-flex flex-column flex-grow-1">
+                                <span class="badge bg-success bg-opacity-25 text-success rounded-pill w-50 mb-3 border border-success border-opacity-25">Backend • Senior</span>
+                                <h5 class="fw-bold">Go Microservices</h5>
+                                <p class="text-white-50 small flex-grow-1">Разработка микросервисов на Golang, gRPC, Docker, Kubernetes.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top border-secondary border-opacity-25">
+                                    <span class="fw-bold fs-5">75 000 ₽</span>
+                                    <a href="course.html" class="btn btn-sm glass-btn px-3 py-2">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
