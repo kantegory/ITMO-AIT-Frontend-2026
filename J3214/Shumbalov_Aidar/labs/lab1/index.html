@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Лабораторная работа 1: статическая платформа онлайн-курсов Omagad." />
+    <title>Omagad - поиск курсов</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+    <header class="border-bottom bg-white">
+      <nav class="navbar navbar-expand-lg container py-3" aria-label="Основная навигация">
+        <a class="navbar-brand fw-bold" href="index.html">Omagad</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Открыть меню">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+          <ul class="navbar-nav ms-auto gap-lg-2">
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Курсы</a></li>
+            <li class="nav-item"><a class="nav-link" href="profile.html">Кабинет</a></li>
+            <li class="nav-item"><a class="nav-link" href="course.html">Страница курса</a></li>
+            <li class="nav-item"><a class="nav-link" href="teacher.html">Преподавателю</a></li>
+            <li class="nav-item"><a class="btn btn-outline-primary" href="login.html">Вход</a></li>
+            <li class="nav-item"><a class="btn btn-primary" href="register.html">Регистрация</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main" class="container py-4">
+      <section class="work-surface mb-4" aria-labelledby="catalog-title">
+        <div class="row g-4 align-items-end">
+          <div class="col-lg-5">
+            <p class="text-uppercase text-primary fw-bold small mb-2">Лабораторная работа 1</p>
+            <h1 id="catalog-title" class="h2 mb-2">Каталог онлайн-курсов</h1>
+            <p class="text-secondary mb-0">Поиск и фильтрация курсов по предмету, уровню и цене.</p>
+          </div>
+          <div class="col-lg-7">
+            <form class="row g-3" id="filters" aria-label="Фильтры каталога">
+              <div class="col-md-5">
+                <label class="form-label" for="courseSearch">Название</label>
+                <input class="form-control" id="courseSearch" type="search" placeholder="Например, Python" autocomplete="off" />
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="subjectFilter">Предмет</label>
+                <select class="form-select" id="subjectFilter">
+                  <option value="all">Все</option>
+                  <option value="programming">Программирование</option>
+                  <option value="analytics">Аналитика</option>
+                  <option value="design">Дизайн</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label" for="levelFilter">Уровень</label>
+                <select class="form-select" id="levelFilter">
+                  <option value="all">Все</option>
+                  <option value="beginner">Начальный</option>
+                  <option value="middle">Средний</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label" for="priceFilter">Цена</label>
+                <select class="form-select" id="priceFilter">
+                  <option value="all">Все</option>
+                  <option value="free">Бесплатно</option>
+                  <option value="paid">Платно</option>
+                </select>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h4 mb-0">Найденные курсы</h2>
+        <span class="badge text-bg-light border" id="resultCount" aria-live="polite">5 курсов</span>
+      </div>
+
+      <section class="row g-3" id="courseGrid" aria-label="Список курсов">
+        <article class="col-md-6 col-xl-4 course-item" data-title="python для начинающих" data-subject="programming" data-level="beginner" data-price="free">
+          <div class="course-card h-100">
+            <span class="badge text-bg-success">Бесплатно</span>
+            <h3 class="h5 mt-3">Python для начинающих</h3>
+            <p>Синтаксис, функции, коллекции и первый консольный проект.</p>
+            <a class="btn btn-sm btn-primary" href="course.html">Подробнее</a>
+          </div>
+        </article>
+        <article class="col-md-6 col-xl-4 course-item" data-title="html css javascript веб разработка" data-subject="programming" data-level="beginner" data-price="paid">
+          <div class="course-card h-100">
+            <span class="badge text-bg-primary">Начальный</span>
+            <h3 class="h5 mt-3">HTML, CSS, JavaScript</h3>
+            <p>Верстка страниц, адаптивность и базовая интерактивность.</p>
+            <a class="btn btn-sm btn-primary" href="course.html">Подробнее</a>
+          </div>
+        </article>
+        <article class="col-md-6 col-xl-4 course-item" data-title="machine learning python" data-subject="analytics" data-level="middle" data-price="paid">
+          <div class="course-card h-100">
+            <span class="badge text-bg-warning">Средний</span>
+            <h3 class="h5 mt-3">Machine Learning на Python</h3>
+            <p>Подготовка данных, модели, метрики и визуализация результатов.</p>
+            <a class="btn btn-sm btn-primary" href="course.html">Подробнее</a>
+          </div>
+        </article>
+        <article class="col-md-6 col-xl-4 course-item" data-title="ui ux дизайн figma" data-subject="design" data-level="beginner" data-price="paid">
+          <div class="course-card h-100">
+            <span class="badge text-bg-info">Дизайн</span>
+            <h3 class="h5 mt-3">UI/UX дизайн в Figma</h3>
+            <p>Исследование сценариев, прототипы и оформление интерфейсов.</p>
+            <a class="btn btn-sm btn-primary" href="course.html">Подробнее</a>
+          </div>
+        </article>
+        <article class="col-md-6 col-xl-4 course-item" data-title="sql аналитика данных" data-subject="analytics" data-level="beginner" data-price="free">
+          <div class="course-card h-100">
+            <span class="badge text-bg-success">Бесплатно</span>
+            <h3 class="h5 mt-3">SQL для аналитиков</h3>
+            <p>Запросы, агрегации, соединения таблиц и учебный дашборд.</p>
+            <a class="btn btn-sm btn-primary" href="course.html">Подробнее</a>
+          </div>
+        </article>
+      </section>
+
+      <p class="empty-state mt-4" id="emptyState" hidden>По выбранным фильтрам курсы не найдены.</p>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,355 @@
+:root {
+  --primary: #4f46e5;
+  --primary-dark: #3730a3;
+  --accent: #0d9488;
+  --text: #172033;
+  --muted: #667085;
+  --border: #e5e7eb;
+  --surface: #ffffff;
+  --page: #f6f7fb;
+  --shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--page);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px clamp(20px, 5vw, 64px);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand,
+.app-header nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand,
+.app-header a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.app-header nav a {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.brand-mark {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-radius: 10px;
+}
+
+.page-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 36px 0 56px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 28px;
+  align-items: stretch;
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  max-width: 760px;
+  margin-bottom: 16px;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1.06;
+}
+
+.hero-text {
+  max-width: 720px;
+  color: var(--muted);
+  font-size: 1.08rem;
+  line-height: 1.65;
+}
+
+.progress-panel,
+.filters,
+.empty-state,
+.report-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.progress-panel {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+}
+
+.panel-stat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-stat span,
+.selected-course span,
+.selected-course small {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.panel-stat strong {
+  font-size: 1.4rem;
+}
+
+.selected-course {
+  display: grid;
+  gap: 5px;
+  padding: 14px;
+  background: #eef2ff;
+  border-radius: 12px;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr auto auto;
+  gap: 14px;
+  align-items: end;
+  padding: 18px;
+  margin-bottom: 28px;
+}
+
+.filters label {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.filters input[type="search"],
+.filters select {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  color: var(--text);
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.checkbox-label {
+  display: flex !important;
+  grid-template-columns: none !important;
+  align-items: center;
+  gap: 8px !important;
+  min-height: 42px;
+  color: var(--text) !important;
+}
+
+.secondary-button,
+.course-card button,
+.empty-state button {
+  min-height: 42px;
+  padding: 0 16px;
+  color: white;
+  background: var(--primary);
+  border: 0;
+  border-radius: 10px;
+  font-weight: 800;
+}
+
+.secondary-button {
+  color: var(--primary);
+  background: #eef2ff;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.section-heading h2 {
+  margin: 0;
+}
+
+.section-heading span {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.course-card {
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+}
+
+.course-card.active {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.16), var(--shadow);
+}
+
+.course-accent {
+  height: 8px;
+}
+
+.course-card-body {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+}
+
+.course-meta,
+.course-info,
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.course-meta span {
+  padding: 4px 9px;
+  background: #f3f4f6;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.course-info strong {
+  color: var(--primary-dark);
+}
+
+.course-card h3 {
+  min-height: 56px;
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.35;
+}
+
+.progress-track {
+  height: 9px;
+  overflow: hidden;
+  background: #e5e7eb;
+  border-radius: 999px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: inherit;
+}
+
+.empty-state {
+  padding: 36px;
+  text-align: center;
+}
+
+.empty-state p {
+  color: var(--muted);
+}
+
+.report-section {
+  margin-top: 28px;
+  padding: 24px;
+}
+
+.report-section h2 {
+  margin-bottom: 10px;
+}
+
+.report-section p {
+  max-width: 760px;
+  margin-bottom: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 920px) {
+  .hero,
+  .filters,
+  .course-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .app-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 560px) {
+  .app-header nav {
+    flex-wrap: wrap;
+  }
+
+  .page-shell {
+    width: min(100% - 24px, 1180px);
+    padding-top: 24px;
+  }
+
+  .filters,
+  .progress-panel,
+  .course-card-body {
+    border-radius: 12px;
+  }
+}
