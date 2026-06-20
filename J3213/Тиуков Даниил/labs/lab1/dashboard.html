@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TripPlanner | Личный кабинет</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="dashboard">
+<nav class="navbar navbar-expand-lg site-navbar sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <span class="brand-mark"><i class="bi bi-globe2"></i></span>
+            <span>TripPlanner</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                <li class="nav-item"><a class="nav-link" href="index.html" data-nav="home">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="destinations.html" data-nav="destinations">Направления</a></li>
+                <li class="nav-item" data-auth-only><a class="nav-link" href="collaboration.html" data-nav="collaboration">Совместное планирование</a></li>
+                <li class="nav-item" data-auth-only><a class="nav-link" href="dashboard.html" data-nav="dashboard">Кабинет</a></li>
+                <li class="nav-item" data-guest-only><a class="nav-link" href="login.html" data-nav="login">Вход</a></li>
+                <li class="nav-item" data-guest-only><a class="nav-link" href="register.html" data-nav="register">Регистрация</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main id="dashboardPage">
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-card">
+                <h1 class="section-title-sm mb-2">Личный кабинет путешественника</h1>
+                <p>Здесь собраны профиль пользователя, сохранённые маршруты, путевые заметки и избранные направления.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="pb-5">
+        <div class="container">
+            <div class="dashboard-profile-card mb-4">
+                <div class="row g-4 align-items-center">
+                    <div class="col-lg-8">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="profile-avatar" id="profileAvatar">TP</div>
+                            <div>
+                                <h2 class="section-title-sm mb-1" id="profileName">Пользователь</h2>
+                                <p class="text-secondary mb-0" id="profileEmail">email@example.com</p>
+                            </div>
+                        </div>
+                        <div class="card-meta">
+                            <span class="badge badge-soft">Тип отдыха: <span id="profilePreference">Смешанный</span></span>
+                            <span class="badge badge-soft">Данные хранятся в localStorage</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <div class="d-flex flex-wrap justify-content-lg-end gap-2">
+                            <button class="btn btn-outline-danger" type="button" id="logoutButton">Выйти</button>
+                            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#profileModal">Редактировать профиль</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid mb-4">
+                <article class="dashboard-stat-card dashboard-card">
+                    <div class="metric-value" id="routesCount">0</div>
+                    <p class="metric-label">сохранённых маршрутов</p>
+                </article>
+                <article class="dashboard-stat-card dashboard-card">
+                    <div class="metric-value" id="notesCount">0</div>
+                    <p class="metric-label">путевых заметок</p>
+                </article>
+                <article class="dashboard-stat-card dashboard-card">
+                    <div class="metric-value" id="favoritesCount">0</div>
+                    <p class="metric-label">избранных направлений</p>
+                </article>
+            </div>
+
+            <ul class="nav nav-pills mb-4 gap-2" id="dashboardTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="routes-tab" data-bs-toggle="pill" data-bs-target="#routes-pane" type="button" role="tab">Мои маршруты</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="notes-tab" data-bs-toggle="pill" data-bs-target="#notes-pane" type="button" role="tab">Путевые заметки</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="favorites-tab" data-bs-toggle="pill" data-bs-target="#favorites-pane" type="button" role="tab">Избранные направления</button>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="routes-pane" role="tabpanel" aria-labelledby="routes-tab">
+                    <div class="dashboard-card mb-4">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                            <div>
+                                <h2 class="h3 mb-1">Мои маршруты</h2>
+                                <p class="text-secondary mb-0">Создавайте маршруты, связывайте их с направлениями и открывайте детальные страницы.</p>
+                            </div>
+                            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#routeModal">Добавить маршрут</button>
+                        </div>
+                        <div class="row g-4" id="routesList"></div>
+                        <div class="empty-state d-none" id="routesEmpty">
+                            <i class="bi bi-map"></i>
+                            <h3 class="h4">Маршрутов пока нет</h3>
+                            <p class="text-secondary mb-0">Добавьте первый маршрут через модальное окно и свяжите его с направлением.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="notes-pane" role="tabpanel" aria-labelledby="notes-tab">
+                    <div class="dashboard-card mb-4">
+                        <div class="row g-4">
+                            <div class="col-lg-4">
+                                <h2 class="h3 mb-3">Добавить заметку</h2>
+                                <form id="noteForm">
+                                    <input type="hidden" id="noteId">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="noteTitle">Заголовок</label>
+                                        <input class="form-control" type="text" id="noteTitle" placeholder="Например: Идеи по транспорту">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="noteText">Текст заметки</label>
+                                        <textarea class="form-control" id="noteText" placeholder="Краткий план, адреса, список дел"></textarea>
+                                    </div>
+                                    <button class="btn btn-primary w-100" type="submit" id="noteSubmitLabel">Добавить заметку</button>
+                                </form>
+                            </div>
+                            <div class="col-lg-8">
+                                <h2 class="h3 mb-3">Список заметок</h2>
+                                <div class="row g-4" id="notesList"></div>
+                                <div class="empty-state d-none" id="notesEmpty">
+                                    <i class="bi bi-journal-text"></i>
+                                    <h3 class="h4">Заметок пока нет</h3>
+                                    <p class="text-secondary mb-0">Создайте первую заметку, чтобы фиксировать идеи, адреса и задачи по поездке.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="favorites-pane" role="tabpanel" aria-labelledby="favorites-tab">
+                    <div class="dashboard-card">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                            <div>
+                                <h2 class="h3 mb-1">Избранные направления</h2>
+                                <p class="text-secondary mb-0">Список формируется из каталога направлений и детальных страниц.</p>
+                            </div>
+                            <a class="btn btn-outline-primary" href="destinations.html">Перейти в каталог</a>
+                        </div>
+                        <div class="row g-4" id="favoritesList"></div>
+                        <div class="empty-state d-none" id="favoritesEmpty">
+                            <i class="bi bi-bookmark-heart"></i>
+                            <h3 class="h4">Нет избранных направлений</h3>
+                            <p class="text-secondary mb-0">Сохраните направление в каталоге или на странице деталей, чтобы оно появилось здесь.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="container">
+        <div class="row gy-4 align-items-center">
+            <div class="col-lg-4">
+                <a class="footer-brand d-inline-flex align-items-center gap-2" href="index.html">
+                    <span class="brand-mark"><i class="bi bi-globe2"></i></span>
+                    <span>TripPlanner</span>
+                </a>
+                <p class="mt-3 mb-0">Учебное многостраничное travel-приложение на HTML, CSS, Bootstrap и Vanilla JavaScript.</p>
+            </div>
+            <div class="col-lg-5">
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="index.html">Главная</a>
+                    <a href="destinations.html">Направления</a>
+                    <a data-auth-only href="dashboard.html">Кабинет</a>
+                    <a data-auth-only href="collaboration.html">Совместное планирование</a>
+                    <a data-guest-only href="login.html">Вход</a>
+                    <a data-guest-only href="register.html">Регистрация</a>
+                </div>
+            </div>
+            <div class="col-lg-3 text-lg-end">
+                <p class="mb-0">© 2026 TripPlanner</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="profileModalLabel">Редактировать профиль</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <form id="profileForm">
+                    <div class="mb-3">
+                        <label class="form-label" for="profileFirstName">Имя</label>
+                        <input class="form-control" type="text" id="profileFirstName">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="profileLastName">Фамилия</label>
+                        <input class="form-control" type="text" id="profileLastName">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="profilePreferenceSelect">Тип отдыха</label>
+                        <select class="form-select" id="profilePreferenceSelect">
+                            <option value="city">Город</option>
+                            <option value="nature">Природа</option>
+                            <option value="mixed">Смешанный</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary w-100" type="submit">Сохранить изменения</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="routeModal" tabindex="-1" aria-labelledby="routeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="routeModalLabel">Добавить маршрут</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <form id="routeForm">
+                    <div class="mb-3">
+                        <label class="form-label" for="routeName">Название маршрута</label>
+                        <input class="form-control" type="text" id="routeName" placeholder="Летний маршрут по Стамбулу">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="routeDuration">Длительность</label>
+                        <input class="form-control" type="text" id="routeDuration" placeholder="5 дней">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="routeBudget">Бюджет</label>
+                        <select class="form-select" id="routeBudget">
+                            <option value="">Выберите бюджет</option>
+                            <option value="low">Низкий</option>
+                            <option value="medium">Средний</option>
+                            <option value="high">Высокий</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="routeDestination">Связанное направление</label>
+                        <select class="form-select" id="routeDestination"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="routeDescription">Краткое описание</label>
+                        <textarea class="form-control" id="routeDescription" placeholder="Что хотите успеть за эту поездку"></textarea>
+                    </div>
+                    <button class="btn btn-primary w-100" type="submit">Сохранить маршрут</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/data.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
