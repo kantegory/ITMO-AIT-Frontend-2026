@@ -27,6 +27,7 @@ const elements = {
   courseGrid: document.getElementById('courseGrid'),
   courseCount: document.getElementById('courseCount'),
   emptyState: document.getElementById('emptyState'),
+  profileSection: document.getElementById('profile'),
   profileContent: document.getElementById('profileContent'),
   courseDetails: document.getElementById('courseDetails'),
   template: document.getElementById('courseCardTemplate'),
@@ -94,6 +95,14 @@ function syncAuthView() {
   renderCourses();
 }
 
+function openProfile() {
+  location.hash = 'profile';
+  elements.profileSection.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start',
+  });
+}
+
 async function loadCourses() {
   try {
     state.courses = await request('/courses');
@@ -119,7 +128,8 @@ async function loadEnrollments() {
   try {
     state.enrollments = await request(`/enrollments?userId=${state.user.id}`);
   } catch (error) {
-    elements.authMessage.textContent = 'Не удалось загрузить кабинет. Проверьте токен авторизации.';
+    clearAuthData();
+    elements.authMessage.textContent = 'Сессия устарела. Войдите заново.';
     state.enrollments = [];
   }
 
@@ -207,6 +217,10 @@ function renderProfile() {
     .join('');
 
   elements.profileContent.innerHTML = `
+    <div class="notice success-notice">
+      <strong>${state.user.name || state.user.email}</strong>
+      <p>Личный кабинет открыт. Данные загружены из защищённого API \`/enrollments\`.</p>
+    </div>
     <div class="metrics">
       <div><span>Курсов</span><strong>${state.enrollments.length}</strong></div>
       <div><span>Средний прогресс</span><strong>${averageProgress}%</strong></div>
@@ -290,8 +304,9 @@ elements.loginForm.addEventListener('submit', async (event) => {
       body: JSON.stringify(Object.fromEntries(formData)),
     });
     await setAuthData(payload, formData.get('email'));
-    elements.authMessage.textContent = 'Вход выполнен.';
     await loadEnrollments();
+    elements.authMessage.textContent = 'Вход выполнен. Личный кабинет открыт ниже.';
+    openProfile();
   } catch (error) {
     elements.authMessage.textContent = 'Не удалось войти. Проверьте email и пароль.';
   }
@@ -310,8 +325,9 @@ elements.registerForm.addEventListener('submit', async (event) => {
       }),
     });
     await setAuthData(payload, formData.get('email'));
-    elements.authMessage.textContent = 'Аккаунт создан.';
     await loadEnrollments();
+    elements.authMessage.textContent = 'Аккаунт создан. Личный кабинет открыт ниже.';
+    openProfile();
   } catch (error) {
     elements.authMessage.textContent = 'Не удалось зарегистрироваться. Возможно, email уже занят.';
   }

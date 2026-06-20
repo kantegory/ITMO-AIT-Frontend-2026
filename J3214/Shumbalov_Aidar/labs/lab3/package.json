@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "api": "json-server-auth db.json -r routes.json --host 127.0.0.1 --port 3002",
-    "dev": "vite --host 127.0.0.1 --port 5175",
-    "start": "concurrently \"npm run api\" \"npm run dev\"",
+    "web": "vite --host 127.0.0.1 --port 5175",
+    "dev": "concurrently \"npm run api\" \"npm run web\"",
+    "start": "npm run dev",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1 --port 4175"
   },

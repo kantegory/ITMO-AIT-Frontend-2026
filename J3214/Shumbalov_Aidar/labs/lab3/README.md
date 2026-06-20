@@ -37,14 +37,14 @@ teacher@omagad.ru / password123
 ```bash
 npm install
 npm run api
-npm run dev
+npm run web
 npm run build
 ```
 
 Одновременно API и фронтенд:
 
 ```bash
-npm run start
+npm run dev
 ```
 
 После запуска:
