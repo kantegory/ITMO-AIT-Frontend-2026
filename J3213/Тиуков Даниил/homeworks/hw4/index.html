@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <script>(function(){var t=localStorage.getItem("tripplannerTheme");if(t){document.documentElement.setAttribute("data-theme",t)}})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TripPlanner | Планирование путешествий</title>
+    <meta name="description" content="TripPlanner — приложение для планирования путешествий: маршруты, заметки, избранные направления и совместная работа.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="home">
+<a class="visually-hidden-focusable" href="#main-content">Перейти к основному содержимому</a>
+<nav class="navbar navbar-expand-lg site-navbar sticky-top" aria-label="Основная навигация">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <span class="brand-mark"><svg class="icon" aria-hidden="true"><use href="images/icons.svg#icon-globe2"></use></svg></span>
+            <span>TripPlanner</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                <li class="nav-item"><a class="nav-link" href="index.html" data-nav="home">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="destinations.html" data-nav="destinations">Направления</a></li>
+                <li class="nav-item" data-auth-only><a class="nav-link" href="collaboration.html" data-nav="collaboration">Совместное планирование</a></li>
+                <li class="nav-item" data-auth-only><a class="nav-link" href="dashboard.html" data-nav="dashboard">Кабинет</a></li>
+                <li class="nav-item" data-guest-only><a class="nav-link" href="login.html" data-nav="login">Вход</a></li>
+                <li class="nav-item" data-guest-only><a class="nav-link" href="register.html" data-nav="register">Регистрация</a></li>
+            </ul>
+            <button class="theme-toggle ms-lg-2" type="button" id="themeToggle" aria-label="Переключить тему">
+                <svg class="icon icon-moon" aria-hidden="true"><use href="images/icons.svg#icon-moon-fill"></use></svg>
+                <svg class="icon icon-sun" aria-hidden="true"><use href="images/icons.svg#icon-sun-fill"></use></svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<main id="main-content">
+    <section class="hero-section" aria-label="Главный баннер">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <div class="hero-copy">
+                        <span class="section-badge"><svg class="icon" aria-hidden="true"><use href="images/icons.svg#icon-compass"></use></svg> Планируйте поездки без хаоса</span>
+                        <h1 class="section-title">Маршруты, заметки и совместные идеи для каждого путешествия в одном приложении.</h1>
+                        <p class="section-text">
+                            TripPlanner помогает быстро подобрать направление, собрать маршрут по дням, сохранить заметки, добавить избранное и обсуждать план поездки с друзьями.
+                        </p>
+                        <div class="hero-actions">
+                            <a class="btn btn-primary btn-lg" href="destinations.html">Начать планирование</a>
+                            <a class="btn btn-outline-dark btn-lg" href="login.html">Войти</a>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="metric-card">
+                                <div class="metric-value">5+</div>
+                                <p class="metric-label">рабочих разделов сайта</p>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">100%</div>
+                                <p class="metric-label">статическая работа в браузере</p>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">24/7</div>
+                                <p class="metric-label">доступ к планам и заметкам</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-visual">
+                        <div class="glass-card highlight">
+                            <div class="d-flex justify-content-between align-items-start gap-3">
+                                <div>
+                                    <p class="mb-2 text-uppercase small">Путешествие недели</p>
+                                    <h3 class="h2 mb-2">Стамбул на 5 дней</h3>
+                                    <p class="mb-0">Исторический центр, паромы по Босфору, крыши, гастрономия и гибкий маршрут по дням.</p>
+                                </div>
+                                <span class="icon-bubble bg-white text-primary"><svg class="icon" aria-hidden="true"><use href="images/icons.svg#icon-airplane-engines"></use></svg></span>
+                            </div>
+                        </div>
+                        <div class="hero-mini-grid">
+                            <div class="glass-card">
+                                <div class="icon-bubble mb-3"><svg class="icon" aria-hidden="true"><use href="images/icons.svg#icon-signpost-split"></use></svg></div>
+                                <h4 class="h5 mb-2">Поиск направлений</h4>
+                                <p class="mb-0 text-secondary">Фильтрация по типу, бюджету и длительности.</p>
+                            </div>
+                            <div class="glass-card">
+                                <div class="icon-bubble mb-3"><svg class="icon" aria-hidden="true"><use href="images/icons.svg#icon-journal-richtext"></use></svg></div>
+                                <h4 class="h5 mb-2">Путевые заметки</h4>
+                                <p class="mb-0 text-secondary">Личные записи и быстрые идеи по поездке.</p>
+                            </div>
+                        </div>
+                        <div class="glass-card floating-card">
+                            <p class="mb-2 text-uppercase small text-secondary">Совместная работа</p>
+                            <h4 class="h5 mb-2">Маршрут для группы</h4>
+                            <p class="mb-0 text-secondary">Приглашайте участников, обсуждайте этапы и голосуйте за идеи.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-space">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="section-badge"><svg class="icon" aria-hidden="true"><use href="images/icons.svg#icon-stars"></use></svg> Возможности</span>
+                <h2 class="section-title-sm">Что можно делать в приложении</h2>
+                <p class="section-text mx-auto" style="max-width: 760px;">
+                    Все ключевые элементы лабораторной собраны в единую travel-систему: каталог, кабинет, формы, модальные окна, фильтры, вкладки и localStorage.
+                </p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-xl-3">
+                    <article class="feature-card">
+                        <span class="feature-number">01</span>
+                        <h3 class="h4">Поиск направлений</h3>
+                        <p class="text-secondary mb-0">Каталог с фильтрацией по типу отдыха, бюджету, длительности и сортировкой карточек.</p>
+                    </article>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <article class="feature-card">
+                        <span class="feature-number">02</span>
+                        <h3 class="h4">Сохранение маршрутов</h3>
+                        <p class="text-secondary mb-0">Добавляйте собственные маршруты, связывайте их с направлениями и открывайте детальные страницы.</p>
+                    </article>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <article class="feature-card">
+                        <span class="feature-number">03</span>
+                        <h3 class="h4">Путевые заметки</h3>
+                        <p class="text-secondary mb-0">Фиксируйте идеи, полезные адреса, список дел и редактируйте заметки в личном кабинете.</p>
+                    </article>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <article class="feature-card">
+                        <span class="feature-number">04</span>
+                        <h3 class="h4">Совместное планирование</h3>
+                        <p class="text-secondary mb-0">Обсуждайте этапы поездки, приглашайте участников и голосуйте за идеи всей группой.</p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-space pt-0">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+                <div>
+                    <span class="section-badge"><svg class="icon" aria-hidden="true"><use href="images/icons.svg#icon-geo-alt"></use></svg> Популярные направления</span>
+                    <h2 class="section-title-sm mb-2">Подборка для первого старта</h2>
+                </div>
+                <a class="btn btn-outline-primary" href="destinations.html">Открыть весь каталог</a>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-xl-3">
+                    <article class="destination-card card border-0">
+                        <img src="images/istanbul.jpg" alt="Стамбул">
+                        <div class="card-body d-flex flex-column">
+                            <div class="card-meta mt-0">
+                                <span class="badge badge-city">Город</span>
+                                <span class="badge badge-budget">Средний бюджет</span>
+                                <span class="badge badge-soft">5 дней</span>
+                            </div>
+                            <h3 class="h4">Стамбул</h3>
+                            <p class="text-secondary flex-grow-1">История, вода, гастрономия и гибкий городской маршрут с насыщенной программой.</p>
+                            <a class="btn btn-primary btn-sm" href="destination-details.html?id=1">Подробнее</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <article class="destination-card card border-0">
+                        <img src="images/altai.jpg" alt="Алтай">
+                        <div class="card-body d-flex flex-column">
+                            <div class="card-meta mt-0">
+                                <span class="badge badge-nature">Природа</span>
+                                <span class="badge badge-budget">Средний бюджет</span>
+                                <span class="badge badge-soft">8 дней</span>
+                            </div>
+                            <h3 class="h4">Алтай</h3>
+                            <p class="text-secondary flex-grow-1">Горы, озёра, длинные переезды, природные маршруты и ощущение полной перезагрузки.</p>
+                            <a class="btn btn-primary btn-sm" href="destination-details.html?id=2">Подробнее</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <article class="destination-card card border-0">
+                        <img src="images/kazan.jpg" alt="Казань">
+                        <div class="card-body d-flex flex-column">
+                            <div class="card-meta mt-0">
+                                <span class="badge badge-city">Город</span>
+                                <span class="badge badge-budget">Низкий бюджет</span>
+                                <span class="badge badge-soft">3 дня</span>
+                            </div>
+                            <h3 class="h4">Казань</h3>
+                            <p class="text-secondary flex-grow-1">Удобный city-break для выходных с кремлём, набережной и сильной гастрономией.</p>
+                            <a class="btn btn-primary btn-sm" href="destination-details.html?id=3">Подробнее</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <article class="destination-card card border-0">
+                        <img src="images/baikal.jpg" alt="Байкал">
+                        <div class="card-body d-flex flex-column">
+                            <div class="card-meta mt-0">
+                                <span class="badge badge-nature">Природа</span>
+                                <span class="badge badge-budget">Высокий бюджет</span>
+                                <span class="badge badge-soft">7 дней</span>
+                            </div>
+                            <h3 class="h4">Байкал</h3>
+                            <p class="text-secondary flex-grow-1">Крупный маршрут с островами, береговыми прогулками и сильными видами каждый день.</p>
+                            <a class="btn btn-primary btn-sm" href="destination-details.html?id=4">Подробнее</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-space pt-0">
+        <div class="container">
+            <div class="row g-4 align-items-stretch">
+                <div class="col-lg-4">
+                    <div class="cta-card h-100 p-4">
+                        <span class="section-badge"><svg class="icon" aria-hidden="true"><use href="images/icons.svg#icon-diagram-3"></use></svg> Как это работает</span>
+                        <h2 class="section-title-sm">Три шага до готового маршрута</h2>
+                        <p class="section-text mb-0">Приложение рассчитано на реальный сценарий подготовки поездки: от идеи до личного кабинета и совместного обсуждения.</p>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <article class="feature-card h-100">
+                                <span class="feature-number"><svg class="icon" aria-hidden="true"><use href="images/icons.svg#icon-search"></use></svg></span>
+                                <h3 class="h4">1. Выберите направление</h3>
+                                <p class="text-secondary mb-0">Используйте поиск и фильтры, чтобы быстро найти подходящий вариант под ваш ритм и бюджет.</p>
+                            </article>
+                        </div>
+                        <div class="col-md-4">
+                            <article class="feature-card h-100">
+                                <span class="feature-number"><svg class="icon" aria-hidden="true"><use href="images/icons.svg#icon-map"></use></svg></span>
+                                <h3 class="h4">2. Составьте маршрут</h3>
+                                <p class="text-secondary mb-0">Сохраните направление, добавьте его в маршрут и дополните поездку собственными заметками.</p>
+                            </article>
+                        </div>
+                        <div class="col-md-4">
+                            <article class="feature-card h-100">
+                                <span class="feature-number"><svg class="icon" aria-hidden="true"><use href="images/icons.svg#icon-share"></use></svg></span>
+                                <h3 class="h4">3. Сохраните и поделитесь</h3>
+                                <p class="text-secondary mb-0">Откройте совместный раздел, пригласите участников и обсудите детали поездки всей группой.</p>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-space pt-0">
+        <div class="container">
+            <div class="cta-card p-4 p-lg-5">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg-8">
+                        <span class="section-badge"><svg class="icon" aria-hidden="true"><use href="images/icons.svg#icon-person-plus"></use></svg> Начните сейчас</span>
+                        <h2 class="section-title-sm mb-3">Создайте аккаунт и соберите первый маршрут уже сегодня.</h2>
+                        <p class="section-text mb-0">После регистрации вы получите доступ к личному кабинету, заметкам, избранным направлениям и разделу совместного планирования.</p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <a class="btn btn-primary btn-lg" href="register.html">Создать аккаунт</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="container">
+        <div class="row gy-4 align-items-center">
+            <div class="col-lg-4">
+                <a class="footer-brand d-inline-flex align-items-center gap-2" href="index.html">
+                    <span class="brand-mark"><svg class="icon" aria-hidden="true"><use href="images/icons.svg#icon-globe2"></use></svg></span>
+                    <span>TripPlanner</span>
+                </a>
+                <p class="mt-3 mb-0">Учебное многостраничное travel-приложение на HTML, CSS, Bootstrap и Vanilla JavaScript.</p>
+            </div>
+            <div class="col-lg-5">
+                <nav aria-label="Навигация в подвале">
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="index.html">Главная</a>
+                        <a href="destinations.html">Направления</a>
+                        <a data-auth-only href="dashboard.html">Кабинет</a>
+                        <a data-auth-only href="collaboration.html">Совместное планирование</a>
+                        <a data-guest-only href="login.html">Вход</a>
+                        <a data-guest-only href="register.html">Регистрация</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-lg-3 text-lg-end">
+                <p class="mb-0">© 2026 TripPlanner</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
