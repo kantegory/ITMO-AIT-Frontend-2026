@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <script>(function(){var t=localStorage.getItem("tripplannerTheme");if(t){document.documentElement.setAttribute("data-theme",t)}})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TripPlanner | Совместное планирование</title>
+    <meta name="description" content="Совместное планирование поездки: участники, общий маршрут, заметки и идеи.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="collaboration">
+<a class="visually-hidden-focusable" href="#collaborationPage">Перейти к основному содержимому</a>
+<nav class="navbar navbar-expand-lg site-navbar sticky-top" aria-label="Основная навигация">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <span class="brand-mark"><i class="bi bi-globe2" aria-hidden="true"></i></span>
+            <span>TripPlanner</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                <li class="nav-item"><a class="nav-link" href="index.html" data-nav="home">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="destinations.html" data-nav="destinations">Направления</a></li>
+                <li class="nav-item" data-auth-only><a class="nav-link" href="collaboration.html" data-nav="collaboration">Совместное планирование</a></li>
+                <li class="nav-item" data-auth-only><a class="nav-link" href="dashboard.html" data-nav="dashboard">Кабинет</a></li>
+                <li class="nav-item" data-guest-only><a class="nav-link" href="login.html" data-nav="login">Вход</a></li>
+                <li class="nav-item" data-guest-only><a class="nav-link" href="register.html" data-nav="register">Регистрация</a></li>
+            </ul>
+            <button class="theme-toggle ms-lg-2" type="button" id="themeToggle" aria-label="Переключить тему">
+                <i class="bi bi-moon-fill" aria-hidden="true"></i>
+                <i class="bi bi-sun-fill" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<main id="collaborationPage">
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-card">
+                <h1 class="section-title-sm mb-2">Совместное планирование поездки</h1>
+                <p>Раздел для командной работы: участники, общий маршрут, заметки и идеи с поддержкой через localStorage.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="pb-5">
+        <div class="container">
+            <div class="dashboard-card mb-4">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                    <div>
+                        <h2 class="h3 mb-1">Участники поездки</h2>
+                        <p class="text-secondary mb-0">Кто участвует в подготовке, кто организует поездку и кто сейчас на связи.</p>
+                    </div>
+                    <button class="btn btn-primary" type="button" id="inviteParticipantButton">Пригласить участника</button>
+                </div>
+                <div class="row g-4" id="participantsList" aria-live="polite"></div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-7">
+                    <div class="dashboard-card mb-4">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                            <div>
+                                <h2 class="h3 mb-1">Общий маршрут</h2>
+                                <p class="text-secondary mb-0">Этапы поездки по дням с возможностью редактирования и удаления.</p>
+                            </div>
+                            <button class="btn btn-outline-primary" type="button" id="addStageButton">Добавить этап</button>
+                        </div>
+                        <div class="collab-stack" id="stagesList" aria-live="polite"></div>
+                        <div class="empty-state d-none" id="stagesEmpty">
+                            <i class="bi bi-signpost-split" aria-hidden="true"></i>
+                            <h3 class="h4">Этапы ещё не добавлены</h3>
+                            <p class="text-secondary mb-0">Создайте первый пункт маршрута, чтобы команда видела план по дням.</p>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="d-flex justify-content-between align-items-center gap-3 mb-4">
+                            <div>
+                                <h2 class="h3 mb-1">Общие заметки</h2>
+                                <p class="text-secondary mb-0">Короткие комментарии и важные напоминания для всей группы.</p>
+                            </div>
+                        </div>
+                        <form id="sharedNoteForm" class="mb-4">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label" for="sharedNoteAuthor">Автор</label>
+                                    <input class="form-control" type="text" id="sharedNoteAuthor" placeholder="Ваше имя">
+                                </div>
+                                <div class="col-md-8">
+                                    <label class="form-label" for="sharedNoteText">Заметка</label>
+                                    <input class="form-control" type="text" id="sharedNoteText" placeholder="Что важно учесть для поездки">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-3" type="submit">Добавить заметку</button>
+                        </form>
+                        <div class="collab-stack" id="sharedNotesList" aria-live="polite"></div>
+                        <div class="empty-state d-none" id="sharedNotesEmpty">
+                            <i class="bi bi-stickies" aria-hidden="true"></i>
+                            <h3 class="h4">Нет общих заметок</h3>
+                            <p class="text-secondary mb-0">Добавьте первую заметку для команды.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="dashboard-card">
+                        <h2 class="h3 mb-3">Идеи и рекомендации</h2>
+                        <p class="text-secondary">Сюда можно добавлять предложения по поездке и поддерживать их голосами.</p>
+                        <form id="ideaForm" class="mb-4">
+                            <div class="mb-3">
+                                <label class="form-label" for="ideaTitle">Заголовок идеи</label>
+                                <input class="form-control" type="text" id="ideaTitle" placeholder="Например: Устроить музейный день">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="ideaText">Описание</label>
+                                <textarea class="form-control" id="ideaText" placeholder="Почему это полезно для всей поездки"></textarea>
+                            </div>
+                            <button class="btn btn-primary w-100" type="submit">Добавить идею</button>
+                        </form>
+                        <div class="row g-4" id="ideasList" aria-live="polite"></div>
+                        <div class="empty-state d-none" id="ideasEmpty">
+                            <i class="bi bi-lightbulb" aria-hidden="true"></i>
+                            <h3 class="h4">Пока нет идей</h3>
+                            <p class="text-secondary mb-0">Предложите первую активность или улучшение маршрута.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="container">
+        <div class="row gy-4 align-items-center">
+            <div class="col-lg-4">
+                <a class="footer-brand d-inline-flex align-items-center gap-2" href="index.html">
+                    <span class="brand-mark"><i class="bi bi-globe2" aria-hidden="true"></i></span>
+                    <span>TripPlanner</span>
+                </a>
+                <p class="mt-3 mb-0">Учебное многостраничное travel-приложение на HTML, CSS, Bootstrap и Vanilla JavaScript.</p>
+            </div>
+            <div class="col-lg-5">
+                <nav aria-label="Навигация в подвале">
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="index.html">Главная</a>
+                        <a href="destinations.html">Направления</a>
+                        <a data-auth-only href="dashboard.html">Кабинет</a>
+                        <a data-auth-only href="collaboration.html">Совместное планирование</a>
+                        <a data-guest-only href="login.html">Вход</a>
+                        <a data-guest-only href="register.html">Регистрация</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-lg-3 text-lg-end">
+                <p class="mb-0">© 2026 TripPlanner</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="modal fade" id="inviteModal" tabindex="-1" aria-labelledby="inviteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="inviteModalLabel">Пригласить участника</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <form id="inviteParticipantForm">
+                    <div class="mb-3">
+                        <label class="form-label" for="participantName">Имя</label>
+                        <input class="form-control" type="text" id="participantName" placeholder="Иван Петров">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="participantEmail">Email</label>
+                        <input class="form-control" type="email" id="participantEmail" placeholder="ivan@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="participantRole">Роль</label>
+                        <select class="form-select" id="participantRole">
+                            <option value="">Выберите роль</option>
+                            <option value="organizer">Организатор</option>
+                            <option value="member">Участник</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="participantStatus">Статус</label>
+                        <select class="form-select" id="participantStatus">
+                            <option value="">Выберите статус</option>
+                            <option value="online">Онлайн</option>
+                            <option value="offline">Оффлайн</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary w-100" type="submit">Добавить участника</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="stageModal" tabindex="-1" aria-labelledby="stageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="stageModalLabel">Добавить этап маршрута</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <form id="stageForm">
+                    <input type="hidden" id="stageId">
+                    <div class="mb-3">
+                        <label class="form-label" for="stageDay">День</label>
+                        <input class="form-control" type="text" id="stageDay" placeholder="День 3">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="stagePlace">Место</label>
+                        <input class="form-control" type="text" id="stagePlace" placeholder="Старый город">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="stageDescription">Описание</label>
+                        <textarea class="form-control" id="stageDescription" placeholder="Что делаем на этом этапе"></textarea>
+                    </div>
+                    <button class="btn btn-primary w-100" type="submit">Сохранить этап</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/api.js"></script>
+<script src="js/collaboration.js"></script>
+</body>
+</html>
