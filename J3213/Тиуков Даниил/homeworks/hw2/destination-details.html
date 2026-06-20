@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TripPlanner | Детали направления</title>
+    <meta name="description" content="Подробная информация о направлении: достопримечательности, рекомендации, план поездки и отзывы.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="destinations">
+<a class="visually-hidden-focusable" href="#destinationDetailsPage">Перейти к основному содержимому</a>
+<nav class="navbar navbar-expand-lg site-navbar sticky-top" aria-label="Основная навигация">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <span class="brand-mark"><i class="bi bi-globe2" aria-hidden="true"></i></span>
+            <span>TripPlanner</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                <li class="nav-item"><a class="nav-link" href="index.html" data-nav="home">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="destinations.html" data-nav="destinations">Направления</a></li>
+                <li class="nav-item" data-auth-only><a class="nav-link" href="collaboration.html" data-nav="collaboration">Совместное планирование</a></li>
+                <li class="nav-item" data-auth-only><a class="nav-link" href="dashboard.html" data-nav="dashboard">Кабинет</a></li>
+                <li class="nav-item" data-guest-only><a class="nav-link" href="login.html" data-nav="login">Вход</a></li>
+                <li class="nav-item" data-guest-only><a class="nav-link" href="register.html" data-nav="register">Регистрация</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main id="destinationDetailsPage">
+    <div class="container py-5 d-none" id="destinationError">
+        <div class="empty-state">
+            <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
+            <h1 class="h2">Направление не найдено</h1>
+            <p class="text-secondary">Параметр `id` отсутствует или не соответствует данным каталога.</p>
+            <a class="btn btn-primary" href="destinations.html">Вернуться в каталог</a>
+        </div>
+    </div>
+
+    <div id="destinationContent">
+        <section class="detail-hero">
+            <div class="container">
+                <div class="row g-4 align-items-center">
+                    <div class="col-lg-6">
+                        <img class="destination-hero-image detail-hero-image" id="destinationHeroImage" src="" alt="Фотография направления">
+                    </div>
+                    <div class="col-lg-6">
+                        <span class="section-badge"><i class="bi bi-geo-alt" aria-hidden="true"></i> Детальная страница направления</span>
+                        <h1 class="section-title-sm mb-3" id="destinationName">Направление</h1>
+                        <p class="section-text mb-3" id="destinationDescription"></p>
+                        <div class="card-meta">
+                            <span class="badge badge-soft" id="destinationType"></span>
+                            <span class="badge badge-budget" id="destinationBudget"></span>
+                            <span class="badge badge-soft" id="destinationDuration"></span>
+                            <span class="badge badge-soft">Рейтинг: <span id="destinationRating"></span></span>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 mt-4">
+                            <button class="btn btn-primary" type="button" id="saveFavoriteButton">Сохранить в избранное</button>
+                            <button class="btn btn-outline-primary" type="button" id="openRouteModalButton">Добавить в маршрут</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pb-5">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <article class="dashboard-card detail-section">
+                            <h2 class="h3 mb-3">Главные достопримечательности</h2>
+                            <ul class="list-check" id="highlightsList"></ul>
+                        </article>
+                        <article class="dashboard-card detail-section">
+                            <h2 class="h3 mb-3">Рекомендации для туриста</h2>
+                            <ul class="list-check" id="tipsList"></ul>
+                        </article>
+                        <article class="dashboard-card detail-section">
+                            <h2 class="h3 mb-3">Примерный план поездки по дням</h2>
+                            <div class="accordion" id="itineraryAccordion"></div>
+                        </article>
+                    </div>
+                    <div class="col-lg-4">
+                        <article class="detail-side-card mb-4">
+                            <h2 class="h4 mb-3">Краткая информация</h2>
+                            <p class="mb-2"><strong>Локация:</strong> <span id="destinationLocation"></span></p>
+                            <p class="mb-2"><strong>Лучший сезон:</strong> <span id="destinationSeason"></span></p>
+                            <p class="mb-0"><strong>Погода:</strong> <span id="destinationWeather"></span></p>
+                        </article>
+                        <article class="detail-side-card mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h2 class="h4 mb-0">Карта</h2>
+                                <span class="badge badge-soft">Карта направления</span>
+                            </div>
+                            <iframe id="destinationMap" loading="lazy" title="Карта направления"></iframe>
+                        </article>
+                        <article class="detail-side-card mb-4">
+                            <h2 class="h4 mb-3">Погода</h2>
+                            <p class="text-secondary mb-0" id="destinationWeatherCard"></p>
+                        </article>
+                        <article class="detail-side-card">
+                            <h2 class="h4 mb-3">Поделиться поездкой</h2>
+                            <p class="text-secondary">Скопируйте ссылку на страницу и отправьте её друзьям для обсуждения маршрута.</p>
+                            <button class="btn btn-outline-primary w-100" type="button" id="shareButton">Поделиться</button>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pb-5">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-7">
+                        <div class="dashboard-card">
+                            <h2 class="h3 mb-4">Отзывы путешественников</h2>
+                            <div id="reviewsList" aria-live="polite"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="dashboard-card">
+                            <h2 class="h3 mb-3">Добавить отзыв</h2>
+                            <form id="reviewForm">
+                                <div class="mb-3">
+                                    <label class="form-label" for="reviewAuthor">Имя</label>
+                                    <input class="form-control" type="text" id="reviewAuthor" placeholder="Ваше имя">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="reviewRating">Оценка</label>
+                                    <select class="form-select" id="reviewRating">
+                                        <option value="">Выберите оценку</option>
+                                        <option value="5">5</option>
+                                        <option value="4">4</option>
+                                        <option value="3">3</option>
+                                        <option value="2">2</option>
+                                        <option value="1">1</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="reviewText">Текст отзыва</label>
+                                    <textarea class="form-control" id="reviewText" placeholder="Что понравилось и что стоит учесть"></textarea>
+                                </div>
+                                <button class="btn btn-primary w-100" type="submit">Опубликовать отзыв</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="container">
+        <div class="row gy-4 align-items-center">
+            <div class="col-lg-4">
+                <a class="footer-brand d-inline-flex align-items-center gap-2" href="index.html">
+                    <span class="brand-mark"><i class="bi bi-globe2" aria-hidden="true"></i></span>
+                    <span>TripPlanner</span>
+                </a>
+                <p class="mt-3 mb-0">Учебное многостраничное travel-приложение на HTML, CSS, Bootstrap и Vanilla JavaScript.</p>
+            </div>
+            <div class="col-lg-5">
+                <nav aria-label="Навигация в подвале">
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="index.html">Главная</a>
+                        <a href="destinations.html">Направления</a>
+                        <a data-auth-only href="dashboard.html">Кабинет</a>
+                        <a data-auth-only href="collaboration.html">Совместное планирование</a>
+                        <a data-guest-only href="login.html">Вход</a>
+                        <a data-guest-only href="register.html">Регистрация</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-lg-3 text-lg-end">
+                <p class="mb-0">© 2026 TripPlanner</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="modal fade" id="addToRouteModal" tabindex="-1" aria-labelledby="addToRouteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="addToRouteLabel">Добавить в маршрут</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addToRouteForm">
+                    <div class="mb-3">
+                        <label class="form-label" for="existingRoute">Существующий маршрут</label>
+                        <select class="form-select" id="existingRoute"></select>
+                    </div>
+                    <button class="btn btn-outline-primary w-100 mb-3" type="button" id="toggleNewRoute">Или создать новый маршрут</button>
+                    <div class="d-none" id="newRouteFields">
+                        <div class="mb-3">
+                            <label class="form-label" for="newRouteName">Название маршрута</label>
+                            <input class="form-control" type="text" id="newRouteName" placeholder="Весенний маршрут">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="newRouteDuration">Длительность</label>
+                            <input class="form-control" type="text" id="newRouteDuration" placeholder="5 дней">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="newRouteBudget">Бюджет</label>
+                            <select class="form-select" id="newRouteBudget">
+                                <option value="">Выберите бюджет</option>
+                                <option value="low">Низкий</option>
+                                <option value="medium">Средний</option>
+                                <option value="high">Высокий</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary w-100" type="submit">Сохранить в маршрут</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/api.js"></script>
+<script src="js/data.js"></script>
+<script src="js/destination-details.js"></script>
+</body>
+</html>
