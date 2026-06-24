@@ -1,0 +1,302 @@
+:root {
+    --primary: #2c7da0;
+    --primary-dark: #1f5e7a;
+    --secondary: #61a5c2;
+    --accent: #eaeaea;
+    --earth: #e76f51;
+    --success: #2a9d8f;
+    --light-bg: #fbfbfb;
+    --card-bg: #ffffff;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--light-bg);
+    padding-top: 76px;
+    overflow-x: hidden;
+    color: #2d3e50;
+}
+
+/* Навигация */
+.navbar {
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    padding: 1rem 0;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(0);
+}
+
+.navbar-hidden {
+    transform: translateY(-100%);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.nav-link:not(.btn-register) {
+    color: #343c3c !important;
+    font-weight: 500;
+    margin: 0 0.25rem;
+    transition: all 0.3s ease;
+}
+
+.nav-link:not(.btn-register):hover {
+    color: var(--primary) !important;
+    transform: translateY(-1px);
+}
+
+.nav-link.active:not(.btn-register) {
+    color: var(--primary) !important;
+    border-bottom: 2px solid var(--accent);
+}
+
+/* Кнопка регистрации */
+.btn-register {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white !important;
+    border-radius: 50px;
+    padding: 0.5rem 1.25rem !important;
+    margin-left: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(71, 254, 232, 0.3);
+}
+
+.btn-register:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(32, 220, 191, 0.4);
+    color: white !important;
+}
+
+/* Hero секция */
+.hero {
+    background-image: url('../assetc/images/one.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    min-height: 30vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4));
+    z-index: 1;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    color: white;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.hero .lead {
+    color: rgba(255,255,255,0.9);
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #fff, var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.feature-card {
+    background: var(--card-bg);
+    border-radius: 1.5rem;
+    transition: all 0.3s ease;
+    height: 100%;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 30px -10px rgba(44,125,160,0.2);
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, rgba(44,125,160,0.1), rgba(97,165,194,0.1));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.feature-icon i {
+    color: var(--primary);
+    font-size: 2.5rem;
+}
+
+.cta {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    position: relative;
+    overflow: hidden;
+}
+
+.footer {
+    background: #1e2a36 !important;
+}
+
+.footer a:hover {
+    color: var(--accent) !important;
+}
+
+/* Общие стили для секций */
+.auth-section,
+.search-section,
+.feed-section,
+.my-trips-section,
+.create-trip-section,
+.destination-section,
+.profile-section {
+    background: linear-gradient(135deg, #fdfdfd 0%, #e6e6e6 100%);
+    min-height: 80vh;
+    padding: 60px 0;
+}
+
+/* Страница авторизации */
+.auth-card {
+    background: var(--card-bg);
+    border: none;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    overflow: hidden;
+    padding: 2rem;
+}
+
+/* Стили для поиска */
+.destination-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: var(--card-bg);
+}
+
+.destination-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 30px -10px rgba(44,125,160,0.2) !important;
+}
+
+.sticky-top {
+    z-index: 100;
+}
+
+/* Карточки и анимации */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 1rem;
+    background: var(--card-bg);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+}
+
+/* Кнопки */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border: none;
+    border-radius: 50px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(44,125,160,0.4);
+}
+
+.btn-outline-primary {
+    border-color: var(--primary);
+    color: var(--primary);
+    border-radius: 50px;
+}
+
+.btn-outline-primary:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--success), #3b9e8f);
+    border: none;
+    border-radius: 50px;
+}
+
+.btn-secondary {
+    border-radius: 50px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    body {
+        padding-top: 60px;
+    }
+    
+    .display-3 {
+        font-size: 2rem;
+    }
+    
+    .hero {
+        min-height: 60vh;
+        padding-top: 60px;
+        background-attachment: scroll;
+    }
+    
+    .feature-card {
+        margin-bottom: 1rem;
+    }
+    
+    .btn-register {
+        margin-left: 0;
+        margin-top: 0.5rem;
+        text-align: center;
+    }
+    
+    .navbar-nav {
+        align-items: center;
+    }
+    
+    .auth-section,
+    .search-section,
+    .feed-section,
+    .my-trips-section,
+    .create-trip-section,
+    .destination-section,
+    .profile-section {
+        padding: 40px 0;
+    }
+    
+    .auth-card {
+        margin: 0 1rem;
+        padding: 1.5rem;
+    }
+}

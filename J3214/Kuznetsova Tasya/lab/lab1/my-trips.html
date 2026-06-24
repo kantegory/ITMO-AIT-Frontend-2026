@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои путешествия - Round the World </title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="fas fa-map-marked-alt"></i>  Round the World </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="search.html"><i class="fas fa-compass"></i> Поиск</a></li>
+                    <li class="nav-item"><a class="nav-link" href="feed.html"><i class="fas fa-globe"></i> Лента</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="my-trips.html"><i class="fas fa-plane"></i> Мои путешествия</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html"><i class="fas fa-sign-in-alt"></i> Вход</a></li>
+                    <li class="nav-item"><a class="nav-link btn-register" href="register.html"><i class="fas fa-user-plus"></i> Регистрация</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="my-trips-section">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="h3 fw-bold"><i class="fas fa-plane text-primary me-2"></i>Мои путешествия</h2>
+                <a href="create-trip.html" class="btn btn-primary"><i class="fas fa-plus me-1"></i> Новый маршрут</a>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100">
+                        <img src="https://via.placeholder.com/400x200?text=Санкт-Петербург" class="card-img-top" style="height: 200px; object-fit: cover;">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="fw-bold mb-0">Санкт-Петербург</h5>
+                                <span class="badge bg-primary">Планируется</span>
+                            </div>
+                            <p class="text-muted small">10-15 июня 2026 • 5 дней</p>
+                            <p class="small text-muted"><i class="fas fa-users me-1"></i> 2 путешественника</p>
+                            <button class="btn btn-sm btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#demoModal"><i class="fas fa-eye me-1"></i> Подробнее</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100">
+                        <img src="https://via.placeholder.com/400x200?text=Алтай" class="card-img-top" style="height: 200px; object-fit: cover;">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="fw-bold mb-0">Алтай</h5>
+                                <span class="badge bg-success">В процессе</span>
+                            </div>
+                            <p class="text-muted small">1-10 августа 2026 • 10 дней</p>
+                            <p class="small text-muted"><i class="fas fa-users me-1"></i> 4 путешественника</p>
+                            <button class="btn btn-sm btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#demoModal"><i class="fas fa-eye me-1"></i> Подробнее</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-info text-center mt-4">
+                <i class="fas fa-info-circle me-2"></i>Здесь будут храниться все твои маршруты
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="demoModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="fas fa-code"></i> заглушка</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <i class="fas fa-code fa-4x text-primary mb-3"></i>
+                    <p class="lead">Скоро здесь будет детальная информация</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer py-4 mt-5">
+        <div class="container text-center">
+            <p class="text-white-50 small mb-0"> Round the World - твой проводник в мир путешествий</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
