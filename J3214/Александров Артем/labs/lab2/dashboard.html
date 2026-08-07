@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moneta - Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-light">
+
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            
+            <aside class="col-12 col-md-3 col-lg-2 bg-white border-end p-4 d-flex flex-column justify-content-between sidebar">
+                <div>
+                    <h2 class="h2 text-dark fw-bold mb-4" style="letter-spacing: -0.5px;">
+                        <i class="bi bi-stack"></i>
+                        Moneta
+                    </h2>
+                    
+                    <nav class="nav flex-column gap-2">
+                        <a href="dashboard.html" class="nav-link active-menu-item p-2 rounded-3">
+                            <i class="bi bi-layout-sidebar me-1"></i>
+                            Главная панель
+                        </a>
+                        <a href="search.html" class="nav-link text-secondary p-2 rounded-3">
+                            <i class="bi bi-search me-1"></i>
+                            Поиск транзакций
+                        </a>
+                        <a href="#" class="nav-link text-secondary p-2 rounded-3">
+                            <i class="bi bi-wallet me-1"></i>
+                            Кошелек
+                        </a>
+                        <a href="#" class="nav-link text-secondary p-2 rounded-3">
+                            <i class="bi bi-graph-up-arrow me-1"></i>
+                            Анализ и отчеты
+                        </a> 
+                    </nav>
+                </div>
+                
+                <div>
+                    <a href="#" class="nav-link text-secondary p-2 rounded-3">
+                        <i class="bi bi-headphones me-1"></i>
+                        Помощь
+                    </a>
+                    <a href="#" class="nav-link text-secondary p-2 rounded-3">
+                        <i class="bi bi-gear me-1"></i>
+                        Настройки
+                    </a>
+                    <a href="index.html" class="nav-link text-secondary p-2 rounded-3">
+                        <i class="bi bi-box-arrow-up-left me-1"></i>
+                        Выйти
+                    </a>
+                </div>
+            </aside>
+
+            <main class="col-12 col-md-9 col-lg-10 p-4 p-lg-5">
+                
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-2">
+                        <h1 class="h3 fw-bold m-0" style="letter-spacing: -0.5px;">Добро пожаловать!</h1>
+                        
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-white rounded-circle d-flex justify-content-center align-items-center shadow-sm" style="width: 44px; height: 44px; cursor: pointer;">
+                                <i class="bi bi-bell text-secondary fs-5"></i>
+                            </div>
+                            <img src="https://ui-avatars.com/api/?name=Artem&background=2563eb&color=fff" alt="Profile" class="rounded-circle shadow-sm" width="44" height="44" style="cursor: pointer;">
+                        </div>
+                </div>
+
+                <div class="row g-4 mb-4">
+
+                    <!-- БЛОК С РАСХОДАМИ -->
+                    <div class="col-12 col-lg-6">
+                        <div class="bg-white p-4 shadow-sm border-0 rounded-4 d-flex justify-content-between align-items-center h-100">
+                            <div>
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <div class="bg-danger-subtle text-danger rounded-circle d-flex justify-content-center align-items-center" style="width: 32px; height: 32px;">
+                                        <i class="bi bi-arrow-down-right"></i>
+                                    </div>
+                                    <span class="text-muted fw-medium small">Месячные расходы</span>
+                                </div>
+                                <h2 class="fw-bold m-0 h3">$67 000.00</h2>
+                            </div>
+
+                            <div class="text-end">
+                                <span class="badge bg-light text-dark border mb-1">+2.4%</span>
+                                <div class="text-muted" style="font-size: 11px;">к прошлому месяцу</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- БЛОК С ДОХОДАМИ -->
+                    <div class="col-12 col-lg-6">
+                        <div class="bg-white p-4 shadow-sm border-0 rounded-4 d-flex justify-content-between align-items-center h-100">
+                            <div>
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <div class="bg-success-subtle text-success rounded-circle d-flex justify-content-center align-items-center" style="width: 32px; height: 32px;">
+                                        <i class="bi bi-arrow-up-right"></i>
+                                    </div>
+                                    <span class="text-muted fw-medium small">Месячные доходы</span>
+                                </div>
+                                <h2 class="fw-bold m-0 h3">$100 000.00</h2>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-light text-dark border mb-1">+14.5%</span>
+                                <div class="text-muted" style="font-size: 11px;">к прошлому месяцу</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-4">
+
+                    <!-- БЛОК С ВАЛЮТОЙ -->
+                    <div class="col-12 col-lg-8">
+                        <div class="bg-white p-4 shadow-sm border-0 rounded-4 h-100 d-flex flex-column justify-content-between">
+                            
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="bg-primary-subtle text-primary rounded-circle d-flex justify-content-center align-items-center" style="width: 36px; height: 36px;">
+                                        <i class="bi bi-currency-exchange fs-5"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="h6 fw-bold m-0">Курсы валют</h3>
+                                        <span class="text-muted" style="font-size: 11px;">Курс к USD на сегодня</span>
+                                    </div>
+                                </div>
+                                
+                                <button id="refreshRatesBtn" class="btn btn-light btn-sm rounded-circle d-flex align-items-center justify-content-center p-0" style="width: 32px; height: 32px;">
+                                    <i class="bi bi-arrow-clockwise text-secondary"></i>
+                                </button>
+                            </div>
+
+                            <div id="currencyRatesContainer" class="row g-3 my-auto">
+                                <div class="col-12 text-center py-4">
+                                    <div class="spinner-border text-primary spinner-border-sm" role="status"></div>
+                                    <div class="text-muted small mt-2">Загрузка курсов из внешнего API...</div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center pt-3 border-top border-light mt-2" style="font-size: 11px;">
+                                <span class="text-muted">Источник: ExchangeRate API</span>
+                                <span id="ratesLastUpdate" class="text-muted">Обновлено: --:--</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- БЛОК С КАРТОЙ -->
+                    <div class="col-12 col-lg-4">
+                        <div class="bg-white p-4 shadow-sm border-0 rounded-4 h-100">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3 class="h6 fw-bold m-0">Моя карта</h3>
+                                <i class="bi bi-three-dots text-muted" style="cursor: pointer;"></i>
+                            </div>
+
+                            <div class="p-4 rounded-4 text-white shadow-sm position-relative overflow-hidden" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);">
+                                
+                                <div class="d-flex justify-content-between align-items-start mb-4">
+                                    <div>
+                                        <p class="text-white-50 small mb-1">Баланс</p>
+                                        <h4 class="fw-bold m-0">$6 700.27</h4>
+                                    </div>
+                                    <i class="bi bi-wifi fs-4 text-white-50" style="transform: rotate(90deg);"></i>
+                                </div>
+                                
+                                <p class="mb-4 text-white-50" style="letter-spacing: 3px; font-family: monospace;">**** **** **** 1234</p>
+                                
+                                <div class="d-flex justify-content-between align-items-end">
+                                    <span class="small text-white-50 fw-medium">Artem A.</span>
+                                    <i class="bi bi-credit-card-2-back fs-2 lh-1 text-white-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    
+                    <!-- БЛОК С КЕШБЕКОМ -->
+                    <div class="col-12 col-lg-4">
+                        <div class="bg-white p-4 shadow-sm border-0 rounded-4 h-100">
+                            
+                            <div class="d-flex justify-content-between align-items-start mb-4">
+                                <div>
+                                    <h3 class="h6 fw-bold m-0 mb-1">Повышенный кэшбек</h3>
+                                    <span class="text-muted" style="font-size: 11px;">Выбрано на март • 4 категории</span>
+                                </div>
+                                <div class="text-end">
+                                    <div class="fw-bold text-success" style="font-size: 16px;">+$124.50</div>
+                                    <span class="text-muted" style="font-size: 10px;">накоплено</span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-column gap-3">
+                                
+                                <div class="d-flex justify-content-between align-items-center pb-2 border-bottom border-light">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="rounded-3 d-flex justify-content-center align-items-center" style="width: 40px; height: 40px; background-color: #fff7ed; color: #ea580c;">
+                                            <i class="bi bi-egg-fried fs-5"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-semibold text-dark" style="font-size: 14px;">Рестораны и кафе</div>
+                                            <div class="text-muted" style="font-size: 11px;">До конца месяца</div>
+                                        </div>
+                                    </div>
+                                    <span class="badge rounded-pill fw-bold px-3 py-2" style="background-color: #fef3c7; color: #d97706; font-size: 12px;">5%</span>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center pb-2 border-bottom border-light">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="rounded-3 d-flex justify-content-center align-items-center" style="width: 40px; height: 40px; background-color: #eff6ff; color: #2563eb;">
+                                            <i class="bi bi-car-front fs-5"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-semibold text-dark" style="font-size: 14px;">Такси и авто</div>
+                                            <div class="text-muted" style="font-size: 11px;">Весь квартал</div>
+                                        </div>
+                                    </div>
+                                    <span class="badge rounded-pill fw-bold px-3 py-2" style="background-color: #dbeafe; color: #1d4ed8; font-size: 12px;">10%</span>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="rounded-3 d-flex justify-content-center align-items-center" style="width: 40px; height: 40px; background-color: #faf5ff; color: #9333ea;">
+                                            <i class="bi bi-bag-heart fs-5"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-semibold text-dark" style="font-size: 14px;">Супермаркеты</div>
+                                            <div class="text-muted" style="font-size: 11px;">До 31 марта</div>
+                                        </div>
+                                    </div>
+                                    <span class="badge rounded-pill fw-bold px-3 py-2" style="background-color: #f3e8ff; color: #6b21a8; font-size: 12px;">3%</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="col-12 col-lg-4">
+
+                    <!-- БЛОК С ТРАНЗАКЦИЯМИ -->
+                    <div class="bg-white p-4 shadow-sm border-0 rounded-4 h-100">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h3 class="h6 fw-bold m-0">Последние операции</h3>
+
+                            <button class="btn btn-primary btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#addTransactionModal">
+                                <i class="bi bi-plus-lg me-1"></i>Добавить
+                            </button>
+                        </div>
+
+                        <!-- динамический список транзакций -->
+                        <div id="transactionsContainer" class="d-flex flex-column gap-3">
+                            <!-- список транзакций с кнопками удаления -->
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-12 col-lg-4">
+
+                    <!-- БЛОК С ФИН. ЦЕЛЯМИ -->
+                    <div class="bg-white p-4 shadow-sm border-0 rounded-4 h-100">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h3 class="h6 fw-bold m-0">Финансовые цели</h3>
+                            <button class="btn btn-light btn-sm rounded-circle d-flex align-items-center justify-content-center p-0" style="width: 28px; height: 28px;" type="button">
+                                <i class="bi bi-plus-lg text-dark"></i>
+                            </button>
+                        </div>
+
+                        <div class="d-flex flex-column gap-4">
+                            
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="fw-semibold text-dark" style="font-size: 14px;">MacBook Pro 16</div>
+                                    </div>
+                                    <span class="text-primary fw-bold" style="font-size: 13px;">75%</span>
+                                </div>
+                                <div class="progress bg-light" style="height: 6px;">
+                                    <div class="progress-bar bg-primary rounded-pill" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-between text-muted mt-1" style="font-size: 11px;">
+                                    <span>Накоплено: $1,500</span>
+                                    <span>Цель: $2,000</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="fw-semibold text-dark" style="font-size: 14px;">Подушка безопасности</div>
+                                    </div>
+                                    <span class="text-dark fw-bold" style="font-size: 13px;">40%</span>
+                                </div>
+                                <div class="progress bg-light" style="height: 6px;">
+                                    <div class="progress-bar bg-dark rounded-pill" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-between text-muted mt-1" style="font-size: 11px;">
+                                    <span>Накоплено: $4,000</span>
+                                    <span>Цель: $10,000</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/currency.js"></script>
+    <script src="js/dashboard.js"></script>
+
+    
+    <script>
+      const currentUser = checkAuth();
+      console.log('Authorized user:', currentUser);
+    </script>
+
+    <!-- Модальное окно добавления транзакции (Bootstrap Modal) -->
+    <div class="modal fade" id="addTransactionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow rounded-4">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold">Новая транзакция</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            <div class="modal-body">
+                <form id="addTransactionForm">
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">Название операции</label>
+                        <input type="text" id="txTitle" class="form-control" placeholder="Например: Супермаркет" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">Сумма (со знаком - для расхода)</label>
+                        <input type="number" step="0.01" id="txAmount" class="form-control" placeholder="-50.00 или 100.00" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">Категория</label>
+                        <select id="txCategory" class="form-select">
+                        <option value="Еда и продукты">Еда и продукты</option>
+                        <option value="Кафе и рестораны">Кафе и рестораны</option>
+                        <option value="Доходы">Доходы / Переводы</option>
+                        <option value="Покупки">Покупки</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 rounded-3 mt-2">Сохранить на сервер</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
