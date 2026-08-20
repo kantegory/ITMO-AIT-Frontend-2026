@@ -1,0 +1,229 @@
+/* светлая тема (по умолчанию) */
+:root {
+  --bg-main: #f8f9fa;
+  --bg-card: #ffffff;
+  --bg-sidebar: #ffffff;
+  --text-main: #212529;
+  --text-muted: #6c757d;
+  --border-color: #e5e7eb;
+  
+  --circle-btn-bg: #ffffff;
+  --circle-btn-color: #6c757d;
+  --circle-btn-hover: #f3f4f6;
+
+  --nav-hover-bg: #f3f4f6;
+  --nav-active-bg: #e7e8eb;
+  --nav-active-color: #000000;
+
+  --bg-secondary: #f8f9fa;
+  --bg-secondary-hover: #e9ecef;
+}
+
+/* темная тема */
+[data-theme="dark"] {
+  --bg-main: #121212;
+  --bg-card: #1e1e1e;
+  --bg-sidebar: #181818;
+  --text-main: #e0e0e0;
+  --text-muted: #9ca3af;
+  --border-color: #2d2d2d;
+  
+  --circle-btn-bg: #2b2b2b;
+  --circle-btn-color: #e0e0e0;
+  --circle-btn-hover: #3a3a3a;
+
+  --nav-hover-bg: #2b2b2d;
+  --nav-active-bg: #343438;
+  --nav-active-color: #ffffff;
+
+  --bg-secondary: #2c2c2d;
+  --bg-secondary-hover: #38383a;
+}
+
+/* классы-адаптеры (используют наши CSS-переменные) */
+.theme-bg-main {
+  background-color: var(--bg-main) !important;
+  color: var(--text-main);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.theme-bg-secondary {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-main) !important;
+  transition: background-color 0.2s ease;
+}
+
+.theme-bg-secondary:hover {
+  background-color: var(--bg-secondary-hover) !important;
+}
+
+.theme-bg-secondary::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 0.7; /* Легкая прозрачность для естественного вида */
+}
+
+.theme-card {
+  background-color: var(--bg-card) !important;
+  color: var(--text-main);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.theme-sidebar {
+  background-color: var(--bg-sidebar) !important;
+  color: var(--text-main);
+  border-color: var(--border-color) !important;
+  transition: background-color 0.25s ease;
+}
+
+.theme-text-main {
+  color: var(--text-main) !important;
+}
+
+.theme-text-muted {
+  color: var(--text-muted) !important;
+}
+
+.theme-border {
+  border-color: var(--border-color) !important;
+}
+
+/* кнопки управления в шапке */
+.theme-circle-btn {
+  background-color: var(--circle-btn-bg) !important;
+  color: var(--circle-btn-color) !important;
+  border: 1px solid var(--border-color) !important;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.theme-circle-btn:hover {
+  background-color: var(--circle-btn-hover) !important;
+}
+
+
+/* глобальные настройки стилей */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f7fb;
+    color: #111827;
+}
+
+/* для всех карточек в системе */
+.card {
+    border-radius: 16px !important;
+}
+
+.custom-card-primary {
+    background-color: #2563eb !important;
+}
+
+/* плавность для интерактивных ссылок */
+.nav-link {
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+}
+
+/* эффект наведения в меню сайдбара */
+.nav-link:hover {
+    background-color: var(--nav-hover-bg) !important;
+    color: var(--text-main) !important;
+}
+
+/* стиль для активной вкладки в меню */
+.active-menu-item {
+    background-color: var(--nav-active-bg) !important;
+    color: var(--nav-active-color) !important;
+    font-weight: 600;
+}
+
+/* --- стили для страниц (INDEX и REGISTER) --- */
+
+/* для тега body */
+.auth-page-bg {
+    background-image: url('../images/wallpaper.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    z-index: 1;
+}
+
+/* затемнение поверх картинки */
+.auth-page-bg::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(40, 40, 60, 0.25) 0%, rgba(20, 20, 30, 0.35) 100%);
+    z-index: -1;
+}
+
+/* стилизация инпутов на страницах входа */
+.auth-page-bg .form-control {
+    border-color: #d1d5db;
+    border-radius: 10px;
+    background-color: #fafafa;
+}
+
+.auth-page-bg .form-control:focus {
+    background-color: #ffffff;
+    border-color: #111827;
+}
+
+/* фиксация сайдбара на экране */
+@media (min-width: 768px) {
+    aside.sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    main {
+        height: 100vh;
+        overflow-y: auto;
+    }
+}
+
+/* адаптер для таблиц Bootstrap */
+.theme-table {
+    --bs-table-bg: transparent; /* Прозрачный фон, чтобы было видно карточку */
+    --bs-table-color: var(--text-main); /* Наш цвет текста */
+    --bs-table-border-color: var(--border-color); /* Наши рамки */
+    --bs-table-hover-bg: var(--bg-main); /* Фон при наведении строки */
+    --bs-table-hover-color: var(--text-main);
+}
+
+/* адаптер для шапки таблицы */
+.theme-table-header {
+    --bs-table-bg: var(--bg-secondary);
+    --bs-table-color: var(--text-main);
+}
+
+/* каркас модального окна */
+.modal-content.theme-card {
+  background-color: var(--bg-card) !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+/* шапка модального окна */
+.modal-header {
+  border-bottom-color: var(--border-color) !important;
+}
+
+/* инпуты и селекты внутри модального окна */
+.modal-body .form-control,
+.modal-body .form-select {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+.modal-body .form-control::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 0.7;
+}
+
+/* кнопка крестика (.btn-close) в тёмной теме */
+[data-theme="dark"] .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
