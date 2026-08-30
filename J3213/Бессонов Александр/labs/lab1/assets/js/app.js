@@ -76,36 +76,6 @@ document.querySelector("[data-mark-read]")?.addEventListener("click", (event) =>
   document.querySelector(".has-indicator")?.classList.remove("has-indicator");
 });
 
-document.getElementById("quickTaskForm")?.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const form = event.currentTarget;
-  const title = document.getElementById("quickTaskTitle").value.trim();
-  const project = document.getElementById("quickProject").value;
-  const priority = document.getElementById("quickPriority").value;
-
-  if (!title) return;
-
-  const priorityClasses = {
-    "Высокий": "priority-high-bg",
-    "Средний": "priority-medium-bg",
-    "Низкий": "priority-low-bg"
-  };
-  const row = document.createElement("article");
-  row.className = "task-row";
-  row.innerHTML = '<button class="task-check" type="button" aria-label="Отметить задачу выполненной"><i class="bi bi-check"></i></button><div class="task-main"><strong></strong><span></span></div><span class="priority-badge ' + priorityClasses[priority] + '">' + priority + '</span><span class="task-date">Новая</span>';
-  row.querySelector("strong").textContent = title;
-  row.querySelector(".task-main span").textContent = project;
-  row.querySelector(".task-check").addEventListener("click", (clickEvent) => {
-    const taskButton = clickEvent.currentTarget;
-    taskButton.classList.toggle("is-complete");
-    taskButton.closest(".task-row").querySelector(".task-main").classList.toggle("is-complete");
-  });
-  document.getElementById("dashboardTaskList")?.prepend(row);
-  bootstrap.Modal.getInstance(document.getElementById("taskModal"))?.hide();
-  form.reset();
-  showToast("Задача добавлена в список");
-});
-
 const searchForm = document.getElementById("searchFilters");
 
 function filterSearchResults() {
@@ -176,7 +146,6 @@ const boardSearch = document.getElementById("boardSearch");
 const boardAssigneeFilter = document.getElementById("boardAssigneeFilter");
 const boardPriorityFilter = document.getElementById("boardPriorityFilter");
 let draggedKanbanCard = null;
-let kanbanTaskSequence = 134;
 let cardWasMoved = false;
 
 function updateKanbanCounts() {
@@ -218,51 +187,6 @@ function openTaskDetails(card) {
   document.getElementById("taskDetailsAssignee").textContent = card.dataset.assignee;
   document.getElementById("taskDetailsDue").textContent = card.dataset.due;
   bootstrap.Modal.getOrCreateInstance(document.getElementById("taskDetailsModal")).show();
-}
-
-function createKanbanCard({ title, type, priority, assignee, due }) {
-  const typeMeta = {
-    "Задача": ["task-type-dev", "bi-code-slash"],
-    "История": ["task-type-story", "bi-bookmark-check"],
-    "Ошибка": ["task-type-bug", "bi-bug"],
-    "Исследование": ["task-type-research", "bi-lightbulb"]
-  };
-  const priorityMeta = {
-    "Высокий": ["priority-high", "high", "bi-arrow-up"],
-    "Средний": ["priority-medium", "medium", "bi-equals"],
-    "Низкий": ["priority-low", "low", "bi-arrow-down"]
-  };
-  const [typeClass, typeIcon] = typeMeta[type];
-  const [priorityClass, priorityIconClass, priorityIcon] = priorityMeta[priority];
-  const initials = assignee.split(" ").map((part) => part[0]).join("");
-  const key = "TP-" + kanbanTaskSequence;
-  const formattedDue = due
-    ? new Intl.DateTimeFormat("ru-RU", { day: "numeric", month: "short" }).format(new Date(due + "T00:00:00"))
-    : "Без срока";
-  kanbanTaskSequence += 1;
-
-  const card = document.createElement("article");
-  card.className = "kanban-card " + priorityClass;
-  card.draggable = true;
-  card.tabIndex = 0;
-  card.dataset.kanbanCard = "";
-  card.dataset.taskId = key;
-  card.dataset.taskType = type;
-  card.dataset.priority = priority;
-  card.dataset.assignee = assignee;
-  card.dataset.due = formattedDue;
-  card.innerHTML = '<div class="kanban-card-top"><span class="task-type"><i></i> <span></span></span><span class="kanban-card-key"></span></div><h4></h4><div class="kanban-labels"><span>Новая</span></div><div class="kanban-card-footer"><span class="task-priority" title="Приоритет"><i></i></span><span class="task-due"><i class="bi bi-calendar3"></i> <span></span></span><span class="activity-avatar avatar-lime"></span></div>';
-  card.querySelector(".task-type").classList.add(typeClass);
-  card.querySelector(".task-type i").className = "bi " + typeIcon;
-  card.querySelector(".task-type span").textContent = type;
-  card.querySelector(".kanban-card-key").textContent = key;
-  card.querySelector("h4").textContent = title;
-  card.querySelector(".task-priority").classList.add(priorityIconClass);
-  card.querySelector(".task-priority i").className = "bi " + priorityIcon;
-  card.querySelector(".task-due span").textContent = formattedDue;
-  card.querySelector(".activity-avatar").textContent = initials;
-  card.querySelector(".activity-avatar").title = assignee;
-  return card;
 }
 
 kanbanBoard?.addEventListener("dragstart", (event) => {
@@ -327,28 +251,6 @@ document.querySelector("[data-board-reset]")?.addEventListener("click", () => {
   boardAssigneeFilter.value = "";
   boardPriorityFilter.value = "";
   filterKanbanCards();
-});
-
-document.getElementById("projectTaskForm")?.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const form = event.currentTarget;
-  const title = document.getElementById("projectTaskName").value.trim();
-  const type = document.getElementById("projectTaskType").value;
-  const status = document.getElementById("projectTaskStatus").value;
-  const priority = document.getElementById("projectTaskPriority").value;
-  const assignee = document.getElementById("projectTaskAssignee").value;
-  const due = document.getElementById("projectTaskDue").value;
-  const column = document.querySelector('[data-kanban-column="' + status + '"]');
-
-  if (!title || !column) return;
-
-  column.querySelector(".kanban-cards").prepend(createKanbanCard({ title, type, priority, assignee, due }));
-  updateKanbanCounts();
-  filterKanbanCards();
-  bootstrap.Modal.getInstance(document.getElementById("projectTaskModal"))?.hide();
-  bootstrap.Tab.getOrCreateInstance(document.getElementById("board-tab")).show();
-  form.reset();
-  showToast("Задача добавлена на доску");
 });
 
 updateKanbanCounts();
@@ -438,6 +340,14 @@ document.getElementById("backlogTaskForm")?.addEventListener("submit", (event) =
   form.reset();
   showToast("Задача добавлена в бэклог");
 });
+
+const createTaskRequest = new URLSearchParams(window.location.search).get("create");
+const backlogTaskModal = document.getElementById("backlogTaskModal");
+
+if (createTaskRequest === "task" && backlogTaskModal) {
+  bootstrap.Modal.getOrCreateInstance(backlogTaskModal).show();
+  window.history.replaceState({}, "", window.location.pathname);
+}
 
 document.querySelector("[data-upload-file]")?.addEventListener("click", () => {
   showToast("Файл добавлен в проект");
