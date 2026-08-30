@@ -295,13 +295,6 @@ kanbanBoard?.addEventListener("dragend", () => {
 });
 
 kanbanBoard?.addEventListener("click", (event) => {
-  const addButton = event.target.closest("[data-add-to-column]");
-  if (addButton) {
-    document.getElementById("projectTaskStatus").value = addButton.dataset.addToColumn;
-    bootstrap.Modal.getOrCreateInstance(document.getElementById("projectTaskModal")).show();
-    return;
-  }
-
   const card = event.target.closest("[data-kanban-card]");
   if (card && !cardWasMoved) openTaskDetails(card);
 });
@@ -349,6 +342,92 @@ document.getElementById("projectTaskForm")?.addEventListener("submit", (event) =
 });
 
 updateKanbanCounts();
+
+const backlogSearch = document.getElementById("backlogSearch");
+const backlogPriorityFilter = document.getElementById("backlogPriorityFilter");
+const backlogAssigneeFilter = document.getElementById("backlogAssigneeFilter");
+let backlogTaskSequence = 140;
+
+function filterBacklogItems() {
+  if (!backlogSearch) return;
+
+  const query = backlogSearch.value.trim().toLowerCase();
+  const priority = backlogPriorityFilter.value;
+  const assignee = backlogAssigneeFilter.value;
+  let visibleCount = 0;
+
+  document.querySelectorAll("[data-backlog-item]").forEach((item) => {
+    const visible = (!query || item.dataset.title.toLowerCase().includes(query) || item.dataset.key.toLowerCase().includes(query))
+      && (!priority || item.dataset.priority === priority)
+      && (!assignee || item.dataset.assignee === assignee);
+
+    item.classList.toggle("is-filtered", !visible);
+    if (visible) visibleCount += 1;
+  });
+
+  document.getElementById("backlogVisibleCount").textContent = visibleCount;
+  document.getElementById("backlogEmpty")?.classList.toggle("d-none", visibleCount !== 0);
+}
+
+[backlogSearch, backlogPriorityFilter, backlogAssigneeFilter].forEach((control) => {
+  control?.addEventListener("input", filterBacklogItems);
+  control?.addEventListener("change", filterBacklogItems);
+});
+
+document.querySelectorAll("[data-backlog-toggle]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const list = document.getElementById(button.dataset.backlogToggle);
+    const expanded = button.getAttribute("aria-expanded") === "true";
+    list.classList.toggle("is-collapsed", expanded);
+    button.setAttribute("aria-expanded", String(!expanded));
+  });
+});
+
+function createBacklogItem({ title, priority, assignee, points }) {
+  const priorityClasses = {
+    "Высокий": "priority-high-bg",
+    "Средний": "priority-medium-bg",
+    "Низкий": "priority-low-bg"
+  };
+  const initials = assignee.split(" ").map((part) => part[0]).join("");
+  const key = "TP-" + backlogTaskSequence;
+  backlogTaskSequence += 1;
+
+  const item = document.createElement("article");
+  item.className = "backlog-item";
+  item.dataset.backlogItem = "";
+  item.dataset.title = title;
+  item.dataset.key = key;
+  item.dataset.priority = priority;
+  item.dataset.assignee = assignee;
+  item.innerHTML = '<span class="backlog-handle"><i class="bi bi-grip-vertical"></i></span><span class="backlog-type task"><i class="bi bi-check2-square"></i></span><div class="backlog-task-main"><span></span><strong></strong><small>Новая задача</small></div><span class="priority-badge"></span><span class="backlog-assignee"><span class="activity-avatar avatar-lime"></span><span></span></span><span class="story-points"></span><button class="btn icon-btn btn-sm" type="button" aria-label="Действия задачи"><i class="bi bi-three-dots"></i></button>';
+  item.querySelector(".backlog-task-main > span").textContent = key;
+  item.querySelector(".backlog-task-main strong").textContent = title;
+  item.querySelector(".priority-badge").classList.add(priorityClasses[priority]);
+  item.querySelector(".priority-badge").textContent = priority;
+  item.querySelector(".activity-avatar").textContent = initials;
+  item.querySelector(".backlog-assignee > span:last-child").textContent = assignee;
+  item.querySelector(".story-points").textContent = points;
+  return item;
+}
+
+document.getElementById("backlogTaskForm")?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const title = document.getElementById("backlogTaskName").value.trim();
+  const priority = document.getElementById("backlogTaskPriority").value;
+  const assignee = document.getElementById("backlogTaskAssignee").value;
+  const points = document.getElementById("backlogTaskPoints").value;
+
+  if (!title) return;
+
+  document.getElementById("productBacklogList").append(createBacklogItem({ title, priority, assignee, points }));
+  document.getElementById("productBacklogCount").textContent = document.querySelectorAll("#productBacklogList [data-backlog-item]").length;
+  filterBacklogItems();
+  bootstrap.Modal.getInstance(document.getElementById("backlogTaskModal"))?.hide();
+  form.reset();
+  showToast("Задача добавлена в бэклог");
+});
 
 document.querySelector("[data-upload-file]")?.addEventListener("click", () => {
   showToast("Файл добавлен в проект");

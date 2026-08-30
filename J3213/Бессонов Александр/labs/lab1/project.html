@@ -20,6 +20,7 @@
           <a href="dashboard.html"><i class="bi bi-grid-1x2"></i><span>Обзор</span></a>
           <a href="search.html"><i class="bi bi-search"></i><span>Поиск</span><kbd>/</kbd></a>
           <a class="active" href="project.html" aria-current="page"><i class="bi bi-kanban"></i><span>Проект</span></a>
+          <a href="backlog.html"><i class="bi bi-list-task"></i><span>Бэклог</span></a>
           <a href="team.html"><i class="bi bi-people"></i><span>Команда</span></a>
           <span class="sidebar-caption mt-4">Избранное</span>
           <a href="project.html"><span class="project-dot dot-purple"></span><span>Мобильное приложение</span></a>
@@ -98,27 +99,17 @@
                 <select class="form-select form-select-sm" id="boardAssigneeFilter" aria-label="Фильтр по исполнителю"><option value="">Все исполнители</option><option>Александр Б.</option><option>Мария С.</option><option>Илья В.</option><option>Анна К.</option></select>
                 <select class="form-select form-select-sm" id="boardPriorityFilter" aria-label="Фильтр по приоритету"><option value="">Любой приоритет</option><option>Высокий</option><option>Средний</option><option>Низкий</option></select>
               </div>
-              <div class="kanban-toolbar-meta"><span><strong id="boardVisibleCount">10</strong> задач</span><button class="btn btn-sm btn-light" type="button" data-board-reset><i class="bi bi-arrow-counterclockwise me-1"></i>Сбросить</button></div>
+              <div class="kanban-toolbar-meta"><span><strong id="boardVisibleCount">8</strong> задач</span><button class="btn btn-sm btn-light" type="button" data-board-reset><i class="bi bi-arrow-counterclockwise me-1"></i>Сбросить</button></div>
             </div>
 
             <div class="kanban-scroll" aria-label="Канбан-доска проекта">
               <div class="kanban-board" id="kanbanBoard">
-                <section class="kanban-column status-backlog" data-kanban-column="backlog">
-                  <div class="kanban-column-head"><h3>Бэклог</h3><span class="kanban-count">2</span></div>
-                  <div class="kanban-cards" data-dropzone="backlog">
-                    <article class="kanban-card priority-medium" draggable="true" tabindex="0" data-kanban-card data-task-id="TP-128" data-task-type="Задача" data-priority="Средний" data-assignee="Мария С." data-due="8 сентября"><div class="kanban-card-top"><span class="task-type task-type-design"><i class="bi bi-palette"></i> Дизайн</span><span class="kanban-card-key">TP-128</span></div><h4>Продумать пустые состояния экранов</h4><div class="kanban-labels"><span>UX</span><span>Профиль</span></div><div class="kanban-card-footer"><span class="task-priority medium" title="Средний приоритет"><i class="bi bi-equals"></i></span><span class="task-activity"><i class="bi bi-paperclip"></i> 2 <i class="bi bi-chat-left ms-2"></i> 3</span><span class="activity-avatar avatar-pink" title="Мария С.">МС</span></div></article>
-                    <article class="kanban-card priority-low" draggable="true" tabindex="0" data-kanban-card data-task-id="TP-131" data-task-type="Задача" data-priority="Низкий" data-assignee="Анна К." data-due="10 сентября"><div class="kanban-card-top"><span class="task-type task-type-content"><i class="bi bi-file-text"></i> Контент</span><span class="kanban-card-key">TP-131</span></div><h4>Подготовить подсказки для формы</h4><div class="kanban-labels"><span>Онбординг</span></div><div class="kanban-card-footer"><span class="task-priority low" title="Низкий приоритет"><i class="bi bi-arrow-down"></i></span><span class="task-due"><i class="bi bi-calendar3"></i> 10 сен.</span><span class="activity-avatar avatar-lime" title="Анна К.">АК</span></div></article>
-                  </div>
-                  <button class="kanban-add" type="button" data-add-to-column="backlog"><i class="bi bi-plus-lg"></i> Создать задачу</button>
-                </section>
-
                 <section class="kanban-column status-todo" data-kanban-column="todo">
                   <div class="kanban-column-head"><h3>К выполнению</h3><span class="kanban-count">2</span></div>
                   <div class="kanban-cards" data-dropzone="todo">
                     <article class="kanban-card priority-high" draggable="true" tabindex="0" data-kanban-card data-task-id="TP-124" data-task-type="История" data-priority="Высокий" data-assignee="Илья В." data-due="5 сентября"><div class="kanban-card-top"><span class="task-type task-type-story"><i class="bi bi-bookmark-check"></i> История</span><span class="kanban-card-key">TP-124</span></div><h4>Добавить вход по биометрии</h4><div class="kanban-labels"><span>iOS</span><span>Безопасность</span></div><div class="kanban-card-footer"><span class="task-priority high" title="Высокий приоритет"><i class="bi bi-arrow-up"></i></span><span class="task-activity"><i class="bi bi-list-check"></i> 1/4</span><span class="activity-avatar avatar-blue" title="Илья В.">ИВ</span></div></article>
                     <article class="kanban-card priority-medium" draggable="true" tabindex="0" data-kanban-card data-task-id="TP-129" data-task-type="Задача" data-priority="Средний" data-assignee="Александр Б." data-due="6 сентября"><div class="kanban-card-top"><span class="task-type task-type-dev"><i class="bi bi-code-slash"></i> Разработка</span><span class="kanban-card-key">TP-129</span></div><h4>Подключить загрузку аватара</h4><div class="kanban-labels"><span>API</span></div><div class="kanban-card-footer"><span class="task-priority medium" title="Средний приоритет"><i class="bi bi-equals"></i></span><span class="task-due"><i class="bi bi-calendar3"></i> 6 сен.</span><span class="activity-avatar avatar-lime" title="Александр Б.">АБ</span></div></article>
                   </div>
-                  <button class="kanban-add" type="button" data-add-to-column="todo"><i class="bi bi-plus-lg"></i> Создать задачу</button>
                 </section>
 
                 <section class="kanban-column status-progress" data-kanban-column="progress">
@@ -127,7 +118,6 @@
                     <article class="kanban-card priority-high" draggable="true" tabindex="0" data-kanban-card data-task-id="TP-117" data-task-type="История" data-priority="Высокий" data-assignee="Александр Б." data-due="Сегодня"><div class="kanban-card-top"><span class="task-type task-type-design"><i class="bi bi-palette"></i> Дизайн</span><span class="kanban-card-key">TP-117</span></div><h4>Собрать прототип экрана профиля</h4><div class="kanban-labels"><span>Спринт 8</span><span>UX</span></div><div class="kanban-card-footer"><span class="task-priority high" title="Высокий приоритет"><i class="bi bi-arrow-up"></i></span><span class="task-due is-overdue"><i class="bi bi-clock"></i> Сегодня</span><span class="activity-avatar avatar-lime" title="Александр Б.">АБ</span></div></article>
                     <article class="kanban-card priority-high" draggable="true" tabindex="0" data-kanban-card data-task-id="TP-121" data-task-type="Задача" data-priority="Высокий" data-assignee="Илья В." data-due="2 сентября"><div class="kanban-card-top"><span class="task-type task-type-dev"><i class="bi bi-code-slash"></i> Разработка</span><span class="kanban-card-key">TP-121</span></div><h4>Настроить события аналитики</h4><div class="kanban-labels"><span>Analytics</span></div><div class="kanban-card-footer"><span class="task-priority high" title="Высокий приоритет"><i class="bi bi-arrow-up"></i></span><span class="task-activity"><i class="bi bi-list-check"></i> 3/5</span><span class="activity-avatar avatar-blue" title="Илья В.">ИВ</span></div></article>
                   </div>
-                  <button class="kanban-add" type="button" data-add-to-column="progress"><i class="bi bi-plus-lg"></i> Создать задачу</button>
                 </section>
 
                 <section class="kanban-column status-review" data-kanban-column="review">
@@ -136,7 +126,6 @@
                     <article class="kanban-card priority-medium" draggable="true" tabindex="0" data-kanban-card data-task-id="TP-114" data-task-type="Ошибка" data-priority="Средний" data-assignee="Анна К." data-due="3 сентября"><div class="kanban-card-top"><span class="task-type task-type-bug"><i class="bi bi-bug"></i> Ошибка</span><span class="kanban-card-key">TP-114</span></div><h4>Исправить отображение длинного имени</h4><div class="kanban-labels"><span>Android</span></div><div class="kanban-card-footer"><span class="task-priority medium" title="Средний приоритет"><i class="bi bi-equals"></i></span><span class="task-activity"><i class="bi bi-chat-left"></i> 5</span><span class="activity-avatar avatar-lime" title="Анна К.">АК</span></div></article>
                     <article class="kanban-card priority-low" draggable="true" tabindex="0" data-kanban-card data-task-id="TP-119" data-task-type="Задача" data-priority="Низкий" data-assignee="Мария С." data-due="4 сентября"><div class="kanban-card-top"><span class="task-type task-type-content"><i class="bi bi-file-text"></i> Контент</span><span class="kanban-card-key">TP-119</span></div><h4>Проверить тексты онбординга</h4><div class="kanban-labels"><span>Редактура</span></div><div class="kanban-card-footer"><span class="task-priority low" title="Низкий приоритет"><i class="bi bi-arrow-down"></i></span><span class="task-due"><i class="bi bi-calendar3"></i> 4 сен.</span><span class="activity-avatar avatar-pink" title="Мария С.">МС</span></div></article>
                   </div>
-                  <button class="kanban-add" type="button" data-add-to-column="review"><i class="bi bi-plus-lg"></i> Создать задачу</button>
                 </section>
 
                 <section class="kanban-column status-done" data-kanban-column="done">
@@ -145,7 +134,6 @@
                     <article class="kanban-card priority-medium" draggable="true" tabindex="0" data-kanban-card data-task-id="TP-108" data-task-type="Исследование" data-priority="Средний" data-assignee="Мария С." data-due="28 августа"><div class="kanban-card-top"><span class="task-type task-type-research"><i class="bi bi-lightbulb"></i> Исследование</span><span class="kanban-card-key">TP-108</span></div><h4>Провести интервью с пользователями</h4><div class="kanban-labels"><span>Discovery</span></div><div class="kanban-card-footer"><span class="task-priority medium" title="Средний приоритет"><i class="bi bi-equals"></i></span><span class="task-due is-done"><i class="bi bi-check2-circle"></i> 28 авг.</span><span class="activity-avatar avatar-pink" title="Мария С.">МС</span></div></article>
                     <article class="kanban-card priority-low" draggable="true" tabindex="0" data-kanban-card data-task-id="TP-105" data-task-type="Задача" data-priority="Низкий" data-assignee="Александр Б." data-due="27 августа"><div class="kanban-card-top"><span class="task-type task-type-design"><i class="bi bi-palette"></i> Дизайн</span><span class="kanban-card-key">TP-105</span></div><h4>Собрать визуальные референсы</h4><div class="kanban-labels"><span>UI</span></div><div class="kanban-card-footer"><span class="task-priority low" title="Низкий приоритет"><i class="bi bi-arrow-down"></i></span><span class="task-due is-done"><i class="bi bi-check2-circle"></i> 27 авг.</span><span class="activity-avatar avatar-lime" title="Александр Б.">АБ</span></div></article>
                   </div>
-                  <button class="kanban-add" type="button" data-add-to-column="done"><i class="bi bi-plus-lg"></i> Создать задачу</button>
                 </section>
               </div>
             </div>
@@ -185,7 +173,7 @@
           <div class="mb-3"><label class="form-label" for="projectTaskName">Название</label><input class="form-control form-control-lg" id="projectTaskName" placeholder="Что нужно сделать?" required></div>
           <div class="row g-3">
             <div class="col-sm-6"><label class="form-label" for="projectTaskType">Тип</label><select class="form-select" id="projectTaskType"><option>Задача</option><option>История</option><option>Ошибка</option><option>Исследование</option></select></div>
-            <div class="col-sm-6"><label class="form-label" for="projectTaskStatus">Статус</label><select class="form-select" id="projectTaskStatus"><option value="backlog">Бэклог</option><option value="todo">К выполнению</option><option value="progress">В работе</option><option value="review">На проверке</option><option value="done">Готово</option></select></div>
+            <div class="col-sm-6"><label class="form-label" for="projectTaskStatus">Статус</label><select class="form-select" id="projectTaskStatus"><option value="todo">К выполнению</option><option value="progress">В работе</option><option value="review">На проверке</option><option value="done">Готово</option></select></div>
             <div class="col-sm-6"><label class="form-label" for="projectTaskPriority">Приоритет</label><select class="form-select" id="projectTaskPriority"><option>Средний</option><option>Высокий</option><option>Низкий</option></select></div>
             <div class="col-sm-6"><label class="form-label" for="projectTaskAssignee">Исполнитель</label><select class="form-select" id="projectTaskAssignee"><option>Александр Б.</option><option>Мария С.</option><option>Илья В.</option><option>Анна К.</option></select></div>
             <div class="col-12"><label class="form-label" for="projectTaskDue">Срок</label><input class="form-control" id="projectTaskDue" type="date"></div>

@@ -1618,24 +1618,6 @@ a:hover {
   color: #26865a;
 }
 
-.kanban-add {
-  width: 100%;
-  margin-top: 0.55rem;
-  padding: 0.5rem 0.6rem;
-  border: 0;
-  border-radius: 0.55rem;
-  color: #686e7a;
-  background: transparent;
-  text-align: left;
-  font-size: 0.7rem;
-  font-weight: 700;
-}
-
-.kanban-add:hover {
-  color: var(--pulse-text);
-  background: rgba(255, 255, 255, 0.75);
-}
-
 .kanban-hint {
   margin: 0.25rem 0 0;
   color: var(--pulse-muted);
@@ -1788,6 +1770,269 @@ a:hover {
   font-size: 0.7rem;
 }
 
+.backlog-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+}
+
+.backlog-toolbar .form-select {
+  width: 180px;
+  min-height: 2.4rem;
+  border-color: #e3e5ea;
+  font-size: 0.75rem;
+}
+
+.backlog-search {
+  display: flex;
+  width: min(360px, 35vw);
+  min-height: 2.4rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.75rem;
+  border: 1px solid #e3e5ea;
+  border-radius: 0.55rem;
+  color: var(--pulse-muted);
+  background: #f8f9fb;
+}
+
+.backlog-search:focus-within {
+  border-color: var(--pulse-primary-dark);
+  box-shadow: 0 0 0 3px rgba(255, 221, 45, 0.18);
+}
+
+.backlog-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 0.76rem;
+}
+
+.backlog-result-count {
+  margin-left: auto;
+  color: var(--pulse-muted);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.backlog-result-count strong {
+  color: var(--pulse-text);
+}
+
+.backlog-group {
+  overflow: hidden;
+  margin-top: 1rem;
+  border: 1px solid var(--pulse-border);
+  border-radius: 0.9rem;
+  background: #fff;
+  box-shadow: 0 7px 24px rgba(28, 34, 48, 0.04);
+}
+
+.backlog-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--pulse-border);
+  background: #fafbfc;
+}
+
+.sprint-group .backlog-group-head {
+  border-top: 3px solid var(--pulse-primary);
+}
+
+.backlog-group-title,
+.sprint-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.backlog-group-title h2 {
+  margin: 0;
+  font-size: 0.86rem;
+  font-weight: 850;
+}
+
+.backlog-group-title p {
+  margin: 0.12rem 0 0;
+  color: var(--pulse-muted);
+  font-size: 0.67rem;
+}
+
+.backlog-collapse {
+  display: inline-grid;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 2rem;
+  place-items: center;
+  border: 0;
+  border-radius: 0.5rem;
+  color: #6f7581;
+  background: #fff;
+}
+
+.backlog-collapse:hover {
+  color: var(--pulse-text);
+  background: var(--pulse-primary);
+}
+
+.backlog-collapse i {
+  transition: transform 0.18s ease;
+}
+
+.backlog-collapse[aria-expanded="false"] i {
+  transform: rotate(-90deg);
+}
+
+.sprint-summary,
+.backlog-group-count {
+  color: var(--pulse-muted);
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
+.sprint-summary strong,
+.backlog-group-count strong {
+  color: var(--pulse-text);
+}
+
+.backlog-list {
+  display: grid;
+}
+
+.backlog-list.is-collapsed {
+  display: none;
+}
+
+.backlog-item {
+  display: grid;
+  min-height: 64px;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 0.8rem;
+  border-bottom: 1px solid #eceef2;
+  grid-template-columns: 18px 28px minmax(220px, 1fr) 80px 150px 34px 34px;
+  transition: background-color 0.14s ease;
+}
+
+.backlog-item:last-child {
+  border-bottom: 0;
+}
+
+.backlog-item:hover {
+  background: #fffdf1;
+}
+
+.backlog-item.is-filtered {
+  display: none;
+}
+
+.backlog-handle {
+  color: #a7acb6;
+  cursor: grab;
+}
+
+.backlog-type {
+  display: inline-grid;
+  width: 1.65rem;
+  height: 1.65rem;
+  place-items: center;
+  border-radius: 0.45rem;
+  color: #2876b9;
+  background: #e9f3ff;
+  font-size: 0.75rem;
+}
+
+.backlog-type.story {
+  color: #7559c4;
+  background: #f1edff;
+}
+
+.backlog-type.research {
+  color: #218555;
+  background: #e7f7ee;
+}
+
+.backlog-task-main {
+  display: grid;
+  align-items: center;
+  column-gap: 0.45rem;
+  grid-template-columns: auto 1fr;
+}
+
+.backlog-task-main > span {
+  color: #858b97;
+  font-size: 0.62rem;
+  font-weight: 800;
+}
+
+.backlog-task-main strong {
+  overflow: hidden;
+  font-size: 0.76rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.backlog-task-main small {
+  grid-column: 2;
+  color: var(--pulse-muted);
+  font-size: 0.61rem;
+}
+
+.backlog-assignee {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #535966;
+  font-size: 0.66rem;
+  font-weight: 700;
+}
+
+.backlog-assignee .activity-avatar {
+  width: 1.7rem;
+  height: 1.7rem;
+  font-size: 0.55rem;
+}
+
+.story-points {
+  display: inline-grid;
+  width: 1.65rem;
+  height: 1.65rem;
+  place-items: center;
+  border-radius: 50%;
+  color: #626875;
+  background: #eef0f3;
+  font-size: 0.65rem;
+  font-weight: 850;
+}
+
+.backlog-empty {
+  display: grid;
+  padding: 2.5rem 1rem;
+  place-items: center;
+  color: var(--pulse-muted);
+  text-align: center;
+}
+
+.backlog-empty i {
+  margin-bottom: 0.4rem;
+  font-size: 1.4rem;
+}
+
+.backlog-empty strong {
+  color: var(--pulse-text);
+  font-size: 0.8rem;
+}
+
+.backlog-empty span {
+  font-size: 0.68rem;
+}
+
 .role-select {
   width: auto;
   min-width: 150px;
@@ -1839,6 +2084,22 @@ a:hover {
 
   .kanban-search {
     width: min(100%, 320px);
+  }
+
+  .backlog-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .backlog-search {
+    width: min(100%, 360px);
+  }
+
+  .backlog-item {
+    grid-template-columns: 18px 28px minmax(200px, 1fr) 80px 34px 34px;
+  }
+
+  .backlog-assignee {
+    display: none;
   }
 
   .auth-shell {
@@ -1932,6 +2193,45 @@ a:hover {
 
   .task-details-grid {
     grid-template-columns: 1fr;
+  }
+
+  .backlog-toolbar {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .backlog-search,
+  .backlog-toolbar .form-select {
+    width: 100%;
+  }
+
+  .backlog-result-count {
+    margin-left: 0;
+  }
+
+  .backlog-group-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .backlog-item {
+    grid-template-columns: 28px minmax(0, 1fr) 34px;
+  }
+
+  .backlog-handle,
+  .backlog-item > .priority-badge,
+  .backlog-assignee,
+  .backlog-item > .icon-btn {
+    display: none;
+  }
+
+  .backlog-task-main {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .backlog-task-main small {
+    grid-column: auto;
   }
 
   .members-table .hide-mobile {
