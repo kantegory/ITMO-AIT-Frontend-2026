@@ -1,5 +1,15 @@
 "use strict";
 
+document.addEventListener("keydown", (event) => {
+  const target = event.target;
+  const isTyping = ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName) || target.isContentEditable;
+
+  if (event.key === "/" && !isTyping) {
+    event.preventDefault();
+    window.location.href = "search.html";
+  }
+});
+
 function showToast(message) {
   const toastElement = document.getElementById("appToast");
   if (!toastElement) return;
