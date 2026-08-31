@@ -10,10 +10,11 @@
     <link rel="stylesheet" href="assets/css/styles.css">
   </head>
   <body class="auth-page">
-    <main class="auth-shell">
+    <a class="skip-link" href="#mainContent">Перейти к основному содержимому</a>
+    <main class="auth-shell" id="mainContent" tabindex="-1">
       <section class="auth-showcase auth-showcase-login" aria-labelledby="showcase-title">
         <a class="brand brand-light" href="index.html" aria-label="T-Пульс — главная">
-          <span class="brand-mark" aria-hidden="true"><i class="bi bi-bezier2"></i></span>
+          <span class="brand-mark" aria-hidden="true"><i aria-hidden="true" class="bi bi-bezier2"></i></span>
           <span>T-Пульс</span>
         </a>
 
@@ -29,7 +30,7 @@
         <div class="auth-form-wrap">
           <div class="auth-heading">
             <span class="mobile-brand brand">
-              <span class="brand-mark" aria-hidden="true"><i class="bi bi-bezier2"></i></span>
+              <span class="brand-mark" aria-hidden="true"><i aria-hidden="true" class="bi bi-bezier2"></i></span>
               <span>T-Пульс</span>
             </span>
             <p class="eyebrow text-primary">С возвращением</p>
@@ -41,9 +42,9 @@
             <div class="mb-3">
               <label class="form-label" for="loginEmail">Электронная почта</label>
               <div class="input-group input-group-lg auth-input">
-                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                <input class="form-control" id="loginEmail" name="email" type="email" placeholder="name@example.ru" autocomplete="email" required>
-                <div class="invalid-feedback">Введите корректный адрес почты.</div>
+                <span class="input-group-text"><i aria-hidden="true" class="bi bi-envelope"></i></span>
+                <input class="form-control" id="loginEmail" name="email" type="email" placeholder="name@example.ru" autocomplete="email" aria-describedby="loginEmailError" required>
+                <div class="invalid-feedback" id="loginEmailError">Введите корректный адрес почты.</div>
               </div>
             </div>
 
@@ -53,12 +54,12 @@
                 <a class="form-link" href="#" data-bs-toggle="modal" data-bs-target="#restoreModal">Забыли пароль?</a>
               </div>
               <div class="input-group input-group-lg auth-input">
-                <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                <input class="form-control" id="loginPassword" name="password" type="password" placeholder="Не менее 6 символов" minlength="6" autocomplete="current-password" required>
+                <span class="input-group-text"><i aria-hidden="true" class="bi bi-lock"></i></span>
+                <input class="form-control" id="loginPassword" name="password" type="password" placeholder="Не менее 6 символов" minlength="6" autocomplete="current-password" aria-describedby="loginPasswordError" required>
                 <button class="btn password-toggle" type="button" data-password-toggle="loginPassword" aria-label="Показать пароль">
-                  <i class="bi bi-eye"></i>
+                  <i aria-hidden="true" class="bi bi-eye"></i>
                 </button>
-                <div class="invalid-feedback">Пароль должен содержать не менее 6 символов.</div>
+                <div class="invalid-feedback" id="loginPasswordError">Пароль должен содержать не менее 6 символов.</div>
               </div>
             </div>
 
@@ -68,12 +69,12 @@
             </div>
 
             <button class="btn btn-primary btn-lg w-100" type="submit">
-              Войти <i class="bi bi-arrow-right ms-2"></i>
+              Войти <i aria-hidden="true" class="bi bi-arrow-right ms-2"></i>
             </button>
           </form>
 
           <p class="auth-switch">Нет аккаунта? <a href="register.html">Создать бесплатно</a></p>
-          <p class="demo-note"><i class="bi bi-info-circle"></i> Демо: alexander@example.ru / pulse123</p>
+          <p class="demo-note"><i aria-hidden="true" class="bi bi-info-circle"></i> Демо: alexander@example.ru / pulse123</p>
         </div>
       </section>
     </main>
@@ -88,7 +89,7 @@
           <div class="modal-body pt-3">
             <p class="text-secondary">Укажите почту, и мы отправим ссылку для восстановления.</p>
             <label class="form-label" for="restoreEmail">Электронная почта</label>
-            <input class="form-control form-control-lg" id="restoreEmail" type="email" placeholder="name@example.ru">
+            <input class="form-control form-control-lg" id="restoreEmail" type="email" placeholder="name@example.ru" autocomplete="email">
           </div>
           <div class="modal-footer border-0 pt-0">
             <button class="btn btn-light" type="button" data-bs-dismiss="modal">Отмена</button>
@@ -101,7 +102,7 @@
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
       <div class="toast" id="appToast" role="status" aria-live="polite" aria-atomic="true">
         <div class="toast-header">
-          <span class="toast-mark me-2"><i class="bi bi-check"></i></span>
+          <span class="toast-mark me-2"><i aria-hidden="true" class="bi bi-check"></i></span>
           <strong class="me-auto">T-Пульс</strong>
           <button class="btn-close" type="button" data-bs-dismiss="toast" aria-label="Закрыть"></button>
         </div>

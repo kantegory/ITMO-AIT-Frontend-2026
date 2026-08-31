@@ -203,12 +203,28 @@ document.querySelectorAll(".sidebar-profile a[href='index.html']").forEach((link
 });
 
 document.querySelectorAll("[data-complete-task]").forEach((button) => {
+  const taskTitle = button.closest(".task-row")?.querySelector(".task-main strong")?.textContent.trim() || "задачу";
+  const initialCompleted = button.classList.contains("is-complete");
+  button.setAttribute("aria-pressed", String(initialCompleted));
+  button.setAttribute("aria-label", initialCompleted
+    ? `Вернуть задачу «${taskTitle}» в работу`
+    : `Отметить задачу «${taskTitle}» выполненной`);
+
   button.addEventListener("click", () => {
     const taskMain = button.closest(".task-row")?.querySelector(".task-main");
     const completed = button.classList.toggle("is-complete");
     taskMain?.classList.toggle("is-complete", completed);
-    button.setAttribute("aria-label", completed ? "Вернуть задачу в работу" : "Отметить задачу выполненной");
+    button.setAttribute("aria-pressed", String(completed));
+    button.setAttribute("aria-label", completed
+      ? `Вернуть задачу «${taskTitle}» в работу`
+      : `Отметить задачу «${taskTitle}» выполненной`);
   });
+});
+
+document.querySelectorAll("[data-member-name]").forEach((row) => {
+  const memberName = row.dataset.memberName;
+  row.querySelector("[data-role-select]")?.setAttribute("aria-label", `Роль участника ${memberName}`);
+  row.querySelector("button.icon-btn")?.setAttribute("aria-label", `Действия с участником ${memberName}`);
 });
 
 document.querySelector("[data-mark-read]")?.addEventListener("click", (event) => {
@@ -250,21 +266,27 @@ function renderSearchItem(task) {
   const projectName = task.projectId === 2 ? "Редизайн сайта" : "Мобильное приложение";
 
   return `<article class="result-card" data-search-item data-title="${escapeHtml(task.title)}" data-status="${state}" data-priority="${escapeHtml(task.priority)}" data-assignee="${escapeHtml(task.assigneeCode)}">
-    <span class="result-icon"><i class="bi bi-check2-square"></i></span>
+    <span class="result-icon"><i aria-hidden="true" class="bi bi-check2-square"></i></span>
     <div><h3>${escapeHtml(task.title)}</h3><p>${escapeHtml(projectName)} · ${escapeHtml(task.type)}</p></div>
     <span class="status-pill ${status.className}">${status.label}</span>
     <span class="priority-badge priority-${escapeHtml(task.priority)}-bg">${priority}</span>
     <div class="result-assignee"><span class="activity-avatar avatar-${escapeHtml(task.avatar)}">${escapeHtml(task.initials)}</span>${escapeHtml(task.assignee.split(" ")[0])}</div>
-    <span class="result-date"><i class="bi bi-calendar3"></i> ${escapeHtml(task.due)}</span>
+    <span class="result-date"><i aria-hidden="true" class="bi bi-calendar3"></i> ${escapeHtml(task.due)}</span>
   </article>`;
 }
 
 async function loadSearchTasks() {
   if (!searchForm) return;
   const user = getCurrentUser();
-  const tasks = await api.getTasks({ userId: user.id, _sort: "id", _order: "desc" });
-  document.getElementById("searchResults").innerHTML = tasks.map(renderSearchItem).join("");
-  filterSearchResults();
+  const results = document.getElementById("searchResults");
+  results.setAttribute("aria-busy", "true");
+  try {
+    const tasks = await api.getTasks({ userId: user.id, _sort: "id", _order: "desc" });
+    results.innerHTML = tasks.map(renderSearchItem).join("");
+    filterSearchResults();
+  } finally {
+    results.setAttribute("aria-busy", "false");
+  }
 }
 
 searchForm?.querySelectorAll("input, select").forEach((control) => {
@@ -281,8 +303,12 @@ document.querySelector("[data-empty-reset]")?.addEventListener("click", () => {
 
 document.querySelectorAll(".view-switch button").forEach((button) => {
   button.addEventListener("click", () => {
-    document.querySelectorAll(".view-switch button").forEach((item) => item.classList.remove("active"));
+    document.querySelectorAll(".view-switch button").forEach((item) => {
+      item.classList.remove("active");
+      item.setAttribute("aria-pressed", "false");
+    });
     button.classList.add("active");
+    button.setAttribute("aria-pressed", "true");
   });
 });
 
@@ -303,6 +329,8 @@ document.querySelector("[data-favorite]")?.addEventListener("click", (event) => 
   const active = icon.classList.toggle("bi-star-fill");
   icon.classList.toggle("bi-star", !active);
   button.classList.toggle("btn-warning", active);
+  button.setAttribute("aria-pressed", String(active));
+  button.setAttribute("aria-label", active ? "Удалить проект из избранного" : "Добавить проект в избранное");
   showToast(active ? "Проект добавлен в избранное" : "Проект удалён из избранного");
 });
 
@@ -312,6 +340,17 @@ const boardAssigneeFilter = document.getElementById("boardAssigneeFilter");
 const boardPriorityFilter = document.getElementById("boardPriorityFilter");
 let draggedKanbanCard = null;
 let cardWasMoved = false;
+
+function setKanbanCardAccessibility(card) {
+  const key = card.dataset.taskId;
+  const title = card.querySelector("h4")?.textContent.trim();
+  const priority = card.dataset.priority;
+  const assignee = card.dataset.assignee;
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-label", `${key}: ${title}. ${priority} приоритет. Исполнитель: ${assignee}. Открыть подробности`);
+}
+
+kanbanBoard?.querySelectorAll("[data-kanban-card]").forEach(setKanbanCardAccessibility);
 
 function renderKanbanCard(task) {
   const type = typeMeta[task.type] || typeMeta["Задача"];
@@ -331,10 +370,11 @@ function renderKanbanCard(task) {
   card.dataset.priority = priority;
   card.dataset.assignee = task.assignee;
   card.dataset.due = task.due;
-  card.innerHTML = `<div class="kanban-card-top"><span class="task-type ${type.className}"><i class="bi ${type.icon}"></i> ${escapeHtml(task.type)}</span><span class="kanban-card-key">${escapeHtml(task.key)}</span></div>
+  card.innerHTML = `<div class="kanban-card-top"><span class="task-type ${type.className}"><i aria-hidden="true" class="bi ${type.icon}"></i> ${escapeHtml(task.type)}</span><span class="kanban-card-key">${escapeHtml(task.key)}</span></div>
     <h4>${escapeHtml(task.title)}</h4>
     <div class="kanban-labels">${labels}</div>
-    <div class="kanban-card-footer"><span class="task-priority ${escapeHtml(task.priority)}" title="${priority} приоритет"><i class="bi bi-arrow-up"></i></span><span class="task-due ${dueClass}"><i class="bi ${dueIcon}"></i> ${escapeHtml(task.due)}</span><span class="activity-avatar avatar-${escapeHtml(task.avatar)}" title="${escapeHtml(task.assignee)}">${escapeHtml(task.initials)}</span></div>`;
+    <div class="kanban-card-footer"><span class="task-priority ${escapeHtml(task.priority)}" title="${priority} приоритет"><i aria-hidden="true" class="bi bi-arrow-up"></i></span><span class="task-due ${dueClass}"><i aria-hidden="true" class="bi ${dueIcon}"></i> ${escapeHtml(task.due)}</span><span class="activity-avatar avatar-${escapeHtml(task.avatar)}" title="${escapeHtml(task.assignee)}">${escapeHtml(task.initials)}</span></div>`;
+  setKanbanCardAccessibility(card);
   return card;
 }
 
@@ -495,7 +535,7 @@ function renderBacklogItem(task) {
   item.dataset.key = task.key;
   item.dataset.priority = priority;
   item.dataset.assignee = task.assignee;
-  item.innerHTML = `<span class="backlog-handle"><i class="bi bi-grip-vertical"></i></span><span class="backlog-type task"><i class="bi ${type.icon}"></i></span><div class="backlog-task-main"><span>${escapeHtml(task.key)}</span><strong>${escapeHtml(task.title)}</strong><small>${escapeHtml((task.labels || []).join(" · ") || task.type)}</small></div><span class="priority-badge priority-${escapeHtml(task.priority)}-bg">${priority}</span><span class="backlog-assignee"><span class="activity-avatar avatar-${escapeHtml(task.avatar)}">${escapeHtml(task.initials)}</span><span>${escapeHtml(task.assignee)}</span></span><span class="story-points">${escapeHtml(task.points)}</span><button class="btn icon-btn btn-sm" type="button" aria-label="Действия задачи"><i class="bi bi-three-dots"></i></button>`;
+  item.innerHTML = `<span class="backlog-handle"><i aria-hidden="true" class="bi bi-grip-vertical"></i></span><span class="backlog-type task"><i aria-hidden="true" class="bi ${type.icon}"></i></span><div class="backlog-task-main"><span>${escapeHtml(task.key)}</span><strong>${escapeHtml(task.title)}</strong><small>${escapeHtml((task.labels || []).join(" · ") || task.type)}</small></div><span class="priority-badge priority-${escapeHtml(task.priority)}-bg">${priority}</span><span class="backlog-assignee"><span class="activity-avatar avatar-${escapeHtml(task.avatar)}">${escapeHtml(task.initials)}</span><span>${escapeHtml(task.assignee)}</span></span><span class="story-points">${escapeHtml(task.points)}</span><button class="btn icon-btn btn-sm" type="button" aria-label="Действия задачи"><i aria-hidden="true" class="bi bi-three-dots"></i></button>`;
   return item;
 }
 
@@ -628,7 +668,7 @@ document.getElementById("commentForm")?.addEventListener("submit", async (event)
 function renderMember(member, currentUser) {
   const isCurrentUser = member.userId === currentUser.id;
   const statusClass = member.status === "Онлайн" ? "status-active" : "status-planning";
-  return `<tr data-member-name="${escapeHtml(member.name)}"><td><div class="member-cell"><span class="activity-avatar avatar-${escapeHtml(member.avatar)}">${escapeHtml(member.initials)}</span><div><strong>${escapeHtml(member.name)}</strong><span>${escapeHtml(member.email)}</span></div></div></td><td class="hide-mobile">${escapeHtml(member.projectsCount)} проекта</td><td><select class="form-select form-select-sm role-select" data-role-select data-member-id="${member.id}" ${isCurrentUser ? "disabled" : ""}><option ${member.role === "Администратор" ? "selected" : ""}>Администратор</option><option ${member.role === "Участник" ? "selected" : ""}>Участник</option><option ${member.role === "Наблюдатель" ? "selected" : ""}>Наблюдатель</option></select></td><td class="hide-mobile"><span class="status-pill ${statusClass}">${escapeHtml(member.status)}</span></td><td><button class="btn icon-btn btn-sm" type="button" aria-label="Меню участника"><i class="bi bi-three-dots"></i></button></td></tr>`;
+  return `<tr data-member-name="${escapeHtml(member.name)}"><td><div class="member-cell"><span class="activity-avatar avatar-${escapeHtml(member.avatar)}">${escapeHtml(member.initials)}</span><div><strong>${escapeHtml(member.name)}</strong><span>${escapeHtml(member.email)}</span></div></div></td><td class="hide-mobile">${escapeHtml(member.projectsCount)} проекта</td><td><select class="form-select form-select-sm role-select" data-role-select data-member-id="${member.id}" aria-label="Роль участника ${escapeHtml(member.name)}" ${isCurrentUser ? "disabled" : ""}><option ${member.role === "Администратор" ? "selected" : ""}>Администратор</option><option ${member.role === "Участник" ? "selected" : ""}>Участник</option><option ${member.role === "Наблюдатель" ? "selected" : ""}>Наблюдатель</option></select></td><td class="hide-mobile"><span class="status-pill ${statusClass}">${escapeHtml(member.status)}</span></td><td><button class="btn icon-btn btn-sm" type="button" aria-label="Действия с участником ${escapeHtml(member.name)}"><i aria-hidden="true" class="bi bi-three-dots"></i></button></td></tr>`;
 }
 
 async function loadMembers() {

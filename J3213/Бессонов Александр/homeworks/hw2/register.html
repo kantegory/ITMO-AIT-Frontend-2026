@@ -10,10 +10,11 @@
     <link rel="stylesheet" href="assets/css/styles.css">
   </head>
   <body class="auth-page">
-    <main class="auth-shell auth-shell-register">
+    <a class="skip-link" href="#mainContent">Перейти к основному содержимому</a>
+    <main class="auth-shell auth-shell-register" id="mainContent" tabindex="-1">
       <section class="auth-showcase register-showcase" aria-labelledby="register-showcase-title">
         <a class="brand brand-light" href="index.html" aria-label="T-Пульс — главная">
-          <span class="brand-mark" aria-hidden="true"><i class="bi bi-bezier2"></i></span>
+          <span class="brand-mark" aria-hidden="true"><i aria-hidden="true" class="bi bi-bezier2"></i></span>
           <span>T-Пульс</span>
         </a>
 
@@ -43,7 +44,7 @@
         <div class="auth-form-wrap register-form-wrap">
           <div class="auth-heading">
             <span class="mobile-brand brand">
-              <span class="brand-mark" aria-hidden="true"><i class="bi bi-bezier2"></i></span>
+              <span class="brand-mark" aria-hidden="true"><i aria-hidden="true" class="bi bi-bezier2"></i></span>
               <span>T-Пульс</span>
             </span>
             <p class="eyebrow text-primary">Новый аккаунт</p>
@@ -55,41 +56,41 @@
             <div class="row g-3">
               <div class="col-sm-6">
                 <label class="form-label" for="firstName">Имя</label>
-                <input class="form-control form-control-lg" id="firstName" type="text" placeholder="Александр" autocomplete="given-name" required>
-                <div class="invalid-feedback">Укажите имя.</div>
+                <input class="form-control form-control-lg" id="firstName" name="given-name" type="text" placeholder="Александр" autocomplete="given-name" aria-describedby="firstNameError" required>
+                <div class="invalid-feedback" id="firstNameError">Укажите имя.</div>
               </div>
               <div class="col-sm-6">
                 <label class="form-label" for="lastName">Фамилия</label>
-                <input class="form-control form-control-lg" id="lastName" type="text" placeholder="Бессонов" autocomplete="family-name" required>
-                <div class="invalid-feedback">Укажите фамилию.</div>
+                <input class="form-control form-control-lg" id="lastName" name="family-name" type="text" placeholder="Бессонов" autocomplete="family-name" aria-describedby="lastNameError" required>
+                <div class="invalid-feedback" id="lastNameError">Укажите фамилию.</div>
               </div>
               <div class="col-12">
                 <label class="form-label" for="registerEmail">Электронная почта</label>
-                <input class="form-control form-control-lg" id="registerEmail" type="email" placeholder="name@example.ru" autocomplete="email" required>
-                <div class="invalid-feedback">Введите корректный адрес почты.</div>
+                <input class="form-control form-control-lg" id="registerEmail" name="email" type="email" placeholder="name@example.ru" autocomplete="email" aria-describedby="registerEmailError" required>
+                <div class="invalid-feedback" id="registerEmailError">Введите корректный адрес почты.</div>
               </div>
               <div class="col-12">
                 <label class="form-label" for="workspaceName">Название команды</label>
-                <input class="form-control form-control-lg" id="workspaceName" type="text" placeholder="Например, Digital Lab" required>
-                <div class="invalid-feedback">Укажите название команды.</div>
+                <input class="form-control form-control-lg" id="workspaceName" name="organization" type="text" placeholder="Например, Digital Lab" autocomplete="organization" aria-describedby="workspaceNameError" required>
+                <div class="invalid-feedback" id="workspaceNameError">Укажите название команды.</div>
               </div>
               <div class="col-12">
                 <label class="form-label" for="registerPassword">Пароль</label>
                 <div class="input-group input-group-lg auth-input plain-input">
-                  <input class="form-control" id="registerPassword" type="password" placeholder="Не менее 6 символов" minlength="6" autocomplete="new-password" required>
-                  <button class="btn password-toggle" type="button" data-password-toggle="registerPassword" aria-label="Показать пароль"><i class="bi bi-eye"></i></button>
-                  <div class="invalid-feedback">Пароль должен содержать не менее 6 символов.</div>
+                  <input class="form-control" id="registerPassword" name="new-password" type="password" placeholder="Не менее 6 символов" minlength="6" autocomplete="new-password" aria-describedby="registerPasswordError" required>
+                  <button class="btn password-toggle" type="button" data-password-toggle="registerPassword" aria-label="Показать пароль"><i aria-hidden="true" class="bi bi-eye"></i></button>
+                  <div class="invalid-feedback" id="registerPasswordError">Пароль должен содержать не менее 6 символов.</div>
                 </div>
               </div>
             </div>
 
             <div class="form-check my-4">
-              <input class="form-check-input" id="terms" type="checkbox" required>
+              <input class="form-check-input" id="terms" name="terms" type="checkbox" aria-describedby="termsError" required>
               <label class="form-check-label" for="terms">Я принимаю <a href="#">условия использования</a></label>
-              <div class="invalid-feedback">Необходимо принять условия.</div>
+              <div class="invalid-feedback" id="termsError">Необходимо принять условия.</div>
             </div>
 
-            <button class="btn btn-primary btn-lg w-100" type="submit">Создать аккаунт <i class="bi bi-arrow-right ms-2"></i></button>
+            <button class="btn btn-primary btn-lg w-100" type="submit">Создать аккаунт <i aria-hidden="true" class="bi bi-arrow-right ms-2"></i></button>
           </form>
           <p class="auth-switch">Уже зарегистрированы? <a href="index.html">Войти</a></p>
         </div>
