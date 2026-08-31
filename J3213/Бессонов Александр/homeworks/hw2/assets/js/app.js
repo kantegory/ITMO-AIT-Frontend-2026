@@ -434,6 +434,29 @@ function openTaskDetails(card) {
   bootstrap.Modal.getOrCreateInstance(document.getElementById("taskDetailsModal")).show();
 }
 
+function getKanbanColumnName(dropzone) {
+  return dropzone.closest("[data-kanban-column]")?.querySelector("h3")?.textContent.trim() || "новый статус";
+}
+
+async function moveKanbanCard(card, dropzone) {
+  const previousDropzone = card.parentElement;
+  dropzone.append(card);
+  updateKanbanCounts();
+  card.focus();
+
+  try {
+    if (card.dataset.recordId) {
+      await api.updateTask(card.dataset.recordId, { status: dropzone.dataset.dropzone });
+    }
+    showToast(`Задача ${card.dataset.taskId} перемещена в колонку «${getKanbanColumnName(dropzone)}»`);
+  } catch (error) {
+    previousDropzone?.append(card);
+    updateKanbanCounts();
+    card.focus();
+    showToast(`Не удалось изменить статус: ${error.message}`);
+  }
+}
+
 kanbanBoard?.addEventListener("dragstart", (event) => {
   const card = event.target.closest("[data-kanban-card]");
   if (!card) return;
@@ -458,17 +481,8 @@ kanbanBoard?.addEventListener("drop", async (event) => {
   event.preventDefault();
 
   const card = draggedKanbanCard;
-  dropzone.append(card);
   cardWasMoved = true;
-  updateKanbanCounts();
-
-  try {
-    await api.updateTask(card.dataset.recordId, { status: dropzone.dataset.dropzone });
-    showToast(`Статус задачи ${card.dataset.taskId} сохранён в API`);
-  } catch (error) {
-    showToast(error.message);
-    await loadKanbanTasks();
-  }
+  await moveKanbanCard(card, dropzone);
 });
 
 kanbanBoard?.addEventListener("dragend", () => {
@@ -482,11 +496,29 @@ kanbanBoard?.addEventListener("click", (event) => {
   if (card && !cardWasMoved) openTaskDetails(card);
 });
 
-kanbanBoard?.addEventListener("keydown", (event) => {
+kanbanBoard?.addEventListener("keydown", async (event) => {
   const card = event.target.closest("[data-kanban-card]");
-  if (card && (event.key === "Enter" || event.key === " ")) {
+  if (!card) return;
+
+  if (event.key === "Enter" || event.key === " ") {
     event.preventDefault();
     openTaskDetails(card);
+    return;
+  }
+
+  if (event.ctrlKey && (event.key === "ArrowLeft" || event.key === "ArrowRight")) {
+    event.preventDefault();
+    const columns = [...kanbanBoard.querySelectorAll("[data-kanban-column]")];
+    const currentColumnIndex = columns.indexOf(card.closest("[data-kanban-column]"));
+    const direction = event.key === "ArrowRight" ? 1 : -1;
+    const nextColumn = columns[currentColumnIndex + direction];
+
+    if (!nextColumn) {
+      showToast("Задача уже находится в крайней колонке");
+      return;
+    }
+
+    await moveKanbanCard(card, nextColumn.querySelector("[data-dropzone]"));
   }
 });
 
