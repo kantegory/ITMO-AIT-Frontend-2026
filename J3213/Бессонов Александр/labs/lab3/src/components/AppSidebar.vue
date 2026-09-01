@@ -1,8 +1,27 @@
 <script setup>
 import { ChevronDown, GitBranch, Kanban, LayoutDashboard, ListChecks, LogOut, Users, X } from '@lucide/vue'
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
 
 defineProps({ open: { type: Boolean, default: false } })
 defineEmits(['close'])
+
+const auth = useAuthStore()
+const router = useRouter()
+const displayName = computed(() => {
+  if (!auth.user?.firstName) return 'Александр Б.'
+  return `${auth.user.firstName} ${auth.user.lastName?.[0] ?? ''}.`
+})
+const initials = computed(() => {
+  if (!auth.user?.firstName) return 'АБ'
+  return `${auth.user.firstName[0]}${auth.user.lastName?.[0] ?? ''}`.toUpperCase()
+})
+
+async function logout() {
+  auth.logout()
+  await router.replace('/login')
+}
 </script>
 
 <template>
@@ -16,10 +35,10 @@ defineEmits(['close'])
       <button class="sidebar-close" type="button" aria-label="Закрыть меню" @click="$emit('close')"><X /></button>
     </div>
 
-    <a class="brand brand-light sidebar-brand" href="#pageTitle" @click="$emit('close')">
+    <RouterLink class="brand brand-light sidebar-brand" to="/dashboard" @click="$emit('close')">
       <span class="brand-mark"><GitBranch :size="22" /></span>
       <span>Т‑Пульс</span>
-    </a>
+    </RouterLink>
 
     <button class="workspace-switcher" type="button">
       <span class="workspace-logo">DL</span>
@@ -29,7 +48,7 @@ defineEmits(['close'])
 
     <nav class="sidebar-nav" aria-label="Основная навигация">
       <span class="sidebar-caption">Работа</span>
-      <a class="active" href="#pageTitle" @click="$emit('close')"><LayoutDashboard /><span>Обзор</span></a>
+      <RouterLink to="/dashboard" @click="$emit('close')"><LayoutDashboard /><span>Обзор</span></RouterLink>
       <a href="#projects" @click="$emit('close')"><Kanban /><span>Проект</span></a>
       <a href="#tasks" @click="$emit('close')"><ListChecks /><span>Бэклог</span></a>
       <a href="#activity" @click="$emit('close')"><Users /><span>Команда</span></a>
@@ -40,9 +59,9 @@ defineEmits(['close'])
     </nav>
 
     <div class="sidebar-profile">
-      <span class="user-avatar">АБ</span>
-      <span><strong>Александр Б.</strong><small>Администратор</small></span>
-      <button type="button" aria-label="Выйти"><LogOut :size="19" /></button>
+      <span class="user-avatar">{{ initials }}</span>
+      <span><strong>{{ displayName }}</strong><small>{{ auth.user?.role ?? 'Администратор' }}</small></span>
+      <button type="button" aria-label="Выйти" @click="logout"><LogOut :size="19" /></button>
     </div>
   </aside>
 </template>

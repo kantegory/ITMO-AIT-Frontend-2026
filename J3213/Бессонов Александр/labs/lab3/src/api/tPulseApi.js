@@ -1,6 +1,26 @@
 import { http } from './http'
 
 export const tPulseApi = {
+  async login(email, password) {
+    const { data } = await http.post('/login', { email, password })
+    return data
+  },
+  async register(profile) {
+    const { data } = await http.post('/register', profile)
+    return data
+  },
+  async createWorkspace(workspace) {
+    const { data } = await http.post('/workspaces', workspace)
+    return data
+  },
+  async createProject(project) {
+    const { data } = await http.post('/projects', project)
+    return data
+  },
+  async updateUser(id, changes) {
+    const { data } = await http.patch(`/users/${id}`, changes)
+    return data
+  },
   async getTasks(params = {}) {
     const { data } = await http.get('/tasks', { params })
     return data
@@ -20,6 +40,10 @@ export const tPulseApi = {
   },
   async getMembers(params = {}) {
     const { data } = await http.get('/members', { params })
+    return data
+  },
+  async createMember(member) {
+    const { data } = await http.post('/members', member)
     return data
   },
 }
