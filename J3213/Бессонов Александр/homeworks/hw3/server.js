@@ -21,7 +21,7 @@ server.use(auth.rewriter({
 server.use(auth);
 server.use(router);
 
-const port = 3000;
+const port = Number(process.env.TPULSE_PORT) || 3000;
 server.listen(port, () => {
   console.log(`T-Пульс запущен: http://localhost:${port}`);
   console.log(`REST API доступен: http://localhost:${port}/tasks`);
