@@ -1,7 +1,7 @@
 "use strict";
 
 window.TPulseApi = (() => {
-  const apiOrigin = window.location.port === "3000" ? "" : "http://localhost:3000";
+  const apiOrigin = window.location.origin;
   const tokenKey = "tpulseAccessToken";
   const userKey = "tpulseCurrentUser";
 
@@ -52,7 +52,7 @@ window.TPulseApi = (() => {
     try {
       response = await fetch(apiOrigin + path, { ...options, headers });
     } catch (error) {
-      throw new Error("API недоступен. Запустите npm start в папке lab2.");
+      throw new Error("API недоступен. Запустите npm start в папке проекта.");
     }
 
     const contentType = response.headers.get("content-type") || "";
