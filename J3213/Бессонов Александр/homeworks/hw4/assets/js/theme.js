@@ -2,6 +2,7 @@
 
 (() => {
   const storageKey = "t-pulse-theme";
+  const iconSpritePath = "assets/icons/sprite.svg";
   const root = document.documentElement;
   const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -39,12 +40,15 @@
   function updateToggle(button) {
     const darkThemeEnabled = root.dataset.theme === "dark";
     const action = darkThemeEnabled ? "Включить светлую тему" : "Включить тёмную тему";
-    const icon = button.querySelector("i");
+    const icon = button.querySelector("use");
 
     button.setAttribute("aria-label", action);
     button.setAttribute("title", action);
     button.setAttribute("aria-pressed", String(darkThemeEnabled));
-    icon.className = darkThemeEnabled ? "bi bi-sun" : "bi bi-moon-stars";
+    icon.setAttribute(
+      "href",
+      `${iconSpritePath}#icon-${darkThemeEnabled ? "sun" : "moon-stars"}`,
+    );
   }
 
   function updateToggles() {
@@ -67,7 +71,7 @@
     button.type = "button";
     button.className = "btn icon-btn theme-toggle";
     button.dataset.themeToggle = "";
-    button.innerHTML = '<i aria-hidden="true" class="bi"></i>';
+    button.innerHTML = `<svg aria-hidden="true" class="icon" focusable="false"><use href="${iconSpritePath}#icon-moon-stars"></use></svg>`;
     button.addEventListener("click", () => {
       const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
       applyTheme(nextTheme, true);

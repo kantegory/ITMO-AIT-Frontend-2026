@@ -1,6 +1,7 @@
 "use strict";
 
 const api = window.TPulseApi;
+const iconSpritePath = "assets/icons/sprite.svg";
 
 const priorityLabels = {
   high: "Высокий",
@@ -23,13 +24,13 @@ const statusMeta = {
 };
 
 const typeMeta = {
-  "История": { className: "task-type-story", icon: "bi-bookmark-check" },
-  "Разработка": { className: "task-type-dev", icon: "bi-code-slash" },
-  "Дизайн": { className: "task-type-design", icon: "bi-palette" },
-  "Ошибка": { className: "task-type-bug", icon: "bi-bug" },
-  "Контент": { className: "task-type-content", icon: "bi-file-text" },
-  "Исследование": { className: "task-type-research", icon: "bi-lightbulb" },
-  "Задача": { className: "task-type-dev", icon: "bi-check2-square" }
+  "История": { className: "task-type-story", icon: "bookmark-check" },
+  "Разработка": { className: "task-type-dev", icon: "code-slash" },
+  "Дизайн": { className: "task-type-design", icon: "palette" },
+  "Ошибка": { className: "task-type-bug", icon: "bug" },
+  "Контент": { className: "task-type-content", icon: "file-text" },
+  "Исследование": { className: "task-type-research", icon: "lightbulb" },
+  "Задача": { className: "task-type-dev", icon: "check2-square" }
 };
 
 const assignees = {
@@ -46,6 +47,19 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+function getIconHref(name) {
+  return `${iconSpritePath}#icon-${name}`;
+}
+
+function iconMarkup(name, extraClass = "") {
+  const className = ["icon", extraClass].filter(Boolean).join(" ");
+  return `<svg aria-hidden="true" class="${className}" focusable="false"><use href="${getIconHref(escapeHtml(name))}"></use></svg>`;
+}
+
+function setSpriteIcon(useElement, name) {
+  useElement?.setAttribute("href", getIconHref(name));
 }
 
 function showToast(message) {
@@ -119,11 +133,11 @@ document.addEventListener("keydown", (event) => {
 document.querySelectorAll("[data-password-toggle]").forEach((button) => {
   button.addEventListener("click", () => {
     const input = document.getElementById(button.dataset.passwordToggle);
-    const icon = button.querySelector("i");
+    const icon = button.querySelector("use");
     const passwordVisible = input.type === "text";
 
     input.type = passwordVisible ? "password" : "text";
-    icon.className = passwordVisible ? "bi bi-eye" : "bi bi-eye-slash";
+    setSpriteIcon(icon, passwordVisible ? "eye" : "eye-slash");
     button.setAttribute("aria-label", passwordVisible ? "Показать пароль" : "Скрыть пароль");
   });
 });
@@ -266,12 +280,12 @@ function renderSearchItem(task) {
   const projectName = task.projectId === 2 ? "Редизайн сайта" : "Мобильное приложение";
 
   return `<article class="result-card" data-search-item data-title="${escapeHtml(task.title)}" data-status="${state}" data-priority="${escapeHtml(task.priority)}" data-assignee="${escapeHtml(task.assigneeCode)}">
-    <span class="result-icon"><i aria-hidden="true" class="bi bi-check2-square"></i></span>
+    <span class="result-icon"><svg aria-hidden="true" class="icon" focusable="false"><use href="assets/icons/sprite.svg#icon-check2-square"></use></svg></span>
     <div><h3>${escapeHtml(task.title)}</h3><p>${escapeHtml(projectName)} · ${escapeHtml(task.type)}</p></div>
     <span class="status-pill ${status.className}">${status.label}</span>
     <span class="priority-badge priority-${escapeHtml(task.priority)}-bg">${priority}</span>
     <div class="result-assignee"><span class="activity-avatar avatar-${escapeHtml(task.avatar)}">${escapeHtml(task.initials)}</span>${escapeHtml(task.assignee.split(" ")[0])}</div>
-    <span class="result-date"><i aria-hidden="true" class="bi bi-calendar3"></i> ${escapeHtml(task.due)}</span>
+    <span class="result-date"><svg aria-hidden="true" class="icon" focusable="false"><use href="assets/icons/sprite.svg#icon-calendar3"></use></svg> ${escapeHtml(task.due)}</span>
   </article>`;
 }
 
@@ -325,9 +339,9 @@ document.querySelector("[data-save-filter]")?.addEventListener("click", () => {
 
 document.querySelector("[data-favorite]")?.addEventListener("click", (event) => {
   const button = event.currentTarget;
-  const icon = button.querySelector("i");
-  const active = icon.classList.toggle("bi-star-fill");
-  icon.classList.toggle("bi-star", !active);
+  const icon = button.querySelector("use");
+  const active = button.getAttribute("aria-pressed") !== "true";
+  setSpriteIcon(icon, active ? "star-fill" : "star");
   button.classList.toggle("btn-warning", active);
   button.setAttribute("aria-pressed", String(active));
   button.setAttribute("aria-label", active ? "Удалить проект из избранного" : "Добавить проект в избранное");
@@ -357,7 +371,7 @@ function renderKanbanCard(task) {
   const priority = priorityLabels[task.priority] || priorityLabels.medium;
   const labels = (task.labels || []).map((label) => `<span>${escapeHtml(label)}</span>`).join("");
   const dueClass = task.status === "done" ? "is-done" : task.due === "Сегодня" ? "is-overdue" : "";
-  const dueIcon = task.status === "done" ? "bi-check2-circle" : task.due === "Сегодня" ? "bi-clock" : "bi-calendar3";
+  const dueIcon = task.status === "done" ? "check2-circle" : task.due === "Сегодня" ? "clock" : "calendar3";
 
   const card = document.createElement("article");
   card.className = `kanban-card priority-${task.priority}`;
@@ -370,10 +384,10 @@ function renderKanbanCard(task) {
   card.dataset.priority = priority;
   card.dataset.assignee = task.assignee;
   card.dataset.due = task.due;
-  card.innerHTML = `<div class="kanban-card-top"><span class="task-type ${type.className}"><i aria-hidden="true" class="bi ${type.icon}"></i> ${escapeHtml(task.type)}</span><span class="kanban-card-key">${escapeHtml(task.key)}</span></div>
+  card.innerHTML = `<div class="kanban-card-top"><span class="task-type ${type.className}">${iconMarkup(type.icon)} ${escapeHtml(task.type)}</span><span class="kanban-card-key">${escapeHtml(task.key)}</span></div>
     <h4>${escapeHtml(task.title)}</h4>
     <div class="kanban-labels">${labels}</div>
-    <div class="kanban-card-footer"><span class="task-priority ${escapeHtml(task.priority)}" title="${priority} приоритет"><i aria-hidden="true" class="bi bi-arrow-up"></i></span><span class="task-due ${dueClass}"><i aria-hidden="true" class="bi ${dueIcon}"></i> ${escapeHtml(task.due)}</span><span class="activity-avatar avatar-${escapeHtml(task.avatar)}" title="${escapeHtml(task.assignee)}">${escapeHtml(task.initials)}</span></div>`;
+    <div class="kanban-card-footer"><span class="task-priority ${escapeHtml(task.priority)}" title="${priority} приоритет"><svg aria-hidden="true" class="icon" focusable="false"><use href="assets/icons/sprite.svg#icon-arrow-up"></use></svg></span><span class="task-due ${dueClass}">${iconMarkup(dueIcon)} ${escapeHtml(task.due)}</span><span class="activity-avatar avatar-${escapeHtml(task.avatar)}" title="${escapeHtml(task.assignee)}">${escapeHtml(task.initials)}</span></div>`;
   setKanbanCardAccessibility(card);
   return card;
 }
@@ -567,7 +581,7 @@ function renderBacklogItem(task) {
   item.dataset.key = task.key;
   item.dataset.priority = priority;
   item.dataset.assignee = task.assignee;
-  item.innerHTML = `<span class="backlog-handle"><i aria-hidden="true" class="bi bi-grip-vertical"></i></span><span class="backlog-type task"><i aria-hidden="true" class="bi ${type.icon}"></i></span><div class="backlog-task-main"><span>${escapeHtml(task.key)}</span><strong>${escapeHtml(task.title)}</strong><small>${escapeHtml((task.labels || []).join(" · ") || task.type)}</small></div><span class="priority-badge priority-${escapeHtml(task.priority)}-bg">${priority}</span><span class="backlog-assignee"><span class="activity-avatar avatar-${escapeHtml(task.avatar)}">${escapeHtml(task.initials)}</span><span>${escapeHtml(task.assignee)}</span></span><span class="story-points">${escapeHtml(task.points)}</span><button class="btn icon-btn btn-sm" type="button" aria-label="Действия задачи"><i aria-hidden="true" class="bi bi-three-dots"></i></button>`;
+  item.innerHTML = `<span class="backlog-handle"><svg aria-hidden="true" class="icon" focusable="false"><use href="assets/icons/sprite.svg#icon-grip-vertical"></use></svg></span><span class="backlog-type task">${iconMarkup(type.icon)}</span><div class="backlog-task-main"><span>${escapeHtml(task.key)}</span><strong>${escapeHtml(task.title)}</strong><small>${escapeHtml((task.labels || []).join(" · ") || task.type)}</small></div><span class="priority-badge priority-${escapeHtml(task.priority)}-bg">${priority}</span><span class="backlog-assignee"><span class="activity-avatar avatar-${escapeHtml(task.avatar)}">${escapeHtml(task.initials)}</span><span>${escapeHtml(task.assignee)}</span></span><span class="story-points">${escapeHtml(task.points)}</span><button class="btn icon-btn btn-sm" type="button" aria-label="Действия задачи"><svg aria-hidden="true" class="icon" focusable="false"><use href="assets/icons/sprite.svg#icon-three-dots"></use></svg></button>`;
   return item;
 }
 
@@ -700,7 +714,7 @@ document.getElementById("commentForm")?.addEventListener("submit", async (event)
 function renderMember(member, currentUser) {
   const isCurrentUser = member.userId === currentUser.id;
   const statusClass = member.status === "Онлайн" ? "status-active" : "status-planning";
-  return `<tr data-member-name="${escapeHtml(member.name)}"><td><div class="member-cell"><span class="activity-avatar avatar-${escapeHtml(member.avatar)}">${escapeHtml(member.initials)}</span><div><strong>${escapeHtml(member.name)}</strong><span>${escapeHtml(member.email)}</span></div></div></td><td class="hide-mobile">${escapeHtml(member.projectsCount)} проекта</td><td><select class="form-select form-select-sm role-select" data-role-select data-member-id="${member.id}" aria-label="Роль участника ${escapeHtml(member.name)}" ${isCurrentUser ? "disabled" : ""}><option ${member.role === "Администратор" ? "selected" : ""}>Администратор</option><option ${member.role === "Участник" ? "selected" : ""}>Участник</option><option ${member.role === "Наблюдатель" ? "selected" : ""}>Наблюдатель</option></select></td><td class="hide-mobile"><span class="status-pill ${statusClass}">${escapeHtml(member.status)}</span></td><td><button class="btn icon-btn btn-sm" type="button" aria-label="Действия с участником ${escapeHtml(member.name)}"><i aria-hidden="true" class="bi bi-three-dots"></i></button></td></tr>`;
+  return `<tr data-member-name="${escapeHtml(member.name)}"><td><div class="member-cell"><span class="activity-avatar avatar-${escapeHtml(member.avatar)}">${escapeHtml(member.initials)}</span><div><strong>${escapeHtml(member.name)}</strong><span>${escapeHtml(member.email)}</span></div></div></td><td class="hide-mobile">${escapeHtml(member.projectsCount)} проекта</td><td><select class="form-select form-select-sm role-select" data-role-select data-member-id="${member.id}" aria-label="Роль участника ${escapeHtml(member.name)}" ${isCurrentUser ? "disabled" : ""}><option ${member.role === "Администратор" ? "selected" : ""}>Администратор</option><option ${member.role === "Участник" ? "selected" : ""}>Участник</option><option ${member.role === "Наблюдатель" ? "selected" : ""}>Наблюдатель</option></select></td><td class="hide-mobile"><span class="status-pill ${statusClass}">${escapeHtml(member.status)}</span></td><td><button class="btn icon-btn btn-sm" type="button" aria-label="Действия с участником ${escapeHtml(member.name)}"><svg aria-hidden="true" class="icon" focusable="false"><use href="assets/icons/sprite.svg#icon-three-dots"></use></svg></button></td></tr>`;
 }
 
 async function loadMembers() {
