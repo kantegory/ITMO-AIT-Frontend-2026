@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Поиск задач и проектов с фильтрацией в T-Пульс">
+    <title>Поиск — T-Пульс</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="assets/js/theme.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body class="app-page">
+    <a class="skip-link" href="#mainContent">Перейти к основному содержимому</a>
+    <aside class="app-sidebar offcanvas-lg offcanvas-start" tabindex="-1" id="appSidebar" aria-labelledby="sidebarTitle">
+      <div class="offcanvas-header d-lg-none"><span class="brand brand-light" id="sidebarTitle"><span class="brand-mark"><i aria-hidden="true" class="bi bi-bezier2"></i></span>T-Пульс</span><button class="btn-close btn-close-white" type="button" data-bs-dismiss="offcanvas" data-bs-target="#appSidebar" aria-label="Закрыть"></button></div>
+      <div class="offcanvas-body">
+        <a class="brand brand-light sidebar-brand" href="dashboard.html"><span class="brand-mark"><i aria-hidden="true" class="bi bi-bezier2"></i></span>T-Пульс</a>
+        <div class="workspace-switcher"><span class="workspace-logo">DL</span><div><small>Пространство</small><strong>Digital Lab</strong></div><i aria-hidden="true" class="bi bi-chevron-expand ms-auto"></i></div>
+        <nav class="sidebar-nav" aria-label="Основная навигация">
+          <span class="sidebar-caption">Работа</span>
+          <a href="dashboard.html"><i aria-hidden="true" class="bi bi-grid-1x2"></i><span>Обзор</span></a>
+          <a href="project.html"><i aria-hidden="true" class="bi bi-kanban"></i><span>Проект</span></a>
+          <a href="backlog.html"><i aria-hidden="true" class="bi bi-list-task"></i><span>Бэклог</span></a>
+          <a href="team.html"><i aria-hidden="true" class="bi bi-people"></i><span>Команда</span></a>
+          <span class="sidebar-caption mt-4">Избранное</span>
+          <a href="project.html"><span class="project-dot dot-purple"></span><span>Мобильное приложение</span></a>
+          <a href="project.html"><span class="project-dot dot-green"></span><span>Редизайн сайта</span></a>
+        </nav>
+        <div class="sidebar-profile"><span class="user-avatar">АБ</span><div><strong>Александр Б.</strong><small>Администратор</small></div><a href="index.html" aria-label="Выйти"><i aria-hidden="true" class="bi bi-box-arrow-right"></i></a></div>
+      </div>
+    </aside>
+
+    <div class="app-content">
+      <header class="app-topbar">
+        <button class="btn icon-btn d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#appSidebar" aria-controls="appSidebar" aria-label="Открыть меню"><i aria-hidden="true" class="bi bi-list"></i></button>
+        <div><strong>Поиск</strong><small class="d-block text-secondary">Задачи и проекты команды</small></div>
+        <div class="topbar-actions ms-auto"><a class="btn icon-btn topbar-nav-link active" href="search.html" aria-current="page" aria-label="Поиск" title="Поиск"><i aria-hidden="true" class="bi bi-search"></i></a><a class="btn icon-btn topbar-nav-link" href="dashboard.html" aria-label="Вернуться в кабинет" title="Главная"><i aria-hidden="true" class="bi bi-house"></i></a><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#savedFilterModal"><i aria-hidden="true" class="bi bi-bookmark-plus me-1"></i><span class="d-none d-sm-inline">Сохранить фильтр</span></button></div>
+      </header>
+
+      <main class="page-main" id="mainContent" tabindex="-1">
+        <section class="page-heading"><p class="eyebrow text-primary">Быстрый доступ</p><h1>Найдите нужную задачу</h1><p>Используйте поиск и фильтры по статусу, приоритету и исполнителю.</p></section>
+
+        <form class="filter-panel" id="searchFilters">
+          <div class="filter-grid">
+            <div class="search-filter-field"><label class="form-label" for="searchQuery">Поиск</label><div class="search-input-wrap"><i aria-hidden="true" class="bi bi-search"></i><input class="form-control" id="searchQuery" type="search" placeholder="Название задачи или проекта"></div></div>
+            <div><label class="form-label" for="statusFilter">Статус</label><select class="form-select" id="statusFilter"><option value="">Все статусы</option><option value="planned">Запланировано</option><option value="progress">В работе</option><option value="review">На проверке</option><option value="done">Готово</option></select></div>
+            <div><label class="form-label" for="priorityFilter">Приоритет</label><select class="form-select" id="priorityFilter"><option value="">Любой</option><option value="high">Высокий</option><option value="medium">Средний</option><option value="low">Низкий</option></select></div>
+            <div><label class="form-label" for="assigneeFilter">Исполнитель</label><select class="form-select" id="assigneeFilter"><option value="">Все участники</option><option value="alex">Александр Б.</option><option value="maria">Мария С.</option><option value="ilya">Илья В.</option><option value="anna">Анна К.</option></select></div>
+            <button class="btn btn-light align-self-end" type="reset" data-reset-filters><i aria-hidden="true" class="bi bi-arrow-counterclockwise me-1"></i>Сбросить</button>
+          </div>
+        </form>
+
+        <div class="filter-result-heading">
+          <h2>Результаты <span class="text-secondary fw-normal" id="resultCount">6</span></h2>
+          <div class="view-switch" role="group" aria-label="Вид результатов"><button class="active" type="button" aria-label="Показать списком" aria-pressed="true"><i aria-hidden="true" class="bi bi-list-ul"></i></button><button type="button" aria-label="Показать сеткой" aria-pressed="false"><i aria-hidden="true" class="bi bi-grid"></i></button></div>
+        </div>
+
+        <section class="results-list" id="searchResults" aria-label="Результаты поиска" aria-live="polite" aria-busy="false">
+          <article class="result-card" data-search-item data-title="Подготовить прототип экрана профиля" data-status="progress" data-priority="high" data-assignee="alex">
+            <span class="result-icon"><i aria-hidden="true" class="bi bi-phone"></i></span><div><h3>Подготовить прототип экрана профиля</h3><p>Мобильное приложение · Дизайн</p></div><span class="status-pill status-active">В работе</span><span class="priority-badge priority-high-bg">Высокий</span><div class="result-assignee"><span class="activity-avatar avatar-lime">АБ</span>Александр</div><span class="result-date"><i aria-hidden="true" class="bi bi-calendar3"></i> Сегодня</span>
+          </article>
+          <article class="result-card" data-search-item data-title="Проверить тексты для главной страницы" data-status="review" data-priority="medium" data-assignee="maria">
+            <span class="result-icon"><i aria-hidden="true" class="bi bi-window"></i></span><div><h3>Проверить тексты для главной страницы</h3><p>Редизайн сайта · Контент</p></div><span class="status-pill status-review">На проверке</span><span class="priority-badge priority-medium-bg">Средний</span><div class="result-assignee"><span class="activity-avatar avatar-pink">МС</span>Мария</div><span class="result-date"><i aria-hidden="true" class="bi bi-calendar3"></i> Сегодня</span>
+          </article>
+          <article class="result-card" data-search-item data-title="Настроить события аналитики" data-status="planned" data-priority="high" data-assignee="ilya">
+            <span class="result-icon"><i aria-hidden="true" class="bi bi-bar-chart"></i></span><div><h3>Настроить события аналитики</h3><p>Мобильное приложение · Разработка</p></div><span class="status-pill status-planning">Запланировано</span><span class="priority-badge priority-high-bg">Высокий</span><div class="result-assignee"><span class="activity-avatar avatar-blue">ИВ</span>Илья</div><span class="result-date"><i aria-hidden="true" class="bi bi-calendar3"></i> 2 сен.</span>
+          </article>
+          <article class="result-card" data-search-item data-title="Согласовать структуру каталога" data-status="done" data-priority="medium" data-assignee="anna">
+            <span class="result-icon"><i aria-hidden="true" class="bi bi-diagram-3"></i></span><div><h3>Согласовать структуру каталога</h3><p>Редизайн сайта · Исследование</p></div><span class="status-pill status-active">Готово</span><span class="priority-badge priority-medium-bg">Средний</span><div class="result-assignee"><span class="activity-avatar avatar-lime">АК</span>Анна</div><span class="result-date"><i aria-hidden="true" class="bi bi-check2"></i> 28 авг.</span>
+          </article>
+          <article class="result-card" data-search-item data-title="Собрать требования к дашборду" data-status="progress" data-priority="low" data-assignee="alex">
+            <span class="result-icon"><i aria-hidden="true" class="bi bi-clipboard-data"></i></span><div><h3>Собрать требования к дашборду</h3><p>Модуль аналитики · Аналитика</p></div><span class="status-pill status-active">В работе</span><span class="priority-badge priority-low-bg">Низкий</span><div class="result-assignee"><span class="activity-avatar avatar-lime">АБ</span>Александр</div><span class="result-date"><i aria-hidden="true" class="bi bi-calendar3"></i> 5 сен.</span>
+          </article>
+          <article class="result-card" data-search-item data-title="Подготовить план командной встречи" data-status="planned" data-priority="low" data-assignee="maria">
+            <span class="result-icon"><i aria-hidden="true" class="bi bi-people"></i></span><div><h3>Подготовить план командной встречи</h3><p>Digital Lab · Управление</p></div><span class="status-pill status-planning">Запланировано</span><span class="priority-badge priority-low-bg">Низкий</span><div class="result-assignee"><span class="activity-avatar avatar-pink">МС</span>Мария</div><span class="result-date"><i aria-hidden="true" class="bi bi-calendar3"></i> 6 сен.</span>
+          </article>
+        </section>
+
+        <div class="empty-state d-none" id="emptyResults"><i aria-hidden="true" class="bi bi-search"></i><h2 class="fs-5">Ничего не найдено</h2><p class="text-secondary mb-3">Попробуйте изменить запрос или сбросить фильтры.</p><button class="btn btn-primary" type="button" data-empty-reset>Сбросить фильтры</button></div>
+      </main>
+    </div>
+
+    <div class="modal fade" id="savedFilterModal" tabindex="-1" aria-labelledby="savedFilterTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header border-0"><h2 class="modal-title fs-5" id="savedFilterTitle">Сохранить набор фильтров</h2><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Закрыть"></button></div><div class="modal-body"><label class="form-label" for="filterName">Название</label><input class="form-control form-control-lg" id="filterName" placeholder="Например, мои срочные задачи"></div><div class="modal-footer border-0"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Отмена</button><button class="btn btn-primary" type="button" data-save-filter>Сохранить</button></div></div></div></div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3"><div class="toast" id="appToast" role="status" aria-live="polite" aria-atomic="true"><div class="toast-header"><span class="toast-mark me-2"><i aria-hidden="true" class="bi bi-check"></i></span><strong class="me-auto">T-Пульс</strong><button class="btn-close" type="button" data-bs-dismiss="toast" aria-label="Закрыть"></button></div><div class="toast-body" data-toast-message>Готово</div></div></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
