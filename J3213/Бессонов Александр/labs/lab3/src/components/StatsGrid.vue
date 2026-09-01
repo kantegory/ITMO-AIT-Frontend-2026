@@ -12,7 +12,7 @@ defineProps({ stats: { type: Object, required: true } })
     </article>
     <article class="stat-card">
       <span class="stat-icon tone-orange"><Timer /></span>
-      <div><small>В работе</small><strong>{{ stats.active }}</strong><span>{{ Math.round((stats.active / stats.total) * 100) }}% от всех задач</span></div>
+      <div><small>В работе</small><strong>{{ stats.active }}</strong><span>{{ Math.round((stats.active / Math.max(stats.total, 1)) * 100) }}% от всех задач</span></div>
     </article>
     <article class="stat-card">
       <span class="stat-icon tone-green"><CircleCheckBig /></span>
