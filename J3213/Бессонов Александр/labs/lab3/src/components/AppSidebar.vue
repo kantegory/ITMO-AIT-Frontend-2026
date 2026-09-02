@@ -31,8 +31,12 @@ async function logout() {
       <RouterLink to="/backlog" @click="$emit('close')"><ListChecks /><span>Бэклог</span></RouterLink>
       <RouterLink to="/team" @click="$emit('close')"><Users /><span>Команда</span></RouterLink>
       <span class="sidebar-caption sidebar-caption-spaced">Избранное</span>
-      <RouterLink to="/project" @click="$emit('close')"><span class="project-dot dot-yellow"></span><span>Мобильное приложение</span></RouterLink>
-      <RouterLink to="/project" @click="$emit('close')"><span class="project-dot dot-green"></span><span>Редизайн сайта</span></RouterLink>
+      <RouterLink v-slot="{ href, navigate }" to="/project" custom>
+        <a :href="href" @click="navigate($event); $emit('close')"><span class="project-dot dot-yellow"></span><span>Мобильное приложение</span></a>
+      </RouterLink>
+      <RouterLink v-slot="{ href, navigate }" to="/project" custom>
+        <a :href="href" @click="navigate($event); $emit('close')"><span class="project-dot dot-green"></span><span>Редизайн сайта</span></a>
+      </RouterLink>
     </nav>
 
     <div class="sidebar-profile">
