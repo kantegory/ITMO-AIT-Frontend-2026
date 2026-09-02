@@ -8,8 +8,8 @@ import { useAuthStore } from '../stores/auth'
 const auth = useAuthStore()
 const route = useRoute()
 const router = useRouter()
-const email = ref('alexander@example.ru')
-const password = ref('pulse123')
+const email = ref('')
+const password = ref('')
 const remember = ref(false)
 const showPassword = ref(false)
 const errorMessage = ref('')
@@ -44,11 +44,11 @@ async function submit() {
       <p>Продолжите работу над проектами вместе с командой.</p>
     </div>
 
-    <form class="auth-form" aria-labelledby="loginTitle" @submit.prevent="submit">
+    <form class="auth-form" aria-labelledby="loginTitle" autocomplete="off" @submit.prevent="submit">
       <label for="loginEmail">Электронная почта</label>
       <div class="auth-input">
         <Mail :size="20" />
-        <input id="loginEmail" v-model.trim="email" type="email" autocomplete="email" required />
+        <input id="loginEmail" v-model.trim="email" type="email" autocomplete="off" required />
       </div>
 
       <div class="auth-label-row">
@@ -62,7 +62,7 @@ async function submit() {
           v-model="password"
           :type="showPassword ? 'text' : 'password'"
           minlength="6"
-          autocomplete="current-password"
+          autocomplete="off"
           required
         />
         <button type="button" class="password-toggle" :aria-label="showPassword ? 'Скрыть пароль' : 'Показать пароль'" @click="showPassword = !showPassword">
