@@ -1,0 +1,11 @@
+import { createPinia } from 'pinia'
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+import './style.css'
+import './search-results.css'
+import './api-state.css'
+import './auth.css'
+import './workspace.css'
+
+createApp(App).use(createPinia()).use(router).mount('#app')
