@@ -1,18 +1,8 @@
 import { defineStore } from 'pinia'
 import { tPulseApi } from '../api/tPulseApi'
 
-const priorityLabels = {
-  high: 'Высокий',
-  medium: 'Средний',
-  low: 'Низкий',
-}
-
-const priorityValues = {
-  Высокий: 'high',
-  Средний: 'medium',
-  Низкий: 'low',
-}
-
+const priorityLabels = { high: 'Высокий', medium: 'Средний', low: 'Низкий' }
+const priorityValues = { Высокий: 'high', Средний: 'medium', Низкий: 'low' }
 const projectPresentation = {
   1: { progress: 68, color: 'yellow', icon: 'phone', members: ['+3', 'МС', 'АБ'] },
   2: { progress: 42, color: 'green', icon: 'window', members: ['+2', 'ИВ', 'АК'] },
@@ -27,30 +17,24 @@ function formatDeadline(value) {
     .replace('.', '')
 }
 
+function presentTasks(tasks, projects) {
+  const names = new Map(projects.map((project) => [project.id, project.name]))
+  return tasks.map((task) => ({
+    ...task,
+    project: names.get(task.projectId) ?? 'Digital Lab',
+    priority: priorityLabels[task.priority] ?? task.priority,
+    time: task.status === 'done' ? 'Готово' : task.due,
+    completed: task.status === 'done',
+    meeting: task.type === 'Встреча',
+  }))
+}
+
 export const useTasksStore = defineStore('tasks', {
-  state: () => ({
-    tasks: [],
-    projects: [],
-    loading: false,
-    error: '',
-    initialized: false,
-  }),
+  state: () => ({ tasks: [], projects: [], loading: false, error: '', initialized: false }),
 
   getters: {
-    dashboardTasks(state) {
-      const projectNames = new Map(state.projects.map((project) => [project.id, project.name]))
-      return state.tasks
-        .filter((task) => task.scope !== 'backlog')
-        .map((task) => ({
-          ...task,
-          project: projectNames.get(task.projectId) ?? 'Digital Lab',
-          priority: priorityLabels[task.priority] ?? task.priority,
-          time: task.status === 'done' ? 'Готово' : task.due,
-          completed: task.status === 'done',
-          meeting: task.type === 'Встреча',
-        }))
-    },
-
+    dashboardTasks: (state) => presentTasks(state.tasks.filter((task) => task.scope !== 'backlog'), state.projects),
+    backlogTasks: (state) => presentTasks(state.tasks.filter((task) => task.scope === 'backlog'), state.projects),
     projectCards(state) {
       return state.projects.map((project, index) => {
         const presentation = projectPresentation[project.id] ?? {
@@ -67,18 +51,12 @@ export const useTasksStore = defineStore('tasks', {
         }
       })
     },
-
     stats(state) {
-      const completed = state.tasks.filter((task) => task.status === 'done').length
-      const active = state.tasks.filter((task) => task.status === 'progress').length
-      const overdue = state.tasks.filter(
-        (task) => task.status !== 'done' && task.priority === 'high',
-      ).length
       return {
         total: state.tasks.length,
-        active,
-        completed,
-        overdue,
+        active: state.tasks.filter((task) => task.status === 'progress').length,
+        completed: state.tasks.filter((task) => task.status === 'done').length,
+        overdue: state.tasks.filter((task) => task.status !== 'done' && task.priority === 'high').length,
       }
     },
   },
@@ -103,37 +81,40 @@ export const useTasksStore = defineStore('tasks', {
         this.loading = false
       }
     },
-
-    async createTask(formTask) {
+    async createTask(formTask, options = {}) {
       const project = this.projects.find((item) => item.name === formTask.project)
       const created = await tPulseApi.createTask({
         projectId: project?.id ?? 1,
         userId: 1,
         title: formTask.title,
-        type: 'Задача',
-        status: 'todo',
+        type: options.type ?? 'Задача',
+        status: options.status ?? 'todo',
         priority: priorityValues[formTask.priority] ?? 'medium',
         assignee: 'Александр Б.',
         assigneeCode: 'alex',
         initials: 'АБ',
         avatar: 'lime',
         due: formTask.time,
-        labels: [],
-        points: 3,
-        scope: 'board',
+        labels: options.labels ?? [],
+        points: options.points ?? 3,
+        scope: options.scope ?? 'board',
       })
       this.tasks.unshift(created)
       return created
     },
-
+    async updateTask(id, changes) {
+      const updated = await tPulseApi.updateTask(id, changes)
+      const task = this.tasks.find((item) => item.id === id)
+      if (task) Object.assign(task, updated)
+      return updated
+    },
     async toggleTask(id) {
       const task = this.tasks.find((item) => item.id === id)
       if (!task) return null
-      const updated = await tPulseApi.updateTask(id, {
-        status: task.status === 'done' ? 'todo' : 'done',
-      })
-      Object.assign(task, updated)
-      return updated
+      return this.updateTask(id, { status: task.status === 'done' ? 'todo' : 'done' })
+    },
+    async moveTask(id, status) {
+      return this.updateTask(id, { status, scope: status === 'backlog' ? 'backlog' : 'board' })
     },
   },
 })

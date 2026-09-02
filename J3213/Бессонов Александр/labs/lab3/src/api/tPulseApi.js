@@ -46,4 +46,16 @@ export const tPulseApi = {
     const { data } = await http.post('/members', member)
     return data
   },
+  async updateMember(id, changes) {
+    const { data } = await http.patch(`/members/${id}`, changes)
+    return data
+  },
+  async getNotifications(params = {}) {
+    const { data } = await http.get('/notifications', { params })
+    return data
+  },
+  async updateNotification(id, changes) {
+    const { data } = await http.patch(`/notifications/${id}`, changes)
+    return data
+  },
 }
