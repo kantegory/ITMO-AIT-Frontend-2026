@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moneta - Поиск транзакций</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="theme-bg-main">
+
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            
+            <aside class="col-12 col-md-3 col-lg-2 theme-sidebar border-end theme-border p-4 d-flex flex-column justify-content-between sidebar">
+                <div>
+                    <h2 class="h2 theme-text-main fw-bold mb-4" style="letter-spacing: -0.5px;">
+                        <i class="bi bi-stack"></i>
+                        Moneta
+                    </h2>
+                    
+                    <nav class="nav flex-column gap-2">
+                        <a href="dashboard.html" class="nav-link text-secondary p-2 rounded-3">
+                            <i class="bi bi-layout-sidebar me-1"></i>
+                            Главная панель
+                        </a>
+                        <a href="search.html" class="nav-link active-menu-item p-2 rounded-3">
+                            <i class="bi bi-search me-1"></i>
+                            Поиск транзакций
+                        </a>
+                        <a href="#" class="nav-link text-secondary p-2 rounded-3">
+                            <i class="bi bi-wallet me-1"></i>
+                            Кошелек
+                        </a>
+                        <a href="#" class="nav-link text-secondary p-2 rounded-3">
+                            <i class="bi bi-graph-up-arrow me-1"></i>
+                            Анализ и отчеты
+                        </a> 
+                    </nav>
+                </div>
+                
+                <div>
+                    <a href="#" class="nav-link text-secondary p-2 rounded-3">
+                        <i class="bi bi-headphones me-1"></i>
+                        Помощь
+                    </a>
+                    <a href="#" class="nav-link text-secondary p-2 rounded-3">
+                        <i class="bi bi-gear me-1"></i>
+                        Настройки
+                    </a>
+                    <a href="index.html" class="nav-link text-secondary p-2 rounded-3">
+                        <i class="bi bi-box-arrow-up-left me-1"></i>
+                        Выйти
+                    </a>
+                </div>
+            </aside>
+
+            <main class="col-12 col-md-9 col-lg-10 p-4 p-lg-5">
+                
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-2">
+                    <h1 class="h3 fw-bold m-0" style="letter-spacing: -0.5px;">Поиск и фильтрация</h1>
+                    
+                    <div class="d-flex align-items-center gap-3">
+                        <button id="theme-toggle" class="btn btn-light btn-sm p-0 border-0 rounded-circle d-flex justify-content-center align-items-center shadow-sm theme-circle-btn" style="width: 44px; height: 44px;" aria-label="Переключить тему">
+                            <i class="bi bi-circle-half fs-5"></i>
+                        </button>
+
+                        <div class="rounded-circle d-flex justify-content-center align-items-center shadow-sm theme-circle-btn" style="width: 44px; height: 44px; cursor: pointer;">
+                            <i class="bi bi-bell fs-5"></i>
+                        </div>
+                        
+                        <img src="https://ui-avatars.com/api/?name=Artem&background=2563eb&color=fff" alt="Profile" class="rounded-circle shadow-sm" width="44" height="44" style="cursor: pointer;">
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm p-4 mb-4 rounded-4 theme-card">
+                    <h2 class="h6 fw-bold mb-4">Параметры фильтрации</h2>
+                    
+                    <form class="row g-3 align-items-end">
+                        <div class="col-12 col-md-3">
+                            <label for="filterCategory" class="form-label small fw-medium theme-text-muted">
+                                <i class="bi bi-tag me-1"></i> Категория
+                            </label>
+                            <select class="theme-text-main form-select shadow-none py-2 theme-bg-secondary border-0" id="filterCategory">
+                                <option selected>Все категории</option>
+                                <option>Покупки</option>
+                                <option>Одежда</option>
+                                <option>Доход</option>
+                                <option>Развлечения</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-md-3">
+                            <label for="filterAmount" class="form-label small fw-medium theme-text-muted">
+                                <i class="bi bi-cash me-1"></i> Макс. сумма ($)
+                            </label>
+                            <input type="number" class="form-control shadow-none py-2 theme-bg-secondary border-0" id="filterAmount" placeholder="Например: 5000">
+                        </div>
+
+                        <div class="col-12 col-md-3">
+                            <label for="filterDate" class="form-label small fw-medium theme-text-muted">
+                                <i class="bi bi-calendar3 me-1"></i> Дата операции
+                            </label>
+                            <input type="date" class="theme-text-main form-control shadow-none py-2 theme-bg-secondary border-0" id="filterDate">
+                        </div>
+
+                        <div class="col-12 col-md-3">
+                            <button type="button" class="btn btn-primary w-100 fw-medium py-2">Найти транзакции</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card border-0 shadow-sm p-4 rounded-4 theme-card">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="h6 fw-bold m-0">Результаты поиска</h2>
+                        <span class="badge px-3 py-2 rounded-pill fw-medium theme-bg-secondary theme-text-main">Найдено: 3 операции</span>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="theme-table table table-hover align-middle m-0 border-top">
+                            <thead class="theme-table-header">
+                                <tr>
+                                    <th scope="col" class="theme-text-muted small text-uppercase fw-semibold py-3 ps-3 border-0">Дата</th>
+                                    <th scope="col" class="theme-text-muted small text-uppercase fw-semibold py-3 border-0">Описание</th>
+                                    <th scope="col" class="theme-text-muted small text-uppercase fw-semibold py-3 border-0">Категория</th>
+                                    <th scope="col" class="theme-text-muted small text-uppercase fw-semibold py-3 text-end pe-3 border-0">Сумма</th>
+                                </tr>
+                            </thead>
+                            <tbody class="border-top-0">
+                                <tr>
+                                    <td class="theme-text-muted py-3 ps-3 small">28.05.2026</td>
+                                    <td>
+                                        <div class="fw-semibold theme-text-main">Супермаркет «Лента»</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge rounded-pill px-3 py-2" style="background-color: #faf5ff; color: #49008e;">
+                                            <i class="bi bi-bag-heart me-1"></i> Покупки
+                                        </span>
+                                    </td>
+                                    <td class="theme-text-main fw-bold text-end pe-3">-$45.50</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td class="theme-text-muted py-3 ps-3 small">25.05.2026</td>
+                                    <td>
+                                        <div class="fw-semibold theme-text-main">Магазин «Nike»</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge rounded-pill px-3 py-2" style="background-color: #eff6ff; color: #002e90;">
+                                            <i class="bi bi-shop me-1"></i> Одежда
+                                        </span>
+                                    </td>
+                                    <td class="theme-text-main fw-bold text-end pe-3">-$120.00</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="theme-text-muted py-3 ps-3 small">10.05.2026</td>
+                                    <td>
+                                        <div class="fw-semibold theme-text-main
+                                        ">Зарплата за май</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge rounded-pill px-3 py-2" style="background-color: #eefcec; color: #0c6601;">
+                                            <i class="bi bi-wallet2 me-1"></i> Доход
+                                        </span>
+                                    </td>
+                                    <td class="text-success fw-bold text-end pe-3">+$5,000.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </main>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/theme.js"></script>
+    
+    <script>
+      const currentUser = checkAuth();
+      console.log('Authorized user:', currentUser);
+    </script>
+</body>
+</html>
