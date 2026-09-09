@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moneta - Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="theme-bg-main">
+
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            
+            <aside class="col-12 col-md-3 col-lg-2 theme-sidebar border-end theme-border p-4 d-flex flex-column justify-content-between sidebar">
+                <div>
+                    <h2 class="h2 theme-text-main fw-bold mb-4" style="letter-spacing: -0.5px;">
+                        <i class="bi bi-stack"></i>
+                        Moneta
+                    </h2>
+                    
+                    <nav class="nav flex-column gap-2">
+                        <a href="dashboard.html" class="nav-link active-menu-item p-2 rounded-3">
+                            <i class="bi bi-layout-sidebar me-1"></i>
+                            Главная панель
+                        </a>
+                        <a href="search.html" class="nav-link text-secondary p-2 rounded-3">
+                            <i class="bi bi-search me-1"></i>
+                            Поиск транзакций
+                        </a>
+                        <a href="#" class="nav-link text-secondary p-2 rounded-3">
+                            <i class="bi bi-wallet me-1"></i>
+                            Кошелек
+                        </a>
+                        <a href="#" class="nav-link text-secondary p-2 rounded-3">
+                            <i class="bi bi-graph-up-arrow me-1"></i>
+                            Анализ и отчеты
+                        </a> 
+                    </nav>
+                </div>
+                
+                <div>
+                    <a href="#" class="nav-link text-secondary p-2 rounded-3">
+                        <i class="bi bi-headphones me-1"></i>
+                        Помощь
+                    </a>
+                    <a href="#" class="nav-link text-secondary p-2 rounded-3">
+                        <i class="bi bi-gear me-1"></i>
+                        Настройки
+                    </a>
+                    <a href="index.html" class="nav-link text-secondary p-2 rounded-3">
+                        <i class="bi bi-box-arrow-up-left me-1"></i>
+                        Выйти
+                    </a>
+                </div>
+            </aside>
+
+            <main class="col-12 col-md-9 col-lg-10 p-4 p-lg-5">
+                
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-2">
+                    <h1 class="h3 fw-bold m-0" style="letter-spacing: -0.5px;">Добро пожаловать!</h1>
+                    
+                    <div class="d-flex align-items-center gap-3">
+                        
+                        <button id="theme-toggle" class="btn btn-light btn-sm p-0 border-0 theme-border rounded-circle d-flex justify-content-center align-items-center shadow-sm theme-circle-btn" style="width: 44px; height: 44px;" aria-label="Переключить тему">
+                            <svg width="24" height="24" fill="currentColor" aria-hidden="true">
+                                <use href="images/sprite.svg#icon-sun"></use>
+                            </svg>
+                        </button>   
+
+                        <div class="rounded-circle d-flex justify-content-center align-items-center shadow-sm theme-circle-btn" style="width: 44px; height: 44px; cursor: pointer;" aria-label="Уведомления">
+                            <svg width="22" height="22" fill="currentColor" aria-hidden="true">
+                                <use href="images/sprite.svg#icon-bell"></use>
+                            </svg>
+                        </div>
+                        
+                        <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center shadow-sm" style="width: 44px; height: 44px; cursor: pointer;" aria-label="Профиль">
+                            <svg width="26" height="26" fill="currentColor" aria-hidden="true">
+                                <use href="images/sprite.svg#icon-person"></use>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-4">
+
+                    <!-- БЛОК С РАСХОДАМИ -->
+                    <div class="col-12 col-lg-6">
+                        <div class="theme-card p-4 shadow-sm border-0 theme-border rounded-4 d-flex justify-content-between align-items-center h-100">
+                            <div>
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <div class="bg-danger-subtle text-danger rounded-circle d-flex justify-content-center align-items-center" style="width: 32px; height: 32px;">
+                                        <i class="bi bi-arrow-down-right"></i>
+                                    </div>
+                                    <span class="theme-text-muted fw-medium small">Месячные расходы</span>
+                                </div>
+                                <h2 class="fw-bold m-0 h3">$67 000.00</h2>
+                            </div>
+
+                            <div class="text-end">
+                                <span class="badge theme-bg-secondary theme-text-main border theme-border mb-1">+2.4%</span>
+                                <div class="theme-text-muted" style="font-size: 11px;">к прошлому месяцу</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- БЛОК С ДОХОДАМИ -->
+                    <div class="col-12 col-lg-6">
+                        <div class="theme-card p-4 shadow-sm border-0 theme-border rounded-4 d-flex justify-content-between align-items-center h-100">
+                            <div>
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <div class="bg-success-subtle text-success rounded-circle d-flex justify-content-center align-items-center" style="width: 32px; height: 32px;">
+                                        <i class="bi bi-arrow-up-right"></i>
+                                    </div>
+                                    <span class="theme-text-muted fw-medium small">Месячные доходы</span>
+                                </div>
+                                <h2 class="fw-bold m-0 h3">$100 000.00</h2>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge theme-bg-secondary theme-text-main border theme-border mb-1">+14.5%</span>
+                                <div class="theme-text-muted" style="font-size: 11px;">к прошлому месяцу</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-4">
+
+                    <!-- БЛОК С ВАЛЮТОЙ -->
+                    <div class="col-12 col-lg-8">
+                        <div class="theme-card p-4 shadow-sm border-0 theme-border rounded-4 h-100 d-flex flex-column justify-content-between">
+                            
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="bg-primary-subtle text-primary rounded-circle d-flex justify-content-center align-items-center" style="width: 36px; height: 36px;">
+                                        <i class="bi bi-currency-exchange fs-5"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="h6 fw-bold m-0">Курсы валют</h3>
+                                        <span class="theme-text-muted" style="font-size: 11px;">Курс к USD на сегодня</span>
+                                    </div>
+                                </div>
+                                
+                                <button id="refreshRatesBtn" class="btn theme-bg-secondary theme-text-main rounded-circle d-flex align-items-center justify-content-center p-0" aria-label="Обновить" style="width: 32px; height: 32px;">
+                                    <i class="bi bi-arrow-clockwise text-secondary"></i>
+                                </button>
+                            </div>
+
+                            <div id="currencyRatesContainer" class="row g-3 my-auto">
+                                <div class="col-12 text-center py-4">
+                                    <div class="spinner-border text-primary spinner-border-sm" role="status"></div>
+                                    <div class="theme-text-muted small mt-2">Загрузка курсов из внешнего API...</div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center pt-3 mt-2" style="font-size: 11px;">
+                                <span class="theme-text-muted">Источник: ExchangeRate API</span>
+                                <span id="ratesLastUpdate" class="theme-text-muted">Обновлено: --:--</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- БЛОК С КАРТОЙ -->
+                    <div class="col-12 col-lg-4">
+                        <div class="theme-card p-4 shadow-sm border-0 theme-border rounded-4 h-100">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3 class="h6 fw-bold m-0">Моя карта</h3>
+                                <i class="bi bi-three-dots theme-text-muted" style="cursor: pointer;"></i>
+                            </div>
+
+                            <div class="p-4 rounded-4 text-white shadow-sm position-relative overflow-hidden" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);">
+                                
+                                <div class="d-flex justify-content-between align-items-start mb-4">
+                                    <div>
+                                        <p class="text-white-50 small mb-1">Баланс</p>
+                                        <h4 class="fw-bold m-0">$6 700.27</h4>
+                                    </div>
+                                    <i class="bi bi-wifi fs-4 text-white-50" style="transform: rotate(90deg);"></i>
+                                </div>
+                                
+                                <p class="mb-4 text-white-50" style="letter-spacing: 3px; font-family: monospace;">**** **** **** 1234</p>
+                                
+                                <div class="d-flex justify-content-between align-items-end">
+                                    <span class="small text-white-50 fw-medium">Artem A.</span>
+                                    <i class="bi bi-credit-card-2-back fs-2 lh-1 text-white-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    
+                    <!-- БЛОК С КЕШБЕКОМ -->
+                    <div class="col-12 col-lg-4">
+                        <div class="theme-card p-4 shadow-sm border-0 theme-border rounded-4 h-100">
+                            
+                            <div class="d-flex justify-content-between align-items-start mb-4">
+                                <div>
+                                    <h3 class="h6 fw-bold m-0 mb-1">Повышенный кэшбек</h3>
+                                    <span class="theme-text-muted" style="font-size: 11px;">Выбрано на март • 4 категории</span>
+                                </div>
+                                <div class="text-end">
+                                    <div class="fw-bold text-success" style="font-size: 16px;">+$124.50</div>
+                                    <span class="theme-text-muted" style="font-size: 10px;">накоплено</span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-column gap-3">
+                                
+                                <div class="d-flex justify-content-between align-items-center pb-2">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="rounded-3 d-flex justify-content-center align-items-center" style="width: 40px; height: 40px; background-color: #fff7ed; color: #fa5700;">
+                                            <i class="bi bi-egg-fried fs-5"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-semibold theme-text-main" style="font-size: 14px;">Рестораны и кафе</div>
+                                            <div class="theme-text-muted" style="font-size: 11px;">До конца месяца</div>
+                                        </div>
+                                    </div>
+                                    <span class="badge rounded-pill fw-bold px-3 py-2" style="background-color: #fef3c7; color: #703c00; font-size: 12px;">5%</span>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center pb-2">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="rounded-3 d-flex justify-content-center align-items-center" style="width: 40px; height: 40px; background-color: #eff6ff; color: #2563eb;">
+                                            <i class="bi bi-car-front fs-5"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-semibold theme-text-main" style="font-size: 14px;">Такси и авто</div>
+                                            <div class="theme-text-muted" style="font-size: 11px;">Весь квартал</div>
+                                        </div>
+                                    </div>
+                                    <span class="badge rounded-pill fw-bold px-3 py-2" style="background-color: #dbeafe; color: #001d6c; font-size: 12px;">10%</span>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="rounded-3 d-flex justify-content-center align-items-center" style="width: 40px; height: 40px; background-color: #faf5ff; color: #9333ea;">
+                                            <i class="bi bi-bag-heart fs-5"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-semibold theme-text-main" style="font-size: 14px;">Супермаркеты</div>
+                                            <div class="theme-text-muted" style="font-size: 11px;">До 31 марта</div>
+                                        </div>
+                                    </div>
+                                    <span class="badge rounded-pill fw-bold px-3 py-2" style="background-color: #f3e8ff; color: #390067; font-size: 12px;">3%</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="col-12 col-lg-4">
+
+                    <!-- БЛОК С ТРАНЗАКЦИЯМИ -->
+                    <div class="theme-card p-4 shadow-sm border-0 theme-border rounded-4 h-100">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h3 class="h6 fw-bold m-0">Последние операции</h3>
+
+                            <button class="btn theme-bg-secondary btn-sm theme-text-main rounded-pill px-3 py-1 border-0 fw-medium" data-bs-toggle="modal" data-bs-target="#addTransactionModal" aria-label="Добавить транзакцию">
+                                <i class="bi bi-plus-lg me-1"></i>Добавить
+                            </button>
+                        </div>
+
+                        <!-- динамический список транзакций -->
+                        <div id="transactionsContainer" class="d-flex flex-column gap-3">
+                            <!-- список транзакций с кнопками удаления -->
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-12 col-lg-4">
+
+                    <!-- БЛОК С ФИН. ЦЕЛЯМИ -->
+                    <div class="theme-card p-4 shadow-sm border-0 theme-border rounded-4 h-100">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h3 class="h6 fw-bold m-0">Финансовые цели</h3>
+                            <button class="btn theme-bg-secondary theme-text-main rounded-circle d-flex align-items-center justify-content-center p-0" aria-label="Добавить цель" style="width: 28px; height: 28px;" type="button">
+                                <i class="bi bi-plus-lg theme-text-main"></i>
+                            </button>
+                        </div>
+
+                        <div class="d-flex flex-column gap-4">
+                            
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="fw-semibold theme-text-main" style="font-size: 14px;">MacBook Pro 16</div>
+                                    </div>
+                                    <span class="theme-text-main fw-bold" style="font-size: 13px;">75%</span>
+                                </div>
+                                <div class="progress theme-bg-secondary" style="height: 6px;">
+                                    <div class="progress-bar bg-primary rounded-pill" role="progressbar" aria-label="Цель на Макбук" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-between theme-text-muted mt-1" style="font-size: 11px;">
+                                    <span>Накоплено: $1,500</span>
+                                    <span>Цель: $2,000</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="fw-semibold theme-text-main" style="font-size: 14px;">Подушка безопасности</div>
+                                    </div>
+                                    <span class="theme-text-main fw-bold" style="font-size: 13px;">40%</span>
+                                </div>
+                                <div class="progress theme-bg-secondary" style="height: 6px;">
+                                    <div class="progress-bar bg-primary rounded-pill" role="progressbar" aria-label="Цель на формирование подушки безопасности" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-between theme-text-muted mt-1" style="font-size: 11px;">
+                                    <span>Накоплено: $4,000</span>
+                                    <span>Цель: $10,000</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/currency.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/theme.js"></script>                 
+    
+    <script>
+      const currentUser = checkAuth();
+      console.log('Authorized user:', currentUser);
+    </script>
+
+    <!-- модальное окно добавления транзакции -->
+    <div class="modal fade" id="addTransactionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content theme-card rounded-4 shadow">
+                
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title fw-bold theme-text-main" id="addTransactionModalLabel">Добавить транзакцию</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                
+                <div class="modal-body pt-3">
+                    <form id="addTransactionForm">
+                        <div class="mb-3">
+                            <label class="form-label small theme-text-muted fw-medium">Название операции</label>
+                            <input type="text" id="txTitle" class="form-control py-2 shadow-none" placeholder="Например: Супермаркет" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label small theme-text-muted fw-medium">Сумма (со знаком - для расхода)</label>
+                            <input type="number" step="0.01" id="txAmount" class="form-control py-2 shadow-none" placeholder="-50.00 или 100.00" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label small theme-text-muted fw-medium">Категория</label>
+                            <select id="txCategory" class="form-select py-2 shadow-none">
+                                <option value="Еда и продукты">Еда и продукты</option>
+                                <option value="Кафе и рестораны">Кафе и рестораны</option>
+                                <option value="Доходы">Доходы / Переводы</option>
+                                <option value="Покупки">Покупки</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 rounded-3 py-2 mt-3 fw-medium">Сохранить на сервер</button>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
