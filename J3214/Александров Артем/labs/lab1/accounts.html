@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Монета - Мои счета</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+<div class="container-fluid">
+    <div class="row min-vh-100">
+        <aside class="col-12 col-md-3 col-lg-2 bg-white border-end p-4 d-flex flex-column justify-content-between sidebar">
+            <div>
+                <h2 class="h2 text-dark fw-bold mb-4" style="letter-spacing: -0.5px;">
+                    <i class="bi bi-stack"></i>
+                    Moneta
+                </h2>
+                
+                <nav class="nav flex-column gap-2">
+                    <a href="dashboard.html" class="nav-link text-secondary p-2 rounded-3">
+                        <i class="bi bi-layout-sidebar me-1"></i>
+                        Главная панель
+                    </a>
+                    <a href="search.html" class="nav-link text-secondary p-2 rounded-3">
+                        <i class="bi bi-search me-1"></i>
+                        Поиск транзакций
+                    </a>
+                    <a href="accounts.html" class="nav-link active-menu-item p-2 rounded-3">
+                        <i class="bi bi-wallet me-1"></i>
+                        Кошелек
+                    </a>
+                </nav>
+            </div>
+            
+            <div>
+                <a href="#" class="nav-link text-secondary p-2 rounded-3">
+                    <i class="bi bi-headphones me-1"></i>
+                    Помощь
+                </a>
+                <a href="#" class="nav-link text-secondary p-2 rounded-3">
+                    <i class="bi bi-gear me-1"></i>
+                    Настройки
+                </a>
+                <a href="index.html" class="nav-link text-secondary p-2 rounded-3">
+                    <i class="bi bi-box-arrow-up-left me-1"></i>
+                    Выйти
+                </a>
+            </div>
+        </aside>
+
+        <main class="col-12 col-md-9 col-xl-10 p-4 p-md-5">
+            <header class="d-flex justify-content-between align-items-center mb-5">
+                <div>
+                    <h2 class="fw-bold mb-0">Управление счетами</h2>
+                    <p class="text-muted mb-0">Привязка банковских карт и инвестиционных портфелей</p>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="bg-white rounded-circle d-flex justify-content-center align-items-center shadow-sm" style="width: 44px; height: 44px; cursor: pointer;">
+                        <i class="bi bi-bell text-secondary fs-5"></i>
+                    </div>
+                    <a href="profile.html">
+                        <img src="images/avatar.jpg" alt="Профиль" class="rounded-circle shadow-sm" style="width: 44px; height: 44px; object-fit: cover;">
+                    </a>
+                </div>
+            </header>
+
+            <div class="row g-4">
+                
+                <div class="col-12 col-xl-6">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="fw-bold mb-0"><i class="bi bi-credit-card-2-front me-2 text-primary"></i>Банковские карты</h5>
+                            <span class="badge bg-primary-subtle text-primary rounded-pill px-3">2 активные</span>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-sm-6">
+                                <div class="p-3 rounded-4 text-white shadow-sm position-relative" style="background: linear-gradient(135deg, #2c3e50, #3498db); min-height: 120px;">
+                                    <div class="small opacity-75">Кредитная (Т-Банк)</div>
+                                    <div class="fs-4 fw-bold my-1">$76 500.52</div>
+                                    <div class="small mt-3 font-monospace">•••• 4321</div>
+                                    <i class="bi bi-wifi position-absolute end-0 top-0 m-3" style="transform: rotate(90deg);"></i>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="p-3 rounded-4 text-white shadow-sm position-relative" style="background: linear-gradient(135deg, #111111, #434343); min-height: 120px;">
+                                    <div class="small opacity-75">Основная карта</div>
+                                    <div class="fs-4 fw-bold my-1">$6 700.27</div>
+                                    <div class="small mt-3 font-monospace">•••• 1234</div>
+                                    <i class="bi bi-wifi position-absolute end-0 top-0 m-3" style="transform: rotate(90deg);"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border-top pt-4">
+                            <h6 class="fw-bold text-muted mb-3">Привязать новую карту</h6>
+                            <form>
+                                <div class="mb-3">
+                                    <label class="form-label text-muted small">Номер карты</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-0"><i class="bi bi-card-text text-muted"></i></span>
+                                        <input type="text" class="form-control bg-light border-0 py-2 shadow-none" placeholder="0000 0000 0000 0000">
+                                    </div>
+                                </div>
+                                <div class="row g-3 mb-4">
+                                    <div class="col-6">
+                                        <label class="form-label text-muted small">Срок действия</label>
+                                        <input type="text" class="form-control bg-light border-0 py-2 shadow-none" placeholder="ММ/ГГ">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label text-muted small">CVC / CVV</label>
+                                        <input type="password" class="form-control bg-light border-0 py-2 shadow-none" placeholder="***">
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-dark w-100 py-2 rounded-3 fw-medium">Добавить карту</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-xl-6">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="fw-bold mb-0"><i class="bi bi-graph-up-arrow me-2 text-success"></i>Инвестиционные счета</h5>
+                            <span class="badge bg-success-subtle text-success rounded-pill px-3">1 активный</span>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-12">
+                                <div class="p-3 rounded-4 bg-white border d-flex justify-content-between align-items-center shadow-sm">
+                                    <div class="d-flex align-items-center">
+                                        <div class="bg-success text-white rounded-3 p-2 me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                            <i class="bi bi-currency-dollar fs-4"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold">Т-Инвестиции</div>
+                                            <div class="text-muted small">Брокерский счет • ИИС</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="fw-bold fs-5">240 000 ₽</div>
+                                        <div class="text-success small fw-medium"><i class="bi bi-caret-up-fill me-1"></i>+12.4% за год</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border-top pt-4">
+                            <h6 class="fw-bold text-muted mb-3">Подключить инвестиционный счет</h6>
+                            <form>
+                                <div class="mb-3">
+                                    <label class="form-label text-muted small">Выберите брокера</label>
+                                    <select class="form-select bg-light border-0 py-2 shadow-none">
+                                        <option selected disabled>Выберите компанию...</option>
+                                        <option>Т-Инвестиции</option>
+                                        <option>Альфа-Инвестиции</option>
+                                        <option>СберИнвестиции</option>
+                                        <option>ВТБ Мои Инвестиции</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label text-muted small">Номер договора или API-ключ</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-0"><i class="bi bi-key text-muted"></i></span>
+                                        <input type="text" class="form-control bg-light border-0 py-2 shadow-none" placeholder="Например: 220194850">
+                                    </div>
+                                    <div class="form-text text-muted px-1" style="font-size: 0.75rem;">
+                                        Синхронизация происходит в режиме «Только чтение». Мы не получаем доступ к управлению вашими активами.
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-outline-success w-100 py-2 rounded-3 fw-medium">Синхронизировать счет</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
