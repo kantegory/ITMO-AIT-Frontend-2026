@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <title>Кабинет организатора — EventTix</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/light.css" media="(prefers-color-scheme: light)" data-theme="light">
+  <link rel="stylesheet" href="css/dark.css" media="(prefers-color-scheme: dark)" data-theme="dark">
+  <script src="js/theme.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к основному содержимому</a>
+
+  <header>
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm" aria-label="Основная навигация">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">EventTix</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Открыть меню">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+            <li class="nav-item"><a class="nav-link" href="events.html">Мероприятия</a></li>
+          </ul>
+          <button type="button" class="btn btn-outline-secondary me-2 js-theme-toggle" aria-pressed="false">
+            <svg class="icon js-theme-icon" aria-hidden="true"><use href="img/sprite.svg#icon-sun"></use></svg>
+            <span class="js-theme-text">Тёмная тема</span>
+          </button>
+          <div class="dropdown js-user-menu">
+            <button class="btn btn-outline-secondary dropdown-toggle js-user-name" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <svg class="icon" aria-hidden="true"><use href="img/sprite.svg#icon-user"></use></svg> Аккаунт
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="profile.html"><svg class="icon" aria-hidden="true"><use href="img/sprite.svg#icon-ticket"></use></svg> Личный кабинет</a></li>
+              <li><a class="dropdown-item active js-organizer-link" href="organizer.html">Кабинет организатора</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item js-logout" href="login.html">Выйти</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" class="container py-5">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+      <h1 class="mb-0">Кабинет организатора</h1>
+      <button type="button" class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#createEventModal">
+        + Создать мероприятие
+      </button>
+    </div>
+
+    <div class="row g-4 mb-5">
+      <div class="col-6 col-md-3">
+        <div class="card text-center p-3">
+          <span class="fs-3 fw-bold js-stat-events">—</span>
+          <span class="text-muted">Активных события</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card text-center p-3">
+          <span class="fs-3 fw-bold js-stat-tickets">—</span>
+          <span class="text-muted">Продано билетов</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card text-center p-3">
+          <span class="fs-3 fw-bold js-stat-revenue">—</span>
+          <span class="text-muted">Выручка</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card text-center p-3">
+          <span class="fs-3 fw-bold js-stat-refunds">—</span>
+          <span class="text-muted">Возврата</span>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 mb-3">Мои мероприятия</h2>
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <caption class="visually-hidden">Список созданных мероприятий и продажи по ним</caption>
+        <thead>
+          <tr>
+            <th scope="col">Название</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Продано / всего</th>
+            <th scope="col">Статус</th>
+            <th scope="col"><span class="visually-hidden">Действия</span></th>
+          </tr>
+        </thead>
+        <tbody class="js-organizer-events-body">
+          <tr><td colspan="5" class="text-muted text-center py-4">Загрузка…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <div class="modal fade" id="createEventModal" tabindex="-1" aria-labelledby="createEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="createEventModalLabel">Новое мероприятие</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="row g-3">
+              <div class="col-12">
+                <label for="eventTitle" class="form-label">Название</label>
+                <input type="text" id="eventTitle" class="form-control" required>
+              </div>
+              <div class="col-12 col-md-6">
+                <label for="eventType" class="form-label">Тип</label>
+                <select id="eventType" class="form-select">
+                  <option value="concert">Концерт</option>
+                  <option value="festival">Фестиваль</option>
+                </select>
+              </div>
+              <div class="col-12 col-md-6">
+                <label for="eventVenue" class="form-label">Место проведения</label>
+                <input type="text" id="eventVenue" class="form-control" placeholder="Например: КСК «Арена»" required>
+              </div>
+              <div class="col-12 col-md-6">
+                <label for="eventDate" class="form-label">Дата</label>
+                <input type="date" id="eventDate" class="form-control" required>
+              </div>
+              <div class="col-12 col-md-6">
+                <label for="eventPrice" class="form-label">Цена билета, ₽ (0 — бесплатно)</label>
+                <input type="number" id="eventPrice" class="form-control" min="0" value="0" required>
+              </div>
+              <div class="col-12">
+                <label for="eventDescription" class="form-label">Описание</label>
+                <textarea id="eventDescription" class="form-control" rows="3"></textarea>
+              </div>
+            </div>
+          </form>
+          <div class="alert alert-danger js-create-error d-none mt-3" role="alert"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+          <button type="button" class="btn btn-brand js-create-event">Создать (черновик)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="py-4 mt-5">
+    <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
+      <span class="text-muted">© 2026 EventTix</span>
+      <a href="#main" class="text-muted">Наверх</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/organizer.js"></script>
+</body>
+</html>
