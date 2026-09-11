@@ -1,0 +1,223 @@
+/* общее оформление страницы */
+body {
+  background-color: var(--surface-muted);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  color: var(--plum) !important;
+}
+
+.btn-brand {
+  background-color: var(--gold-glow);
+  border-color: var(--gold-glow);
+  color: var(--plum-dark);
+}
+
+.btn-brand:hover,
+.btn-brand:focus {
+  background-color: var(--gold-glow-dark);
+  border-color: var(--gold-glow-dark);
+  color: var(--plum-dark);
+}
+
+/* приветственный блок на главной */
+.hero {
+  background:
+    radial-gradient(60% 70% at 85% 12%, rgba(240, 185, 74, 0.85), transparent 60%),
+    radial-gradient(60% 70% at 15% 100%, rgba(240, 185, 74, 0.85), transparent 60%),
+    linear-gradient(160deg, var(--plum), var(--plum-dark));
+  color: #fff;
+  padding: 4rem 0;
+}
+
+.hero__title {
+  font-weight: 700;
+}
+
+/* карточки мероприятий */
+.event-card {
+  border: none;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  height: 100%;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.event-card__image-wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+}
+
+.event-card__image-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-size: cover;
+  background-position: center;
+  filter: blur(18px) brightness(0.85) saturate(1.1);
+  transform: scale(1.2);
+}
+
+.event-card__image {
+  position: relative;
+  z-index: 1;
+  display: block;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.event-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* страница мероприятия */
+.event-hero {
+  position: relative;
+  aspect-ratio: 21 / 9;
+  max-height: 380px;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background-size: cover;
+  background-position: center;
+}
+
+.event-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-size: cover;
+  background-position: center;
+  filter: blur(24px) brightness(0.85) saturate(1.1);
+  transform: scale(1.2);
+}
+
+.event-hero__image {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.event-card__title {
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.event-card__meta {
+  color: var(--bs-secondary-color);
+  font-size: 0.9rem;
+}
+
+.event-card__footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.event-card__footer .fw-semibold {
+  color: var(--brand-color-dark);
+}
+
+.review-card {
+  border-radius: var(--radius-card);
+  background: var(--surface-card);
+  padding: 1rem 1.25rem;
+}
+
+.review-card__author {
+  font-weight: 600;
+}
+
+.review-card__rating {
+  color: #f5b301;
+  letter-spacing: 1px;
+}
+
+.venue-map {
+  border: 2px dashed var(--venue-border);
+  border-radius: var(--radius-card);
+  background: var(--venue-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  color: var(--plum);
+  text-align: center;
+  padding: 1rem;
+}
+
+/* билеты в личном кабинете */
+.ticket-row__status--active {
+  color: var(--status-active);
+}
+
+.ticket-row__status--refunded {
+  color: var(--status-refunded);
+}
+
+.ticket-row__status--used {
+  color: var(--status-used);
+}
+
+.auth-card {
+  max-width: 420px;
+  margin: 3rem auto;
+  border-radius: var(--radius-card);
+}
+
+footer {
+  background-color: var(--surface-card);
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* доступность */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--plum);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  z-index: 2000;
+}
+
+.skip-link:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+}
+
+:focus-visible {
+  outline: 3px solid var(--plum);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
