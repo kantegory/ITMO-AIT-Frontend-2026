@@ -1,0 +1,71 @@
+:root {
+    --primary-color: #0d6efd;
+    --expense-color: #dc3545;
+    --income-color: #198754;
+    --bg-color: #f8f9fa;
+    --transition-speed: 0.3s;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.text-expense {
+    color: var(--expense-color);
+    font-weight: 600;
+}
+
+.text-income {
+    color: var(--income-color);
+    font-weight: 600;
+}
+
+.card {
+    border-radius: 12px;
+    border: none;
+    transition: box-shadow var(--transition-speed) ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+@keyframes fadeInRow {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.table tbody tr {
+    animation: fadeInRow 0.4s ease-out forwards;
+}
+
+.table tbody tr:nth-child(1) { animation-delay: 0.05s; }
+.table tbody tr:nth-child(2) { animation-delay: 0.1s; }
+.table tbody tr:nth-child(3) { animation-delay: 0.15s; }
+.table tbody tr:nth-child(4) { animation-delay: 0.2s; }
+
+.table td, .table th {
+    vertical-align: middle;
+}
+
+.table-responsive::-webkit-scrollbar {
+    height: 8px;
+}
+.table-responsive::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 4px;
+}
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #ccc; 
+    border-radius: 4px;
+}
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: #aaa; 
+}
