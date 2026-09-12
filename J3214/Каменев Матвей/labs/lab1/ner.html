@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>annotaylor: Распознавание паспортных данных</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar border-bottom">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <img src="img/logo.png" alt="" height="40">
+                annotaylor
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <ul class="navbar-nav list-group-horizontal gap-4">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Личный кабинет</a></li>
+                </ul>
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Вход</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">Регистрация</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="annotation-header border-bottom">
+        <div class="container py-3">
+            <h1 class="h5 mb-1">Распознавание паспортных данных</h1>
+            <p class="annotation-header-desc text-muted mb-0">Выделите мышью нужный фрагмент текста и выберите тип сущности. Кликните на выделение, чтобы удалить метку.</p>
+        </div>
+    </header>
+
+    <div class="py-4">
+        <div class="container" style="max-width: 780px;">
+            <p class="text-muted text-center mb-3">1 / 30</p>
+
+            <div class="d-flex gap-3 flex-wrap mb-3">
+                <span class="d-flex align-items-center gap-1 small">
+                    <span class="ner-legend-dot" style="background:#3b82f633; border-bottom: 2px solid #3b82f6;"></span> ФИО
+                </span>
+                <span class="d-flex align-items-center gap-1 small">
+                    <span class="ner-legend-dot" style="background:#10b98133; border-bottom: 2px solid #10b981;"></span> Дата рождения
+                </span>
+                <span class="d-flex align-items-center gap-1 small">
+                    <span class="ner-legend-dot" style="background:#f59e0b33; border-bottom: 2px solid #f59e0b;"></span> Серия/номер паспорта
+                </span>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div id="ner-text" class="ner-text">
+                        <p>Lorem ipsum Иванов Иван Иванович dolor sit amet, 12 марта 1985 года рождения consectetur adipiscing elit, серия паспорта 45&nbsp;09 номер 678234 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <p>Ut enim ad minim veniam Петрова Наталья Сергеевна, 07 ноября 1992 года рождения, серия паспорта 46&nbsp;11 номер 345678 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <p>Duis aute irure dolor Сидоров Алексей Дмитриевич, 23 июня 1978 года рождения in reprehenderit, серия паспорта 50&nbsp;07 номер 123456 in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                    </div>
+                    <div id="ner-popup" class="ner-popup d-none">
+                        <button class="btn btn-sm ner-entity-btn" data-entity="fio" style="background:#3b82f620; border-color:#3b82f6; color:#1d4ed8;">ФИО</button>
+                        <button class="btn btn-sm ner-entity-btn" data-entity="dob" style="background:#10b98120; border-color:#10b981; color:#065f46;">Дата рождения</button>
+                        <button class="btn btn-sm ner-entity-btn" data-entity="passport" style="background:#f59e0b20; border-color:#f59e0b; color:#92400e;">Серия/номер паспорта</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="button" class="btn btn-primary btn-lg" id="confirm-btn">Подтвердить</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-top py-3 mt-auto">
+        <div class="container text-center text-muted">
+            <small>© annotaylor 2026</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth-modals.js"></script>
+    <script src="js/ner.js"></script>
+</body>
+</html>
