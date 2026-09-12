@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <script src="js/theme.js"></script>
+    <title>annotaylor: Коты и Собаки</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar border-bottom" aria-label="Основная навигация">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <img src="img/logo.png" alt="" height="40">
+                annotaylor
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <ul class="navbar-nav list-group-horizontal gap-4">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Личный кабинет</a></li>
+                </ul>
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Вход</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">Регистрация</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="project-header border-bottom py-4">
+        <div class="container">
+            <img src="img/image_classification.png" alt="" class="project-cover mb-4">
+            <h1 class="h3 mb-2">Коты и Собаки</h1>
+            <p class="text-muted mb-3">Разметить фотографии питомцев для бесплатного онлайн-курса по ML в ИТМО.</p>
+            <p class="mb-0"><span class="text-muted">Потраченный бюджет:</span> <span class="fw-semibold" data-price-rub="240">240 ₽</span></p>
+        </div>
+    </section>
+
+    <section class="project-content py-4">
+        <div class="container">
+            <ul class="nav nav-tabs mb-4" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="datapoints-tab" data-bs-toggle="tab" data-bs-target="#datapoints" type="button" role="tab" aria-controls="datapoints" aria-selected="true">Дата поинты</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="validation-tab" data-bs-toggle="tab" data-bs-target="#validation" type="button" role="tab" aria-controls="validation" aria-selected="false">Валидация</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="annotators-tab" data-bs-toggle="tab" data-bs-target="#annotators" type="button" role="tab" aria-controls="annotators" aria-selected="false">Аннотаторы</button>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="datapoints" role="tabpanel" aria-labelledby="datapoints-tab">
+                    <div class="row g-3 dp-grid">
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                            <div class="dp-card">
+                                <img src="img/dog.jpg" alt="" class="dp-card-img">
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                            <div class="dp-card">
+                                <img src="img/cat.png" alt="" class="dp-card-img">
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                            <div class="dp-card dp-card-empty"></div>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                            <div class="dp-card dp-card-empty"></div>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                            <button type="button" class="dp-card dp-card-add" aria-label="Добавить дата поинт">
+                                <span class="dp-add-icon" aria-hidden="true">+</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="validation" role="tabpanel" aria-labelledby="validation-tab">
+                    <div class="row g-4">
+                        <div class="col-sm-6 col-md-4 col-lg-3">
+                            <div class="validation-item">
+                                <div class="dp-card">
+                                    <img src="img/dog.jpg" alt="" class="dp-card-img">
+                                </div>
+                                <p class="validation-class fw-semibold mb-0 mt-2">Собака</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-lg-3">
+                            <div class="validation-item">
+                                <div class="dp-card">
+                                    <img src="img/cat.png" alt="" class="dp-card-img">
+                                </div>
+                                <p class="validation-class fw-semibold mb-0 mt-2">Кошка</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="annotators" role="tabpanel" aria-labelledby="annotators-tab">
+                    <div class="table-responsive">
+                        <table class="table align-middle annotators-table mb-0" aria-label="Список аннотаторов проекта">
+                            <thead>
+                                <tr>
+                                    <th>Аннотатор</th>
+                                    <th>Дата поинтов</th>
+                                    <th>Тесты</th>
+                                    <th>Выплата</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <img src="img/andrej.jpg" alt="Фото Андрея Чевапчичи" class="annotator-avatar">
+                                            <a href="profile.html">Андрей Купаты</a>
+                                        </div>
+                                    </td>
+                                    <td>34</td>
+                                    <td><span class="text-success fw-semibold">100%</span></td>
+                                    <td data-price-rub="170">170 ₽</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <img src="img/generic_pfp.png" alt="Фото Ильи Суцвекера" class="annotator-avatar">
+                                            <a href="profile.html">Илья Суцвекер</a>
+                                        </div>
+                                    </td>
+                                    <td>21</td>
+                                    <td><span class="text-danger fw-semibold">67%</span></td>
+                                    <td data-price-rub="0">0 ₽</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <img src="img/generic_pfp.png" alt="Фото Миры Мурати" class="annotator-avatar">
+                                            <a href="profile.html">Мира Мурати</a>
+                                        </div>
+                                    </td>
+                                    <td>14</td>
+                                    <td><span class="text-success fw-semibold">100%</span></td>
+                                    <td data-price-rub="70">70 ₽</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-top py-3 mt-auto">
+        <div class="container text-center text-muted">
+            <small>© annotaylor 2026</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth-modals.js"></script>
+    <script src="js/currency.js"></script>
+</body>
+</html>

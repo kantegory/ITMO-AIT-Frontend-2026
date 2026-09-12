@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>annotaylor: Аннотация</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar border-bottom">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <img src="img/logo.png" alt="" height="40">
+                annotaylor
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <ul class="navbar-nav list-group-horizontal gap-4">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Личный кабинет</a></li>
+                </ul>
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Вход</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">Регистрация</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="annotation-header border-bottom">
+        <div class="container py-3">
+            <h1 class="h5 mb-1">Коты и Собаки</h1>
+            <p class="annotation-header-desc text-muted mb-0">Разметить фотографии питомцев для бесплатного онлайн-курса по ML в ИТМО.</p>
+        </div>
+    </header>
+
+    <main class="annotation py-4">
+        <div class="container">
+            <p class="annotation-progress text-muted text-center mb-3">1 / 69</p>
+            <div class="annotation-image-wrap mx-auto mb-4">
+                <img src="img/dog.jpg" alt="Изображение для разметки" class="annotation-image">
+            </div>
+            <div class="annotation-classes d-flex justify-content-center gap-3 mb-4">
+                <input type="radio" class="btn-check" name="class" id="class-dog" value="dog" autocomplete="off">
+                <label class="btn btn-outline-primary btn-lg" for="class-dog">Собака</label>
+                <input type="radio" class="btn-check" name="class" id="class-cat" value="cat" autocomplete="off">
+                <label class="btn btn-outline-primary btn-lg" for="class-cat">Кошка</label>
+            </div>
+            <div class="text-center">
+                <button type="button" class="btn btn-primary btn-lg" id="confirm-btn" disabled>Подтвердить</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-top py-3 mt-auto">
+        <div class="container text-center text-muted">
+            <small>© annotaylor 2026</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth-modals.js"></script>
+    <script src="js/annotation.js"></script>
+</body>
+</html>

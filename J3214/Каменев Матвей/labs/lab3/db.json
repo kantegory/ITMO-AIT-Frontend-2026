@@ -1,0 +1,279 @@
+{
+  "users": [
+    {
+      "email": "admin@example.com",
+      "password": "$2a$10$8a2A4xkb6zhdkMzBrL9AruEvVXYSx0qPtwgDdAcEB7FoZRfSJIo7u",
+      "name": "admin",
+      "id": 1
+    }
+  ],
+  "orders": [
+    {
+      "title": "Коты и Собаки",
+      "type": "Классификация изображений",
+      "icon": "icon-image-classification",
+      "taskType": "image-classification",
+      "description": "Разметить фотографии питомцев для бесплатного онлайн-курса по ML в ИТМО.",
+      "instructions": "Разметить фотографии питомцев для бесплатного онлайн-курса по ML в ИТМО.",
+      "cover": "/img/image_classification.png",
+      "coverAlt": "Классификация изображений",
+      "priceRub": null,
+      "priceSuffix": "",
+      "labels": [
+        {
+          "value": "dog",
+          "title": "Собака"
+        },
+        {
+          "value": "cat",
+          "title": "Кошка"
+        }
+      ],
+      "id": 1
+    },
+    {
+      "title": "Детекция людей с камер",
+      "type": "Детекция",
+      "icon": "icon-detection",
+      "taskType": "detection",
+      "description": "Обвести людей на кадрах с уличных камер: заказчик из КНР совершенствует систему глобальной слежки.",
+      "instructions": "Обведите всех людей на кадре прямоугольными баундбоксами. Кликните на изображение и потяните, чтобы нарисовать рамку; тяните за угловые маркеры, чтобы изменить размер; нажмите × на рамке, чтобы удалить.",
+      "cover": "/img/detection.png",
+      "coverAlt": "Детекция объектов",
+      "priceRub": 20,
+      "priceSuffix": "/ 100 dp",
+      "labels": [],
+      "id": 2
+    },
+    {
+      "title": "Распознавание паспортных данных",
+      "type": "NER",
+      "icon": "icon-ner",
+      "taskType": "ner",
+      "description": "Выделить ФИО, серию и номер паспорта в переписках с жертвами телефонных мошенников.",
+      "instructions": "Выделите мышью нужный фрагмент текста и выберите тип сущности. Кликните на выделение, чтобы удалить метку.",
+      "cover": "/img/ner.png",
+      "coverAlt": "Распознавание именованных сущностей",
+      "priceRub": 150,
+      "priceSuffix": "/ 100 dp",
+      "labels": [
+        {
+          "value": "fio",
+          "title": "ФИО",
+          "color": "#3b82f6",
+          "textColor": "#1d4ed8"
+        },
+        {
+          "value": "dob",
+          "title": "Дата рождения",
+          "color": "#10b981",
+          "textColor": "#065f46"
+        },
+        {
+          "value": "passport",
+          "title": "Серия/номер паспорта",
+          "color": "#f59e0b",
+          "textColor": "#92400e"
+        }
+      ],
+      "id": 3
+    },
+    {
+      "title": "Классификация юридических текстов",
+      "type": "Классификация текста",
+      "icon": "icon-text-classification",
+      "taskType": "text-classification",
+      "description": "Разнести входящие обращения по категориям. Юрфирма автоматизирует пайплайн приёма заявок.",
+      "instructions": "Прочитайте обращение и выберите, к какой категории оно относится.",
+      "cover": "/img/text_classification.PNG",
+      "coverAlt": "Классификация текста",
+      "priceRub": 100,
+      "priceSuffix": "/ 100 dp",
+      "labels": [
+        {
+          "value": "admin",
+          "title": "Административная статья"
+        },
+        {
+          "value": "criminal",
+          "title": "Уголовная статья"
+        },
+        {
+          "value": "none",
+          "title": "Нет статьи"
+        }
+      ],
+      "id": 4
+    }
+  ],
+  "datapoints": [
+    {
+      "orderId": 1,
+      "image": "/img/dog.jpg",
+      "alt": "Изображение для разметки",
+      "id": 1
+    },
+    {
+      "orderId": 1,
+      "image": "/img/cat.png",
+      "alt": "Изображение для разметки",
+      "id": 2
+    },
+    {
+      "orderId": 2,
+      "image": "/img/to_detect.jpg",
+      "alt": "Кадр для разметки",
+      "id": 3
+    },
+    {
+      "orderId": 3,
+      "paragraphs": [
+        "Lorem ipsum Иванов Иван Иванович dolor sit amet, 12 марта 1985 года рождения consectetur adipiscing elit, серия паспорта 45 09 номер 678234 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "Ut enim ad minim veniam Петрова Наталья Сергеевна, 07 ноября 1992 года рождения, серия паспорта 46 11 номер 345678 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "Duis aute irure dolor Сидоров Алексей Дмитриевич, 23 июня 1978 года рождения in reprehenderit, серия паспорта 50 07 номер 123456 in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+      ],
+      "id": 4
+    },
+    {
+      "orderId": 4,
+      "paragraphs": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      ],
+      "id": 5
+    }
+  ],
+  "annotations": [
+    {
+      "userId": 1,
+      "orderId": 1,
+      "id": 1
+    },
+    {
+      "userId": 1,
+      "orderId": 2,
+      "id": 2
+    },
+    {
+      "userId": 1,
+      "orderId": 3,
+      "id": 3
+    }
+  ],
+  "results": [
+    {
+      "userId": 1,
+      "orderId": 3,
+      "datapointId": 4,
+      "value": {
+        "entities": [
+          {
+            "paragraph": 0,
+            "start": 2,
+            "end": 15,
+            "label": "dob"
+          },
+          {
+            "paragraph": 0,
+            "start": 186,
+            "end": 196,
+            "label": "fio"
+          },
+          {
+            "paragraph": 1,
+            "start": 23,
+            "end": 115,
+            "label": "passport"
+          }
+        ]
+      },
+      "id": 1
+    },
+    {
+      "userId": 1,
+      "orderId": 2,
+      "datapointId": 3,
+      "value": {
+        "boxes": [
+          {
+            "x": 0.153125,
+            "y": 0.3992974238875878,
+            "w": 0.2203125,
+            "h": 0.6007025761124122
+          }
+        ]
+      },
+      "id": 2
+    }
+  ],
+  "profiles": [
+    {
+      "userId": 1,
+      "avatar": "/img/andrej.jpg",
+      "bio": "AGI larper",
+      "balanceRub": 322,
+      "spentRub": 1240,
+      "earnedRub": 1562,
+      "validPercent": 91,
+      "id": 1
+    }
+  ],
+  "projects": [
+    {
+      "userId": 1,
+      "orderId": 1,
+      "spentRub": 240,
+      "datapoints": [
+        {
+          "image": "/img/dog.jpg"
+        },
+        {
+          "image": "/img/cat.png"
+        },
+        {
+          "image": null
+        },
+        {
+          "image": null
+        }
+      ],
+      "validation": [
+        {
+          "image": "/img/dog.jpg",
+          "label": "Собака"
+        },
+        {
+          "image": "/img/cat.png",
+          "label": "Кошка"
+        }
+      ],
+      "annotators": [
+        {
+          "name": "Андрей Купаты",
+          "avatar": "/img/andrej.jpg",
+          "avatarAlt": "Фото Андрея Чевапчичи",
+          "datapoints": 34,
+          "tests": 100,
+          "payoutRub": 170
+        },
+        {
+          "name": "Илья Суцвекер",
+          "avatar": "/img/generic_pfp.png",
+          "avatarAlt": "Фото Ильи Суцвекера",
+          "datapoints": 21,
+          "tests": 67,
+          "payoutRub": 0
+        },
+        {
+          "name": "Мира Мурати",
+          "avatar": "/img/generic_pfp.png",
+          "avatarAlt": "Фото Миры Мурати",
+          "datapoints": 14,
+          "tests": 100,
+          "payoutRub": 70
+        }
+      ],
+      "id": 1
+    }
+  ]
+}
