@@ -1,0 +1,82 @@
+/* глобальные настройки стилей */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f7fb;
+    color: #111827;
+}
+
+/* для всех карточек в системе */
+.card {
+    border-radius: 16px !important;
+}
+
+.custom-card-primary {
+    background-color: #2563eb !important;
+}
+
+/* плавность для интерактивных ссылок */
+.nav-link {
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+}
+
+/* эффект наведения в меню сайдбара */
+.nav-link:hover {
+    background-color: #f3f4f6;
+    /* color: #2563eb !important; */
+}
+
+/* стиль для активной вкладки в меню */
+.active-menu-item {
+    background-color: #e7e8eb !important;
+    color: #000000 !important;
+    font-weight: 600;
+}
+
+/* --- стили для страниц (INDEX и REGISTER) --- */
+
+/* для тега body */
+.auth-page-bg {
+    background-image: url('../images/wallpaper.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    z-index: 1;
+}
+
+/* затемнение поверх картинки */
+.auth-page-bg::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(40, 40, 60, 0.25) 0%, rgba(20, 20, 30, 0.35) 100%);
+    z-index: -1;
+}
+
+/* стилизация инпутов на страницах входа */
+.auth-page-bg .form-control {
+    border-color: #d1d5db;
+    border-radius: 10px;
+    background-color: #fafafa;
+}
+
+.auth-page-bg .form-control:focus {
+    background-color: #ffffff;
+    border-color: #111827;
+}
+
+/* фиксация сайдбара на экране */
+@media (min-width: 768px) {
+    aside.sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    main {
+        height: 100vh;
+        overflow-y: auto;
+    }
+}
