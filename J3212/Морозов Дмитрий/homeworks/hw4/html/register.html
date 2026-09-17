@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Pipeline — Регистрация</title>
+    <script src="../js/theme.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script>
+        (function() {
+            const saved = localStorage.getItem('ml-pipeline-theme');
+            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Перейти к форме регистрации</a>
+    
+    <header class="navbar navbar-expand-lg navbar-dark bg-dark" role="banner">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">ML Pipeline</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Платформа управления ML-экспериментами</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item me-2">
+                        <button 
+                            id="theme-toggle" 
+                            class="btn btn-outline-light btn-sm" 
+                            aria-label="Переключить тему"
+                            title="Переключить светлую/тёмную тему">
+                            🌓 Тема
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="container py-5" role="main">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h2 class="card-title h4 text-center mb-4">Регистрация аккаунта</h2>
+                        
+                        <div id="register-error" role="alert" aria-live="assertive" 
+                             aria-atomic="true" class="visually-hidden" tabindex="-1"></div>
+                        <form id="register-form" novalidate>
+                            <div class="mb-3">
+                                <label for="register-email" class="form-label">Email</label>
+                                <input type="email" 
+                                       class="form-control" 
+                                       id="register-email" 
+                                       name="email"
+                                       placeholder="name@example.com" 
+                                       required 
+                                       aria-required="true"
+                                       aria-describedby="register-email-hint"
+                                       autocomplete="email">
+                                <small id="register-email-hint" class="form-text text-muted">Введите ваш email для входа</small>
+                                <div id="register-email-error" class="invalid-feedback" role="alert" aria-live="polite"></div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="register-username" class="form-label">Имя пользователя</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="register-username" 
+                                       name="username"
+                                       placeholder="Введите имя" 
+                                       required 
+                                       aria-required="true"
+                                       aria-describedby="register-username-hint"
+                                       autocomplete="username">
+                                <small id="register-username-hint" class="form-text text-muted">Это имя будет отображаться в системе</small>
+                                <div id="register-username-error" class="invalid-feedback" role="alert" aria-live="polite"></div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="register-password" class="form-label">Пароль</label>
+                                <input type="password" 
+                                       class="form-control" 
+                                       id="register-password" 
+                                       name="password"
+                                       placeholder="Минимум 8 символов" 
+                                       required 
+                                       aria-required="true"
+                                       aria-describedby="register-password-hint"
+                                       autocomplete="new-password"
+                                       minlength="8">
+                                <small id="register-password-hint" class="form-text text-muted">Используйте буквы, цифры и спецсимволы</small>
+                                <div id="register-password-error" class="invalid-feedback" role="alert" aria-live="polite"></div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="register-password-confirm" class="form-label">Подтвердите пароль</label>
+                                <input type="password" 
+                                       class="form-control" 
+                                       id="register-password-confirm" 
+                                       name="password-confirm"
+                                       placeholder="Повторите пароль" 
+                                       required 
+                                       aria-required="true"
+                                       aria-describedby="register-password-confirm-hint"
+                                       autocomplete="new-password">
+                                <small id="register-password-confirm-hint" class="form-text text-muted">Повторите пароль для подтверждения</small>
+                                <div id="register-password-confirm-error" class="invalid-feedback" role="alert" aria-live="polite"></div>
+                            </div>
+                            
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" 
+                                       class="form-check-input" 
+                                       id="register-terms" 
+                                       name="terms"
+                                       required 
+                                       aria-required="true"
+                                       aria-describedby="register-terms-hint">
+                                <label class="form-check-label" for="register-terms">
+                                    Я согласен с <a href="#" id="terms-link">условиями использования</a>
+                                </label>
+                                <small id="register-terms-hint" class="form-text text-muted visually-hidden">Необходимо принять условия для продолжения</small>
+                                <div id="register-terms-error" class="invalid-feedback" role="alert" aria-live="polite"></div>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                            </div>
+                        </form>
+                        
+                        <div class="text-center mt-3">
+                            <p class="mb-0">Уже есть аккаунт? <a href="index.html">Войти</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="footer mt-auto py-3 bg-light" role="contentinfo">
+        <div class="container text-center text-muted">
+            <p>&copy; 2026 ML Pipeline. Все права защищены.</p>
+        </div>
+    </footer>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+</html>
