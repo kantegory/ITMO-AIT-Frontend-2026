@@ -1,0 +1,386 @@
+{
+  "users": [
+    {
+      "email": "ruslan@flow.io",
+      "password": "123456",
+      "name": "Ruslan Zhemlihanov",
+      "team": "Data Team",
+      "id": 1
+    },
+    {
+      "email": "ewazhe@yandex.ru",
+      "password": "$2a$10$5hbQ3/hodkn87wIMgqZ7Teo3B7E2HU/rV6umRdXuZiTu4fld3AYVW",
+      "name": "Руслан Тимурович Жемлиханов",
+      "team": "gregori",
+      "id": 2
+    },
+    {
+      "email": "charlieperez1912@phonocardiomnes.com",
+      "password": "$2a$10$aWjtI60bgpJSlct5HIZpyeZ16z84bvkfi2sBO7y3n956/kiLxBFIi",
+      "name": "Тимур Гонтарь",
+      "team": "OZON",
+      "id": 3
+    }
+  ],
+  "pipelines": [
+    {
+      "id": 1,
+      "name": "daily_sales_etl",
+      "description": "Daily sales extraction and loading",
+      "owner": "Data Team",
+      "status": "Success",
+      "lastRun": "2026-03-14 08:00",
+      "nextRun": "2026-03-15 08:00",
+      "active": true
+    },
+    {
+      "id": 2,
+      "name": "customer_sync",
+      "description": "Sync customer profile changes",
+      "owner": "Analytics Team",
+      "status": "Failed",
+      "lastRun": "2026-03-14 07:30",
+      "nextRun": "2026-03-14 13:30",
+      "active": true
+    },
+    {
+      "id": 3,
+      "name": "inventory_update",
+      "description": "Update stock snapshots per region",
+      "owner": "Platform Team",
+      "status": "Running",
+      "lastRun": "2026-03-14 09:10",
+      "nextRun": "2026-03-14 10:10",
+      "active": true
+    },
+    {
+      "id": 4,
+      "name": "marketing_report_build",
+      "description": "Build campaign performance mart",
+      "owner": "Data Team",
+      "status": "Queued",
+      "lastRun": "2026-03-13 23:00",
+      "nextRun": "2026-03-14 10:30",
+      "active": true
+    },
+    {
+      "id": 5,
+      "name": "fraud_detection_batch",
+      "description": "Batch scoring for suspicious events",
+      "owner": "Ivan Petrov",
+      "status": "Paused",
+      "lastRun": "2026-03-13 04:15",
+      "nextRun": "2026-03-14 11:00",
+      "active": false
+    }
+  ],
+  "pipelineDetails": [
+    {
+      "id": 1,
+      "name": "daily_sales_etl",
+      "description": "ETL пайплайн для ежедневной загрузки продаж, валидации и агрегации метрик в ClickHouse.",
+      "owner": "Data Team",
+      "schedule": "0 8 * * *",
+      "lastRun": "2026-03-14 08:00",
+      "status": "Running",
+      "graph": [
+        [
+          {
+            "name": "extract_orders",
+            "status": "success"
+          },
+          {
+            "name": "transform_orders",
+            "status": "running"
+          },
+          {
+            "name": "build_metrics",
+            "status": "queued"
+          },
+          {
+            "name": "load_to_clickhouse",
+            "status": "queued"
+          }
+        ],
+        [
+          {
+            "name": "extract_customers",
+            "status": "success"
+          },
+          {
+            "name": "validate_data",
+            "status": "failed"
+          }
+        ]
+      ],
+      "logs": [
+        "[2026-03-14 08:00:01] INFO Starting DAG daily_sales_etl",
+        "[2026-03-14 08:00:09] INFO Task extract_orders completed in 7.2s",
+        "[2026-03-14 08:00:16] INFO Task extract_customers completed in 6.8s",
+        "[2026-03-14 08:00:32] ERROR validate_data: null values exceed threshold",
+        "[2026-03-14 08:00:33] INFO transform_orders started with 1,342,871 rows",
+        "[2026-03-14 08:00:41] WARN SLA for customer_sync is close to deadline"
+      ],
+      "runHistory": [
+        {
+          "runId": "run_2841",
+          "startTime": "2026-03-14 08:00",
+          "endTime": "2026-03-14 08:04",
+          "duration": "4m 12s",
+          "status": "Running",
+          "triggeredBy": "Scheduler"
+        },
+        {
+          "runId": "run_2840",
+          "startTime": "2026-03-13 08:00",
+          "endTime": "2026-03-13 08:03",
+          "duration": "3m 58s",
+          "status": "Success",
+          "triggeredBy": "Scheduler"
+        },
+        {
+          "runId": "run_2839",
+          "startTime": "2026-03-12 08:00",
+          "endTime": "2026-03-12 08:05",
+          "duration": "5m 22s",
+          "status": "Failed",
+          "triggeredBy": "Ivan Petrov"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "customer_sync",
+      "description": "Синхронизация профилей клиентов из CRM в аналитический слой.",
+      "owner": "Analytics Team",
+      "schedule": "*/30 * * * *",
+      "lastRun": "2026-03-14 07:30",
+      "status": "Failed",
+      "graph": [
+        [
+          {
+            "name": "extract_crm_changes",
+            "status": "success"
+          },
+          {
+            "name": "normalize_profiles",
+            "status": "failed"
+          },
+          {
+            "name": "load_customer_dim",
+            "status": "queued"
+          }
+        ]
+      ],
+      "logs": [
+        "[2026-03-14 07:30:01] INFO Starting DAG customer_sync",
+        "[2026-03-14 07:30:07] INFO extract_crm_changes finished",
+        "[2026-03-14 07:30:14] ERROR normalize_profiles: invalid email format ratio 4.9%",
+        "[2026-03-14 07:30:15] INFO load_customer_dim skipped due to upstream failure"
+      ],
+      "runHistory": [
+        {
+          "runId": "run_9122",
+          "startTime": "2026-03-14 07:30",
+          "endTime": "2026-03-14 07:31",
+          "duration": "1m 14s",
+          "status": "Failed",
+          "triggeredBy": "Scheduler"
+        },
+        {
+          "runId": "run_9121",
+          "startTime": "2026-03-14 07:00",
+          "endTime": "2026-03-14 07:01",
+          "duration": "1m 01s",
+          "status": "Success",
+          "triggeredBy": "Scheduler"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "inventory_update",
+      "description": "Обновление региональных срезов складских остатков.",
+      "owner": "Platform Team",
+      "schedule": "10 * * * *",
+      "lastRun": "2026-03-14 09:10",
+      "status": "Running",
+      "graph": [
+        [
+          {
+            "name": "read_erp_stock",
+            "status": "success"
+          },
+          {
+            "name": "enrich_with_geo",
+            "status": "running"
+          },
+          {
+            "name": "publish_inventory_snapshot",
+            "status": "queued"
+          }
+        ]
+      ],
+      "logs": [
+        "[2026-03-14 09:10:00] INFO Starting DAG inventory_update",
+        "[2026-03-14 09:10:08] INFO read_erp_stock completed",
+        "[2026-03-14 09:10:11] INFO enrich_with_geo running"
+      ],
+      "runHistory": [
+        {
+          "runId": "run_5051",
+          "startTime": "2026-03-14 09:10",
+          "endTime": "-",
+          "duration": "in progress",
+          "status": "Running",
+          "triggeredBy": "Scheduler"
+        },
+        {
+          "runId": "run_5050",
+          "startTime": "2026-03-14 08:10",
+          "endTime": "2026-03-14 08:11",
+          "duration": "1m 05s",
+          "status": "Success",
+          "triggeredBy": "Scheduler"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "marketing_report_build",
+      "description": "Сбор витрины эффективности рекламных кампаний.",
+      "owner": "Data Team",
+      "schedule": "30 10 * * *",
+      "lastRun": "2026-03-13 23:00",
+      "status": "Queued",
+      "graph": [
+        [
+          {
+            "name": "extract_ad_platforms",
+            "status": "queued"
+          },
+          {
+            "name": "join_with_costs",
+            "status": "queued"
+          },
+          {
+            "name": "load_marketing_mart",
+            "status": "queued"
+          }
+        ]
+      ],
+      "logs": [
+        "[2026-03-14 10:00:00] INFO DAG queued by scheduler"
+      ],
+      "runHistory": [
+        {
+          "runId": "run_2219",
+          "startTime": "2026-03-13 23:00",
+          "endTime": "2026-03-13 23:04",
+          "duration": "4m 09s",
+          "status": "Success",
+          "triggeredBy": "Scheduler"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "fraud_detection_batch",
+      "description": "Пакетный скоринг подозрительных транзакций.",
+      "owner": "Ivan Petrov",
+      "schedule": "0 11 * * *",
+      "lastRun": "2026-03-13 04:15",
+      "status": "Paused",
+      "graph": [
+        [
+          {
+            "name": "extract_transactions",
+            "status": "paused"
+          },
+          {
+            "name": "score_ruleset",
+            "status": "paused"
+          },
+          {
+            "name": "store_fraud_flags",
+            "status": "paused"
+          }
+        ]
+      ],
+      "logs": [
+        "[2026-03-13 04:15:00] INFO DAG is paused; scheduler skip run"
+      ],
+      "runHistory": [
+        {
+          "runId": "run_1175",
+          "startTime": "2026-03-13 04:15",
+          "endTime": "2026-03-13 04:20",
+          "duration": "5m 03s",
+          "status": "Success",
+          "triggeredBy": "Ivan Petrov"
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": 1,
+      "name": "PostgreSQL Prod"
+    },
+    {
+      "id": 2,
+      "name": "S3 Raw Storage"
+    },
+    {
+      "id": 3,
+      "name": "Kafka Events"
+    },
+    {
+      "id": 4,
+      "name": "ClickHouse Warehouse"
+    },
+    {
+      "name": "timur gontar api",
+      "id": 5
+    }
+  ],
+  "variables": [
+    {
+      "id": 1,
+      "key": "ENV",
+      "value": "prod"
+    },
+    {
+      "id": 2,
+      "key": "RETRY_COUNT",
+      "value": "3"
+    },
+    {
+      "id": 3,
+      "key": "ALERT_EMAIL",
+      "value": "alerts@flow.io"
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "severity": "critical",
+      "text": "Pipeline daily_sales_etl failed"
+    },
+    {
+      "id": 2,
+      "severity": "warning",
+      "text": "SLA missed for customer_sync"
+    },
+    {
+      "id": 3,
+      "severity": "warning",
+      "text": "Worker capacity is near limit"
+    },
+    {
+      "id": 4,
+      "severity": "info",
+      "text": "Connection restored"
+    }
+  ]
+}
