@@ -1,0 +1,63 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=20mm]{geometry}
+\usepackage{fontspec}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}[Scale=0.85]
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\hypersetup{hidelinks}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}
+\titlespacing*{\section}{0pt}{10pt}{4pt}
+\sloppy
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+\newcommand{\shot}[2]{\begin{center}\includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{#1}\par\small #2\end{center}}
+\begin{document}
+\begin{center}
+{\small Университет ИТМО · Фронт-энд разработка · 2026}\par
+{\LARGE Домашняя работа № 2}\par
+{\large Доступность HTML-интерфейса}\par
+Светлов Ярослав, группа J3211
+\end{center}
+\section*{Цель}
+Улучшить доступность самостоятельной копии ЛР2 и проверить её с помощью Lighthouse и Firefox Accessibility Inspector.
+\section*{Изменения}
+\begin{itemize}
+\item Ссылка перехода к содержимому, видимый фокус, перенос фокуса на заголовок при смене страницы.
+\item Видимые подписи полей, заголовки страниц, aria-current для навигации и aria-busy при загрузке.
+\item Ошибки и уведомления используют alert/status. Кнопки сохранения имеют разные доступные имена.
+\item У таблиц есть caption и заголовки столбцов. Прокручиваемая область получает Tab-фокус только при переполнении.
+\item График продублирован численной таблицей; отключено взаимодействие, доступное только мышью.
+\item Усилен контраст ссылок и кнопок. Дата вводится в подписанном формате ГГГГ-ММ-ДД с проверкой: встроенные части календаря Firefox вызывали замечания инспектора.
+\end{itemize}
+
+\section*{Результаты аудита}
+Lighthouse проверил шесть экранов: вход, регистрацию, кабинет, поиск, эксперимент и модели. Все получили 100 баллов в категории доступности; результаты сохранены в \texttt{checks/lighthouse.json}.
+
+В Firefox 148 выполнен аудит ALL через Accessibility Inspector на тех же экранах. После исправлений нет FAIL. Осталось предупреждение о видимости фокуса уже сфокусированного поля Email; переход Tab проверен отдельно, контрастный outline задан в CSS. Результаты: \texttt{checks/firefox-accessibility.json}.
+
+Проверены клавиатурная навигация, вход, пустая выдача и сброс. Девять API-тестов пройдены.
+\section*{Запуск и проверка}
+Требуется Node.js 22.12 или новее. Команды выполняются из папки этой работы.
+\begin{verbatim}
+npm ci
+npm start
+\end{verbatim}
+Открыть \url{http://localhost:3002}. Автотесты: \texttt{npm test}.
+Учебные аккаунты: \texttt{admin@nexus.ai / password} и \texttt{vision@nexus.ai / cv12345}. Данные сохраняются в \texttt{db.local.json}, исходная база \texttt{db.json} не меняется.\section*{Вывод и ограничения}
+Доступность основных экранов улучшена и проверена двумя инструментами. Полное тестирование со скринридером не проводилось. Автоматические оценки не доказывают полного соответствия WCAG.
+
+\clearpage
+\section*{Скриншоты}
+\shot{checks/firefox-inspector.png}{Рисунок 1. Аудит в Firefox Accessibility Inspector.}
+\shot{checks/search.png}{Рисунок 2. Поиск после исправлений доступности.}
+
+\end{document}
