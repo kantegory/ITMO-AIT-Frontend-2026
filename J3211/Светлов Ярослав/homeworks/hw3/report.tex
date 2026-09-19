@@ -1,0 +1,61 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=20mm]{geometry}
+\usepackage{fontspec}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}[Scale=0.85]
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\hypersetup{hidelinks}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}
+\titlespacing*{\section}{0pt}{10pt}{4pt}
+\sloppy
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+\newcommand{\shot}[2]{\begin{center}\includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{#1}\par\small #2\end{center}}
+\begin{document}
+\begin{center}
+{\small Университет ИТМО · Фронт-энд разработка · 2026}\par
+{\LARGE Домашняя работа № 3}\par
+{\large CSS-переменные и темы}\par
+Светлов Ярослав, группа J3211
+\end{center}
+\section*{Цель}
+Добавить светлую и тёмную темы через CSS-переменные. За основу взята отдельная копия ДЗ2; предыдущие работы не заменяются.
+\section*{Реализация}
+\begin{itemize}
+\item Переменные задают фон, текст, ссылки, контрастный фокус, поверхность логов и цвета графика.
+\item theme.js отслеживает prefers-color-scheme. Тема меняется вслед за настройкой системы без перезагрузки страницы.
+\item Атрибут data-bs-theme переключает цветовые переменные Bootstrap, чтобы формы и таблицы соответствовали общей теме.
+\item Цвета Chart.js обновляются при смене темы. Отдельная кнопка не добавлена: выбран предусмотренный заданием вариант с системными настройками.
+\end{itemize}
+
+\section*{Проверка}
+В Firefox 148 проверены кабинет, поиск, эксперимент и модели в обеих темах, смена предпочтения без перезагрузки, пустой результат и сброс фильтра, сохранение сессии. Результаты находятся в \texttt{checks/browser.json}.
+
+В Chromium проверены вход, кабинет и график; ошибок консоли не обнаружено. В узком окне Firefox формы перестраиваются, таблицы прокручиваются внутри блока, страница не переполняется. Девять API-тестов пройдены.
+\section*{Запуск и проверка}
+Требуется Node.js 22.12 или новее. Команды выполняются из папки этой работы.
+\begin{verbatim}
+npm ci
+npm start
+\end{verbatim}
+Открыть \url{http://localhost:3003}. Автотесты: \texttt{npm test}.
+Учебные аккаунты: \texttt{admin@nexus.ai / password} и \texttt{vision@nexus.ai / cv12345}. Данные сохраняются в \texttt{db.local.json}, исходная база \texttt{db.json} не меняется.\section*{Как увидеть обе темы}
+Открыть приложение и изменить светлую/тёмную тему в настройках системы либо эмулировать prefers-color-scheme в инструментах разработчика браузера. Перезагрузка страницы не требуется.
+\section*{Вывод}
+Обе цветовые схемы используют одну разметку. Цвета сосредоточены в переменных; логика запросов и сохранение данных не изменились.
+
+\clearpage
+\section*{Скриншоты}
+\shot{checks/light.png}{Рисунок 1. Светлая тема.}
+\shot{checks/dark.png}{Рисунок 2. Тёмная тема.}
+
+\end{document}

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nexus ML — ДЗ3</title>
+  <script src="/theme.js"></script>
+  <link rel="stylesheet" href="/vendor/bootstrap.css">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/vendor/chart.js" defer></script>
+  <script src="/script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <header class="border-bottom">
+    <div class="container py-3">
+      <div class="d-flex flex-wrap align-items-center gap-3">
+        <a class="fw-bold text-body text-decoration-none" href="#dashboard">Nexus ML</a>
+        <nav id="navigation" class="d-flex flex-wrap align-items-center gap-3" aria-label="Основная навигация" hidden>
+          <a href="#dashboard">Личный кабинет</a>
+          <a href="#search">Эксперименты</a>
+          <a href="#models">Модели</a>
+          <button id="logout" class="btn btn-sm btn-outline-secondary" type="button">Выйти</button>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main id="main" class="container py-4" tabindex="-1">
+    <div id="message" class="alert" role="alert" tabindex="-1" hidden></div>
+    <p id="loading" role="status" hidden>Загрузка…</p>
+
+    <section id="login" class="auth-form" hidden>
+      <h1 class="h3 mb-3">Вход</h1>
+      <form id="login-form">
+        <div class="mb-3">
+          <label class="form-label" for="login-email">Email</label>
+          <input class="form-control" id="login-email" name="email" type="email" autocomplete="username" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="login-password">Пароль</label>
+          <input class="form-control" id="login-password" name="password" type="password" autocomplete="current-password" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Войти</button>
+        <a class="ms-3" href="#register">Создать аккаунт</a>
+      </form>
+    </section>
+
+    <section id="register" class="auth-form" hidden>
+      <h1 class="h3 mb-3">Регистрация</h1>
+      <form id="register-form">
+        <div class="mb-3">
+          <label class="form-label" for="register-name">Имя</label>
+          <input class="form-control" id="register-name" name="name" autocomplete="name" maxlength="80" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="register-email">Email</label>
+          <input class="form-control" id="register-email" name="email" type="email" autocomplete="username" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="register-password">Пароль (от 6 символов)</label>
+          <input class="form-control" id="register-password" name="password" type="password" minlength="6" autocomplete="new-password" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Зарегистрироваться</button>
+        <a class="ms-3" href="#login">Войти</a>
+      </form>
+    </section>
+
+    <section id="dashboard" hidden>
+      <h1 class="h3 mb-3">Личный кабинет</h1>
+      <div id="dashboard-content"></div>
+    </section>
+
+    <section id="search" hidden>
+      <h1 class="h3 mb-3">Поиск экспериментов</h1>
+      <form id="search-form" class="row g-3 mb-4">
+        <div class="col-sm-6 col-lg-3">
+          <label class="form-label" for="search-date">Дата (ГГГГ-ММ-ДД)</label>
+          <input class="form-control" id="search-date" name="date" type="text" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" placeholder="2026-04-02">
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <label class="form-label" for="search-accuracy">Минимальная accuracy</label>
+          <input class="form-control" id="search-accuracy" name="accuracy_gte" type="number" min="0" max="1" step="0.01">
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <label class="form-label" for="search-latency">Максимальная latency, мс</label>
+          <input class="form-control" id="search-latency" name="latencyMs_lte" type="number" min="0" step="1">
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <label class="form-label" for="search-query">Название, тег или ID</label>
+          <input class="form-control" id="search-query" name="q" type="search">
+        </div>
+        <div class="col-12 d-flex gap-2">
+          <button class="btn btn-primary" type="submit">Найти</button>
+          <button class="btn btn-outline-secondary" id="reset-search" type="button">Сбросить</button>
+        </div>
+      </form>
+      <div id="search-results"></div>
+    </section>
+
+    <section id="experiment" hidden>
+      <a class="d-inline-block mb-3" href="#search">← К поиску</a>
+      <div id="experiment-content"></div>
+    </section>
+
+    <section id="models" hidden>
+      <h1 class="h3 mb-3">Модели и версии</h1>
+      <p>Деплой в этой работе имитируется статусом Production.</p>
+      <div id="models-list"></div>
+      <h2 class="h5 mt-4">Добавить версию</h2>
+      <p id="model-hint" hidden>Для добавления версии нужен собственный эксперимент.</p>
+      <form id="model-form" class="row g-3">
+        <div class="col-sm-6 col-lg-4">
+          <label class="form-label" for="model-name">Название модели</label>
+          <input class="form-control" id="model-name" name="name" maxlength="100" required>
+        </div>
+        <div class="col-sm-6 col-lg-2">
+          <label class="form-label" for="model-version">Версия</label>
+          <input class="form-control" id="model-version" name="version" placeholder="1.0.0" pattern="[0-9]+\.[0-9]+\.[0-9]+" title="Три числа через точку, например 1.0.0" required>
+        </div>
+        <div class="col-lg-4">
+          <label class="form-label" for="model-experiment">Эксперимент</label>
+          <select class="form-select" id="model-experiment" name="linkedExperimentId" required></select>
+        </div>
+        <div class="col-lg-2 d-flex align-items-end">
+          <button class="btn btn-primary" type="submit">Добавить</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="not-found" hidden>
+      <h1 class="h3">Страница не найдена</h1>
+      <a href="#dashboard">В личный кабинет</a>
+    </section>
+  </main>
+</body>
+</html>
