@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg app-navbar sticky-top">
+    <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+    <nav class="navbar navbar-expand-lg app-navbar sticky-top" aria-label="Основная навигация">
       <div class="container py-2">
         <a class="navbar-brand fw-bold" href="dashboard.html">DataForge<span class="brand-dot">.</span></a>
         <button
@@ -46,7 +47,7 @@
       </div>
     </nav>
 
-    <main class="container py-4 py-lg-5">
+    <main id="main-content" role="main" class="container py-4 py-lg-5" tabindex="-1">
       <section class="hero p-4 p-lg-5 mb-4 mb-lg-5 fade-up">
         <div class="row align-items-center g-4">
           <div class="col-lg-8">
@@ -65,25 +66,25 @@
         <div class="col-md-6 col-xl-3 fade-up">
           <article class="metric-card p-4 h-100">
             <p class="text-secondary mb-1">Активные проекты</p>
-            <h2 id="metric-active-projects" class="display-6 fw-bold mb-0">-</h2>
+            <h2 id="metric-active-projects" class="display-6 fw-bold mb-0" aria-live="polite">-</h2>
           </article>
         </div>
         <div class="col-md-6 col-xl-3 fade-up fade-up-delay">
           <article class="metric-card p-4 h-100">
             <p class="text-secondary mb-1">Задач в работе</p>
-            <h2 id="metric-active-tasks" class="display-6 fw-bold mb-0">-</h2>
+            <h2 id="metric-active-tasks" class="display-6 fw-bold mb-0" aria-live="polite">-</h2>
           </article>
         </div>
         <div class="col-md-6 col-xl-3 fade-up fade-up-delay-2">
           <article class="metric-card p-4 h-100">
             <p class="text-secondary mb-1">Среднее качество</p>
-            <h2 id="metric-average-quality" class="display-6 fw-bold mb-0">-</h2>
+            <h2 id="metric-average-quality" class="display-6 fw-bold mb-0" aria-live="polite">-</h2>
           </article>
         </div>
         <div class="col-md-6 col-xl-3 fade-up fade-up-delay-2">
           <article class="metric-card p-4 h-100">
             <p class="text-secondary mb-1">Новых сотрудников</p>
-            <h2 id="metric-new-workers" class="display-6 fw-bold mb-0">-</h2>
+            <h2 id="metric-new-workers" class="display-6 fw-bold mb-0" aria-live="polite">-</h2>
           </article>
         </div>
       </section>
@@ -94,15 +95,16 @@
             <h2 class="h4 mb-3">Проекты аннотации</h2>
             <div class="table-responsive">
               <table class="table align-middle">
+                <caption class="visually-hidden">Список проектов аннотации с прогрессом и качеством</caption>
                 <thead>
                   <tr>
-                    <th>Проект</th>
-                    <th>Тип</th>
-                    <th>Прогресс</th>
-                    <th>Качество</th>
+                    <th scope="col">Проект</th>
+                    <th scope="col">Тип</th>
+                    <th scope="col">Прогресс</th>
+                    <th scope="col">Качество</th>
                   </tr>
                 </thead>
-                <tbody id="dashboard-projects-body">
+                <tbody id="dashboard-projects-body" aria-live="polite">
                   <tr>
                     <td colspan="4" class="text-secondary">Загрузка проектов...</td>
                   </tr>
@@ -116,15 +118,15 @@
           <article class="glass-card p-4 h-100">
             <h2 class="h5 mb-3">Статистика качества</h2>
             <p class="text-secondary mb-2">Валидация за неделю</p>
-            <div id="dashboard-validation-wrapper" class="progress mb-3" role="progressbar" aria-label="validation" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div id="dashboard-validation-wrapper" class="progress mb-3" role="progressbar" aria-label="Валидация за неделю" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
               <div id="dashboard-validation" class="progress-bar bg-success" style="width: 0%">0%</div>
             </div>
             <p class="text-secondary mb-2">Доля задач с повторной проверкой</p>
-            <div id="dashboard-recheck-wrapper" class="progress mb-3" role="progressbar" aria-label="recheck" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div id="dashboard-recheck-wrapper" class="progress mb-3" role="progressbar" aria-label="Повторная проверка" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
               <div id="dashboard-recheck" class="progress-bar bg-warning" style="width: 0%">0%</div>
             </div>
             <p class="text-secondary mb-2">SLA выполнения</p>
-            <div id="dashboard-sla-wrapper" class="progress" role="progressbar" aria-label="sla" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div id="dashboard-sla-wrapper" class="progress" role="progressbar" aria-label="SLA выполнения" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
               <div id="dashboard-sla" class="progress-bar" style="width: 0%">0%</div>
             </div>
           </article>

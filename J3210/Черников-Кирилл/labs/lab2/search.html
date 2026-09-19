@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg app-navbar sticky-top">
+    <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+    <nav class="navbar navbar-expand-lg app-navbar sticky-top" aria-label="Основная навигация">
       <div class="container py-2">
         <a class="navbar-brand fw-bold" href="dashboard.html">DataForge<span class="brand-dot">.</span></a>
         <button
@@ -46,17 +47,18 @@
       </div>
     </nav>
 
-    <main class="container py-4 py-lg-5">
+    <main id="main-content" role="main" class="container py-4 py-lg-5" tabindex="-1">
       <section class="hero p-4 p-lg-5 mb-4 fade-up">
         <h1 class="display-6 fw-bold mb-3">Поиск проектов и заданий</h1>
-        <p id="search-summary" class="text-secondary mb-0">Используйте фильтрацию по статусу, типу аннотации и исполнителю, чтобы быстро найти нужные задачи.</p>
+        <p id="search-summary" class="text-secondary mb-0" role="status" aria-live="polite">Используйте фильтрацию по статусу, типу аннотации и исполнителю, чтобы быстро найти нужные задачи.</p>
       </section>
 
       <div class="row g-4">
-        <aside class="col-lg-4 col-xl-3">
+        <aside class="col-lg-4 col-xl-3" aria-label="Панель фильтров">
           <section class="glass-card p-4 filter-panel fade-up fade-up-delay">
             <h2 class="h5 mb-3">Фильтры</h2>
-            <form id="search-filter-form" class="d-grid gap-3">
+            <form id="search-filter-form" class="d-grid gap-3" role="search" aria-describedby="filter-help">
+              <p id="filter-help" class="visually-hidden">Фильтры обновляют список проектов по статусу, типу аннотации и исполнителю.</p>
               <div>
                 <label for="filter-status" class="form-label">Статус</label>
                 <select id="filter-status" class="form-select">
@@ -77,14 +79,14 @@
               </div>
               <div>
                 <label for="filter-worker" class="form-label">Исполнитель</label>
-                <input id="filter-worker" type="text" class="form-control" placeholder="Например, Петров" />
+                <input id="filter-worker" type="text" class="form-control" placeholder="Например, Петров" autocomplete="off" />
               </div>
               <button id="reset-filters" type="button" class="btn btn-outline-brand">Сбросить фильтры</button>
             </form>
           </section>
         </aside>
 
-        <section id="search-results" class="col-lg-8 col-xl-9 d-grid gap-3">
+        <section id="search-results" class="col-lg-8 col-xl-9 d-grid gap-3" aria-live="polite" aria-label="Результаты поиска">
           <div class="glass-card p-4 text-secondary">Загрузка проектов...</div>
           <div id="empty-results" class="glass-card p-4 text-center d-none">
             <h3 class="h5">Ничего не найдено</h3>

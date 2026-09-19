@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg app-navbar sticky-top">
+    <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+    <nav class="navbar navbar-expand-lg app-navbar sticky-top" aria-label="Основная навигация">
       <div class="container py-2">
         <a class="navbar-brand fw-bold" href="dashboard.html">DataForge<span class="brand-dot">.</span></a>
         <button
@@ -46,16 +47,16 @@
       </div>
     </nav>
 
-    <main class="container py-4 py-lg-5">
+    <main id="main-content" role="main" class="container py-4 py-lg-5" tabindex="-1">
       <section class="hero p-4 p-lg-5 mb-4 fade-up">
         <div class="d-flex flex-wrap justify-content-between gap-3">
           <div>
             <p class="badge badge-soft rounded-pill mb-2">Страница задачи аннотации</p>
             <h1 id="task-title" class="display-6 fw-bold mb-2">Загрузка задачи...</h1>
-            <p id="task-instruction" class="text-secondary mb-0">Получаем данные из API.</p>
+            <p id="task-instruction" class="text-secondary mb-0" role="status" aria-live="polite">Получаем данные из API.</p>
           </div>
           <div class="align-self-center">
-            <button class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#submitTaskModal">Отправить на проверку</button>
+            <button type="button" class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#submitTaskModal">Отправить на проверку</button>
           </div>
         </div>
       </section>
@@ -63,18 +64,18 @@
       <div class="row g-4">
         <div class="col-lg-8">
           <article class="task-card p-4 mb-4">
-            <div id="task-tools" class="d-flex flex-wrap gap-2 mb-3">
-              <button type="button" class="btn btn-outline-brand active" data-tool="Загрузка">Загрузка</button>
+            <div id="task-tools" class="d-flex flex-wrap gap-2 mb-3" role="toolbar" aria-label="Инструменты аннотации">
+              <button type="button" class="btn btn-outline-brand active" data-tool="Загрузка" aria-pressed="true" aria-label="Инструмент: Загрузка">Загрузка</button>
             </div>
-            <p class="text-secondary">Активный инструмент: <strong id="active-tool-label">Загрузка</strong></p>
-            <div id="annotation-canvas" class="annotation-canvas d-flex align-items-center justify-content-center text-secondary">
+            <p class="text-secondary">Активный инструмент: <strong id="active-tool-label" aria-live="polite">Загрузка</strong></p>
+            <div id="annotation-canvas" class="annotation-canvas d-flex align-items-center justify-content-center text-secondary" role="region" aria-label="Область аннотации">
               Viewer area: изображение/видео для аннотации
             </div>
           </article>
 
           <article class="glass-card p-4">
             <h2 class="h5 mb-3">Файлы задачи</h2>
-            <ul id="task-files" class="list-group">
+            <ul id="task-files" class="list-group" aria-live="polite">
               <li class="list-group-item text-secondary">Загрузка файлов...</li>
             </ul>
           </article>
@@ -96,12 +97,12 @@
       </div>
     </main>
 
-    <div class="modal fade" id="submitTaskModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="submitTaskModal" tabindex="-1" aria-labelledby="submitTaskTitle" aria-describedby="submit-task-text" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h2 class="modal-title fs-5">Подтвердить отправку</h2>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h2 id="submitTaskTitle" class="modal-title fs-5">Подтвердить отправку</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
           </div>
           <div id="submit-task-text" class="modal-body">Задача будет передана валидатору. После отправки редактирование блокируется.</div>
           <div class="modal-footer">
