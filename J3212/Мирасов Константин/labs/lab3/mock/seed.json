@@ -1,0 +1,405 @@
+{
+  "resources": [
+    {
+      "id": 1,
+      "userId": 1,
+      "authorName": "Alex Morgan",
+      "type": "model",
+      "name": "Sentiment Mini",
+      "summary": "Compact sentiment classification example for short English reviews.",
+      "description": "Fictional learning resource. All metrics are illustrative. The download contains a shared demo manifest, not this full resource.",
+      "task": "text-classification",
+      "framework": "pytorch",
+      "license": "apache-2.0",
+      "sizeBytes": 50331648,
+      "tags": [
+        "text-classification",
+        "demo"
+      ],
+      "metrics": [
+        {
+          "label": "Accuracy",
+          "value": 0.9,
+          "unit": ""
+        },
+        {
+          "label": "F1 score",
+          "value": 0.89,
+          "unit": ""
+        },
+        {
+          "label": "False positives",
+          "value": 0,
+          "unit": ""
+        }
+      ],
+      "usageExample": "import json\n\nconfiguration = {\"name\": \"Sentiment Mini\", \"version\": \"1.0\", \"framework\": \"PyTorch\", \"task\": \"text-classification\", \"labels\": [\"negative\", \"positive\"]}\nprint(json.dumps(configuration, indent=2))",
+      "downloadCount": 16,
+      "demoFile": "resource-manifest",
+      "revision": "1.0",
+      "sourceResourceId": null,
+      "reproducibility": {
+        "environment": "Python 3.12; configuration example only",
+        "seed": 42,
+        "steps": [
+          "Read the demo manifest.",
+          "Compare the revision and task.",
+          "Inspect the sample configuration; no model is executed."
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "authorName": "Jamie Lee",
+      "type": "dataset",
+      "name": "Reviews Sample",
+      "summary": "A small labelled review collection for sentiment experiments.",
+      "description": "Fictional learning resource. All metrics are illustrative. The download contains a shared demo manifest, not this full resource.",
+      "task": "text-classification",
+      "framework": "none",
+      "license": "cc-by-4.0",
+      "sizeBytes": 12582912,
+      "tags": [
+        "text-classification",
+        "demo"
+      ],
+      "metrics": [
+        {
+          "label": "Rows",
+          "value": 1200,
+          "unit": ""
+        },
+        {
+          "label": "Columns",
+          "value": 3,
+          "unit": ""
+        },
+        {
+          "label": "Missing values",
+          "value": 0,
+          "unit": ""
+        }
+      ],
+      "usageExample": "import json\n\nconfiguration = {'name': 'Reviews Sample', 'revision': '1.0', 'task': 'text-classification'}\nprint(json.dumps(configuration, indent=2))",
+      "downloadCount": 32,
+      "demoFile": "resource-manifest",
+      "revision": "1.0",
+      "sourceResourceId": null,
+      "reproducibility": {
+        "environment": "Python 3.12; configuration example only",
+        "seed": 42,
+        "steps": [
+          "Read the demo manifest.",
+          "Compare the revision and task.",
+          "Inspect the sample configuration; no model is executed."
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "userId": 2,
+      "authorName": "Jamie Lee",
+      "type": "model",
+      "name": "Image Baseline",
+      "summary": "A fictional image classifier for comparing baseline configurations.",
+      "description": "Fictional learning resource. All metrics are illustrative. The download contains a shared demo manifest, not this full resource.",
+      "task": "image-classification",
+      "framework": "tensorflow",
+      "license": "mit",
+      "sizeBytes": 188743680,
+      "tags": [
+        "image-classification",
+        "demo"
+      ],
+      "metrics": [
+        {
+          "label": "Accuracy",
+          "value": 0.9,
+          "unit": ""
+        },
+        {
+          "label": "F1 score",
+          "value": 0.89,
+          "unit": ""
+        },
+        {
+          "label": "False positives",
+          "value": 0,
+          "unit": ""
+        }
+      ],
+      "usageExample": "import json\n\nconfiguration = {'name': 'Image Baseline', 'revision': '1.0', 'task': 'image-classification'}\nprint(json.dumps(configuration, indent=2))",
+      "downloadCount": 48,
+      "demoFile": "resource-manifest",
+      "revision": "1.0",
+      "sourceResourceId": null,
+      "reproducibility": {
+        "environment": "Python 3.12; configuration example only",
+        "seed": 42,
+        "steps": [
+          "Read the demo manifest.",
+          "Compare the revision and task.",
+          "Inspect the sample configuration; no model is executed."
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "authorName": "Alex Morgan",
+      "type": "dataset",
+      "name": "Multilingual Product Reviews for Text Classification",
+      "summary": "Product reviews in multiple languages with sentiment labels.",
+      "description": "Fictional learning resource. All metrics are illustrative. The download contains a shared demo manifest, not this full resource.",
+      "task": "text-classification",
+      "framework": "none",
+      "license": "cc-by-4.0",
+      "sizeBytes": 33554432,
+      "tags": [
+        "text-classification",
+        "demo"
+      ],
+      "metrics": [
+        {
+          "label": "Rows",
+          "value": 1200,
+          "unit": ""
+        },
+        {
+          "label": "Columns",
+          "value": 3,
+          "unit": ""
+        },
+        {
+          "label": "Missing values",
+          "value": 0,
+          "unit": ""
+        }
+      ],
+      "usageExample": "import json\n\nwith open(\"axonhub-demo-manifest.json\", encoding=\"utf-8\") as file:\n    manifest = json.load(file)\ndataset = next(resource for resource in manifest[\"resources\"] if resource[\"type\"] == \"dataset\")\nfor row in dataset[\"sample\"]:\n    print(row[\"language\"], row[\"sentiment\"], row[\"text\"])",
+      "downloadCount": 64,
+      "demoFile": "resource-manifest",
+      "revision": "1.0",
+      "sourceResourceId": null,
+      "reproducibility": {
+        "environment": "Python 3.12; configuration example only",
+        "seed": 42,
+        "steps": [
+          "Read the demo manifest.",
+          "Compare the revision and task.",
+          "Inspect the sample configuration; no model is executed."
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "userId": 2,
+      "authorName": "Jamie Lee",
+      "type": "model",
+      "name": "Translation Starter",
+      "summary": "A demo configuration for studying translation model metadata.",
+      "description": "Fictional learning resource. All metrics are illustrative. The download contains a shared demo manifest, not this full resource.",
+      "task": "translation",
+      "framework": "pytorch",
+      "license": "apache-2.0",
+      "sizeBytes": 1073741824,
+      "tags": [
+        "translation",
+        "demo"
+      ],
+      "metrics": [
+        {
+          "label": "Accuracy",
+          "value": 0.9,
+          "unit": ""
+        },
+        {
+          "label": "F1 score",
+          "value": 0.89,
+          "unit": ""
+        },
+        {
+          "label": "False positives",
+          "value": 0,
+          "unit": ""
+        }
+      ],
+      "usageExample": "import json\n\nconfiguration = {'name': 'Translation Starter', 'revision': '1.0', 'task': 'translation'}\nprint(json.dumps(configuration, indent=2))",
+      "downloadCount": 80,
+      "demoFile": "resource-manifest",
+      "revision": "1.0",
+      "sourceResourceId": null,
+      "reproducibility": {
+        "environment": "Python 3.12; configuration example only",
+        "seed": 42,
+        "steps": [
+          "Read the demo manifest.",
+          "Compare the revision and task.",
+          "Inspect the sample configuration; no model is executed."
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "userId": 2,
+      "authorName": "Jamie Lee",
+      "type": "dataset",
+      "name": "Parallel Phrases",
+      "summary": "Fictional paired phrases for translation experiments.",
+      "description": "Fictional learning resource. All metrics are illustrative. The download contains a shared demo manifest, not this full resource.",
+      "task": "translation",
+      "framework": "none",
+      "license": "cc-by-4.0",
+      "sizeBytes": 104857600,
+      "tags": [
+        "translation",
+        "demo"
+      ],
+      "metrics": [
+        {
+          "label": "Rows",
+          "value": 1200,
+          "unit": ""
+        },
+        {
+          "label": "Columns",
+          "value": 3,
+          "unit": ""
+        },
+        {
+          "label": "Missing values",
+          "value": 0,
+          "unit": ""
+        }
+      ],
+      "usageExample": "import json\n\nconfiguration = {'name': 'Parallel Phrases', 'revision': '1.0', 'task': 'translation'}\nprint(json.dumps(configuration, indent=2))",
+      "downloadCount": 96,
+      "demoFile": "resource-manifest",
+      "revision": "1.0",
+      "sourceResourceId": null,
+      "reproducibility": {
+        "environment": "Python 3.12; configuration example only",
+        "seed": 42,
+        "steps": [
+          "Read the demo manifest.",
+          "Compare the revision and task.",
+          "Inspect the sample configuration; no model is executed."
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "userId": 1,
+      "authorName": "Alex Morgan",
+      "type": "model",
+      "name": "Linear Sentiment",
+      "summary": "A metadata-only example of a lightweight text classification baseline.",
+      "description": "Fictional learning resource. All metrics are illustrative. The download contains a shared demo manifest, not this full resource.",
+      "task": "text-classification",
+      "framework": "scikit-learn",
+      "license": "mit",
+      "sizeBytes": 0,
+      "tags": [
+        "text-classification",
+        "demo"
+      ],
+      "metrics": [
+        {
+          "label": "Accuracy",
+          "value": 0.9,
+          "unit": ""
+        },
+        {
+          "label": "F1 score",
+          "value": 0.89,
+          "unit": ""
+        },
+        {
+          "label": "False positives",
+          "value": 0,
+          "unit": ""
+        }
+      ],
+      "usageExample": "import json\n\nconfiguration = {'name': 'Linear Sentiment', 'revision': '1.0', 'task': 'text-classification'}\nprint(json.dumps(configuration, indent=2))",
+      "downloadCount": 0,
+      "demoFile": "resource-manifest",
+      "revision": "1.0",
+      "sourceResourceId": null,
+      "reproducibility": {
+        "environment": "Python 3.12; configuration example only",
+        "seed": 42,
+        "steps": [
+          "Read the demo manifest.",
+          "Compare the revision and task.",
+          "Inspect the sample configuration; no model is executed."
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "userId": 2,
+      "authorName": "Jamie Lee",
+      "type": "dataset",
+      "name": "Everyday Objects Image Classification Collection",
+      "summary": "A fictional collection of labelled objects for image classification.",
+      "description": "Fictional learning resource. All metrics are illustrative. The download contains a shared demo manifest, not this full resource.",
+      "task": "image-classification",
+      "framework": "none",
+      "license": "cc-by-4.0",
+      "sizeBytes": 1610612736,
+      "tags": [
+        "image-classification",
+        "demo"
+      ],
+      "metrics": [
+        {
+          "label": "Rows",
+          "value": 1200,
+          "unit": ""
+        },
+        {
+          "label": "Columns",
+          "value": 3,
+          "unit": ""
+        },
+        {
+          "label": "Missing values",
+          "value": 0,
+          "unit": ""
+        }
+      ],
+      "usageExample": "import json\n\nconfiguration = {'name': 'Everyday Objects Image Classification Collection', 'revision': '1.0', 'task': 'image-classification'}\nprint(json.dumps(configuration, indent=2))",
+      "downloadCount": 128,
+      "demoFile": "resource-manifest",
+      "revision": "1.0",
+      "sourceResourceId": null,
+      "reproducibility": {
+        "environment": "Python 3.12; configuration example only",
+        "seed": 42,
+        "steps": [
+          "Read the demo manifest.",
+          "Compare the revision and task.",
+          "Inspect the sample configuration; no model is executed."
+        ]
+      }
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "alex@example.test",
+      "displayName": "Alex Morgan",
+      "password": "$2a$10$./O3a3k6RX3Co4jEMb/YTu9QYLadw6FtPc3RDRsFxg6sAr4AIKjcG"
+    },
+    {
+      "id": 2,
+      "email": "jamie@example.test",
+      "displayName": "Jamie Lee",
+      "password": "$2a$10$mF7PmhcxA9/nO86iX1qJk.0y8O182D5UgTE0a6RyA5uRFxPj1IbX6"
+    }
+  ],
+  "stars": [],
+  "subscriptions": [],
+  "discussions": []
+}

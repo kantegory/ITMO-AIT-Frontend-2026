@@ -1,0 +1,521 @@
+h1 {
+  font-weight: 750;
+  font-size: clamp(1.75rem, 4vw, 2.35rem);
+  margin-block: 24px 16px;
+  overflow-wrap: anywhere;
+}
+h1:focus {
+  outline: none;
+}
+a {
+  color: var(--axon-accent);
+}
+a:hover {
+  color: var(--axon-accent-hover);
+}
+.axon-main {
+  padding-block: 32px 48px;
+}
+.axon-footer {
+  padding-block: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+}
+.axon-logo {
+  width: 34px;
+  height: 34px;
+}
+.axon-nav-link.router-link-active {
+  background: var(--axon-nav-selected);
+  color: var(--axon-nav-text);
+}
+.axon-library-mark {
+  width: 150px;
+  height: 120px;
+  flex-shrink: 0;
+}
+.axon-explore-intro {
+  margin-bottom: 28px;
+}
+.axon-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  padding: 20px 4px 4px;
+}
+.axon-row-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  font-size: 0.8125rem;
+  color: var(--axon-muted);
+}
+.axon-row-metadata div {
+  display: flex;
+  gap: 6px;
+}
+.axon-row-metadata dd {
+  margin: 0;
+}
+.axon-resource-row p {
+  color: var(--axon-muted);
+}
+.axon-resource-title {
+  margin-bottom: 14px;
+}
+.axon-resource-title h3 {
+  margin-top: 4px;
+}
+.axon-action-buttons {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.axon-star-selected {
+  color: var(--axon-star);
+}
+.axon-panel {
+  padding: 24px;
+  background: var(--axon-surface);
+  border: 1px solid var(--axon-border);
+  border-radius: 12px;
+  margin-block: 20px;
+  min-width: 0;
+}
+.axon-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 270px;
+  gap: 24px;
+}
+.axon-detail-grid > aside {
+  order: 1;
+  align-self: start;
+}
+.axon-panel section + section {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--axon-section-border);
+}
+.axon-panel h2 {
+  font-size: 1.15rem;
+}
+.axon-panel pre {
+  background: var(--axon-code-bg);
+  color: var(--axon-code-text);
+  padding: 16px;
+  border-radius: 8px;
+  max-width: 100%;
+  overflow: auto;
+}
+.axon-resource-owner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.axon-error {
+  color: var(--axon-error);
+}
+.axon-discussion-list {
+  list-style: none;
+  padding: 0;
+}
+.axon-discussion-list > li {
+  padding-block: 16px;
+  border-bottom: 1px solid var(--axon-border);
+}
+.axon-comment-body {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.axon-comment-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.axon-auth-layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 440px);
+  align-items: center;
+  gap: 80px;
+}
+.axon-auth-intro > .axon-icon {
+  width: 200px;
+  height: 160px;
+}
+.axon-auth-form {
+  margin-block: 24px;
+  padding-block: 0;
+}
+.axon-auth-form .form-text {
+  margin-bottom: 0;
+}
+@media (max-width: 991.98px) {
+  .axon-filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .axon-auth-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .axon-detail-grid {
+    grid-template-columns: 1fr;
+  }
+  .axon-detail-grid > aside {
+    order: 0;
+  }
+}
+@media (max-width: 575.98px) {
+  .axon-filter-grid {
+    grid-template-columns: 1fr;
+  }
+  .axon-panel {
+    padding: 18px;
+  }
+  .axon-explore-intro {
+    align-items: start;
+  }
+  .axon-library-mark {
+    display: none;
+  }
+}
+.axon-account-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  min-height: 44px;
+  color: var(--axon-text);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.axon-account-name {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.axon-account-nav .axon-logout {
+  border-color: transparent;
+}
+.axon-profile-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 24px;
+  margin-block: 24px 32px;
+  background: var(--axon-surface);
+  border: 1px solid var(--axon-border);
+  border-radius: 12px;
+}
+.axon-profile-info {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.axon-profile-info h2 {
+  margin: 0 0 8px;
+  color: var(--axon-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+.axon-profile-name {
+  margin: 0 0 4px;
+  font-size: 1.125rem;
+  font-weight: 650;
+}
+.axon-profile-email {
+  margin: 0;
+  color: var(--axon-muted);
+  font-size: 0.875rem;
+}
+.axon-profile-section > h2 {
+  margin-bottom: 16px;
+}
+.axon-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  margin-top: 12px;
+}
+.axon-social-button {
+  min-height: 40px;
+  min-width: 44px;
+  padding: 8px 12px;
+  border-color: var(--axon-border-hover);
+  font-size: 0.8125rem;
+}
+.axon-action-count {
+  min-width: 1ch;
+  font-variant-numeric: tabular-nums;
+}
+.axon-subscribe-button {
+  position: relative;
+}
+.axon-subscription-check {
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.axon-actions > [role='alert'] {
+  flex-basis: 100%;
+  margin: 4px 0 0;
+  color: var(--axon-error);
+}
+.axon-sort-label {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--axon-muted);
+}
+.axon-filter-form {
+  margin-bottom: 28px;
+  padding: 20px;
+  background: var(--axon-surface);
+  border: 1px solid var(--axon-border);
+  border-radius: 12px;
+}
+.axon-filter-form .axon-search {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.axon-filter-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows 180ms ease,
+    visibility 0s linear 180ms;
+}
+.axon-filter-collapse.is-open {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition-delay: 0s;
+}
+.axon-filter-clip {
+  min-height: 0;
+  overflow: hidden;
+}
+.axon-chevron {
+  width: 7px;
+  height: 7px;
+  margin-left: 4px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 180ms ease;
+}
+.axon-filter-toggle[aria-expanded='true'] .axon-chevron {
+  transform: rotate(225deg) translate(-1px, -1px);
+}
+@media (max-width: 575.98px) {
+  .axon-header-row {
+    gap: 8px;
+  }
+  .axon-account-nav {
+    gap: 4px;
+  }
+  .axon-account-name {
+    max-width: 72px;
+  }
+  .axon-account-link {
+    gap: 6px;
+  }
+  .axon-account-nav .axon-logout {
+    padding-inline: 8px;
+  }
+  .axon-profile-card {
+    padding: 18px;
+    gap: 12px;
+  }
+  .axon-filter-form {
+    padding: 16px;
+  }
+  .axon-search {
+    gap: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .axon-filter-collapse,
+  .axon-chevron {
+    transition: none;
+  }
+}
+
+.axon-resource-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+.axon-resource-footer .axon-row-metadata,
+.axon-resource-footer .axon-actions {
+  margin: 0;
+}
+.axon-resource-footer .axon-actions {
+  margin-left: auto;
+}
+@media (max-width: 575.98px) {
+  .axon-resource-footer .axon-actions {
+    margin-left: 0;
+  }
+}
+@media (max-width: 359.98px) {
+  .axon-brand {
+    gap: 6px;
+    font-size: 1.1rem;
+  }
+  .axon-logo {
+    width: 28px;
+    height: 28px;
+  }
+  .axon-account-name {
+    max-width: 48px;
+  }
+  .axon-account-link,
+  .axon-account-nav .axon-logout {
+    font-size: 0.75rem;
+  }
+  .axon-account-nav .axon-logout {
+    padding-inline: 6px;
+  }
+  .axon-account-link .axon-avatar {
+    width: 28px;
+    height: 28px;
+  }
+}
+.axon-main [role='alert'] {
+  margin: 0;
+}
+.axon-main [role='alert']:not(:empty) {
+  padding: 12px 16px;
+  margin-block: 12px;
+  border-inline-start: 3px solid var(--axon-error);
+  border-radius: 8px;
+  background: var(--axon-error-bg);
+  color: var(--axon-error);
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+.axon-main [role='alert'] p:last-child {
+  margin-bottom: 0;
+}
+.axon-account-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+  border: 1px solid var(--axon-border);
+  border-radius: 10px;
+  background: var(--axon-subtle);
+  color: var(--axon-text);
+}
+.axon-account-notice--success {
+  background: var(--axon-success-bg);
+  color: var(--axon-success-text);
+}
+.axon-account-notice--error {
+  background: var(--axon-error-bg);
+  color: var(--axon-error);
+  border-color: var(--axon-error);
+}
+.axon-account-notice p,
+.axon-account-notice [role='alert']:not(:empty) {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-size: 0.875rem;
+}
+.axon-account-notice .btn {
+  flex-shrink: 0;
+  border-color: transparent;
+  color: inherit;
+}
+.axon-field-error:empty,
+.axon-auth-form [role='alert']:empty {
+  margin: 0;
+}
+@media (max-width: 575.98px) {
+  .axon-account-notice {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+.axon-auth-form [role='alert']:not(:empty) {
+  margin-block: 0;
+}
+
+.axon-notice-slot {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+.axon-notice-clip {
+  min-height: 0;
+  overflow: hidden;
+}
+.axon-account-notice--timed {
+  --axon-notice-fill: var(--axon-subtle);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 64px;
+  background: color-mix(in srgb, var(--axon-notice-fill) 35%, transparent);
+}
+.axon-account-notice--timed.axon-account-notice--success {
+  --axon-notice-fill: var(--axon-success-bg);
+}
+.axon-account-notice--timed::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--axon-notice-fill);
+  transform-origin: left center;
+  animation: axon-notice-drain 2s linear forwards;
+}
+.axon-notice-countdown {
+  flex-shrink: 0;
+  min-width: 2ch;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}
+.axon-notice-enter-active,
+.axon-notice-leave-active {
+  transition:
+    grid-template-rows 180ms ease,
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+.axon-notice-enter-from,
+.axon-notice-leave-to {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(-6px);
+}
+@keyframes axon-notice-drain {
+  to {
+    transform: scaleX(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .axon-account-notice--timed::before {
+    animation: none;
+  }
+  .axon-notice-enter-active,
+  .axon-notice-leave-active {
+    transition: none;
+  }
+}
