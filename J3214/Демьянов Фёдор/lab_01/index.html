@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroTour | Космический туризм</title>
+    <!-- Бутстрап -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
+    <!-- Шрифты от гугла -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Верхнее меню -->
+    <nav class="navbar navbar-expand-lg sticky-top glass-navbar">
+        <div class="container-fluid custom-container px-4 px-md-5">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="11" stroke="white" stroke-width="1" />
+                    <path d="M12 1 C12 8 16 12 23 12 C16 12 12 16 12 23 C12 16 8 12 1 12 C8 12 12 8 12 1 Z"
+                        fill="white" />
+                </svg>
+                <span class="fw-bold ms-2">Nova</span><span class="fw-light">Transit</span>
+            </a>
+            <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Переключатель навигации">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-4">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html"><span
+                                class="fw-bold me-1 text-main">00</span> Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#catalog"><span class="fw-bold me-1 text-main">01</span> Маршруты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="dashboard.html"><span
+                                class="fw-bold me-1 text-main">02</span> Кабинет</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3 mt-4 mt-lg-0">
+                    <a href="login.html" class="nav-link letter-spacing-2 text-uppercase"
+                        style="font-size: 0.75rem;">Войти</a>
+                    <a href="register.html" class="btn btn-accent"
+                        style="font-size: 0.85rem; padding: 0.4rem 1rem;">Регистрация</a>
+
+                    <a href="dashboard.html" class="profile-nav-btn ms-2">
+                        <img src="https://ui-avatars.com/api/?name=J+D&background=1a1e29&color=c8d0db&size=32"
+                            alt="Avatar" width="24" height="24" class="rounded-circle">
+                        <span class="d-none d-sm-inline">Кабинет</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Главный экран -->
+    <section class="hero-section d-flex align-items-center">
+        <div class="container-fluid custom-container position-relative z-1 px-4 px-md-5">
+            <div class="row align-items-center py-5">
+
+                <!-- Левая колонка -->
+                <div class="col-lg-6 col-xl-6 text-center text-lg-start">
+                    <span class="badge-premium">Межпланетные путешествия</span>
+                    <h1 class="hero-title display-2 mb-4">
+                        Открой для себя<br>
+                        <span class="fw-light text-muted-custom">Глубокий Космос</span>
+                    </h1>
+                    <p class="hero-subtitle mb-5 mx-auto mx-lg-0" style="max-width: 500px;">
+                        Премиальные туристические маршруты на Луну, Марс и Энцелад. Почувствуйте невесомость и взгляните
+                        на Вселенную по-новому.
+                    </p>
+
+                    <!-- Панель поиска и фильтрации -->
+                    <div id="searchPanel" class="search-panel glass-panel p-4 p-md-5 mt-4">
+                        <form class="row g-4">
+                            <!-- Верхний ярус: фильтры -->
+                            <div class="col-md-4">
+                                <label for="destination" class="form-label">Направление</label>
+                                <select id="destination" class="form-select glass-input shadow-none">
+                                    <option value="" selected>Все орбиты</option>
+                                    <option value="earth">Орбита Земли</option>
+                                    <option value="moon">Луна</option>
+                                    <option value="mars">Марс</option>
+                                    <option value="enceladus">Энцелад</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="duration" class="form-label">Длительность</label>
+                                <select id="duration" class="form-select glass-input shadow-none">
+                                    <option value="" selected>Любая</option>
+                                    <option value="short">До 7 суток</option>
+                                    <option value="long">Более 7 суток</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="budget" class="form-label">Класс миссии</label>
+                                <select id="budget" class="form-select glass-input shadow-none">
+                                    <option value="" selected>Все классы</option>
+                                    <option value="standard">Standard</option>
+                                    <option value="premium">Premium</option>
+                                    <option value="vip">VIP Explorer</option>
+                                </select>
+                            </div>
+
+                            <!-- Нижний ярус: кнопка -->
+                            <div class="col-12 mt-4">
+                                <button type="button" id="findMissionBtn"
+                                    class="btn btn-accent w-100 py-3 letter-spacing-2 fs-7">
+                                    Найти экспедицию
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Правая колонка: динамическая карточка планеты -->
+                <div class="col-lg-6 col-xl-6 mt-5 mt-lg-0">
+                    <div class="planet-wrapper">
+                        <!-- Все 4 изображения предзагружены и наложены друг на друга -->
+                        <img src="assets/images/Earth.png" alt="Орбита Земли" class="planet-img" data-planet="earth">
+                        <img src="assets/images/Moon.png" alt="Луна" class="planet-img active" data-planet="moon">
+                        <img src="assets/images/Mars.png" alt="Марс" class="planet-img" data-planet="mars">
+                        <img src="assets/images/Encelade.png" alt="Энцелад" class="planet-img" data-planet="enceladus">
+
+                        <!-- Карточка характеристик поверх них -->
+                        <div class="safety-card glass-panel p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span id="heroPlanetBadge" class="badge-gold px-2 py-1 fs-7 rounded">Флагман
+                                    сезона</span>
+                                <span id="heroPlanetCode" class="text-muted-custom fs-7">EXP-01 // LUNA</span>
+                            </div>
+                            <h4 id="heroPlanetTitle" class="text-uppercase letter-spacing-2 fs-6 text-main mb-3">
+                                Орбитальная станция "Селена"</h4>
+                            <ul class="list-unstyled mb-0 safety-list">
+                                <li
+                                    class="d-flex justify-content-between mb-2 border-bottom border-secondary border-opacity-25 pb-2">
+                                    <span class="text-muted-custom">Гравитация:</span>
+                                    <span id="heroPlanetGravity" class="fw-medium text-main">0.16 G</span>
+                                </li>
+                                <li
+                                    class="d-flex justify-content-between mb-2 border-bottom border-secondary border-opacity-25 pb-2">
+                                    <span class="text-muted-custom">Длительность:</span>
+                                    <span id="heroPlanetDuration" class="fw-medium text-main">7 суток</span>
+                                </li>
+                                <li class="d-flex justify-content-between">
+                                    <span class="text-muted-custom">Подготовка:</span>
+                                    <span id="heroPlanetTraining" class="fw-medium text-main">Класс II (14 дней)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <!-- Секция каталога экспедиций -->
+    <section id="catalog" class="py-5">
+        <div class="container-fluid custom-container px-4 px-md-5">
+
+            <!-- Заголовок каталога и быстрый сброс -->
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5">
+                <div>
+                    <span class="badge-premium">Реестр полетов</span>
+                    <h2 class="display-6 fw-bold text-main mb-0">Доступные экспедиции</h2>
+                </div>
+                <div class="mt-3 mt-md-0 d-flex gap-2">
+                    <button type="button" id="resetFilterBtn" class="btn btn-glass fs-7 py-2 px-3">
+                        Показать все миссии
+                    </button>
+                </div>
+            </div>
+
+            <!-- Сообщение, если ничего не найдено по фильтрам -->
+            <div id="noResults" class="glass-panel text-center p-5 d-none">
+                <h4 class="text-main mb-2">Экспедиций не найдено</h4>
+                <p class="text-muted-custom mb-4">По выбранным параметрам нет доступных стартовых окон. Попробуйте
+                    изменить фильтры.</p>
+                <button type="button" class="btn btn-accent py-2 px-4"
+                    onclick="document.getElementById('resetFilterBtn').click()">Сбросить фильтры</button>
+            </div>
+
+            <!-- Сетка карточек -->
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="missionsGrid">
+
+                <!-- Карточка 1: Орбита Земли (Standard) -->
+                <div class="col mission-card-item" data-destination="earth" data-budget="standard"
+                    data-duration="short">
+                    <div class="glass-panel h-100 p-4 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge-silver px-2 py-1 fs-7 rounded">Standard</span>
+                                <span class="text-muted-custom fs-7">EXP-01 // ORB</span>
+                            </div>
+                            <h4 class="text-main fs-5 mb-2">Орбитальный уикенд МКС-2</h4>
+                            <p class="text-muted-custom fs-7 mb-4">Суборбитальный подъем и двое суток на комфортной
+                                станции с панорамным обзором Земли.</p>
+
+                            <div class="border-top border-secondary border-opacity-25 pt-3 mb-4">
+                                <div class="d-flex justify-content-between fs-7 mb-2">
+                                    <span class="text-muted-custom">Высота:</span>
+                                    <span class="text-main">410 км</span>
+                                </div>
+                                <div class="d-flex justify-content-between fs-7 mb-2">
+                                    <span class="text-muted-custom">Перегрузка:</span>
+                                    <span class="text-main">До 3.0 G</span>
+                                </div>
+                                <div class="d-flex justify-content-between fs-7">
+                                    <span class="text-muted-custom">Длительность:</span>
+                                    <span class="text-main">3 дня</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted-custom fs-7">Стоимость</span>
+                                <span class="fs-5 fw-bold text-main">250 000 $</span>
+                            </div>
+                            <a href="tour.html?id=earth" class="btn btn-glass w-100 py-2 fs-7">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 2: Луна (Premium) -->
+                <div class="col mission-card-item" data-destination="moon" data-budget="premium" data-duration="short">
+                    <div class="glass-panel h-100 p-4 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge-gold px-2 py-1 fs-7 rounded">Premium</span>
+                                <span class="text-muted-custom fs-7">EXP-02 // LUNA</span>
+                            </div>
+                            <h4 class="text-main fs-5 mb-2">Экспедиция "Селена-Бэй"</h4>
+                            <p class="text-muted-custom fs-7 mb-4">Облет обратной стороны Луны с выходом на низкую
+                                орбиту и осмотром лунных морей.</p>
+
+                            <div class="border-top border-secondary border-opacity-25 pt-3 mb-4">
+                                <div class="d-flex justify-content-between fs-7 mb-2">
+                                    <span class="text-muted-custom">Высота:</span>
+                                    <span class="text-main">384 400 км</span>
+                                </div>
+                                <div class="d-flex justify-content-between fs-7 mb-2">
+                                    <span class="text-muted-custom">Гравитация:</span>
+                                    <span class="text-main">0.16 G</span>
+                                </div>
+                                <div class="d-flex justify-content-between fs-7">
+                                    <span class="text-muted-custom">Длительность:</span>
+                                    <span class="text-main">7 суток</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted-custom fs-7">Стоимость</span>
+                                <span class="fs-5 fw-bold text-main">1 200 000 $</span>
+                            </div>
+                            <a href="tour.html?id=moon" class="btn btn-glass w-100 py-2 fs-7">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 3: Луна (VIP) -->
+                <div class="col mission-card-item" data-destination="moon" data-budget="vip" data-duration="long">
+                    <div class="glass-panel h-100 p-4 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge-gold px-2 py-1 fs-7 rounded">VIP Explorer</span>
+                                <span class="text-muted-custom fs-7">EXP-03 // LUNA</span>
+                            </div>
+                            <h4 class="text-main fs-5 mb-2">Посадка: База Шеклтон</h4>
+                            <p class="text-muted-custom fs-7 mb-4">Пилотируемая высадка на южный полюс Луны,
+                                персональный модуль и научная программа.</p>
+
+                            <div class="border-top border-secondary border-opacity-25 pt-3 mb-4">
+                                <div class="d-flex justify-content-between fs-7 mb-2">
+                                    <span class="text-muted-custom">Локация:</span>
+                                    <span class="text-main">Кратер Шеклтон</span>
+                                </div>
+                                <div class="d-flex justify-content-between fs-7 mb-2">
+                                    <span class="text-muted-custom">Выход на грунт:</span>
+                                    <span class="text-main">3 выхода</span>
+                                </div>
+                                <div class="d-flex justify-content-between fs-7">
+                                    <span class="text-muted-custom">Длительность:</span>
+                                    <span class="text-main">12 суток</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted-custom fs-7">Стоимость</span>
+                                <span class="fs-5 fw-bold text-main">3 500 000 $</span>
+                            </div>
+                            <a href="tour.html?id=moon" class="btn btn-glass w-100 py-2 fs-7">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 4: Марс (VIP) -->
+                <div class="col mission-card-item" data-destination="mars" data-budget="vip" data-duration="long">
+                    <div class="glass-panel h-100 p-4 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge-gold px-2 py-1 fs-7 rounded">VIP Explorer</span>
+                                <span class="text-muted-custom fs-7">EXP-04 // MARS</span>
+                            </div>
+                            <h4 class="text-main fs-5 mb-2">Марсианский транзит</h4>
+                            <p class="text-muted-custom fs-7 mb-4">Межпланетный перелет на ядерном буксире с
+                                искусственной гравитацией и орбитальным челноком.</p>
+
+                            <div class="border-top border-secondary border-opacity-25 pt-3 mb-4">
+                                <div class="d-flex justify-content-between fs-7 mb-2">
+                                    <span class="text-muted-custom">Дистанция:</span>
+                                    <span class="text-main">78 млн км</span>
+                                </div>
+                                <div class="d-flex justify-content-between fs-7 mb-2">
+                                    <span class="text-muted-custom">Гравитация:</span>
+                                    <span class="text-main">0.38 G</span>
+                                </div>
+                                <div class="d-flex justify-content-between fs-7">
+                                    <span class="text-muted-custom">Длительность:</span>
+                                    <span class="text-main">180 дней</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted-custom fs-7">Стоимость</span>
+                                <span class="fs-5 fw-bold text-main">8 900 000 $</span>
+                            </div>
+                            <a href="tour.html?id=mars" class="btn btn-glass w-100 py-2 fs-7">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 5: Земля / Орбита (Premium) -->
+                <div class="col mission-card-item" data-destination="earth" data-budget="premium" data-duration="short">
+                    <div class="glass-panel h-100 p-4 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge-silver px-2 py-1 fs-7 rounded">Premium</span>
+                                <span class="text-muted-custom fs-7">EXP-05 // ORB</span>
+                            </div>
+                            <h4 class="text-main fs-5 mb-2">Полярная одиссея</h4>
+                            <p class="text-muted-custom fs-7 mb-4">Высокая полярная орбита с прохождением через северное
+                                сияние и тренировочным выходом в открытый космос.</p>
+
+                            <div class="border-top border-secondary border-opacity-25 pt-3 mb-4">
+                                <div class="d-flex justify-content-between fs-7 mb-2">
+                                    <span class="text-muted-custom">Высота:</span>
+                                    <span class="text-main">600 км</span>
+                                </div>
+                                <div class="d-flex justify-content-between fs-7 mb-2">
+                                    <span class="text-muted-custom">Наклонение:</span>
+                                    <span class="text-main">98° (Полярная)</span>
+                                </div>
+                                <div class="d-flex justify-content-between fs-7">
+                                    <span class="text-muted-custom">Длительность:</span>
+                                    <span class="text-main">5 дней</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted-custom fs-7">Стоимость</span>
+                                <span class="fs-5 fw-bold text-main">750 000 $</span>
+                            </div>
+                            <a href="tour.html?id=earth" class="btn btn-glass w-100 py-2 fs-7">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 6: Энцелад (VIP) -->
+                <div class="col mission-card-item" data-destination="enceladus" data-budget="vip" data-duration="long">
+                    <div class="glass-panel h-100 p-4 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge-gold px-2 py-1 fs-7 rounded">VIP Explorer</span>
+                                <span class="text-muted-custom fs-7">EXP-06 // SATURN</span>
+                            </div>
+                            <h4 class="text-main fs-5 mb-2">Гейзеры Энцелада</h4>
+                            <p class="text-muted-custom fs-7 mb-4">Экспедиция дальнего рубежа к ледяным гейзерам
+                                спутника Сатурна на флагманском исследовательском судне.</p>
+
+                            <div class="border-top border-secondary border-opacity-25 pt-3 mb-4">
+                                <div class="d-flex justify-content-between fs-7 mb-2">
+                                    <span class="text-muted-custom">Дистанция:</span>
+                                    <span class="text-main">1.4 млрд км</span>
+                                </div>
+                                <div class="d-flex justify-content-between fs-7 mb-2">
+                                    <span class="text-muted-custom">Гравитация:</span>
+                                    <span class="text-main">0.011 G</span>
+                                </div>
+                                <div class="d-flex justify-content-between fs-7">
+                                    <span class="text-muted-custom">Длительность:</span>
+                                    <span class="text-main">360 дней</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted-custom fs-7">Стоимость</span>
+                                <span class="fs-5 fw-bold text-main">14 000 000 $</span>
+                            </div>
+                            <a href="tour.html?id=enceladus" class="btn btn-glass w-100 py-2 fs-7">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Скрипты бутстрапа -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+
+    <!-- Основная логика страницы -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const findBtn = document.getElementById('findMissionBtn');
+            const resetBtn = document.getElementById('resetFilterBtn');
+            const destinationSelect = document.getElementById('destination');
+            const durationSelect = document.getElementById('duration');
+            const budgetSelect = document.getElementById('budget');
+            const searchPanel = document.getElementById('searchPanel');
+            const cards = document.querySelectorAll('.mission-card-item');
+            const noResults = document.getElementById('noResults');
+            const catalogSection = document.getElementById('catalog');
+
+            const planetsInfo = {
+                earth: {
+                    title: 'Орбитальная станция МКС-2',
+                    code: 'EXP-00 // ORBIT',
+                    gravity: '0.00 G (Невесомость)',
+                    duration: '3-5 суток',
+                    training: 'Класс I (3 дня)',
+                    badge: 'Околоземная орбита'
+                },
+                moon: {
+                    title: 'Орбитальная станция "Селена"',
+                    code: 'EXP-01 // LUNA',
+                    gravity: '0.16 G',
+                    duration: '7 суток',
+                    training: 'Класс II (14 дней)',
+                    badge: 'Флагман сезона'
+                },
+                mars: {
+                    title: 'Марсианский аванпост',
+                    code: 'EXP-04 // MARS',
+                    gravity: '0.38 G',
+                    duration: '180 суток',
+                    training: 'Класс IV (3 мес.)',
+                    badge: 'Дальний рубеж'
+                },
+                enceladus: {
+                    title: 'Гейзеры Энцелада',
+                    code: 'EXP-06 // SATURN',
+                    gravity: '0.011 G',
+                    duration: '360 суток',
+                    training: 'Класс V (1 год)',
+                    badge: 'Глубокий космос'
+                }
+            };
+
+            // Плавная смена визуала планеты при выборе направления
+            destinationSelect.addEventListener('change', () => {
+                const selected = destinationSelect.value;
+                const data = planetsInfo[selected];
+
+                // Если выбрано "Все направления", возвращаем вид Луны по умолчанию
+                const targetPlanet = data ? selected : 'moon';
+                const displayData = data || planetsInfo['moon'];
+
+                document.querySelectorAll('.planet-img').forEach(img => {
+                    if (img.getAttribute('data-planet') === targetPlanet) {
+                        img.classList.add('active');
+                    } else {
+                        img.classList.remove('active');
+                    }
+                });
+
+                document.getElementById('heroPlanetTitle').textContent = displayData.title;
+                document.getElementById('heroPlanetCode').textContent = displayData.code;
+                document.getElementById('heroPlanetGravity').textContent = displayData.gravity;
+                document.getElementById('heroPlanetDuration').textContent = displayData.duration;
+                document.getElementById('heroPlanetTraining').textContent = displayData.training;
+                document.getElementById('heroPlanetBadge').textContent = displayData.badge;
+            });
+
+            // Свечение панели при выборе премиум-тарифов
+            budgetSelect.addEventListener('change', () => {
+                searchPanel.classList.remove('glow-premium', 'glow-vip');
+                if (budgetSelect.value === 'premium') {
+                    searchPanel.classList.add('glow-premium');
+                } else if (budgetSelect.value === 'vip') {
+                    searchPanel.classList.add('glow-vip');
+                }
+            });
+
+            // Комплексная фильтрация по трем параметрам
+            function filterMissions() {
+                const dest = destinationSelect.value;
+                const dur = durationSelect.value;
+                const bud = budgetSelect.value;
+                let visibleCount = 0;
+
+                cards.forEach(card => {
+                    const cardDest = card.getAttribute('data-destination');
+                    const cardDur = card.getAttribute('data-duration');
+                    const cardBud = card.getAttribute('data-budget');
+
+                    const matchDest = !dest || dest === cardDest;
+                    const matchDur = !dur || dur === cardDur;
+                    const matchBud = !bud || bud === cardBud;
+
+                    if (matchDest && matchDur && matchBud) {
+                        card.classList.remove('d-none');
+                        visibleCount++;
+                    } else {
+                        card.classList.add('d-none');
+                    }
+                });
+
+                if (visibleCount === 0) {
+                    noResults.classList.remove('d-none');
+                } else {
+                    noResults.classList.add('d-none');
+                }
+
+                catalogSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            findBtn.addEventListener('click', filterMissions);
+
+            resetBtn.addEventListener('click', () => {
+                destinationSelect.value = '';
+                durationSelect.value = '';
+                budgetSelect.value = '';
+                searchPanel.classList.remove('glow-premium', 'glow-vip');
+                destinationSelect.dispatchEvent(new Event('change'));
+                cards.forEach(card => card.classList.remove('d-none'));
+                noResults.classList.add('d-none');
+                catalogSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+
+</html>
