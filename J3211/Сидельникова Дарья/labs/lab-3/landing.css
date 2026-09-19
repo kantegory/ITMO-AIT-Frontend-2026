@@ -1,0 +1,59 @@
+.hero {
+    height: 92vh;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: clamp(70px, 15vw, 160px);
+    font-weight: 900;
+    letter-spacing: 15px;
+    color: white;
+    white-space: nowrap;
+}
+
+.hero-title span,
+.prime-letter {
+    display: inline-block;
+    transition: transform 0.25s ease;
+}
+
+.hero-title span:hover {
+    transform: scale(0.85);
+}
+
+.prime-letter {
+    position: relative;
+    cursor: pointer;
+}
+
+.prime-letter:hover {
+    transform: scale(0.9);
+}
+
+.prime-word {
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 1px;
+    opacity: 0;
+    white-space: nowrap;
+    transition: 0.25s;
+}
+
+.prime-letter:hover .prime-word {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.hero-subtitle {
+    color: #bbb;
+    font-size: 24px;
+    margin-top: 20px;
+}
