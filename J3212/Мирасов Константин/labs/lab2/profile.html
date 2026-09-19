@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="View your AxonHub account and public resources." />
+    <title>Your library · AxonHub</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link href="assets/css/base.css" rel="stylesheet" />
+    <link href="assets/css/catalog.css" rel="stylesheet" />
+    <link href="assets/css/pages.css" rel="stylesheet" />
+    <link rel="icon" href="assets/icons/axon-mark.svg" type="image/svg+xml" />
+    <script src="assets/js/profile.js" type="module"></script>
+  </head>
+  <body>
+    <header class="axon-header">
+      <div class="container-fluid axon-container axon-header-row">
+        <a class="axon-brand" href="index.html"
+          ><img
+            src="assets/icons/axon-mark.svg"
+            width="34"
+            height="34"
+            alt=""
+            aria-hidden="true"
+          />AxonHub</a
+        >
+        <nav class="axon-nav" aria-label="Main navigation">
+          <a class="axon-nav-link" href="index.html">Explore</a>
+          <a class="axon-nav-link" href="profile.html" aria-current="page">Your library</a>
+        </nav>
+        <div class="axon-account-nav">
+          <a class="axon-nav-link" href="login.html">Log in</a>
+          <a class="btn btn-primary" href="register.html">Sign up</a>
+        </div>
+      </div>
+    </header>
+
+    <noscript
+      ><p class="container-fluid axon-container"
+        >Enable JavaScript to view your library.</p
+      ></noscript
+    >
+    <main class="container-fluid axon-container" hidden>
+      <div class="axon-page-header">
+        <span class="axon-eyebrow">Your workspace</span>
+        <h1>Your library</h1>
+        <p>Your account and the public resources you own.</p>
+      </div>
+      <div class="axon-profile-identity">
+        <span id="profile-avatar" class="axon-avatar" aria-hidden="true"></span>
+        <div>
+          <p id="profile-name" class="fw-semibold mb-1"></p>
+          <p id="profile-email" class="mb-0 axon-muted"></p>
+        </div>
+      </div>
+
+      <section class="axon-profile-section" aria-labelledby="your-resources-heading">
+        <h2 id="your-resources-heading">Your resources</h2>
+        <p id="resource-status" role="status" tabindex="-1"></p>
+        <button id="retry-resources" type="button" class="btn btn-outline-primary" hidden
+          >Retry</button
+        >
+        <ul id="your-resources" class="axon-resource-list" aria-busy="true"></ul>
+        <div id="empty-resources" class="axon-empty-state" hidden>
+          <h3>No resources yet</h3>
+          <p
+            >You do not own any resources yet. Explore the public library to find a starting
+            point.</p
+          >
+          <a class="btn btn-outline-primary" href="index.html">Explore resources</a>
+        </div>
+        <template id="profile-resource-template">
+          <li class="axon-resource-row">
+            <span class="axon-resource-type"></span>
+            <h3><a></a></h3>
+            <p></p>
+          </li>
+        </template>
+      </section>
+
+      <section class="axon-profile-section" aria-labelledby="subscriptions-heading">
+        <h2 id="subscriptions-heading">Subscriptions</h2>
+        <p id="subscriptions-status" role="status" tabindex="-1"></p>
+        <button id="retry-subscriptions" type="button" class="btn btn-outline-primary" hidden
+          >Reload subscriptions</button
+        >
+        <ul id="subscriptions-list" class="axon-resource-list mt-3 mb-3"></ul>
+        <a class="btn btn-outline-primary" href="index.html">Explore resources</a>
+      </section>
+    </main>
+    <footer class="axon-footer">
+      <div class="container-fluid axon-container">
+        <p>AxonHub <span aria-hidden="true">/</span> Models, datasets &amp; ideas.</p>
+        <p>Learning preview · Sample resources only</p>
+      </div>
+    </footer>
+  </body>
+</html>
