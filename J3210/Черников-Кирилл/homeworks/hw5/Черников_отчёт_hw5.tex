@@ -1,0 +1,301 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  stringstyle=\color{red},
+  commentstyle=\color{gray},
+  breaklines=true,
+  showstringspaces=false
+}
+
+\begin{document}
+
+\begin{center}
+\textbf{САНКТ-ПЕТЕРБУРГСКИЙ НАЦИОНАЛЬНЫЙ}\\
+\textbf{ИССЛЕДОВАТЕЛЬСКИЙ УНИВЕРСИТЕТ ИТМО}\\[1.5cm]
+
+Дисциплина: Фронт-энд разработка\\[1.5cm]
+
+Отчет\\[1.5cm]
+
+Домашняя работа 5\\[2cm]
+
+Выполнил:\\
+Черников Кирилл\\
+Группа J3210\\[0.8cm]
+
+Проверил:\\
+Добряков Д. И.\\[2cm]
+
+Санкт-Петербург\\
+2026 г.
+\end{center}
+
+\newpage
+
+\section{Цель работы}
+
+Изучить основные команды менеджера зависимостей NPM и освоить базовые концепции фреймворка Vue.js~3: создание проекта через Vite, компонентный подход, реактивность, передача данных через пропсы и пользовательские события.
+
+\section{Требования задания}
+
+\begin{itemize}
+  \item Изучить основные команды NPM (\texttt{npm init}, \texttt{npm install}, \texttt{npm run})
+  \item Создать Vue-проект с помощью Vite
+  \item Реализовать несколько компонентов, демонстрирующих возможности Vue.js
+  \item Предоставить скриншоты компонентов и код приложения
+\end{itemize}
+
+\section{Ход выполнения работы}
+
+\subsection{Основные команды NPM}
+
+NPM (Node Package Manager) — стандартный менеджер пакетов для Node.js. Основные команды, использованные в работе:
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Команда & Описание \\
+\midrule
+\texttt{npm init}              & Инициализация нового проекта, создание \texttt{package.json} \\
+\texttt{npm install}           & Установка всех зависимостей из \texttt{package.json} \\
+\texttt{npm install \textless пакет\textgreater}   & Установка конкретного пакета в \texttt{dependencies} \\
+\texttt{npm install -D \textless пакет\textgreater} & Установка пакета в \texttt{devDependencies} \\
+\texttt{npm run dev}           & Запуск dev-сервера (скрипт из \texttt{package.json}) \\
+\texttt{npm run build}         & Сборка проекта для продакшена \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Создание проекта}
+
+Проект создан вручную с использованием Vite и плагина \texttt{@vitejs/plugin-vue}. Файл \texttt{package.json}:
+
+\begin{lstlisting}[language={}]
+{
+  "name": "dataforge-hw5",
+  "scripts": {
+    "dev":     "vite",
+    "build":   "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies":    { "vue": "^3.4.27" },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "vite": "^5.2.11"
+  }
+}
+\end{lstlisting}
+
+Конфигурация Vite (\texttt{vite.config.js}):
+
+\begin{lstlisting}[language={}]
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+export default defineConfig({
+  plugins: [vue()],
+})
+\end{lstlisting}
+
+Структура проекта:
+
+\begin{lstlisting}
+vue-app/
+  index.html
+  vite.config.js
+  package.json
+  src/
+    main.js
+    App.vue
+    assets/styles.css
+    components/
+      UserGreeting.vue
+      CounterWidget.vue
+      TaskList.vue
+\end{lstlisting}
+
+Точка входа \texttt{src/main.js}:
+
+\begin{lstlisting}[language={}]
+import { createApp } from 'vue'
+import App from './App.vue'
+import './assets/styles.css'
+
+createApp(App).mount('#app')
+\end{lstlisting}
+
+\subsection{Компонент UserGreeting — пропсы и события}
+
+Компонент принимает имя и роль через пропсы и отправляет событие \texttt{update:role} при смене роли через выпадающий список. Это демонстрирует однонаправленный поток данных и паттерн \texttt{v-model} на пользовательских компонентах.
+
+\begin{lstlisting}[language={}]
+<template>
+  <div class="card">
+    <h3>Привет, <strong>{{ name }}</strong>!</h3>
+    <div class="role-tag">{{ role }}</div>
+    <select :value="role"
+            @change="$emit('update:role', $event.target.value)">
+      <option>Исполнитель</option>
+      <option>Валидатор</option>
+      <option>Менеджер</option>
+    </select>
+  </div>
+</template>
+
+<script setup>
+defineProps({ name: String, role: String })
+defineEmits(['update:role'])
+</script>
+\end{lstlisting}
+
+\subsection{Компонент CounterWidget — реактивность}
+
+Компонент демонстрирует реактивность Vue через \texttt{ref}. Значение счётчика меняется при нажатии на кнопки, интерфейс обновляется автоматически.
+
+\begin{lstlisting}[language={}]
+<template>
+  <div class="card">
+    <div class="counter-value">{{ count }}</div>
+    <div class="btn-row">
+      <button @click="count++">+ Добавить</button>
+      <button :disabled="count === 0" @click="count--">
+        − Убрать
+      </button>
+      <button :disabled="count === 0" @click="count = 0">
+        Сброс
+      </button>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+const count = ref(0)
+</script>
+\end{lstlisting}
+
+\subsection{Компонент TaskList — директивы v-for и v-if}
+
+Компонент реализует список задач и демонстрирует:
+\begin{itemize}
+  \item \texttt{v-for} — рендеринг списка задач
+  \item \texttt{v-if} / \texttt{v-else} — условный рендеринг пустого состояния
+  \item \texttt{v-model} — двустороннее связывание поля ввода и чекбоксов
+  \item \texttt{computed} — автоматическое вычисление числа выполненных задач
+\end{itemize}
+
+\begin{lstlisting}[language={}]
+<template>
+  <div class="card">
+    <form @submit.prevent="addTask">
+      <input v-model="newTask" placeholder="Новая задача..." />
+      <button type="submit">Добавить</button>
+    </form>
+
+    <p v-if="tasks.length === 0">Список пуст.</p>
+
+    <ul v-else>
+      <li v-for="task in tasks" :key="task.id"
+          :class="{ done: task.done }">
+        <input type="checkbox" v-model="task.done" />
+        <label>{{ task.text }}</label>
+        <button @click="removeTask(task.id)">X</button>
+      </li>
+    </ul>
+    <p>Выполнено: {{ doneCount }} / {{ tasks.length }}</p>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed } from 'vue'
+
+const newTask = ref('')
+const tasks = ref([
+  { id: 1, text: 'Изучить основы Vue.js', done: true },
+  { id: 2, text: 'Создать первый компонент', done: false },
+])
+let nextId = 3
+
+const doneCount = computed(
+  () => tasks.value.filter(t => t.done).length
+)
+
+function addTask() {
+  const text = newTask.value.trim()
+  if (!text) return
+  tasks.value.push({ id: nextId++, text, done: false })
+  newTask.value = ''
+}
+
+function removeTask(id) {
+  tasks.value = tasks.value.filter(t => t.id !== id)
+}
+</script>
+\end{lstlisting}
+
+\subsection{Корневой компонент App.vue}
+
+Корневой компонент импортирует три дочерних компонента и передаёт данные через пропсы. Смена роли в \texttt{UserGreeting} обновляет состояние в родителе через \texttt{v-model}.
+
+\begin{lstlisting}[language={}]
+<template>
+  <div class="app">
+    <header class="app-header">
+      <h1>DataForge — изучение Vue.js</h1>
+    </header>
+    <div class="grid">
+      <UserGreeting :name="userName" v-model:role="userRole" />
+      <CounterWidget />
+    </div>
+    <TaskList />
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import UserGreeting from './components/UserGreeting.vue'
+import CounterWidget from './components/CounterWidget.vue'
+import TaskList from './components/TaskList.vue'
+
+const userName = ref('Кирилл')
+const userRole = ref('Исполнитель')
+</script>
+\end{lstlisting}
+
+\section{Скриншоты}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.85\textwidth]{"screenshots/Скриншот 11-05-2026 234858.jpg"}
+  \caption{Общий вид приложения: компоненты UserGreeting (пропсы, смена роли), CounterWidget (реактивность) и TaskList (v-for, v-if) на одной странице}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{"screenshots/Скриншот 11-05-2026 234929.jpg"}
+  \caption{Компонент CounterWidget — счётчик показывает значение 5 после пяти нажатий кнопки «+ Добавить»; кнопки «− Убрать» и «Сброс» становятся активными}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.75\textwidth]{"screenshots/Скриншот 11-05-2026 234942.jpg"}
+  \caption{Компонент TaskList — задача «Изучить основы Vue.js» отмечена как выполненная (зачёркнута через v-if/v-bind:class), счётчик «Выполнено: 1~/ 2» обновляется реактивно через computed}
+\end{figure}
+
+\section{Вывод}
+
+В ходе выполнения домашней работы изучены основные команды NPM и базовые концепции Vue.js~3. Создан Vue-проект на базе Vite с тремя компонентами, демонстрирующими: передачу данных через пропсы (\texttt{UserGreeting}), реактивность через \texttt{ref} (\texttt{CounterWidget}), условный рендеринг и рендеринг списков через \texttt{v-if} и \texttt{v-for} (\texttt{TaskList}). Все концепции, изученные в ДЗ5, применены в полноценном SPA в рамках ЛР3.
+
+\end{document}
