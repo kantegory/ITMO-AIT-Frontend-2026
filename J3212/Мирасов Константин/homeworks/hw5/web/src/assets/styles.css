@@ -1,0 +1,223 @@
+body {
+  margin: 0;
+  background: var(--axon-page);
+  color: var(--axon-text);
+  font-family: system-ui, sans-serif;
+}
+.axon-container {
+  width: min(100% - 40px, 1120px);
+  margin-inline: auto;
+}
+.axon-header {
+  background: var(--axon-surface);
+  border-bottom: 1px solid var(--axon-divider);
+}
+.axon-header-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 76px;
+}
+.axon-brand {
+  font-size: 1.3rem;
+  font-weight: 750;
+  color: var(--axon-brand);
+}
+.axon-current-page {
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: var(--axon-nav-selected);
+  color: var(--axon-nav-text);
+  font-size: 0.875rem;
+  font-weight: 650;
+}
+.axon-main {
+  padding-block: 44px 64px;
+}
+.axon-intro {
+  margin-bottom: 28px;
+}
+.axon-intro h1 {
+  font-size: clamp(1.65rem, 4vw, 2.25rem);
+  font-weight: 750;
+  letter-spacing: -0.04em;
+}
+.axon-intro > p:not(.axon-eyebrow) {
+  color: var(--axon-muted);
+  max-width: 680px;
+}
+.axon-eyebrow {
+  color: var(--axon-accent);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+}
+.axon-preview-note {
+  font-size: 0.8125rem;
+}
+.axon-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 16px;
+  padding: 20px;
+  margin-bottom: 28px;
+  background: var(--axon-surface);
+  border: 1px solid var(--axon-border);
+  border-radius: 12px;
+}
+.axon-search-field {
+  flex: 1 1 300px;
+  min-width: 0;
+}
+.axon-type-field {
+  flex: 0 1 180px;
+}
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 650;
+}
+.form-control,
+.form-select {
+  min-height: 44px;
+  border-color: var(--axon-control-border);
+  color: var(--axon-text);
+}
+.form-control::placeholder {
+  color: var(--axon-muted);
+}
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--axon-focus);
+  box-shadow: 0 0 0 0.2rem rgba(var(--axon-focus-rgb), 0.2);
+}
+.btn {
+  min-height: 44px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.btn-outline-primary {
+  --bs-btn-color: var(--axon-button-text);
+  --bs-btn-border-color: var(--axon-control-border);
+  --bs-btn-hover-color: var(--axon-nav-text);
+  --bs-btn-hover-bg: var(--axon-nav-selected);
+  --bs-btn-hover-border-color: var(--axon-focus);
+  --bs-btn-active-color: var(--axon-nav-text);
+  --bs-btn-active-bg: var(--axon-nav-selected);
+  --bs-btn-active-border-color: var(--axon-focus);
+}
+.axon-results-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.axon-results-heading h2 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+.axon-results-heading p {
+  color: var(--axon-muted);
+  font-size: 0.8125rem;
+  margin: 0;
+}
+.axon-resource-list {
+  display: grid;
+  gap: 14px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.axon-resource-row {
+  padding: 22px;
+  background: var(--axon-surface);
+  border: 1px solid var(--axon-border);
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+}
+.axon-resource-type {
+  display: inline-block;
+  background: var(--axon-model-bg);
+  color: var(--axon-model-text);
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+.axon-resource-type--dataset {
+  background: var(--axon-dataset-bg);
+  color: var(--axon-dataset-text);
+}
+.axon-resource-row h3 {
+  font-size: 1.05rem;
+  font-weight: 650;
+  margin: 8px 0;
+}
+.axon-resource-row p {
+  color: var(--axon-muted);
+  font-size: 0.875rem;
+}
+.axon-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 0;
+  color: var(--axon-muted);
+  font-size: 0.8125rem;
+}
+.axon-metadata > div {
+  display: flex;
+  gap: 5px;
+}
+.axon-metadata dd {
+  margin: 0;
+}
+.axon-empty-state {
+  padding: 32px 20px;
+  text-align: center;
+  border: 1px dashed var(--axon-empty-border);
+  border-radius: 12px;
+}
+.axon-empty-state h3 {
+  font-size: 1.1rem;
+}
+.axon-footer {
+  padding-block: 24px;
+  border-top: 1px solid var(--axon-divider);
+  color: var(--axon-muted);
+  font-size: 0.8125rem;
+}
+.axon-skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  transform: translateY(-150%);
+  z-index: 10;
+  background: var(--axon-surface);
+  padding: 12px;
+  color: var(--axon-accent);
+}
+.axon-skip-link:focus {
+  transform: translateY(0);
+}
+:focus-visible {
+  outline: 3px solid var(--axon-focus);
+  outline-offset: 3px;
+}
+@media (max-width: 575.98px) {
+  .axon-container {
+    width: calc(100% - 28px);
+  }
+  .axon-main {
+    padding-top: 28px;
+  }
+  .axon-type-field {
+    flex: 1 1 160px;
+  }
+  .axon-filters {
+    padding: 16px;
+  }
+}
