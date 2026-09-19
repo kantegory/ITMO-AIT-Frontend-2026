@@ -1,0 +1,68 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=20mm]{geometry}
+\usepackage{fontspec}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}[Scale=0.85]
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\hypersetup{hidelinks}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}
+\titlespacing*{\section}{0pt}{10pt}{4pt}
+\sloppy
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+\newcommand{\shot}[2]{\begin{center}\includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{#1}\par\small #2\end{center}}
+\begin{document}
+\begin{center}
+{\small Университет ИТМО · Фронт-энд разработка · 2026}\par
+{\LARGE Домашняя работа № 5}\par
+{\large npm и основы Vue}\par
+Светлов Ярослав, группа J3211
+\end{center}
+\section*{Цель и технологии}
+Освоить npm и компонентный подход Vue на отдельном приложении заметок. Использованы Vue 3, Vite, Vue Router, Pinia, Axios, Bootstrap и JSON Server.
+\section*{Компоненты и данные}
+\begin{itemize}
+\item BaseLayout: общая навигация и slot для содержимого.
+\item NoteCard: получает заметку через props и отображает заголовок, текст и дату.
+\item NoteForm: реактивная форма v-model, проверка данных, событие saved.
+\item NotesPage: загрузка в onMounted, список v-for, состояния v-if. NewNotePage показывает форму и после сохранения возвращает к списку.
+\item stores/notes.js: общее состояние Pinia и запросы Axios. Сервер проверяет заголовок и текст и сохраняет данные в рабочую базу.
+\end{itemize}
+
+\section*{Команды npm}
+npm install устанавливает зависимости и обновляет lock-файл. npm ci воспроизводит установку по существующему lock-файлу. npm run запускает сценарии из package.json. Проверены сборка, тест API и npm audit: на момент проверки аудит показал 0 уязвимостей.
+\section*{Проверка}
+В Firefox 148 и Chromium проверены список, переход к форме, создание заметки с многострочным текстом и сохранение после обновления. Пробельный заголовок отклоняется. На ширине 390 px переполнения нет. Выключенный API вызывает понятную ошибку и позволяет повторить загрузку. Автотест проверяет пустой список, валидацию, создание, нормализацию заголовка, запись на диск и закрытый служебный маршрут.
+\section*{Запуск и проверка}
+Требуется Node.js 22.12 или новее. Команды выполняются из папки этой работы.
+\begin{verbatim}
+npm ci
+npm run api
+\end{verbatim}
+Во втором терминале из той же папки:
+\begin{verbatim}
+npm start
+\end{verbatim}
+Открыть \url{http://localhost:8085}. Автотесты: \texttt{npm test}. Сборка: \texttt{npm run build}; просмотр сборки: \texttt{npm run preview} вместо dev-сервера. API должен оставаться запущенным.
+ API: \url{http://localhost:3005}. Вход не требуется. Новые заметки сохраняются в \texttt{db.local.json}.\section*{Вывод}
+Реализованы маршрутизация, компоненты, общее состояние и серверное сохранение. Полные исходники находятся в src.
+
+\clearpage
+\section*{Скриншоты}
+\shot{checks/form.png}{Рисунок 1. NoteForm внутри BaseLayout.}
+\shot{checks/notes.png}{Рисунок 2. NoteCard и список заметок на узком экране.}
+\clearpage\section*{Пример исходного компонента}
+Компонент \texttt{src/components/NoteCard.vue} из текущей работы:
+\VerbatimInput[fontsize=\footnotesize]{src/components/NoteCard.vue}
+Данные приходят через обязательное свойство note. Карточка не выполняет запросы и не хранит отдельную копию состояния. Остальной код расположен в src/components, src/views и src/stores.
+
+\end{document}
