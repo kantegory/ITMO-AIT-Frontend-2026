@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Explore resource details, demo metrics and usage examples on AxonHub."
+    />
+    <title>Resource details · AxonHub</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link href="assets/css/base.css" rel="stylesheet" />
+    <link href="assets/css/catalog.css" rel="stylesheet" />
+    <link href="assets/css/pages.css" rel="stylesheet" />
+    <link rel="icon" href="assets/icons/axon-mark.svg" type="image/svg+xml" />
+    <script src="assets/js/resource.js" type="module"></script>
+    <script src="assets/js/session.js" type="module"></script>
+  </head>
+  <body>
+    <a class="axon-skip-link" href="#main-content">Skip to main content</a>
+    <header class="axon-header">
+      <div class="container-fluid axon-container axon-header-row">
+        <a class="axon-brand" href="index.html"
+          ><img
+            src="assets/icons/axon-mark.svg"
+            width="34"
+            height="34"
+            alt=""
+            aria-hidden="true"
+          />AxonHub</a
+        >
+        <nav class="axon-nav" aria-label="Main navigation">
+          <a class="axon-nav-link" href="index.html">Explore</a>
+          <a class="axon-nav-link" href="profile.html">Your library</a>
+        </nav>
+        <div class="axon-account-nav">
+          <a class="axon-nav-link" href="login.html">Log in</a>
+          <a class="btn btn-primary" href="register.html">Sign up</a>
+        </div>
+      </div>
+    </header>
+
+    <main
+      id="main-content"
+      tabindex="-1"
+      data-resource-type="dataset"
+      class="container-fluid axon-container"
+    >
+      <div class="axon-page-header">
+        <a class="axon-back-link" href="index.html">← Back to Explore</a>
+        <div id="resource-owner" class="axon-resource-owner" hidden
+          ><span class="axon-resource-type axon-resource-type--dataset">Dataset</span>
+          <img
+            class="axon-icon"
+            src="assets/icons/person.svg"
+            width="16"
+            height="16"
+            alt=""
+            aria-hidden="true" />
+          <span id="author-name"></span
+        ></div>
+        <h1 id="resource-name">Resource details</h1>
+        <p id="resource-summary"></p>
+      </div>
+
+      <p id="resource-status" role="status" tabindex="-1">Loading resource...</p>
+      <button id="retry-resource" class="btn btn-outline-primary mb-3" type="button" hidden
+        >Retry</button
+      >
+      <noscript>Enable JavaScript to load resource details.</noscript>
+      <div id="resource-content" hidden>
+        <section class="axon-actions" aria-labelledby="actions-heading">
+          <div class="axon-actions-heading">
+            <h2 id="actions-heading">Try it out</h2>
+            <p>Save stars and subscriptions to your account.</p>
+          </div>
+          <div class="axon-actions-controls">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              id="star-resource"
+              aria-pressed="false"
+              disabled
+            >
+              <img
+                class="axon-icon axon-toggle-off"
+                src="assets/icons/star.svg"
+                width="18"
+                height="18"
+                alt=""
+                aria-hidden="true"
+              />
+              <img
+                class="axon-icon axon-toggle-on"
+                src="assets/icons/star-fill.svg"
+                width="18"
+                height="18"
+                alt=""
+                aria-hidden="true"
+              />
+              Star
+            </button>
+            <span class="axon-star-count">Stars: <span id="star-count">—</span></span>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              id="subscribe-resource"
+              aria-label="Subscribe"
+              aria-pressed="false"
+              disabled
+            >
+              <img
+                class="axon-icon"
+                src="assets/icons/bell.svg"
+                width="18"
+                height="18"
+                alt=""
+                aria-hidden="true"
+              />
+              <span class="axon-toggle-off">Subscribe</span>
+              <span class="axon-toggle-on">✓ Subscribed</span>
+            </button>
+          </div>
+          <p id="star-status" role="status"></p>
+          <button id="retry-stars" type="button" class="btn btn-outline-primary" hidden
+            >Reload stars</button
+          >
+          <a id="star-login" href="login.html" hidden>Log in to star</a>
+          <button id="retry-subscriptions" type="button" class="btn btn-outline-primary" hidden
+            >Reload subscription</button
+          >
+          <a id="subscription-login" href="login.html" hidden>Log in to subscribe</a>
+          <p id="subscription-status" role="status" class="mt-2 mb-0"></p>
+          <noscript>Enable JavaScript to try the preview controls.</noscript>
+        </section>
+
+        <div class="axon-detail-layout">
+          <aside class="axon-detail-metadata" aria-labelledby="metadata-heading">
+            <h2 id="metadata-heading">Dataset information</h2>
+            <dl id="resource-metadata"></dl>
+          </aside>
+          <div class="axon-detail-content">
+            <section aria-labelledby="overview-heading">
+              <h2 id="overview-heading">Overview</h2>
+              <p id="resource-description"></p>
+            </section>
+            <section aria-labelledby="metrics-heading">
+              <h2 id="metrics-heading">Demo metrics</h2>
+              <dl id="resource-metrics" class="axon-metrics"></dl>
+              <p class="mt-3">Illustrative values only; no evaluation has been run by AxonHub.</p>
+            </section>
+            <section aria-labelledby="usage-heading">
+              <h2 id="usage-heading">Usage example</h2>
+              <p>This Python example is for reference only. No code is executed by AxonHub.</p>
+              <pre
+                class="axon-code"
+                tabindex="0"
+                aria-label="Python usage example"
+              ><code id="resource-usage"></code></pre>
+            </section>
+            <section aria-labelledby="reproducibility-heading">
+              <h2 id="reproducibility-heading">Reproducibility</h2>
+              <details>
+                <summary>Reproducibility details</summary>
+                <p class="mt-3">Configuration reference — no execution.</p>
+                <dl id="resource-reproduction"></dl>
+                <ol id="resource-steps"></ol>
+              </details>
+            </section>
+            <section aria-labelledby="fork-heading">
+              <h2 id="fork-heading">Fork metadata</h2>
+              <p
+                >Create a public metadata copy in your library. Files, stars, subscriptions and
+                comments are not copied.</p
+              >
+              <a id="fork-source" href="index.html" class="mb-3" hidden>View original resource</a>
+              <div
+                ><button id="fork-resource" type="button" class="btn btn-outline-primary" disabled
+                  >Fork metadata</button
+                ></div
+              >
+              <p id="fork-status" role="status" class="mt-3"></p>
+              <a id="fork-login" href="login.html" hidden>Log in to fork</a>
+            </section>
+            <section aria-labelledby="discussion-heading">
+              <h2 id="discussion-heading" class="axon-icon-label"
+                ><img
+                  class="axon-icon"
+                  src="assets/icons/chat-left-text.svg"
+                  width="20"
+                  height="20"
+                  alt=""
+                  aria-hidden="true"
+                />
+                Discussion</h2
+              >
+              <p id="comments-status" role="status" tabindex="-1"></p>
+              <button id="retry-comments" class="btn btn-outline-primary mb-3" type="button" hidden
+                >Reload comments</button
+              >
+              <ul id="comment-list" class="list-unstyled" aria-busy="true"></ul>
+              <template id="comment-template">
+                <li class="axon-comment">
+                  <div class="axon-comment-author">
+                    <span class="axon-avatar axon-avatar--small" aria-hidden="true"></span>
+                    <div
+                      ><p class="fw-semibold mb-0" data-author></p
+                      ><time class="small axon-muted"></time
+                    ></div>
+                  </div>
+                  <p class="axon-comment-body" data-body></p>
+                </li>
+              </template>
+              <a id="comment-login" href="login.html" class="mb-3">Log in to comment</a>
+              <form id="comment-form" novalidate>
+                <label for="comment-body" class="form-label">Your comment</label>
+                <textarea
+                  id="comment-body"
+                  name="body"
+                  class="form-control"
+                  rows="3"
+                  maxlength="1000"
+                  required
+                  aria-describedby="comment-hint comment-error"
+                ></textarea>
+                <p id="comment-hint" class="form-text">1–1000 characters. Plain text only.</p>
+                <p id="comment-error" class="axon-field-error"></p>
+                <button type="submit" class="btn btn-primary" disabled>Post comment</button>
+                <p id="comment-status" role="status" class="mt-3"></p>
+              </form>
+            </section>
+            <section aria-labelledby="download-heading">
+              <h2 id="download-heading">Download information</h2>
+              <p id="resource-downloads"></p>
+              <p id="download-unavailable" hidden
+                >No demo download is available for this resource.</p
+              >
+              <p
+                >The JSON includes metadata for both demo resources and two sample records. It
+                contains no model weights or full dataset.</p
+              >
+              <a
+                id="resource-download"
+                class="btn btn-primary"
+                href="assets/demo/resource-manifest.json"
+                download="axonhub-demo-manifest.json"
+                ><img
+                  class="axon-icon"
+                  src="assets/icons/download.svg"
+                  width="18"
+                  height="18"
+                  alt=""
+                  aria-hidden="true"
+                />Download demo manifest</a
+              >
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="axon-footer">
+      <div class="container-fluid axon-container">
+        <p>AxonHub <span aria-hidden="true">/</span> Models, datasets &amp; ideas.</p>
+        <p>Learning preview · Sample resources only</p>
+      </div>
+    </footer>
+  </body>
+</html>
