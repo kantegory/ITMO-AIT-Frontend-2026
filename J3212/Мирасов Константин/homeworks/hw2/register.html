@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign up · AxonHub</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link href="assets/css/base.css" rel="stylesheet" />
+    <link href="assets/css/pages.css" rel="stylesheet" />
+    <link rel="icon" href="assets/icons/axon-mark.svg" type="image/svg+xml" />
+    <script src="assets/js/forms.js" type="module"></script>
+    <script src="assets/js/session.js" type="module"></script>
+  </head>
+  <body>
+    <a class="axon-skip-link" href="#main-content">Skip to main content</a>
+    <header class="axon-header">
+      <div class="container-fluid axon-container axon-header-row">
+        <a class="axon-brand" href="index.html"
+          ><img
+            src="assets/icons/axon-mark.svg"
+            width="34"
+            height="34"
+            alt=""
+            aria-hidden="true"
+          />AxonHub</a
+        >
+        <nav class="axon-nav" aria-label="Main navigation">
+          <a class="axon-nav-link" href="index.html">Explore</a>
+          <a class="axon-nav-link" href="profile.html">Your library</a>
+        </nav>
+        <div class="axon-account-nav">
+          <a class="axon-nav-link" href="login.html">Log in</a>
+          <a class="btn btn-primary" href="register.html" aria-current="page">Sign up</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" tabindex="-1" class="container-fluid axon-container">
+      <div class="axon-auth-layout">
+        <div class="axon-auth">
+          <div class="axon-page-header">
+            <h1>Create an account</h1>
+            <p>Create a local demo account. Use sample details, not real credentials.</p>
+          </div>
+          <form id="register-form" class="axon-auth-form" method="post" novalidate>
+            <p id="error-summary" class="axon-field-error" role="alert"></p>
+            <div>
+              <label for="display-name" class="form-label">Display name</label>
+              <input
+                id="display-name"
+                name="displayName"
+                type="text"
+                class="form-control"
+                autocomplete="nickname"
+                required
+                maxlength="60"
+                aria-describedby="display-name-hint display-name-error"
+              />
+              <p id="display-name-hint" class="form-text mb-0">Use 1–60 characters.</p>
+              <p id="display-name-error" class="axon-field-error" hidden></p>
+            </div>
+            <div>
+              <label for="email" class="form-label">Email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                class="form-control"
+                autocomplete="email"
+                required
+                maxlength="254"
+                aria-describedby="email-error"
+              />
+              <p id="email-error" class="axon-field-error" hidden></p>
+            </div>
+            <div>
+              <label for="password" class="form-label">Password</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                class="form-control"
+                autocomplete="new-password"
+                required
+                minlength="8"
+                aria-describedby="password-hint password-error"
+              />
+              <p id="password-hint" class="form-text mb-0">Use at least 8 characters.</p>
+              <p id="password-error" class="axon-field-error" hidden></p>
+            </div>
+            <button type="submit" class="btn btn-primary" disabled>Sign up</button>
+            <noscript>Enable JavaScript to create an account.</noscript>
+            <p id="form-status" role="status" class="mb-0"></p>
+          </form>
+          <p>Already have an account? <a href="login.html">Log in</a></p>
+        </div>
+        <aside class="axon-auth-intro" aria-label="About AxonHub">
+          <img
+            src="assets/icons/resource-network.svg"
+            width="200"
+            height="160"
+            alt=""
+            aria-hidden="true"
+          />
+          <span class="axon-eyebrow">A place to build from</span>
+          <h2>Good ideas start<br />with shared knowledge.</h2>
+          <p>Discover a model, explore a dataset, and understand what makes it work.</p>
+          <a class="axon-icon-label" href="index.html"
+            >Explore the library
+            <img
+              class="axon-icon"
+              src="assets/icons/arrow-up-right.svg"
+              width="18"
+              height="18"
+              alt=""
+              aria-hidden="true"
+          /></a>
+        </aside>
+      </div>
+    </main>
+    <footer class="axon-footer">
+      <div class="container-fluid axon-container">
+        <p>AxonHub <span aria-hidden="true">/</span> Models, datasets &amp; ideas.</p>
+        <p>Learning preview · Sample resources only</p>
+      </div>
+    </footer>
+  </body>
+</html>
