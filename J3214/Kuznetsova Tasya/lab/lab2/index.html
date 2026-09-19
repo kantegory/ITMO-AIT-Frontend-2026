@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Travelly — путешествуй и планируй</title>
+
+    <meta
+        name="description"
+        content="Travelly - сервис для поиска направлений, планирования маршрутов и обмена историями о путешествиях."
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/themes.css">
+
+    <style>
+        .popular-destinations {
+            padding: 80px 0;
+        }
+
+        .destination-card {
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border-radius: 22px;
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .destination-image-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            background: #eaf3ff;
+        }
+
+        .destination-card-image {
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            display: block;
+            object-fit: cover;
+            transition: transform .5s ease;
+        }
+
+        .destination-card:hover .destination-card-image {
+            transform: scale(1.05);
+        }
+
+        .destination-card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .destination-card-title {
+            margin-bottom: 7px;
+        }
+
+        .destination-card-description {
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        .destination-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-bottom: 17px;
+        }
+
+        .destination-meta span {
+            padding: 6px 9px;
+            border-radius: 999px;
+            background: var(--background-secondary);
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .destination-card-link {
+            margin-top: auto;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .home-feed-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 18px 18px 0 0;
+        }
+
+        .hero-visual {
+            min-height: 420px;
+            border-radius: 28px;
+            background-image:
+                linear-gradient(
+                    135deg,
+                    rgba(23, 32, 51, 0.08),
+                    rgba(23, 32, 51, 0.28)
+                ),
+                url("https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1400&q=85");
+            background-size: cover;
+            background-position: center;
+        }
+
+        @media (max-width: 768px) {
+            .popular-destinations {
+                padding: 55px 0;
+            }
+
+            .destination-image-wrap {
+                aspect-ratio: 4 / 3;
+            }
+
+            .hero-visual {
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<svg class="icon-sprite" aria-hidden="true"><use href="assets/sprite.svg#icon-plane"></use></svg>
+
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+
+        <a
+            class="navbar-brand fw-bold fs-4"
+            href="index.html"
+        >
+            ✈️ Travelly
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-label="Открыть меню"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+            class="collapse navbar-collapse"
+            id="mainNavbar"
+        >
+
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link active"
+                        href="index.html"
+                    >
+                        Главная
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="search.html"
+                    >
+                        Поиск
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="feed.html"
+                    >
+                        Истории
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="trip-planner.html"
+                    >
+                        Планировщик
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="my-trips.html"
+                    >
+                        Мои поездки
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <button
+                        id="themeToggle"
+                        class="theme-toggle"
+                        type="button"
+                        aria-label="Переключить тему"
+                        title="Переключить тему"
+                    >
+                        <span id="themeIcon">☀️</span>
+                    </button>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        href="profile.html"
+                        class="btn btn-primary ms-lg-2"
+                    >
+                        Профиль
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!-- =====================================================
+     HERO
+     ===================================================== -->
+
+<section class="hero-section">
+    <div class="container py-5">
+
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-6">
+
+                <span class="section-label">
+                    ПЛАНИРУЙ. ПУТЕШЕСТВУЙ. ДЕЛИСЬ.
+                </span>
+
+                <h1 class="display-4 fw-bold mt-3 mb-4">
+                    Найди место,
+                    <span class="text-primary">
+                        куда хочется уехать
+                    </span>
+                </h1>
+
+                <p class="lead text-secondary mb-4">
+                    Ищи интересные направления, сохраняй места,
+                    создавай маршруты и вдохновляйся путешествиями
+                    других людей.
+                </p>
+
+
+                <div class="hero-actions mt-4">
+
+                    <a href="#popularDestinations" class="hero-action-card">
+                        <span class="hero-action-icon">
+                            <svg class="ui-icon ui-icon-lg" aria-hidden="true"><use href="assets/sprite.svg#icon-search"></use></svg>
+                        </span>
+                        <span class="hero-action-text">
+                            <strong>Найти направление</strong>
+                            <small>Подбери место по формату отдыха</small>
+                        </span>
+                        <span class="hero-action-arrow">→</span>
+                    </a>
+
+                    <a href="#tripPlannerSection" class="hero-action-card">
+                        <span class="hero-action-icon">
+                            <svg class="ui-icon ui-icon-lg" aria-hidden="true"><use href="assets/sprite.svg#icon-map"></use></svg>
+                        </span>
+                        <span class="hero-action-text">
+                            <strong>Собрать маршрут</strong>
+                            <small>Места, даты и остановки в одном плане</small>
+                        </span>
+                        <span class="hero-action-arrow">→</span>
+                    </a>
+
+                    <a href="#storiesSection" class="hero-action-card">
+                        <span class="hero-action-icon">
+                            <svg class="ui-icon ui-icon-lg" aria-hidden="true"><use href="assets/sprite.svg#icon-heart"></use></svg>
+                        </span>
+                        <span class="hero-action-text">
+                            <strong>Посмотреть истории</strong>
+                            <small>Вдохновляйся чужими путешествиями</small>
+                        </span>
+                        <span class="hero-action-arrow">→</span>
+                    </a>
+
+                </div>
+
+                <div class="d-flex flex-wrap gap-2 mt-3">
+
+                    <a
+                        href="search.html?type=city"
+                        class="btn btn-outline-primary btn-sm"
+                    >
+                        🏙️ Города
+                    </a>
+
+                    <a
+                        href="search.html?type=nature"
+                        class="btn btn-outline-primary btn-sm"
+                    >
+                        🌿 Природа
+                    </a>
+
+                    <a
+                        href="search.html?type=beach"
+                        class="btn btn-outline-primary btn-sm"
+                    >
+                        🏖️ Пляжи
+                    </a>
+
+                    <a
+                        href="search.html?type=mountains"
+                        class="btn btn-outline-primary btn-sm"
+                    >
+                        ⛰️ Горы
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6">
+
+                <div
+                    class="hero-visual"
+                    aria-label="Путешествия по миру"
+                    role="img"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =====================================================
+     POPULAR DESTINATIONS
+     ===================================================== -->
+
+<section id="popularDestinations" class="popular-destinations">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-end mb-4">
+
+            <div>
+
+                <span class="section-label">
+                    ПОПУЛЯРНЫЕ НАПРАВЛЕНИЯ
+                </span>
+
+                <h2 class="mt-2 mb-0">
+                    Куда поехать?
+                </h2>
+
+            </div>
+
+            <a
+                href="search.html"
+                class="btn btn-outline-primary"
+            >
+                Все направления
+            </a>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- ИТАЛИЯ -->
+            <div class="col-md-6 col-lg-4">
+
+                <article class="destination-card h-100">
+
+                    <div class="destination-image-wrap">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1520175480921-4edfa2983e0f?auto=format&fit=crop&w=1000&q=85"
+                            alt="Италия"
+                            class="destination-card-image"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                    <div class="destination-card-body">
+
+                        <h3 class="destination-card-title">
+                            Италия
+                        </h3>
+
+                        <p class="destination-card-description">
+                            Рим, Флоренция, Венеция и маленькие
+                            города с особенной атмосферой.
+                        </p>
+
+                        <div class="destination-meta">
+                            <span>🏙️ Город</span>
+                            <span>7–10 дней</span>
+                            <span>от 75 000 ₽</span>
+                        </div>
+
+                        <a
+                            href="destination.html?id=italy"
+                            class="destination-card-link"
+                        >
+                            Смотреть направление →
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- ЯПОНИЯ -->
+            <div class="col-md-6 col-lg-4">
+
+                <article class="destination-card h-100">
+
+                    <div class="destination-image-wrap">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1000&q=85"
+                            alt="Токио, Япония"
+                            class="destination-card-image"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                    <div class="destination-card-body">
+
+                        <h3 class="destination-card-title">
+                            Япония
+                        </h3>
+
+                        <p class="destination-card-description">
+                            Токио, Киото, Осака, традиции,
+                            технологии и невероятная кухня.
+                        </p>
+
+                        <div class="destination-meta">
+                            <span>🏙️ Город</span>
+                            <span>10–14 дней</span>
+                            <span>от 145 000 ₽</span>
+                        </div>
+
+                        <a
+                            href="destination.html?id=japan"
+                            class="destination-card-link"
+                        >
+                            Смотреть направление →
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- СЕУЛ -->
+            <div class="col-md-6 col-lg-4">
+
+                <article class="destination-card h-100">
+
+                    <div class="destination-image-wrap">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1630999050065-b2d2377c2928?auto=format&fit=crop&w=1400&q=85"
+                            alt="Сеул, Южная Корея"
+                            class="destination-card-image"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                    <div class="destination-card-body">
+
+                        <h3 class="destination-card-title">
+                            Южная Корея
+                        </h3>
+
+                        <p class="destination-card-description">
+                            Сеул, стильные районы, кафе,
+                            шопинг и современная корейская культура.
+                        </p>
+
+                        <div class="destination-meta">
+                            <span>🏙️ Город</span>
+                            <span>7–10 дней</span>
+                            <span>от 85 000 ₽</span>
+                        </div>
+
+                        <a
+                            href="destination.html?id=korea"
+                            class="destination-card-link"
+                        >
+                            Смотреть направление →
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- ИСЛАНДИЯ -->
+            <div class="col-md-6 col-lg-4">
+
+                <article class="destination-card h-100">
+
+                    <div class="destination-image-wrap">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=1000&q=85"
+                            alt="Исландия"
+                            class="destination-card-image"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                    <div class="destination-card-body">
+
+                        <h3 class="destination-card-title">
+                            Исландия
+                        </h3>
+
+                        <p class="destination-card-description">
+                            Водопады, вулканы, ледники,
+                            океан и необычные природные маршруты.
+                        </p>
+
+                        <div class="destination-meta">
+                            <span>🌿 Природа</span>
+                            <span>8–12 дней</span>
+                            <span>от 130 000 ₽</span>
+                        </div>
+
+                        <a
+                            href="destination.html?id=iceland"
+                            class="destination-card-link"
+                        >
+                            Смотреть направление →
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- НОРВЕГИЯ -->
+            <div class="col-md-6 col-lg-4">
+
+                <article class="destination-card h-100">
+
+                    <div class="destination-image-wrap">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=85"
+                            alt="Норвегия"
+                            class="destination-card-image"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                    <div class="destination-card-body">
+
+                        <h3 class="destination-card-title">
+                            Норвегия
+                        </h3>
+
+                        <p class="destination-card-description">
+                            Фьорды, горы, северные города
+                            и красивые треккинговые маршруты.
+                        </p>
+
+                        <div class="destination-meta">
+                            <span>⛰️ Горы</span>
+                            <span>7–10 дней</span>
+                            <span>от 110 000 ₽</span>
+                        </div>
+
+                        <a
+                            href="destination.html?id=norway"
+                            class="destination-card-link"
+                        >
+                            Смотреть направление →
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- ТУРЦИЯ -->
+            <div class="col-md-6 col-lg-4">
+
+                <article class="destination-card h-100">
+
+                    <div class="destination-image-wrap">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1000&q=85"
+                            alt="Турция"
+                            class="destination-card-image"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                    <div class="destination-card-body">
+
+                        <h3 class="destination-card-title">
+                            Турция
+                        </h3>
+
+                        <p class="destination-card-description">
+                            Стамбул, море, Каппадокия,
+                            восточная кухня и доступный отдых.
+                        </p>
+
+                        <div class="destination-meta">
+                            <span>🏖️ Пляж</span>
+                            <span>5–8 дней</span>
+                            <span>от 45 000 ₽</span>
+                        </div>
+
+                        <a
+                            href="destination.html?id=turkey"
+                            class="destination-card-link"
+                        >
+                            Смотреть направление →
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =====================================================
+     MAP BANNER
+     ===================================================== -->
+
+<section id="tripPlannerSection" class="map-section py-5">
+    <div class="container">
+
+        <div class="row align-items-center g-4">
+
+            <div class="col-lg-6">
+
+                <span class="section-label">
+                    ТВОЯ КАРТА
+                </span>
+
+                <h2 class="mt-2">
+                    Отмечай места,
+                    которые хочешь посетить
+                </h2>
+
+                <p class="text-secondary">
+                    Сохраняй любимые места и собирай
+                    собственные маршруты на одной карте.
+                </p>
+
+                <a
+                    href="trip-planner.html"
+                    class="btn btn-primary"
+                >
+                    Открыть планировщик
+                </a>
+
+            </div>
+
+
+            <div class="col-lg-6">
+
+                <div class="planner-map map-centered">
+
+                    <div class="map-grid"></div>
+
+                    <div class="map-road road-one"></div>
+                    <div class="map-road road-two"></div>
+                    <div class="map-road road-three"></div>
+
+                    <div class="map-route-line"></div>
+
+                    <div class="map-marker marker-one">
+                        <span>📍</span>
+                    </div>
+
+                    <div class="map-marker marker-two">
+                        <span>📍</span>
+                    </div>
+
+                    <div class="map-marker marker-three">
+                        <span>📍</span>
+                    </div>
+
+                    <span class="map-label label-one">
+                        Токио
+                    </span>
+
+                    <span class="map-label label-two">
+                        Сеул
+                    </span>
+
+                    <span class="map-label label-three">
+                        Париж
+                    </span>
+
+                    <div class="map-hint">
+                        Твой будущий маршрут
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =====================================================
+     STORIES
+     ===================================================== -->
+
+<section id="storiesSection" class="py-5">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-end mb-4">
+
+            <div>
+
+                <span class="section-label">
+                    ИСТОРИИ ПУТЕШЕСТВЕННИКОВ
+                </span>
+
+                <h2 class="mt-2 mb-0">
+                    Вдохновляйся другими
+                </h2>
+
+            </div>
+
+            <a
+                href="feed.html"
+                class="btn btn-outline-primary"
+            >
+                Все истории
+            </a>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <div class="col-md-4">
+
+                <article class="post-card h-100 overflow-hidden">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1000&q=85"
+                        alt="Париж"
+                        class="home-feed-image"
+                        loading="lazy"
+                    >
+
+                    <div class="p-4">
+
+                        <span class="section-label">
+                            ФРАНЦИЯ
+                        </span>
+
+                        <h3 class="mt-2">
+                            Неделя в Париже
+                        </h3>
+
+                        <p class="text-secondary">
+                            Как объехать главные места
+                            и при этом оставить время
+                            на атмосферные прогулки.
+                        </p>
+
+                        <a
+                            href="feed.html"
+                            class="destination-card-link"
+                        >
+                            Читать историю →
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <article class="post-card h-100 overflow-hidden">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1000&q=85"
+                        alt="Токио"
+                        class="home-feed-image"
+                        loading="lazy"
+                    >
+
+                    <div class="p-4">
+
+                        <span class="section-label">
+                            ЯПОНИЯ
+                        </span>
+
+                        <h3 class="mt-2">
+                            Первый раз в Токио
+                        </h3>
+
+                        <p class="text-secondary">
+                            Районы, транспорт, кафе и места,
+                            которые особенно понравились.
+                        </p>
+
+                        <a
+                            href="feed.html"
+                            class="destination-card-link"
+                        >
+                            Читать историю →
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <article class="post-card h-100 overflow-hidden">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1630999050065-b2d2377c2928?auto=format&fit=crop&w=1400&q=85"
+                        alt="Сеул"
+                        class="home-feed-image"
+                        loading="lazy"
+                    >
+
+                    <div class="p-4">
+
+                        <span class="section-label">
+                            ЮЖНАЯ КОРЕЯ
+                        </span>
+
+                        <h3 class="mt-2">
+                            Сеул за 7 дней
+                        </h3>
+
+                        <p class="text-secondary">
+                            Как совместить дворцы, современные
+                            районы, кафе и шопинг.
+                        </p>
+
+                        <a
+                            href="feed.html"
+                            class="destination-card-link"
+                        >
+                            Читать историю →
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =====================================================
+     CTA
+     ===================================================== -->
+
+<section class="py-5">
+    <div class="container">
+
+        <div class="p-5 rounded-4 text-center bg-light">
+
+            <span class="section-label">
+                ГОТОВА К НОВОМУ ПУТЕШЕСТВИЮ?
+            </span>
+
+            <h2 class="mt-2 mb-3">
+                Начни планировать следующую поездку
+            </h2>
+
+            <p class="text-secondary mx-auto" style="max-width: 650px;">
+                Выбери направление, сохрани интересные места
+                и собери свой маршрут в Travelly.
+            </p>
+
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+
+                <a
+                    href="trip-planner.html"
+                    class="btn btn-primary"
+                >
+                    Планировать поездку
+                </a>
+
+                <a
+                    href="search.html"
+                    class="btn btn-outline-primary"
+                >
+                    Найти направление
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

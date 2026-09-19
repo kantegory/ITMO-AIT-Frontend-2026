@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль -  Round the World </title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-map-marked-alt"></i>  Round the World
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="search.html"><i class="fas fa-compass"></i> Поиск</a></li>
+                    <li class="nav-item"><a class="nav-link" href="feed.html"><i class="fas fa-globe"></i> Лента</a></li>
+                    <li class="nav-item"><a class="nav-link" href="create-trip.html"><i class="fas fa-map"></i> Создать</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="profile.html"><i class="fas fa-hiking"></i> Профиль</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="fas fa-plane-departure"></i> Выйти</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="profile-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <div class="list-group shadow-sm">
+                        <a href="#" class="list-group-item list-group-item-action active" data-tab="info">
+                            <i class="fas fa-user me-2"></i> Мой профиль
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" data-tab="archive-trips">
+                            <i class="fas fa-archive me-2"></i> Архив путешествий
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" data-tab="archive-posts">
+                            <i class="fas fa-newspaper me-2"></i> Архив публикаций
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" data-tab="active-trips">
+                            <i class="fas fa-plane me-2"></i> Активные путешествия
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <!-- Информация пользователя -->
+                    <div id="info-tab" class="tab-content-item">
+                        <div class="card shadow-sm border-0 rounded-4">
+                            <div class="card-header bg-primary text-white rounded-top-4">
+                                <h4 class="mb-0"><i class="fas fa-user-circle me-2"></i> О себе</h4>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row">
+                                    <div class="col-md-4 text-center">
+                                        <img src="https://via.placeholder.com/150" class="rounded-circle mb-3 shadow-sm" width="120" height="120">
+                                        <h5>Тася Кузнецова</h5>
+                                        <p class="text-muted">@tasya_kuz</p>
+                                        <p class="small text-muted"><i class="fas fa-map-marker-alt me-1"></i> Санкт-Петербург</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <form>
+                                            <div class="mb-3"><label class="form-label">Имя</label><input type="text" class="form-control" value="Тася Кузнецова"></div>
+                                            <div class="mb-3"><label class="form-label">Email</label><input type="email" class="form-control" value="tasya@example.com"></div>
+                                            <div class="mb-3"><label class="form-label">Телефон</label><input type="tel" class="form-control" value="+7 000 000-00-00"></div>
+                                            <div class="mb-3"><label class="form-label">О себе</label><textarea class="form-control" rows="3">Люблю путешествовать</textarea></div>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#demoModal"><i class="fas fa-save me-1"></i> Сохранить</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Архив путешествий -->
+                    <div id="archive-trips-tab" class="tab-content-item" style="display: none;">
+                        <div class="card shadow-sm border-0 rounded-4">
+                            <div class="card-header bg-secondary text-white rounded-top-4">
+                                <h4 class="mb-0"><i class="fas fa-archive me-2"></i> Архив путешествий</h4>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="card border-0 shadow-sm h-100">
+                                            <div class="card-body">
+                                                <h5><i class="fas fa-landmark text-primary me-2"></i> Санкт-Петербург</h5>
+                                                <p class="text-muted small">10-15 июня 2021 • 5 дней</p>
+                                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#demoModal">Вспомнить</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="card border-0 shadow-sm h-100">
+                                            <div class="card-body">
+                                                <h5><i class="fas fa-mountain text-primary me-2"></i> Алтай</h5>
+                                                <p class="text-muted small">1-10 августа 2024 • 10 дней</p>
+                                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#demoModal">Вспомнить</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Архив публикаций -->
+                    <div id="archive-posts-tab" class="tab-content-item" style="display: none;">
+                        <div class="card shadow-sm border-0 rounded-4">
+                            <div class="card-header bg-info text-white rounded-top-4">
+                                <h4 class="mb-0"><i class="fas fa-newspaper me-2"></i> Архив публикаций</h4>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="border-start border-3 border-primary ps-3 mb-3">
+                                    <h6>Санкт-Петербург</h6>
+                                    <p class="text-muted small">Потрясающий город</p>
+                                    <small class="text-muted">❤️ 24 • 💬 8 </small>
+                                </div>
+                                <div class="border-start border-3 border-primary ps-3">
+                                    <h6>Алтай </h6>
+                                    <p class="text-muted small">Незабываемые пейзажи!</p>
+                                    <small class="text-muted">❤️ 56 • 💬 12 </small>
+                                </div>
+                                <div class="alert alert-info text-center mt-3"><i class="fas fa-info-circle me-1"></i> заглушка</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Активные путешествия -->
+                    <div id="active-trips-tab" class="tab-content-item" style="display: none;">
+                        <div class="card shadow-sm border-0 rounded-4">
+                            <div class="card-header bg-success text-white rounded-top-4">
+                                <h4 class="mb-0"><i class="fas fa-plane me-2"></i> Активные путешествия</h4>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="card border-0 shadow-sm h-100">
+                                            <div class="card-body">
+                                                <h5><i class="fas fa-mosque text-primary me-2"></i> Казань</h5>
+                                                <p class="text-muted small">15-20 мая 2026 • 5 дней</p>
+                                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#demoModal">Продолжить</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="card border-0 shadow-sm h-100">
+                                            <div class="card-body">
+                                                <h5><i class="fas fa-umbrella-beach text-primary me-2"></i> Крым</h5>
+                                                <p class="text-muted small">1-10 июля 2026 • 10 дней</p>
+                                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#demoModal">Продолжить</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="create-trip.html" class="btn btn-outline-primary w-100 mt-2"><i class="fas fa-plus me-1"></i> Новое путешествие</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно выхода -->
+    <div class="modal fade" id="logoutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="fas fa-plane-departure me-2"></i> Выход из аккаунта</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <i class="fas fa-question-circle fa-4x text-danger mb-3"></i>
+                    <p class="lead">Вы действительно хотите выйти?</p>
+                    <p class="text-muted">Вы всегда можете вернуться и продолжить свои приключения</p>
+                </div>
+                <div class="modal-footer justify-content-center gap-2">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Остаться</button>
+                    <a href="login.html" class="btn btn-outline-primary">Сменить аккаунт</a>
+                    <a href="index.html" class="btn btn-danger">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="demoModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="fas fa-code"></i> Сохранено</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <i class="fas fa-code fa-4x text-primary mb-3"></i>
+                    <p class="lead">заглушка</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer py-4 mt-5">
+        <div class="container text-center">
+            <p class="text-white-50 small mb-0"> Round the World</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelectorAll('[data-tab]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.list-group-item').forEach(item => item.classList.remove('active'));
+                link.classList.add('active');
+                document.querySelectorAll('.tab-content-item').forEach(tab => tab.style.display = 'none');
+                document.getElementById(`${link.getAttribute('data-tab')}-tab`).style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>

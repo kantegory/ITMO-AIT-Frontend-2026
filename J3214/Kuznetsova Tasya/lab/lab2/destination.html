@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Направление — Travelly</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/themes.css"
+    >
+
+    <style>
+
+        .destination-page {
+            padding: 45px 0 80px;
+        }
+
+        .destination-hero {
+            position: relative;
+            min-height: 450px;
+            margin-bottom: 30px;
+
+            display: flex;
+            align-items: flex-end;
+
+            overflow: hidden;
+
+            border-radius: 28px;
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .destination-hero::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    transparent 20%,
+                    rgba(0,0,0,.75)
+                );
+        }
+
+        .destination-hero-content {
+            position: relative;
+            z-index: 1;
+
+            padding: 42px;
+            color: #fff;
+        }
+
+        .destination-hero-content h1,
+        .destination-hero-content p {
+            color: #fff !important;
+        }
+
+        .destination-type {
+            display: inline-block;
+
+            margin-bottom: 12px;
+            padding: 7px 12px;
+
+            border-radius: 999px;
+
+            background: rgba(255,255,255,.18);
+
+            backdrop-filter: blur(8px);
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .destination-content {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.55fr)
+                minmax(280px, .65fr);
+
+            gap: 28px;
+        }
+
+        .destination-main,
+        .destination-sidebar {
+            display: grid;
+            gap: 24px;
+            align-content: start;
+        }
+
+        .destination-card-box {
+            padding: 28px;
+
+            border-radius: 22px;
+            border: 1px solid var(--border);
+
+            background: var(--card);
+
+            box-shadow: var(--shadow);
+        }
+
+        .destination-description {
+            color: var(--text-secondary);
+
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .stat-box {
+            padding: 18px;
+            text-align: center;
+
+            border-radius: 16px;
+
+            background: var(--background-secondary);
+        }
+
+        .stat-box strong {
+            display: block;
+
+            color: var(--primary);
+
+            font-size: 20px;
+        }
+
+        .stat-box span {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .sights-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 16px;
+        }
+
+        .sight-card {
+            overflow: hidden;
+
+            border-radius: 18px;
+            border: 1px solid var(--border);
+
+            background: var(--card);
+        }
+
+        .sight-card img {
+            width: 100%;
+            height: 190px;
+
+            display: block;
+
+            object-fit: cover;
+        }
+
+        .sight-card-body {
+            padding: 16px;
+        }
+
+        .sight-card-body h3 {
+            font-size: 18px;
+        }
+
+        .sight-card-body p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .destination-map {
+            min-height: 300px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            border-radius: 18px;
+
+            background: var(--map-background);
+        }
+
+        .destination-map::before,
+        .destination-map::after {
+            content: "";
+
+            position: absolute;
+
+            width: 140%;
+            height: 2px;
+
+            left: -20%;
+
+            background: var(--border);
+        }
+
+        .destination-map::before {
+            top: 42%;
+            transform: rotate(16deg);
+        }
+
+        .destination-map::after {
+            top: 64%;
+            transform: rotate(-13deg);
+        }
+
+        .map-marker {
+            position: absolute;
+
+            width: 20px;
+            height: 20px;
+
+            border-radius: 50%;
+
+            background: var(--primary);
+
+            border: 4px solid #fff;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,.18);
+        }
+
+        .map-marker.one {
+            top: 32%;
+            left: 28%;
+        }
+
+        .map-marker.two {
+            top: 52%;
+            left: 53%;
+        }
+
+        .map-marker.three {
+            top: 67%;
+            left: 73%;
+        }
+
+        .map-label {
+            position: absolute;
+
+            padding: 6px 9px;
+
+            background: var(--card);
+            color: var(--text);
+
+            border: 1px solid var(--border);
+            border-radius: 9px;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .map-label.one {
+            top: 24%;
+            left: 23%;
+        }
+
+        .map-label.two {
+            top: 44%;
+            left: 48%;
+        }
+
+        .map-label.three {
+            top: 75%;
+            left: 67%;
+        }
+
+        .recommendation-list {
+            display: grid;
+            gap: 11px;
+        }
+
+        .recommendation-item {
+            display: flex;
+            gap: 11px;
+
+            padding: 14px;
+
+            border-radius: 14px;
+
+            background:
+                var(--background-secondary);
+        }
+
+        .recommendation-item strong {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .recommendation-item span {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .sidebar-list {
+            list-style: none;
+
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-list li {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+
+            padding: 10px 0;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-list span {
+            color: var(--text-secondary);
+        }
+
+        .review {
+            padding: 17px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .review:last-child {
+            border-bottom: none;
+        }
+
+        .review-author {
+            font-weight: 700;
+        }
+
+        .review-stars {
+            margin: 5px 0;
+        }
+
+        .review p {
+            color: var(--text-secondary);
+        }
+
+        .not-found {
+            max-width: 700px;
+
+            margin: 80px auto;
+
+            padding: 50px 30px;
+
+            text-align: center;
+
+            border-radius: 24px;
+            border: 1px solid var(--border);
+
+            background: var(--card);
+
+            box-shadow: var(--shadow);
+        }
+
+        @media (max-width: 992px) {
+
+            .destination-content {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .destination-hero {
+                min-height: 350px;
+            }
+
+            .destination-hero-content {
+                padding: 27px;
+            }
+
+            .stats-row,
+            .sights-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<nav class="navbar navbar-expand-lg sticky-top">
+
+    <div class="container">
+
+        <a
+            class="navbar-brand fw-bold fs-4"
+            href="index.html"
+        >
+            ✈️ Travelly
+        </a>
+
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-label="Открыть меню"
+        >
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <div
+            class="collapse navbar-collapse"
+            id="mainNavbar"
+        >
+
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="index.html"
+                    >
+                        Главная
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="search.html"
+                    >
+                        Поиск
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="feed.html"
+                    >
+                        Истории
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="trip-planner.html"
+                    >
+                        Планировщик
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="my-trips.html"
+                    >
+                        Мои поездки
+                    </a>
+                </li>
+
+                <li class="nav-item">
+
+                    <button
+                        id="themeToggle"
+                        class="theme-toggle"
+                        type="button"
+                        aria-label="Переключить тему"
+                    >
+
+                        <span id="themeIcon">
+                            ☀️
+                        </span>
+
+                    </button>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a
+                        id="authStatus"
+                        data-auth-link
+                        href="login.html"
+                        class="btn btn-primary ms-lg-2"
+                    >
+                        Войти
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="destination-page">
+
+    <div class="container">
+
+        <div id="destinationContainer"></div>
+
+    </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="js/theme.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+
+
+<script>
+
+const destinations = {
+
+    italy: {
+        title: "Италия",
+        subtitle: "Рим, Флоренция и атмосфера старой Европы",
+        type: "🏙️ Город + культура",
+        image: "https://images.unsplash.com/photo-1520175480921-4edfa2983e0f?auto=format&fit=crop&w=1600&q=85",
+        description: "Италия позволяет совместить архитектуру, музеи, гастрономию, море и небольшие города.",
+        price: "от 75 000 ₽",
+        duration: "7–10 дней",
+        season: "апрель — октябрь",
+        rating: "4.9 / 5",
+        sights: [
+            ["Колизей","https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=900&q=85","Одна из главных достопримечательностей Рима."],
+            ["Флоренция","https://images.unsplash.com/photo-1543429258-17bbbcfb4f02?auto=format&fit=crop&w=900&q=85","Искусство, архитектура и прогулки."],
+            ["Венеция","https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=900&q=85","Каналы и особенная атмосфера."],
+            ["Тоскана","https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=900&q=85","Небольшие города и живописные пейзажи."]
+        ]
+    },
+
+    japan: {
+        title: "Япония",
+        subtitle: "Токио, традиционные районы и невероятная культура",
+        type: "🌸 Город + культура",
+        image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1600&q=85",
+        description: "Япония сочетает современные мегаполисы, храмы, традиционные районы и необычную повседневную культуру.",
+        price: "от 145 000 ₽",
+        duration: "10–14 дней",
+        season: "март — май / сентябрь — ноябрь",
+        rating: "4.9 / 5",
+        sights: [
+            ["Токио","https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=900&q=85","Shibuya, Shinjuku, Asakusa и ночной город."],
+            ["Киото","https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=900&q=85","Храмы, традиционные улицы и сады."],
+            ["Осака","https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=900&q=85","Гастрономия и яркие улицы."],
+            ["Фудзи","https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?auto=format&fit=crop&w=900&q=85","Один из символов Японии."]
+        ]
+    },
+
+    korea: {
+        title: "Южная Корея",
+        subtitle: "Сеул, кафе, шопинг и современная культура",
+        type: "🏙️ Город",
+        image: "https://images.unsplash.com/photo-1538485399081-7c89709a58a6?auto=format&fit=crop&w=1600&q=85",
+        description: "Южная Корея хорошо подходит для сочетания современного города, кафе, шопинга и культуры.",
+        price: "от 85 000 ₽",
+        duration: "7–10 дней",
+        season: "апрель — май / сентябрь — октябрь",
+        rating: "4.8 / 5",
+        sights: [
+            ["Сеул","https://images.unsplash.com/photo-1538485399081-7c89709a58a6?auto=format&fit=crop&w=900&q=85","Огромный мегаполис с разными районами."],
+            ["Gyeongbokgung","https://images.unsplash.com/photo-1578895101408-1a36b834405b?auto=format&fit=crop&w=900&q=85","Традиционный дворец в центре города."],
+            ["Hongdae","https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=900&q=85","Молодёжный район с кафе и магазинами."],
+            ["Busan","https://images.unsplash.com/photo-1517154421773-0529f29ea451?auto=format&fit=crop&w=900&q=85","Море и совсем другая атмосфера."]
+        ]
+    },
+
+    iceland: {
+        title: "Исландия",
+        subtitle: "Вулканы, ледники, водопады и океан",
+        type: "🌿 Природа",
+        image: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=1600&q=85",
+        description: "Исландия — направление для road trip: вулканы, водопады, океан и ледники.",
+        price: "от 130 000 ₽",
+        duration: "8–12 дней",
+        season: "июнь — сентябрь",
+        rating: "4.8 / 5",
+        sights: [
+            ["Рейкьявик","https://images.unsplash.com/photo-1504274066651-8d31a536b11a?auto=format&fit=crop&w=900&q=85","Компактная столица."],
+            ["Водопады","https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=85","Мощные водопады по всему острову."],
+            ["Чёрные пляжи","https://images.unsplash.com/photo-1520769669658-f07657a5f0f6?auto=format&fit=crop&w=900&q=85","Вулканические пейзажи."],
+            ["Ледники","https://images.unsplash.com/photo-1486911278844-a81c5267e227?auto=format&fit=crop&w=900&q=85","Ледяные лагуны и поля."]
+        ]
+    },
+
+    norway: {
+        title: "Норвегия",
+        subtitle: "Фьорды, горы и северная природа",
+        type: "⛰️ Горы + природа",
+        image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=85",
+        description: "Норвегия подходит для активного отдыха и природных маршрутов.",
+        price: "от 110 000 ₽",
+        duration: "7–10 дней",
+        season: "май — сентябрь",
+        rating: "4.9 / 5",
+        sights: [
+            ["Гейрангер-фьорд","https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=85","Один из самых известных фьордов."],
+            ["Берген","https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?auto=format&fit=crop&w=900&q=85","Красивый прибрежный город."],
+            ["Лофотены","https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=85","Горы поднимаются прямо из моря."],
+            ["Треккинг","https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=900&q=85","Маршруты разного уровня сложности."]
+        ]
+    },
+
+    turkey: {
+        title: "Турция",
+        subtitle: "Стамбул, море, Каппадокия и кухня",
+        type: "🏖️ Море + город",
+        image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1600&q=85",
+        description: "Турция позволяет совместить город, море, шопинг и гастрономию.",
+        price: "от 45 000 ₽",
+        duration: "5–8 дней",
+        season: "май — октябрь",
+        rating: "4.7 / 5",
+        sights: [
+            ["Стамбул","https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=900&q=85","Город на двух континентах."],
+            ["Каппадокия","https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=900&q=85","Воздушные шары и необычные пейзажи."],
+            ["Анталья","https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?auto=format&fit=crop&w=900&q=85","Море и пляжи."],
+            ["Памуккале","https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=85","Белые террасы."]
+        ]
+    },
+
+    france: {
+        title: "Франция",
+        subtitle: "Париж, архитектура, музеи и французские города",
+        type: "🏙️ Город + культура",
+        image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1600&q=85",
+        description: "Франция отлично подходит для культурного путешествия.",
+        price: "от 85 000 ₽",
+        duration: "7–10 дней",
+        season: "апрель — октябрь",
+        rating: "4.8 / 5",
+        sights: [
+            ["Эйфелева башня","https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=900&q=85","Главный символ Парижа."],
+            ["Лувр","https://images.unsplash.com/photo-1564399579883-451a5d44ec08?auto=format&fit=crop&w=900&q=85","Один из крупнейших музеев."],
+            ["Монмартр","https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=900&q=85","Атмосферный район."],
+            ["Лазурный берег","https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85","Море и курортные города."]
+        ]
+    }
+};
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const container =
+            document.getElementById(
+                "destinationContainer"
+            );
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const id =
+            params.get("id") ||
+            "italy";
+
+        const destination =
+            destinations[id];
+
+
+        if (!destination) {
+
+            container.innerHTML = `
+                <section class="not-found">
+
+                    <div style="font-size:52px">
+                        🗺️
+                    </div>
+
+                    <h1>
+                        Направление не найдено
+                    </h1>
+
+                    <p class="text-secondary">
+                        Попробуй выбрать другое направление.
+                    </p>
+
+                    <a
+                        href="search.html"
+                        class="btn btn-primary"
+                    >
+                        К поиску
+                    </a>
+
+                </section>
+            `;
+
+            return;
+        }
+
+
+        document.title =
+            `${destination.title} — Travelly`;
+
+
+        function getSavedKey() {
+
+            const user =
+                TravellyAuth.getUser();
+
+            if (!user) {
+                return null;
+            }
+
+            return `travelly-trips-${user.id}`;
+        }
+
+
+        function getSaved() {
+
+            const key =
+                getSavedKey();
+
+            if (!key) {
+                return [];
+            }
+
+            try {
+                return JSON.parse(
+                    localStorage.getItem(key)
+                ) || [];
+            } catch {
+                return [];
+            }
+        }
+
+
+        function saveSaved(data) {
+
+            const key =
+                getSavedKey();
+
+            if (!key) {
+                return;
+            }
+
+            localStorage.setItem(
+                key,
+                JSON.stringify(data)
+            );
+        }
+
+
+        function render() {
+
+            const saved =
+                getSaved().includes(id);
+
+
+            container.innerHTML = `
+
+                <section
+                    class="destination-hero"
+                    style="
+                        background-image:
+                        url('${destination.image}')
+                    "
+                >
+
+                    <div class="destination-hero-content">
+
+                        <span class="destination-type">
+                            ${destination.type}
+                        </span>
+
+                        <h1>
+                            ${destination.title}
+                        </h1>
+
+                        <p class="lead">
+                            ${destination.subtitle}
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <div class="destination-content">
+
+
+                    <div class="destination-main">
+
+
+                        <section class="destination-card-box">
+
+                            <h2>
+                                О направлении
+                            </h2>
+
+                            <p class="destination-description">
+                                ${destination.description}
+                            </p>
+
+
+                            <div class="stats-row mt-4">
+
+                                <div class="stat-box">
+                                    <strong>
+                                        ${destination.duration}
+                                    </strong>
+
+                                    <span>
+                                        Длительность
+                                    </span>
+                                </div>
+
+                                <div class="stat-box">
+                                    <strong>
+                                        ${destination.season}
+                                    </strong>
+
+                                    <span>
+                                        Лучший сезон
+                                    </span>
+                                </div>
+
+                                <div class="stat-box">
+                                    <strong>
+                                        ${destination.rating}
+                                    </strong>
+
+                                    <span>
+                                        Рейтинг
+                                    </span>
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+                        <section class="destination-card-box">
+
+                            <h2>
+                                Что посмотреть
+                            </h2>
+
+                            <div class="sights-grid">
+
+                                ${destination.sights
+                                    .map(
+                                        sight => `
+
+                                            <article class="sight-card">
+
+                                                <img
+                                                    src="${sight[1]}"
+                                                    alt="${sight[0]}"
+                                                    loading="lazy"
+                                                >
+
+                                                <div class="sight-card-body">
+
+                                                    <h3>
+                                                        ${sight[0]}
+                                                    </h3>
+
+                                                    <p>
+                                                        ${sight[2]}
+                                                    </p>
+
+                                                </div>
+
+                                            </article>
+
+                                        `
+                                    )
+                                    .join("")
+                                }
+
+                            </div>
+
+                        </section>
+
+
+                        <section class="destination-card-box">
+
+                            <h2>
+                                Карта
+                            </h2>
+
+                            <div class="destination-map">
+
+                                <div class="map-marker one"></div>
+                                <div class="map-marker two"></div>
+                                <div class="map-marker three"></div>
+
+                                <span class="map-label one">
+                                    Центр
+                                </span>
+
+                                <span class="map-label two">
+                                    Популярное место
+                                </span>
+
+                                <span class="map-label three">
+                                    Маршрут
+                                </span>
+
+                            </div>
+
+                            <a
+                                href="trip-planner.html"
+                                class="btn btn-primary mt-3"
+                            >
+                                Построить маршрут
+                            </a>
+
+                        </section>
+
+                    </div>
+
+
+                    <aside class="destination-sidebar">
+
+
+                        <section class="destination-card-box">
+
+                            <span
+                                style="
+                                    color:var(--text-secondary);
+                                    font-size:13px;
+                                "
+                            >
+                                Примерный бюджет
+                            </span>
+
+                            <div
+                                style="
+                                    color:var(--primary);
+                                    font-size:30px;
+                                    font-weight:800;
+                                    margin-bottom:18px;
+                                "
+                            >
+                                ${destination.price}
+                            </div>
+
+
+                            <button
+                                id="saveDestination"
+                                type="button"
+                                class="btn ${
+                                    saved
+                                        ? "btn-danger"
+                                        : "btn-primary"
+                                } w-100"
+                            >
+
+                                ${
+                                    saved
+                                        ? "♥ Сохранено"
+                                        : "♡ Сохранить"
+                                }
+
+                            </button>
+
+
+                            <p
+                                id="saveHint"
+                                class="text-secondary mt-2 mb-0"
+                                style="font-size:13px"
+                            ></p>
+
+                        </section>
+
+
+                        <section class="destination-card-box">
+
+                            <h2>
+                                Информация
+                            </h2>
+
+                            <ul class="sidebar-list">
+
+                                <li>
+                                    <span>
+                                        Тип
+                                    </span>
+
+                                    <strong>
+                                        ${destination.type}
+                                    </strong>
+                                </li>
+
+                                <li>
+                                    <span>
+                                        Срок
+                                    </span>
+
+                                    <strong>
+                                        ${destination.duration}
+                                    </strong>
+                                </li>
+
+                                <li>
+                                    <span>
+                                        Сезон
+                                    </span>
+
+                                    <strong>
+                                        ${destination.season}
+                                    </strong>
+                                </li>
+
+                                <li>
+                                    <span>
+                                        Рейтинг
+                                    </span>
+
+                                    <strong>
+                                        ${destination.rating}
+                                    </strong>
+                                </li>
+
+                            </ul>
+
+                        </section>
+
+
+                        <section class="destination-card-box">
+
+                            <h2>
+                                Готова ехать?
+                            </h2>
+
+                            <p class="text-secondary">
+                                Сохрани направление или
+                                собери маршрут.
+                            </p>
+
+                            <a
+                                href="trip-planner.html"
+                                class="btn btn-primary w-100"
+                            >
+                                Планировать поездку
+                            </a>
+
+                        </section>
+
+
+                    </aside>
+
+                </div>
+            `;
+
+
+            const button =
+                document.getElementById(
+                    "saveDestination"
+                );
+
+
+            const hint =
+                document.getElementById(
+                    "saveHint"
+                );
+
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    /*
+                     * Сохранять можно только
+                     * авторизованному пользователю.
+                     */
+
+                    if (
+                        !TravellyAuth.isLoggedIn()
+                    ) {
+
+                        window.location.href =
+                            `login.html?redirect=${encodeURIComponent(
+                                window.location.pathname +
+                                window.location.search
+                            )}`;
+
+                        return;
+                    }
+
+
+                    let current =
+                        getSaved();
+
+
+                    if (
+                        current.includes(id)
+                    ) {
+
+                        current =
+                            current.filter(
+                                item =>
+                                    item !== id
+                            );
+
+                        saveSaved(current);
+
+                    } else {
+
+                        current.push(id);
+
+                        saveSaved(current);
+
+                    }
+
+
+                    render();
+
+                }
+            );
+
+        }
+
+
+        render();
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

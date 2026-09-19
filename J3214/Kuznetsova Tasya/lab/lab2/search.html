@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Поиск направлений — Travelly</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/themes.css"
+    >
+
+    <style>
+
+        .search-page {
+            padding: 50px 0 80px;
+        }
+
+        .search-panel {
+            padding: 25px;
+
+            border-radius: 22px;
+
+            background: var(--card);
+            border: 1px solid var(--border);
+
+            box-shadow: var(--shadow);
+
+            margin-bottom: 30px;
+        }
+
+        .results-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 24px;
+        }
+
+        .result-card {
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            border: 1px solid var(--border);
+
+            background: var(--card);
+
+            box-shadow: var(--shadow);
+
+            transition: .25s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .result-image {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .result-body {
+            padding: 20px;
+        }
+
+        .result-meta {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            margin: 13px 0 17px;
+        }
+
+        .result-meta span {
+            padding: 5px 8px;
+
+            border-radius: 999px;
+
+            background: var(--background-secondary);
+
+            color: var(--text-secondary);
+
+            font-size: 12px;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+
+            padding: 50px;
+
+            text-align: center;
+
+            border-radius: 20px;
+
+            background: var(--background-secondary);
+        }
+
+        .result-count {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 992px) {
+
+            .results-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<nav class="navbar navbar-expand-lg sticky-top">
+
+    <div class="container">
+
+        <a
+            class="navbar-brand fw-bold fs-4"
+            href="index.html"
+        >
+            ✈️ Travelly
+        </a>
+
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+        >
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <div
+            class="collapse navbar-collapse"
+            id="mainNavbar"
+        >
+
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="index.html"
+                    >
+                        Главная
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link active"
+                        href="search.html"
+                    >
+                        Поиск
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="feed.html"
+                    >
+                        Истории
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="trip-planner.html"
+                    >
+                        Планировщик
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="my-trips.html"
+                    >
+                        Мои поездки
+                    </a>
+                </li>
+
+                <li class="nav-item">
+
+                    <button
+                        id="themeToggle"
+                        class="theme-toggle"
+                        type="button"
+                        aria-label="Переключить тему"
+                    >
+
+                        <span id="themeIcon">
+                            ☀️
+                        </span>
+
+                    </button>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a
+                        id="authStatus"
+                        href="login.html"
+                        class="btn btn-primary ms-lg-2"
+                    >
+                        Войти
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="search-page">
+
+    <div class="container">
+
+        <div class="mb-5">
+
+            <span class="section-label">
+                ПОИСК
+            </span>
+
+            <h1 class="mt-2">
+                Найди своё направление
+            </h1>
+
+            <p class="text-secondary">
+                Фильтруй путешествия по типу, бюджету
+                и продолжительности.
+            </p>
+
+        </div>
+
+
+        <section class="search-panel">
+
+            <form id="searchForm">
+
+                <div class="row g-3">
+
+                    <div class="col-lg-4">
+
+                        <label
+                            for="destination"
+                            class="form-label"
+                        >
+                            Направление
+                        </label>
+
+                        <input
+                            id="destination"
+                            type="text"
+                            class="form-control"
+                            placeholder="Например, Япония"
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-4 col-lg-2">
+
+                        <label
+                            for="type"
+                            class="form-label"
+                        >
+                            Тип
+                        </label>
+
+                        <select
+                            id="type"
+                            class="form-select"
+                        >
+
+                            <option value="all">
+                                Все
+                            </option>
+
+                            <option value="city">
+                                🏙️ Город
+                            </option>
+
+                            <option value="nature">
+                                🌿 Природа
+                            </option>
+
+                            <option value="beach">
+                                🏖️ Пляж
+                            </option>
+
+                            <option value="mountains">
+                                ⛰️ Горы
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-md-4 col-lg-2">
+
+                        <label
+                            for="budget"
+                            class="form-label"
+                        >
+                            Бюджет
+                        </label>
+
+                        <select
+                            id="budget"
+                            class="form-select"
+                        >
+
+                            <option value="all">
+                                Все
+                            </option>
+
+                            <option value="low">
+                                До 70 000 ₽
+                            </option>
+
+                            <option value="medium">
+                                70–110 тыс.
+                            </option>
+
+                            <option value="high">
+                                110+ тыс.
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-md-4 col-lg-2">
+
+                        <label
+                            for="duration"
+                            class="form-label"
+                        >
+                            Длительность
+                        </label>
+
+                        <select
+                            id="duration"
+                            class="form-select"
+                        >
+
+                            <option value="all">
+                                Все
+                            </option>
+
+                            <option value="short">
+                                До 6 дней
+                            </option>
+
+                            <option value="medium">
+                                7–10 дней
+                            </option>
+
+                            <option value="long">
+                                11+ дней
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-md-12 col-lg-2 d-flex align-items-end">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100"
+                        >
+                            Найти
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <div class="d-flex justify-content-between mb-3">
+
+            <div
+                id="resultCount"
+                class="result-count"
+            >
+                Загрузка...
+            </div>
+
+            <select
+                id="sort"
+                class="form-select"
+                style="max-width: 220px;"
+            >
+
+                <option value="popular">
+                    По популярности
+                </option>
+
+                <option value="price">
+                    По цене
+                </option>
+
+                <option value="duration">
+                    По длительности
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <section
+            id="results"
+            class="results-grid"
+        ></section>
+
+    </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="js/theme.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/main.js"></script>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
+
+        const results =
+            document.getElementById(
+                "results"
+            );
+
+
+        const resultCount =
+            document.getElementById(
+                "resultCount"
+            );
+
+
+        const form =
+            document.getElementById(
+                "searchForm"
+            );
+
+
+        const destination =
+            document.getElementById(
+                "destination"
+            );
+
+
+        const type =
+            document.getElementById(
+                "type"
+            );
+
+
+        const budget =
+            document.getElementById(
+                "budget"
+            );
+
+
+        const duration =
+            document.getElementById(
+                "duration"
+            );
+
+
+        const sort =
+            document.getElementById(
+                "sort"
+            );
+
+
+        let destinations = [];
+
+
+        /* =================================================
+           LOAD DATA
+           ================================================= */
+
+        try {
+
+            destinations =
+                await TravellyAPI.getDestinations();
+
+        } catch (error) {
+
+            console.warn(
+                "JSON-server недоступен.",
+                error
+            );
+
+
+            /*
+             * Fallback,
+             * чтобы поиск не был пустым.
+             */
+
+            destinations = [
+
+                {
+                    id: "italy",
+                    title: "Италия",
+                    type: "city",
+                    budget: "medium",
+                    duration: "medium",
+                    price: 75000,
+                    days: 7,
+                    image:
+                        "https://images.unsplash.com/photo-1520175480921-4edfa2983e0f?auto=format&fit=crop&w=900&q=85"
+                },
+
+                {
+                    id: "japan",
+                    title: "Япония",
+                    type: "city",
+                    budget: "high",
+                    duration: "long",
+                    price: 145000,
+                    days: 12,
+                    image:
+                        "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=900&q=85"
+                },
+
+                {
+                    id: "korea",
+                    aliases: ["сеул", "seoul", "корея", "южная корея", "south korea"],
+                    title: "Южная Корея",
+                    type: "city",
+                    budget: "medium",
+                    duration: "medium",
+                    price: 85000,
+                    days: 8,
+                    image:
+                        "https://images.unsplash.com/photo-1630999050065-b2d2377c2928?auto=format&fit=crop&w=1400&q=85"
+                },
+
+                {
+                    id: "iceland",
+                    title: "Исландия",
+                    type: "nature",
+                    budget: "high",
+                    duration: "long",
+                    price: 130000,
+                    days: 11,
+                    image:
+                        "https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=900&q=85"
+                },
+
+                {
+                    id: "norway",
+                    title: "Норвегия",
+                    type: "mountains",
+                    budget: "high",
+                    duration: "medium",
+                    price: 110000,
+                    days: 8,
+                    image:
+                        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=85"
+                },
+
+                {
+                    id: "turkey",
+                    title: "Турция",
+                    type: "beach",
+                    budget: "low",
+                    duration: "short",
+                    price: 45000,
+                    days: 5,
+                    image:
+                        "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=900&q=85"
+                },
+
+                {
+                    id: "france",
+                    title: "Франция",
+                    type: "city",
+                    budget: "high",
+                    duration: "medium",
+                    price: 85000,
+                    days: 7,
+                    image:
+                        "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=900&q=85"
+                }
+
+            ];
+        }
+
+
+        /* =================================================
+           URL PARAMS
+           ================================================= */
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        if (params.get("destination")) {
+            destination.value =
+                params.get("destination");
+        }
+
+
+        if (params.get("type")) {
+            type.value =
+                params.get("type");
+        }
+
+
+        /* =================================================
+           RENDER
+           ================================================= */
+
+        function render() {
+
+            const destinationQuery =
+                destination.value
+                    .trim()
+                    .toLowerCase();
+
+
+            let filtered =
+                destinations.filter(
+                    item => {
+
+                        const searchText = [
+                            item.title,
+                            item.description,
+                            ...(item.aliases || [])
+                        ]
+                            .filter(Boolean)
+                            .join(" ")
+                            .toLowerCase();
+
+                        const matchesDestination =
+                            !destinationQuery ||
+                            searchText.includes(destinationQuery);
+
+
+                        const matchesType =
+                            type.value === "all" ||
+                            item.type === type.value;
+
+
+                        const matchesBudget =
+                            budget.value === "all" ||
+                            item.budget === budget.value;
+
+
+                        const matchesDuration =
+                            duration.value === "all" ||
+                            item.duration === duration.value;
+
+
+                        return (
+                            matchesDestination &&
+                            matchesType &&
+                            matchesBudget &&
+                            matchesDuration
+                        );
+                    }
+                );
+
+
+            /* -------------------------------------------------
+               Sort
+               ------------------------------------------------- */
+
+            if (sort.value === "price") {
+
+                filtered.sort(
+                    (a, b) =>
+                        Number(a.price || 0) -
+                        Number(b.price || 0)
+                );
+
+            } else if (
+                sort.value === "duration"
+            ) {
+
+                filtered.sort(
+                    (a, b) =>
+                        Number(a.days || 0) -
+                        Number(b.days || 0)
+                );
+
+            }
+
+
+            resultCount.textContent =
+                `Найдено: ${filtered.length}`;
+
+
+            if (!filtered.length) {
+
+                results.innerHTML = `
+
+                    <div class="no-results">
+
+                        <div style="font-size: 48px;">
+                            🌍
+                        </div>
+
+                        <h3 class="mt-3">
+                            Ничего не найдено
+                        </h3>
+
+                        <p class="text-secondary">
+                            Попробуй изменить фильтры.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+            }
+
+
+            results.innerHTML =
+                filtered
+                    .map(
+                        item => `
+
+                        <article class="result-card">
+
+                            <img
+                                src="${item.image || ""}"
+                                alt="${item.title}"
+                                class="result-image"
+                                loading="lazy"
+                            >
+
+                            <div class="result-body">
+
+                                <span class="section-label">
+                                    ${item.type}
+                                </span>
+
+                                <h3 class="mt-2">
+                                    ${item.title}
+                                </h3>
+
+                                <div class="result-meta">
+
+                                    <span>
+                                        💰 ${
+                                            item.price
+                                                ? item.price.toLocaleString("ru-RU") + " ₽"
+                                                : "—"
+                                        }
+                                    </span>
+
+                                    <span>
+                                        🕒 ${
+                                            item.days || "—"
+                                        } дней
+                                    </span>
+
+                                </div>
+
+                                <a
+                                    href="destination.html?id=${item.id}"
+                                    class="btn btn-primary"
+                                >
+                                    Подробнее
+                                </a>
+
+                            </div>
+
+                        </article>
+
+                    `
+                    )
+                    .join("");
+
+        }
+
+
+        form.addEventListener(
+            "submit",
+            event => {
+
+                event.preventDefault();
+
+                render();
+
+            }
+        );
+
+
+        sort.addEventListener(
+            "change",
+            render
+        );
+
+
+        [
+            type,
+            budget,
+            duration
+        ].forEach(
+            select => {
+
+                select.addEventListener(
+                    "change",
+                    render
+                );
+
+            }
+        );
+
+
+        render();
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

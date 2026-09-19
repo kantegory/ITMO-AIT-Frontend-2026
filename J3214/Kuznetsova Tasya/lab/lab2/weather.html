@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоды — Round the World</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .big-card, .medium-card, .small-card { background: var(--card-bg); color: var(--text-primary); }
+        .big-card { border-radius: 1.5rem; }
+        .medium-card { border-radius: 1rem; }
+        .small-card { border-radius: 0.75rem; }
+    </style>
+</head>
+<body>
+<a href="#main" class="skip-link">Перейти к содержимому</a>
+
+<nav class="navbar navbar-expand-lg fixed-top" aria-label="Главная навигация">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <svg class="nav-icon" width="24" height="24" aria-hidden="true"><use href="assets/sprite.svg#icon-map"/></svg>
+            Round the World
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-label="Открыть меню" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="search.html">Поиск</a></li>
+                <li class="nav-item"><a class="nav-link" href="feed.html">Лента</a></li>
+                <li class="nav-item"><a class="nav-link active" href="weather.html">Погода</a></li>
+                <li class="nav-item"><a class="nav-link" href="profile.html">Профиль</a></li>
+                <li class="nav-item">
+                    <button class="btn btn-link nav-link" aria-label="Переключить тему" onclick="toggleTheme()">
+                        <svg width="20" height="20" aria-hidden="true"><use href="assets/sprite.svg#icon-sun"/></svg>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="destination-section">
+    <div class="container">
+        <div id="forecastContent" class="text-center py-5" role="status" aria-live="polite">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Загрузка...</span>
+            </div>
+            <p>Определяем ваше местоположение...</p>
+        </div>
+    </div>
+</main>
+
+<footer class="footer py-4 mt-5">
+    <div class="container text-center">
+        <p class="text-white-50 small mb-0">Round the World</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/theme.js"></script>
+<script>
+    // ⚠️ ЗАМЕНИТЕ НА СВОЙ КЛЮЧ С https://openweathermap.org/api
+    const WEATHER_API_KEY = 'YOUR_API_KEY';
+
+    function groupByDay(list) {
+        const days = {};
+        list.forEach(item => {
+            const date = item.dt_txt.split(' ')[0];
+            if (!days[date]) days[date] = [];
+            days[date].push(item);
+        });
+        return Object.values(days).map(dayItems => {
+            const noon = dayItems.find(i => i.dt_txt.includes('12:00:00')) || dayItems[0];
+            return {
+                date: noon.dt_txt.split(' ')[0],
+                temp: Math.round(noon.main.temp),
+                feels_like: Math.round(noon.main.feels_like),
+                description: noon.weather[0].description,
+                icon: noon.weather[0].icon,
+                humidity: noon.main.humidity,
+                wind: noon.wind.speed
+            };
+        }).slice(0, 7);
+    }
+
+    async function getForecast(lat, lon) {
+        const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&lang=ru&appid=${WEATHER_API_KEY}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Не удалось загрузить прогноз');
+        return res.json();
+    }
+
+    async function renderForecast(lat, lon, cityName = 'Ваше местоположение') {
+        const container = document.getElementById('forecastContent');
+        try {
+            const data = await getForecast(lat, lon);
+            const forecast = groupByDay(data.list);
+
+            if (forecast.length === 0) throw new Error('Нет данных');
+
+            const big = forecast[0];
+            const medium = forecast.slice(1, 4);
+            const small = forecast.slice(4, 8);
+
+            container.innerHTML = `
+                <h1 class="display-5 fw-bold mb-4">${cityName} — прогноз на 7 дней</h1>
+
+                <div class="row justify-content-center mb-5">
+                    <div class="col-md-8">
+                        <div class="big-card p-4 shadow-sm">
+                            <div class="row align-items-center">
+                                <div class="col-md-4 text-center">
+                                    <img src="https://openweathermap.org/img/wn/${big.icon}@4x.png" alt="${big.description}" width="120">
+                                </div>
+                                <div class="col-md-8">
+                                    <h2>${big.date}</h2>
+                                    <div class="display-3 fw-bold">${big.temp}°C</div>
+                                    <p class="lead">${big.description}</p>
+                                    <p>💧 ${big.humidity}% &nbsp; 🌬️ ${big.wind} м/с</p>
+                                    <p>Ощущается как ${big.feels_like}°C</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-5">
+                    ${medium.map(day => `
+                        <div class="col-md-4">
+                            <div class="medium-card p-3 text-center h-100 shadow-sm">
+                                <h3 class="h5">${day.date}</h3>
+                                <img src="https://openweathermap.org/img/wn/${day.icon}@2x.png" alt="${day.description}" width="80">
+                                <div class="h4 mt-2">${day.temp}°C</div>
+                                <p class="small">${day.description}</p>
+                                <div class="small text-muted">💧 ${day.humidity}% 🌬️ ${day.wind} м/с</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="row g-3">
+                    ${small.map(day => `
+                        <div class="col-md-3 col-sm-6">
+                            <div class="small-card p-2 text-center h-100 shadow-sm">
+                                <h3 class="h6">${day.date}</h3>
+                                <img src="https://openweathermap.org/img/wn/${day.icon}.png" alt="${day.description}" width="50">
+                                <div class="fw-bold">${day.temp}°C</div>
+                                <div class="small text-muted">${day.description}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <a href="search.html" class="btn btn-primary mt-5">← Вернуться к поиску</a>
+            `;
+        } catch (err) {
+            container.innerHTML = `<div class="alert alert-danger">❌ Ошибка: ${err.message}</div>
+                                   <a href="search.html" class="btn btn-primary mt-3">Вернуться</a>`;
+        }
+    }
+
+    // Получаем геолокацию
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            pos => renderForecast(pos.coords.latitude, pos.coords.longitude),
+            err => {
+                console.warn('Геолокация недоступна:', err.message);
+                renderForecast(55.7558, 37.6173, 'Москва (по умолчанию)');
+            },
+            { timeout: 8000 }
+        );
+    } else {
+        renderForecast(55.7558, 37.6173, 'Москва (по умолчанию)');
+    }
+</script>
+</body>
+</html>

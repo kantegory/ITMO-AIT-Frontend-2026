@@ -1,0 +1,2372 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Планировщик — Travelly</title>
+
+    <meta
+        name="description"
+        content="Создай свой маршрут путешествия в Travelly."
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/themes.css"
+    >
+
+    <link rel="stylesheet" href="https://cdn.maptiler.com/maptiler-sdk-js/v4.1.0/maptiler-sdk.css">
+
+    <style>
+        .planner-page {
+            padding: 45px 0 80px;
+        }
+
+        .planner-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.55fr) minmax(290px, .65fr);
+            gap: 25px;
+        }
+
+        .planner-settings,
+        .planner-map-card,
+        .day-card,
+        .planner-sidebar-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+        }
+
+        .planner-settings {
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+
+        .planner-map-card {
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .planner-map {
+            height: 430px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 18px;
+            background: var(--map-background) url("assets/map-placeholder.svg") center / cover no-repeat;
+            z-index: 0;
+        }
+
+        .planner-map.is-live {
+            background-image: none;
+        }
+
+        .map-status {
+            position: absolute;
+            right: 16px;
+            top: 16px;
+            z-index: 900;
+            padding: 7px 10px;
+            border-radius: 10px;
+            background: rgba(255,255,255,.92);
+            border: 1px solid rgba(255,255,255,.75);
+            box-shadow: 0 4px 14px rgba(16,24,40,.10);
+            font-size: 12px;
+            font-weight: 700;
+            color: #475467;
+        }
+
+        html[data-theme="dark"] .map-status {
+            background: rgba(20,28,38,.92);
+            color: #d0d7e2;
+            border-color: rgba(255,255,255,.08);
+        }
+
+        #travelMap {
+            width: 100%;
+            height: 100%;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .map-hint {
+            position: absolute;
+            left: 16px;
+            bottom: 16px;
+            z-index: 500;
+            padding: 8px 11px;
+            border-radius: 10px;
+            background: rgba(255,255,255,.94);
+            color: #475467;
+            border: 1px solid rgba(255,255,255,.75);
+            box-shadow: 0 4px 14px rgba(16,24,40,.12);
+            font-size: 12px;
+            font-weight: 600;
+            pointer-events: none;
+        }
+
+        html[data-theme="dark"] .map-hint {
+            background: rgba(20,28,38,.94);
+            color: #d0d7e2;
+            border-color: rgba(255,255,255,.08);
+        }
+
+
+        .planner-map.tiles-loading #travelMap { opacity: .94; }
+        .planner-map.tiles-ready #travelMap { opacity: 1; transition: opacity .25s ease; }
+
+
+        .map-ready-cover {
+            position:absolute; inset:0; z-index:2; pointer-events:none;
+            display:flex; align-items:center; justify-content:center;
+            padding:20px; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+        }
+        .planner-map.tiles-ready .map-ready-cover { display:none; }
+
+        .map-note-modal .modal-content {
+            background:var(--card); color:var(--text); border:1px solid var(--border); border-radius:22px;
+        }
+        .map-note-modal .modal-header, .map-note-modal .modal-footer { border-color:var(--border); }
+        .map-note-modal .form-control { min-height:46px; }
+
+        .travelly-marker {
+            width:38px; height:38px; border-radius:50% 50% 50% 0; transform:rotate(-45deg);
+            background:var(--primary); border:3px solid #fff; box-shadow:0 6px 16px rgba(16,24,40,.25);
+            position:relative;
+        }
+        .travelly-marker::after {
+            content:""; position:absolute; width:12px; height:12px; border-radius:50%; background:#fff;
+            left:10px; top:10px;
+        }
+
+        .travelly-marker {
+            width: 28px;
+            height: 28px;
+            border-radius: 50% 50% 50% 0;
+            background: var(--primary);
+            border: 3px solid #fff;
+            box-shadow: 0 6px 16px rgba(16,24,40,.22);
+            transform: rotate(-45deg);
+            position: relative;
+        }
+        .travelly-marker::after {
+            content: "";
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #fff;
+            left: 7px;
+            top: 7px;
+        }
+        .map-note-popup { min-width: 180px; }
+        .map-note-popup strong { display:block; margin-bottom:4px; }
+
+        .map-note-card {
+            display:flex; align-items:center; gap:12px; padding:13px 14px;
+            border:1px solid var(--border); border-radius:16px; background:var(--background-secondary);
+        }
+        .map-note-index {
+            flex:0 0 34px; width:34px; height:34px; border-radius:50%; background:var(--primary); color:#fff;
+            display:flex; align-items:center; justify-content:center; font-weight:800;
+        }
+        .map-note-main { min-width:0; flex:1; }
+        .map-note-main strong { display:block; margin-bottom:2px; }
+        .map-note-main small { color:var(--text-secondary); display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        .map-note-actions { display:flex; gap:6px; flex-shrink:0; }
+
+        .maplibregl-map {
+            font-family: inherit;
+            background: #dfeaf3;
+        }
+
+        .maplibregl-popup-content,
+        .maplibregl-popup-tip {
+            background: var(--card);
+            color: var(--text);
+        }
+
+        .maplibregl-popup-content {
+            margin: 12px 14px;
+        }
+
+        .map-note-card { padding:12px 14px; border:1px solid var(--border); border-radius:14px; background:var(--background-secondary); display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center; }
+        .map-note-card strong { display:block; margin-bottom:3px; }
+        .map-note-card small { color:var(--text-secondary); }
+
+        .days-list {
+            display: grid;
+            gap: 18px;
+        }
+
+        .day-card {
+            padding: 22px;
+        }
+
+        .day-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .day-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .day-number {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background: var(--primary);
+            color: #fff;
+
+            font-weight: 800;
+        }
+
+        .day-title {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .day-date {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .stops-list {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .stop-row {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 10px;
+
+            padding: 10px;
+
+            border-radius: 12px;
+
+            background: var(--background-secondary);
+        }
+
+        .stop-number {
+            width: 28px;
+            height: 28px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: var(--card);
+            color: var(--primary);
+
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .planner-sidebar {
+            display: grid;
+            gap: 18px;
+            align-content: start;
+        }
+
+        .planner-sidebar-card {
+            padding: 22px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+
+            padding: 10px 0;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .summary-row span {
+            color: var(--text-secondary);
+        }
+
+        .summary-row strong {
+            color: var(--text);
+            text-align: right;
+        }
+
+        .tip-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .tip-item {
+            display: flex;
+            gap: 10px;
+
+            padding: 11px;
+
+            border-radius: 12px;
+
+            background: var(--background-secondary);
+
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .collaboration-card {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary-soft),
+                    var(--card)
+                );
+        }
+
+        .save-message {
+            min-height: 22px;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 1050px) {
+            .planner-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .planner-settings,
+            .planner-map-card,
+            .day-card,
+            .planner-sidebar-card {
+                padding: 19px;
+            }
+
+            .planner-map {
+                min-height: 280px;
+            }
+
+            .day-header {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+<nav class="navbar navbar-expand-lg sticky-top">
+
+    <div class="container">
+
+        <a
+            class="navbar-brand fw-bold fs-4"
+            href="index.html"
+        >
+            ✈️ Travelly
+        </a>
+
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-label="Открыть меню"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div
+            class="collapse navbar-collapse"
+            id="mainNavbar"
+        >
+
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        Главная
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="search.html">
+                        Поиск
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="feed.html">
+                        Истории
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link active"
+                        href="trip-planner.html"
+                    >
+                        Планировщик
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="my-trips.html">
+                        Мои поездки
+                    </a>
+                </li>
+
+                <li class="nav-item">
+
+                    <button
+                        id="themeToggle"
+                        class="theme-toggle"
+                        type="button"
+                        aria-label="Переключить тему"
+                    >
+                        <span id="themeIcon">
+                            ☀️
+                        </span>
+                    </button>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a
+                        id="authStatus"
+                        data-auth-link
+                        href="login.html"
+                        class="btn btn-primary ms-lg-2"
+                    >
+                        Войти
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="planner-page">
+
+    <div class="container">
+
+        <header class="mb-4">
+
+            <span class="section-label">
+                TRAVEL PLANNER
+            </span>
+
+            <h1 class="mt-2 mb-2">
+                Собери свой маршрут
+            </h1>
+
+            <p class="text-secondary">
+                Выбери направление, даты и места,
+                которые хочешь посетить.
+            </p>
+
+        </header>
+
+
+        <div class="planner-layout">
+
+
+            <div>
+
+
+                <!-- Основные параметры -->
+
+                <section class="planner-settings">
+
+                    <div class="mb-4">
+
+                        <h2 class="mb-2">
+                            Основные данные
+                        </h2>
+
+                        <p class="text-secondary mb-0">
+                            Начни с параметров поездки.
+                        </p>
+
+                    </div>
+
+
+                    <form
+                        id="plannerForm"
+                        novalidate
+                    >
+
+                        <div class="row g-3">
+
+                            <div class="col-12">
+
+                                <label
+                                    for="destination"
+                                    class="form-label"
+                                >
+                                    Куда едем?
+                                </label>
+
+                                <input
+                                    id="destination"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Например, Токио"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-4">
+
+                                <label
+                                    for="travellers"
+                                    class="form-label"
+                                >
+                                    Путешественники
+                                </label>
+
+                                <input
+                                    id="travellers"
+                                    type="number"
+                                    class="form-control"
+                                    min="1"
+                                    max="20"
+                                    value="1"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-4">
+
+                                <label
+                                    for="startDate"
+                                    class="form-label"
+                                >
+                                    Дата начала
+                                </label>
+
+                                <input
+                                    id="startDate"
+                                    type="date"
+                                    class="form-control"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-4">
+
+                                <label
+                                    for="endDate"
+                                    class="form-label"
+                                >
+                                    Дата окончания
+                                </label>
+
+                                <input
+                                    id="endDate"
+                                    type="date"
+                                    class="form-control"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="budget"
+                                    class="form-label"
+                                >
+                                    Бюджет
+                                </label>
+
+                                <select
+                                    id="budget"
+                                    class="form-select"
+                                >
+
+                                    <option value="low">
+                                        До 70 000 ₽
+                                    </option>
+
+                                    <option
+                                        value="medium"
+                                        selected
+                                    >
+                                        70 000–110 000 ₽
+                                    </option>
+
+                                    <option value="high">
+                                        110 000 ₽+
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="style"
+                                    class="form-label"
+                                >
+                                    Стиль путешествия
+                                </label>
+
+                                <select
+                                    id="style"
+                                    class="form-select"
+                                >
+
+                                    <option value="culture">
+                                        🏛️ Культура
+                                    </option>
+
+                                    <option value="food">
+                                        🍜 Еда
+                                    </option>
+
+                                    <option value="nature">
+                                        🌿 Природа
+                                    </option>
+
+                                    <option value="shopping">
+                                        🛍️ Шопинг
+                                    </option>
+
+                                    <option
+                                        value="mixed"
+                                        selected
+                                    >
+                                        ✨ Всё понемногу
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+
+                <!-- Карта -->
+
+                <section class="planner-map-card">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+
+                        <div>
+
+                            <h2 class="mb-1">
+                                Карта маршрута
+                            </h2>
+
+                            <p class="text-secondary mb-0">
+                                Нажми на карту, чтобы добавить заметку о месте.
+                            </p>
+
+                        </div>
+
+                        <span
+                            id="mapDestination"
+                            class="badge bg-light text-dark"
+                        >
+                            Направление не выбрано
+                        </span>
+
+                    </div>
+
+
+                    <div class="planner-map" id="plannerMapShell" aria-live="polite">
+                        <div id="travelMap" aria-label="Интерактивная карта маршрута"></div>
+                        <div class="map-ready-cover"><div class="map-status">Подготавливаем карту…</div></div>
+                        <div id="mapStatus" class="map-status">Карта загружается…</div>
+                        <div class="map-hint">После загрузки можно нажать на любое место → добавить заметку</div>
+                    </div>
+
+                    <div class="map-controls mt-3 d-flex align-items-center gap-3 flex-wrap">
+                        <button id="addMapNote" type="button" class="btn btn-outline-primary btn-sm">
+                            + Добавить заметку
+                        </button>
+                        <span class="text-secondary small">Заметки сохраняются вместе с маршрутом.</span>
+                    </div>
+
+                    <div id="mapNotesList" class="map-notes-list mt-3"></div>
+
+                </section>
+
+
+                <!-- Дни -->
+
+                <section>
+
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+
+                        <div>
+
+                            <h2 class="mb-1">
+                                Дни путешествия
+                            </h2>
+
+                            <p class="text-secondary mb-0">
+                                Добавляй остановки на каждый день.
+                            </p>
+
+                        </div>
+
+                        <button
+                            id="addDay"
+                            type="button"
+                            class="btn btn-outline-primary"
+                        >
+                            + День
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="daysList"
+                        class="days-list"
+                    ></div>
+
+                </section>
+
+
+                <div class="mt-4">
+
+                    <button
+                        id="savePlan"
+                        type="button"
+                        class="btn btn-primary btn-lg"
+                    >
+                        💾 Сохранить план
+                    </button>
+
+                    <button
+                        id="sharePlan"
+                        type="button"
+                        class="btn btn-outline-primary btn-lg ms-2"
+                    >
+                        ↗ Поделиться
+                    </button>
+
+                    <div
+                        id="saveMessage"
+                        class="save-message"
+                        role="status"
+                        aria-live="polite"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Сайдбар -->
+
+            <aside class="planner-sidebar">
+
+
+                <section class="planner-sidebar-card">
+
+                    <h2>
+                        Твой план
+                    </h2>
+
+                    <div class="summary-row">
+
+                        <span>
+                            Направление
+                        </span>
+
+                        <strong id="summaryDestination">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Дней
+                        </span>
+
+                        <strong id="summaryDays">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Мест
+                        </span>
+
+                        <strong id="summaryStops">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Людей
+                        </span>
+
+                        <strong id="summaryTravellers">
+                            1
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Бюджет
+                        </span>
+
+                        <strong id="summaryBudget">
+                            70–110 тыс.
+                        </strong>
+
+                    </div>
+
+                </section>
+
+
+                <section class="planner-sidebar-card">
+
+                    <h2>
+                        Советы
+                    </h2>
+
+                    <div class="tip-list">
+
+                        <div class="tip-item">
+                            <span>💡</span>
+                            <span>
+                                Не планируй слишком много мест
+                                на один день.
+                            </span>
+                        </div>
+
+                        <div class="tip-item">
+                            <span>🚆</span>
+                            <span>
+                                Учитывай время на переезды.
+                            </span>
+                        </div>
+
+                        <div class="tip-item">
+                            <span>🌦️</span>
+                            <span>
+                                Оставляй немного свободного
+                                времени.
+                            </span>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <section class="planner-sidebar-card collaboration-card">
+
+                    <span class="section-label">
+                        COLLABORATION
+                    </span>
+
+                    <h2 class="mt-2">
+                        Планируй вместе
+                    </h2>
+
+                    <p class="text-secondary">
+                        Поделись своим маршрутом
+                        с друзьями.
+                    </p>
+
+                    <button
+                        id="sharePlanSidebar"
+                        type="button"
+                        class="btn btn-primary w-100"
+                    >
+                        Поделиться
+                    </button>
+
+                </section>
+
+
+                <section class="planner-sidebar-card">
+
+                    <h2>
+                        Мой план
+                    </h2>
+
+                    <p class="text-secondary">
+                        План сохраняется отдельно
+                        для текущего пользователя.
+                    </p>
+
+                    <button
+                        id="clearPlan"
+                        type="button"
+                        class="btn btn-outline-danger w-100"
+                    >
+                        Очистить план
+                    </button>
+
+                </section>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/map-config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        if (!TravellyAuth.requireAuth()) {
+            return;
+        }
+
+
+        const user =
+            TravellyAuth.getUser();
+
+
+        /*
+         * ВАЖНО:
+         * ключ уникален для пользователя.
+         */
+
+        const planKey =
+            `travelly-current-plan-${user.id}`;
+
+
+        const destinationInput =
+            document.getElementById(
+                "destination"
+            );
+
+        const travellersInput =
+            document.getElementById(
+                "travellers"
+            );
+
+        const startDateInput =
+            document.getElementById(
+                "startDate"
+            );
+
+        const endDateInput =
+            document.getElementById(
+                "endDate"
+            );
+
+        const budgetInput =
+            document.getElementById(
+                "budget"
+            );
+
+        const styleInput =
+            document.getElementById(
+                "style"
+            );
+
+        const daysList =
+            document.getElementById(
+                "daysList"
+            );
+
+
+        const summaryDestination =
+            document.getElementById(
+                "summaryDestination"
+            );
+
+        const summaryDays =
+            document.getElementById(
+                "summaryDays"
+            );
+
+        const summaryStops =
+            document.getElementById(
+                "summaryStops"
+            );
+
+        const summaryTravellers =
+            document.getElementById(
+                "summaryTravellers"
+            );
+
+        const summaryBudget =
+            document.getElementById(
+                "summaryBudget"
+            );
+
+        const mapDestination =
+            document.getElementById(
+                "mapDestination"
+            );
+
+
+        const saveMessage =
+            document.getElementById(
+                "saveMessage"
+            );
+
+
+        let days = [];
+        let notes = [];
+
+
+        function createDay(
+            number,
+            date = ""
+        ) {
+
+            return {
+                id:
+                    Date.now() +
+                    Math.random(),
+
+                day:
+                    number,
+
+                date,
+
+                stops: []
+            };
+
+        }
+
+
+        function formatDate(
+            value
+        ) {
+
+            if (!value) {
+                return "";
+            }
+
+
+            const date =
+                new Date(
+                    value + "T00:00:00"
+                );
+
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+                return value;
+            }
+
+
+            return date.toLocaleDateString(
+                "ru-RU",
+                {
+                    day: "numeric",
+                    month: "long"
+                }
+            );
+
+        }
+
+
+        function getDayCount() {
+
+            const start =
+                startDateInput.value;
+
+            const end =
+                endDateInput.value;
+
+
+            if (!start || !end) {
+                return 1;
+            }
+
+
+            const startDate =
+                new Date(
+                    start + "T00:00:00"
+                );
+
+            const endDate =
+                new Date(
+                    end + "T00:00:00"
+                );
+
+
+            const difference =
+                endDate -
+                startDate;
+
+
+            if (difference < 0) {
+                return 1;
+            }
+
+
+            return (
+                Math.floor(
+                    difference /
+                    (1000 * 60 * 60 * 24)
+                ) + 1
+            );
+
+        }
+
+
+        function getDateForDay(
+            index
+        ) {
+
+            if (!startDateInput.value) {
+                return "";
+            }
+
+
+            const date =
+                new Date(
+                    startDateInput.value +
+                    "T00:00:00"
+                );
+
+
+            date.setDate(
+                date.getDate() +
+                index
+            );
+
+
+            return date
+                .toISOString()
+                .split("T")[0];
+
+        }
+
+
+        function syncDays() {
+
+            const count =
+                getDayCount();
+
+
+            while (
+                days.length <
+                count
+            ) {
+
+                days.push(
+                    createDay(
+                        days.length + 1,
+                        getDateForDay(
+                            days.length
+                        )
+                    )
+                );
+
+            }
+
+
+            while (
+                days.length >
+                count
+            ) {
+
+                days.pop();
+
+            }
+
+
+            days.forEach(
+                (
+                    day,
+                    index
+                ) => {
+
+                    day.day =
+                        index + 1;
+
+                    day.date =
+                        getDateForDay(
+                            index
+                        );
+
+                }
+            );
+
+
+            if (!days.length) {
+
+                days.push(
+                    createDay(1)
+                );
+
+            }
+
+        }
+
+
+        function renderDays() {
+
+            syncDays();
+
+
+            daysList.innerHTML =
+                days.map(
+                    (
+                        day,
+                        index
+                    ) => `
+
+                    <article class="day-card">
+
+                        <div class="day-header">
+
+                            <div class="day-header-left">
+
+                                <div class="day-number">
+                                    ${day.day}
+                                </div>
+
+                                <div>
+
+                                    <h3 class="day-title">
+                                        День ${day.day}
+                                    </h3>
+
+                                    <div class="day-date">
+                                        ${
+                                            day.date
+                                                ? formatDate(
+                                                    day.date
+                                                )
+                                                : "Дата не выбрана"
+                                        }
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            ${
+                                days.length > 1
+                                    ? `
+                                        <button
+                                            type="button"
+                                            class="btn btn-sm btn-outline-danger remove-day"
+                                            data-index="${index}"
+                                        >
+                                            Удалить
+                                        </button>
+                                    `
+                                    : ""
+                            }
+
+                        </div>
+
+
+                        <div class="stops-list">
+
+                            ${
+                                day.stops.length
+                                    ? day.stops.map(
+                                        (
+                                            stop,
+                                            stopIndex
+                                        ) => `
+
+                                            <div class="stop-row">
+
+                                                <div class="stop-number">
+                                                    ${stopIndex + 1}
+                                                </div>
+
+                                                <input
+                                                    type="text"
+                                                    class="form-control stop-input"
+                                                    data-day="${index}"
+                                                    data-stop="${stopIndex}"
+                                                    value="${escapeHtml(stop)}"
+                                                    placeholder="Например, Senso-ji"
+                                                >
+
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-sm btn-outline-danger remove-stop"
+                                                    data-day="${index}"
+                                                    data-stop="${stopIndex}"
+                                                >
+                                                    ×
+                                                </button>
+
+                                            </div>
+
+                                        `
+                                    ).join("")
+                                    : `
+                                        <p class="text-secondary mb-2">
+                                            Пока нет остановок.
+                                        </p>
+                                    `
+                            }
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="btn btn-outline-primary btn-sm add-stop"
+                            data-index="${index}"
+                        >
+                            + Добавить место
+                        </button>
+
+                    </article>
+
+                `
+                ).join("");
+
+
+            attachDayEvents();
+
+            updateSummary();
+
+        }
+
+
+        function attachDayEvents() {
+
+            document
+                .querySelectorAll(".add-stop")
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                const index =
+                                    Number(
+                                        button.dataset.index
+                                    );
+
+
+                                days[index]
+                                    .stops
+                                    .push("");
+
+
+                                renderDays();
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            document
+                .querySelectorAll(".remove-stop")
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                const dayIndex =
+                                    Number(
+                                        button.dataset.day
+                                    );
+
+                                const stopIndex =
+                                    Number(
+                                        button.dataset.stop
+                                    );
+
+
+                                days[dayIndex]
+                                    .stops
+                                    .splice(
+                                        stopIndex,
+                                        1
+                                    );
+
+
+                                renderDays();
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            document
+                .querySelectorAll(".remove-day")
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                const index =
+                                    Number(
+                                        button.dataset.index
+                                    );
+
+
+                                days.splice(
+                                    index,
+                                    1
+                                );
+
+
+                                days.forEach(
+                                    (
+                                        day,
+                                        dayIndex
+                                    ) => {
+
+                                        day.day =
+                                            dayIndex + 1;
+
+                                        day.date =
+                                            getDateForDay(
+                                                dayIndex
+                                            );
+
+                                    }
+                                );
+
+
+                                renderDays();
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            document
+                .querySelectorAll(".stop-input")
+                .forEach(
+                    input => {
+
+                        input.addEventListener(
+                            "input",
+                            () => {
+
+                                const dayIndex =
+                                    Number(
+                                        input.dataset.day
+                                    );
+
+                                const stopIndex =
+                                    Number(
+                                        input.dataset.stop
+                                    );
+
+
+                                days[dayIndex]
+                                    .stops[stopIndex] =
+                                    input.value;
+
+                                updateSummary();
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+
+
+        function getBudgetText(
+            value
+        ) {
+
+            const data = {
+                low: "до 70 000 ₽",
+                medium: "70–110 тыс.",
+                high: "110 000 ₽+"
+            };
+
+
+            return data[value] || "—";
+
+        }
+
+
+        function updateSummary() {
+
+            const stops =
+                days.reduce(
+                    (
+                        total,
+                        day
+                    ) =>
+                        total +
+                        day.stops.filter(
+                            stop =>
+                                stop.trim()
+                        ).length,
+                    0
+                );
+
+
+            const destination =
+                destinationInput
+                    .value
+                    .trim();
+
+
+            summaryDestination.textContent =
+                destination || "—";
+
+            summaryDays.textContent =
+                days.length;
+
+            summaryStops.textContent =
+                stops;
+
+            summaryTravellers.textContent =
+                travellersInput.value || "1";
+
+            summaryBudget.textContent =
+                getBudgetText(
+                    budgetInput.value
+                );
+
+            mapDestination.textContent =
+                destination ||
+                "Направление не выбрано";
+
+        }
+
+
+        let travelMap = null;
+        let mapMarkers = [];
+
+        const mapCenters = {
+            "Токио": [139.6503, 35.6762],
+            "Япония": [139.6503, 35.6762],
+            "Сеул": [126.9780, 37.5665],
+            "Южная Корея": [126.9780, 37.5665],
+            "Париж": [2.3522, 48.8566],
+            "Франция": [2.3522, 48.8566],
+            "Рим": [12.4964, 41.9028],
+            "Италия": [12.4964, 41.9028],
+            "Стамбул": [28.9784, 41.0082],
+            "Турция": [28.9784, 41.0082],
+            "Рейкьявик": [-21.9426, 64.1466],
+            "Исландия": [-21.9426, 64.1466],
+            "Осло": [10.7522, 59.9139],
+            "Норвегия": [10.7522, 59.9139]
+        };
+
+        function escapeHtml(value) {
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function getMapCenter(destination) {
+            const clean = destination.trim();
+            if (mapCenters[clean]) return mapCenters[clean];
+            const found = Object.keys(mapCenters).find(key =>
+                clean.toLowerCase().includes(key.toLowerCase()) ||
+                key.toLowerCase().includes(clean.toLowerCase())
+            );
+            return found ? mapCenters[found] : [8.6821, 50.1109];
+        }
+
+        function markerPopupHtml(note) {
+            return `
+                <div class="map-note-popup">
+                    <strong>${escapeHtml(note.title)}</strong>
+                    <div class="text-secondary small mt-1">
+                        ${escapeHtml(note.text || "Без дополнительной заметки")}
+                    </div>
+                </div>
+            `;
+        }
+
+        function createMapMarker(note) {
+            const el = document.createElement("div");
+            el.className = "travelly-marker";
+            el.setAttribute("aria-hidden", "true");
+
+            const marker = new maptilersdk.Marker({ element: el, anchor: "bottom" })
+                .setLngLat([Number(note.lng), Number(note.lat)])
+                .setPopup(
+                    new maptilersdk.Popup({ offset: 22, closeButton: true })
+                        .setHTML(markerPopupHtml(note))
+                )
+                .addTo(travelMap);
+
+            return marker;
+        }
+
+        function initTravelMap() {
+            const mapElement = document.getElementById("travelMap");
+            const shell = document.getElementById("plannerMapShell");
+            const status = document.getElementById("mapStatus");
+
+            if (!mapElement || !window.maptilersdk || !window.TRAVELLY_MAPTILER_KEY) {
+                if (status) status.textContent = "Добавь ключ MapTiler в js/map-config.js";
+                return false;
+            }
+
+            if (travelMap) {
+                mapMarkers.forEach(marker => marker.remove());
+                mapMarkers = [];
+                travelMap.remove();
+                travelMap = null;
+            }
+
+            maptilersdk.config.apiKey = window.TRAVELLY_MAPTILER_KEY;
+            const center = getMapCenter(destinationInput.value);
+
+            mapElement.setAttribute("aria-busy", "true");
+            shell?.classList.add("tiles-loading");
+            shell?.classList.remove("tiles-ready");
+            if (status) status.textContent = "Загружаем карту…";
+
+            travelMap = new maptilersdk.Map({
+                container: mapElement,
+                style: maptilersdk.MapStyle.STREETS,
+                center,
+                zoom: destinationInput.value.trim() ? 11 : 4,
+                navigationControl: true,
+                geolocateControl: false,
+                terrainControl: false,
+                fullscreenControl: false
+            });
+
+            travelMap.on("load", () => {
+                mapElement.setAttribute("aria-busy", "false");
+                shell?.classList.remove("tiles-loading");
+                shell?.classList.add("tiles-ready", "is-live");
+                if (status) status.textContent = "Карта готова";
+                renderMapNotes();
+            });
+
+            travelMap.on("error", () => {
+                mapElement.setAttribute("aria-busy", "false");
+                if (status) status.textContent = "Не удалось загрузить карту";
+            });
+
+            travelMap.on("click", event => {
+                addMapNoteAt(event.lngLat.lat, event.lngLat.lng);
+            });
+
+            setTimeout(() => travelMap && travelMap.resize(), 150);
+            return true;
+        }
+
+        function loadMapTilerAndInitMap() {
+            const status = document.getElementById("mapStatus");
+            if (window.maptilersdk) {
+                initTravelMap();
+                return;
+            }
+
+            if (status) status.textContent = "Интерактивная карта загружается…";
+
+            const script = document.createElement("script");
+            script.src = "https://cdn.maptiler.com/maptiler-sdk-js/v4.1.0/maptiler-sdk.umd.min.js";
+            script.onload = () => initTravelMap();
+            script.onerror = () => {
+                if (status) status.textContent = "Карта временно недоступна";
+            };
+            document.body.appendChild(script);
+        }
+
+        function clearMapMarkers() {
+            mapMarkers.forEach(marker => marker.remove());
+            mapMarkers = [];
+        }
+
+        function renderMapNotes() {
+            const list = document.getElementById("mapNotesList");
+            if (!list) return;
+
+            clearMapMarkers();
+
+            if (travelMap) {
+                notes.forEach(note => {
+                    if (Number.isFinite(Number(note.lat)) && Number.isFinite(Number(note.lng))) {
+                        mapMarkers.push(createMapMarker(note));
+                    }
+                });
+            }
+
+            list.innerHTML = notes.length
+                ? notes.map((note, index) => `
+                    <div class="map-note-card">
+                        <div class="map-note-index">${index + 1}</div>
+                        <div class="map-note-main">
+                            <strong>${escapeHtml(note.title)}</strong>
+                            <small>${escapeHtml(note.text || "Без дополнительной заметки")}</small>
+                        </div>
+                        <div class="map-note-actions">
+                            <button type="button" class="btn btn-sm btn-outline-primary focus-map-note" data-note-index="${index}" aria-label="Показать ${escapeHtml(note.title)}">Показать</button>
+                            <button type="button" class="btn btn-sm btn-outline-danger delete-map-note" data-note-index="${index}" aria-label="Удалить ${escapeHtml(note.title)}">×</button>
+                        </div>
+                    </div>
+                `).join("")
+                : '<div class="map-note-card"><div class="map-note-index">+</div><div class="map-note-main"><strong>Добавь первую точку</strong><small>Нажми на карту или кнопку «Добавить заметку».</small></div></div>';
+
+            document.querySelectorAll(".delete-map-note").forEach(button => {
+                button.addEventListener("click", () => {
+                    notes.splice(Number(button.dataset.noteIndex), 1);
+                    renderMapNotes();
+                    updateSummary();
+                });
+            });
+
+            document.querySelectorAll(".focus-map-note").forEach(button => {
+                button.addEventListener("click", () => {
+                    const note = notes[Number(button.dataset.noteIndex)];
+                    if (!note || !travelMap) return;
+                    travelMap.flyTo([Number(note.lng), Number(note.lat)], Math.max(travelMap.getZoom(), 14), { duration: 0.8 });
+                    setTimeout(() => mapMarkers[Number(button.dataset.noteIndex)]?.togglePopup(), 700);
+                });
+            });
+        }
+
+        let pendingMapPoint = null;
+        let mapNoteModal = null;
+
+        function openMapNoteModal(lat, lng) {
+            pendingMapPoint = { lat: Number(lat.toFixed(6)), lng: Number(lng.toFixed(6)) };
+            const titleInput = document.getElementById("mapNoteTitle");
+            const textInput = document.getElementById("mapNoteText");
+            if (titleInput) titleInput.value = "";
+            if (textInput) textInput.value = "";
+            if (!mapNoteModal) {
+                const modalEl = document.getElementById("mapNoteModal");
+                if (modalEl && window.bootstrap) mapNoteModal = new bootstrap.Modal(modalEl);
+            }
+            mapNoteModal?.show();
+            setTimeout(() => document.getElementById("mapNoteTitle")?.focus(), 200);
+        }
+
+        function addMapNoteAt(lat, lng) {
+            openMapNoteModal(lat, lng);
+        }
+
+        async function updateMapForDestination(destination) {
+            if (!travelMap) return;
+            const center = getMapCenter(destination);
+            travelMap.flyTo(center, destination.trim() ? 11 : 4, { duration: 0.8 });
+            setTimeout(() => travelMap && travelMap.resize(), 200);
+        }
+
+        function getPlan() {
+
+            return {
+
+                userId:
+                    user.id,
+
+                destination:
+                    destinationInput.value.trim(),
+
+                travellers:
+                    Number(
+                        travellersInput.value
+                    ) || 1,
+
+                startDate:
+                    startDateInput.value,
+
+                endDate:
+                    endDateInput.value,
+
+                budget:
+                    budgetInput.value,
+
+                style:
+                    styleInput.value,
+
+                notes: notes.map(note => ({ ...note })),
+
+                days:
+                    days.map(
+                        day => ({
+                            day:
+                                day.day,
+
+                            date:
+                                day.date,
+
+                            stops:
+                                day.stops
+                                    .map(
+                                        stop =>
+                                            stop.trim()
+                                    )
+                                    .filter(
+                                        Boolean
+                                    )
+                        })
+                    ),
+
+                updatedAt:
+                    new Date().toISOString()
+
+            };
+
+        }
+
+
+        function saveLocalPlan(
+            plan
+        ) {
+
+            localStorage.setItem(
+                planKey,
+                JSON.stringify(plan)
+            );
+
+        }
+
+
+        function showMessage(
+            text,
+            type = "success"
+        ) {
+
+            saveMessage.textContent =
+                text;
+
+            saveMessage.style.color =
+                type === "success"
+                    ? "var(--success)"
+                    : "var(--danger)";
+
+        }
+
+
+        async function savePlan() {
+
+            const form =
+                document.getElementById(
+                    "plannerForm"
+                );
+
+
+            if (!form.checkValidity()) {
+
+                form.classList.add(
+                    "was-validated"
+                );
+
+                showMessage(
+                    "Заполни направление и даты.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            const plan =
+                getPlan();
+
+
+            /*
+             * Главное:
+             * план хранится только под user.id.
+             */
+
+            saveLocalPlan(
+                plan
+            );
+
+
+            /*
+             * API пока необязателен.
+             * При наличии /plans данные можно
+             * отправить туда.
+             */
+
+            try {
+                const existing = await TravellyAPI.getPlans(user.id);
+                if (Array.isArray(existing) && existing.length) {
+                    await TravellyAPI.updatePlan(existing[0].id, { ...plan, id: existing[0].id });
+                } else {
+                    await TravellyAPI.createPlan(plan);
+                }
+            } catch {
+                /*
+                 * localStorage уже сохранил план.
+                 */
+            }
+
+
+            showMessage(
+                "План сохранён ✈️"
+            );
+
+        }
+
+
+        async function sharePlan() {
+
+            const plan =
+                getPlan();
+
+            const notesText = plan.notes?.length
+                ? `\nЗаметки: ${plan.notes.map(note => note.title + (note.text ? " — " + note.text : "")).join("; ")}`
+                : "";
+
+            const text = `
+Мой маршрут в Travelly
+
+Направление: ${plan.destination || "не указано"}
+Даты: ${plan.startDate || "—"} → ${plan.endDate || "—"}
+Дней: ${plan.days.length}
+Путешественников: ${plan.travellers}${notesText}
+            `.trim();
+
+
+            try {
+
+                if (
+                    navigator.share
+                ) {
+
+                    await navigator.share({
+                        title:
+                            "Мой маршрут Travelly",
+                        text
+                    });
+
+                } else if (
+                    navigator.clipboard
+                ) {
+
+                    await navigator
+                        .clipboard
+                        .writeText(text);
+
+                    showMessage(
+                        "Маршрут скопирован."
+                    );
+
+                } else {
+
+                    alert(text);
+
+                }
+
+            } catch {
+                // отмена share
+            }
+
+        }
+
+
+        async function clearPlan() {
+
+            if (
+                !confirm(
+                    "Удалить твой сохранённый план?"
+                )
+            ) {
+                return;
+            }
+
+
+            /*
+             * Удаляем только план текущего пользователя.
+             */
+
+            localStorage.removeItem(
+                planKey
+            );
+
+            try {
+                const existing = await TravellyAPI.getPlans(user.id);
+                if (Array.isArray(existing) && existing.length) {
+                    await TravellyAPI.deletePlan(existing[0].id);
+                }
+            } catch {
+                // Локальные данные уже очищены.
+            }
+
+
+            destinationInput.value =
+                "";
+
+            travellersInput.value =
+                "1";
+
+            startDateInput.value =
+                "";
+
+            endDateInput.value =
+                "";
+
+            budgetInput.value =
+                "medium";
+
+            styleInput.value =
+                "mixed";
+
+
+            days = [
+                createDay(1)
+            ];
+            notes = [];
+
+
+            renderDays();
+            renderMapNotes();
+
+            updateSummary();
+
+            showMessage(
+                "План удалён."
+            );
+
+        }
+
+
+        async function loadPlan() {
+
+            let saved = null;
+
+            try {
+                saved = JSON.parse(localStorage.getItem(planKey));
+            } catch {
+                saved = null;
+            }
+
+            if (!saved) {
+                try {
+                    const apiPlans = await TravellyAPI.getPlans(user.id);
+                    if (Array.isArray(apiPlans) && apiPlans.length) {
+                        saved = apiPlans[0];
+                        localStorage.setItem(planKey, JSON.stringify(saved));
+                    }
+                } catch {
+                    saved = null;
+                }
+            }
+
+            if (saved && Number(saved.userId) === Number(user.id)) {
+
+                destinationInput.value = saved.destination || "";
+                travellersInput.value = saved.travellers || 1;
+                startDateInput.value = saved.startDate || "";
+                endDateInput.value = saved.endDate || "";
+                budgetInput.value = saved.budget || "medium";
+                styleInput.value = saved.style || "mixed";
+                notes = Array.isArray(saved.notes) ? saved.notes : [];
+
+                if (Array.isArray(saved.days) && saved.days.length) {
+                    days = saved.days.map(day => ({
+                        id: Date.now() + Math.random(),
+                        day: day.day,
+                        date: day.date,
+                        stops: Array.isArray(day.stops) ? [...day.stops] : []
+                    }));
+                } else {
+                    days = [createDay(1, getDateForDay(0))];
+                }
+
+            } else {
+                days = [createDay(1)];
+                notes = [];
+            }
+
+            renderDays();
+            renderMapNotes();
+            updateSummary();
+
+        }
+
+
+        function escapeHtml(
+            value
+        ) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+            div.textContent =
+                String(value);
+
+            return div.innerHTML;
+
+        }
+
+
+        /* EVENTS */
+
+        destinationInput.addEventListener(
+            "input",
+            updateSummary
+        );
+
+        travellersInput.addEventListener(
+            "input",
+            updateSummary
+        );
+
+        budgetInput.addEventListener(
+            "change",
+            updateSummary
+        );
+
+        startDateInput.addEventListener(
+            "change",
+            renderDays
+        );
+
+        endDateInput.addEventListener(
+            "change",
+            renderDays
+        );
+
+
+        document
+            .getElementById("addDay")
+            .addEventListener(
+                "click",
+                () => {
+
+                    days.push(
+                        createDay(
+                            days.length + 1,
+                            getDateForDay(
+                                days.length
+                            )
+                        )
+                    );
+
+                    renderDays();
+
+                }
+            );
+
+
+        document
+            .getElementById("savePlan")
+            .addEventListener(
+                "click",
+                savePlan
+            );
+
+
+        document
+            .getElementById("sharePlan")
+            .addEventListener(
+                "click",
+                sharePlan
+            );
+
+
+        document
+            .getElementById("sharePlanSidebar")
+            .addEventListener(
+                "click",
+                sharePlan
+            );
+
+
+        document
+            .getElementById("clearPlan")
+            .addEventListener(
+                "click",
+                clearPlan
+            );
+
+        const addMapNoteButton = document.getElementById("addMapNote");
+        if (addMapNoteButton) {
+            addMapNoteButton.addEventListener("click", () => {
+                if (!travelMap) return;
+                const center = travelMap.getCenter();
+                addMapNoteAt(center.lat, center.lng);
+            });
+        }
+
+        destinationInput.addEventListener("change", () => {
+            updateMapForDestination(destinationInput.value);
+            updateSummary();
+        });
+
+        destinationInput.addEventListener("input", () => {
+            mapDestination.textContent = destinationInput.value.trim() || "Направление не выбрано";
+            if (travelMap) updateMapForDestination(destinationInput.value);
+        });
+
+        const mapNoteForm = document.getElementById("mapNoteForm");
+        if (mapNoteForm) {
+            mapNoteForm.addEventListener("submit", event => {
+                event.preventDefault();
+                const title = document.getElementById("mapNoteTitle")?.value.trim();
+                const text = document.getElementById("mapNoteText")?.value.trim() || "";
+                if (!title || !pendingMapPoint) return;
+                notes.push({
+                    id: Date.now(),
+                    title,
+                    text,
+                    lat: pendingMapPoint.lat,
+                    lng: pendingMapPoint.lng
+                });
+                pendingMapPoint = null;
+                renderMapNotes();
+                updateSummary();
+                mapNoteModal?.hide();
+                showMessage("Точка добавлена на карту.");
+            });
+        }
+
+        loadMapTilerAndInitMap();
+
+
+        /*
+         * Загружаем именно план текущего пользователя.
+         */
+
+        loadPlan();
+
+    }
+
+);
+
+</script>
+
+
+    <div class="modal fade map-note-modal" id="mapNoteModal" tabindex="-1" aria-labelledby="mapNoteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h2 class="modal-title h5 mb-1" id="mapNoteModalLabel">Добавить место</h2>
+                        <p class="text-secondary small mb-0">Оставь короткую заметку для этого места.</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <form id="mapNoteForm">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="mapNoteTitle" class="form-label">Название места</label>
+                            <input id="mapNoteTitle" class="form-control" maxlength="80" required placeholder="Например, Gyeongbokgung">
+                        </div>
+                        <div>
+                            <label for="mapNoteText" class="form-label">Заметка</label>
+                            <textarea id="mapNoteText" class="form-control" rows="4" maxlength="300" placeholder="Что стоит посмотреть или запомнить?"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-primary">Добавить точку</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

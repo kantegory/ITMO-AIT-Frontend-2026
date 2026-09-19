@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Вход — Travelly</title>
+
+    <meta
+        name="description"
+        content="Вход в аккаунт Travelly"
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/themes.css">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+
+        <a
+            class="navbar-brand fw-bold fs-4"
+            href="index.html"
+        >
+            ✈️ Travelly
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-label="Открыть меню"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+            class="collapse navbar-collapse"
+            id="mainNavbar"
+        >
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="index.html"
+                    >
+                        Главная
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="search.html"
+                    >
+                        Поиск
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="feed.html"
+                    >
+                        Истории
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="trip-planner.html"
+                    >
+                        Планировщик
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="my-trips.html"
+                    >
+                        Мои поездки
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <button
+                        id="themeToggle"
+                        class="theme-toggle"
+                        type="button"
+                        aria-label="Переключить тему"
+                        title="Переключить тему"
+                    >
+                        <span id="themeIcon">☀️</span>
+                    </button>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        id="authStatus"
+                        href="login.html"
+                        class="btn btn-primary ms-lg-2"
+                    >
+                        Войти
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<main class="py-5">
+    <div class="container">
+
+        <div
+            class="row justify-content-center align-items-center"
+            style="min-height: 65vh;"
+        >
+
+            <div class="col-md-7 col-lg-5">
+
+                <section class="auth-card p-4 p-md-5">
+
+                    <div class="text-center mb-4">
+
+                        <span class="section-label">
+                            TRAVELLY
+                        </span>
+
+                        <h1 class="mt-2 mb-2">
+                            С возвращением ✈️
+                        </h1>
+
+                        <p class="text-secondary mb-0">
+                            Войди, чтобы продолжить планировать
+                            свои путешествия.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        id="loginMessage"
+                        class="alert d-none"
+                        role="alert"
+                        aria-live="polite"
+                    ></div>
+
+
+                    <form id="loginForm" novalidate>
+
+                        <!-- EMAIL -->
+
+                        <div class="mb-3">
+
+                            <label
+                                for="email"
+                                class="form-label"
+                            >
+                                Email
+                            </label>
+
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="email"
+                                name="email"
+                                placeholder="you@example.com"
+                                autocomplete="email"
+                                required
+                            >
+
+                            <div class="invalid-feedback">
+                                Введи корректный email.
+                            </div>
+
+                        </div>
+
+
+                        <!-- PASSWORD -->
+
+                        <div class="mb-3">
+
+                            <div class="d-flex justify-content-between">
+
+                                <label
+                                    for="password"
+                                    class="form-label"
+                                >
+                                    Пароль
+                                </label>
+
+                                <a
+                                    href="#"
+                                    id="forgotPassword"
+                                    class="small"
+                                >
+                                    Забыли пароль?
+                                </a>
+
+                            </div>
+
+
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="password"
+                                name="password"
+                                placeholder="Введите пароль"
+                                autocomplete="current-password"
+                                minlength="6"
+                                required
+                            >
+
+                            <div class="invalid-feedback">
+                                Пароль должен содержать минимум 6 символов.
+                            </div>
+
+                        </div>
+
+
+                        <!-- REMEMBER -->
+
+                        <div class="form-check mb-4">
+
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="remember"
+                                name="remember"
+                            >
+
+                            <label
+                                class="form-check-label"
+                                for="remember"
+                            >
+                                Запомнить меня
+                            </label>
+
+                        </div>
+
+
+                        <!-- BUTTON -->
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100 btn-lg"
+                        >
+                            Войти
+                        </button>
+
+                    </form>
+
+
+                    <div class="text-center mt-4">
+
+                        <p class="text-secondary mb-0">
+                            Ещё нет аккаунта?
+                            <a href="register.html">
+                                Зарегистрироваться
+                            </a>
+                        </p>
+
+                    </div>
+
+                </section>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- BOOTSTRAP -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+<!-- PROJECT JS -->
+
+<script src="js/theme.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("loginForm");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const message = document.getElementById("loginMessage");
+    const forgotPassword = document.getElementById("forgotPassword");
+    const params = new URLSearchParams(window.location.search);
+    const redirectPage = params.get("redirect");
+
+    function showMessage(text, type) {
+        message.className = `alert alert-${type}`;
+        message.textContent = text;
+    }
+
+    // Для входа проверяем длину пароля вручную.
+    password.removeAttribute("minlength");
+    password.removeAttribute("required");
+    email.removeAttribute("required");
+
+    form.addEventListener("submit", async event => {
+        event.preventDefault();
+
+        const emailValue = email.value.trim();
+        const passwordValue = password.value;
+
+        email.setCustomValidity("");
+        password.setCustomValidity("");
+        form.classList.add("was-validated");
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+            email.setCustomValidity("Введите корректный email");
+        }
+
+        if (passwordValue.length < 6) {
+            password.setCustomValidity("Пароль должен содержать минимум 6 символов");
+        }
+
+        if (!form.checkValidity()) return;
+
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.textContent = "Входим...";
+
+        try {
+            const result = await TravellyAuth.login(emailValue, passwordValue);
+
+            if (!result.success) {
+                showMessage(result.message, "danger");
+                password.value = "";
+                password.focus();
+                return;
+            }
+
+            showMessage(`Добро пожаловать, ${result.user.name}!`, "success");
+            setTimeout(() => {
+                window.location.href = redirectPage || "profile.html";
+            }, 350);
+        } catch (error) {
+            console.error("Ошибка входа:", error);
+            showMessage("Не удалось выполнить вход. Проверь email и пароль.", "danger");
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = "Войти";
+        }
+    });
+
+    forgotPassword.addEventListener("click", event => {
+        event.preventDefault();
+        showMessage("Восстановление пароля пока не подключено.", "info");
+    });
+});
+</script>
+
+</body>
+</html>

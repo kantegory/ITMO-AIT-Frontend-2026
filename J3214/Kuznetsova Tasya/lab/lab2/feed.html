@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Истории путешественников — Travelly</title>
+
+    <meta
+        name="description"
+        content="Истории, маршруты и впечатления путешественников Travelly."
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/themes.css"
+    >
+
+    <style>
+        .feed-page {
+            padding: 50px 0 80px;
+        }
+
+        .feed-header {
+            margin-bottom: 35px;
+        }
+
+        .feed-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-bottom: 30px;
+        }
+
+        .feed-filter {
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            border-radius: 999px;
+            padding: 9px 15px;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .feed-filter:hover,
+        .feed-filter.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .feed-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .story-card {
+            overflow: hidden;
+            border-radius: 22px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .story-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .story-body {
+            padding: 21px;
+        }
+
+        .story-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .story-avatar {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--primary-soft);
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .story-author-name {
+            font-weight: 700;
+        }
+
+        .story-author-meta {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .story-title {
+            margin-bottom: 8px;
+        }
+
+        .story-text {
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        .story-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 15px 0;
+        }
+
+        .story-tag {
+            padding: 5px 9px;
+            border-radius: 999px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .story-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+
+        .story-stats {
+            display: flex;
+            gap: 13px;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .story-actions {
+            display: flex;
+            gap: 7px;
+        }
+
+        .story-action {
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            border-radius: 10px;
+            padding: 7px 9px;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .story-action:hover,
+        .story-action.liked {
+            color: #ef4444 !important;
+            transform: scale(1.08);
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .feed-empty {
+            grid-column: 1 / -1;
+            padding: 55px 25px;
+            text-align: center;
+            border-radius: 20px;
+            background: var(--background-secondary);
+            border: 1px dashed var(--border-strong);
+        }
+
+        .feed-empty-icon {
+            font-size: 52px;
+            margin-bottom: 14px;
+        }
+
+        .feed-loading {
+            grid-column: 1 / -1;
+            padding: 60px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 992px) {
+            .feed-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 680px) {
+            .feed-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .story-image {
+                height: 210px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+<nav class="navbar navbar-expand-lg sticky-top">
+
+    <div class="container">
+
+        <a
+            class="navbar-brand fw-bold fs-4"
+            href="index.html"
+        >
+            ✈️ Travelly
+        </a>
+
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-label="Открыть меню"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div
+            class="collapse navbar-collapse"
+            id="mainNavbar"
+        >
+
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="index.html"
+                    >
+                        Главная
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="search.html"
+                    >
+                        Поиск
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link active"
+                        href="feed.html"
+                    >
+                        Истории
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="trip-planner.html"
+                    >
+                        Планировщик
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="my-trips.html"
+                    >
+                        Мои поездки
+                    </a>
+                </li>
+
+                <li class="nav-item">
+
+                    <button
+                        id="themeToggle"
+                        class="theme-toggle"
+                        type="button"
+                        aria-label="Переключить тему"
+                    >
+
+                        <span id="themeIcon">
+                            ☀️
+                        </span>
+
+                    </button>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a
+                        id="authStatus"
+                        data-auth-link
+                        href="login.html"
+                        class="btn btn-primary ms-lg-2"
+                    >
+                        Войти
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="feed-page">
+
+    <div class="container">
+
+
+        <header class="feed-header">
+
+            <span class="section-label">
+                СООБЩЕСТВО TRAVELLY
+            </span>
+
+            <h1 class="mt-2 mb-3">
+                Истории путешественников
+            </h1>
+
+            <p class="text-secondary">
+                Реальные маршруты, впечатления и советы
+                людей, которые уже побывали в этих местах.
+            </p>
+
+            <a
+                href="create-trip.html"
+                class="btn btn-primary mt-2"
+            >
+                + Рассказать о поездке
+            </a>
+
+        </header>
+
+
+        <!-- Фильтры -->
+
+        <div class="feed-filters">
+
+            <button
+                class="feed-filter active"
+                type="button"
+                data-filter="all"
+            >
+                Все
+            </button>
+
+            <button
+                class="feed-filter"
+                type="button"
+                data-filter="city"
+            >
+                🏙️ Города
+            </button>
+
+            <button
+                class="feed-filter"
+                type="button"
+                data-filter="nature"
+            >
+                🌿 Природа
+            </button>
+
+            <button
+                class="feed-filter"
+                type="button"
+                data-filter="beach"
+            >
+                🏖️ Пляжи
+            </button>
+
+            <button
+                class="feed-filter"
+                type="button"
+                data-filter="mountains"
+            >
+                ⛰️ Горы
+            </button>
+
+        </div>
+
+
+        <div
+            id="feedGrid"
+            class="feed-grid"
+        >
+
+            <div class="feed-loading">
+                Загружаем истории...
+            </div>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="js/theme.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
+
+
+        const grid =
+            document.getElementById(
+                "feedGrid"
+            );
+
+
+        const filterButtons =
+            document.querySelectorAll(
+                ".feed-filter"
+            );
+
+
+        let allPosts = [];
+
+        let currentFilter = "all";
+
+
+        /* =================================================
+           FALLBACK DATA
+           ================================================= */
+
+        const fallbackPosts = [
+
+            {
+                id: 1,
+                userId: 1,
+                author: "Анна",
+                destination: "Япония",
+                type: "city",
+                title: "Первый раз в Токио",
+                text:
+                    "Токио оказался намного удобнее " +
+                    "и интереснее, чем я ожидала. " +
+                    "Особенно понравились Shibuya и Asakusa.",
+                image:
+                    "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1200&q=85",
+                tags: [
+                    "япония",
+                    "токио"
+                ],
+                likes: 24,
+                comments: 5
+            },
+
+            {
+                id: 2,
+                userId: 1,
+                author: "Анна",
+                destination: "Южная Корея",
+                type: "city",
+                title: "Сеул за семь дней",
+                text:
+                    "Дворцы, современные районы, " +
+                    "корейские кафе и шопинг.",
+                image:
+                    "https://images.unsplash.com/photo-1630999050065-b2d2377c2928?auto=format&fit=crop&w=1400&q=85",
+                tags: [
+                    "корея",
+                    "сеул"
+                ],
+                likes: 18,
+                comments: 4
+            },
+
+            {
+                id: 3,
+                userId: 1,
+                author: "Анна",
+                destination: "Исландия",
+                type: "nature",
+                title: "Road trip по Исландии",
+                text:
+                    "Водопады, океан, горы " +
+                    "и постоянно меняющаяся погода.",
+                image:
+                    "https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=1200&q=85",
+                tags: [
+                    "исландия",
+                    "roadtrip"
+                ],
+                likes: 31,
+                comments: 7
+            },
+
+            {
+                id: 4,
+                userId: 1,
+                author: "Анна",
+                destination: "Италия",
+                type: "city",
+                title: "Неделя среди итальянских городов",
+                text:
+                    "Рим, Флоренция и Венеция — " +
+                    "три очень разные точки одного путешествия.",
+                image:
+                    "https://images.unsplash.com/photo-1520175480921-4edfa2983e0f?auto=format&fit=crop&w=1200&q=85",
+                tags: [
+                    "италия",
+                    "рим"
+                ],
+                likes: 27,
+                comments: 6
+            },
+
+            {
+                id: 5,
+                userId: 1,
+                author: "Анна",
+                destination: "Норвегия",
+                type: "mountains",
+                title: "Фьорды и горы Норвегии",
+                text:
+                    "Путешествие для тех, кто " +
+                    "любит природу и долгие прогулки.",
+                image:
+                    "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=85",
+                tags: [
+                    "норвегия",
+                    "горы"
+                ],
+                likes: 22,
+                comments: 3
+            },
+
+            {
+                id: 6,
+                userId: 1,
+                author: "Анна",
+                destination: "Турция",
+                type: "beach",
+                title: "Стамбул + море",
+                text:
+                    "Хороший вариант для поездки, " +
+                    "где хочется совместить город, " +
+                    "еду и отдых у моря.",
+                image:
+                    "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1200&q=85",
+                tags: [
+                    "турция",
+                    "стамбул",
+                    "море"
+                ],
+                likes: 16,
+                comments: 2
+            }
+
+        ];
+
+
+        /* =================================================
+           LOAD POSTS
+           ================================================= */
+
+        async function loadPosts() {
+
+            try {
+
+                allPosts =
+                    await TravellyAPI.getPosts();
+
+
+            } catch (error) {
+
+                console.warn(
+                    "JSON-server недоступен. " +
+                    "Используем локальные данные.",
+                    error
+                );
+
+                allPosts =
+                    fallbackPosts;
+            }
+
+
+            renderPosts();
+
+        }
+
+
+        /* =================================================
+           RENDER
+           ================================================= */
+
+        function renderPosts() {
+
+            const filteredPosts =
+                currentFilter === "all"
+                    ? allPosts
+                    : allPosts.filter(
+                        post =>
+                            post.type ===
+                            currentFilter
+                    );
+
+
+            if (!filteredPosts.length) {
+
+                grid.innerHTML = `
+
+                    <div class="feed-empty">
+
+                        <div class="feed-empty-icon">
+                            🌍
+                        </div>
+
+                        <h3>
+                            Историй пока нет
+                        </h3>
+
+                        <p class="text-secondary">
+                            Для этого фильтра пока
+                            никто ничего не опубликовал.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="btn btn-outline-primary"
+                            id="resetFilter"
+                        >
+                            Показать все
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                document
+                    .getElementById("resetFilter")
+                    ?.addEventListener(
+                        "click",
+                        () => {
+
+                            currentFilter =
+                                "all";
+
+                            filterButtons
+                                .forEach(
+                                    button =>
+                                        button.classList.toggle(
+                                            "active",
+                                            button.dataset.filter ===
+                                                "all"
+                                        )
+                                );
+
+                            renderPosts();
+
+                        }
+                    );
+
+                return;
+            }
+
+
+            grid.innerHTML =
+                filteredPosts
+                    .map(
+                        post =>
+                            createPostCard(post)
+                    )
+                    .join("");
+
+
+            attachPostEvents();
+
+        }
+
+
+        /* =================================================
+           POST CARD
+           ================================================= */
+
+        function createPostCard(post) {
+
+            const author =
+                post.author ||
+                "Путешественник";
+
+
+            const avatar =
+                author.charAt(0).toUpperCase();
+
+
+            const tags =
+                Array.isArray(post.tags)
+                    ? post.tags
+                    : [];
+
+
+            return `
+
+                <article
+                    class="story-card"
+                    data-type="${post.type || "city"}"
+                >
+
+                    <img
+                        src="${post.image || ""}"
+                        alt="${post.destination || "Путешествие"}"
+                        class="story-image"
+                        loading="lazy"
+                    >
+
+
+                    <div class="story-body">
+
+
+                        <div class="story-author">
+
+                            <div class="story-avatar">
+                                ${avatar}
+                            </div>
+
+                            <div>
+
+                                <div class="story-author-name">
+                                    ${author}
+                                </div>
+
+                                <div class="story-author-meta">
+                                    📍 ${post.destination || "Путешествие"}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <span class="section-label">
+                            ${getTypeLabel(post.type)}
+                        </span>
+
+
+                        <h3 class="story-title mt-2">
+                            ${post.title}
+                        </h3>
+
+
+                        <p class="story-text">
+                            ${post.text || ""}
+                        </p>
+
+
+                        ${
+                            tags.length
+                                ? `
+
+                                    <div class="story-tags">
+
+                                        ${tags
+                                            .map(
+                                                tag => `
+                                                    <span class="story-tag">
+                                                        #${tag}
+                                                    </span>
+                                                `
+                                            )
+                                            .join("")
+                                        }
+
+                                    </div>
+
+                                `
+                                : ""
+                        }
+
+
+                        <div class="story-footer">
+
+                            <div class="story-stats">
+
+                                <span>
+                                    ❤️
+                                    <span
+                                        class="like-count"
+                                        data-id="${post.id}"
+                                    >
+                                        ${post.likes || 0}
+                                    </span>
+                                </span>
+
+                                <span>
+                                    💬
+                                    ${post.comments || 0}
+                                </span>
+
+                            </div>
+
+
+                            <div class="story-actions">
+
+                                <button
+                                    type="button"
+                                    class="story-action like-story"
+                                    data-id="${post.id}"
+                                >
+                                    <svg class="ui-icon" aria-hidden="true"><use href="assets/sprite.svg#icon-heart"></use></svg>
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="story-action share-story"
+                                    data-id="${post.id}"
+                                    data-title="${escapeHtml(post.title || "История Travelly")}"
+                                >
+                                    ↗
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        }
+
+
+        /* =================================================
+           TYPE LABEL
+           ================================================= */
+
+        function getTypeLabel(type) {
+
+            const labels = {
+
+                city: "🏙️ ГОРОД",
+
+                nature: "🌿 ПРИРОДА",
+
+                beach: "🏖️ ПЛЯЖ",
+
+                mountains: "⛰️ ГОРЫ"
+
+            };
+
+
+            return (
+                labels[type] ||
+                "✈️ ПУТЕШЕСТВИЕ"
+            );
+
+        }
+
+
+        /* =================================================
+           EVENTS
+           ================================================= */
+
+        function attachPostEvents() {
+
+            document
+                .querySelectorAll(".like-story")
+                .forEach(button => {
+
+                    button.addEventListener("click", async () => {
+                        const id = button.dataset.id;
+                        const post = allPosts.find(item => String(item.id) === String(id));
+                        if (!post) return;
+
+                        const key = `travelly-liked-post-${id}`;
+                        const liked = localStorage.getItem(key) === "1";
+                        const nextLiked = !liked;
+
+                        post.likes = Math.max(0, Number(post.likes || 0) + (nextLiked ? 1 : -1));
+                        localStorage.setItem(key, nextLiked ? "1" : "0");
+
+                        button.classList.toggle("liked", nextLiked);
+
+                        const count = document.querySelector(`.like-count[data-id="${id}"]`);
+                        if (count) count.textContent = post.likes;
+
+                        try {
+                            await TravellyAPI.request(`/posts/${id}`, {
+                                method: "PATCH",
+                                body: JSON.stringify({ likes: post.likes })
+                            });
+                        } catch (error) {
+                            console.warn("Лайк сохранён локально.", error);
+                        }
+                    });
+
+                    const savedLike = localStorage.getItem(`travelly-liked-post-${button.dataset.id}`) === "1";
+                    button.classList.toggle("liked", savedLike);
+                });
+
+
+            document
+                .querySelectorAll(".share-story")
+                .forEach(button => {
+
+                    button.addEventListener(
+                        "click",
+                        async () => {
+
+                            const title =
+                                button.dataset.title ||
+                                "История Travelly";
+
+
+                            const url =
+                                window.location.href;
+
+
+                            try {
+
+                                if (
+                                    navigator.share
+                                ) {
+
+                                    await navigator.share({
+
+                                        title,
+
+                                        text:
+                                            "Посмотри эту историю в Travelly",
+
+                                        url
+
+                                    });
+
+                                } else {
+
+                                    await navigator
+                                        .clipboard
+                                        .writeText(url);
+
+                                    alert(
+                                        "Ссылка скопирована!"
+                                    );
+
+                                }
+
+                            } catch {
+
+                                /* Пользователь отменил share */
+                            }
+
+                        }
+                    );
+
+                });
+
+        }
+
+
+        /* =================================================
+           FILTER BUTTONS
+           ================================================= */
+
+        filterButtons.forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    currentFilter =
+                        button.dataset.filter;
+
+
+                    filterButtons.forEach(
+                        item => {
+
+                            item.classList.toggle(
+                                "active",
+                                item === button
+                            );
+
+                        }
+                    );
+
+
+                    renderPosts();
+
+                }
+            );
+
+        });
+
+
+        /* =================================================
+           HELPERS
+           ================================================= */
+
+        function escapeHtml(value) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent =
+                String(value);
+
+            return div.innerHTML;
+
+        }
+
+
+        await loadPosts();
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

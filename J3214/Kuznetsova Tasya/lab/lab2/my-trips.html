@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Мои поездки — Travelly</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/themes.css"
+    >
+
+    <style>
+
+        .trips-page {
+            padding: 50px 0 80px;
+        }
+
+        .saved-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 24px;
+        }
+
+        .saved-card {
+            overflow: hidden;
+
+            border-radius: 22px;
+
+            border: 1px solid var(--border);
+
+            background: var(--card);
+
+            box-shadow: var(--shadow);
+
+            transition: .25s ease;
+        }
+
+        .saved-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .saved-card img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+        }
+
+        .saved-card-body {
+            padding: 22px;
+        }
+
+        .saved-meta {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            margin: 15px 0;
+        }
+
+        .saved-meta span {
+            padding: 6px 9px;
+
+            border-radius: 999px;
+
+            background:
+                var(--background-secondary);
+
+            color:
+                var(--text-secondary);
+
+            font-size: 12px;
+        }
+
+        .trip-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 17px;
+        }
+
+        .trip-tag {
+            padding: 5px 9px;
+
+            border-radius: 999px;
+
+            background:
+                var(--primary-soft);
+
+            color:
+                var(--primary);
+
+            font-size: 12px;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+
+            padding: 55px 25px;
+
+            text-align: center;
+
+            border: 1px dashed var(--border-strong);
+
+            border-radius: 22px;
+
+            background:
+                var(--background-secondary);
+        }
+
+        .empty-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .planner-box {
+            padding: 28px;
+
+            border-radius: 22px;
+
+            border: 1px solid var(--border);
+
+            background: var(--card);
+
+            box-shadow: var(--shadow);
+        }
+
+        .planner-meta {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin: 17px 0;
+        }
+
+        .planner-meta span {
+            padding: 8px 10px;
+
+            background:
+                var(--background-secondary);
+
+            border-radius: 10px;
+
+            font-size: 13px;
+        }
+
+        @media (max-width: 992px) {
+
+            .saved-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+        @media (max-width: 680px) {
+
+            .saved-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<nav class="navbar navbar-expand-lg sticky-top">
+
+    <div class="container">
+
+        <a
+            class="navbar-brand fw-bold fs-4"
+            href="index.html"
+        >
+            ✈️ Travelly
+        </a>
+
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-label="Открыть меню"
+        >
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <div
+            class="collapse navbar-collapse"
+            id="mainNavbar"
+        >
+
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        Главная
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="search.html">
+                        Поиск
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="feed.html">
+                        Истории
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="trip-planner.html">
+                        Планировщик
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link active"
+                        href="my-trips.html"
+                    >
+                        Мои поездки
+                    </a>
+                </li>
+
+                <li class="nav-item">
+
+                    <button
+                        id="themeToggle"
+                        class="theme-toggle"
+                        type="button"
+                        aria-label="Переключить тему"
+                    >
+                        <span id="themeIcon">
+                            ☀️
+                        </span>
+                    </button>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a
+                        id="authStatus"
+                        data-auth-link
+                        href="login.html"
+                        class="btn btn-primary ms-lg-2"
+                    >
+                        Войти
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="trips-page">
+
+    <div class="container">
+
+
+        <header class="mb-5">
+
+            <span class="section-label">
+                ЛИЧНЫЕ ПУТЕШЕСТВИЯ
+            </span>
+
+            <h1 class="mt-2">
+                Мои поездки
+            </h1>
+
+            <p class="text-secondary">
+                Здесь находятся только твои
+                сохранённые направления и поездки.
+            </p>
+
+        </header>
+
+
+        <!-- CREATED TRIPS -->
+
+        <section class="mb-5">
+
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+
+                <h2 class="mb-0">
+                    Мои маршруты
+                </h2>
+
+                <a
+                    href="create-trip.html"
+                    class="btn btn-primary"
+                >
+                    + Создать поездку
+                </a>
+
+            </div>
+
+
+            <div
+                id="userTrips"
+                class="saved-grid"
+            ></div>
+
+        </section>
+
+
+        <!-- SAVED DESTINATIONS -->
+
+        <section class="mb-5">
+
+            <h2 class="mb-3">
+                Сохранённые направления
+            </h2>
+
+
+            <div
+                id="savedDestinations"
+                class="saved-grid"
+            ></div>
+
+        </section>
+
+
+        <!-- PLANNER -->
+
+        <section>
+
+            <h2 class="mb-3">
+                Мой план
+            </h2>
+
+
+            <div id="savedPlanner"></div>
+
+        </section>
+
+    </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="js/theme.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
+
+        if (!TravellyAuth.requireAuth()) {
+            return;
+        }
+
+
+        const user =
+            TravellyAuth.getUser();
+
+
+        const tripsContainer =
+            document.getElementById(
+                "userTrips"
+            );
+
+        const savedContainer =
+            document.getElementById(
+                "savedDestinations"
+            );
+
+        const plannerContainer =
+            document.getElementById(
+                "savedPlanner"
+            );
+
+
+        /* =================================================
+           TRIPS
+           ================================================= */
+
+        async function loadTrips() {
+
+            let trips = [];
+
+
+            try {
+
+                const allTrips =
+                    await TravellyAPI.getTrips();
+
+
+                trips =
+                    allTrips.filter(
+                        trip =>
+                            Number(trip.userId) ===
+                            Number(user.id)
+                    );
+
+            } catch {
+
+                const key =
+                    `travelly-user-trips-${user.id}`;
+
+
+                try {
+
+                    trips =
+                        JSON.parse(
+                            localStorage.getItem(
+                                key
+                            )
+                        ) || [];
+
+                } catch {
+
+                    trips = [];
+
+                }
+
+            }
+
+
+            if (!trips.length) {
+
+                tripsContainer.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            🗺️
+                        </div>
+
+                        <h3>
+                            Пока нет созданных поездок
+                        </h3>
+
+                        <p class="text-secondary">
+                            Создай первый маршрут,
+                            чтобы он появился здесь.
+                        </p>
+
+                        <a
+                            href="create-trip.html"
+                            class="btn btn-primary"
+                        >
+                            Создать поездку
+                        </a>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            tripsContainer.innerHTML =
+                trips
+                    .map(
+                        trip => `
+
+                            <article class="saved-card">
+
+                                <div class="saved-card-body">
+
+                                    <span class="section-label">
+                                        ${trip.type || "ПУТЕШЕСТВИЕ"}
+                                    </span>
+
+                                    <h3 class="mt-2">
+                                        ${escapeHtml(
+                                            trip.title
+                                        )}
+                                    </h3>
+
+                                    <p class="text-secondary">
+                                        ${escapeHtml(
+                                            trip.description || ""
+                                        )}
+                                    </p>
+
+
+                                    <div class="saved-meta">
+
+                                        <span>
+                                            📍
+                                            ${escapeHtml(
+                                                trip.destination
+                                            )}
+                                        </span>
+
+                                        <span>
+                                            🕒
+                                            ${escapeHtml(
+                                                trip.duration
+                                            )}
+                                        </span>
+
+                                        <span>
+                                            💰
+                                            ${escapeHtml(
+                                                trip.budget
+                                            )}
+                                        </span>
+
+                                    </div>
+
+
+                                    ${
+                                        Array.isArray(
+                                            trip.tags
+                                        )
+                                            ? `
+                                                <div class="trip-tags">
+
+                                                    ${
+                                                        trip.tags
+                                                            .map(
+                                                                tag =>
+                                                                    `
+                                                                        <span class="trip-tag">
+                                                                            #${escapeHtml(tag)}
+                                                                        </span>
+                                                                    `
+                                                            )
+                                                            .join("")
+                                                    }
+
+                                                </div>
+                                            `
+                                            : ""
+                                    }
+
+
+                                    <div class="d-flex gap-2">
+
+                                        <a
+                                            href="trip-planner.html"
+                                            class="btn btn-primary"
+                                        >
+                                            Планировать
+                                        </a>
+
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-danger delete-trip"
+                                            data-id="${trip.id}"
+                                        >
+                                            Удалить
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                        `
+                    )
+                    .join("");
+
+
+            tripsContainer
+                .querySelectorAll(
+                    ".delete-trip"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            async () => {
+
+                                const id =
+                                    button.dataset.id;
+
+
+                                try {
+
+                                    await TravellyAPI.deleteTrip(
+                                        id
+                                    );
+
+                                } catch {
+                                    /* API может быть недоступен */
+                                }
+
+
+                                const key =
+                                    `travelly-user-trips-${user.id}`;
+
+
+                                let localTrips = [];
+
+
+                                try {
+
+                                    localTrips =
+                                        JSON.parse(
+                                            localStorage.getItem(
+                                                key
+                                            )
+                                        ) || [];
+
+                                } catch {
+
+                                    localTrips = [];
+
+                                }
+
+
+                                localTrips =
+                                    localTrips.filter(
+                                        trip =>
+                                            String(
+                                                trip.id
+                                            ) !==
+                                            String(id)
+                                    );
+
+
+                                localStorage.setItem(
+                                    key,
+                                    JSON.stringify(
+                                        localTrips
+                                    )
+                                );
+
+
+                                loadTrips();
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+
+
+        /* =================================================
+           SAVED DESTINATIONS
+           ================================================= */
+
+        const destinationData = {
+
+            italy: {
+                title: "Италия",
+                image: "https://images.unsplash.com/photo-1520175480921-4edfa2983e0f?auto=format&fit=crop&w=900&q=85"
+            },
+
+            japan: {
+                title: "Япония",
+                image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=900&q=85"
+            },
+
+            korea: {
+                title: "Южная Корея",
+                image: "https://images.unsplash.com/photo-1538485399081-7c89709a58a6?auto=format&fit=crop&w=900&q=85"
+            },
+
+            iceland: {
+                title: "Исландия",
+                image: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=900&q=85"
+            },
+
+            norway: {
+                title: "Норвегия",
+                image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=85"
+            },
+
+            turkey: {
+                title: "Турция",
+                image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=900&q=85"
+            },
+
+            france: {
+                title: "Франция",
+                image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=900&q=85"
+            }
+
+        };
+
+
+        async function loadSaved() {
+
+            let savedIds = [];
+
+
+            /*
+             * Сначала API.
+             */
+
+            try {
+
+                const saved =
+                    await TravellyAPI.getSaved(
+                        user.id
+                    );
+
+
+                savedIds =
+                    saved.map(
+                        item =>
+                            item.destinationId
+                    );
+
+            } catch {
+
+                /*
+                 * Fallback.
+                 */
+
+                const key =
+                    `travelly-trips-${user.id}`;
+
+
+                try {
+
+                    savedIds =
+                        JSON.parse(
+                            localStorage.getItem(
+                                key
+                            )
+                        ) || [];
+
+                } catch {
+
+                    savedIds = [];
+
+                }
+
+            }
+
+
+            if (!savedIds.length) {
+
+                savedContainer.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            ❤️
+                        </div>
+
+                        <h3>
+                            Нет сохранённых направлений
+                        </h3>
+
+                        <p class="text-secondary">
+                            Открывай направления
+                            и сохраняй понравившиеся.
+                        </p>
+
+                        <a
+                            href="search.html"
+                            class="btn btn-primary"
+                        >
+                            Найти направление
+                        </a>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            savedContainer.innerHTML =
+                savedIds
+                    .map(
+                        id => {
+
+                            const item =
+                                destinationData[id];
+
+
+                            if (!item) {
+                                return "";
+                            }
+
+
+                            return `
+
+                                <article class="saved-card">
+
+                                    <img
+                                        src="${item.image}"
+                                        alt="${item.title}"
+                                        loading="lazy"
+                                    >
+
+                                    <div class="saved-card-body">
+
+                                        <h3>
+                                            ${item.title}
+                                        </h3>
+
+                                        <a
+                                            href="destination.html?id=${id}"
+                                            class="btn btn-primary"
+                                        >
+                                            Открыть
+                                        </a>
+
+                                    </div>
+
+                                </article>
+
+                            `;
+
+                        }
+                    )
+                    .join("");
+
+        }
+
+
+        /* =================================================
+           PLANNER
+           ================================================= */
+
+        function loadPlanner() {
+
+            const key =
+                `travelly-current-plan-${user.id}`;
+
+
+            let plan = null;
+
+
+            try {
+
+                plan =
+                    JSON.parse(
+                        localStorage.getItem(
+                            key
+                        )
+                    );
+
+            } catch {
+
+                plan = null;
+
+            }
+
+
+            if (!plan) {
+
+                plannerContainer.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            📅
+                        </div>
+
+                        <h3>
+                            Нет сохранённого плана
+                        </h3>
+
+                        <p class="text-secondary">
+                            Создай маршрут в планировщике.
+                        </p>
+
+                        <a
+                            href="trip-planner.html"
+                            class="btn btn-primary"
+                        >
+                            Открыть планировщик
+                        </a>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            const days =
+                Array.isArray(plan.days)
+                    ? plan.days.length
+                    : 0;
+
+
+            const stops =
+                Array.isArray(plan.days)
+                    ? plan.days.reduce(
+                        (
+                            total,
+                            day
+                        ) =>
+                            total +
+                            (
+                                Array.isArray(day.stops)
+                                    ? day.stops.length
+                                    : 0
+                            ),
+                        0
+                    )
+                    : 0;
+
+
+            plannerContainer.innerHTML = `
+
+                <div class="planner-box">
+
+                    <span class="section-label">
+                        СОХРАНЁННЫЙ ПЛАН
+                    </span>
+
+                    <h3 class="mt-2">
+                        ${escapeHtml(
+                            plan.destination ||
+                            "Путешествие"
+                        )}
+                    </h3>
+
+                    <div class="planner-meta">
+
+                        <span>
+                            👥
+                            ${plan.travellers || 1}
+                            чел.
+                        </span>
+
+                        <span>
+                            📅
+                            ${plan.startDate || "—"}
+                            →
+                            ${plan.endDate || "—"}
+                        </span>
+
+                        <span>
+                            🧭
+                            ${days}
+                            дней
+                        </span>
+
+                        <span>
+                            📍
+                            ${stops}
+                            мест
+                        </span>
+
+                    </div>
+
+                    <a
+                        href="trip-planner.html"
+                        class="btn btn-primary"
+                    >
+                        Продолжить планирование
+                    </a>
+
+                </div>
+
+            `;
+
+        }
+
+
+        function escapeHtml(value) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+            div.textContent =
+                String(value);
+
+            return div.innerHTML;
+
+        }
+
+
+        await loadTrips();
+
+        await loadSaved();
+
+        loadPlanner();
+
+    }
+
+);
+
+</script>
+
+</body>
+
+</html>
