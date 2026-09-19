@@ -1,21 +1,50 @@
 const API_BASE_URL = "http://localhost:3000";
 const SESSION_KEY = "dataforge_session";
+const THEME_KEY = "dataforge_theme";
 const PROTECTED_PAGES = new Set(["dashboard.html", "search.html", "task.html", "workers.html"]);
 
 document.addEventListener("DOMContentLoaded", () => {
+  initTheme();
+  initThemeToggle();
   initApp().catch((error) => {
     console.error("Application bootstrap failed:", error);
     renderBootstrapError(error);
   });
 });
 
+function initTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  const preferred = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  applyTheme(saved || preferred);
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  document.documentElement.setAttribute("data-bs-theme", theme);
+  const btn = document.getElementById("theme-toggle");
+  if (btn) {
+    btn.textContent = theme === "dark" ? "☀ Светлая" : "☾ Тёмная";
+    btn.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+  }
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute("data-theme") || "light";
+  const next = current === "dark" ? "light" : "dark";
+  localStorage.setItem(THEME_KEY, next);
+  applyTheme(next);
+}
+
+function initThemeToggle() {
+  const btn = document.getElementById("theme-toggle");
+  if (btn) {
+    btn.addEventListener("click", toggleTheme);
+  }
+}
+
 async function initApp() {
   const currentPage = getCurrentPage();
   const session = getSession();
-
-  if (currentPage !== "index.html") {
-    await ensureApiIsAvailable(currentPage);
-  }
 
   if (PROTECTED_PAGES.has(currentPage) && !session) {
     redirectTo("login.html");
@@ -532,13 +561,14 @@ function renderWorkersPage(workers, summary) {
 }
 
 async function apiFetch(path, options = {}) {
+  const hasBody = options.body !== undefined && options.body !== null;
   const requestOptions = {
     method: options.method || "GET",
     headers: {
-      "Content-Type": "application/json",
       ...(options.headers || {}),
+      ...(hasBody ? { "Content-Type": "application/json" } : {}),
     },
-    body: options.body,
+    ...(hasBody ? { body: options.body } : {}),
   };
 
   let response;
