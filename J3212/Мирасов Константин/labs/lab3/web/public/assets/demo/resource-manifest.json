@@ -1,0 +1,61 @@
+{
+  "demo": true,
+  "description": "Sample metadata only; no model weights or full dataset are included.",
+  "resources": [
+    {
+      "type": "model",
+      "name": "Sentiment Mini",
+      "task": "text-classification",
+      "framework": "pytorch",
+      "license": "apache-2.0",
+      "sizeBytes": 50331648,
+      "revision": "1.0",
+      "reproducibility": {
+        "environment": "Python 3.12; PyTorch configuration reference",
+        "seed": 42,
+        "steps": [
+          "Read the configuration example.",
+          "Compare the task and labels with this manifest."
+        ]
+      },
+      "labels": [
+        "negative",
+        "positive"
+      ]
+    },
+    {
+      "type": "dataset",
+      "name": "Multilingual Product Reviews for Text Classification",
+      "task": "text-classification",
+      "framework": "none",
+      "license": "cc-by-4.0",
+      "sizeBytes": 33554432,
+      "revision": "1.0",
+      "metrics": {
+        "rows": 1200,
+        "columns": 3,
+        "missingValues": 0
+      },
+      "reproducibility": {
+        "environment": "Python 3.12 standard library",
+        "seed": 42,
+        "steps": [
+          "Read the sample records from this manifest.",
+          "Check the text, language and sentiment fields."
+        ]
+      },
+      "sample": [
+        {
+          "text": "A useful product.",
+          "language": "en",
+          "sentiment": "positive"
+        },
+        {
+          "text": "Un produit peu pratique.",
+          "language": "fr",
+          "sentiment": "negative"
+        }
+      ]
+    }
+  ]
+}
