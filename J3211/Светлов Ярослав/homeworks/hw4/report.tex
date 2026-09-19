@@ -1,0 +1,55 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=20mm]{geometry}
+\usepackage{fontspec}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}[Scale=0.85]
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\hypersetup{hidelinks}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}
+\titlespacing*{\section}{0pt}{10pt}{4pt}
+\sloppy
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+\newcommand{\shot}[2]{\begin{center}\includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{#1}\par\small #2\end{center}}
+\begin{document}
+\begin{center}
+{\small Университет ИТМО · Фронт-энд разработка · 2026}\par
+{\LARGE Домашняя работа № 4}\par
+{\large SVG-спрайт}\par
+Светлов Ярослав, группа J3211
+\end{center}
+\section*{Цель}
+Собрать набор из 3–5 иконок в общий SVG-спрайт и использовать его в приложении. Работа сохранена как независимая копия ДЗ3.
+\section*{Реализация}
+В \texttt{public/sprite.svg} объявлены пять символов: пользователь, поиск, модель, файл и выход. Разметка обращается к ним через внешний элемент use, например \texttt{/sprite.svg\#file}. Фигуры не дублируются в HTML.
+
+Цвет наследуется через currentColor, размер задаёт класс .icon. Иконки следуют светлой и тёмной темам. Они декоративные: используются aria-hidden="true" и focusable="false"; рядом остаются текстовые названия действий.
+\section*{Проверка}
+В Firefox 148 проверены четыре основных экрана в обеих темах, фильтры, сброс и восстановление сессии. Результаты: \texttt{checks/browser.json}.
+
+В Chromium проверено использование всех пяти идентификаторов. На ширине 390 px нет горизонтального переполнения всей страницы, таблицы имеют собственную прокрутку. Девять API-тестов пройдены.
+\section*{Запуск и проверка}
+Требуется Node.js 22.12 или новее. Команды выполняются из папки этой работы.
+\begin{verbatim}
+npm ci
+npm start
+\end{verbatim}
+Открыть \url{http://localhost:3004}. Автотесты: \texttt{npm test}.
+Учебные аккаунты: \texttt{admin@nexus.ai / password} и \texttt{vision@nexus.ai / cv12345}. Данные сохраняются в \texttt{db.local.json}, исходная база \texttt{db.json} не меняется.\section*{Вывод}
+Создан единый спрайт из пяти иконок. Их размер и цвет управляются CSS; иконки не заменяют доступные текстовые подписи.
+
+\clearpage
+\section*{Скриншоты}
+\shot{checks/light.png}{Рисунок 1. Иконки в светлой теме.}
+\shot{checks/dark.png}{Рисунок 2. Иконки в тёмной теме.}
+
+\end{document}
