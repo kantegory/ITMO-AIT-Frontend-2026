@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Личный кабинет — ФинТрекер</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body data-page="dashboard">
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: var(--finance-primary);">
+    <div class="container">
+      <a class="navbar-brand brand-logo" href="index.html">💰 ФинТрекер</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="dashboard.html">Кабинет</a></li>
+          <li class="nav-item"><a class="nav-link" href="search.html">Транзакции</a></li>
+          <li class="nav-item"><a class="nav-link" href="report.html">Отчёты</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Выйти</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="h3 mb-0">Личный кабинет</h1>
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTxModal">+ Транзакция</button>
+    </div>
+
+    <!-- Счета -->
+    <h2 class="h5 text-muted mb-3">Мои счета</h2>
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <div class="card balance-card p-3">
+          <span class="text-muted small">Основная карта</span>
+          <span class="h4 amount-income mb-0">125 400 ₽</span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card balance-card p-3">
+          <span class="text-muted small">Наличные</span>
+          <span class="h4 mb-0">8 200 ₽</span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card balance-card p-3">
+          <span class="text-muted small">Накопления</span>
+          <span class="h4 amount-income mb-0">300 000 ₽</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Последние транзакции -->
+      <div class="col-lg-7">
+        <h2 class="h5 text-muted mb-3">Последние транзакции</h2>
+        <div class="card balance-card">
+          <table class="table table-hover mb-0 align-middle">
+            <thead>
+              <tr><th>Дата</th><th>Категория</th><th>Описание</th><th class="text-end">Сумма</th></tr>
+            </thead>
+            <tbody>
+              <!-- TODO (ЛР2): рендерить из API -->
+              <tr><td>28.06</td><td>Продукты</td><td>Супермаркет</td><td class="text-end amount-expense">−1 250 ₽</td></tr>
+              <tr><td>27.06</td><td>Зарплата</td><td>Аванс</td><td class="text-end amount-income">+60 000 ₽</td></tr>
+              <tr><td>26.06</td><td>Транспорт</td><td>Метро</td><td class="text-end amount-expense">−70 ₽</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Бюджеты -->
+      <div class="col-lg-5">
+        <h2 class="h5 text-muted mb-3">Бюджеты на месяц</h2>
+        <div class="card balance-card p-3">
+          <div class="mb-3">
+            <div class="d-flex justify-content-between small"><span>Продукты</span><span>12 000 / 15 000 ₽</span></div>
+            <div class="progress" role="progressbar"><div class="progress-bar bg-success" style="width:80%"></div></div>
+          </div>
+          <div class="mb-3">
+            <div class="d-flex justify-content-between small"><span>Развлечения</span><span>4 500 / 5 000 ₽</span></div>
+            <div class="progress" role="progressbar"><div class="progress-bar bg-warning" style="width:90%"></div></div>
+          </div>
+          <div>
+            <div class="d-flex justify-content-between small"><span>Транспорт</span><span>3 200 / 3 000 ₽</span></div>
+            <div class="progress" role="progressbar"><div class="progress-bar bg-danger" style="width:100%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Модальное окно добавления транзакции (демонстрация JS/Bootstrap) -->
+  <div class="modal fade" id="addTxModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Новая транзакция</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form class="needs-validation" novalidate>
+            <div class="mb-3">
+              <label class="form-label">Сумма</label>
+              <input type="number" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Категория</label>
+              <select class="form-select">
+                <option>Продукты</option><option>Транспорт</option>
+                <option>Развлечения</option><option>Зарплата</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Дата</label>
+              <input type="date" class="form-control" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+          <button class="btn btn-success">Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
