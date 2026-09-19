@@ -1,0 +1,584 @@
+:root {
+    /* Базовая палитра (Тёмная тема: Deep Space) */
+    --bg-dark: #090a10;
+    --bg-surface: #11141d;
+    --bg-overlay: linear-gradient(rgba(9, 10, 16, 0.92), rgba(9, 10, 16, 0.96));
+    --navbar-bg: rgba(9, 10, 16, 0.8);
+
+    /* Стекло и границы */
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-border-hover: rgba(255, 255, 255, 0.2);
+    --glass-blur: blur(16px);
+    --card-shadow: none;
+
+    /* Текст */
+    --text-main: #f3f5f8;
+    --text-muted: rgba(243, 245, 248, 0.6);
+
+    /* Акценты */
+    --accent-blue: #2c4a75;
+    --accent-blue-light: #6a95cc;
+    --accent-silver: #c8d0db;
+    --accent-gold: #dfb15b;
+
+    /* Свечения */
+    --glow-silver: 0 0 20px rgba(200, 208, 219, 0.12);
+    --glow-gold: 0 0 25px rgba(223, 177, 91, 0.3);
+    --glow-blue: 0 0 25px rgba(44, 74, 117, 0.25);
+
+    /* Шкалы нормативов */
+    --progress-track: rgba(255, 255, 255, 0.1);
+    --progress-bar-1: linear-gradient(90deg, #0284c7, #38bdf8);
+    --progress-bar-2: linear-gradient(90deg, #2563eb, #60a5fa);
+    --progress-bar-3: linear-gradient(90deg, #1d4ed8, #38bdf8);
+
+    /* Элементы форм, таблиц и системные иконки */
+    --input-border: rgba(255, 255, 255, 0.2);
+    --table-border: rgba(255, 255, 255, 0.08);
+    --switch-bg: rgba(255, 255, 255, 0.15);
+    --carousel-caption-bg: rgba(9, 10, 16, 0.75);
+    --carousel-caption-border: rgba(255, 255, 255, 0.12);
+    --calendar-invert: 1;
+    --select-chevron: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    --toggler-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Светлая тема: Orbital Station */
+[data-theme="light"] {
+    --bg-dark: #f4f6fa;
+    --bg-surface: #ffffff;
+    --bg-overlay: linear-gradient(rgba(244, 246, 250, 0.94), rgba(235, 239, 247, 0.97));
+    --navbar-bg: rgba(244, 246, 250, 0.85);
+
+    /* Стекло и тени */
+    --glass-bg: rgba(255, 255, 255, 0.78);
+    --glass-border: rgba(15, 20, 28, 0.08);
+    --glass-border-hover: rgba(15, 20, 28, 0.2);
+    --card-shadow: 0 10px 30px rgba(15, 20, 28, 0.05);
+
+    /* Контрастный темный текст */
+    --text-main: #0f141c;
+    --text-muted: rgba(15, 20, 28, 0.65);
+
+    /* Акценты для светлого фона */
+    --accent-blue: #1c3c66;
+    --accent-blue-light: #205493;
+    --accent-silver: #4a5568;
+    --accent-gold: #9e6c1b;
+
+    /* Мягкие тени */
+    --glow-silver: 0 4px 15px rgba(0, 0, 0, 0.06);
+    --glow-gold: 0 4px 15px rgba(158, 108, 27, 0.15);
+    --glow-blue: 0 4px 15px rgba(32, 84, 147, 0.15);
+
+    /* Шкалы нормативов */
+    --progress-track: rgba(15, 20, 28, 0.09);
+    --progress-bar-1: linear-gradient(90deg, #0284c7, #0ea5e9);
+    --progress-bar-2: linear-gradient(90deg, #1d4ed8, #3b82f6);
+    --progress-bar-3: linear-gradient(90deg, #1e3a8a, #2563eb);
+
+    /* Элементы управления */
+    --input-border: rgba(15, 20, 28, 0.25);
+    --table-border: rgba(15, 20, 28, 0.08);
+    --switch-bg: rgba(15, 20, 28, 0.2);
+    --carousel-caption-bg: rgba(255, 255, 255, 0.85);
+    --carousel-caption-border: rgba(255, 255, 255, 0.5);
+    --calendar-invert: 0;
+    --select-chevron: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%230f141c' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    --toggler-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2815, 20, 28, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Автоматический учет темы системы при отсутствии ручного выбора */
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+        --bg-dark: #f4f6fa;
+        --bg-surface: #ffffff;
+        --bg-overlay: linear-gradient(rgba(244, 246, 250, 0.94), rgba(235, 239, 247, 0.97));
+        --navbar-bg: rgba(244, 246, 250, 0.85);
+        --glass-bg: rgba(255, 255, 255, 0.78);
+        --glass-border: rgba(15, 20, 28, 0.08);
+        --glass-border-hover: rgba(15, 20, 28, 0.2);
+        --card-shadow: 0 10px 30px rgba(15, 20, 28, 0.05);
+        --text-main: #0f141c;
+        --text-muted: rgba(15, 20, 28, 0.65);
+        --accent-blue: #1c3c66;
+        --accent-blue-light: #205493;
+        --accent-silver: #4a5568;
+        --accent-gold: #9e6c1b;
+        --glow-silver: 0 4px 15px rgba(0, 0, 0, 0.06);
+        --glow-gold: 0 4px 15px rgba(158, 108, 27, 0.15);
+        --glow-blue: 0 4px 15px rgba(32, 84, 147, 0.15);
+        --input-border: rgba(15, 20, 28, 0.25);
+        --table-border: rgba(15, 20, 28, 0.08);
+        --progress-track: rgba(15, 20, 28, 0.09);
+        --progress-bar-1: linear-gradient(90deg, #0284c7, #0ea5e9);
+        --progress-bar-2: linear-gradient(90deg, #1d4ed8, #3b82f6);
+        --progress-bar-3: linear-gradient(90deg, #1e3a8a, #2563eb);
+        --switch-bg: rgba(15, 20, 28, 0.2);
+        --carousel-caption-bg: rgba(255, 255, 255, 0.85);
+        --carousel-caption-border: rgba(255, 255, 255, 0.5);
+        --calendar-invert: 0;
+        --select-chevron: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%230f141c' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+        --toggler-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2815, 20, 28, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    line-height: 1.6;
+    background-image: var(--bg-overlay), url('assets/images/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+}
+
+.text-main {
+    color: var(--text-main) !important;
+}
+
+.text-muted-custom {
+    color: var(--text-muted) !important;
+}
+
+.letter-spacing-2 {
+    letter-spacing: 2px;
+}
+
+.fs-7 {
+    font-size: 0.8rem;
+}
+
+/* Контейнеры */
+.custom-container {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+/* Навбар */
+.glass-navbar {
+    background: var(--navbar-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+}
+
+.glass-navbar .navbar-brand {
+    font-size: 1.25rem;
+    color: var(--text-main);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.glass-navbar .nav-link {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    padding: 0.5rem 1rem;
+}
+
+.glass-navbar .nav-link:hover,
+.glass-navbar .nav-link.active {
+    color: var(--text-main);
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.navbar-toggler-icon {
+    background-image: var(--toggler-icon);
+}
+
+/* Кнопки */
+.btn-glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    backdrop-filter: var(--glass-blur);
+    border-radius: 4px;
+    padding: 0.75rem 2rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.btn-glass:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--glass-border-hover);
+    color: var(--text-main);
+    box-shadow: var(--glow-silver);
+}
+
+.btn-accent {
+    background: var(--text-main);
+    border: 1px solid var(--text-main);
+    color: var(--bg-dark);
+    border-radius: 4px;
+    padding: 0.75rem 2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.btn-accent:hover {
+    background: transparent;
+    color: var(--text-main);
+    border-color: var(--text-main);
+    box-shadow: var(--glow-silver);
+}
+
+/* Кнопка переключателя темы */
+.theme-toggle-btn {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-main);
+    backdrop-filter: var(--glass-blur);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.theme-toggle-btn:hover {
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--glow-silver);
+    color: var(--text-main);
+}
+
+/* Главный блок */
+.hero-section {
+    min-height: calc(100vh - 90px);
+    position: relative;
+    padding: 3rem 0;
+}
+
+.hero-title {
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -1px;
+}
+
+.hero-subtitle {
+    color: var(--text-muted);
+    font-weight: 300;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.badge-premium {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+/* Стеклянные панели и инпуты */
+.glass-panel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Адаптивная стеклянная плашка подписи в карусели */
+.carousel-caption-glass {
+    background: var(--carousel-caption-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--carousel-caption-border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+#searchPanel {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glow-premium {
+    box-shadow: var(--glow-silver);
+    border-color: var(--glass-border-hover);
+}
+
+.glow-vip {
+    box-shadow: var(--glow-gold);
+    border-color: var(--accent-gold);
+}
+
+.glass-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--input-border);
+    border-radius: 0;
+    color: var(--text-main);
+    padding: 0.75rem 0;
+    font-weight: 400;
+    transition: all 0.3s ease;
+}
+
+.glass-input:focus {
+    background: transparent;
+    border-color: var(--accent-silver);
+    box-shadow: none;
+    color: var(--text-main);
+}
+
+select.glass-input {
+    appearance: none;
+    background-image: var(--select-chevron);
+    background-repeat: no-repeat;
+    background-position: right 0 center;
+    background-size: 16px 12px;
+    cursor: pointer;
+    padding-right: 1.5rem;
+}
+
+select.glass-input option {
+    background-color: var(--bg-surface);
+    color: var(--text-main);
+}
+
+input[type="date"].glass-input::-webkit-calendar-picker-indicator {
+    filter: invert(var(--calendar-invert));
+    opacity: 0.75;
+    cursor: pointer;
+}
+
+.form-label {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+}
+
+/* Блоки планет */
+.planet-wrapper {
+    position: relative;
+    height: 100%;
+    min-height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.planet-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-width: 100%;
+    height: auto;
+    max-height: 420px;
+    object-fit: contain;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+    filter: drop-shadow(0 0 35px rgba(0, 0, 0, 0.15)) blur(16px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.planet-img.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    filter: drop-shadow(0 0 35px rgba(0, 0, 0, 0.15)) blur(0px);
+}
+
+.safety-card {
+    position: absolute;
+    bottom: 2%;
+    right: 2%;
+    z-index: 2;
+    min-width: 300px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.safety-list li {
+    font-size: 0.85rem;
+}
+
+/* Bento Grid карточки дашборда */
+.bento-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100%;
+    box-shadow: var(--card-shadow);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bento-card:hover {
+    border-color: var(--glass-border-hover);
+}
+
+/* Бейджи */
+.badge-silver {
+    border: 1px solid var(--accent-silver);
+    color: var(--accent-silver);
+    background: transparent;
+}
+
+.badge-gold {
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+    background: transparent;
+}
+
+.badge-blue {
+    border: 1px solid var(--accent-blue-light);
+    color: var(--accent-blue-light);
+    background: transparent;
+}
+
+/* Прозрачная таблица */
+.table-transparent {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text-main);
+    --bs-table-border-color: var(--table-border);
+}
+
+.table-transparent th,
+.table-transparent td {
+    background-color: transparent;
+}
+
+/* Тумблеры */
+.form-switch .form-check-input {
+    width: 2.4em;
+    height: 1.2em;
+    cursor: pointer;
+    background-color: var(--switch-bg);
+    border: 1px solid var(--glass-border);
+}
+
+.form-switch .form-check-input:checked {
+    background-color: var(--accent-blue-light);
+    border-color: var(--accent-blue-light);
+}
+
+/* Дорожка прогресс-бара */
+.progress {
+    background-color: var(--progress-track) !important;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* Оттенки синего для нормативов */
+.progress-bar-blue-1 {
+    background: var(--progress-bar-1) !important;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
+}
+
+.progress-bar-blue-2 {
+    background: var(--progress-bar-2) !important;
+    box-shadow: 0 0 10px rgba(96, 165, 250, 0.35);
+}
+
+.progress-bar-blue-3 {
+    background: var(--progress-bar-3) !important;
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.35);
+}
+
+/* Лаконичная кнопка профиля в навбаре */
+.profile-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    background: var(--glass-bg);
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.profile-nav-btn:hover {
+    border-color: var(--glass-border-hover);
+    color: var(--text-main);
+    box-shadow: var(--glow-silver);
+}
+
+/* Доступность */
+:focus-visible {
+    outline: 2px solid var(--accent-silver) !important;
+    outline-offset: 3px !important;
+}
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+select:focus:not(:focus-visible) {
+    outline: none !important;
+}
+
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
