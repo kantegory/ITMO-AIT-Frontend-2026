@@ -1,0 +1,61 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=20mm]{geometry}
+\usepackage{fontspec}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}[Scale=0.85]
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\hypersetup{hidelinks}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}
+\titlespacing*{\section}{0pt}{10pt}{4pt}
+\sloppy
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+\newcommand{\shot}[2]{\begin{center}\includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{#1}\par\small #2\end{center}}
+\begin{document}
+\begin{center}
+{\small Университет ИТМО · Фронт-энд разработка · 2026}\par
+{\LARGE Лабораторная работа № 2}\par
+{\large ML-платформа с JSON API}\par
+Светлов Ярослав, группа J3211
+\end{center}
+\section*{Цель и технологии}
+Подключить интерфейс ML-платформы к серверу данных. Использованы HTML, Bootstrap, обычный JavaScript, Chart.js, JSON Server 0.17.4 и json-server-auth 2.1.0. Vue не используется.
+\section*{Реализованные возможности}
+\begin{itemize}
+\item Регистрация, вход, восстановление сессии после обновления страницы и выход. Недействительный токен возвращает пользователя на вход.
+\item Кабинет показывает профиль, собственные эксперименты, модели и артефакты.
+\item Серверный поиск по дате, минимальной accuracy, максимальной latency и тексту; сброс и пустая выдача.
+\item Детали по ID: метрики, график, логи и скачивание JSON/TXT.
+\item Добавление версии со связью со своим экспериментом; статусы Staging, Production, Archived сохраняются сервером.
+\end{itemize}
+
+\section*{Организация кода и доступ}
+Статика находится в \texttt{public}, сервер запускается через \texttt{server.js}. Один помощник fetch добавляет Bearer-токен и обрабатывает ответы. Интерфейс сообщает о загрузке, ошибках и пустых данных.
+
+Используются маршруты \texttt{/register}, \texttt{/login}, \texttt{/users/:id}, \texttt{/experiments}, \texttt{/experiments/:id}, \texttt{/models}. Сервер разрешает только свой профиль и изменение собственных моделей. Фильтры передаются как \texttt{date}, \texttt{accuracy\_gte}, \texttt{latencyMs\_lte}, \texttt{q}.
+\section*{Результаты проверки}
+19.09.2026 выполнен повторный проход в Firefox 148.0.2 и Chromium 146.0.7680.153: 26 сценариев Firefox и 6 дополнительных сценариев Chromium пройдены. Проверены регистрация, повторный email, неверный пароль, восстановление и завершение сессии, отдельные и совместные фильтры, сброс и пустой результат, четыре разных эксперимента, неизвестный ID, скачивание JSON/TXT, создание версии и смена статусов с перезагрузкой. Проверены недействительный токен, недоступный API и узкие окна (Firefox 500 px, Chromium 390 px). Девять API-тестов пройдены; среди них проверки отсутствия токена, чужой модели, содержимого файлов и сохранения на диск.
+\section*{Запуск и проверка}
+Требуется Node.js 22.12 или новее. Команды выполняются из папки этой работы.
+\begin{verbatim}
+npm ci
+npm start
+\end{verbatim}
+Открыть \url{http://localhost:3000}. Автотесты: \texttt{npm test}.
+Учебные аккаунты: \texttt{admin@nexus.ai / password} и \texttt{vision@nexus.ai / cv12345}. Данные сохраняются в \texttt{db.local.json}, исходная база \texttt{db.json} не меняется.\section*{Вывод и ограничения}
+Обучение и облачное развёртывание не выполняются: статус Production имитирует деплой. Артефакты содержат демонстрационные метрики и логи, а не веса моделей. JSON Server с json-server-auth предназначен только для localhost и учебных данных; нельзя использовать реальные пароли.
+
+\section*{Скриншоты}
+\shot{checks/lab2-experiment.png}{Рисунок 1. Метрики и график выбранного эксперимента.}
+\shot{checks/lab2-combined-filters.png}{Рисунок 2. Совместная серверная фильтрация.}
+
+\end{document}
