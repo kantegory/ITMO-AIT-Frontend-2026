@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Личный кабинет пользователя приложения «Маршрут»">
+  <title>Личный кабинет — Маршрут</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <script src="js/theme.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Перейти к личному кабинету</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Основная навигация">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><span class="brand-mark"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#icon-compass"></use></svg></span>Маршрут</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Открыть меню"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Направления</a></li>
+          <li class="nav-item"><a class="nav-link" href="trip.html">Моя поездка</a></li>
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="profile.html">Кабинет</a></li>
+          <li class="nav-item ms-lg-2"><button class="btn btn-outline-light btn-sm theme-toggle" type="button" data-theme-toggle><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#icon-moon"></use></svg><span data-theme-label>Тёмная тема</span></button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="py-5" id="main-content" tabindex="-1">
+    <div class="container" id="profileContent">
+      <section class="content-card bg-white p-4 mb-4" aria-labelledby="profileName">
+        <div class="d-flex flex-column flex-md-row align-items-md-center gap-4">
+          <div class="profile-avatar" id="profileAvatar" aria-hidden="true">—</div>
+          <div class="flex-grow-1">
+            <h1 class="h3 mb-1" id="profileName">Загрузка профиля…</h1>
+            <p class="text-secondary mb-0" id="profileEmail"></p>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editProfileModal" aria-label="Редактировать профиль">Редактировать</button>
+            <button class="btn btn-outline-danger" type="button" data-logout aria-label="Выйти из аккаунта">Выйти</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="row g-3 mb-5">
+        <div class="col-md-4"><div class="card stat-card"><div class="card-body"><div class="text-secondary">Сохранено</div><div class="fs-3 fw-bold" id="savedCount">—</div></div></div></div>
+        <div class="col-md-4"><div class="card stat-card"><div class="card-body"><div class="text-secondary">Посещено</div><div class="fs-3 fw-bold">6 городов</div></div></div></div>
+        <div class="col-md-4"><div class="card stat-card"><div class="card-body"><div class="text-secondary">Следующая поездка</div><div class="fs-3 fw-bold">12 октября</div></div></div></div>
+      </div>
+
+      <section aria-labelledby="savedRoutesTitle">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h4 mb-0" id="savedRoutesTitle">Сохранённые маршруты</h2>
+          <a class="btn btn-sm btn-travel" href="index.html">Найти ещё</a>
+        </div>
+        <div class="row g-4" id="savedRoutes" aria-live="polite" aria-busy="true">
+          <div class="col-12"><div class="api-status" role="status">Загружаем сохранённые маршруты…</div></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header"><h2 class="modal-title fs-5" id="editProfileTitle">Редактирование профиля</h2><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Закрыть"></button></div>
+        <div class="modal-body">
+          <label class="form-label" for="profileCity">Город</label>
+          <input class="form-control" id="profileCity" name="city" value="Санкт-Петербург" autocomplete="address-level2">
+        </div>
+        <div class="modal-footer"><button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Отмена</button><button class="btn btn-travel" type="button" data-bs-dismiss="modal">Сохранить</button></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.20.0/dist/axios.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
