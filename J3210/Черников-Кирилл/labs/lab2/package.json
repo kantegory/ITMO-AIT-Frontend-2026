@@ -1,0 +1,15 @@
+{
+  "name": "dataforge-lab2",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "api": "json-server --watch server/db.json --port 3000 --delay 350",
+    "serve": "http-server . -p 5500 -c-1",
+    "dev": "concurrently \"npm run api\" \"npm run serve\""
+  },
+  "dependencies": {
+    "concurrently": "latest",
+    "http-server": "latest",
+    "json-server": "latest"
+  }
+}
