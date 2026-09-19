@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Discover AI models and datasets on AxonHub." />
+    <title>Explore resources · AxonHub</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link href="assets/css/base.css" rel="stylesheet" />
+    <link href="assets/css/catalog.css" rel="stylesheet" />
+    <link rel="icon" href="assets/icons/axon-mark.svg" type="image/svg+xml" />
+    <script src="assets/js/explore.js" defer></script>
+  </head>
+  <body>
+    <header class="axon-header">
+      <div class="container-fluid axon-container axon-header-row">
+        <a class="axon-brand" href="index.html"
+          ><img
+            src="assets/icons/axon-mark.svg"
+            width="34"
+            height="34"
+            alt=""
+            aria-hidden="true"
+          />AxonHub</a
+        >
+        <nav class="axon-nav" aria-label="Main navigation">
+          <a class="axon-nav-link" href="index.html" aria-current="page">Explore</a>
+          <a class="axon-nav-link" href="profile.html">Your library</a>
+        </nav>
+        <div class="axon-account-nav">
+          <a class="axon-nav-link" href="login.html">Log in</a>
+          <a class="btn btn-primary" href="register.html">Sign up</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container-fluid axon-container">
+      <div class="axon-page-header axon-explore-intro">
+        <div>
+          <span class="axon-eyebrow">The resource library</span>
+          <h1>Find your next starting point.</h1>
+          <p
+            >Explore models and datasets. Compare the details, inspect the examples, and make
+            something of your own.</p
+          >
+        </div>
+        <img
+          class="axon-library-mark"
+          src="assets/icons/resource-network.svg"
+          width="150"
+          height="120"
+          alt=""
+          aria-hidden="true"
+        />
+      </div>
+
+      <form id="resource-filters" class="axon-search" method="get">
+        <div>
+          <label for="search" class="form-label">Search resources</label>
+          <div class="axon-search-field">
+            <img
+              class="axon-icon"
+              src="assets/icons/search.svg"
+              width="18"
+              height="18"
+              alt=""
+              aria-hidden="true"
+            />
+            <input
+              id="search"
+              name="q"
+              type="search"
+              class="form-control"
+              placeholder="Search by name or description"
+            />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Apply filters</button>
+        <button type="reset" class="btn btn-outline-secondary">Reset</button>
+      </form>
+
+      <div class="axon-explore-layout">
+        <aside aria-label="Resource filters">
+          <details id="filter-panel" class="axon-filter-panel" open>
+            <summary
+              ><img
+                class="axon-icon"
+                src="assets/icons/sliders.svg"
+                width="18"
+                height="18"
+                alt=""
+                aria-hidden="true"
+              />Filters <span id="filter-count">(0)</span></summary
+            >
+            <div class="axon-filter-fields">
+              <label for="type">Type</label>
+              <select id="type" name="type" form="resource-filters" class="form-select">
+                <option value="">All types</option>
+                <option value="model">Models</option>
+                <option value="dataset">Datasets</option>
+              </select>
+              <label for="task">Task</label>
+              <select id="task" name="task" form="resource-filters" class="form-select">
+                <option value="">All tasks</option>
+                <option value="text-classification">Text classification</option>
+                <option value="image-classification">Image classification</option>
+                <option value="translation">Translation</option>
+              </select>
+              <label for="license">License</label>
+              <select id="license" name="license" form="resource-filters" class="form-select">
+                <option value="">All licenses</option>
+                <option value="apache-2.0">Apache-2.0</option>
+                <option value="mit">MIT</option>
+                <option value="cc-by-4.0">CC-BY-4.0</option>
+              </select>
+              <label for="size">Size</label>
+              <select id="size" name="size" form="resource-filters" class="form-select">
+                <option value="">All sizes</option>
+                <option value="small">Under 100 MiB</option>
+                <option value="medium">100 MiB to &lt;1 GiB</option>
+                <option value="large">1 GiB and above</option>
+              </select>
+              <label for="framework">Framework</label>
+              <select id="framework" name="framework" form="resource-filters" class="form-select">
+                <option value="">All frameworks</option>
+                <option value="pytorch">PyTorch</option>
+                <option value="tensorflow">TensorFlow</option>
+                <option value="scikit-learn">scikit-learn</option>
+                <option value="none">Not applicable</option>
+              </select>
+            </div>
+          </details>
+        </aside>
+        <div class="axon-results">
+          <div class="axon-results-heading">
+            <h2>Explore resources</h2>
+            <p id="result-count" role="status">4 resources</p>
+          </div>
+          <p id="empty-results" class="axon-empty-state" hidden
+            >No resources match your filters. Try another search or Reset.</p
+          >
+          <ul class="axon-resource-list">
+            <li
+              class="axon-resource-row"
+              data-type="model"
+              data-task="text-classification"
+              data-license="apache-2.0"
+              data-framework="pytorch"
+              data-size-bytes="50331648"
+            >
+              <div class="axon-resource-heading">
+                <div class="axon-resource-title">
+                  <span class="axon-resource-tile"
+                    ><img
+                      class="axon-icon"
+                      src="assets/icons/box.svg"
+                      width="18"
+                      height="18"
+                      alt=""
+                      aria-hidden="true"
+                  /></span>
+                  <div>
+                    <span class="axon-resource-type">Model</span>
+                    <h3><a href="model.html">Sentiment Mini</a></h3>
+                  </div>
+                </div>
+                <span class="axon-resource-stars"
+                  ><img
+                    class="axon-icon"
+                    src="assets/icons/star.svg"
+                    width="18"
+                    height="18"
+                    alt=""
+                    aria-hidden="true"
+                  />12 stars</span
+                >
+              </div>
+              <p>Compact sentiment classification example for short English reviews.</p>
+              <dl class="axon-resource-metadata">
+                <div><dt>Task</dt><dd>Text classification</dd></div>
+                <div><dt>Framework</dt><dd>PyTorch</dd></div>
+                <div><dt>License</dt><dd>Apache-2.0</dd></div>
+                <div><dt>Size</dt><dd>48 MiB</dd></div>
+              </dl>
+            </li>
+            <li
+              class="axon-resource-row"
+              data-type="dataset"
+              data-task="text-classification"
+              data-license="cc-by-4.0"
+              data-framework="none"
+              data-size-bytes="12582912"
+            >
+              <div class="axon-resource-heading">
+                <div class="axon-resource-title">
+                  <span class="axon-resource-tile axon-resource-tile--dataset"
+                    ><img
+                      class="axon-icon"
+                      src="assets/icons/database.svg"
+                      width="18"
+                      height="18"
+                      alt=""
+                      aria-hidden="true"
+                  /></span>
+                  <div>
+                    <span class="axon-resource-type axon-resource-type--dataset">Dataset</span>
+                    <h3>Reviews Sample</h3>
+                  </div>
+                </div>
+                <span class="axon-resource-stars"
+                  ><img
+                    class="axon-icon"
+                    src="assets/icons/star.svg"
+                    width="18"
+                    height="18"
+                    alt=""
+                    aria-hidden="true"
+                  />8 stars</span
+                >
+              </div>
+              <p>A small collection of labelled reviews for sentiment classification practice.</p>
+              <dl class="axon-resource-metadata">
+                <div><dt>Task</dt><dd>Text classification</dd></div>
+                <div><dt>Framework</dt><dd>Not applicable</dd></div>
+                <div><dt>License</dt><dd>CC-BY-4.0</dd></div>
+                <div><dt>Size</dt><dd>12 MiB</dd></div>
+              </dl>
+            </li>
+            <li
+              class="axon-resource-row"
+              data-type="model"
+              data-task="image-classification"
+              data-license="mit"
+              data-framework="tensorflow"
+              data-size-bytes="188743680"
+            >
+              <div class="axon-resource-heading">
+                <div class="axon-resource-title">
+                  <span class="axon-resource-tile"
+                    ><img
+                      class="axon-icon"
+                      src="assets/icons/box.svg"
+                      width="18"
+                      height="18"
+                      alt=""
+                      aria-hidden="true"
+                  /></span>
+                  <div>
+                    <span class="axon-resource-type">Model</span>
+                    <h3>Image Baseline</h3>
+                  </div>
+                </div>
+                <span class="axon-resource-stars"
+                  ><img
+                    class="axon-icon"
+                    src="assets/icons/star.svg"
+                    width="18"
+                    height="18"
+                    alt=""
+                    aria-hidden="true"
+                  />5 stars</span
+                >
+              </div>
+              <p>An image classification baseline for comparing simple training configurations.</p>
+              <dl class="axon-resource-metadata">
+                <div><dt>Task</dt><dd>Image classification</dd></div>
+                <div><dt>Framework</dt><dd>TensorFlow</dd></div>
+                <div><dt>License</dt><dd>MIT</dd></div>
+                <div><dt>Size</dt><dd>180 MiB</dd></div>
+              </dl>
+            </li>
+            <li
+              class="axon-resource-row"
+              data-type="dataset"
+              data-task="text-classification"
+              data-license="cc-by-4.0"
+              data-framework="none"
+              data-size-bytes="33554432"
+            >
+              <div class="axon-resource-heading">
+                <div class="axon-resource-title">
+                  <span class="axon-resource-tile axon-resource-tile--dataset"
+                    ><img
+                      class="axon-icon"
+                      src="assets/icons/database.svg"
+                      width="18"
+                      height="18"
+                      alt=""
+                      aria-hidden="true"
+                  /></span>
+                  <div>
+                    <span class="axon-resource-type axon-resource-type--dataset">Dataset</span>
+                    <h3
+                      ><a href="dataset.html"
+                        >Multilingual Product Reviews for Text Classification</a
+                      ></h3
+                    >
+                  </div>
+                </div>
+                <span class="axon-resource-stars"
+                  ><img
+                    class="axon-icon"
+                    src="assets/icons/star.svg"
+                    width="18"
+                    height="18"
+                    alt=""
+                    aria-hidden="true"
+                  />0 stars</span
+                >
+              </div>
+              <p
+                >Product review examples in several languages for exploring classification tasks.</p
+              >
+              <dl class="axon-resource-metadata">
+                <div><dt>Task</dt><dd>Text classification</dd></div>
+                <div><dt>Framework</dt><dd>Not applicable</dd></div>
+                <div><dt>License</dt><dd>CC-BY-4.0</dd></div>
+                <div><dt>Size</dt><dd>32 MiB</dd></div>
+              </dl>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </main>
+    <footer class="axon-footer">
+      <div class="container-fluid axon-container">
+        <p>AxonHub <span aria-hidden="true">/</span> Models, datasets &amp; ideas.</p>
+        <p>Learning preview · Sample resources only</p>
+      </div>
+    </footer>
+  </body>
+</html>
