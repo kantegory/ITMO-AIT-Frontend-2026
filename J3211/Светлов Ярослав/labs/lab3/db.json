@@ -1,0 +1,270 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Светлов Ярослав",
+      "email": "admin@nexus.ai",
+      "password": "$2a$10$7S5iv.3LDUFC88K1E2BCfOppv1VPgeDL/JMGg61u/ea5w50LINZmu"
+    },
+    {
+      "id": 2,
+      "name": "Artem Sokolov",
+      "email": "vision@nexus.ai",
+      "password": "$2a$10$ofDJ3Na8qPHVksf1Gqm03uTzpgoSN9eFgSihjFjTmNtBWWU3Ohs6q"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "exp-1337",
+      "name": "BERT-Transformer-v2",
+      "tag": "production",
+      "date": "2026-04-02",
+      "accuracy": 0.94,
+      "latencyMs": 67,
+      "finalLoss": 0.052,
+      "status": "completed",
+      "framework": "PyTorch",
+      "dataset": "customer-support-ru-v4",
+      "description": "Финальный production-run модели для классификации пользовательских обращений. Эксперимент использует дообучение на русскоязычном support-датасете и публикует артефакты в registry.",
+      "metrics": {
+        "labels": [
+          "Epoch 1",
+          "Epoch 2",
+          "Epoch 3",
+          "Epoch 4",
+          "Epoch 5"
+        ],
+        "accuracy": [
+          0.42,
+          0.57,
+          0.71,
+          0.84,
+          0.94
+        ],
+        "loss": [
+          1.18,
+          0.84,
+          0.43,
+          0.19,
+          0.052
+        ]
+      },
+      "logs": [
+        "[INFO] Loading customer-support-ru-v4 dataset",
+        "[INFO] Warmup steps: 200",
+        "[INFO] Epoch 3 accuracy improved to 0.71",
+        "[WARN] GPU memory reached 81%",
+        "[INFO] Final validation accuracy: 0.94",
+        "[INFO] Publishing model to registry stage=Production"
+      ],
+      "userId": 1,
+      "artifacts": [
+        {
+          "name": "exp-1337-metrics.json",
+          "url": "/artifacts/exp-1337-metrics.json",
+          "size": 233
+        },
+        {
+          "name": "exp-1337-logs.txt",
+          "url": "/artifacts/exp-1337-logs.txt",
+          "size": 234
+        }
+      ]
+    },
+    {
+      "id": "exp-1308",
+      "name": "ResNet-50-Retail",
+      "tag": "computer-vision",
+      "date": "2026-04-01",
+      "accuracy": 0.89,
+      "latencyMs": 81,
+      "finalLoss": 0.11,
+      "status": "completed",
+      "framework": "PyTorch",
+      "dataset": "retail-shelf-2026",
+      "description": "Эксперимент по детекции товарных позиций на полке. Используется батчевый inference для последующего деплоя в vision-сервис.",
+      "metrics": {
+        "labels": [
+          "Epoch 1",
+          "Epoch 2",
+          "Epoch 3",
+          "Epoch 4",
+          "Epoch 5"
+        ],
+        "accuracy": [
+          0.48,
+          0.62,
+          0.77,
+          0.84,
+          0.89
+        ],
+        "loss": [
+          1.01,
+          0.72,
+          0.36,
+          0.21,
+          0.11
+        ]
+      },
+      "logs": [
+        "[INFO] Starting retail shelf fine-tuning",
+        "[INFO] Augmentations: rotate, crop, blur",
+        "[INFO] Epoch 4 latency stabilized at 81ms",
+        "[INFO] Validation mAP proxy reached 0.89",
+        "[INFO] Exported model to ONNX"
+      ],
+      "userId": 2,
+      "artifacts": [
+        {
+          "name": "exp-1308-metrics.json",
+          "url": "/artifacts/exp-1308-metrics.json",
+          "size": 232
+        },
+        {
+          "name": "exp-1308-logs.txt",
+          "url": "/artifacts/exp-1308-logs.txt",
+          "size": 195
+        }
+      ]
+    },
+    {
+      "id": "exp-1285",
+      "name": "LoRA-Ranker-AB",
+      "tag": "ab-test",
+      "date": "2026-03-31",
+      "accuracy": 0.91,
+      "latencyMs": 54,
+      "finalLoss": 0.064,
+      "status": "completed",
+      "framework": "TensorFlow",
+      "dataset": "ranking-clicks-v2",
+      "description": "A/B эксперимент ранжирования каталога с LoRA-адаптацией. Отдельно сохраняются артефакты сравнения online-метрик и офлайн-валидатора.",
+      "metrics": {
+        "labels": [
+          "Epoch 1",
+          "Epoch 2",
+          "Epoch 3",
+          "Epoch 4"
+        ],
+        "accuracy": [
+          0.55,
+          0.71,
+          0.83,
+          0.91
+        ],
+        "loss": [
+          0.82,
+          0.51,
+          0.19,
+          0.064
+        ]
+      },
+      "logs": [
+        "[INFO] Loading ranking-clicks-v2",
+        "[INFO] LoRA rank=16 alpha=32",
+        "[INFO] AB split confirmed",
+        "[INFO] Final offline accuracy: 0.91",
+        "[INFO] Experiment marked ready for staging"
+      ],
+      "userId": 1,
+      "artifacts": [
+        {
+          "name": "exp-1285-metrics.json",
+          "url": "/artifacts/exp-1285-metrics.json",
+          "size": 198
+        },
+        {
+          "name": "exp-1285-logs.txt",
+          "url": "/artifacts/exp-1285-logs.txt",
+          "size": 167
+        }
+      ]
+    },
+    {
+      "id": "exp-1212",
+      "name": "Anomaly-Detector-GPU",
+      "tag": "monitoring",
+      "date": "2026-03-30",
+      "accuracy": 0.87,
+      "latencyMs": 43,
+      "finalLoss": 0.082,
+      "status": "completed",
+      "framework": "XGBoost",
+      "dataset": "cluster-metrics-hourly",
+      "description": "Модель для обнаружения аномалий в телеметрии GPU-кластера. Результаты используются в системе алертинга и capacity planning.",
+      "metrics": {
+        "labels": [
+          "Fold 1",
+          "Fold 2",
+          "Fold 3",
+          "Fold 4"
+        ],
+        "accuracy": [
+          0.78,
+          0.82,
+          0.85,
+          0.87
+        ],
+        "loss": [
+          0.31,
+          0.22,
+          0.14,
+          0.082
+        ]
+      },
+      "logs": [
+        "[INFO] Reading cluster-metrics-hourly",
+        "[INFO] Cross-validation started",
+        "[INFO] Fold 4 anomaly precision improved",
+        "[INFO] Exported anomaly detector to monitoring bucket"
+      ],
+      "userId": 2,
+      "artifacts": [
+        {
+          "name": "exp-1212-metrics.json",
+          "url": "/artifacts/exp-1212-metrics.json",
+          "size": 194
+        },
+        {
+          "name": "exp-1212-logs.txt",
+          "url": "/artifacts/exp-1212-logs.txt",
+          "size": 165
+        }
+      ]
+    }
+  ],
+  "models": [
+    {
+      "id": 1,
+      "name": "NLP-Transformer",
+      "version": "1.5.2",
+      "stage": "Production",
+      "userId": 1,
+      "linkedExperimentId": "exp-1337"
+    },
+    {
+      "id": 2,
+      "name": "NLP-Transformer",
+      "version": "1.4.0",
+      "stage": "Archived",
+      "userId": 1,
+      "linkedExperimentId": "exp-1337"
+    },
+    {
+      "id": 3,
+      "name": "Retail-Vision",
+      "version": "2.1.0",
+      "stage": "Archived",
+      "userId": 2,
+      "linkedExperimentId": "exp-1308"
+    },
+    {
+      "id": 4,
+      "name": "Ranker-LoRA",
+      "version": "0.9.0",
+      "stage": "Staging",
+      "userId": 1,
+      "linkedExperimentId": "exp-1285"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=20mm]{geometry}
+\usepackage{fontspec}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}[Scale=0.85]
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\hypersetup{hidelinks}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}
+\titlespacing*{\section}{0pt}{10pt}{4pt}
+\sloppy
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+\newcommand{\shot}[2]{\begin{center}\includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{#1}\par\small #2\end{center}}
+\begin{document}
+\begin{center}
+{\small Университет ИТМО · Фронт-энд разработка · 2026}\par
+{\LARGE Лабораторная работа № 3}\par
+{\large ML-платформа на Vue}\par
+Светлов Ярослав, группа J3211
+\end{center}
+\section*{Цель и технологии}
+Перенести приложение ЛР2 на Vue 3, сохранив работу с API. Использованы Vite, Vue Router, Axios, Bootstrap, Chart.js и JSON Server с авторизацией. Сохранены темы и SVG-спрайт из домашних работ.
+\section*{Соответствие требованиям}
+\begin{itemize}
+\item Vue Router: вход, регистрация, кабинет, поиск, эксперимент по ID, реестр моделей и неизвестный маршрут. Переходы защищены проверкой сессии.
+\item Общий экземпляр Axios передаёт токен. Ответ 401 очищает сессию и возвращает на страницу входа.
+\item Компоненты AppNav, ExperimentTable, ModelTable, ArtifactList, MetricsChart, RequestState и SvgIcon выделяют повторяющиеся части интерфейса.
+\item Composable useAuth хранит и восстанавливает сессию. useRequest управляет загрузкой и ошибками, не применяет устаревшие ответы.
+\item График создаётся при монтировании компонента и уничтожается при уходе со страницы. Проверки владельца выполняются не только интерфейсом, но и сервером.
+\end{itemize}
+
+\section*{Результаты проверки}
+19.09.2026 выполнен повторный проход в Firefox 148.0.2 и Chromium 146.0.7680.153: 26 сценариев Firefox и 6 дополнительных сценариев Chromium пройдены. Проверены регистрация, повторный email, неверный пароль, восстановление и завершение сессии, отдельные и совместные фильтры, сброс и пустой результат, четыре разных эксперимента, неизвестный ID, скачивание JSON/TXT, создание версии и смена статусов с перезагрузкой. Проверены недействительный токен, недоступный API и узкие окна (Firefox 500 px, Chromium 390 px). Дополнительно проверены неизвестный маршрут, смена системной темы вместе с графиком и сохранение введённых данных формы после сбоя API. Установка, сборка и девять API-тестов проходят.
+\section*{Запуск и проверка}
+Требуется Node.js 22.12 или новее. Команды выполняются из папки этой работы.
+\begin{verbatim}
+npm ci
+npm run api
+\end{verbatim}
+Во втором терминале из той же папки:
+\begin{verbatim}
+npm start
+\end{verbatim}
+Открыть \url{http://localhost:8086}. Автотесты: \texttt{npm test}. Сборка: \texttt{npm run build}; просмотр сборки: \texttt{npm run preview} вместо dev-сервера. API должен оставаться запущенным.
+ API: \url{http://localhost:3006}. Учебные аккаунты: \texttt{admin@nexus.ai / password} и \texttt{vision@nexus.ai / cv12345}. Данные сохраняются в \texttt{db.local.json}, исходная база \texttt{db.json} не меняется.\section*{Вывод и ограничения}
+Функции платформы сохранены при переходе к компонентам и маршрутам Vue. Обучение и облачное развёртывание не выполняются: статус Production имитирует деплой. Артефакты содержат демонстрационные метрики и логи, а не веса моделей. JSON Server с json-server-auth предназначен только для localhost и учебных данных; нельзя использовать реальные пароли.
+
+\section*{Скриншоты}
+\shot{checks/light.png}{Рисунок 1. Эксперимент и график в светлой теме.}
+\shot{checks/dark.png}{Рисунок 2. Тот же интерфейс в тёмной теме.}
+
+\end{document}
