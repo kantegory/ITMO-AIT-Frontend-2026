@@ -1,0 +1,266 @@
+:root {
+  --brand-color: #c2872a;
+  --brand-color-dark: #9c6a1c;
+  --plum: #7a2f6e;
+  --plum-dark: #34182f;
+  --gold-glow: #f0b94a;
+  --gold-glow-dark: #dba036;
+  --surface-muted: #faf3ea;
+  --radius-card: 1.25rem;
+}
+
+body {
+  background-color: var(--surface-muted);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  color: var(--plum) !important;
+}
+
+.btn-brand {
+  background-color: var(--gold-glow);
+  border-color: var(--gold-glow);
+  color: var(--plum-dark);
+}
+
+.btn-brand:hover,
+.btn-brand:focus {
+  background-color: var(--gold-glow-dark);
+  border-color: var(--gold-glow-dark);
+  color: var(--plum-dark);
+}
+
+.hero {
+  background:
+    radial-gradient(60% 70% at 85% 12%, rgba(240, 185, 74, 0.85), transparent 60%),
+    radial-gradient(60% 70% at 15% 100%, rgba(240, 185, 74, 0.85), transparent 60%),
+    linear-gradient(160deg, var(--plum), var(--plum-dark));
+  color: #fff;
+  padding: 4rem 0;
+}
+
+.hero__title {
+  font-weight: 700;
+}
+
+/* Карточка мероприятия — BEM: блок event-card */
+.event-card {
+  border: none;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  height: 100%;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Обёртка изображения — заполняет пустые поля размытой копией той же картинки,
+   а не плоским цветом, когда исходное фото не совпадает по пропорциям с карточкой */
+.event-card__image-wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+}
+
+.event-card__image-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-size: cover;
+  background-position: center;
+  filter: blur(18px) brightness(0.85) saturate(1.1);
+  transform: scale(1.2);
+}
+
+.event-card__image {
+  position: relative;
+  z-index: 1;
+  display: block;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.event-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Баннер на странице мероприятия — та же идея, что и у карточки:
+   не растягиваться в гигантский квадрат на всю ширину колонки, а держать
+   форму широкого баннера с размытой подложкой вместо обрезки/пустоты */
+.event-hero {
+  position: relative;
+  aspect-ratio: 21 / 9;
+  max-height: 380px;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background-size: cover;
+  background-position: center;
+}
+
+.event-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-size: cover;
+  background-position: center;
+  filter: blur(24px) brightness(0.85) saturate(1.1);
+  transform: scale(1.2);
+}
+
+.event-hero__image {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.event-card__title {
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.event-card__meta {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.event-card__footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.event-card__footer .fw-semibold {
+  color: var(--brand-color-dark);
+}
+
+/* Карточка отзыва — блок review-card */
+.review-card {
+  border-radius: var(--radius-card);
+  background: #fff;
+  padding: 1rem 1.25rem;
+}
+
+.review-card__author {
+  font-weight: 600;
+}
+
+.review-card__rating {
+  color: #f5b301;
+  letter-spacing: 1px;
+}
+
+/* Схема зала — плейсхолдер venue-map */
+.venue-map {
+  border: 2px dashed #d8b98f;
+  border-radius: var(--radius-card);
+  background: #f6ece0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  color: var(--plum);
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Билет в личном кабинете — блок ticket-row */
+.ticket-row__status--active {
+  color: #198754;
+}
+
+.ticket-row__status--refunded {
+  color: #dc3545;
+}
+
+.ticket-row__status--used {
+  color: #6c757d;
+}
+
+.auth-card {
+  max-width: 420px;
+  margin: 3rem auto;
+  border-radius: var(--radius-card);
+}
+
+footer {
+  background-color: #fff;
+  border-top: 1px solid #e9ecef;
+}
+
+/* --- доступность -------------------------------------------------------- */
+
+/* Ссылка видна только при переходе на неё с клавиатуры: первый Tab на странице
+   позволяет перепрыгнуть повторяющуюся навигацию и попасть сразу к контенту. */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--plum);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  z-index: 2000;
+}
+
+.skip-link:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+}
+
+/* Стандартный серый Bootstrap (#6c757d) даёт на нашем тёплом фоне 4.25:1
+   вместо требуемых WCAG AA 4.5:1 — затемняем до проходного значения. */
+.link-secondary {
+  color: #5a6268 !important;
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: #5a6268;
+  --bs-btn-border-color: #5a6268;
+  --bs-btn-hover-bg: #5a6268;
+  --bs-btn-hover-border-color: #5a6268;
+}
+
+/* Синий цвет ссылок Bootstrap (#0d6efd) даёт на тёплом фоне 4.08:1 при норме
+   WCAG AA 4.5:1. Задаём цвет ссылок через переменную — правило действует
+   на все ссылки сразу, а не на отдельные блоки. */
+:root {
+  --bs-link-color: #0a58ca;
+  --bs-link-hover-color: #084298;
+  --bs-link-color-rgb: 10, 88, 202;
+}
+
+/* Видимый фокус обязателен: без него при навигации с клавиатуры непонятно,
+   где сейчас находится пользователь. */
+:focus-visible {
+  outline: 3px solid var(--plum);
+  outline-offset: 2px;
+}
+
+/* Пользователь мог попросить систему уменьшить анимацию — уважаем настройку. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
