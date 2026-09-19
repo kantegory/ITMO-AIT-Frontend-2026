@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Лабораторная работа 2: Omagad с mock API, fetch и авторизацией." />
+    <title>Omagad - лабораторная работа 2</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+    <header class="app-header">
+      <a class="brand" href="#catalog" aria-label="Omagad, каталог курсов">
+        <span class="brand-mark">O</span>
+        <span>Omagad</span>
+      </a>
+      <nav aria-label="Основная навигация">
+        <a href="#catalog">Курсы</a>
+        <a href="#profile">Кабинет</a>
+        <a href="#auth">Вход</a>
+      </nav>
+      <button class="ghost-button" id="logoutButton" type="button" hidden>Выйти</button>
+    </header>
+
+    <main id="main" class="page-shell">
+      <section class="top-grid">
+        <div class="panel intro-panel">
+          <p class="eyebrow">Лабораторная работа 2</p>
+          <h1>Платформа онлайн-курсов с mock API</h1>
+          <p>
+            Каталог, фильтры, авторизация, регистрация и кабинет пользователя работают через
+            `fetch` и JSON-server-auth.
+          </p>
+          <div class="status-row" aria-live="polite">
+            <span id="apiStatus">API не проверен</span>
+            <span id="authStatus">Гость</span>
+          </div>
+        </div>
+
+        <section id="auth" class="panel auth-panel" aria-labelledby="auth-title">
+          <div class="tabs" role="tablist" aria-label="Авторизация">
+            <button class="tab-button active" type="button" data-auth-tab="login">Вход</button>
+            <button class="tab-button" type="button" data-auth-tab="register">Регистрация</button>
+          </div>
+
+          <form id="loginForm" class="auth-form" aria-labelledby="auth-title">
+            <h2 id="auth-title">Вход</h2>
+            <label>
+              Email
+              <input name="email" type="email" value="student@omagad.ru" autocomplete="email" required />
+            </label>
+            <label>
+              Пароль
+              <input name="password" type="password" value="password123" autocomplete="current-password" required />
+            </label>
+            <button type="submit">Войти</button>
+          </form>
+
+          <form id="registerForm" class="auth-form" hidden>
+            <h2>Регистрация</h2>
+            <label>
+              Имя
+              <input name="name" type="text" autocomplete="name" required />
+            </label>
+            <label>
+              Email
+              <input name="email" type="email" autocomplete="email" required />
+            </label>
+            <label>
+              Пароль
+              <input name="password" type="password" minlength="6" autocomplete="new-password" required />
+            </label>
+            <button type="submit">Создать аккаунт</button>
+          </form>
+
+          <p class="form-message" id="authMessage" aria-live="polite"></p>
+        </section>
+      </section>
+
+      <section id="catalog" class="panel" aria-labelledby="catalog-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="catalog-title">Поиск курсов</h2>
+            <p>Данные загружаются из `/courses`, фильтрация выполняется на клиенте.</p>
+          </div>
+          <span class="counter" id="courseCount" aria-live="polite">0 курсов</span>
+        </div>
+
+        <form class="filters" aria-label="Фильтры курсов">
+          <label>
+            Название
+            <input id="queryInput" type="search" placeholder="Например, Python" autocomplete="off" />
+          </label>
+          <label>
+            Предмет
+            <select id="subjectSelect">
+              <option value="all">Все</option>
+              <option value="programming">Программирование</option>
+              <option value="analytics">Аналитика</option>
+              <option value="design">Дизайн</option>
+            </select>
+          </label>
+          <label>
+            Уровень
+            <select id="levelSelect">
+              <option value="all">Все</option>
+              <option value="beginner">Начальный</option>
+              <option value="middle">Средний</option>
+            </select>
+          </label>
+          <label>
+            Цена
+            <select id="priceSelect">
+              <option value="all">Все</option>
+              <option value="free">Бесплатно</option>
+              <option value="paid">Платно</option>
+            </select>
+          </label>
+        </form>
+
+        <div class="course-grid" id="courseGrid"></div>
+        <p class="empty-state" id="emptyState" hidden>Курсы не найдены.</p>
+      </section>
+
+      <section id="profile" class="panel" aria-labelledby="profile-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="profile-title">Личный кабинет</h2>
+            <p>После входа кабинет загружает записи `/enrollments` текущего пользователя.</p>
+          </div>
+        </div>
+        <div id="profileContent" class="profile-content"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="details-title">
+        <h2 id="details-title">Страница курса</h2>
+        <div id="courseDetails" class="details-layout"></div>
+      </section>
+    </main>
+
+    <template id="courseCardTemplate">
+      <article class="course-card">
+        <div class="course-meta"></div>
+        <h3></h3>
+        <p></p>
+        <div class="course-footer">
+          <strong></strong>
+          <button type="button"></button>
+        </div>
+      </article>
+    </template>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

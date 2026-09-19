@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Домашние работы 2-4: доступность, темизация через CSS-переменные и SVG-спрайт для платформы онлайн-курсов Omagad.">
+  <title>Omagad - ДЗ 2-4</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" class="svg-sprite" aria-hidden="true">
+    <symbol id="icon-logo" viewBox="0 0 24 24">
+      <path d="M4 19V8.8L12 3l8 5.8V19h-5v-6H9v6H4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24">
+      <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M4 21c1.2-4 4-6 8-6s6.8 2 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="icon-award" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="5" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="m9 13-2 8 5-3 5 3-2-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M19.8 4.2l-2.1 2.1M6.3 17.7l-2.1 2.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24">
+      <path d="M20.5 14.6A8.5 8.5 0 1 1 9.4 3.5a6.6 6.6 0 0 0 11.1 11.1Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+    </symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Перейти к основному содержимому</a>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Основная навигация">
+      <a class="brand" href="#main" aria-label="Omagad, главная страница">
+        <svg class="icon" width="28" height="28" aria-hidden="true">
+          <use href="#icon-logo"></use>
+        </svg>
+        <span>Omagad</span>
+      </a>
+
+      <ul class="nav-list">
+        <li><a href="#courses">Курсы</a></li>
+        <li><a href="#profile">Кабинет</a></li>
+        <li><a href="#certificates">Сертификаты</a></li>
+      </ul>
+
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Переключить цветовую тему" aria-pressed="false">
+        <svg class="icon theme-icon theme-icon-light" width="22" height="22" aria-hidden="true">
+          <use href="#icon-sun"></use>
+        </svg>
+        <svg class="icon theme-icon theme-icon-dark" width="22" height="22" aria-hidden="true">
+          <use href="#icon-moon"></use>
+        </svg>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main" class="page">
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow">Домашние работы 2-4</p>
+        <h1 id="hero-title">Доступная и темизированная версия платформы онлайн-курсов</h1>
+        <p>
+          В этой версии улучшены семантика и доступность, добавлена светлая/тёмная тема на CSS-переменных,
+          а иконки подключены через общий SVG-спрайт.
+        </p>
+        <div class="hero-actions" aria-label="Основные действия">
+          <a class="button button-primary" href="#courses">Найти курс</a>
+          <a class="button button-secondary" href="#profile">Открыть кабинет</a>
+        </div>
+      </div>
+
+      <aside class="summary-card" aria-labelledby="summary-title">
+        <h2 id="summary-title">Прогресс обучения</h2>
+        <dl class="summary-list">
+          <div>
+            <dt>Активных курсов</dt>
+            <dd>5</dd>
+          </div>
+          <div>
+            <dt>Средний прогресс</dt>
+            <dd>67%</dd>
+          </div>
+          <div>
+            <dt>Сертификаты</dt>
+            <dd>2</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+
+    <section id="courses" class="content-section" aria-labelledby="courses-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="courses-title">Поиск курсов</h2>
+          <p>Форма связана с подписями, результат объявляется через `aria-live`.</p>
+        </div>
+        <p class="result-count" id="resultCount" aria-live="polite">Найдено 4 курса</p>
+      </div>
+
+      <form class="filters" aria-label="Фильтры каталога курсов">
+        <label for="courseSearch">Название курса</label>
+        <div class="search-field">
+          <svg class="icon" width="20" height="20" aria-hidden="true">
+            <use href="#icon-search"></use>
+          </svg>
+          <input id="courseSearch" name="query" type="search" autocomplete="off" placeholder="Например, Python">
+        </div>
+
+        <fieldset>
+          <legend>Уровень</legend>
+          <label class="radio-label">
+            <input type="radio" name="level" value="all" checked>
+            Все
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="level" value="beginner">
+            Начальный
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="level" value="middle">
+            Средний
+          </label>
+        </fieldset>
+      </form>
+
+      <div class="course-grid" id="courseGrid">
+        <article class="course-card" data-title="python для начинающих" data-level="beginner">
+          <span class="badge">Начальный</span>
+          <h3>Python для начинающих</h3>
+          <p>Основы языка, функции, коллекции и первый проект.</p>
+          <a href="#" aria-label="Подробнее о курсе Python для начинающих">Подробнее</a>
+        </article>
+
+        <article class="course-card" data-title="веб разработка html css javascript" data-level="beginner">
+          <span class="badge">Начальный</span>
+          <h3>Веб-разработка: HTML, CSS, JavaScript</h3>
+          <p>Семантическая вёрстка, стили и интерактивность в браузере.</p>
+          <a href="#" aria-label="Подробнее о курсе Веб-разработка">Подробнее</a>
+        </article>
+
+        <article class="course-card" data-title="machine learning python" data-level="middle">
+          <span class="badge">Средний</span>
+          <h3>Machine Learning на Python</h3>
+          <p>Подготовка данных, модели и оценка качества.</p>
+          <a href="#" aria-label="Подробнее о курсе Machine Learning на Python">Подробнее</a>
+        </article>
+
+        <article class="course-card" data-title="ui ux figma дизайн" data-level="beginner">
+          <span class="badge">Начальный</span>
+          <h3>UI/UX дизайн в Figma</h3>
+          <p>Макеты, прототипы и базовая дизайн-система.</p>
+          <a href="#" aria-label="Подробнее о курсе UI/UX дизайн в Figma">Подробнее</a>
+        </article>
+      </div>
+
+      <p class="empty-state" id="emptyState" hidden>По выбранным фильтрам курсы не найдены.</p>
+    </section>
+
+    <section id="profile" class="content-section cards-row" aria-labelledby="profile-title">
+      <article class="info-card">
+        <svg class="icon" width="32" height="32" aria-hidden="true">
+          <use href="#icon-user"></use>
+        </svg>
+        <h2 id="profile-title">Личный кабинет</h2>
+        <p>Пользователь видит текущие курсы, прогресс и настройки профиля.</p>
+      </article>
+
+      <article id="certificates" class="info-card" aria-labelledby="certificates-title">
+        <svg class="icon" width="32" height="32" aria-hidden="true">
+          <use href="#icon-award"></use>
+        </svg>
+        <h2 id="certificates-title">Сертификаты</h2>
+        <p>Завершённые курсы отображаются в отдельном доступном разделе.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Omagad, 2026. Учебная версия для ДЗ 2-4.</p>
+  </footer>
+
+  <script src="theme.js"></script>
+</body>
+</html>

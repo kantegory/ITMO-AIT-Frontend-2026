@@ -1,0 +1,409 @@
+:root {
+  --page: #f5f7fb;
+  --surface: #ffffff;
+  --surface-soft: #eef2ff;
+  --text: #172033;
+  --muted: #667085;
+  --primary: #4f46e5;
+  --primary-dark: #3730a3;
+  --accent: #0d9488;
+  --border: #d9deea;
+  --shadow: 0 16px 42px rgba(15, 23, 42, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--page);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+a {
+  color: var(--primary);
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 20;
+  padding: 8px 12px;
+  color: #fff;
+  background: var(--primary);
+  border-radius: 8px;
+  transform: translateY(-150%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 16px clamp(18px, 5vw, 64px);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand,
+.app-header nav,
+.header-actions,
+.course-footer,
+.course-meta,
+.section-heading,
+.profile-list li,
+.compact-list div,
+.details-list div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand {
+  margin-right: auto;
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: var(--primary);
+  border-radius: 10px;
+}
+
+.app-header nav a {
+  color: var(--muted);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.app-header nav a.router-link-active {
+  color: var(--primary);
+}
+
+.user-pill,
+.counter,
+.pill {
+  padding: 7px 10px;
+  color: var(--primary-dark);
+  background: var(--surface-soft);
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.page-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 34px 0 56px;
+}
+
+.hero-panel,
+.panel,
+.course-card,
+.auth-card,
+.notice,
+.status-card,
+.side-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.hero-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 24px;
+  align-items: stretch;
+  padding: 28px;
+  margin-bottom: 24px;
+}
+
+.panel,
+.auth-card,
+.course-card,
+.notice,
+.status-card,
+.side-panel {
+  padding: 22px;
+}
+
+.status-card {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  background: var(--surface-soft);
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  max-width: 760px;
+  margin-bottom: 14px;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.06;
+}
+
+.hero-panel p,
+.section-heading p,
+.course-card p,
+.notice p,
+.form-message,
+.auth-card a,
+small {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.section-heading {
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.filters,
+.auth-form,
+.teacher-form {
+  display: grid;
+  gap: 14px;
+}
+
+.filters {
+  grid-template-columns: 1.5fr repeat(3, 1fr) auto;
+  align-items: end;
+  margin-bottom: 22px;
+}
+
+.auth-form label,
+.filters label,
+.teacher-form label {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  color: var(--text);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.primary-button,
+.ghost-button {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  border-radius: 10px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.primary-button {
+  color: #fff;
+  background: var(--primary);
+  border: 0;
+}
+
+.ghost-button {
+  color: var(--primary);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+}
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.course-card {
+  display: grid;
+  gap: 14px;
+}
+
+.course-card h3 {
+  margin: 0;
+}
+
+.course-meta,
+dt {
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.course-footer {
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.compact-list,
+.details-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.compact-list div,
+.details-list div,
+.profile-list li {
+  justify-content: space-between;
+}
+
+dd {
+  margin: 0;
+  font-weight: 900;
+}
+
+.auth-shell {
+  display: grid;
+  min-height: 64vh;
+  place-items: center;
+}
+
+.auth-card {
+  width: min(100%, 430px);
+}
+
+.form-message {
+  min-height: 24px;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.metrics div {
+  display: grid;
+  gap: 6px;
+  padding: 16px;
+  background: var(--surface-soft);
+  border-radius: 10px;
+}
+
+.metrics span {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.metrics strong {
+  font-size: 1.7rem;
+}
+
+.profile-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.profile-list li {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.profile-list span {
+  display: grid;
+  gap: 4px;
+}
+
+.details-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 22px;
+}
+
+.details-list {
+  margin: 22px 0;
+}
+
+.side-panel ul {
+  margin-bottom: 0;
+  padding-left: 20px;
+}
+
+.teacher-form {
+  grid-template-columns: 1fr 0.8fr 1.4fr auto;
+  align-items: end;
+}
+
+@media (max-width: 960px) {
+  .hero-panel,
+  .filters,
+  .course-grid,
+  .metrics,
+  .details-layout,
+  .teacher-form {
+    grid-template-columns: 1fr;
+  }
+
+  .app-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .brand {
+    margin-right: 0;
+  }
+
+  .app-header nav,
+  .header-actions {
+    flex-wrap: wrap;
+  }
+}
