@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="assets/js/theme.js"></script>
+    <meta name="description" content="Discover AI models and datasets on AxonHub." />
+    <title>Explore resources · AxonHub</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link href="assets/css/tokens.css" rel="stylesheet" />
+    <link href="assets/css/base.css" rel="stylesheet" />
+    <link href="assets/css/catalog.css" rel="stylesheet" />
+    <link rel="icon" href="assets/icons/axon-mark.svg" type="image/svg+xml" />
+    <script src="assets/js/explore.js" type="module"></script>
+    <script src="assets/js/session.js" type="module"></script>
+  </head>
+  <body>
+    <a class="axon-skip-link" href="#main-content">Skip to main content</a>
+    <header class="axon-header">
+      <div class="container-fluid axon-container axon-header-row">
+        <a class="axon-brand" href="index.html"
+          ><svg width="34" height="34" aria-hidden="true" focusable="false">
+            <use href="assets/icons.svg#axon-mark"></use></svg
+          >AxonHub</a
+        >
+        <nav class="axon-nav" aria-label="Main navigation">
+          <a class="axon-nav-link" href="index.html" aria-current="page">Explore</a>
+          <a class="axon-nav-link" href="profile.html">Your library</a>
+        </nav>
+        <div class="axon-theme-controls" hidden>
+          <button
+            id="theme-toggle"
+            class="btn btn-outline-primary axon-theme-toggle"
+            type="button"
+            aria-label="Switch to dark theme"
+            title="Switch to dark theme"
+          >
+            <svg
+              class="axon-icon axon-theme-sun"
+              width="20"
+              height="20"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <use href="assets/icons.svg#sun"></use>
+            </svg>
+            <svg
+              class="axon-icon axon-theme-moon"
+              width="20"
+              height="20"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <use href="assets/icons.svg#moon"></use>
+            </svg>
+          </button>
+        </div>
+        <div class="axon-account-nav">
+          <a class="axon-nav-link" href="login.html">Log in</a>
+          <a class="btn btn-primary" href="register.html">Sign up</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" tabindex="-1" class="container-fluid axon-container">
+      <div class="axon-page-header axon-explore-intro">
+        <div>
+          <span class="axon-eyebrow">The resource library</span>
+          <h1>Find your next starting point.</h1>
+          <p
+            >Explore models and datasets. Compare the details, inspect the examples, and make
+            something of your own.</p
+          >
+        </div>
+        <svg
+          class="axon-library-mark"
+          width="150"
+          height="120"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <use href="assets/icons.svg#resource-network"></use>
+        </svg>
+      </div>
+
+      <form id="resource-filters" class="axon-search" method="get">
+        <div>
+          <label for="search" class="form-label">Search resources</label>
+          <div class="axon-search-field">
+            <svg class="axon-icon" width="18" height="18" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#search"></use>
+            </svg>
+            <input
+              id="search"
+              name="q"
+              type="search"
+              class="form-control"
+              placeholder="Search by name or description"
+            />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Apply filters</button>
+        <button type="reset" class="btn btn-outline-secondary">Reset</button>
+      </form>
+
+      <div class="axon-explore-layout">
+        <aside aria-label="Resource filters">
+          <details id="filter-panel" class="axon-filter-panel" open>
+            <summary
+              ><svg class="axon-icon" width="18" height="18" aria-hidden="true" focusable="false">
+                <use href="assets/icons.svg#sliders"></use></svg
+              >Filters <span id="filter-count">(0)</span></summary
+            >
+            <div class="axon-filter-fields">
+              <label for="type">Type</label>
+              <select id="type" name="type" form="resource-filters" class="form-select">
+                <option value="">All types</option>
+                <option value="model">Models</option>
+                <option value="dataset">Datasets</option>
+              </select>
+              <label for="task">Task</label>
+              <select id="task" name="task" form="resource-filters" class="form-select">
+                <option value="">All tasks</option>
+                <option value="text-classification">Text classification</option>
+                <option value="image-classification">Image classification</option>
+                <option value="translation">Translation</option>
+              </select>
+              <label for="license">License</label>
+              <select id="license" name="license" form="resource-filters" class="form-select">
+                <option value="">All licenses</option>
+                <option value="apache-2.0">Apache-2.0</option>
+                <option value="mit">MIT</option>
+                <option value="cc-by-4.0">CC-BY-4.0</option>
+              </select>
+              <label for="size">Size</label>
+              <select id="size" name="size" form="resource-filters" class="form-select">
+                <option value="">All sizes</option>
+                <option value="small">Under 100 MiB</option>
+                <option value="medium">100 MiB to &lt;1 GiB</option>
+                <option value="large">1 GiB and above</option>
+              </select>
+              <label for="framework">Framework</label>
+              <select id="framework" name="framework" form="resource-filters" class="form-select">
+                <option value="">All frameworks</option>
+                <option value="pytorch">PyTorch</option>
+                <option value="tensorflow">TensorFlow</option>
+                <option value="scikit-learn">scikit-learn</option>
+                <option value="none">Not applicable</option>
+              </select>
+            </div>
+          </details>
+        </aside>
+        <div class="axon-results">
+          <div class="axon-results-heading">
+            <h2>Explore resources</h2>
+            <p id="result-count" role="status" tabindex="-1">Loading resources…</p>
+          </div>
+          <p id="empty-results" class="axon-empty-state" hidden
+            >No resources match your filters. Try another search or Reset.</p
+          >
+          <p id="load-error" class="axon-empty-state" hidden
+            >Resources could not be loaded. Please try again.</p
+          >
+          <button id="retry-load" type="button" class="btn btn-outline-primary mb-3" hidden
+            >Retry</button
+          >
+          <noscript>Enable JavaScript to load and search the resource catalog.</noscript>
+          <ul id="resource-list" class="axon-resource-list" aria-busy="true"></ul>
+          <template id="resource-template">
+            <li class="axon-resource-row">
+              <div class="axon-resource-heading">
+                <div class="axon-resource-title">
+                  <span class="axon-resource-tile"
+                    ><svg
+                      class="axon-icon"
+                      width="18"
+                      height="18"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <use href="assets/icons.svg#box"></use></svg
+                  ></span>
+                  <div>
+                    <span class="axon-resource-type"></span>
+                    <h3></h3>
+                  </div>
+                </div>
+              </div>
+              <p></p>
+              <dl class="axon-resource-metadata">
+                <div><dt>Task</dt><dd data-field="task"></dd></div>
+                <div><dt>Framework</dt><dd data-field="framework"></dd></div>
+                <div><dt>License</dt><dd data-field="license"></dd></div>
+                <div><dt>Size</dt><dd data-field="size"></dd></div>
+              </dl>
+            </li>
+          </template>
+        </div>
+      </div>
+    </main>
+    <footer class="axon-footer">
+      <div class="container-fluid axon-container">
+        <p>AxonHub <span aria-hidden="true">/</span> Models, datasets &amp; ideas.</p>
+        <p>Learning preview · Sample resources only</p>
+      </div>
+    </footer>
+  </body>
+</html>
