@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     // if auth as organizer - cannot auth as user 
     if (localStorage.getItem("organizerAuth") === "true") {
-        alert("You are already logged in as an organizer. Please logout first.");
+        showModal("Error", "You are already logged in as an organizer. Please logout first.","error");
         window.location.href = "organizer-dashboard.html";
         return;
     }
@@ -24,12 +24,12 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         );
         const users = await response.json();
         if (users.length === 0) {
-            alert("User not found");
+            showModal("Error", "User not found","error");
             return;
         }
         const foundUser = users[0];
         if (foundUser.password !== password) {
-            alert("Wrong password");
+            showModal("Error", "Wrong password","error");
             return;
         }
         // save session
@@ -38,7 +38,29 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         window.location.href = "index.html";
     } catch (error) {
         console.error("Login error:", error);
-        alert("Login failed");
+        showModal("Error", "Login failed","error");
     }
 });
 });
+
+// function for modal
+function showModal(title, message, type = "primary") {
+    const modalEl = document.getElementById("appModal");
+
+    document.getElementById("appModalTitle").textContent = title;
+    document.getElementById("appModalBody").textContent = message;
+
+    const header = modalEl.querySelector(".modal-header");
+
+    // reset classes
+    header.className = "modal-header";
+
+    // add color
+    if (type === "error") header.classList.add("bg-danger", "text-white");
+    if (type === "success") header.classList.add("bg-success", "text-white");
+    if (type === "warning") header.classList.add("bg-warning");
+    if (type === "info") header.classList.add("bg-info", "text-white");
+
+    const modal = new bootstrap.Modal(modalEl);
+    modal.show();
+}
