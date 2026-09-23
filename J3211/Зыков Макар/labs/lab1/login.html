@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Makar`s Event | Вход</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+        <div class="container">
+          <a class="navbar-brand" href="index.html">Makar`s Event</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Переключить навигацию">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item"><a class="nav-link" href="events.html">Поиск мероприятий</a></li>
+              <li class="nav-item"><a class="nav-link" href="user-cabinet.html">Кабинет пользователя</a></li>
+              <li class="nav-item"><a class="nav-link" href="organizer-cabinet.html">Кабинет организатора</a></li>
+            </ul>
+            <div class="d-flex gap-2">
+              <a class="btn btn-outline-light btn-sm active" aria-current="page" href="login.html">Вход</a>
+              <a class="btn btn-warning btn-sm" href="register.html">Регистрация</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="main-content auth-layout d-flex align-items-center py-4">
+      <div class="container">
+        <div class="row g-4 align-items-stretch">
+          <div class="col-lg-5 d-none d-lg-block">
+            <section class="auth-side h-100 p-4 p-xl-5">
+              <h1 class="fw-bold mb-3">Вход в аккаунт</h1>
+              <p class="mb-4">Управляйте билетами, отслеживайте возвраты и получайте персональные уведомления о новых событиях.</p>
+              <ul class="list-unstyled mb-0 d-grid gap-3">
+                <li>Быстрый доступ к купленным билетам</li>
+                <li>История возвратов и статусов</li>
+                <li>Сохранённые фильтры мероприятий</li>
+              </ul>
+            </section>
+          </div>
+          <div class="col-lg-7">
+            <section class="auth-panel p-4 p-xl-5" aria-labelledby="loginTitle">
+              <h2 id="loginTitle" class="h3 fw-bold mb-3">Авторизация</h2>
+              <p class="text-secondary mb-4">Введите данные, указанные при регистрации.</p>
+
+              <form class="js-auth-form needs-validation" data-success-message="Вход выполнен. Добро пожаловать в Makar`s Event!" novalidate>
+                <div class="mb-3">
+                  <label for="loginEmail" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="loginEmail" required placeholder="example@mail.com">
+                  <div class="invalid-feedback">Укажите корректный email.</div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="loginPassword" class="form-label">Пароль</label>
+                  <input type="password" class="form-control" id="loginPassword" minlength="6" required placeholder="Минимум 6 символов">
+                  <div class="invalid-feedback">Пароль должен содержать не менее 6 символов.</div>
+                </div>
+
+                <div class="form-check mb-4">
+                  <input class="form-check-input" type="checkbox" id="rememberLogin">
+                  <label class="form-check-label" for="rememberLogin">Запомнить меня</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2">Войти</button>
+              </form>
+
+              <p class="mt-4 mb-0">Нет аккаунта? <a href="register.html">Зарегистрироваться</a></p>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="py-4 mt-5">
+      <div class="container d-flex flex-column flex-md-row gap-2 justify-content-between align-items-md-center">
+        <p class="mb-0">Makar`s Event, ЛР1 по Frontend, <span class="js-current-year"></span></p>
+        <p class="mb-0">Выполнил: Зыков Макар, J3211</p>
+      </div>
+    </footer>
+
+    <div class="modal fade" id="authSuccessModal" tabindex="-1" aria-labelledby="authSuccessTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title fs-5" id="authSuccessTitle">Успешно</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <div class="modal-body" id="auth-success-text"></div>
+          <div class="modal-footer">
+            <a href="user-cabinet.html" class="btn btn-primary">Перейти в кабинет</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
