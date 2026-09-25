@@ -69,12 +69,16 @@ document.addEventListener("DOMContentLoaded", () => {
         eventsGrid.innerHTML = events
             .map((event) => {
                 const students = getRegisteredStudentsForEvent(event.id, registrations, usersById);
+                const fallbackImage = auth.getImageFallbackSrc(event.image);
                 return `
                     <div class="col-12 col-md-6 col-xl-4">
                         <a class="event-card-link" href="event.html?id=${encodeURIComponent(event.id)}">
                             <article class="event-card-custom">
                                 <div class="event-card-image-wrap">
-                                    <img src="${escapeHtml(event.image)}" alt="${escapeHtml(event.title)}" class="event-card-image">
+                                    <picture>
+                                        <source srcset="${escapeHtml(event.image)}" type="image/webp">
+                                        <img src="${escapeHtml(fallbackImage)}" alt="${escapeHtml(event.title)}" class="event-card-image">
+                                    </picture>
                                     <span class="badge text-bg-light border rounded-pill goal-badge position-absolute top-0 start-0 m-3">${escapeHtml(auth.getGoalLabel(event.goal))}</span>
                                 </div>
                                 <div class="event-card-body">

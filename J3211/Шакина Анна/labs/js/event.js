@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const auth = window.SchoolAuth;
     const api = window.SchoolApi;
     const els = {
+        imageSource: document.getElementById("eventImageSource"),
         image: document.getElementById("eventImage"),
         title: document.getElementById("eventTitle"),
         short: document.getElementById("eventShort"),
@@ -121,7 +122,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderEvent(item) {
         const shortDescription = String(item.short || item.shortDescription || item.description || "").trim().slice(0, 140);
 
-        els.image.src = item.image;
+        if (els.imageSource) {
+            els.imageSource.srcset = item.image;
+        }
+        els.image.src = auth.getImageFallbackSrc(item.image);
         els.image.alt = item.title;
         els.title.textContent = item.title;
         els.short.textContent = shortDescription || item.description;
@@ -204,6 +208,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderNotFound() {
         document.title = "Мероприятие не найдено";
+        if (els.imageSource) {
+            els.imageSource.srcset = "img/carousel1.webp";
+        }
+        els.image.src = "img/carousel1.png";
         els.title.textContent = "Мероприятие не найдено";
         els.short.textContent = "Проверьте ссылку или вернитесь к списку мероприятий.";
         els.description.textContent = "Это мероприятие не найдено в общем списке.";

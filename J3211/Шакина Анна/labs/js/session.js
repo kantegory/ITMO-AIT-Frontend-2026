@@ -1,5 +1,109 @@
 document.addEventListener("DOMContentLoaded", () => {
     const auth = window.SchoolAuth;
+    const THEME_STORAGE_KEY = "themePreference";
+    const THEME_OPTIONS = ["auto", "light", "dark"];
+    const themeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const getStoredThemePreference = () => {
+        const storedValue = localStorage.getItem(THEME_STORAGE_KEY);
+        return THEME_OPTIONS.includes(storedValue) ? storedValue : "auto";
+    };
+
+    const getResolvedTheme = (preference) => {
+        if (preference === "light" || preference === "dark") {
+            return preference;
+        }
+
+        return themeMediaQuery.matches ? "dark" : "light";
+    };
+
+    const applyThemePreference = (preference) => {
+        const resolvedTheme = getResolvedTheme(preference);
+        document.documentElement.setAttribute("data-theme", resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+    };
+
+    const syncThemeSwitcher = (preference) => {
+        const switcher = document.querySelector("[data-theme-switcher]");
+        if (switcher) {
+            switcher.value = preference;
+        }
+    };
+
+    const setThemePreference = (preference) => {
+        const normalizedPreference = THEME_OPTIONS.includes(preference) ? preference : "auto";
+        localStorage.setItem(THEME_STORAGE_KEY, normalizedPreference);
+        applyThemePreference(normalizedPreference);
+        syncThemeSwitcher(normalizedPreference);
+    };
+
+    const createThemeSwitcher = () => {
+        if (document.querySelector("[data-theme-switcher]")) {
+            syncThemeSwitcher(getStoredThemePreference());
+            return;
+        }
+
+        const switcherSlot = document.querySelector("[data-theme-switcher-slot]");
+        if (!switcherSlot) {
+            return;
+        }
+
+        const label = document.createElement("label");
+        label.className = "footer-theme-switcher";
+        label.style.display = "inline-flex";
+        label.style.alignItems = "center";
+        label.style.gap = "0.5rem";
+
+        const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        icon.setAttribute("class", "icon icon--sm");
+        icon.setAttribute("aria-hidden", "true");
+        icon.setAttribute("focusable", "false");
+
+        const iconUse = document.createElementNS("http://www.w3.org/2000/svg", "use");
+        iconUse.setAttribute("href", "icons/sprite.svg#icon-theme");
+        icon.append(iconUse);
+
+        const select = document.createElement("select");
+        select.setAttribute("data-theme-switcher", "");
+        select.className = "form-select form-select-sm";
+        select.style.width = "auto";
+
+        [
+            { value: "auto", label: "Авто" },
+            { value: "light", label: "Светлая" },
+            { value: "dark", label: "Тёмная" }
+        ].forEach((optionConfig) => {
+            const option = document.createElement("option");
+            option.value = optionConfig.value;
+            option.textContent = optionConfig.label;
+            select.append(option);
+        });
+
+        select.addEventListener("change", (event) => {
+            setThemePreference(event.target.value);
+        });
+
+        label.append(icon, select);
+        switcherSlot.replaceChildren(label);
+        syncThemeSwitcher(getStoredThemePreference());
+    };
+
+    const handleSystemThemeChange = () => {
+        const preference = getStoredThemePreference();
+        if (preference === "auto") {
+            applyThemePreference(preference);
+            syncThemeSwitcher(preference);
+        }
+    };
+
+    applyThemePreference(getStoredThemePreference());
+    createThemeSwitcher();
+    if (typeof themeMediaQuery.addEventListener === "function") {
+        themeMediaQuery.addEventListener("change", handleSystemThemeChange);
+    } else if (typeof themeMediaQuery.addListener === "function") {
+        themeMediaQuery.addListener(handleSystemThemeChange);
+    }
+
     if (!auth) {
         return;
     }
