@@ -1,0 +1,170 @@
+body {
+    font-family: var(--lf-font-family), serif;
+    background-color: var(--lf-bg);
+    color: var(--lf-text-main);
+    -webkit-font-smoothing: antialiased;
+    overflow-y: scroll;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.navbar {
+    background-color: var(--lf-surface) !important;
+    border-bottom: 1px solid var(--lf-border);
+    box-shadow: var(--lf-shadow-sm);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.progress {
+    background-color: var(--lf-border);
+}
+.brand-logo {
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+    color: var(--lf-text-main);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.brand-logo .brand-icon {
+    color: var(--lf-primary);
+}
+.brand-logo:hover {
+    color: var(--lf-text-main);
+}
+.card {
+    background-color: var(--lf-surface);
+    border: 1px solid var(--lf-border);
+    border-radius: var(--lf-radius-lg);
+    box-shadow: var(--lf-shadow-md);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s;
+}
+.card.border-0 {
+    border: 1px solid transparent !important;
+}
+.card.border-0:hover {
+    border-color: var(--lf-border) !important;
+    transform: translateY(-2px);
+}
+.btn, .list-group-item, .form-control, .form-select, .accordion-item, .accordion-button {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+.btn-primary {
+    background-color: var(--lf-primary);
+    border-color: var(--lf-primary);
+    border-radius: var(--lf-radius-md);
+    font-weight: 500;
+}
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--lf-primary-hover);
+    border-color: var(--lf-primary-hover);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+.btn-outline-primary {
+    color: var(--lf-primary);
+    border: 1px solid var(--lf-primary);
+    border-radius: var(--lf-radius-md);
+    font-weight: 500;
+}
+.btn-outline-primary:hover {
+    background-color: var(--lf-primary);
+    color: #fff;
+}
+.form-control,
+.form-select {
+    border-radius: var(--lf-radius-md);
+    border-color: var(--lf-border);
+    padding: 0.6rem 1rem;
+}
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--lf-primary);
+    box-shadow: 0 0 0 0.25rem rgba(79, 70, 229, 0.25);
+}
+.form-label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--lf-text-main);
+}
+#themeToggleBtn:focus {
+    outline: none;
+    box-shadow: none;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+main {
+    animation: fadeIn 0.6s ease-out forwards;
+}[data-theme="dark"] .form-control,
+ [data-theme="dark"] .form-select {
+     background-color: var(--lf-surface);
+     color: var(--lf-text-main);
+     border-color: var(--lf-border);
+ }
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus {
+    background-color: var(--lf-surface);
+    color: var(--lf-text-main);
+}[data-theme="dark"] .table {
+     --bs-table-bg: var(--lf-surface);
+     --bs-table-color: var(--lf-text-main);
+     --bs-table-hover-color: var(--lf-text-main);
+     --bs-table-hover-bg: rgba(255, 255, 255, 0.05);
+
+     border-color: var(--lf-border);
+ }
+[data-theme="dark"] .table-light {
+    --bs-table-bg: #334155;
+    --bs-table-color: var(--lf-text-main);
+}
+[data-theme="dark"] .bg-white {
+    background-color: var(--lf-surface) !important;
+}
+[data-theme="dark"] .bg-light {
+    background-color: var(--lf-bg) !important;
+}[data-theme="dark"] .border {
+     border-color: var(--lf-border) !important;
+ }[data-theme="dark"] .text-dark,
+  [data-theme="dark"] h1,[data-theme="dark"] h2, [data-theme="dark"] h3,
+  [data-theme="dark"] h4, [data-theme="dark"] h5, [data-theme="dark"] h6,[data-theme="dark"] .h1, [data-theme="dark"] .h2,[data-theme="dark"] .h3,[data-theme="dark"] .h4,[data-theme="dark"] .h5,[data-theme="dark"] .h6,[data-theme="dark"] .form-label,[data-theme="dark"] .card-title {
+      color: var(--lf-text-main) !important;
+  }
+[data-theme="dark"] .text-muted,
+[data-theme="dark"] .form-text {
+    color: var(--lf-text-muted) !important;
+}[data-theme="dark"] .form-control::placeholder,
+ [data-theme="dark"] .form-select::placeholder {
+     color: var(--lf-text-muted) !important;
+     opacity: 0.8;
+ }
+[data-theme="dark"] input:-webkit-autofill,[data-theme="dark"] input:-webkit-autofill:hover,
+[data-theme="dark"] input:-webkit-autofill:focus,[data-theme="dark"] input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--lf-surface) inset !important;
+    -webkit-text-fill-color: var(--lf-text-main) !important;
+}
+[data-theme="dark"] .list-group-item {
+    background-color: var(--lf-surface);
+    color: var(--lf-text-main);
+    border-color: var(--lf-border);
+}
+[data-theme="dark"] .modal-content {
+    background-color: var(--lf-surface);
+    color: var(--lf-text-main);
+}
+[data-theme="dark"] .accordion-item,
+[data-theme="dark"] .accordion-button {
+    background-color: var(--lf-surface);
+    color: var(--lf-text-main);
+}
+[data-theme="dark"] .accordion-button:not(.collapsed) {
+    background-color: var(--lf-border);
+    color: var(--lf-text-main);
+}
+[data-theme="dark"] .navbar .nav-link,
+[data-theme="dark"] .brand-logo {
+    color: var(--lf-text-main) !important;
+}[data-theme="dark"] .navbar .nav-link:hover,
+ [data-theme="dark"] .navbar .nav-link.active {
+     color: var(--lf-primary-hover) !important;
+ }
