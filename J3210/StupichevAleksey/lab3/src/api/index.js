@@ -1,0 +1,5 @@
+export {default as authApi} from '@/api/auth'
+export {default as coursesApi} from '@/api/courses'
+export {default as usersApi} from '@/api/users'
+export {default as certificatesApi} from '@/api/certificates'
+export {default as reviewsApi} from '@/api/reviews'
