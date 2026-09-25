@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Поиск фанфиков — FanFicLib</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dark.css">
+    <script src="js/api.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">FanFicLib</a>
+            <button id="darkModeBtn" class="btn btn-outline-light ms-3">Тёмная тема</button>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav" aria-label="Меню навигации">
+                <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Меню</span>
+            </button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="search.html">Поиск</a></li>
+                    <li class="nav-item"><a class="nav-link" href="write.html">Написать фанфик</a></li>
+                </ul>
+                <ul class="navbar-nav ms-auto" id="navRight">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+
+        <header class="mb-4">
+            <h1>Поиск фанфиков</h1>
+        </header>
+
+        <section class="row">
+            <aside class="col-md-3">
+                <div class="filter-box">
+                    <h2 class="h5">Фильтры</h2>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="filter-title">Название</label>
+                        <input id="filter-title" class="form-control" placeholder="Введите название">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="filter-fandom">Фандом</label>
+                        <select id="filter-fandom" class="form-select">
+                            <option value="">Любой</option>
+                            <option>Harry Potter</option>
+                            <option>Naruto</option>
+                            <option>Marvel</option>
+                            <option>Star Wars</option>
+                            <option>Lord of the Rings</option>
+                            <option>Оригинальный</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="filter-rating">Рейтинг</label>
+                        <select id="filter-rating" class="form-select">
+                            <option value="">Любой</option>
+                            <option>G</option>
+                            <option>PG</option>
+                            <option>PG-13</option>
+                            <option>R</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="filter-status">Статус</label>
+                        <select id="filter-status" class="form-select">
+                            <option value="">Любой</option>
+                            <option value ="completed">Закончен</option>
+                            <option value ="in_progress">В процессе</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-main w-100" id="filter-btn">Найти</button>
+                    <button class="btn btn-outline-secondary w-100 mt-2" id="reset-btn">Сбросить</button>
+                </div>
+            </aside>
+
+            <section class="col-md-9" id="results">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <p class="text-muted mb-0" id="results-count">Загрузка...</p>
+                </div>
+
+                <div id="results-container">
+                    <p class="text-center text-muted">Загрузка фанфиков...</p>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer class="footer text-center">
+        <p>© 2026 FanFicLib</p>
+        <p>Платформа для фанфиков</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+        let allFics = [];
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('q');
+
+        if (searchQuery) {
+            const searchInput = document.getElementById('filter-title');
+            if (searchInput) {
+                searchInput.value = searchQuery;
+            }
+        }
+
+        function updateNav() {
+            const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+            const user = localStorage.getItem('user') || sessionStorage.getItem('user');
+
+            const navRight = document.getElementById('navRight');
+
+            if (token && user) {
+                navRight.innerHTML = `
+            <li class="nav-item"><a class="nav-link" href="profile.html">Профиль</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" id="logoutBtn">Выйти</a></li>
+        `;
+                document.getElementById('logoutBtn')?.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    sessionStorage.removeItem('token');
+                    sessionStorage.removeItem('user');
+                    window.location.href = 'index.html';
+                });
+            } else {
+                navRight.innerHTML = `
+            <li class="nav-item">
+                <a class="btn btn-light me-2" href="login.html">Вход</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-dark" href="register.html">Регистрация</a>
+            </li>
+        `;
+            }
+        }
+
+        // Загрузка всех фанфиков
+        async function loadFics() {
+            try {
+                const response = await fetch(`${API_URL}/fics`);
+                if (response.ok) {
+                    allFics = await response.json();
+                    if (searchQuery) {
+                        performSearch();
+                    } else {
+                        displayFics(allFics);
+                    }
+                } else {
+                    document.getElementById('results-container').innerHTML = '<p class="text-danger text-center">Ошибка загрузки фанфиков</p>';
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                document.getElementById('results-container').innerHTML = '<p class="text-danger text-center">Ошибка подключения к серверу</p>';
+            }
+        }
+
+        function performSearch() {
+            const titleFilter = document.getElementById('filter-title').value.toLowerCase().trim();
+            const fandomFilter = document.getElementById('filter-fandom').value;
+            const ratingFilter = document.getElementById('filter-rating').value;
+            const statusFilter = document.getElementById('filter-status').value;
+
+            let filtered = [...allFics];
+
+            if (titleFilter) {
+                filtered = filtered.filter(fic =>
+                    fic.title.toLowerCase().includes(titleFilter)
+                );
+            }
+
+            if (fandomFilter && fandomFilter !== '') {
+                filtered = filtered.filter(fic => fic.fandom === fandomFilter);
+            }
+
+            if (ratingFilter && ratingFilter !== '') {
+                filtered = filtered.filter(fic => fic.rating === ratingFilter);
+            }
+
+            if (statusFilter && statusFilter !== '') {
+                filtered = filtered.filter(fic => fic.status === statusFilter);
+            }
+
+            displayFics(filtered);
+        }
+
+        function displayFics(fics) {
+            const container = document.getElementById('results-container');
+            const countSpan = document.getElementById('results-count');
+
+            if (!fics || fics.length === 0) {
+                container.innerHTML = '<p class="text-center text-muted">Ничего не найдено</p>';
+                countSpan.textContent = 'Найдено: 0 фанфиков';
+                return;
+            }
+
+            countSpan.textContent = `Найдено: ${fics.length} фанфиков`;
+            container.innerHTML = '';
+
+            fics.forEach(fic => {
+                const statusText = fic.status === 'completed' ? 'Закончен' : (fic.status === 'in_progress' ? 'В процессе' : 'Опубликован');
+                const statusClass = fic.status === 'completed' ? 'text-success' : (fic.status === 'in_progress' ? 'text-warning' : 'text-secondary');
+
+                const ficCard = `
+                <article class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <a href="fic.html?id=${fic.id}" class="fic-title">${escapeHtml(fic.title)}</a>
+                                <span class="rating-tag">${fic.rating}</span>
+                                <span class="ms-2 ${statusClass}">${statusText}</span>
+                                <p class="text-muted mb-2 mt-2">
+                                    <span class="author-info">${escapeHtml(fic.authorName)}</span>
+                                    <span class="ms-3 date-info">${formatDate(fic.createdAt)}</span>
+                                </p>
+                                <span class="fandom-tag">${escapeHtml(fic.fandom)}</span>
+                                <p class="mt-2 mb-2">${escapeHtml(fic.description.substring(0, 150))}${fic.description.length > 150 ? '...' : ''}</p>
+                                <div class="mb-2">
+                                    ${fic.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}
+                                </div>
+                                <div class="fic-meta">
+                                    <span class="meta-heart">${fic.likes}</span>
+                                    <span class="meta-chat">${fic.commentsCount}</span>
+                                    <span class="meta-eye">${fic.views}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            `;
+                container.innerHTML += ficCard;
+            });
+        }
+
+        function filterFics() {
+            performSearch();
+        }
+
+        function resetFilters() {
+            document.getElementById('filter-title').value = '';
+            document.getElementById('filter-fandom').value = '';
+            document.getElementById('filter-rating').value = '';
+            document.getElementById('filter-status').value = '';
+            displayFics(allFics);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU');
+        }
+
+        // Обработчики
+        document.getElementById('filter-btn')?.addEventListener('click', filterFics);
+        document.getElementById('reset-btn')?.addEventListener('click', resetFilters);
+
+        document.getElementById('filter-title')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                filterFics();
+            }
+        });
+
+         // Переключение тёмной темы
+        const darkModeBtn = document.getElementById('darkModeBtn');
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            darkModeBtn.textContent = 'Светлая тема';
+        }
+
+        darkModeBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                darkModeBtn.textContent = 'Тёмная тема';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                darkModeBtn.textContent = 'Светлая тема';
+            }
+        });
+
+        // Загрузка
+        updateNav();
+        loadFics();
+    </script>
+</body>
+
+</html>
