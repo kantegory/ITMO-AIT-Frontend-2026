@@ -1,0 +1,243 @@
+{
+  "users": [
+    {
+      "email": "ilopmail19911991@gmail.com",
+      "password": "$2a$10$cXmSD7K2tD3koOV5GKw5gOO1mu46l.i1r7rxXCxABAzXwu2exJzfG",
+      "firstName": "Andrew",
+      "lastName": "Stelinski",
+      "username": "ilopka",
+      "modelIds": [
+        1
+      ],
+      "datasetIds": [],
+      "starsCount": 42,
+      "subscriptions": [
+        2,
+        3
+      ],
+      "id": 1
+    },
+    {
+      "email": "anna.kuznetsova@example.com",
+      "password": "$2a$10$RDv.a4wxCvZ1tbpjW/lRVu8sazPBbtpVxVyKLOD//3Iq6pk6Ckdm6",
+      "firstName": "Анна",
+      "lastName": "Кузнецова",
+      "username": "annakz",
+      "modelIds": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "datasetIds": [
+        2,
+        3
+      ],
+      "starsCount": 118,
+      "subscriptions": [
+        1,
+        3
+      ],
+      "id": 2
+    },
+    {
+      "email": "nikita.orlov@example.com",
+      "password": "$2a$10$RDv.a4wxCvZ1tbpjW/lRVu8sazPBbtpVxVyKLOD//3Iq6pk6Ckdm6",
+      "firstName": "Никита",
+      "lastName": "Орлов",
+      "username": "nkorlov",
+      "modelIds": [
+        11,
+        12,
+        13,
+        14
+      ],
+      "datasetIds": [
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "starsCount": 76,
+      "subscriptions": [
+        1
+      ],
+      "id": 3
+    }
+  ],
+  "models": [
+    {
+      "id": 1,
+      "name": "YOLOv8-Detection",
+      "author": "ultralytics",
+      "authorAvatar": "https://placekittens.com/32/32",
+      "creatorid": 42,
+      "task": "cv",
+      "framework": "pytorch",
+      "domain": "Object Detection",
+      "license": "gpl-3.0",
+      "description": "Мощная модель для детекции объектов в реальном времени.",
+      "longDescription": "<strong>YOLOv8</strong> (You Only Look Once version 8) — это новейшая версия семейства моделей YOLO, созданная Ultralytics. Она устанавливает новый уровень state-of-the-art для задач детекции объектов, сегментации изображений и классификации. Модель оптимизирована для работы на CPU и GPU.",
+      "views": 2000,
+      "comments": 45,
+      "forks": 128,
+      "stars": 1024,
+      "usageExampleCode": "from ultralytics import YOLO\n\n# Загружаем предобученную модель\nmodel = YOLO('yolov8n.pt')\n\n# Запускаем предсказание на картинке\nresults = model.predict('https://ultralytics.com/images/bus.jpg')",
+      "metrics": [
+        {
+          "model": "YOLOv8n",
+          "size": 640,
+          "map": 37.3,
+          "params": 3.2
+        },
+        {
+          "model": "YOLOv8x",
+          "size": 640,
+          "map": 53.9,
+          "params": 68.2
+        }
+      ],
+      "discussions": [
+        {
+          "title": "Issue with ONNX export on Mac M1",
+          "time": "3 дня назад",
+          "content": "При попытке экспорта модели в формат ONNX получаю ошибку Tensor mismatch..."
+        },
+        {
+          "title": "How to fine-tune on custom dataset?",
+          "time": "Неделю назад",
+          "content": "Подскажите, какой формат разметки датасета нужен для дообучения этой версии?"
+        }
+      ],
+      "artifacts": [
+        {
+          "name": "config.json",
+          "size": "1.2 KB",
+          "updated": "2 мес. назад",
+          "icon": "file-earmark-code",
+          "actionId": "downloadConfigJsonButton"
+        },
+        {
+          "name": "yolov8n.pt",
+          "size": "6.2 MB",
+          "updated": "1 мес. назад",
+          "icon": "box-seam",
+          "actionId": "downloadYolov8nButton"
+        },
+        {
+          "name": "yolov8x.pt",
+          "size": "136.5 MB",
+          "updated": "1 мес. назад",
+          "icon": "box-seam",
+          "actionId": "downloadYolov8xButton"
+        }
+      ],
+      "runtimeOptions": [
+        {
+          "value": "python",
+          "label": "Python (ultralytics)"
+        },
+        {
+          "value": "pytorch",
+          "label": "Python (PyTorch Hub)"
+        },
+        {
+          "value": "cli",
+          "label": "Command Line (CLI)"
+        }
+      ],
+      "modalCodeSnippet": "from ultralytics import YOLO\n\n# Загружаем предобученную модель\nmodel = YOLO('yolov8n.pt')\n\n# Запускаем предсказание на картинке\nresults = model.predict('https://ultralytics.com/images/bus.jpg')"
+    }
+  ],
+  "datasets": [
+    {
+      "id": 1,
+      "name": "COCO-2017",
+      "author": "cocodataset",
+      "authorAvatar": "https://placekittens.com/32/32",
+      "creatorid": 84,
+      "task": "obj_det",
+      "format": "csv",
+      "domain": "Object Detection",
+      "license": "cc-by-4.0",
+      "description": "Широкомасштабный датасет для обнаружения объектов, сегментации и описания изображений.",
+      "longDescription": "<strong>COCO 2017</strong> (Common Objects in Context) — это масштабный датасет для задач обнаружения объектов, сегментации изображений и распознавания ключевых точек. Он содержит более 330 тысяч изображений, на которых детально размечено 1.5 миллиона объектов в 80 различных категориях (люди, транспорт, животные и др.).",
+      "views": 3000,
+      "comments": 189,
+      "forks": 395,
+      "stars": 3105,
+      "usageExampleCode": "import pandas as pd\nimport json\n\n# Загружаем JSON аннотации\nwith open('annotations/instances_train2017.json', 'r') as f:\n    coco_data = json.load(f)\n\n# Конвертируем список изображений в DataFrame\ndf = pd.DataFrame(coco_data['images'])\nprint(df.head())",
+      "structure": [
+        {
+          "id": 397133,
+          "file_name": "000000397133.jpg",
+          "width": 640,
+          "height": 427
+        },
+        {
+          "id": 37777,
+          "file_name": "000000037777.jpg",
+          "width": 230,
+          "height": 352
+        },
+        {
+          "id": 252219,
+          "file_name": "000000252219.jpg",
+          "width": 428,
+          "height": 640
+        }
+      ],
+      "discussions": [
+        {
+          "title": "Missing images in val2017 archive?",
+          "time": "3 дня назад",
+          "content": "Скачал архив валидации, но не могу найти несколько изображений, которые числятся в файле аннотаций JSON..."
+        },
+        {
+          "title": "Commercial use under CC BY 4.0",
+          "time": "Неделю назад",
+          "content": "Могу ли я использовать эти изображения для обучения коммерческой модели детекции лиц?"
+        }
+      ],
+      "artifacts": [
+        {
+          "name": "train2017.zip",
+          "size": "18.0 GB",
+          "updated": "4 года назад",
+          "icon": "file-earmark-zip"
+        },
+        {
+          "name": "val2017.zip",
+          "size": "777.8 MB",
+          "updated": "4 года назад",
+          "icon": "file-earmark-zip"
+        },
+        {
+          "name": "annotations_trainval2017.zip",
+          "size": "241.0 MB",
+          "updated": "4 года назад",
+          "icon": "file-earmark-code"
+        }
+      ],
+      "runtimeOptions": [
+        {
+          "value": "python",
+          "label": "Python (pandas)"
+        },
+        {
+          "value": "pytorch",
+          "label": "Python (HuggingFace datasets)"
+        },
+        {
+          "value": "cli",
+          "label": "Command Line (wget)"
+        }
+      ],
+      "modalCodeSnippet": "import pandas as pd\nimport json\n\n# Чтение JSON файла аннотаций\nwith open('annotations.json', 'r') as f:\n    data = json.load(f)\n\n# Преобразование в таблицу pandas\ndf = pd.DataFrame(data['images'])\nprint(df.head())"
+    }
+  ]
+}
