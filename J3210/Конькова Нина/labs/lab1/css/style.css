@@ -1,0 +1,153 @@
+
+/* Глобальные настройки темы */
+:root {
+    --primary-color: #4f46e5;
+    --secondary-color: #64748b;
+    --sidebar-width: 260px;
+    --bg-light: #f8fafc;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-light);
+    color: #334155;
+}
+
+/* Стили для страниц входа и регистрации. */
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e0e7ff 0%, #f8fafc 100%);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 400px;
+    border: none;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+/* Общий каркас панели управления */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/*
+   Боковое меню.
+   Фиксируем его слева, чтобы навигация была доступна всегда, независимо от скролла.
+*/
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: #1e293b;
+    color: #fff;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    transition: all 0.3s;
+    z-index: 1000;
+}
+
+.sidebar-brand {
+    padding: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #334155;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 1rem 0;
+    margin: 0;
+}
+
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    color: #94a3b8;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+/* Эффект при наведении и выделение текущей страницы */
+.sidebar-menu li a:hover,
+.sidebar-menu li a.active {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid var(--primary-color);
+}
+
+.sidebar-menu li a i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.main-content {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    padding: 2rem;
+    width: calc(100% - var(--sidebar-width));
+}
+
+/* Карточки метрик (Experiments, Models и т.д.) */
+.stat-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+}
+
+/* Интерактивный отклик: карточка слегка приподнимается при наведении */
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 1.5rem;
+}
+
+.bg-indigo-light { background-color: #e0e7ff; color: var(--primary-color); }
+.bg-green-light { background-color: #dcfce7; color: #16a34a; }
+.bg-orange-light { background-color: #ffedd5; color: #ea580c; }
+.bg-blue-light { background-color: #dbeafe; color: #2563eb; }
+
+.table-custom {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.table-custom thead th {
+    background-color: #f1f5f9;
+    border-bottom: 2px solid #e2e8f0;
+    color: #475569;
+    font-weight: 600;
+    padding: 1rem;
+}
+
+.table-custom tbody td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-color: #f1f5f9;
+}
+
+.form-range::-webkit-slider-runnable-track {
+    background-color: #dee2e6;
+    height: 0.5rem;
+    border-radius: 1rem;
+}
