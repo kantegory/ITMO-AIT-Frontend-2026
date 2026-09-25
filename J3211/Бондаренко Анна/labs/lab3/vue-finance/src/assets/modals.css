@@ -1,0 +1,73 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--modal-overlay);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-overlay .terminal-box {
+    max-width: 500px;
+    width: 100%;
+}
+
+.tx-type-selector {
+    display: flex;
+    border: var(--border);
+    margin-bottom: 25px;
+}
+
+.tx-type-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: var(--border-color);
+}
+
+.tx-type-btn.active {
+    background: var(--border-color);
+    color: var(--surface-color);
+}
+
+.tx-type-btn:first-child {
+    border-right: var(--border);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: var(--expense-color);
+    font-weight: 700;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--shadow-color);
+    z-index: 1000;
+}
+
+.menu-overlay.active {
+    display: block;
+}
